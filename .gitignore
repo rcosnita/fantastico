@@ -34,3 +34,7 @@ nosetests.xml
 .project
 .pydevproject
 __pycache__
+
+# virtual environment dependencies
+pip-deps
+nose-xcover
