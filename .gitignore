@@ -39,3 +39,4 @@ __pycache__
 pip-deps
 coverage.xml
 fantastico_tests.xml
+pylint.out
