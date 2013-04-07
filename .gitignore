@@ -37,4 +37,3 @@ __pycache__
 
 # virtual environment dependencies
 pip-deps
-nose-xcover
