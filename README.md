@@ -11,3 +11,4 @@ Fantastico is written completely in Python 3. Below you can find the packages re
 	* virtualenv (for working in isolation)
 	* nosetests-3 (for running unit and integration tests)
 	* pylint (for enforcing the coding standards and code quality).
+	* sphinx (required for generating fantastico documentation)
