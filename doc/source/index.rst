@@ -14,6 +14,4 @@ Fantastico framework
 Build status
 ------------
 
-.. image:: http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon
-   :width: 108px
-   :height: 15px
+If you want to see the current build status of the project visit `Build status <http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon/>`_.
