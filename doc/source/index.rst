@@ -5,6 +5,7 @@ Fantastico framework
    :maxdepth: 2
    
    get_started/getting_started.rst
+   features/features.rst
    
 Build status
 ------------
