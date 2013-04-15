@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.14)  15 APR 2013 20:54
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.14)  15 APR 2013 21:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -937,17 +937,17 @@ LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <9> not available
  [2]
 Chapter 2.
 (./fantastico.ind)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 236.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 238.
  [3
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 236.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 238.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 236.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 236.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 238.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 238.
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
 (rerunfilecheck)             Checksum: 67A32EE0F165168C5641AC06DD44A3C6;237.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 236.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 238.
  ) 
 Here is how much of TeX's memory you used:
  8851 strings out of 495059
@@ -963,10 +963,10 @@ e/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist
 /urw/helvetic/uhvbo8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (7 pages, 79277 bytes).
+Output written on fantastico.pdf (7 pages, 79816 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
- 87 compressed objects within 1 object stream
+ 109 PDF objects out of 1000 (max. 8388607)
+ 88 compressed objects within 1 object stream
  25 named destinations out of 1000 (max. 500000)
  53 words of extra memory for PDF output out of 10000 (max. 10000000)
 
