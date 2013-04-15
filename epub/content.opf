@@ -64,9 +64,16 @@
     <item id="_static_comment-close.png"
           href="_static/comment-close.png"
           media-type="image/png" />
+    <item id="get_started_installation.html"
+          href="get_started/installation.html"
+          media-type="application/xhtml+xml" />
+    <item id="get_started_getting_started.html"
+          href="get_started/getting_started.html"
+          media-type="application/xhtml+xml" />
   </manifest>
   <spine toc="ncx">
     <itemref idref="index.html" />
+    <itemref idref="get_started_getting_started.html" />
     <itemref idref="genindex.html" />
   </spine>
   <guide>

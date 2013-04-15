@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting started &mdash; fantastico 0.0.1-b29 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1-b29',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.0.1-b29 documentation" href="../index.html" />
+    <link rel="prev" title="Welcome to fantastico’s documentation!" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to fantastico’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b29 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation-manual">
+<h2>Installation manual<a class="headerlink" href="#installation-manual" title="Permalink to this headline">¶</a></h2>
+<p>In this section you can find out how to configure fantastico framework for different purposes.</p>
+<div class="section" id="developing-a-new-fantastico-project">
+<h3>Developing a new fantastico project<a class="headerlink" href="#developing-a-new-fantastico-project" title="Permalink to this headline">¶</a></h3>
+<p>Currently fantastico is in early stages so we did not really use it to create new projects. The desired way we want
+to provide this is presented below:</p>
+<p>pip-3.2 install fantastico</p>
+<p>Done, now you are ready to follow our tutorials about creating new projects.</p>
+</div>
+<div class="section" id="contributing-to-fantastico-framework">
+<h3>Contributing to fantastico framework<a class="headerlink" href="#contributing-to-fantastico-framework" title="Permalink to this headline">¶</a></h3>
+<p>Fantastico is an open source MIT licensed project to which any contribution is welcomed. If you like this framework idea
+and you want to contribute do the following (I assume you are on an ubuntu machine):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#. Create a github account.</span>
+<span class="c">#. Ask for permissions to contribute to this project (send an email to radu.cosnita@gmail.com) - I will gladly grant you permissions.</span>
+<span class="c">#. Create a folder where you want to hold fantastico framework files. (e.g worspace_fantastico)</span>
+<span class="c">#. cd ~/workspace_fantastico</span>
+<span class="c">#. git clone git@github.com:rcosnita/fantastico</span>
+<span class="c">#. sudo apt-get install python3-setuptools</span>
+<span class="c">#. sh virtual_env/setup_dev_env.sh</span>
+<span class="c">#. cd ~/workspace_fantastico</span>
+<span class="c">#. git clone git@github.com:rcosnita/fantastico fantastico-doc</span>
+<span class="c">#. git checkout gh-pages</span>
+</pre></div>
+</div>
+<p>Now you have a fully functional fantastico workspace. I personally use PyDev and spring toolsuite but you are free to use
+whatever editor you want. The only rule we follow is <em>always keep the code stable</em>. To check the stability of your contribution
+before commiting the code follow the steps below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#. cd ~/workspace_fantastico/fantastico/fantastico</span>
+<span class="c">#. sh run_tests.sh (we expect no failure in here)</span>
+<span class="c">#. sh run_pylint.sh (we expect 9+ rated code otherwise the build will fail).</span>
+<span class="c">#. cd ~/workspace_fantastico/fantastico</span>
+<span class="c">#. export BUILD_NUMBER=1</span>
+<span class="c">#. ./build_docs.sh (this will autogenerate documentation).</span>
+<span class="c">#. Look into ~/workspace_fantastico/fantastico-doc</span>
+<span class="c">#. Here you can see the autogenerated documentation (do not commit this as Jenkins will do this for you).</span>
+<span class="c">#. Be brave and push your newly awesome contribution.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting started</a><ul>
+<li><a class="reference internal" href="#installation-manual">Installation manual</a><ul>
+<li><a class="reference internal" href="#developing-a-new-fantastico-project">Developing a new fantastico project</a></li>
+<li><a class="reference internal" href="#contributing-to-fantastico-framework">Contributing to fantastico framework</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Welcome to fantastico&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/get_started/getting_started.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to fantastico’s documentation!"
+             >previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b29 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
