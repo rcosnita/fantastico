@@ -1,14 +1,17 @@
 fantastico
 ==========
 
-This is a mini framework created to support very fast web routing and deployment.
+[![Build Status](http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon)](http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/)
 
-Dependencies
-------------
+Create the best pluggable, developer friendly content publishing framework for Python 3 developers.
 
-Fantastico is written completely in Python 3. Below you can find the packages required by the framework:
+Get started
+-----------
 
-	* virtualenv (for working in isolation)
-	* nosetests-3 (for running unit and integration tests)
-	* pylint (for enforcing the coding standards and code quality).
-	* sphinx (required for generating fantastico documentation)
+The easiest way to get started using fantastico is to read our just in time generated documentation:
+
+	* [HTML documentation](http://rcosnita.github.io/fantastico/html/)
+	* [Ebook friendly documentation](http://rcosnita.github.io/fantastico/epub/)
+	* [PDF documentation](http://rcosnita.github.io/fantastico/latex/fantastico.pdf)
+
+Have fun.
