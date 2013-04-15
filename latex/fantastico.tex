@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 15, 2013}
-\release{0.0.1-b29}
+\release{0.0.1-b30}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -121,19 +121,69 @@
 \phantomsection\label{index::doc}
 
 
-Contents:
-
 
 \chapter{Getting started}
-\label{get_started/getting_started:welcome-to-fantastico-s-documentation}\label{get_started/getting_started:getting-started}\label{get_started/getting_started::doc}
+\label{get_started/getting_started:getting-started}\label{get_started/getting_started::doc}\label{get_started/getting_started:fantastico-framework}
+
+\section{Why another python framework?}
+\label{get_started/why_fantastico:why-another-python-framework}\label{get_started/why_fantastico::doc}
+The main reason for developing a new framework is simple: I want to use it for teaching purposes. I have seen
+many projects which fail either because of poor coding or because they become legacy very fast. I will not get into details
+why and what could have been done. It defeats the purpose.
+
+Each piece of code that is being added to fantastico will follow these simple rules:
+\begin{enumerate}
+\item {} 
+\emph{The code is written because is needed and there is no clean way to achieve the requirement with existing fantastico features}.
+
+\item {} 
+The code is developed using TDD (Test Driven Development).
+
+\item {} 
+The code quality is 9+ (reported by pylint).
+
+\item {} 
+The code coverage is 90\%+ (reported by nose coverage).
+
+\item {} 
+The code is fully documented and included into documentation.
+
+\end{enumerate}
+
+
+\subsection{What do you want to teach who?}
+\label{get_started/why_fantastico:what-do-you-want-to-teach-who}
+I am a big fan of Agile practices and currently I own a domain called scrum-expert.ro. This is meant to become a collection of
+hands on resource of how to develop good software with high quality and in a reasonable amount of time. Resources will cover topics
+like
+\begin{enumerate}
+\item {} 
+Incremental development always ready for rollout.
+
+\item {} 
+TDD (Test Driven Development)
+
+\item {} 
+XP (eXtreme programming)
+
+\item {} 
+Scrum
+
+\item {} 
+Projects setup for Continuous Delivery
+
+\end{enumerate}
+
+and many other topics that are required for delivering high quality software but apparently so many companies are ignoring nowadays.
+
 
 \section{Installation manual}
-\label{get_started/getting_started:installation-manual}
+\label{get_started/installation:installation-manual}\label{get_started/installation::doc}
 In this section you can find out how to configure fantastico framework for different purposes.
 
 
 \subsection{Developing a new fantastico project}
-\label{get_started/getting_started:developing-a-new-fantastico-project}
+\label{get_started/installation:developing-a-new-fantastico-project}
 Currently fantastico is in early stages so we did not really use it to create new projects. The desired way we want
 to provide this is presented below:
 
@@ -143,7 +193,7 @@ Done, now you are ready to follow our tutorials about creating new projects.
 
 
 \subsection{Contributing to fantastico framework}
-\label{get_started/getting_started:contributing-to-fantastico-framework}
+\label{get_started/installation:contributing-to-fantastico-framework}
 Fantastico is an open source MIT licensed project to which any contribution is welcomed. If you like this framework idea
 and you want to contribute do the following (I assume you are on an ubuntu machine):
 
@@ -176,6 +226,9 @@ before commiting the code follow the steps below:
 \PYG{c}{\PYGZsh{}. Be brave and push your newly awesome contribution.}
 \end{Verbatim}
 
+
+\chapter{Build status}
+\label{index:build-status}
 
 
 \renewcommand{\indexname}{Index}

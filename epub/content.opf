@@ -67,6 +67,9 @@
     <item id="get_started_installation.html"
           href="get_started/installation.html"
           media-type="application/xhtml+xml" />
+    <item id="get_started_why_fantastico.html"
+          href="get_started/why_fantastico.html"
+          media-type="application/xhtml+xml" />
     <item id="get_started_getting_started.html"
           href="get_started/getting_started.html"
           media-type="application/xhtml+xml" />
@@ -74,6 +77,8 @@
   <spine toc="ncx">
     <itemref idref="index.html" />
     <itemref idref="get_started_getting_started.html" />
+    <itemref idref="get_started_why_fantastico.html" />
+    <itemref idref="get_started_installation.html" />
     <itemref idref="genindex.html" />
   </spine>
   <guide>

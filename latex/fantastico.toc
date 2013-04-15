@@ -1,5 +1,8 @@
 \select@language {english}
-\contentsline {chapter}{\numberline {1}Getting started}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}Installation manual}{3}{section.1.1}
-\contentsline {subsection}{\numberline {1.1.1}Developing a new fantastico project}{3}{subsection.1.1.1}
-\contentsline {subsection}{\numberline {1.1.2}Contributing to fantastico framework}{3}{subsection.1.1.2}
+\contentsline {chapter}{\numberline {1}Getting started}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Why another python framework?}{1}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}What do you want to teach who?}{1}{subsection.1.1.1}
+\contentsline {section}{\numberline {1.2}Installation manual}{1}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Developing a new fantastico project}{2}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Contributing to fantastico framework}{2}{subsection.1.2.2}
+\contentsline {chapter}{\numberline {2}Build status}{3}{chapter.2}
