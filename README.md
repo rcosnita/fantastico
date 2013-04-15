@@ -1,7 +1,7 @@
 fantastico
 ==========
 
-![Build status](http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon)
+![Build status](http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon/)
 
 Create the best pluggable, developer friendly content publishing framework for Python 3 developers.
 
