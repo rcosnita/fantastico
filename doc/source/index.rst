@@ -4,6 +4,7 @@ Fantastico framework
 .. toctree::
    :maxdepth: 2
    
+   intro.rst
    get_started/getting_started.rst
    features/features.rst
    
