@@ -1,18 +1,5 @@
-Fantastico framework
-====================
-
-.. toctree::
-   :maxdepth: 2
-   
-   get_started/getting_started.rst
-   
-Build status
-------------
-
-If you want to see the current build status of the project visit `Build status <http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon/>`_.
-
 License
--------
+=======
 
 Copyright 2013 Cosnita Radu Viorel
 
