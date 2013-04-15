@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.14)  15 APR 2013 21:08
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.14)  15 APR 2013 21:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -936,28 +936,43 @@ LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <9> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 201.
  [2]
 Chapter 2.
-[3
+<routing_engine.png, id=88, 879.16083pt x 497.69443pt>
+File: routing_engine.png Graphic file (type png)
 
-] [4
+<use routing_engine.png>
+Package pdftex.def Info: routing_engine.png used on input line 235.
+(pdftex.def)             Requested size: 879.15868pt x 497.6932pt.
+File: routing_engine.png Graphic file (type png)
+ <use routing_engine.png>
+Package pdftex.def Info: routing_engine.png used on input line 235.
+(pdftex.def)             Requested size: 469.755pt x 265.92595pt.
+ [3
+
+ <./routing_engine.png>]
+[4
 
 ]
 Chapter 3.
+[5] [6
+
+]
+Chapter 4.
 (./fantastico.ind)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 255.
- [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 255.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 263.
+ [7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 263.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 255.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 255.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 263.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 263.
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
-(rerunfilecheck)             Checksum: EB75103E1B64C4D8AC071DAC77767DF5;279.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 255.
+(rerunfilecheck)             Checksum: F020C35A28ED613D51CFFA556426CC45;393.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 263.
  ) 
 Here is how much of TeX's memory you used:
- 8856 strings out of 495059
- 122546 string characters out of 3182030
- 216351 words of memory out of 3000000
- 11780 multiletter control sequences out of 15000+200000
+ 8872 strings out of 495059
+ 122848 string characters out of 3182030
+ 216521 words of memory out of 3000000
+ 11790 multiletter control sequences out of 15000+200000
  57951 words of font info for 61 fonts, out of 3000000 for 9000
  15 hyphenation exceptions out of 8191
  36i,12n,45p,252b,382s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -967,10 +982,10 @@ e/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist
 /urw/helvetic/uhvbo8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (9 pages, 83789 bytes).
+Output written on fantastico.pdf (11 pages, 108445 bytes).
 PDF statistics:
- 122 PDF objects out of 1000 (max. 8388607)
- 99 compressed objects within 1 object stream
- 28 named destinations out of 1000 (max. 500000)
- 61 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 143 PDF objects out of 1000 (max. 8388607)
+ 116 compressed objects within 2 object streams
+ 32 named destinations out of 1000 (max. 500000)
+ 82 words of extra memory for PDF output out of 10000 (max. 10000000)
 

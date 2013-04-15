@@ -64,5 +64,23 @@
         </navPoint>
       </navPoint>
     </navPoint>
+    <navPoint id="navPoint7" playOrder="7">
+      <navLabel>
+        <text>Fantastico features</text>
+      </navLabel>
+      <content src="features/features.html" />
+      <navPoint id="navPoint7" playOrder="7">
+        <navLabel>
+          <text>Fantastico features</text>
+        </navLabel>
+        <content src="features/features.html" />
+      </navPoint>
+      <navPoint id="navPoint8" playOrder="8">
+        <navLabel>
+          <text>Routing engine</text>
+        </navLabel>
+        <content src="features/routing_engine.html" />
+      </navPoint>
+    </navPoint>
   </navMap>
 </ncx>
