@@ -22,6 +22,9 @@
     <item id="index.html"
           href="index.html"
           media-type="application/xhtml+xml" />
+    <item id="license.html"
+          href="license.html"
+          media-type="application/xhtml+xml" />
     <item id="_static_up.png"
           href="_static/up.png"
           media-type="image/png" />
