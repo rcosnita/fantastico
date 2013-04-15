@@ -3,12 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to fantastico's documentation!
-======================================
-
-Contents:
+Fantastico framework
+====================
 
 .. toctree::
    :maxdepth: 2
    
    get_started/getting_started.rst
+   
+Build status
+------------
+
+.. image:: http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon
+   :width: 108px
+   :height: 15px
