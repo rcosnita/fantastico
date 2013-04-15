@@ -1,11 +1,13 @@
 \select@language {english}
-\contentsline {chapter}{\numberline {1}Getting started}{1}{chapter.1}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Why another python framework?}{1}{section.1.1}
 \contentsline {subsection}{\numberline {1.1.1}What do you want to teach who?}{1}{subsection.1.1.1}
-\contentsline {section}{\numberline {1.2}Installation manual}{1}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Developing a new fantastico project}{2}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {1.2.2}Contributing to fantastico framework}{2}{subsection.1.2.2}
-\contentsline {chapter}{\numberline {2}Fantastico features}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Routing engine}{3}{section.2.1}
-\contentsline {chapter}{\numberline {3}Build status}{5}{chapter.3}
-\contentsline {chapter}{\numberline {4}License}{7}{chapter.4}
+\contentsline {section}{\numberline {1.2}Fantastico's initial ideas}{1}{section.1.2}
+\contentsline {chapter}{\numberline {2}Getting started}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Installation manual}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Developing a new fantastico project}{3}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Contributing to fantastico framework}{3}{subsection.2.1.2}
+\contentsline {chapter}{\numberline {3}Fantastico features}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}Routing engine}{5}{section.3.1}
+\contentsline {chapter}{\numberline {4}Build status}{7}{chapter.4}
+\contentsline {chapter}{\numberline {5}License}{9}{chapter.5}

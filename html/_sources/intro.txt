@@ -1,3 +1,6 @@
+Introduction
+============
+
 Why another python framework?
 -----------------------------
 
@@ -27,3 +30,18 @@ like
    #. Projects setup for Continuous Delivery
 
 and many other topics that are required for delivering high quality software but apparently so many companies are ignoring nowadays.
+
+Fantastico's initial ideas
+--------------------------
+
+   * Very fast and pluggable routing engine.
+   * Easily creation of REST apis.
+   * Easily publishing of content (dynamic content).
+   * Easily composition of available content.
+   * Easily deployment on non expensive infrastructures (AWS, RackSpace).
+   
+Once the features above are developed there should be extremely easy to create the following sample applications:
+
+   #. Blog development
+   #. Web Forms development.
+   #. Personal web sites.

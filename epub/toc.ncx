@@ -12,51 +12,69 @@
   <navMap>
     <navPoint id="navPoint1" playOrder="1">
       <navLabel>
-        <text>Getting started</text>
+        <text>Introduction</text>
       </navLabel>
-      <content src="get_started/getting_started.html" />
+      <content src="intro.html" />
       <navPoint id="navPoint1" playOrder="1">
         <navLabel>
-          <text>Getting started</text>
+          <text>Introduction</text>
         </navLabel>
-        <content src="get_started/getting_started.html" />
+        <content src="intro.html" />
       </navPoint>
       <navPoint id="navPoint2" playOrder="2">
         <navLabel>
           <text>Why another python framework?</text>
         </navLabel>
-        <content src="get_started/why_fantastico.html" />
+        <content src="intro.html#why-another-python-framework" />
         <navPoint id="navPoint2" playOrder="2">
           <navLabel>
             <text>Why another python framework?</text>
           </navLabel>
-          <content src="get_started/why_fantastico.html" />
+          <content src="intro.html#why-another-python-framework" />
         </navPoint>
         <navPoint id="navPoint3" playOrder="3">
           <navLabel>
             <text>What do you want to teach who?</text>
           </navLabel>
-          <content src="get_started/why_fantastico.html#what-do-you-want-to-teach-who" />
+          <content src="intro.html#what-do-you-want-to-teach-who" />
         </navPoint>
       </navPoint>
       <navPoint id="navPoint4" playOrder="4">
         <navLabel>
+          <text>Fantastico&#39;s initial ideas</text>
+        </navLabel>
+        <content src="intro.html#fantastico-s-initial-ideas" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint5" playOrder="5">
+      <navLabel>
+        <text>Getting started</text>
+      </navLabel>
+      <content src="get_started/getting_started.html" />
+      <navPoint id="navPoint5" playOrder="5">
+        <navLabel>
+          <text>Getting started</text>
+        </navLabel>
+        <content src="get_started/getting_started.html" />
+      </navPoint>
+      <navPoint id="navPoint6" playOrder="6">
+        <navLabel>
           <text>Installation manual</text>
         </navLabel>
         <content src="get_started/installation.html" />
-        <navPoint id="navPoint4" playOrder="4">
+        <navPoint id="navPoint6" playOrder="6">
           <navLabel>
             <text>Installation manual</text>
           </navLabel>
           <content src="get_started/installation.html" />
         </navPoint>
-        <navPoint id="navPoint5" playOrder="5">
+        <navPoint id="navPoint7" playOrder="7">
           <navLabel>
             <text>Developing a new fantastico project</text>
           </navLabel>
           <content src="get_started/installation.html#developing-a-new-fantastico-project" />
         </navPoint>
-        <navPoint id="navPoint6" playOrder="6">
+        <navPoint id="navPoint8" playOrder="8">
           <navLabel>
             <text>Contributing to fantastico framework</text>
           </navLabel>
@@ -64,18 +82,18 @@
         </navPoint>
       </navPoint>
     </navPoint>
-    <navPoint id="navPoint7" playOrder="7">
+    <navPoint id="navPoint9" playOrder="9">
       <navLabel>
         <text>Fantastico features</text>
       </navLabel>
       <content src="features/features.html" />
-      <navPoint id="navPoint7" playOrder="7">
+      <navPoint id="navPoint9" playOrder="9">
         <navLabel>
           <text>Fantastico features</text>
         </navLabel>
         <content src="features/features.html" />
       </navPoint>
-      <navPoint id="navPoint8" playOrder="8">
+      <navPoint id="navPoint10" playOrder="10">
         <navLabel>
           <text>Routing engine</text>
         </navLabel>
