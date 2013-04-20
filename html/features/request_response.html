@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Routing engine &mdash; fantastico 0.0.1-b35 documentation</title>
+    <title>Request lifecycle &mdash; fantastico 0.0.1-b35 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,7 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="fantastico 0.0.1-b35 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
-    <link rel="prev" title="Request lifecycle" href="request_response.html" /> 
+    <link rel="next" title="Routing engine" href="routing_engine.html" />
+    <link rel="prev" title="Fantastico features" href="features.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,7 +36,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="request_response.html" title="Request lifecycle"
+          <a href="routing_engine.html" title="Routing engine"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">fantastico 0.0.1-b35 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
@@ -47,9 +51,23 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="routing-engine">
-<h1>Routing engine<a class="headerlink" href="#routing-engine" title="Permalink to this headline">¶</a></h1>
-<img alt="../_images/routing_engine.png" src="../_images/routing_engine.png" />
+  <div class="section" id="request-lifecycle">
+<h1>Request lifecycle<a class="headerlink" href="#request-lifecycle" title="Permalink to this headline">¶</a></h1>
+<p>In this document you can find how a request is processed by fantastico framework. By default WSGI applications use a dictionary
+that contains various useful keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li>HTTP Headers</li>
+<li>HTTP Cookies</li>
+<li>Helper keys (e.g file wrapper).</li>
+</ul>
+</div></blockquote>
+<p>In fantastico we want to hide the complexity of this dictionary and allow developers to use some standardized objects. Fantastico
+framework follows a Request / Response paradigm. This mean that for every single http request only one single http response will
+be generated. Below, you can find a simple example of how requests are processed by fantastico framework:</p>
+<img alt="../_images/request_response_sd.png" src="../_images/request_response_sd.png" />
+<p>In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and response
+objects. For more information read <a class="reference external" href="http://docs.webob.org/en/latest/reference.html">WebOB Doc</a>.</p>
 </div>
 
 
@@ -59,11 +77,14 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="request_response.html"
-                        title="previous chapter">Request lifecycle</a></p>
+  <p class="topless"><a href="features.html"
+                        title="previous chapter">Fantastico features</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="routing_engine.html"
+                        title="next chapter">Routing engine</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/features/routing_engine.txt"
+    <li><a href="../_sources/features/request_response.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -90,7 +111,10 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="request_response.html" title="Request lifecycle"
+          <a href="routing_engine.html" title="Routing engine"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="features.html" title="Fantastico features"
              >previous</a> |</li>
         <li><a href="../index.html">fantastico 0.0.1-b35 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 

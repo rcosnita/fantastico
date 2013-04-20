@@ -95,6 +95,12 @@
       </navPoint>
       <navPoint id="navPoint10" playOrder="10">
         <navLabel>
+          <text>Request lifecycle</text>
+        </navLabel>
+        <content src="features/request_response.html" />
+      </navPoint>
+      <navPoint id="navPoint11" playOrder="11">
+        <navLabel>
           <text>Routing engine</text>
         </navLabel>
         <content src="features/routing_engine.html" />

@@ -4,6 +4,7 @@
 \BOOKMARK [0][-]{chapter.2}{Getting started}{}% 4
 \BOOKMARK [1][-]{section.2.1}{Installation manual}{chapter.2}% 5
 \BOOKMARK [0][-]{chapter.3}{Fantastico features}{}% 6
-\BOOKMARK [1][-]{section.3.1}{Routing engine}{chapter.3}% 7
-\BOOKMARK [0][-]{chapter.4}{Build status}{}% 8
-\BOOKMARK [0][-]{chapter.5}{License}{}% 9
+\BOOKMARK [1][-]{section.3.1}{Request lifecycle}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.2}{Routing engine}{chapter.3}% 8
+\BOOKMARK [0][-]{chapter.4}{Build status}{}% 9
+\BOOKMARK [0][-]{chapter.5}{License}{}% 10

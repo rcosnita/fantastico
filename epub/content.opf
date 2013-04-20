@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-04-15</dc:date>
+    <dc:date>2013-04-20</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -76,11 +76,17 @@
     <item id="get_started_getting_started.html"
           href="get_started/getting_started.html"
           media-type="application/xhtml+xml" />
+    <item id="_images_request_response_sd.png"
+          href="_images/request_response_sd.png"
+          media-type="image/png" />
     <item id="_images_routing_engine.png"
           href="_images/routing_engine.png"
           media-type="image/png" />
     <item id="features_features.html"
           href="features/features.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_request_response.html"
+          href="features/request_response.html"
           media-type="application/xhtml+xml" />
     <item id="features_routing_engine.html"
           href="features/routing_engine.html"
@@ -92,6 +98,7 @@
     <itemref idref="get_started_getting_started.html" />
     <itemref idref="get_started_installation.html" />
     <itemref idref="features_features.html" />
+    <itemref idref="features_request_response.html" />
     <itemref idref="features_routing_engine.html" />
     <itemref idref="genindex.html" />
   </spine>

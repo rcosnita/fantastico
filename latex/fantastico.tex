@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{April 15, 2013}
-\release{0.0.1-b34}
+\date{April 20, 2013}
+\release{0.0.1-b35}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -265,6 +265,32 @@ before commiting the code follow the steps below:
 
 \chapter{Fantastico features}
 \label{features/features::doc}\label{features/features:fantastico-features}
+
+\section{Request lifecycle}
+\label{features/request_response:request-lifecycle}\label{features/request_response::doc}
+In this document you can find how a request is processed by fantastico framework. By default WSGI applications use a dictionary
+that contains various useful keys:
+\begin{itemize}
+\item {} 
+HTTP Headers
+
+\item {} 
+HTTP Cookies
+
+\item {} 
+Helper keys (e.g file wrapper).
+
+\end{itemize}
+
+In fantastico we want to hide the complexity of this dictionary and allow developers to use some standardized objects. Fantastico
+framework follows a Request / Response paradigm. This mean that for every single http request only one single http response will
+be generated. Below, you can find a simple example of how requests are processed by fantastico framework:
+
+\includegraphics{request_response_sd.png}
+
+In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and response
+objects. For more information read \href{http://docs.webob.org/en/latest/reference.html}{WebOB Doc}.
+
 
 \section{Routing engine}
 \label{features/routing_engine:routing-engine}\label{features/routing_engine::doc}
