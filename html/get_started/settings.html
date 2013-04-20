@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fantastico settings &mdash; fantastico 0.0.1-b36 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1-b36',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.0.1-b36 documentation" href="../index.html" />
+    <link rel="up" title="Getting started" href="getting_started.html" />
+    <link rel="next" title="Fantastico features" href="../features/features.html" />
+    <link rel="prev" title="Installation manual" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../features/features.html" title="Fantastico features"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b36 documentation</a> &raquo;</li>
+          <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="fantastico-settings">
+<h1>Fantastico settings<a class="headerlink" href="#fantastico-settings" title="Permalink to this headline">¶</a></h1>
+<p>Fantastico is configured using a plain settings file. This file is located in the root of fantastico framework
+or in the root folder of your project. Before we dig further into configuration options lets see a very simple settings
+file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">installed_middleware</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;fantastico.core.middleware.RequestResponseMiddleware&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;fantastico.core.middleware.RoutingEngineMiddleware&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
+middlewares are listed is the order in which they are executed when an http request is made.</p>
+<div class="section" id="settings-api">
+<h2>Settings API<a class="headerlink" href="#settings-api" title="Permalink to this headline">¶</a></h2>
+<p>Below you can find technical information about settings.</p>
+<dl class="class">
+<dt id="fantastico.settings.BasicSettings">
+<em class="property">class </em><tt class="descclassname">fantastico.settings.</tt><tt class="descname">BasicSettings</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.BasicSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the core class that describes all available settings of fantastico framework. For convenience all options
+have default values that ensure minimum functionality of the framework.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="create-dev-configuration">
+<h2>Create Dev configuration<a class="headerlink" href="#create-dev-configuration" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="create-prod-configuration">
+<h2>Create Prod configuration<a class="headerlink" href="#create-prod-configuration" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Fantastico settings</a><ul>
+<li><a class="reference internal" href="#settings-api">Settings API</a></li>
+<li><a class="reference internal" href="#create-dev-configuration">Create Dev configuration</a></li>
+<li><a class="reference internal" href="#create-prod-configuration">Create Prod configuration</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation manual</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../features/features.html"
+                        title="next chapter">Fantastico features</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/get_started/settings.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../features/features.html" title="Fantastico features"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation manual"
+             >previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b36 documentation</a> &raquo;</li>
+          <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

@@ -81,25 +81,55 @@
           <content src="get_started/installation.html#contributing-to-fantastico-framework" />
         </navPoint>
       </navPoint>
+      <navPoint id="navPoint9" playOrder="9">
+        <navLabel>
+          <text>Fantastico settings</text>
+        </navLabel>
+        <content src="get_started/settings.html" />
+        <navPoint id="navPoint9" playOrder="9">
+          <navLabel>
+            <text>Fantastico settings</text>
+          </navLabel>
+          <content src="get_started/settings.html" />
+        </navPoint>
+        <navPoint id="navPoint10" playOrder="10">
+          <navLabel>
+            <text>Settings API</text>
+          </navLabel>
+          <content src="get_started/settings.html#settings-api" />
+        </navPoint>
+        <navPoint id="navPoint11" playOrder="11">
+          <navLabel>
+            <text>Create Dev configuration</text>
+          </navLabel>
+          <content src="get_started/settings.html#create-dev-configuration" />
+        </navPoint>
+        <navPoint id="navPoint12" playOrder="12">
+          <navLabel>
+            <text>Create Prod configuration</text>
+          </navLabel>
+          <content src="get_started/settings.html#create-prod-configuration" />
+        </navPoint>
+      </navPoint>
     </navPoint>
-    <navPoint id="navPoint9" playOrder="9">
+    <navPoint id="navPoint13" playOrder="13">
       <navLabel>
         <text>Fantastico features</text>
       </navLabel>
       <content src="features/features.html" />
-      <navPoint id="navPoint9" playOrder="9">
+      <navPoint id="navPoint13" playOrder="13">
         <navLabel>
           <text>Fantastico features</text>
         </navLabel>
         <content src="features/features.html" />
       </navPoint>
-      <navPoint id="navPoint10" playOrder="10">
+      <navPoint id="navPoint14" playOrder="14">
         <navLabel>
           <text>Request lifecycle</text>
         </navLabel>
         <content src="features/request_response.html" />
       </navPoint>
-      <navPoint id="navPoint11" playOrder="11">
+      <navPoint id="navPoint15" playOrder="15">
         <navLabel>
           <text>Routing engine</text>
         </navLabel>

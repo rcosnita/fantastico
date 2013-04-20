@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 20, 2013}
-\release{0.0.1-b35}
+\release{0.0.1-b36}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -262,6 +262,41 @@ before commiting the code follow the steps below:
 \PYG{c}{\PYGZsh{}. Be brave and push your newly awesome contribution.}
 \end{Verbatim}
 
+
+\section{Fantastico settings}
+\label{get_started/settings:fantastico-settings}\label{get_started/settings::doc}
+Fantastico is configured using a plain settings file. This file is located in the root of fantastico framework
+or in the root folder of your project. Before we dig further into configuration options lets see a very simple settings
+file:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{installed\PYGZus{}middleware} \PYG{o}{=} \PYG{p}{[}\PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.core.middleware.RequestResponseMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,}
+                        \PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.core.middleware.RoutingEngineMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{]}
+\end{Verbatim}
+
+The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
+middlewares are listed is the order in which they are executed when an http request is made.
+
+
+\subsection{Settings API}
+\label{get_started/settings:settings-api}
+Below you can find technical information about settings.
+\index{BasicSettings (class in fantastico.settings)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings}\pysigline{\strong{class }\code{fantastico.settings.}\bfcode{BasicSettings}}
+This is the core class that describes all available settings of fantastico framework. For convenience all options
+have default values that ensure minimum functionality of the framework.
+
+\end{fulllineitems}
+
+
+
+\subsection{Create Dev configuration}
+\label{get_started/settings:create-dev-configuration}
+
+\subsection{Create Prod configuration}
+\label{get_started/settings:create-prod-configuration}
 
 \chapter{Fantastico features}
 \label{features/features::doc}\label{features/features:fantastico-features}
