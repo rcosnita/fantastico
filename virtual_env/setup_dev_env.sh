@@ -9,3 +9,4 @@ pip-3.2 install coverage
 pip-3.2 install pylint
 pip-3.2 install jinja2
 pip-3.2 install sphinx
+pip-3.2 install webob
