@@ -3,4 +3,4 @@
 
 export PYTHONPATH=`pwd`
 cd doc
-make clean html epub latexpdf
+make clean html #epub latexpdf
