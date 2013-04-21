@@ -1,0 +1,6 @@
+\indexentry{BasicSettings (class in fantastico.settings)|hyperpage}{4}
+\indexentry{installed\_middleware (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
+\indexentry{supported\_languages (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
+\indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{5}
+\indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
+\indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{5}

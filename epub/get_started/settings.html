@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fantastico settings</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../features/features.html" title="Fantastico features"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
+          <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="fantastico-settings">
+<h1>Fantastico settings</h1>
+<p>Fantastico is configured using a plain settings file. This file is located in the root of fantastico framework
+or in the root folder of your project. Before we dig further into configuration options lets see a very simple settings
+file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BasicSettings</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+   <span class="nd">@property</span>
+   <span class="k">def</span> <span class="nf">installed_middleware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s">&#39;fantastico.middleware.RequestResponseMiddleware&#39;</span><span class="p">,</span>
+              <span class="s">&#39;fantastico.middleware.RoutingEngineMiddleware&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
+middlewares are listed is the order in which they are executed when an http request is made.</p>
+<div class="section" id="settings-api">
+<h2>Settings API</h2>
+<p>Below you can find technical information about settings.</p>
+<dl class="class">
+<dt id="fantastico.settings.BasicSettings">
+<em class="property">class </em><tt class="descclassname">fantastico.settings.</tt><tt class="descname">BasicSettings</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This is the core class that describes all available settings of fantastico framework. For convenience all options
+have default values that ensure minimum functionality of the framework. Below you can find an example of three possible 
+configuration: Dev / Stage / Production.</p>
+<img alt="../_images/settings.png" src="../_images/settings.png" />
+<p>As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values
+for the attributes you want to overwrite.</p>
+<dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.installed_middleware">
+<tt class="descname">installed_middleware</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.installed_middleware"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Property that holds all installed middlewares.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.supported_languages">
+<tt class="descname">supported_languages</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.supported_languages"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Property that holds all supported languages this fantastico instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="create-dev-configuration">
+<h2>Create Dev configuration</h2>
+<p>Let&#8217;s imagine you want to create a custom dev configuration for your project. Below you can find the code for this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DevSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
+   <span class="nd">@property</span>
+   <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The above configuration actually overwrites supported languages. This mean that only en_us is relevant for <strong>Dev</strong> environment. You
+can do the same for <strong>Stage</strong>, <strong>Prod</strong> or any other custom configuration.</p>
+</div>
+<div class="section" id="using-a-specifc-configuration">
+<h2>Using a specifc configuration</h2>
+<dl class="class">
+<dt id="fantastico.settings.SettingsFacade">
+<em class="property">class </em><tt class="descclassname">fantastico.settings.</tt><tt class="descname">SettingsFacade</tt><big>(</big><em>environ=None</em><big>)</big><a class="reference internal" href="../_modules/fantastico/settings.html#SettingsFacade"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>For using a specific fantastico configuration you need to do two simple steps:</p>
+<ul>
+<li><p class="first">Set <strong>FANTASTICO_ACTIVE_CONFIG</strong> to the fully python qualified class name you want to use. E.g: <a class="reference internal" href="#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a></p>
+</li>
+<li><p class="first">In your code, you can use the following snippet to access a specific setting:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">SettingsFacade</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;installed_middleware&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>If no active configuration is set in the <a class="reference internal" href="#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a> will be used.</p>
+<dl class="method">
+<dt id="fantastico.settings.SettingsFacade.get">
+<tt class="descname">get</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../_modules/fantastico/settings.html#SettingsFacade.get"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Method used to retrieve a setting value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> &#8211; Setting name.</li>
+<li><strong>type</strong> &#8211; string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The setting value.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.settings.SettingsFacade.get_config">
+<tt class="descname">get_config</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/settings.html#SettingsFacade.get_config"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Method used to return the active configuration which is used by this facade.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Active configuration currently used.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

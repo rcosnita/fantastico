@@ -1,0 +1,21 @@
+\begin{theindex}
+\def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
+
+  \bigletter B
+  \item BasicSettings (class in fantastico.settings), \hyperpage{4}
+
+  \indexspace
+  \bigletter G
+  \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
+  \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}
+
+  \indexspace
+  \bigletter I
+  \item installed\_middleware (fantastico.settings.BasicSettings attribute), \hyperpage{4}
+
+  \indexspace
+  \bigletter S
+  \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
+  \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
+
+\end{theindex}
