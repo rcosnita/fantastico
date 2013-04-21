@@ -63,7 +63,7 @@ class TestSettingsFacadeSuite(TestCase):
         
         installed_middleware = self._settings.get("installed_middleware")
         
-        self.assertGreaterEqual(len(installed_middleware), 0)
+        self.assertGreaterEqual(len(installed_middleware), 2)
         self.assertEqual("fantastico.middleware.RequestResponseMiddleware", installed_middleware[0])
         self.assertEqual("fantastico.middleware.RoutingEngineMiddleware", installed_middleware[1])
         
