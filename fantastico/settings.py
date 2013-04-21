@@ -32,7 +32,7 @@ class BasicSettings(object):
     As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values
     for the attributes you want to overwrite.
     '''
-    
+        
     @property
     def installed_middleware(self):
         '''Property that holds all installed middlewares.'''
