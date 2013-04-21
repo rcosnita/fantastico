@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fantastico exceptions hierarchy</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="request_response.html" title="Request lifecycle"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="features.html" title="Fantastico features"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
+          <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="fantastico-exceptions-hierarchy">
+<h1>Fantastico exceptions hierarchy</h1>
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><img alt="../_images/exceptions.png" src="../_images/exceptions.png" />
+<p><strong>FantasticoError</strong> is the base of all exceptions raised within fantastico framework. It describe common attributes that
+each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception. 
+We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
+that at no moment errors will cause fantastico framework wsgi container to crash.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoClassNotFoundError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoClassNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoClassNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoSettingNotFoundError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoSettingNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoSettingNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
+configuration.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

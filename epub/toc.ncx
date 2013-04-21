@@ -125,11 +125,17 @@
       </navPoint>
       <navPoint id="navPoint14" playOrder="14">
         <navLabel>
+          <text>Fantastico exceptions hierarchy</text>
+        </navLabel>
+        <content src="features/exceptions.html" />
+      </navPoint>
+      <navPoint id="navPoint15" playOrder="15">
+        <navLabel>
           <text>Request lifecycle</text>
         </navLabel>
         <content src="features/request_response.html" />
       </navPoint>
-      <navPoint id="navPoint15" playOrder="15">
+      <navPoint id="navPoint16" playOrder="16">
         <navLabel>
           <text>Routing engine</text>
         </navLabel>

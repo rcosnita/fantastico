@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Routing engine &mdash; fantastico 0.0.1-b45 documentation</title>
+    <title>Fantastico exceptions hierarchy &mdash; fantastico 0.0.1-b45 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,7 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="fantastico 0.0.1-b45 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
-    <link rel="prev" title="Request lifecycle" href="request_response.html" /> 
+    <link rel="next" title="Request lifecycle" href="request_response.html" />
+    <link rel="prev" title="Fantastico features" href="features.html" /> 
   </head>
   <body>
     <div class="related">
@@ -36,6 +37,9 @@
              accesskey="I">index</a></li>
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
@@ -47,9 +51,31 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="routing-engine">
-<h1>Routing engine<a class="headerlink" href="#routing-engine" title="Permalink to this headline">¶</a></h1>
-<img alt="../_images/routing_engine.png" src="../_images/routing_engine.png" />
+  <div class="section" id="fantastico-exceptions-hierarchy">
+<h1>Fantastico exceptions hierarchy<a class="headerlink" href="#fantastico-exceptions-hierarchy" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoError" title="Permalink to this definition">¶</a></dt>
+<dd><img alt="../_images/exceptions.png" src="../_images/exceptions.png" />
+<p><strong>FantasticoError</strong> is the base of all exceptions raised within fantastico framework. It describe common attributes that
+each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception. 
+We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
+that at no moment errors will cause fantastico framework wsgi container to crash.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoClassNotFoundError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoClassNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoClassNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoClassNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoSettingNotFoundError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoSettingNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoSettingNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoSettingNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
+configuration.</p>
+</dd></dl>
+
 </div>
 
 
@@ -59,11 +85,14 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
+  <p class="topless"><a href="features.html"
+                        title="previous chapter">Fantastico features</a></p>
+  <h4>Next topic</h4>
   <p class="topless"><a href="request_response.html"
-                        title="previous chapter">Request lifecycle</a></p>
+                        title="next chapter">Request lifecycle</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/features/routing_engine.txt"
+    <li><a href="../_sources/features/exceptions.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -91,6 +120,9 @@
              >index</a></li>
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="features.html" title="Fantastico features"
              >previous</a> |</li>
         <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 

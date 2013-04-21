@@ -4,3 +4,6 @@
 \indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{5}
 \indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
 \indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
+\indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{7}
+\indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{7}
+\indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{7}

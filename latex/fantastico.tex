@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 21, 2013}
-\release{0.0.1-b44}
+\release{0.0.1-b45}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -402,6 +402,39 @@ Active configuration currently used.
 
 \chapter{Fantastico features}
 \label{features/features::doc}\label{features/features:fantastico-features}
+
+\section{Fantastico exceptions hierarchy}
+\label{features/exceptions:fantastico-exceptions-hierarchy}\label{features/exceptions::doc}\index{FantasticoError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoError}}~
+\includegraphics{exceptions.png}
+
+\textbf{FantasticoError} is the base of all exceptions raised within fantastico framework. It describe common attributes that
+each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception. 
+We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
+that at no moment errors will cause fantastico framework wsgi container to crash.
+
+\end{fulllineitems}
+
+\index{FantasticoClassNotFoundError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoClassNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoClassNotFoundError}}
+This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.
+
+\end{fulllineitems}
+
+\index{FantasticoSettingNotFoundError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoSettingNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoSettingNotFoundError}}
+This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
+configuration.
+
+\end{fulllineitems}
+
+
 
 \section{Request lifecycle}
 \label{features/request_response:request-lifecycle}\label{features/request_response::doc}

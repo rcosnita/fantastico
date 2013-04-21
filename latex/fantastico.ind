@@ -5,6 +5,12 @@
   \item BasicSettings (class in fantastico.settings), \hyperpage{4}
 
   \indexspace
+  \bigletter F
+  \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{7}
+  \item FantasticoError (class in fantastico.exceptions), \hyperpage{7}
+  \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{7}
+
+  \indexspace
   \bigletter G
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}

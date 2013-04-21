@@ -85,8 +85,14 @@
     <item id="_modules_fantastico_settings.html"
           href="_modules/fantastico/settings.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_exceptions.html"
+          href="_modules/fantastico/exceptions.html"
+          media-type="application/xhtml+xml" />
     <item id="_images_request_response_sd.png"
           href="_images/request_response_sd.png"
+          media-type="image/png" />
+    <item id="_images_exceptions.png"
+          href="_images/exceptions.png"
           media-type="image/png" />
     <item id="_images_settings.png"
           href="_images/settings.png"
@@ -94,6 +100,9 @@
     <item id="_images_routing_engine.png"
           href="_images/routing_engine.png"
           media-type="image/png" />
+    <item id="features_exceptions.html"
+          href="features/exceptions.html"
+          media-type="application/xhtml+xml" />
     <item id="features_features.html"
           href="features/features.html"
           media-type="application/xhtml+xml" />
@@ -111,6 +120,7 @@
     <itemref idref="get_started_installation.html" />
     <itemref idref="get_started_settings.html" />
     <itemref idref="features_features.html" />
+    <itemref idref="features_exceptions.html" />
     <itemref idref="features_request_response.html" />
     <itemref idref="features_routing_engine.html" />
     <itemref idref="genindex.html" />

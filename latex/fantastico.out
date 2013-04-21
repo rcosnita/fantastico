@@ -5,8 +5,9 @@
 \BOOKMARK [1][-]{section.2.1}{Installation manual}{chapter.2}% 5
 \BOOKMARK [1][-]{section.2.2}{Fantastico settings}{chapter.2}% 6
 \BOOKMARK [0][-]{chapter.3}{Fantastico features}{}% 7
-\BOOKMARK [1][-]{section.3.1}{Request lifecycle}{chapter.3}% 8
-\BOOKMARK [1][-]{section.3.2}{Routing engine}{chapter.3}% 9
-\BOOKMARK [0][-]{chapter.4}{Build status}{}% 10
-\BOOKMARK [0][-]{chapter.5}{License}{}% 11
-\BOOKMARK [0][-]{section*.9}{Index}{}% 12
+\BOOKMARK [1][-]{section.3.1}{Fantastico exceptions hierarchy}{chapter.3}% 8
+\BOOKMARK [1][-]{section.3.2}{Request lifecycle}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.3}{Routing engine}{chapter.3}% 10
+\BOOKMARK [0][-]{chapter.4}{Build status}{}% 11
+\BOOKMARK [0][-]{chapter.5}{License}{}% 12
+\BOOKMARK [0][-]{section*.12}{Index}{}% 13
