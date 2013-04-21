@@ -10,8 +10,8 @@ file:
    class BasicSettings(object):
       @property    
       def installed_middleware(self):
-         return ['fantastico.core.middleware.RequestResponseMiddleware',
-                 'fantastico.core.middleware.RoutingEngineMiddleware']
+         return ['fantastico.middleware.RequestResponseMiddleware',
+                 'fantastico.middleware.RoutingEngineMiddleware']
                                 
 The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
 middlewares are listed is the order in which they are executed when an http request is made.
@@ -42,15 +42,5 @@ can do the same for **Stage**, **Prod** or any other custom configuration.
 Using a specifc configuration
 -----------------------------
 
-For using a specific fantastico configuration you need to do two simple steps:
-
-   * Set **FANTASTICO_ACTIVE_CONFIG** to the fully python qualified class name you want to use. E.g: :py:class:`fantastico.settings.BasicSettings`
-   * In your code, you can use the following snippet to access a specific setting:
-      
-      .. code-block:: python
-      
-         from fantastico.settings import SettingsFacade
-         
-         print(SettingsFacade().get("installed_middleware"))
-         
- If no active configuration is set in the :py:class:`fantastico.settings.BasicSettings` will be used.
+.. autoclass:: fantastico.settings.SettingsFacade
+   :members:

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Fantastico settings &mdash; fantastico 0.0.1-b37 documentation</title>
+    <title>Fantastico settings &mdash; fantastico 0.0.1-b38 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b37',
+        VERSION:     '0.0.1-b38',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b37 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b38 documentation" href="../index.html" />
     <link rel="up" title="Getting started" href="getting_started.html" />
     <link rel="next" title="Fantastico features" href="../features/features.html" />
     <link rel="prev" title="Installation manual" href="installation.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b37 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b38 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>  
@@ -59,8 +59,8 @@ file:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BasicSettings</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">installed_middleware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="k">return</span> <span class="p">[</span><span class="s">&#39;fantastico.core.middleware.RequestResponseMiddleware&#39;</span><span class="p">,</span>
-              <span class="s">&#39;fantastico.core.middleware.RoutingEngineMiddleware&#39;</span><span class="p">]</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s">&#39;fantastico.middleware.RequestResponseMiddleware&#39;</span><span class="p">,</span>
+              <span class="s">&#39;fantastico.middleware.RoutingEngineMiddleware&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
@@ -106,25 +106,64 @@ can do the same for <strong>Stage</strong>, <strong>Prod</strong> or any other c
 </div>
 <div class="section" id="using-a-specifc-configuration">
 <h2>Using a specifc configuration<a class="headerlink" href="#using-a-specifc-configuration" title="Permalink to this headline">¶</a></h2>
-<p>For using a specific fantastico configuration you need to do two simple steps:</p>
-<blockquote>
-<div><blockquote>
-<div><ul>
+<dl class="class">
+<dt id="fantastico.settings.SettingsFacade">
+<em class="property">class </em><tt class="descclassname">fantastico.settings.</tt><tt class="descname">SettingsFacade</tt><big>(</big><em>environ=None</em><big>)</big><a class="reference internal" href="../_modules/fantastico/settings.html#SettingsFacade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.SettingsFacade" title="Permalink to this definition">¶</a></dt>
+<dd><p>For using a specific fantastico configuration you need to do two simple steps:</p>
+<ul>
 <li><p class="first">Set <strong>FANTASTICO_ACTIVE_CONFIG</strong> to the fully python qualified class name you want to use. E.g: <a class="reference internal" href="#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a></p>
 </li>
 <li><p class="first">In your code, you can use the following snippet to access a specific setting:</p>
-<blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">SettingsFacade</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;installed_middleware&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 </ul>
-</div></blockquote>
 <p>If no active configuration is set in the <a class="reference internal" href="#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a> will be used.</p>
-</div></blockquote>
+<dl class="method">
+<dt id="fantastico.settings.SettingsFacade.get">
+<tt class="descname">get</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../_modules/fantastico/settings.html#SettingsFacade.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.SettingsFacade.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method used to retrieve a setting value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> &#8211; Setting name.</li>
+<li><strong>type</strong> &#8211; string</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The setting value.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.settings.SettingsFacade.get_config">
+<tt class="descname">get_config</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/settings.html#SettingsFacade.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.SettingsFacade.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method used to return the active configuration which is used by this facade.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Active configuration currently used.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -184,7 +223,7 @@ can do the same for <strong>Stage</strong>, <strong>Prod</strong> or any other c
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b37 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b38 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
       </ul>
     </div>
