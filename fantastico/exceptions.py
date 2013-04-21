@@ -21,12 +21,17 @@ This package contains all core fantastico exceptions that are raised by differen
 '''
 
 class FantasticoError(Exception):
-    '''This is the core exception. Each concrete exception of fantastico framework is derived from **FantasticoError**.
-    Fantastico code transform all exceptions to fantastico concrete exceptions.'''
+    '''.. image:: /images/core/exceptions.png
+    
+    **FantasticoError** is the base of all exceptions raised within fantastico framework. It describe common attributes that
+    each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception. 
+    We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
+    that at no moment errors will cause fantastico framework wsgi container to crash.
+    '''
     
 class FantasticoClassNotFoundError(FantasticoError):
     '''This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.'''
     
 class FantasticoSettingNotFoundError(FantasticoError):
     '''This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
-    configuration.''' 
+    configuration.'''
