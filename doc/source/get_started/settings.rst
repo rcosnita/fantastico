@@ -6,9 +6,12 @@ or in the root folder of your project. Before we dig further into configuration 
 file:
 
 .. code-block:: python
-    
-   installed_middleware = ['fantastico.core.middleware.RequestResponseMiddleware',
-                           'fantastico.core.middleware.RoutingEngineMiddleware']
+
+   class BasicSettings(object):
+      @property    
+      def installed_middleware(self):
+         return ['fantastico.core.middleware.RequestResponseMiddleware',
+                 'fantastico.core.middleware.RoutingEngineMiddleware']
                                 
 The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
 middlewares are listed is the order in which they are executed when an http request is made.
@@ -24,6 +27,30 @@ Below you can find technical information about settings.
 Create Dev configuration
 ------------------------
 
-Create Prod configuration
--------------------------
-   
+Let's imagine you want to create a custom dev configuration for your project. Below you can find the code for this:
+
+.. code-block:: python
+
+   class DevSettings(BasicSettings):
+      @property
+      def supported_languages(self):
+         return ["en_us"]
+         
+The above configuration actually overwrites supported languages. This mean that only en_us is relevant for **Dev** environment. You
+can do the same for **Stage**, **Prod** or any other custom configuration.
+
+Using a specifc configuration
+-----------------------------
+
+For using a specific fantastico configuration you need to do two simple steps:
+
+   * Set **FANTASTICO_ACTIVE_CONFIG** to the fully python qualified class name you want to use. E.g: :py:class:`fantastico.settings.BasicSettings`
+   * In your code, you can use the following snippet to access a specific setting:
+      
+      .. code-block:: python
+      
+         from fantastico.settings import SettingsFacade
+         
+         print(SettingsFacade().get("installed_middleware"))
+         
+ If no active configuration is set in the :py:class:`fantastico.settings.BasicSettings` will be used.

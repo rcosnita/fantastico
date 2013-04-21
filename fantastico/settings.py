@@ -20,4 +20,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 class BasicSettings(object):
     '''This is the core class that describes all available settings of fantastico framework. For convenience all options
-    have default values that ensure minimum functionality of the framework.'''
+    have default values that ensure minimum functionality of the framework. Below you can find an example of three possible 
+    configuration: Dev / Stage / Production.
+    
+    .. image:: /images/core/settings.png
+    
+    As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values
+    for the attributes you want to overwrite.
+    '''
+    
+    @property
+    def installed_middleware(self):
+        '''Property that holds all installed middlewares.'''
+        
+        return []
+    
+    @property
+    def supported_languages(self):
+        '''Property that holds all supported languages this fantastico instance.''' 
+        
+        return {}
