@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.settings &mdash; fantastico 0.0.1-b36 documentation</title>
+    <title>fantastico.settings &mdash; fantastico 0.0.1-b37 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.0.1-b36',
+        VERSION:     '0.0.1-b37',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b36 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b37 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b36 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b37 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -66,7 +66,26 @@
 
 <div class="viewcode-block" id="BasicSettings"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings">[docs]</a><span class="k">class</span> <span class="nc">BasicSettings</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the core class that describes all available settings of fantastico framework. For convenience all options</span>
-<span class="sd">    have default values that ensure minimum functionality of the framework.&#39;&#39;&#39;</span></div>
+<span class="sd">    have default values that ensure minimum functionality of the framework. Below you can find an example of three possible </span>
+<span class="sd">    configuration: Dev / Stage / Production.</span>
+<span class="sd">    </span>
+<span class="sd">    .. image:: /images/core/settings.png</span>
+<span class="sd">    </span>
+<span class="sd">    As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values</span>
+<span class="sd">    for the attributes you want to overwrite.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.installed_middleware"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.installed_middleware">[docs]</a>    <span class="k">def</span> <span class="nf">installed_middleware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Property that holds all installed middlewares.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="p">[]</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.supported_languages"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.supported_languages">[docs]</a>    <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Property that holds all supported languages this fantastico instance.&#39;&#39;&#39;</span> 
+        
+        <span class="k">return</span> <span class="p">{}</span></div></div>
 </pre></div>
 
           </div>
@@ -97,7 +116,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b36 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b37 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
