@@ -1,5 +1,5 @@
-Fantastico exceptions hierarchy
-===============================
+Exceptions hierarchy
+====================
 
 .. autoclass:: fantastico.exceptions.FantasticoError
    :members:

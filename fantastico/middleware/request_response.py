@@ -15,5 +15,17 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 
-.. py:module:: fantastico.tests
+.. py:module:: fantastico.middleware.request_middleware
 '''
+from webob.request import Request
+
+class RequestResponseMiddleware(object):
+    '''This class provides the middleware responsible for converting wsgi environ dictionary to a request.'''
+    
+    def __init__(self, app):
+        self._app = app
+        
+    def __call__(self, environ, start_response):
+        environ["fantastico.request"] = Request(environ)
+        
+        return self._app(environ, start_response)
