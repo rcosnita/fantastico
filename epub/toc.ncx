@@ -125,7 +125,7 @@
       </navPoint>
       <navPoint id="navPoint14" playOrder="14">
         <navLabel>
-          <text>Fantastico exceptions hierarchy</text>
+          <text>Exceptions hierarchy</text>
         </navLabel>
         <content src="features/exceptions.html" />
       </navPoint>

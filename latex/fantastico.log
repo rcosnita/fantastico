@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.14)  22 APR 2013 14:37
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.14)  22 APR 2013 14:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1033,13 +1033,13 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 495.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 495.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 495.
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
-(rerunfilecheck)             Checksum: F8EDEAE4B4B417A22744BE0F602FE4C2;763.
+(rerunfilecheck)             Checksum: C81FD2394648AA78ECF99CEA0B13AD88;752.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 495.
  ) 
 Here is how much of TeX's memory you used:
  8988 strings out of 495059
- 125007 string characters out of 3182030
- 219532 words of memory out of 3000000
+ 124996 string characters out of 3182030
+ 219477 words of memory out of 3000000
  11861 multiletter control sequences out of 15000+200000
  61581 words of font info for 70 fonts, out of 3000000 for 9000
  15 hyphenation exceptions out of 8191
@@ -1053,7 +1053,7 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (17 pages, 178947 bytes).
+Output written on fantastico.pdf (17 pages, 178993 bytes).
 PDF statistics:
  248 PDF objects out of 1000 (max. 8388607)
  208 compressed objects within 3 object streams
