@@ -42,10 +42,10 @@ class BasicSettings(object):
     
     @property
     def supported_languages(self):
-        '''Property that holds all supported languages this fantastico instance.''' 
+        '''Property that holds all supported languages by this fantastico instance.''' 
         
-        return {}
-    
+        return ["en_us"]
+        
 class SettingsFacade(object):
     '''For using a specific fantastico configuration you need to do two simple steps:
 
