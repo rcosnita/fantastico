@@ -37,7 +37,7 @@ class BasicSettings(object):
     def installed_middleware(self):
         '''Property that holds all installed middlewares.'''
         
-        return ["fantastico.middleware.RequestResponseMiddleware",
+        return ["fantastico.middleware.RequestMiddleware",
                 "fantastico.middleware.RoutingEngineMiddleware"]
     
     @property
