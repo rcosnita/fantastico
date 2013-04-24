@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 24, 2013}
-\release{0.0.1-b9}
+\release{0.0.1-b10}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -273,7 +273,7 @@ file:
 \PYG{k}{class} \PYG{n+nc}{BasicSettings}\PYG{p}{(}\PYG{n+nb}{object}\PYG{p}{)}\PYG{p}{:}
    \PYG{n+nd}{@property}
    \PYG{k}{def} \PYG{n+nf}{installed\PYGZus{}middleware}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
-      \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.middleware.RequestResponseMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,}
+      \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.middleware.RequestMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,}
               \PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.middleware.RoutingEngineMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{]}
 
    \PYG{n+nd}{@property}

@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b9 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b10 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -42,7 +42,7 @@ file:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BasicSettings</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">installed_middleware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="k">return</span> <span class="p">[</span><span class="s">&#39;fantastico.middleware.RequestResponseMiddleware&#39;</span><span class="p">,</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s">&#39;fantastico.middleware.RequestMiddleware&#39;</span><span class="p">,</span>
               <span class="s">&#39;fantastico.middleware.RoutingEngineMiddleware&#39;</span><span class="p">]</span>
 
    <span class="nd">@property</span>
