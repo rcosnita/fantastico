@@ -20,6 +20,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.middleware.request_response import RequestResponseMiddleware
 from mock import Mock
 from unittest.case import TestCase
+import os
+from fantastico.settings import BasicSettings
 
 class RequestMiddlewareTests(TestCase):
     '''Test suite for ensuring that environ wsgi dictionary is correctly converted to a request object.'''
@@ -28,30 +30,31 @@ class RequestMiddlewareTests(TestCase):
         self._app = Mock()
         self._start_response = Mock()
         self._middleware = RequestResponseMiddleware(self._app)
+        
+        self._environ = {"CONTENT_TYPE": "application/json",
+                       "HTTP_ACCEPT": "application/json",
+                       "HTTP_ACCEPT_LANGUAGE": "ro-ro,en-US;q=0.8",
+                       "HTTP_OAUTH_BEARER": "123",
+                       "HTTP_HOST": "localhost:80",
+                       "PATH_INFO": "/article",
+                       "QUERY_STRING": "id=1",
+                       "REQUEST_METHOD": "GET",
+                       "SCRIPT_NAME": "",
+                       "SERVER_NAME": "localhost",
+                       "SERVER_PORT": "80",
+                       "SERVER_PROTOCOL": "HTTP/1.1",
+                       "wsgi.multiprocess": False,
+                       "wsgi.multithread": False,
+                       "wsgi.run_once": False,
+                       "wsgi.url_scheme": 'http',
+                       "wsgi.version": (1, 0)} 
     
     def test_convert_request_ok(self):
         '''Test case that ensuring that request conversion works as expected.'''
+                
+        self._middleware(self._environ, self._start_response)
         
-        environ = {"ACCEPT": "application/json",
-                   "CONTENT_TYPE": "application/json",
-                   "HTTP_OAUTH_BEARER": "123",
-                   "HTTP_HOST": "localhost:80",
-                   "PATH_INFO": "/article",
-                   "QUERY_STRING": "id=1",
-                   "REQUEST_METHOD": "GET",
-                   "SCRIPT_NAME": "",
-                   "SERVER_NAME": "localhost",
-                   "SERVER_PORT": "80",
-                   "SERVER_PROTOCOL": "HTTP/1.1",
-                   "wsgi.multiprocess": False,
-                   "wsgi.multithread": False,
-                   "wsgi.run_once": False,
-                   "wsgi.url_scheme": 'http',
-                   "wsgi.version": (1, 0)}
-        
-        self._middleware(environ, self._start_response)
-        
-        request = environ.get("fantastico.request")
+        request = self._environ.get("fantastico.request")
         
         self.assertIsNotNone(request)
         self.assertEqual("GET", request.method)
@@ -62,6 +65,64 @@ class RequestMiddlewareTests(TestCase):
         self.assertTrue("application/json" in request.accept)
         self.assertEqual("application/json", request.content_type)
         self.assertEqual("123", request.headers.get("oauth_bearer"))
-        self.assertEqual(1, int(request.params.get("id")))        
+        self.assertEqual(1, int(request.params.get("id")))
+    
+    def test_context_settings_initialized(self):
+        '''Test case that ensures settings is binded to the request context.'''
         
+        self._middleware(self._environ, self._start_response)
         
+        old_settings = os.environ.get("FANTASTICO_ACTIVE_CONFIG") or ""
+        os.environ["FANTASTICO_ACTIVE_CONFIG"] = "fantastico.settings.BasicSettings"
+        
+        try:
+            request = self._environ.get("fantastico.request")
+            context = getattr(request, "context")
+            
+            self.assertIsNotNone(context)
+            self.assertEqual(BasicSettings().installed_middleware, context.settings.get("installed_middleware"))
+        finally:
+            os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_settings
+    
+    def test_context_language_detected(self):
+        '''Test case that ensures language is detected correctly based on provided Accept-Language header. This is an exact matching
+        when language is in format <langcode>-<countrycode>.'''
+        
+        self._middleware(self._environ, self._start_response)
+        
+        request = self._environ.get("fantastico.request")
+        context = getattr(request, "context")
+        
+        self.assertIsNotNone(context)
+        self.assertIsNotNone(context.language)
+        self.assertEqual("en_us", str(context.language))
+        
+    def test_context_language_detected_by_langcode(self):
+        '''Test case that ensures language is detected correctly based on provide Accept-Language header when languages listed
+        contain only langcode: E.g: en'''
+        
+        self._environ["HTTP_ACCEPT_LANGUAGE"] = "ro,en;q=0.8"
+        
+        self._middleware(self._environ, self._start_response)
+        
+        request = self._environ.get("fantastico.request")
+        context = getattr(request, "context")
+        
+        self.assertIsNotNone(context)
+        self.assertIsNotNone(context.language)
+        self.assertEqual("en_us", str(context.language))
+        
+    def test_context_language_default_detected(self):
+        '''Test case that ensures request response middleware can successfully detect language even when Accept-Language header
+        is not sent.'''
+        
+        del self._environ["HTTP_ACCEPT_LANGUAGE"]
+        
+        self._middleware(self._environ, self._start_response)
+        
+        request = self._environ.get("fantastico.request")
+        context = getattr(request, "context")
+        
+        self.assertIsNotNone(context)
+        self.assertIsNotNone(context.language)
+        self.assertEqual("en_us", str(context.language))        

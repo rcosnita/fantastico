@@ -12,6 +12,10 @@ file:
       def installed_middleware(self):
          return ['fantastico.middleware.RequestResponseMiddleware',
                  'fantastico.middleware.RoutingEngineMiddleware']
+                 
+      @property
+      def supported_languages(self):
+         return ["en_us"]
                                 
 The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
 middlewares are listed is the order in which they are executed when an http request is made.
@@ -34,7 +38,7 @@ Let's imagine you want to create a custom dev configuration for your project. Be
    class DevSettings(BasicSettings):
       @property
       def supported_languages(self):
-         return ["en_us"]
+         return ["en_us", "ro_ro"]
          
 The above configuration actually overwrites supported languages. This mean that only en_us is relevant for **Dev** environment. You
 can do the same for **Stage**, **Prod** or any other custom configuration.
