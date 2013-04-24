@@ -30,5 +30,17 @@ class RequestContext(object):
         :type settings: fantastico.settings.SettingsFacade 
         '''
         
-        self.settings = settings
-        self.language = language
+        self._settings = settings
+        self._language = language
+        
+    @property
+    def settings(self):
+        '''Property that holds the current settings facade used for accessing fantastico configuration.'''
+        
+        return self._settings
+    
+    @property
+    def language(self):
+        '''Property that holds the current language that must be used during this request.'''
+        
+        return self._language
