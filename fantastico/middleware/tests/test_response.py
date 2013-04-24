@@ -23,7 +23,7 @@ import unittest
 class ResponseTests(unittest.TestCase):
     '''Class used to provide the test cases that ensure response object is correctly provided for future use.'''
     
-    def test_case_response_ok(self):
+    def test_response_ok(self):
         '''Test case that ensures response object behaves as expected. If this pass it guarantees webob version does not
         break fantastico functionality.'''
         
@@ -46,3 +46,26 @@ class ResponseTests(unittest.TestCase):
         
         response.content_type = "application/json"
         self.assertEqual("application/json", response.content_type)
+        
+    def test_response_headers_ok(self):
+        '''Test case that ensures headers can be correctly set to a response instance.'''
+        
+        response = Response()
+        
+        response.headers.add("BEARER_TOKEN", "12345")
+        
+        self.assertEqual("12345", response.headers.get("BEARER_TOKEN"))
+        
+    def test_response_cookie_ok(self):
+        '''Test case that ensures cookies can be correctly set to a response instance.'''
+        
+        response = Response()
+        
+        response.set_cookie("fantastico.sid", "12345", max_age=360, path="/", secure=True)
+        
+        cookie = response.headers["Set-Cookie"]
+        
+        self.assertGreater(cookie.find("fantastico.sid=12345"), -1)
+        self.assertGreater(cookie.find("Max-Age=360"), -1)
+        self.assertGreater(cookie.find("secure"), -1)
+        self.assertGreater(cookie.find("Path=/"), -1)
