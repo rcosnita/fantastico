@@ -5,6 +5,10 @@
   \item BasicSettings (class in fantastico.settings), \hyperpage{4}
 
   \indexspace
+  \bigletter C
+  \item code (fantastico.locale.language.Language attribute), \hyperpage{9}
+
+  \indexspace
   \bigletter F
   \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{7}
   \item FantasticoError (class in fantastico.exceptions), \hyperpage{7}
@@ -22,6 +26,7 @@
   \indexspace
   \bigletter L
   \item Language (class in fantastico.locale.language), \hyperpage{8}
+  \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{8}
 
   \indexspace
   \bigletter R
@@ -29,6 +34,7 @@
 
   \indexspace
   \bigletter S
+  \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{8}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
 

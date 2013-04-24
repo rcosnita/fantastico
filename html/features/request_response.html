@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Request lifecycle &mdash; fantastico 0.0.1-b7 documentation</title>
+    <title>Request lifecycle &mdash; fantastico 0.0.1-b9 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b7',
+        VERSION:     '0.0.1-b9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b7 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b9 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="Routing engine" href="routing_engine.html" />
     <link rel="prev" title="Exceptions hierarchy" href="exceptions.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="exceptions.html" title="Exceptions hierarchy"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b7 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b9 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -85,6 +85,18 @@ request has a special attribute called context. Below you can find the attribute
 <em class="property">class </em><tt class="descclassname">fantastico.middleware.request_context.</tt><tt class="descname">RequestContext</tt><big>(</big><em>settings</em>, <em>language</em><big>)</big><a class="reference internal" href="../_modules/fantastico/middleware/request_context.html#RequestContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.middleware.request_context.RequestContext" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class holds various attributes useful giving a context to an http request. Among other things we need 
 to be able to access current language, current session and possible current user profile.</p>
+<dl class="attribute">
+<dt id="fantastico.middleware.request_context.RequestContext.language">
+<tt class="descname">language</tt><a class="reference internal" href="../_modules/fantastico/middleware/request_context.html#RequestContext.language"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.middleware.request_context.RequestContext.language" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property that holds the current language that must be used during this request.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.middleware.request_context.RequestContext.settings">
+<tt class="descname">settings</tt><a class="reference internal" href="../_modules/fantastico/middleware/request_context.html#RequestContext.settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.middleware.request_context.RequestContext.settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property that holds the current settings facade used for accessing fantastico configuration.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -103,6 +115,12 @@ the simplest one is in request context object:</p>
    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Language </span><span class="si">%s</span><span class="s"> is not supported.&quot;</span> <span class="o">%</span> <span class="n">language</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> 
 </pre></div>
 </div>
+<dl class="attribute">
+<dt id="fantastico.locale.language.Language.code">
+<tt class="descname">code</tt><a class="reference internal" href="../_modules/fantastico/locale/language.html#Language.code"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.locale.language.Language.code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property that holds the language code. This is readonly because once instantiated we mustn&#8217;t be able to change it.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -175,7 +193,7 @@ configuration and accessing attributes from it.</p>
         <li class="right" >
           <a href="exceptions.html" title="Exceptions hierarchy"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b7 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b9 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

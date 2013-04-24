@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b7 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b9 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -64,12 +64,18 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Language.code"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language.code">[docs]</a>    <span class="k">def</span> <span class="nf">code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Property that holds the language code. This is readonly because once instantiated we mustn&#39;t be able to change it.&#39;&#39;&#39;</span>
         
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span>
+    </div>
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Method used to convert the current instance into a string object.&#39;&#39;&#39;</span>
         
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span></div>
 </pre></div>
 
           </div>

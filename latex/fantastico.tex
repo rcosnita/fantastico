@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 24, 2013}
-\release{0.0.1-b7}
+\release{0.0.1-b9}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -490,6 +490,22 @@ user (not yet supported)
 \phantomsection\label{features/request_response:fantastico.middleware.request_context.RequestContext}\pysiglinewithargsret{\strong{class }\code{fantastico.middleware.request\_context.}\bfcode{RequestContext}}{\emph{settings}, \emph{language}}{}
 This class holds various attributes useful giving a context to an http request. Among other things we need 
 to be able to access current language, current session and possible current user profile.
+\index{language (fantastico.middleware.request\_context.RequestContext attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/request_response:fantastico.middleware.request_context.RequestContext.language}\pysigline{\bfcode{language}}
+Property that holds the current language that must be used during this request.
+
+\end{fulllineitems}
+
+\index{settings (fantastico.middleware.request\_context.RequestContext attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/request_response:fantastico.middleware.request_context.RequestContext.settings}\pysigline{\bfcode{settings}}
+Property that holds the current settings facade used for accessing fantastico configuration.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -511,6 +527,14 @@ the simplest one is in request context object:
 \PYG{k}{else}\PYG{p}{:}
    \PYG{k}{raise} \PYG{n+ne}{Exception}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Language }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{ is not supported.}\PYG{l+s}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{language}\PYG{o}{.}\PYG{n}{code}\PYG{p}{)}
 \end{Verbatim}
+\index{code (fantastico.locale.language.Language attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/request_response:fantastico.locale.language.Language.code}\pysigline{\bfcode{code}}
+Property that holds the language code. This is readonly because once instantiated we mustn't be able to change it.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
