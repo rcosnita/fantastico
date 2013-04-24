@@ -15,14 +15,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 
-.. py:module:: fantastico.middleware.request_middleware
+.. py:module:: fantastico.middleware.request_response
 '''
 from fantastico.locale.language import Language
 from fantastico.middleware.request_context import RequestContext
 from fantastico.settings import SettingsFacade
 from webob.request import Request
 
-class RequestResponseMiddleware(object):
+class RequestMiddleware(object):
     '''This class provides the middleware responsible for converting wsgi environ dictionary to a request.'''
     
     def __init__(self, app):
@@ -59,8 +59,8 @@ class RequestResponseMiddleware(object):
                 if(lang_supported.startswith(lang_code)):
                     return Language(lang_supported)
                 
-        return Language(supported_languages[0])
-            
+        return Language(supported_languages[0])        
+                
     def __call__(self, environ, start_response):
         request = Request(environ)
         self._build_context(request)

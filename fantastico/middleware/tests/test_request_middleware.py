@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.middleware.tests.test_request_middleware
 '''
-from fantastico.middleware.request_response import RequestResponseMiddleware
+from fantastico.middleware.request_middleware import RequestMiddleware
 from mock import Mock
 from unittest.case import TestCase
 import os
@@ -29,7 +29,7 @@ class RequestMiddlewareTests(TestCase):
     def setUp(self):
         self._app = Mock()
         self._start_response = Mock()
-        self._middleware = RequestResponseMiddleware(self._app)
+        self._middleware = RequestMiddleware(self._app)
         
         self._environ = {"CONTENT_TYPE": "application/json",
                        "HTTP_ACCEPT": "application/json",
