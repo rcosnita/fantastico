@@ -33,9 +33,15 @@ class Language(object):
     '''
     
     def __init__(self, code):
-        self.code = code
+        self._code = code
+    
+    @property
+    def code(self):
+        '''Property that holds the language code. This is readonly because once instantiated we mustn't be able to change it.'''
         
+        return self._code
+    
     def __str__(self):
         '''Method used to convert the current instance into a string object.'''
         
-        return self.code
+        return self._code
