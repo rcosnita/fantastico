@@ -134,8 +134,32 @@
           <text>Request lifecycle</text>
         </navLabel>
         <content src="features/request_response.html" />
+        <navPoint id="navPoint15" playOrder="15">
+          <navLabel>
+            <text>Request lifecycle</text>
+          </navLabel>
+          <content src="features/request_response.html" />
+        </navPoint>
+        <navPoint id="navPoint16" playOrder="16">
+          <navLabel>
+            <text>Request context</text>
+          </navLabel>
+          <content src="features/request_response.html#request-context" />
+        </navPoint>
+        <navPoint id="navPoint17" playOrder="17">
+          <navLabel>
+            <text>Obtain request language</text>
+          </navLabel>
+          <content src="features/request_response.html#obtain-request-language" />
+        </navPoint>
+        <navPoint id="navPoint18" playOrder="18">
+          <navLabel>
+            <text>Obtain settings using request</text>
+          </navLabel>
+          <content src="features/request_response.html#obtain-settings-using-request" />
+        </navPoint>
       </navPoint>
-      <navPoint id="navPoint16" playOrder="16">
+      <navPoint id="navPoint19" playOrder="19">
         <navLabel>
           <text>Routing engine</text>
         </navLabel>

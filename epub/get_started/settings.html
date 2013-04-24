@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b6 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b7 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -44,6 +44,10 @@ file:</p>
    <span class="k">def</span> <span class="nf">installed_middleware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">return</span> <span class="p">[</span><span class="s">&#39;fantastico.middleware.RequestResponseMiddleware&#39;</span><span class="p">,</span>
               <span class="s">&#39;fantastico.middleware.RoutingEngineMiddleware&#39;</span><span class="p">]</span>
+
+   <span class="nd">@property</span>
+   <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
@@ -69,7 +73,7 @@ for the attributes you want to overwrite.</p>
 <dl class="attribute">
 <dt id="fantastico.settings.BasicSettings.supported_languages">
 <tt class="descname">supported_languages</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.supported_languages"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Property that holds all supported languages this fantastico instance.</p>
+<dd><p>Property that holds all supported languages by this fantastico instance.</p>
 </dd></dl>
 
 </dd></dl>
@@ -81,7 +85,7 @@ for the attributes you want to overwrite.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DevSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">]</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">,</span> <span class="s">&quot;ro_ro&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The above configuration actually overwrites supported languages. This mean that only en_us is relevant for <strong>Dev</strong> environment. You

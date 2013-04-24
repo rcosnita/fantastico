@@ -7,3 +7,5 @@
 \indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{7}
 \indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{7}
 \indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{7}
+\indexentry{RequestContext (class in fantastico.middleware.request\_context)|hyperpage}{8}
+\indexentry{Language (class in fantastico.locale.language)|hyperpage}{8}

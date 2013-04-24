@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Fantastico settings &mdash; fantastico 0.0.1-b6 documentation</title>
+    <title>Fantastico settings &mdash; fantastico 0.0.1-b7 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b6',
+        VERSION:     '0.0.1-b7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b6 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b7 documentation" href="../index.html" />
     <link rel="up" title="Getting started" href="getting_started.html" />
     <link rel="next" title="Fantastico features" href="../features/features.html" />
     <link rel="prev" title="Installation manual" href="installation.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b6 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b7 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>  
@@ -61,6 +61,10 @@ file:</p>
    <span class="k">def</span> <span class="nf">installed_middleware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">return</span> <span class="p">[</span><span class="s">&#39;fantastico.middleware.RequestResponseMiddleware&#39;</span><span class="p">,</span>
               <span class="s">&#39;fantastico.middleware.RoutingEngineMiddleware&#39;</span><span class="p">]</span>
+
+   <span class="nd">@property</span>
+   <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
@@ -86,7 +90,7 @@ for the attributes you want to overwrite.</p>
 <dl class="attribute">
 <dt id="fantastico.settings.BasicSettings.supported_languages">
 <tt class="descname">supported_languages</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.supported_languages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.BasicSettings.supported_languages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Property that holds all supported languages this fantastico instance.</p>
+<dd><p>Property that holds all supported languages by this fantastico instance.</p>
 </dd></dl>
 
 </dd></dl>
@@ -98,7 +102,7 @@ for the attributes you want to overwrite.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DevSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">]</span>
+      <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">,</span> <span class="s">&quot;ro_ro&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>The above configuration actually overwrites supported languages. This mean that only en_us is relevant for <strong>Dev</strong> environment. You
@@ -223,7 +227,7 @@ can do the same for <strong>Stage</strong>, <strong>Prod</strong> or any other c
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b6 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b7 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
       </ul>
     </div>

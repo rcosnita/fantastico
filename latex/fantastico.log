@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.14)  22 APR 2013 14:54
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.14)  24 APR 2013 06:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -945,17 +945,17 @@ LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <9> not available
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
 (Font)              Font shape `T1/pcr/b/n' tried instead on input line 273.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 290.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 294.
 
 <settings.png, id=126, 883.3pt x 262.07pt>
 File: settings.png Graphic file (type png)
  <use settings.png>
-Package pdftex.def Info: settings.png used on input line 295.
+Package pdftex.def Info: settings.png used on input line 299.
 (pdftex.def)             Requested size: 883.29785pt x 262.06935pt.
 File: settings.png Graphic file (type png)
 
 <use settings.png>
-Package pdftex.def Info: settings.png used on input line 295.
+Package pdftex.def Info: settings.png used on input line 299.
 (pdftex.def)             Requested size: 444.75497pt x 131.9584pt.
  [4 <./settings.png>] [5] [6
 
@@ -964,44 +964,45 @@ Chapter 3.
 <exceptions.png, id=154, 475.02469pt x 184.43906pt>
 File: exceptions.png Graphic file (type png)
  <use exceptions.png>
-Package pdftex.def Info: exceptions.png used on input line 411.
+Package pdftex.def Info: exceptions.png used on input line 415.
 (pdftex.def)             Requested size: 475.02351pt x 184.4386pt.
 File: exceptions.png Graphic file (type png)
 
 <use exceptions.png>
-Package pdftex.def Info: exceptions.png used on input line 411.
+Package pdftex.def Info: exceptions.png used on input line 415.
 (pdftex.def)             Requested size: 444.75497pt x 172.69447pt.
  [7 <./exceptions.png>]
 <request_response_sd.png, id=162, 867.24pt x 431.38484pt>
 File: request_response_sd.png Graphic file (type png)
 
 <use request_response_sd.png>
-Package pdftex.def Info: request_response_sd.png used on input line 459.
+Package pdftex.def Info: request_response_sd.png used on input line 463.
 (pdftex.def)             Requested size: 867.2379pt x 431.38377pt.
 File: request_response_sd.png Graphic file (type png)
  <use request_response_sd.png>
-Package pdftex.def Info: request_response_sd.png used on input line 459.
+Package pdftex.def Info: request_response_sd.png used on input line 463.
 (pdftex.def)             Requested size: 469.755pt x 233.6684pt.
-
-<routing_engine.png, id=164, 879.16083pt x 497.69443pt>
+ [8 <./request_response_sd.png>] <routing_engine.png, id=174, 879.16083pt x 497
+.69443pt>
 File: routing_engine.png Graphic file (type png)
 
 <use routing_engine.png>
-Package pdftex.def Info: routing_engine.png used on input line 467.
+Package pdftex.def Info: routing_engine.png used on input line 535.
 (pdftex.def)             Requested size: 879.15868pt x 497.6932pt.
 File: routing_engine.png Graphic file (type png)
  <use routing_engine.png>
-Package pdftex.def Info: routing_engine.png used on input line 467.
+Package pdftex.def Info: routing_engine.png used on input line 535.
 (pdftex.def)             Requested size: 469.755pt x 265.92595pt.
- [8 <./request_response_sd.png> <./routing_engine.png>]
-Chapter 4.
-[9
+ [9 <./routing_engine.png>]
+[10
 
-] [10
+]
+Chapter 4.
+[11] [12
 
 ]
 Chapter 5.
-(./fantastico.ind [11] [12
+(./fantastico.ind [13] [14
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 9--10
@@ -1019,31 +1020,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--21
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 25--26
+Underfull \hbox (badness 10000) in paragraph at lines 28--29
+[]\T1/ptm/m/n/10 RequestContext (class in fan-tas-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
 []\T1/ptm/m/n/10 supported_languages (fan-tas-tico.settings.BasicSettings
  []
 
-[13
+[15
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 495.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 495.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 563.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 563.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 495.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 495.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 563.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 563.
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
-(rerunfilecheck)             Checksum: C81FD2394648AA78ECF99CEA0B13AD88;752.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 495.
+(rerunfilecheck)             Checksum: 446D5670AEAB5E20DA52E745BA7BA159;752.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 563.
  ) 
 Here is how much of TeX's memory you used:
- 8988 strings out of 495059
- 124996 string characters out of 3182030
- 219477 words of memory out of 3000000
- 11861 multiletter control sequences out of 15000+200000
+ 9000 strings out of 495059
+ 125374 string characters out of 3182030
+ 219748 words of memory out of 3000000
+ 11866 multiletter control sequences out of 15000+200000
  61581 words of font info for 70 fonts, out of 3000000 for 9000
  15 hyphenation exceptions out of 8191
- 36i,11n,45p,286b,453s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,11n,45p,286b,485s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
@@ -1053,10 +1059,10 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (17 pages, 179012 bytes).
+Output written on fantastico.pdf (19 pages, 184129 bytes).
 PDF statistics:
- 248 PDF objects out of 1000 (max. 8388607)
- 208 compressed objects within 3 object streams
- 59 named destinations out of 1000 (max. 500000)
+ 267 PDF objects out of 1000 (max. 8388607)
+ 225 compressed objects within 3 object streams
+ 66 named destinations out of 1000 (max. 500000)
  145 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="exceptions.html" title="Exceptions hierarchy"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b6 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b7 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -51,6 +51,55 @@ be generated. Below, you can find a simple example of how requests are processed
 <img alt="../_images/request_response_sd.png" src="../_images/request_response_sd.png" />
 <p>In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and response
 objects. For more information read <a class="reference external" href="http://docs.webob.org/en/latest/reference.html">WebOB Doc</a><span class="link-target"> [http://docs.webob.org/en/latest/reference.html]</span>.</p>
+<div class="section" id="request-context">
+<h2>Request context</h2>
+<p>In comparison with WebOb <strong>Fantastico</strong> provides a nice improvement. For facilitating easy development of code, each fantastico
+request has a special attribute called context. Below you can find the attributes of a request context object:</p>
+<blockquote>
+<div><ul class="simple">
+<li>settings facade (<a class="reference internal" href="../get_started/settings.html"><em>Fantastico settings</em></a>)</li>
+<li>session (not yet supported)</li>
+<li><strong>language</strong> The current preferred by user. This is determined based on user lang header.</li>
+<li>user (not yet supported)</li>
+</ul>
+</div></blockquote>
+<dl class="class">
+<dt id="fantastico.middleware.request_context.RequestContext">
+<em class="property">class </em><tt class="descclassname">fantastico.middleware.request_context.</tt><tt class="descname">RequestContext</tt><big>(</big><em>settings</em>, <em>language</em><big>)</big><a class="reference internal" href="../_modules/fantastico/middleware/request_context.html#RequestContext"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class holds various attributes useful giving a context to an http request. Among other things we need 
+to be able to access current language, current session and possible current user profile.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="obtain-request-language">
+<h2>Obtain request language</h2>
+<dl class="class">
+<dt id="fantastico.locale.language.Language">
+<em class="property">class </em><tt class="descclassname">fantastico.locale.language.</tt><tt class="descname">Language</tt><big>(</big><em>code</em><big>)</big><a class="reference internal" href="../_modules/fantastico/locale/language.html#Language"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Class used to define how does language object looks like. There are various use cases for using language but
+the simplest one is in request context object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">language</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">language</span>
+
+<span class="k">if</span> <span class="n">language</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="s">&quot;en_us&quot;</span><span class="p">:</span>
+   <span class="k">print</span><span class="p">(</span><span class="s">&quot;English (US) language&quot;</span><span class="p">)</span><span class="o">.</span>
+<span class="k">else</span><span class="p">:</span>
+   <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Language </span><span class="si">%s</span><span class="s"> is not supported.&quot;</span> <span class="o">%</span> <span class="n">language</span><span class="o">.</span><span class="n">code</span><span class="p">)</span> 
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="obtain-settings-using-request">
+<h2>Obtain settings using request</h2>
+<p>It is recommended to use <em>request.context</em> object to obtain fantastico settings. This hides the complexity of choosing the right
+configuration and accessing attributes from it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">installed_middleware</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;installed_middleware&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">installed_middleware</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information about how to configure <strong>Fantastico</strong> please read <a class="reference internal" href="../get_started/settings.html"><em>Fantastico settings</em></a>.</p>
+</div>
 </div>
 
 

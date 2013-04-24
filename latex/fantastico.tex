@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{April 22, 2013}
-\release{0.0.1-b6}
+\date{April 24, 2013}
+\release{0.0.1-b7}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -275,6 +275,10 @@ file:
    \PYG{k}{def} \PYG{n+nf}{installed\PYGZus{}middleware}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
       \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.middleware.RequestResponseMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,}
               \PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.middleware.RoutingEngineMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{]}
+
+   \PYG{n+nd}{@property}
+   \PYG{k}{def} \PYG{n+nf}{supported\PYGZus{}languages}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+      \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{en\PYGZus{}us}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}
 \end{Verbatim}
 
 The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
@@ -308,7 +312,7 @@ Property that holds all installed middlewares.
 
 \begin{fulllineitems}
 \phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.supported_languages}\pysigline{\bfcode{supported\_languages}}
-Property that holds all supported languages this fantastico instance.
+Property that holds all supported languages by this fantastico instance.
 
 \end{fulllineitems}
 
@@ -325,7 +329,7 @@ Let's imagine you want to create a custom dev configuration for your project. Be
 \PYG{k}{class} \PYG{n+nc}{DevSettings}\PYG{p}{(}\PYG{n}{BasicSettings}\PYG{p}{)}\PYG{p}{:}
    \PYG{n+nd}{@property}
    \PYG{k}{def} \PYG{n+nf}{supported\PYGZus{}languages}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
-      \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{en\PYGZus{}us}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}
+      \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{en\PYGZus{}us}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ro\PYGZus{}ro}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}
 \end{Verbatim}
 
 The above configuration actually overwrites supported languages. This mean that only en\_us is relevant for \textbf{Dev} environment. You
@@ -460,6 +464,70 @@ be generated. Below, you can find a simple example of how requests are processed
 
 In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and response
 objects. For more information read \href{http://docs.webob.org/en/latest/reference.html}{WebOB Doc}.
+
+
+\subsection{Request context}
+\label{features/request_response:request-context}
+In comparison with WebOb \textbf{Fantastico} provides a nice improvement. For facilitating easy development of code, each fantastico
+request has a special attribute called context. Below you can find the attributes of a request context object:
+\begin{itemize}
+\item {} 
+settings facade ({\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}})
+
+\item {} 
+session (not yet supported)
+
+\item {} 
+\textbf{language} The current preferred by user. This is determined based on user lang header.
+
+\item {} 
+user (not yet supported)
+
+\end{itemize}
+\index{RequestContext (class in fantastico.middleware.request\_context)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/request_response:fantastico.middleware.request_context.RequestContext}\pysiglinewithargsret{\strong{class }\code{fantastico.middleware.request\_context.}\bfcode{RequestContext}}{\emph{settings}, \emph{language}}{}
+This class holds various attributes useful giving a context to an http request. Among other things we need 
+to be able to access current language, current session and possible current user profile.
+
+\end{fulllineitems}
+
+
+
+\subsection{Obtain request language}
+\label{features/request_response:obtain-request-language}\index{Language (class in fantastico.locale.language)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/request_response:fantastico.locale.language.Language}\pysiglinewithargsret{\strong{class }\code{fantastico.locale.language.}\bfcode{Language}}{\emph{code}}{}
+Class used to define how does language object looks like. There are various use cases for using language but
+the simplest one is in request context object:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{language} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{context}\PYG{o}{.}\PYG{n}{language}
+
+\PYG{k}{if} \PYG{n}{language}\PYG{o}{.}\PYG{n}{code} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{en\PYGZus{}us}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:}
+   \PYG{k}{print}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{English (US) language}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{o}{.}
+\PYG{k}{else}\PYG{p}{:}
+   \PYG{k}{raise} \PYG{n+ne}{Exception}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Language }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{ is not supported.}\PYG{l+s}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{language}\PYG{o}{.}\PYG{n}{code}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+
+
+\subsection{Obtain settings using request}
+\label{features/request_response:obtain-settings-using-request}
+It is recommended to use \emph{request.context} object to obtain fantastico settings. This hides the complexity of choosing the right
+configuration and accessing attributes from it.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{installed\PYGZus{}middleware} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{context}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{installed\PYGZus{}middleware}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+
+\PYG{k}{print}\PYG{p}{(}\PYG{n}{installed\PYGZus{}middleware}\PYG{p}{)}
+\end{Verbatim}
+
+For more information about how to configure \textbf{Fantastico} please read {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
 
 
 \section{Routing engine}

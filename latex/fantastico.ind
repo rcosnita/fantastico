@@ -20,6 +20,14 @@
   \item installed\_middleware (fantastico.settings.BasicSettings attribute), \hyperpage{4}
 
   \indexspace
+  \bigletter L
+  \item Language (class in fantastico.locale.language), \hyperpage{8}
+
+  \indexspace
+  \bigletter R
+  \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{8}
+
+  \indexspace
   \bigletter S
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
