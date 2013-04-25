@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.tests.itest_settings
 '''
+from fantastico.exceptions import FantasticoSettingNotFoundError
 from fantastico.settings import SettingsFacade, BasicSettings
 import os
 import unittest
@@ -46,3 +47,20 @@ class SettingsIntegration(unittest.TestCase):
             finally:
                 if old_env is not None:
                     os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env
+                    
+    def test_settings_invalid_ok(self):
+        '''Test case that ensures settings exception cases raise strong type exception.'''
+        
+        old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
+        
+        try:
+            os.environ["FANTASTICO_ACTIVE_CONFIG"] = self._envs[0][0]
+                        
+            self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
+            
+            os.environ["FANTASTICO_ACTIVE_CONFIG"] = "not.found.package"
+            
+            self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
+        finally:
+            if old_env is not None:
+                os.environ.get("FANTASTICO_ACTIVE_CONFIG")
