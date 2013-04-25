@@ -45,7 +45,7 @@ configuration and accessing attributes from it.
 
 .. code-block:: python
 
-   installed_middleware = request.context.get("installed_middleware")
+   installed_middleware = request.context.settings.get("installed_middleware")
    
    print(installed_middleware)
 
