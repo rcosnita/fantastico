@@ -18,15 +18,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.tests.itest_settings
 '''
 from fantastico.exceptions import FantasticoSettingNotFoundError
-from fantastico.settings import SettingsFacade, BasicSettings
+from fantastico.settings import SettingsFacade
+from fantastico.tests.base_case import FantasticoIntegrationTestCase
 import os
-import unittest
 
-class SettingsIntegration(unittest.TestCase):
+class SettingsIntegration(FantasticoIntegrationTestCase):
     '''Test suite that ensures current settings for various environments remain stable.'''
     
-    def setUp(self):
-        self._envs = [("fantastico.settings.BasicSettings", BasicSettings)]
+    def init(self):
         self._settings_facade = SettingsFacade() 
     
     def test_settings_ok(self):

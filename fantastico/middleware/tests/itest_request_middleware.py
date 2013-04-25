@@ -18,17 +18,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.middleware.tests.itest_request_middleware
 '''
 from fantastico.middleware.request_middleware import RequestMiddleware
-from fantastico.settings import BasicSettings
+from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
 import os
-import unittest
 
-class RequestMiddlewareIntegration(unittest.TestCase):
+class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
     '''Test suite that ensures requqest middleware is working properly into it's native running environment (no mocked essential
     dependencies). It ensures integration all available environments configuration.'''
     
-    def setUp(self):
-        self._envs = [("fantastico.settings.BasicSettings", BasicSettings)]
+    def init(self):        
         self._environ = {"CONTENT_TYPE": "application/json",
                            "HTTP_ACCEPT": "application/json",
                            "HTTP_ACCEPT_LANGUAGE": "ro-ro,en-US;q=0.8",

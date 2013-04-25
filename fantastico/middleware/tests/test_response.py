@@ -17,10 +17,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.middleware.tests.test_response
 '''
+from fantastico.tests.base_case import FantasticoUnitTestsCase
 from webob.response import Response
-import unittest
 
-class ResponseTests(unittest.TestCase):
+
+class ResponseTests(FantasticoUnitTestsCase):
     '''Class used to provide the test cases that ensure response object is correctly provided for future use.'''
     
     def test_response_ok(self):
