@@ -54,12 +54,12 @@ class SettingsIntegration(unittest.TestCase):
         old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
         
         try:
-            os.environ["FANTASTICO_ACTIVE_CONFIG"] = self._envs[0][0]
-                        
-            self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
-            
             os.environ["FANTASTICO_ACTIVE_CONFIG"] = "not.found.package"
             
+            self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
+            
+            os.environ["FANTASTICO_ACTIVE_CONFIG"] = self._envs[0][0]
+                        
             self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
         finally:
             if old_env is not None:

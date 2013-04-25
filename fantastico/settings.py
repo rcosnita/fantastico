@@ -77,10 +77,10 @@ class SettingsFacade(object):
         :param type: string
         :returns: The setting value.
         :rtype: object'''
-        
-        self._cached_config = self._cached_config or self.get_config()
-        
+                
         try:
+            self._cached_config = self._cached_config or self.get_config()
+            
             return getattr(self._cached_config, name)
         except AttributeError as ex:
             raise FantasticoSettingNotFoundError("Attribute %s could not be obtained: %s" % (name, str(ex)))
