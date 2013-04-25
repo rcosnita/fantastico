@@ -18,15 +18,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.middleware.tests.test_request_middleware
 '''
 from fantastico.middleware.request_middleware import RequestMiddleware
-from mock import Mock
-from unittest.case import TestCase
-import os
 from fantastico.settings import BasicSettings
+from fantastico.tests.base_case import FantasticoUnitTestsCase
+from mock import Mock
+import os
 
-class RequestMiddlewareTests(TestCase):
+
+class RequestMiddlewareTests(FantasticoUnitTestsCase):
     '''Test suite for ensuring that environ wsgi dictionary is correctly converted to a request object.'''
     
-    def setUp(self):
+    def init(self):
         self._app = Mock()
         self._start_response = Mock()
         self._middleware = RequestMiddleware(self._app)
