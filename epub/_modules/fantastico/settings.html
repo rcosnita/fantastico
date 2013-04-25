@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b14 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b15 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -108,10 +108,10 @@
 <span class="sd">        :param type: string</span>
 <span class="sd">        :returns: The setting value.</span>
 <span class="sd">        :rtype: object&#39;&#39;&#39;</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
-        
+                
         <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+            
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">FantasticoSettingNotFoundError</span><span class="p">(</span><span class="s">&quot;Attribute </span><span class="si">%s</span><span class="s"> could not be obtained: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>

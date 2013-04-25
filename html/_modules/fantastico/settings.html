@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.settings &mdash; fantastico 0.0.1-b14 documentation</title>
+    <title>fantastico.settings &mdash; fantastico 0.0.1-b15 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.0.1-b14',
+        VERSION:     '0.0.1-b15',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b14 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b15 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b14 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b15 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -123,10 +123,10 @@
 <span class="sd">        :param type: string</span>
 <span class="sd">        :returns: The setting value.</span>
 <span class="sd">        :rtype: object&#39;&#39;&#39;</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
-        
+                
         <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
+            
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">FantasticoSettingNotFoundError</span><span class="p">(</span><span class="s">&quot;Attribute </span><span class="si">%s</span><span class="s"> could not be obtained: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
@@ -172,7 +172,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b14 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b15 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
