@@ -18,10 +18,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.tests.test_settings
 '''
 
-from fantastico.exceptions import FantasticoClassNotFoundError,\
+from fantastico.exceptions import FantasticoClassNotFoundError, \
     FantasticoSettingNotFoundError
 from fantastico.settings import SettingsFacade, BasicSettings
-from unittest.case import TestCase
+from fantastico.tests.base_case import FantasticoUnitTestsCase
 
 class SampleSettings(BasicSettings):
     '''Just a simple settings implementation for testing purposes.'''
@@ -30,10 +30,10 @@ class SampleSettings(BasicSettings):
     def installed_middleware(self):
         raise Exception("Internal error")
 
-class TestSettingsFacadeSuite(TestCase):
+class TestSettingsFacadeSuite(FantasticoUnitTestsCase):
     '''Test suite for settings facade functionality.''' 
     
-    def setUp(self):
+    def init(self):
         self._environ = {}
         self._settings = SettingsFacade(self._environ)
     
