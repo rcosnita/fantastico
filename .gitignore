@@ -25,6 +25,11 @@ pip-log.txt
 .coverage
 .tox
 nosetests.xml
+coverage.xml
+coverage_integration.xml
+fantastico_tests.xml
+fantastico_integration_tests.xml
+pylint.out
 
 # Translations
 *.mo
@@ -37,6 +42,3 @@ __pycache__
 
 # virtual environment dependencies
 pip-deps
-coverage.xml
-fantastico_tests.xml
-pylint.out
