@@ -69,6 +69,8 @@ class RequestMiddlewareIntegration(unittest.TestCase):
                 
                 self.assertEqual(settings_cls().installed_middleware, request.context.settings.get("installed_middleware"))
                 self.assertEqual(settings_cls().supported_languages, request.context.settings.get("supported_languages"))
+                
+                self.assertEqual("en_us", request.context.language.code)
             finally:
                 if old_env is not None:
                     os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env                
