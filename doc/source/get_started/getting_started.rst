@@ -6,3 +6,4 @@ Getting started
 
    installation
    settings
+   contribute

@@ -32,31 +32,50 @@ class FantasticoBaseTestCase(unittest.TestCase):
             init()
     
 class FantasticoUnitTestsCase(FantasticoBaseTestCase):
-    '''This is the base class for each unit tests test case written.'''
+    '''This is the base class that must be inherited by each unit test written for fantastico.
+    
+    .. code-block:: python
+    
+        class SimpleUnitTest(FantasticoUnitTestsCase):
+            def init(self):
+                self._msg = "Hello world"
+                
+            def test_simple_flow_ok(self):
+                self.assertEqual("Hello world", self._msg)'''
     
     def setUp(self):
-        super(FantasticoUnitTestsCase, self).setUp()    
+        super(FantasticoUnitTestsCase, self).setUp()
     
 class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
-    '''This is the base class that must be inherited by each integration test written for fantastico.'''
+    '''This is the base class that must be inherited by each integration test written for fantastico.
+
+    .. code-block:: python
+    
+        class SimpleIntegration(FantasticoIntegrationTestCase):
+            def init(self):
+                self.simple_class = {}
+                
+            def test_simple_ok(self):
+                def do_stuff(env, env_cls):
+                    self.assertEqual(simple_class[env], env_cls)
+                    
+                self._run_test_all_envs(do_stuff)
+    '''
+    
+    @property
+    def _envs(self):
+        '''Private property that holds the environments against which we run the integration tests.'''
+        
+        return self.__envs
     
     def setUp(self):
-        self._envs = [("fantastico.settings.BasicSettings", BasicSettings)]
+        self.__envs = [("fantastico.settings.BasicSettings", BasicSettings)]
         
         super(FantasticoIntegrationTestCase, self).setUp()
         
     def _run_test_all_envs(self, callableObj):
         '''This method is used to execute a callable block of code on all environments. This is extremely useful for
-        avoid boiler plate code duplication and executing test logic against all environments.
-        
-        .. code-block::
-        
-            class SimpleIntegration(FantasticoIntegrationTestCase):
-                def test_simple_ok(self):
-                    def do_stuff(env, env_cls):
-                        self.assertEqual(simple_class[env], env_cls)
-                        
-                    self._run_test_all_envs(do_stuff)
+        avoid boiler plate code duplication and executing test logic against all environments.        
         '''
         
         old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
