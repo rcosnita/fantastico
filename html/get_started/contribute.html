@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Contribute &mdash; fantastico 0.0.1-b18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1-b18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.0.1-b18 documentation" href="../index.html" />
+    <link rel="up" title="Getting started" href="getting_started.html" />
+    <link rel="next" title="Fantastico features" href="../features/features.html" />
+    <link rel="prev" title="Fantastico settings" href="settings.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../features/features.html" title="Fantastico features"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="Fantastico settings"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b18 documentation</a> &raquo;</li>
+          <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="contribute">
+<h1>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">¶</a></h1>
+<p>Fantastico framework is open source so every contribution is welcome. For the moment we are looking for more developers willing
+to contribute.</p>
+<div class="section" id="code-contribution">
+<h2>Code contribution<a class="headerlink" href="#code-contribution" title="Permalink to this headline">¶</a></h2>
+<p>If you want to contribute with code to fantastico framework there are a simple set of rules that you must follow:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Write unit tests (for the code / feature you are contributing).</li>
+<li>Write integration tests (for the code / feature you are contributing).</li>
+<li>Make sure your code is rated above 9.5 by pylint tool.</li>
+<li>In addition integration tests and unit tests must cover 95% of your code.</li>
+</ul>
+</div></blockquote>
+<p>In order for each build to remain stable the following hard limits are imposed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Unit tests must cover &gt;= 95% of the code.</li>
+<li>Integration tests must cover &gt;= 95% of the code.</li>
+<li>Code must be rated above 9.5 by pylint.</li>
+<li>Everything must pass.</li>
+</ol>
+</div></blockquote>
+<p>When you push on master a set of jobs are cascaded executed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Run all unit tests job.</li>
+<li>Run all integration tests job (only if unit tests succeeds).</li>
+<li>Generate documentation and publish it (only if integration tests job succeeds).</li>
+</ol>
+</div></blockquote>
+<p>You can follow the above build process by visiting <a class="reference external" href="http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/">Jenkins build</a>.
+Login with your github account and everything should work smoothly.</p>
+<p>In the end do not forget that in Fantastico framework we love to develop against a <strong>stable</strong> base. We really think code will have
+high quality and zero bugs.</p>
+<div class="section" id="writing-unit-tests">
+<h3>Writing unit tests<a class="headerlink" href="#writing-unit-tests" title="Permalink to this headline">¶</a></h3>
+<p>For better understanding how to write unit tests see the documentation below:</p>
+<dl class="class">
+<dt id="fantastico.tests.base_case.FantasticoUnitTestsCase">
+<em class="property">class </em><tt class="descclassname">fantastico.tests.base_case.</tt><tt class="descname">FantasticoUnitTestsCase</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoUnitTestsCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoUnitTestsCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the base class that must be inherited by each unit test written for fantastico.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SimpleUnitTest</span><span class="p">(</span><span class="n">FantasticoUnitTestsCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_msg</span> <span class="o">=</span> <span class="s">&quot;Hello world&quot;</span>
+        
+    <span class="k">def</span> <span class="nf">test_simple_flow_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;Hello world&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_msg</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="writing-integration-tests">
+<h3>Writing integration tests<a class="headerlink" href="#writing-integration-tests" title="Permalink to this headline">¶</a></h3>
+<p>For better understanding how to write integration tests see the documentation below:</p>
+<dl class="class">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase">
+<em class="property">class </em><tt class="descclassname">fantastico.tests.base_case.</tt><tt class="descname">FantasticoIntegrationTestCase</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the base class that must be inherited by each integration test written for fantastico.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SimpleIntegration</span><span class="p">(</span><span class="n">FantasticoIntegrationTestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simple_class</span> <span class="o">=</span> <span class="p">{}</span>
+        
+    <span class="k">def</span> <span class="nf">test_simple_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">do_stuff</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">env_cls</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">simple_class</span><span class="p">[</span><span class="n">env</span><span class="p">],</span> <span class="n">env_cls</span><span class="p">)</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="n">do_stuff</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._envs">
+<tt class="descname">_envs</tt><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._envs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._envs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Private property that holds the environments against which we run the integration tests.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs">
+<tt class="descname">_run_test_all_envs</tt><big>(</big><em>callableObj</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._run_test_all_envs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to execute a callable block of code on all environments. This is extremely useful for
+avoid boiler plate code duplication and executing test logic against all environments.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Contribute</a><ul>
+<li><a class="reference internal" href="#code-contribution">Code contribution</a><ul>
+<li><a class="reference internal" href="#writing-unit-tests">Writing unit tests</a></li>
+<li><a class="reference internal" href="#writing-integration-tests">Writing integration tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="settings.html"
+                        title="previous chapter">Fantastico settings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../features/features.html"
+                        title="next chapter">Fantastico features</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/get_started/contribute.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../features/features.html" title="Fantastico features"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="Fantastico settings"
+             >previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b18 documentation</a> &raquo;</li>
+          <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

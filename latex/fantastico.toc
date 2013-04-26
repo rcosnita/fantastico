@@ -11,6 +11,10 @@
 \contentsline {subsection}{\numberline {2.2.1}Settings API}{4}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Create Dev configuration}{4}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}Using a specifc configuration}{5}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Contribute}{5}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Code contribution}{5}{subsection.2.3.1}
+\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.9}
+\contentsline {subsubsection}{Writing integration tests}{6}{subsubsection*.11}
 \contentsline {chapter}{\numberline {3}Fantastico features}{7}{chapter.3}
 \contentsline {section}{\numberline {3.1}Exceptions hierarchy}{7}{section.3.1}
 \contentsline {section}{\numberline {3.2}Request lifecycle}{7}{section.3.2}
@@ -20,4 +24,4 @@
 \contentsline {section}{\numberline {3.3}Routing engine}{9}{section.3.3}
 \contentsline {chapter}{\numberline {4}Build status}{11}{chapter.4}
 \contentsline {chapter}{\numberline {5}License}{13}{chapter.5}
-\contentsline {chapter}{Index}{15}{section*.17}
+\contentsline {chapter}{Index}{15}{section*.23}

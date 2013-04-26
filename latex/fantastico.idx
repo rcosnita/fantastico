@@ -4,6 +4,10 @@
 \indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{5}
 \indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
 \indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
+\indexentry{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)|hyperpage}{6}
+\indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{6}
+\indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{6}
+\indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{6}
 \indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{7}
 \indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{7}
 \indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{7}

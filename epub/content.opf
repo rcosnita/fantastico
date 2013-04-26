@@ -73,6 +73,9 @@
     <item id="get_started_settings.html"
           href="get_started/settings.html"
           media-type="application/xhtml+xml" />
+    <item id="get_started_contribute.html"
+          href="get_started/contribute.html"
+          media-type="application/xhtml+xml" />
     <item id="get_started_installation.html"
           href="get_started/installation.html"
           media-type="application/xhtml+xml" />
@@ -93,6 +96,9 @@
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_locale_language.html"
           href="_modules/fantastico/locale/language.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_tests_base_case.html"
+          href="_modules/fantastico/tests/base_case.html"
           media-type="application/xhtml+xml" />
     <item id="_images_request_response_sd.png"
           href="_images/request_response_sd.png"
@@ -125,6 +131,7 @@
     <itemref idref="get_started_getting_started.html" />
     <itemref idref="get_started_installation.html" />
     <itemref idref="get_started_settings.html" />
+    <itemref idref="get_started_contribute.html" />
     <itemref idref="features_features.html" />
     <itemref idref="features_exceptions.html" />
     <itemref idref="features_request_response.html" />

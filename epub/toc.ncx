@@ -111,55 +111,73 @@
           <content src="get_started/settings.html#using-a-specifc-configuration" />
         </navPoint>
       </navPoint>
+      <navPoint id="navPoint13" playOrder="13">
+        <navLabel>
+          <text>Contribute</text>
+        </navLabel>
+        <content src="get_started/contribute.html" />
+        <navPoint id="navPoint13" playOrder="13">
+          <navLabel>
+            <text>Contribute</text>
+          </navLabel>
+          <content src="get_started/contribute.html" />
+        </navPoint>
+        <navPoint id="navPoint14" playOrder="14">
+          <navLabel>
+            <text>Code contribution</text>
+          </navLabel>
+          <content src="get_started/contribute.html#code-contribution" />
+        </navPoint>
+      </navPoint>
     </navPoint>
-    <navPoint id="navPoint13" playOrder="13">
+    <navPoint id="navPoint15" playOrder="15">
       <navLabel>
         <text>Fantastico features</text>
       </navLabel>
       <content src="features/features.html" />
-      <navPoint id="navPoint13" playOrder="13">
+      <navPoint id="navPoint15" playOrder="15">
         <navLabel>
           <text>Fantastico features</text>
         </navLabel>
         <content src="features/features.html" />
       </navPoint>
-      <navPoint id="navPoint14" playOrder="14">
+      <navPoint id="navPoint16" playOrder="16">
         <navLabel>
           <text>Exceptions hierarchy</text>
         </navLabel>
         <content src="features/exceptions.html" />
       </navPoint>
-      <navPoint id="navPoint15" playOrder="15">
+      <navPoint id="navPoint17" playOrder="17">
         <navLabel>
           <text>Request lifecycle</text>
         </navLabel>
         <content src="features/request_response.html" />
-        <navPoint id="navPoint15" playOrder="15">
+        <navPoint id="navPoint17" playOrder="17">
           <navLabel>
             <text>Request lifecycle</text>
           </navLabel>
           <content src="features/request_response.html" />
         </navPoint>
-        <navPoint id="navPoint16" playOrder="16">
+        <navPoint id="navPoint18" playOrder="18">
           <navLabel>
             <text>Request context</text>
           </navLabel>
           <content src="features/request_response.html#request-context" />
         </navPoint>
-        <navPoint id="navPoint17" playOrder="17">
+        <navPoint id="navPoint19" playOrder="19">
           <navLabel>
             <text>Obtain request language</text>
           </navLabel>
           <content src="features/request_response.html#obtain-request-language" />
         </navPoint>
-        <navPoint id="navPoint18" playOrder="18">
+        <navPoint id="navPoint20" playOrder="20">
           <navLabel>
             <text>Obtain settings using request</text>
           </navLabel>
           <content src="features/request_response.html#obtain-settings-using-request" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint19" playOrder="19">
+      <navPoint id="navPoint21" playOrder="21">
         <navLabel>
           <text>Routing engine</text>
         </navLabel>

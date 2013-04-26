@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.tests.base_case &mdash; fantastico 0.0.1-b18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.1-b18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.0.1-b18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b18 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.tests.base_case</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+
+<span class="sd">.. py:module:: fantastico.tests.base_case</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">FantasticoBaseTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each specific test case: Unit tests / Integration tests&#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;We make the convention that setup method will always invoke init method for each test case.&#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;init&quot;</span><span class="p">):</span>
+            <span class="n">init</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;init&quot;</span><span class="p">)</span>
+            <span class="n">init</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="FantasticoUnitTestsCase"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase">[docs]</a><span class="k">class</span> <span class="nc">FantasticoUnitTestsCase</span><span class="p">(</span><span class="n">FantasticoBaseTestCase</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each unit test written for fantastico.</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">    </span>
+<span class="sd">        class SimpleUnitTest(FantasticoUnitTestsCase):</span>
+<span class="sd">            def init(self):</span>
+<span class="sd">                self._msg = &quot;Hello world&quot;</span>
+<span class="sd">                </span>
+<span class="sd">            def test_simple_flow_ok(self):</span>
+<span class="sd">                self.assertEqual(&quot;Hello world&quot;, self._msg)&#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoUnitTestsCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+    </div>
+<div class="viewcode-block" id="FantasticoIntegrationTestCase"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase">[docs]</a><span class="k">class</span> <span class="nc">FantasticoIntegrationTestCase</span><span class="p">(</span><span class="n">FantasticoBaseTestCase</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each integration test written for fantastico.</span>
+
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">    </span>
+<span class="sd">        class SimpleIntegration(FantasticoIntegrationTestCase):</span>
+<span class="sd">            def init(self):</span>
+<span class="sd">                self.simple_class = {}</span>
+<span class="sd">                </span>
+<span class="sd">            def test_simple_ok(self):</span>
+<span class="sd">                def do_stuff(env, env_cls):</span>
+<span class="sd">                    self.assertEqual(simple_class[env], env_cls)</span>
+<span class="sd">                    </span>
+<span class="sd">                self._run_test_all_envs(do_stuff)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="FantasticoIntegrationTestCase._envs"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase._envs">[docs]</a>    <span class="k">def</span> <span class="nf">_envs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Private property that holds the environments against which we run the integration tests.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__envs</span>
+    </div>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__envs</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&quot;fantastico.settings.BasicSettings&quot;</span><span class="p">,</span> <span class="n">BasicSettings</span><span class="p">)]</span>
+        
+        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoIntegrationTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
+        
+<div class="viewcode-block" id="FantasticoIntegrationTestCase._run_test_all_envs"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs">[docs]</a>    <span class="k">def</span> <span class="nf">_run_test_all_envs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callableObj</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to execute a callable block of code on all environments. This is extremely useful for</span>
+<span class="sd">        avoid boiler plate code duplication and executing test logic against all environments.        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="n">old_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_envs</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">env</span>
+                
+                <span class="n">callableObj</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">)</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">old_env</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">old_env</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+                    
+                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_env</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b18 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

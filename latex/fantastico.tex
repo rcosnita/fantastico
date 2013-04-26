@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 26, 2013}
-\release{0.0.1-b17}
+\release{0.0.1-b18}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -396,6 +396,130 @@ Method used to return the active configuration which is used by this facade.
 Active configuration currently used.
 
 \end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\section{Contribute}
+\label{get_started/contribute:contribute}\label{get_started/contribute::doc}
+Fantastico framework is open source so every contribution is welcome. For the moment we are looking for more developers willing
+to contribute.
+
+
+\subsection{Code contribution}
+\label{get_started/contribute:code-contribution}
+If you want to contribute with code to fantastico framework there are a simple set of rules that you must follow:
+\begin{itemize}
+\item {} 
+Write unit tests (for the code / feature you are contributing).
+
+\item {} 
+Write integration tests (for the code / feature you are contributing).
+
+\item {} 
+Make sure your code is rated above 9.5 by pylint tool.
+
+\item {} 
+In addition integration tests and unit tests must cover 95\% of your code.
+
+\end{itemize}
+
+In order for each build to remain stable the following hard limits are imposed:
+\begin{enumerate}
+\item {} 
+Unit tests must cover \textgreater{}= 95\% of the code.
+
+\item {} 
+Integration tests must cover \textgreater{}= 95\% of the code.
+
+\item {} 
+Code must be rated above 9.5 by pylint.
+
+\item {} 
+Everything must pass.
+
+\end{enumerate}
+
+When you push on master a set of jobs are cascaded executed:
+\begin{enumerate}
+\item {} 
+Run all unit tests job.
+
+\item {} 
+Run all integration tests job (only if unit tests succeeds).
+
+\item {} 
+Generate documentation and publish it (only if integration tests job succeeds).
+
+\end{enumerate}
+
+You can follow the above build process by visiting \href{http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/}{Jenkins build}.
+Login with your github account and everything should work smoothly.
+
+In the end do not forget that in Fantastico framework we love to develop against a \textbf{stable} base. We really think code will have
+high quality and zero bugs.
+
+
+\subsubsection{Writing unit tests}
+\label{get_started/contribute:writing-unit-tests}
+For better understanding how to write unit tests see the documentation below:
+\index{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoUnitTestsCase}\pysiglinewithargsret{\strong{class }\code{fantastico.tests.base\_case.}\bfcode{FantasticoUnitTestsCase}}{\emph{methodName='runTest'}}{}
+This is the base class that must be inherited by each unit test written for fantastico.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{SimpleUnitTest}\PYG{p}{(}\PYG{n}{FantasticoUnitTestsCase}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{init}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}msg} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world}\PYG{l+s}{\PYGZdq{}}
+        
+    \PYG{k}{def} \PYG{n+nf}{test\PYGZus{}simple\PYGZus{}flow\PYGZus{}ok}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}msg}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+
+
+\subsubsection{Writing integration tests}
+\label{get_started/contribute:writing-integration-tests}
+For better understanding how to write integration tests see the documentation below:
+\index{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoIntegrationTestCase}\pysiglinewithargsret{\strong{class }\code{fantastico.tests.base\_case.}\bfcode{FantasticoIntegrationTestCase}}{\emph{methodName='runTest'}}{}
+This is the base class that must be inherited by each integration test written for fantastico.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{SimpleIntegration}\PYG{p}{(}\PYG{n}{FantasticoIntegrationTestCase}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{init}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{simple\PYGZus{}class} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
+        
+    \PYG{k}{def} \PYG{n+nf}{test\PYGZus{}simple\PYGZus{}ok}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{def} \PYG{n+nf}{do\PYGZus{}stuff}\PYG{p}{(}\PYG{n}{env}\PYG{p}{,} \PYG{n}{env\PYGZus{}cls}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{n}{simple\PYGZus{}class}\PYG{p}{[}\PYG{n}{env}\PYG{p}{]}\PYG{p}{,} \PYG{n}{env\PYGZus{}cls}\PYG{p}{)}
+            
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}run\PYGZus{}test\PYGZus{}all\PYGZus{}envs}\PYG{p}{(}\PYG{n}{do\PYGZus{}stuff}\PYG{p}{)}
+\end{Verbatim}
+\index{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoIntegrationTestCase._envs}\pysigline{\bfcode{\_envs}}
+Private property that holds the environments against which we run the integration tests.
+
+\end{fulllineitems}
+
+\index{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs}\pysiglinewithargsret{\bfcode{\_run\_test\_all\_envs}}{\emph{callableObj}}{}
+This method is used to execute a callable block of code on all environments. This is extremely useful for
+avoid boiler plate code duplication and executing test logic against all environments.
 
 \end{fulllineitems}
 

@@ -1,6 +1,12 @@
 \begin{theindex}
 \def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
 
+  \bigletter {Symbols}
+  \item \_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), \hyperpage{6}
+  \item \_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method), 
+		\hyperpage{6}
+
+  \indexspace
   \bigletter B
   \item BasicSettings (class in fantastico.settings), \hyperpage{4}
 
@@ -12,7 +18,9 @@
   \bigletter F
   \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{7}
   \item FantasticoError (class in fantastico.exceptions), \hyperpage{7}
+  \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{6}
   \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{7}
+  \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{6}
 
   \indexspace
   \bigletter G
