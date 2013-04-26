@@ -18,6 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.tests.base_case
 '''
 from fantastico.settings import BasicSettings
+import os
 import unittest
 
 class FantasticoBaseTestCase(unittest.TestCase):
@@ -43,3 +44,30 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         self._envs = [("fantastico.settings.BasicSettings", BasicSettings)]
         
         super(FantasticoIntegrationTestCase, self).setUp()
+        
+    def _run_test_all_envs(self, callableObj):
+        '''This method is used to execute a callable block of code on all environments. This is extremely useful for
+        avoid boiler plate code duplication and executing test logic against all environments.
+        
+        .. code-block::
+        
+            class SimpleIntegration(FantasticoIntegrationTestCase):
+                def test_simple_ok(self):
+                    def do_stuff(env, env_cls):
+                        self.assertEqual(simple_class[env], env_cls)
+                        
+                    self._run_test_all_envs(do_stuff)
+        '''
+        
+        old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
+        
+        for env, settings_cls in self._envs:
+            try:
+                os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
+                
+                callableObj(env, settings_cls)
+            finally:
+                if old_env is None:
+                    old_env = ""
+                    
+                os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env

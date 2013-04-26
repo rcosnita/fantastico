@@ -20,7 +20,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.middleware.request_middleware import RequestMiddleware
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
-import os
 
 class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
     '''Test suite that ensures requqest middleware is working properly into it's native running environment (no mocked essential
@@ -48,27 +47,21 @@ class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
 
     def test_context_initialization(self):
         '''Test case that ensures context is correctly initialized.'''
-
-        old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
         
-        for env, settings_cls in self._envs:
-            try:
-                os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
+        def exec_test(env, settings_cls):
+            self._middleware(self._environ, Mock())
+            
+            request = self._environ.get("fantastico.request")
+            
+            self.assertIsNotNone(request)
+            self.assertEqual("GET", request.method)
+            self.assertEqual("application/json", request.content_type)
+            self.assertEqual("123", request.headers.get("oauth_bearer"))
+            self.assertEqual(1, int(request.params.get("id")))
+            
+            self.assertEqual(settings_cls().installed_middleware, request.context.settings.get("installed_middleware"))
+            self.assertEqual(settings_cls().supported_languages, request.context.settings.get("supported_languages"))
+            
+            self.assertEqual("en_us", request.context.language.code)
         
-                self._middleware(self._environ, Mock())
-                
-                request = self._environ.get("fantastico.request")
-                
-                self.assertIsNotNone(request)
-                self.assertEqual("GET", request.method)
-                self.assertEqual("application/json", request.content_type)
-                self.assertEqual("123", request.headers.get("oauth_bearer"))
-                self.assertEqual(1, int(request.params.get("id")))
-                
-                self.assertEqual(settings_cls().installed_middleware, request.context.settings.get("installed_middleware"))
-                self.assertEqual(settings_cls().supported_languages, request.context.settings.get("supported_languages"))
-                
-                self.assertEqual("en_us", request.context.language.code)
-            finally:
-                if old_env is not None:
-                    os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env
+        self._run_test_all_envs(exec_test)

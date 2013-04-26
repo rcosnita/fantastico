@@ -31,28 +31,22 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
     def test_settings_ok(self):
         '''Test case that ensures settings are functional for each environment available.'''
         
-        old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
-        
-        for env, settings_cls in self._envs:
-            try:
-                os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
-                
-                self.assertIsInstance(self._settings_facade.get_config(), settings_cls)
-                
-                self.assertEqual(["fantastico.middleware.RequestMiddleware", "fantastico.middleware.RoutingEngineMiddleware"], 
-                                  self._settings_facade.get("installed_middleware"))
-                
-                self.assertEqual(["en_us"], self._settings_facade.get("supported_languages"))
-            finally:
-                if old_env is not None:
-                    os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env
+        def exec_test(env, settings_cls):
+            os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
+            
+            self.assertIsInstance(self._settings_facade.get_config(), settings_cls)
+            
+            self.assertEqual(["fantastico.middleware.RequestMiddleware", "fantastico.middleware.RoutingEngineMiddleware"], 
+                              self._settings_facade.get("installed_middleware"))
+            
+            self.assertEqual(["en_us"], self._settings_facade.get("supported_languages"))
+            
+        self._run_test_all_envs(exec_test)
                     
     def test_settings_invalid_ok(self):
         '''Test case that ensures settings exception cases raise strong type exception.'''
         
-        old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
-        
-        try:
+        def exec_test(env, settings_cls):
             os.environ["FANTASTICO_ACTIVE_CONFIG"] = "not.found.package"
             
             self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
@@ -60,6 +54,5 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
             os.environ["FANTASTICO_ACTIVE_CONFIG"] = self._envs[0][0]
                         
             self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
-        finally:
-            if old_env is not None:
-                os.environ.get("FANTASTICO_ACTIVE_CONFIG")
+        
+        self._run_test_all_envs(exec_test)
