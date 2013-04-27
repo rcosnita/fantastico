@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  27 APR 2013 16:07
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  27 APR 2013 16:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -984,16 +984,16 @@ Package pdftex.def Info: exceptions.png used on input line 539.
  [7
 
  <./exceptions.png>]
-<request_response_sd.png, id=182, 867.24pt x 431.38484pt>
+<request_response_sd.png, id=182, 873.2625pt x 435.87843pt>
 File: request_response_sd.png Graphic file (type png)
 
 <use request_response_sd.png>
 Package pdftex.def Info: request_response_sd.png used on input line 587.
-(pdftex.def)             Requested size: 867.2379pt x 431.38377pt.
+(pdftex.def)             Requested size: 873.26036pt x 435.87737pt.
 File: request_response_sd.png Graphic file (type png)
  <use request_response_sd.png>
 Package pdftex.def Info: request_response_sd.png used on input line 587.
-(pdftex.def)             Requested size: 469.755pt x 233.6684pt.
+(pdftex.def)             Requested size: 469.755pt x 234.47296pt.
  [8 <./request_response_sd.png>] <routing_engine.png, id=196, 879.16083pt x 497
 .69443pt>
 File: routing_engine.png Graphic file (type png)
@@ -1006,11 +1006,11 @@ File: routing_engine.png Graphic file (type png)
 Package pdftex.def Info: routing_engine.png used on input line 683.
 (pdftex.def)             Requested size: 469.755pt x 265.92595pt.
  [9 <./routing_engine.png>]
-[10
-
-]
+[10]
 Chapter 4.
-[11] [12
+[11
+
+] [12
 
 ]
 Chapter 5.
@@ -1082,20 +1082,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 47--48
 [15
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 711.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 711.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 744.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 744.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 711.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 711.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 744.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 744.
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
 (rerunfilecheck)             Checksum: 9B7AE0A16F7EC70EF07C0D1128EBD263;809.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 711.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 744.
  ) 
 Here is how much of TeX's memory you used:
- 9036 strings out of 493485
- 126450 string characters out of 3143526
- 222647 words of memory out of 3000000
- 12007 multiletter control sequences out of 15000+200000
+ 9043 strings out of 493485
+ 126600 string characters out of 3143526
+ 222764 words of memory out of 3000000
+ 12009 multiletter control sequences out of 15000+200000
  61581 words of font info for 70 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
  36i,11n,45p,305b,470s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1108,10 +1108,10 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (19 pages, 190929 bytes).
+Output written on fantastico.pdf (19 pages, 191087 bytes).
 PDF statistics:
- 301 PDF objects out of 1000 (max. 8388607)
- 259 compressed objects within 3 object streams
- 84 named destinations out of 1000 (max. 500000)
+ 307 PDF objects out of 1000 (max. 8388607)
+ 265 compressed objects within 3 object streams
+ 89 named destinations out of 1000 (max. 500000)
  153 words of extra memory for PDF output out of 10000 (max. 10000000)
 

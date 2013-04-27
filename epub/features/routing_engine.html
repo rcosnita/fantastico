@@ -22,7 +22,7 @@
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b24 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b25 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -34,6 +34,29 @@
   <div class="section" id="routing-engine">
 <h1>Routing engine</h1>
 <img alt="../_images/routing_engine.png" src="../_images/routing_engine.png" />
+<p>Fantastico routing engine is design by having extensibility in mind. Below you can find the list of concerns for routing engine:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Support multiple sources for routes.</li>
+<li>Load all available routes.</li>
+<li>Select the controller that can handle the request route (if any available).</li>
+</ol>
+</div></blockquote>
+<div class="section" id="routes-loaders">
+<h2>Routes loaders</h2>
+<p>Fantastico routing engine is designed so that routes can be loaded from multiple sources (database, disk locations, and others). This give huge extensibility so that developers can use Fantastico in various scenarios:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Create a CMS that allows people to create new pages (mapping between page url / controller) is hold in database. Just by adding a simple loader in which the business logic is encapsulated allows routing engine extension.</li>
+<li>Create a blog that loads articles from disk.</li>
+</ul>
+</div></blockquote>
+<p>I am sure you can find other use cases in which you benefit from this extension point.</p>
+</div>
+<div class="section" id="how-to-write-a-new-route-loader">
+<h2>How to write a new route loader</h2>
+<p>TODO</p>
+</div>
 </div>
 
 

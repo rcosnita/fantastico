@@ -182,6 +182,24 @@
           <text>Routing engine</text>
         </navLabel>
         <content src="features/routing_engine.html" />
+        <navPoint id="navPoint21" playOrder="21">
+          <navLabel>
+            <text>Routing engine</text>
+          </navLabel>
+          <content src="features/routing_engine.html" />
+        </navPoint>
+        <navPoint id="navPoint22" playOrder="22">
+          <navLabel>
+            <text>Routes loaders</text>
+          </navLabel>
+          <content src="features/routing_engine.html#routes-loaders" />
+        </navPoint>
+        <navPoint id="navPoint23" playOrder="23">
+          <navLabel>
+            <text>How to write a new route loader</text>
+          </navLabel>
+          <content src="features/routing_engine.html#how-to-write-a-new-route-loader" />
+        </navPoint>
       </navPoint>
     </navPoint>
   </navMap>

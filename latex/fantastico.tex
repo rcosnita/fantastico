@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 27, 2013}
-\release{0.0.1-b24}
+\release{0.0.1-b25}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -681,6 +681,39 @@ For more information about how to configure \textbf{Fantastico} please read {\hy
 \section{Routing engine}
 \label{features/routing_engine:routing-engine}\label{features/routing_engine::doc}
 \includegraphics{routing_engine.png}
+
+Fantastico routing engine is design by having extensibility in mind. Below you can find the list of concerns for routing engine:
+\begin{enumerate}
+\item {} 
+Support multiple sources for routes.
+
+\item {} 
+Load all available routes.
+
+\item {} 
+Select the controller that can handle the request route (if any available).
+
+\end{enumerate}
+
+
+\subsection{Routes loaders}
+\label{features/routing_engine:routes-loaders}
+Fantastico routing engine is designed so that routes can be loaded from multiple sources (database, disk locations, and others). This give huge extensibility so that developers can use Fantastico in various scenarios:
+\begin{itemize}
+\item {} 
+Create a CMS that allows people to create new pages (mapping between page url / controller) is hold in database. Just by adding a simple loader in which the business logic is encapsulated allows routing engine extension.
+
+\item {} 
+Create a blog that loads articles from disk.
+
+\end{itemize}
+
+I am sure you can find other use cases in which you benefit from this extension point.
+
+
+\subsection{How to write a new route loader}
+\label{features/routing_engine:how-to-write-a-new-route-loader}
+TODO
 
 
 \chapter{Build status}
