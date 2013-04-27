@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 27, 2013}
-\release{0.0.1-b23}
+\release{0.0.1-b24}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -273,8 +273,8 @@ file:
 \PYG{k}{class} \PYG{n+nc}{BasicSettings}\PYG{p}{(}\PYG{n+nb}{object}\PYG{p}{)}\PYG{p}{:}
    \PYG{n+nd}{@property}
    \PYG{k}{def} \PYG{n+nf}{installed\PYGZus{}middleware}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
-      \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.middleware.RequestMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,}
-              \PYG{l+s}{\PYGZsq{}}\PYG{l+s}{fantastico.middleware.RoutingEngineMiddleware}\PYG{l+s}{\PYGZsq{}}\PYG{p}{]}
+      \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.middleware.request\PYGZus{}middleware.RequestMiddleware}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.middleware.routing\PYGZus{}engine.RoutingEngineMiddleware}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}
 
    \PYG{n+nd}{@property}
    \PYG{k}{def} \PYG{n+nf}{supported\PYGZus{}languages}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
