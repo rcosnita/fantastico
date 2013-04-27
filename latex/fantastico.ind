@@ -39,6 +39,7 @@
   \indexspace
   \bigletter R
   \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{8}
+  \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{10}
 
   \indexspace
   \bigletter S

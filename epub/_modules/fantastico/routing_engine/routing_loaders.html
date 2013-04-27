@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.locale.language</title>
+    <title>fantastico.routing_engine.routing_loaders</title>
     
     <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
@@ -28,7 +28,7 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <h1>Source code for fantastico.locale.language</h1><div class="highlight"><pre>
+  <h1>Source code for fantastico.routing_engine.routing_loaders</h1><div class="highlight"><pre>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
@@ -46,36 +46,26 @@
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 
-<span class="sd">.. py:module:: fantastico.locale.language</span>
+<span class="sd">.. py:module:: fantastico.routing_engine.routing_loaders</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
 
-<div class="viewcode-block" id="Language"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language">[docs]</a><span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Class used to define how does language object looks like. There are various use cases for using language but</span>
-<span class="sd">    the simplest one is in request context object: </span>
+<div class="viewcode-block" id="RouteLoader"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.routing_loaders.RouteLoader">[docs]</a><span class="k">class</span> <span class="nc">RouteLoader</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible</span>
+<span class="sd">    for implementing its own business logic for loading routes.</span>
 <span class="sd">    </span>
 <span class="sd">    .. code-block:: python</span>
 <span class="sd">    </span>
-<span class="sd">       language = request.context.language</span>
-<span class="sd">       </span>
-<span class="sd">       if language.code = &quot;en_us&quot;:</span>
-<span class="sd">          print(&quot;English (US) language&quot;).</span>
-<span class="sd">       else:</span>
-<span class="sd">          raise Exception(&quot;Language %s is not supported.&quot; % language.code) </span>
+<span class="sd">        class DummyRouteLoader(RouteLoader):</span>
+<span class="sd">            def __init__(self, settings_facade=SettingsFacade):</span>
+<span class="sd">                self_settings_facade = settings_facade()</span>
+<span class="sd">                </span>
+<span class="sd">            def load_routes(self):</span>
+<span class="sd">                return {&quot;/index.html&quot;, &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_text&quot;,</span>
+<span class="sd">                        &quot;/images/image.png&quot;, &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_binary&quot;}</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span>
-    
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="Language.code"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language.code">[docs]</a>    <span class="k">def</span> <span class="nf">code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Property that holds the language code. This is readonly because once instantiated we mustn&#39;t be able to change it.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span>
     </div>
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Method used to convert the current instance into a string object.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span></div>
 </pre></div>
 
           </div>

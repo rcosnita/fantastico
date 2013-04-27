@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{April 27, 2013}
-\release{0.0.1-b25}
+\release{0.0.1-b26}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -698,10 +698,12 @@ Select the controller that can handle the request route (if any available).
 
 \subsection{Routes loaders}
 \label{features/routing_engine:routes-loaders}
-Fantastico routing engine is designed so that routes can be loaded from multiple sources (database, disk locations, and others). This give huge extensibility so that developers can use Fantastico in various scenarios:
+Fantastico routing engine is designed so that routes can be loaded from multiple sources (database, disk locations, and others).
+This give huge extensibility so that developers can use Fantastico in various scenarios:
 \begin{itemize}
 \item {} 
-Create a CMS that allows people to create new pages (mapping between page url / controller) is hold in database. Just by adding a simple loader in which the business logic is encapsulated allows routing engine extension.
+Create a CMS that allows people to create new pages (mapping between page url / controller) is hold in database. Just by
+adding a simple loader in which the business logic is encapsulated allows routing engine extension.
 
 \item {} 
 Create a blog that loads articles from disk.
@@ -713,7 +715,34 @@ I am sure you can find other use cases in which you benefit from this extension 
 
 \subsection{How to write a new route loader}
 \label{features/routing_engine:how-to-write-a-new-route-loader}
-TODO
+Before digging in further details see the RouteLoader class documentation below:
+\index{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/routing_engine:fantastico.routing_engine.routing_loaders.RouteLoader}\pysigline{\strong{class }\code{fantastico.routing\_engine.routing\_loaders.}\bfcode{RouteLoader}}
+This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible
+for implementing its own business logic for loading routes.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{DummyRouteLoader}\PYG{p}{(}\PYG{n}{RouteLoader}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{settings\PYGZus{}facade}\PYG{o}{=}\PYG{n}{SettingsFacade}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{self\PYGZus{}settings\PYGZus{}facade} \PYG{o}{=} \PYG{n}{settings\PYGZus{}facade}\PYG{p}{(}\PYG{p}{)}
+        
+    \PYG{k}{def} \PYG{n+nf}{load\PYGZus{}routes}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/index.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}text}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/images/image.png}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}binary}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+
+As you can, each concrete route loader receives in the constructor settings facade that can be used to access fantastico settings.
+In the code example above, DummyRouteLoader maps a list of urls to a controller method that can be used to render it. Keep in
+mind that a route loader is a stateless component and it can't in anyway determine the wsgi environment in which it is used. In
+addition this design decision also make sure clear separation of concerned is followed.
+
+Once your \textbf{RouteLoader} implementation is ready you must register it into settings profile. The safest bet is to add it into
+BaseSettings provider. For more information read {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
 
 
 \chapter{Build status}

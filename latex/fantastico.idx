@@ -16,3 +16,4 @@
 \indexentry{settings (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{8}
 \indexentry{Language (class in fantastico.locale.language)|hyperpage}{8}
 \indexentry{code (fantastico.locale.language.Language attribute)|hyperpage}{9}
+\indexentry{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)|hyperpage}{10}

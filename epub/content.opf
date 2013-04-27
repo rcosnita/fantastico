@@ -97,6 +97,9 @@
     <item id="_modules_fantastico_locale_language.html"
           href="_modules/fantastico/locale/language.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_routing_engine_routing_loaders.html"
+          href="_modules/fantastico/routing_engine/routing_loaders.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_tests_base_case.html"
           href="_modules/fantastico/tests/base_case.html"
           media-type="application/xhtml+xml" />
