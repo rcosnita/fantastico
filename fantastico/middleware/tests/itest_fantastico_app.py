@@ -16,15 +16,40 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.middleware.tests.itest_fantastico_app
 '''
-#from fantastico.middleware.fantastico_app import FantasticoApp
+from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
+from mock import Mock
 
 class FantasticoAppIntegration(FantasticoIntegrationTestCase):
     '''Class used to make sure fantastico can correctly handle requests.'''
     
     def init(self):
-        #self._middleware = FantasticoApp()
-        pass
+        self._environ = {"CONTENT_TYPE": "application/json",
+                           "HTTP_ACCEPT": "application/json",
+                           "HTTP_ACCEPT_LANGUAGE": "ro-ro,en-US;q=0.8",
+                           "HTTP_OAUTH_BEARER": "123",
+                           "HTTP_HOST": "localhost:80",
+                           "PATH_INFO": "/article",
+                           "QUERY_STRING": "id=1",
+                           "REQUEST_METHOD": "GET",
+                           "SCRIPT_NAME": "",
+                           "SERVER_NAME": "localhost",
+                           "SERVER_PORT": "80",
+                           "SERVER_PROTOCOL": "HTTP/1.1",
+                           "wsgi.multiprocess": False,
+                           "wsgi.multithread": False,
+                           "wsgi.run_once": False,
+                           "wsgi.url_scheme": 'http',
+                           "wsgi.version": (1, 0)}
+
+        self._middleware = FantasticoApp()
         
     def test_request_ok(self):
-        pass
+        '''Test case than ensures requests are handled correctly by fantastico app (all configured middlewares are doing)
+        what they are supposed to do.'''
+        
+        self._middleware(self._environ, Mock())
+        
+        request = self._environ.get("fantastico.request")
+        
+        self.assertIsNotNone(request)

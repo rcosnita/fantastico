@@ -10,8 +10,8 @@ file:
    class BasicSettings(object):
       @property    
       def installed_middleware(self):
-         return ['fantastico.middleware.RequestMiddleware',
-                 'fantastico.middleware.RoutingEngineMiddleware']
+         return ["fantastico.middleware.request_middleware.RequestMiddleware",
+                "fantastico.middleware.routing_engine.RoutingEngineMiddleware"]
                  
       @property
       def supported_languages(self):
