@@ -22,13 +22,13 @@ This module provides helper methods used for instantiating classes by given stri
 import importlib
 from fantastico.exceptions import FantasticoClassNotFoundError
 
-def instantiate_class(full_name, args=[]):
+def instantiate_class(full_name, constr_args=[]):
     '''Method used to instantiate a class starting from it's full name.
     
     :param full_name: fully qualified class name.
     :type full_name: string
-    :param args: A list of arguments we want to pass to the constructor.
-    :type args: list
+    :param constr_args: A list of arguments we want to pass to the constructor.
+    :type constr_args: list
     :returns: A new instance of the full_name class.
     '''
     
@@ -42,6 +42,6 @@ def instantiate_class(full_name, args=[]):
         raise FantasticoClassNotFoundError(str(ex))
     
     try:
-        return getattr(module, class_name)(*args)
+        return getattr(module, class_name)(*constr_args)
     except AttributeError as ex:
         raise FantasticoClassNotFoundError(str(ex))    
