@@ -22,7 +22,7 @@ This module provides helper methods used for instantiating classes by given stri
 import importlib
 from fantastico.exceptions import FantasticoClassNotFoundError
 
-def instantiate_class(full_name, constr_args=[]):
+def instantiate_class(full_name, constr_args=None):
     '''Method used to instantiate a class starting from it's full name.
     
     :param full_name: fully qualified class name.
@@ -31,6 +31,9 @@ def instantiate_class(full_name, constr_args=[]):
     :type constr_args: list
     :returns: A new instance of the full_name class.
     '''
+    
+    if constr_args is None:
+        constr_args = []
     
     last_dot = full_name.rfind(".")
     

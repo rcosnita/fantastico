@@ -28,12 +28,12 @@ class FantasticoApp(object):
         '''Class used to save __call__ method from a wsgi middleware. It is used before chaining it at startup.'''
         
         def __init__(self, callable_obj):
-            self._callableObj = callable_obj
+            self._callable_obj = callable_obj
             
         def __call__(self, environ, start_response):
             '''Take the same number of arguments as any other middleware __call__ method.'''
              
-            return self._callableObj(environ, start_response)
+            return self._callable_obj(environ, start_response)
     
     def __init__(self, settings_facade=SettingsFacade):
         self._settings_facade = settings_facade()
