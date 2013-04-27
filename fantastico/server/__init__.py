@@ -14,34 +14,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-
-.. py:module:: fantastico.utils.instantiator
-
-This module provides helper methods used for instantiating classes by given string values.
 '''
-import importlib
-from fantastico.exceptions import FantasticoClassNotFoundError
-
-def instantiate_class(full_name, args=[]):
-    '''Method used to instantiate a class starting from it's full name.
-    
-    :param full_name: fully qualified class name.
-    :type full_name: string
-    :param args: A list of arguments we want to pass to the constructor.
-    :type args: list
-    :returns: A new instance of the full_name class.
-    '''
-    
-    last_dot = full_name.rfind(".")
-    
-    module_name, class_name = full_name[:last_dot], full_name[last_dot + 1:]
-    
-    try:
-        module = importlib.import_module(module_name)
-    except ImportError as ex:
-        raise FantasticoClassNotFoundError(str(ex))
-    
-    try:
-        return getattr(module, class_name)(*args)
-    except AttributeError as ex:
-        raise FantasticoClassNotFoundError(str(ex))    
