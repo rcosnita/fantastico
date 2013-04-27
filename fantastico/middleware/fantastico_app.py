@@ -27,8 +27,8 @@ class FantasticoApp(object):
     class OldCallableApp(object):
         '''Class used to save __call__ method from a wsgi middleware. It is used before chaining it at startup.'''
         
-        def __init__(self, callableObj):
-            self._callableObj = callableObj
+        def __init__(self, callable_obj):
+            self._callableObj = callable_obj
             
         def __call__(self, environ, start_response):
             '''Take the same number of arguments as any other middleware __call__ method.'''
