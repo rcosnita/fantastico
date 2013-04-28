@@ -49,7 +49,7 @@ class BasicSettings(object):
 class SettingsFacade(object):
     '''For using a specific fantastico configuration you need to do two simple steps:
 
-    * Set **FANTASTICO_ACTIVE_CONFIG** to the fully python qualified class name you want to use. E.g: :py:class:`fantastico.settings.BasicSettings`
+    * Set **FANTASTICO_ACTIVE_CONFIG** environment variable to the fully python qualified class name you want to use. E.g: :py:class:`fantastico.settings.BasicSettings`
     * In your code, you can use the following snippet to access a specific setting:
       
       .. code-block:: python
