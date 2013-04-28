@@ -17,9 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.routing_engine.routing_loaders
 '''
-from abc import ABCMeta
+from abc import abstractmethod
+from fantastico.settings import SettingsFacade
 
-class RouteLoader(metaclass=ABCMeta):
+class RouteLoader(metaclass=abc.ABCMeta):
     '''This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible
     for implementing its own business logic for loading routes.
     
@@ -34,4 +35,10 @@ class RouteLoader(metaclass=ABCMeta):
                         "/images/image.png", "fantastico.plugins.static_assets.StaticAssetsController.resolve_binary"}
     '''
     
+    def __init__(self, settings_facade=SettingsFacade):
+        self._settings_facade = settings_facade()
     
+    @abstractmethod
+    def load_routes(self):
+        '''This method must be overriden by each concrete implementation so that all loaded routes can be handled by
+        fantastico routing engine middleware.'''
