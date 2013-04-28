@@ -35,3 +35,6 @@ class FantasticoClassNotFoundError(FantasticoError):
 class FantasticoSettingNotFoundError(FantasticoError):
     '''This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
     configuration.'''
+    
+class FantasticoDuplicateRouteError(FantasticoError):
+    '''This exception is usually raised by routing engine when it detects duplicate routes.'''
