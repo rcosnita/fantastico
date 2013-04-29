@@ -41,3 +41,6 @@ class FantasticoDuplicateRouteError(FantasticoError):
     
 class FantasticoNoRoutesError(FantasticoError):
     '''This exception is usually raised by routing engine when no loaders are configured or no routes are registered.'''
+    
+class FantasticoRouteNotFoundError(FantasticoError):
+    '''This exception is usually raised by routing engine when a requested url is not registered.'''

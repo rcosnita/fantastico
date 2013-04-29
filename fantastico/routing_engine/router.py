@@ -20,8 +20,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
 import threading
-from fantastico.exceptions import FantasticoDuplicateRouteError,\
-    FantasticoNoRoutesError
+from fantastico.exceptions import FantasticoDuplicateRouteError, FantasticoNoRoutesError,\
+    FantasticoRouteNotFoundError
 
 class Router(object):
     '''This class is used for registering all available routes by using all registered loaders.'''
@@ -94,3 +94,27 @@ class Router(object):
             raise FantasticoNoRoutesError("No routes found with %s registered loaders." % len(self._loaders))
         
         return self._routes
+    
+    def handle_route(self, url, environ):
+        '''Method used to identify the given url method handler. It enrich the environ dictionary with a new entry that
+        holds a controller instance and a function to be executed from that controller.'''
+        
+        if url not in self._routes:
+            raise FantasticoRouteNotFoundError("Route %s is not registered." % url)
+        
+        route_config = self._routes[url]
+        
+        if route_config is None:
+            raise FantasticoNoRoutesError("Route %s has an invalid controller mapped." % url)
+        
+        last_dot = route_config.rfind(".")
+
+        if last_dot == -1:
+            raise FantasticoNoRoutesError("Route %s has an invalid controller mapped." % url)
+        
+        controller_cls =  route_config[:last_dot]
+        controller_meth = route_config[last_dot + 1:]
+        
+        environ["route_%s_handler" % url] = {"controller": instantiator.instantiate_class(controller_cls, 
+                                                                                          [self._settings_facade]),
+                                             "method": controller_meth}

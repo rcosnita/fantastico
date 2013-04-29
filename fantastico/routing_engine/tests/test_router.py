@@ -18,7 +18,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.routing_engine.tests.test_router
 '''
 from fantastico.exceptions import FantasticoClassNotFoundError, \
-    FantasticoDuplicateRouteError, FantasticoNoRoutesError
+    FantasticoDuplicateRouteError, FantasticoNoRoutesError, \
+    FantasticoRouteNotFoundError
 from fantastico.routing_engine.router import Router
 from fantastico.routing_engine.routing_loaders import RouteLoader
 from fantastico.tests.base_case import FantasticoUnitTestsCase
@@ -79,8 +80,8 @@ class RouterTests(FantasticoUnitTestsCase):
         routes = self._router.register_routes()
         
         self.assertIsNotNone(routes)
-        self.assertEqual("fantastico.routing_engine.router.tests.test_router.Controller.do_stuff", routes.get("/index.html"))
-        self.assertEqual("fantastico.routing_engine.router.tests.test_router.Controller.do_stuff2", routes.get("/index2.html"))
+        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff", routes.get("/index.html"))
+        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff2", routes.get("/index2.html"))
         
     def test_register_routes_conflict(self):
         '''Test case that ensures an exception is thrown whenever duplicate routes are detected.'''
@@ -142,8 +143,8 @@ class RouterTests(FantasticoUnitTestsCase):
         routes = self._router.register_routes()
         
         self.assertIsNotNone(routes)
-        self.assertEqual("fantastico.routing_engine.router.tests.test_router.Controller.do_stuff", routes.get("/index.html"))
-        self.assertEqual("fantastico.routing_engine.router.tests.test_router.Controller.do_stuff2", routes.get("/index2.html"))
+        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff", routes.get("/index.html"))
+        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff2", routes.get("/index2.html"))
 
     def test_no_loaders_error(self):
         '''Test case that ensures router will not work correctly without loaders configured in current configuration.'''
@@ -159,26 +160,87 @@ class RouterTests(FantasticoUnitTestsCase):
         
         self.assertRaises(FantasticoNoRoutesError, self._router.register_routes)
         
+    def test_handle_route_ok(self):
+        '''Test case that ensures handle route correctly instantiate the route handler and add it to WSGI environ dictionary.'''
+        
+        environ = {}
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader"])
+        
+        self._router.register_routes()
+        
+        self._router.handle_route("/index.html", environ)
+        
+        handler = environ.get("route_/index.html_handler")
+        
+        self.assertIsNotNone(handler)
+        self.assertIsInstance(handler.get("controller"), Controller)
+        self.assertEqual("do_stuff", handler.get("method"))
+        
+    def test_handle_route_controller_missing(self):
+        '''Test case that ensures handle route correctly raise an exception if it can't locate the requested controller.'''
+        
+        environ = {}
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader3"])
+        
+        self._router.register_routes()
+        
+        self.assertRaises(FantasticoClassNotFoundError, self._router.handle_route, *["/index.html", environ])
+        
+    def test_handle_route_empty_controller(self):
+        '''Test case that ensures handle route will raise a fantastico exception in case an None or empty string is
+        retrieved as route handler.'''
+        
+        environ = {}
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader3"])
+        
+        self._router.register_routes()
+        
+        self.assertRaises(FantasticoNoRoutesError, self._router.handle_route, *["/index2.html", environ])
+        
+    def test_handle_route_notfound(self):
+        '''This test case make sure an exception is thrown when a given url is not registered.'''
+
+        environ = {}
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader3"])
+        
+        self._router.register_routes()
+        
+        self.assertRaises(FantasticoRouteNotFoundError, self._router.handle_route, *["/not_found_route.html", environ])
+        
 class TestLoader(RouteLoader):
     '''Simple route loader used for unit testing.'''
     
     def load_routes(self):
-        return {"/index.html": "fantastico.routing_engine.router.tests.test_router.Controller.do_stuff"}
+        return {"/index.html": "fantastico.routing_engine.tests.test_router.Controller.do_stuff"}
     
 class TestLoader2(RouteLoader):
     '''Simple route loader used for unit testing.'''
     
     def load_routes(self):
-        return {"/index2.html": "fantastico.routing_engine.router.tests.test_router.Controller.do_stuff2"}
+        return {"/index2.html": "fantastico.routing_engine.tests.test_router.Controller.do_stuff2"}
     
 class TestLoader3(RouteLoader):
     '''Simple route loader used for unit testing.'''
     
     def load_routes(self):
-        return {"/index.html": "fantastico.routing_engine.router.tests.test_router.Controller.do_stuff2"}
+        return {"/index.html": "fantastico.routing_engine.tests.test_router.not_found.Controller.do_stuff2",
+                "/index2.html": ""}
     
 class TestLoaderEmpty(RouteLoader):
     '''Simple route loader meant to return no routes - unit testing purposes.'''
     
     def load_routes(self):
         return {}
+
+class Controller(object):
+    '''Just a simple controller used for unit testing purposes.'''
+    
+    def __init__(self, settings_facade):
+        self._settings_facade = settings_facade()
+        
+    def do_stuff(self, request):
+        '''Simple method for handling a route.'''
