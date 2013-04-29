@@ -20,7 +20,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
 import threading
-from fantastico.exceptions import FantasticoDuplicateRouteError, FantasticoNoRoutesError,\
+from fantastico.exceptions import FantasticoDuplicateRouteError, FantasticoNoRoutesError, \
     FantasticoRouteNotFoundError
 
 class Router(object):
