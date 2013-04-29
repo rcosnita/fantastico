@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.routing_engine.tests.test_router
 '''
 from fantastico.exceptions import FantasticoClassNotFoundError, \
-    FantasticoDuplicateRouteError
+    FantasticoDuplicateRouteError, FantasticoNoRoutesError
 from fantastico.routing_engine.router import Router
 from fantastico.routing_engine.routing_loaders import RouteLoader
 from fantastico.tests.base_case import FantasticoUnitTestsCase
@@ -144,6 +144,20 @@ class RouterTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(routes)
         self.assertEqual("fantastico.routing_engine.router.tests.test_router.Controller.do_stuff", routes.get("/index.html"))
         self.assertEqual("fantastico.routing_engine.router.tests.test_router.Controller.do_stuff2", routes.get("/index2.html"))
+
+    def test_no_loaders_error(self):
+        '''Test case that ensures router will not work correctly without loaders configured in current configuration.'''
+        
+        self._settings_facade.get = Mock(return_value=None)
+        
+        self.assertRaises(FantasticoNoRoutesError, self._router.get_loaders)
+        
+    def test_no_routes_error(self):
+        '''Test case that ensures no register routes causes registration process to raise an exception.'''
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoaderEmpty"])
+        
+        self.assertRaises(FantasticoNoRoutesError, self._router.register_routes)
         
 class TestLoader(RouteLoader):
     '''Simple route loader used for unit testing.'''
@@ -161,4 +175,10 @@ class TestLoader3(RouteLoader):
     '''Simple route loader used for unit testing.'''
     
     def load_routes(self):
-        return {"/index.html": "fantastico.routing_engine.router.tests.test_router.Controller.do_stuff2"}    
+        return {"/index.html": "fantastico.routing_engine.router.tests.test_router.Controller.do_stuff2"}
+    
+class TestLoaderEmpty(RouteLoader):
+    '''Simple route loader meant to return no routes - unit testing purposes.'''
+    
+    def load_routes(self):
+        return {}
