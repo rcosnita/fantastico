@@ -12,3 +12,6 @@ Exceptions hierarchy
 
 .. autoclass:: fantastico.exceptions.FantasticoDuplicateRouteError 
    :members:
+
+.. autoclass:: fantastico.exceptions.FantasticoNoRoutesError
+   :members:

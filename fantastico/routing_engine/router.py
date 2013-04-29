@@ -20,7 +20,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
 import threading
-from fantastico.exceptions import FantasticoDuplicateRouteError
+from fantastico.exceptions import FantasticoDuplicateRouteError,\
+    FantasticoNoRoutesError
 
 class Router(object):
     '''This class is used for registering all available routes by using all registered loaders.'''
@@ -36,7 +37,12 @@ class Router(object):
         '''Method used to retrieve all available loaders. If loaders are not currently instantiated they are by these method.
         This method also supports multi threaded workers mode of wsgi with really small memory footprint. It uses an internal
         lock so that it makes sure available loaders are instantiated only once per wsgi worker.'''
-        
+                
+        conf_loaders = self._settings_facade.get("routes_loaders") or []
+                
+        if len(conf_loaders) == 0:
+            raise FantasticoNoRoutesError("No loaders configured.")
+                        
         if self._loader_lock is not None and len(self._loaders) == 0:
             self._loader_lock = threading.Lock()
             self._loaders = []
@@ -45,7 +51,7 @@ class Router(object):
             self._loader_lock.acquire()
         
         if len(self._loaders) == 0:
-            for loader_cls in self._settings_facade.get("routes_loaders"):
+            for loader_cls in conf_loaders:
                 loader = instantiator.instantiate_class(loader_cls, [self._settings_facade])
                 
                 self._loaders.append(loader)
@@ -74,16 +80,17 @@ class Router(object):
             for loader in self._loaders:
                 loader_routes = loader.load_routes()
                 
-                route = None
-                
                 for route in loader_routes.keys():
                     if route in self._routes:
                         raise FantasticoDuplicateRouteError("Route %s already registered." % route)
                 
-                self._routes[route] = loader_routes[route]
-        
+                    self._routes[route] = loader_routes[route]
+                    
         if self._routes_lock:
             self._routes_lock.release()
             self._routes_lock = None
+        
+        if len(self._routes) == 0:
+            raise FantasticoNoRoutesError("No routes found with %s registered loaders." % len(self._loaders))
         
         return self._routes
