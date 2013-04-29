@@ -73,6 +73,9 @@ class Router(object):
         if len(self._routes) == 0:
             for loader in self._loaders:
                 loader_routes = loader.load_routes()
+                
+                route = None
+                
                 for route in loader_routes.keys():
                     if route in self._routes:
                         raise FantasticoDuplicateRouteError("Route %s already registered." % route)
