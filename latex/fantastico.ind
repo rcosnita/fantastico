@@ -15,6 +15,10 @@
   \item code (fantastico.locale.language.Language attribute), \hyperpage{11}
 
   \indexspace
+  \bigletter D
+  \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{14}
+
+  \indexspace
   \bigletter F
   \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{9}
@@ -48,7 +52,7 @@
 
   \indexspace
   \bigletter R
-  \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{13}
+  \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
   \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{10}
   \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{13}
   \item Router (class in fantastico.routing\_engine.router), \hyperpage{12}

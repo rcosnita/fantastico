@@ -22,7 +22,7 @@
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b28 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -129,6 +129,17 @@ configuration of available loaders:</p>
 </div>
 <p>The above configuration tells <strong>Fantastico routing engine</strong> that only CustomLoader is a source of routes. If you want to learn
 more about multiple configurations please read <a class="reference internal" href="../get_started/settings.html"><em>Fantastico settings</em></a>.</p>
+</div>
+<div class="section" id="dummyrouteloader">
+<h2>DummyRouteLoader</h2>
+<dl class="class">
+<dt id="fantastico.routing_engine.dummy_routeloader.DummyRouteLoader">
+<em class="property">class </em><tt class="descclassname">fantastico.routing_engine.dummy_routeloader.</tt><tt class="descname">DummyRouteLoader</tt><big>(</big><em>settings_facade</em><big>)</big><a class="reference internal" href="../_modules/fantastico/routing_engine/dummy_routeloader.html#DummyRouteLoader"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class represents an example of how to write a route loader. <strong>DummyRouteLoader</strong> is available in all configurations
+and it provides a single route to the routing engine: <em>/dummy/route/loader/test</em>. Integration tests rely on this loader
+to be configured in each available profile.</p>
+</dd></dl>
+
 </div>
 </div>
 

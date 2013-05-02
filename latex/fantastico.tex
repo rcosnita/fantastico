@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 02, 2013}
-\release{0.0.1-b27}
+\release{0.0.1-b28}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -525,7 +525,7 @@ Private property that holds the environments against which we run the integratio
 \index{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs}\pysiglinewithargsret{\bfcode{\_run\_test\_all\_envs}}{\emph{callableObj}}{}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs}\pysiglinewithargsret{\bfcode{\_run\_test\_all\_envs}}{\emph{callable\_obj}}{}
 This method is used to execute a callable block of code on all environments. This is extremely useful for
 avoid boiler plate code duplication and executing test logic against all environments.
 
@@ -837,6 +837,19 @@ configuration of available loaders:
 
 The above configuration tells \textbf{Fantastico routing engine} that only CustomLoader is a source of routes. If you want to learn
 more about multiple configurations please read {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
+
+
+\subsection{DummyRouteLoader}
+\label{features/routing_engine:dummyrouteloader}\index{DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/routing_engine:fantastico.routing_engine.dummy_routeloader.DummyRouteLoader}\pysiglinewithargsret{\strong{class }\code{fantastico.routing\_engine.dummy\_routeloader.}\bfcode{DummyRouteLoader}}{\emph{settings\_facade}}{}
+This class represents an example of how to write a route loader. \textbf{DummyRouteLoader} is available in all configurations
+and it provides a single route to the routing engine: \emph{/dummy/route/loader/test}. Integration tests rely on this loader
+to be configured in each available profile.
+
+\end{fulllineitems}
+
 
 
 \chapter{Build status}

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.middleware.request_context &mdash; fantastico 0.0.1-b28 documentation</title>
+    <title>fantastico.routing_engine.dummy_routeloader &mdash; fantastico 0.0.1-b28 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -43,7 +43,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for fantastico.middleware.request_context</h1><div class="highlight"><pre>
+  <h1>Source code for fantastico.routing_engine.dummy_routeloader</h1><div class="highlight"><pre>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
@@ -61,35 +61,19 @@
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 
-<span class="sd">.. py:module:: fantastico.middleware.request_context</span>
+<span class="sd">.. py:module:: fantastico.routing_engine.dummy_routeloader</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.routing_engine.routing_loaders</span> <span class="kn">import</span> <span class="n">RouteLoader</span>
 
-<div class="viewcode-block" id="RequestContext"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.middleware.request_context.RequestContext">[docs]</a><span class="k">class</span> <span class="nc">RequestContext</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This class holds various attributes useful giving a context to an http request. Among other things we need </span>
-<span class="sd">    to be able to access current language, current session and possible current user profile.&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="DummyRouteLoader"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.dummy_routeloader.DummyRouteLoader">[docs]</a><span class="k">class</span> <span class="nc">DummyRouteLoader</span><span class="p">(</span><span class="n">RouteLoader</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class represents an example of how to write a route loader. **DummyRouteLoader** is available in all configurations</span>
+<span class="sd">    and it provides a single route to the routing engine: */dummy/route/loader/test*. Integration tests rely on this loader</span>
+<span class="sd">    to be configured in each available profile.&#39;&#39;&#39;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        :param language: The language associated with the current request.</span>
-<span class="sd">        :type language: fantastico.locale.language.Language</span>
-<span class="sd">        :param settings: The current settings facade that can be used to obtain items from framework configuration.</span>
-<span class="sd">        :type settings: fantastico.settings.SettingsFacade </span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="n">settings</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_language</span> <span class="o">=</span> <span class="n">language</span>
-        
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="RequestContext.settings"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.middleware.request_context.RequestContext.settings">[docs]</a>    <span class="k">def</span> <span class="nf">settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Property that holds the current settings facade used for accessing fantastico configuration.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span>
-    </div>
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="RequestContext.language"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.middleware.request_context.RequestContext.language">[docs]</a>    <span class="k">def</span> <span class="nf">language</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Property that holds the current language that must be used during this request.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_language</span></div></div>
+    <span class="n">DUMMY_ROUTE</span> <span class="o">=</span> <span class="s">&quot;/dummy/route/loader/test&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">load_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">:</span> <span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test&quot;</span><span class="p">}</span></div>
 </pre></div>
 
           </div>

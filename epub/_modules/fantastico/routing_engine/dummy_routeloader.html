@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.locale.language</title>
+    <title>fantastico.routing_engine.dummy_routeloader</title>
     
     <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
@@ -28,7 +28,7 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <h1>Source code for fantastico.locale.language</h1><div class="highlight"><pre>
+  <h1>Source code for fantastico.routing_engine.dummy_routeloader</h1><div class="highlight"><pre>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
@@ -46,36 +46,19 @@
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 
-<span class="sd">.. py:module:: fantastico.locale.language</span>
+<span class="sd">.. py:module:: fantastico.routing_engine.dummy_routeloader</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.routing_engine.routing_loaders</span> <span class="kn">import</span> <span class="n">RouteLoader</span>
 
-<div class="viewcode-block" id="Language"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language">[docs]</a><span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Class used to define how does language object looks like. There are various use cases for using language but</span>
-<span class="sd">    the simplest one is in request context object: </span>
-<span class="sd">    </span>
-<span class="sd">    .. code-block:: python</span>
-<span class="sd">    </span>
-<span class="sd">       language = request.context.language</span>
-<span class="sd">       </span>
-<span class="sd">       if language.code = &quot;en_us&quot;:</span>
-<span class="sd">          print(&quot;English (US) language&quot;).</span>
-<span class="sd">       else:</span>
-<span class="sd">          raise Exception(&quot;Language %s is not supported.&quot; % language.code) </span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="DummyRouteLoader"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.dummy_routeloader.DummyRouteLoader">[docs]</a><span class="k">class</span> <span class="nc">DummyRouteLoader</span><span class="p">(</span><span class="n">RouteLoader</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class represents an example of how to write a route loader. **DummyRouteLoader** is available in all configurations</span>
+<span class="sd">    and it provides a single route to the routing engine: */dummy/route/loader/test*. Integration tests rely on this loader</span>
+<span class="sd">    to be configured in each available profile.&#39;&#39;&#39;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span>
+    <span class="n">DUMMY_ROUTE</span> <span class="o">=</span> <span class="s">&quot;/dummy/route/loader/test&quot;</span>
     
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="Language.code"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language.code">[docs]</a>    <span class="k">def</span> <span class="nf">code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Property that holds the language code. This is readonly because once instantiated we mustn&#39;t be able to change it.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span>
-    </div>
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Method used to convert the current instance into a string object.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span></div>
+    <span class="k">def</span> <span class="nf">load_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">:</span> <span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test&quot;</span><span class="p">}</span></div>
 </pre></div>
 
           </div>

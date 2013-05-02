@@ -100,6 +100,9 @@
     <item id="_modules_fantastico_routing_engine_router.html"
           href="_modules/fantastico/routing_engine/router.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_routing_engine_dummy_routeloader.html"
+          href="_modules/fantastico/routing_engine/dummy_routeloader.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_routing_engine_routing_loaders.html"
           href="_modules/fantastico/routing_engine/routing_loaders.html"
           media-type="application/xhtml+xml" />

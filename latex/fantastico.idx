@@ -23,6 +23,7 @@
 \indexentry{Router (class in fantastico.routing\_engine.router)|hyperpage}{12}
 \indexentry{get\_loaders() (fantastico.routing\_engine.router.Router method)|hyperpage}{12}
 \indexentry{handle\_route() (fantastico.routing\_engine.router.Router method)|hyperpage}{12}
-\indexentry{register\_routes() (fantastico.routing\_engine.router.Router method)|hyperpage}{13}
+\indexentry{register\_routes() (fantastico.routing\_engine.router.Router method)|hyperpage}{12}
 \indexentry{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)|hyperpage}{13}
 \indexentry{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)|hyperpage}{13}
+\indexentry{DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader)|hyperpage}{14}

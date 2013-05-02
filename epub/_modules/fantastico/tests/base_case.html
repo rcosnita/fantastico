@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b28 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -104,7 +104,7 @@
         
         <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoIntegrationTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
         
-<div class="viewcode-block" id="FantasticoIntegrationTestCase._run_test_all_envs"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs">[docs]</a>    <span class="k">def</span> <span class="nf">_run_test_all_envs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callableObj</span><span class="p">):</span>
+<div class="viewcode-block" id="FantasticoIntegrationTestCase._run_test_all_envs"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs">[docs]</a>    <span class="k">def</span> <span class="nf">_run_test_all_envs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callable_obj</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used to execute a callable block of code on all environments. This is extremely useful for</span>
 <span class="sd">        avoid boiler plate code duplication and executing test logic against all environments.        </span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -115,7 +115,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">env</span>
                 
-                <span class="n">callableObj</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">)</span>
+                <span class="n">callable_obj</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">)</span>
             <span class="k">finally</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">old_env</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">old_env</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>

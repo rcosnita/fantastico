@@ -206,6 +206,12 @@
           </navLabel>
           <content src="features/routing_engine.html#configuring-available-loaders" />
         </navPoint>
+        <navPoint id="navPoint25" playOrder="25">
+          <navLabel>
+            <text>DummyRouteLoader</text>
+          </navLabel>
+          <content src="features/routing_engine.html#dummyrouteloader" />
+        </navPoint>
       </navPoint>
     </navPoint>
   </navMap>
