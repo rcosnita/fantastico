@@ -73,7 +73,7 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         
         super(FantasticoIntegrationTestCase, self).setUp()
         
-    def _run_test_all_envs(self, callableObj):
+    def _run_test_all_envs(self, callable_obj):
         '''This method is used to execute a callable block of code on all environments. This is extremely useful for
         avoid boiler plate code duplication and executing test logic against all environments.        
         '''
@@ -84,7 +84,7 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
             try:
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
                 
-                callableObj(env, settings_cls)
+                callable_obj(env, settings_cls)
             finally:
                 if old_env is None:
                     old_env = ""
