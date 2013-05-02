@@ -44,3 +44,7 @@ class FantasticoNoRoutesError(FantasticoError):
     
 class FantasticoRouteNotFoundError(FantasticoError):
     '''This exception is usually raised by routing engine when a requested url is not registered.'''
+    
+class FantasticoNoRequestError(FantasticoError):
+    '''This exception is usually raised when some components try to use fantastico.request from WSGI environ before 
+    :py:class:`fantastico.middleware.request_middleware.RequestMiddleware` was executed.'''
