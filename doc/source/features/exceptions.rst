@@ -18,3 +18,6 @@ Exceptions hierarchy
 
 .. autoclass:: fantastico.exceptions.FantasticoRouteNotFoundError
    :members:
+
+.. autoclass:: fantastico.exceptions.FantasticoNoRequestError
+   :members:
