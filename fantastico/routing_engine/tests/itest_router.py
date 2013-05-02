@@ -20,6 +20,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.routing_engine.router import Router
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from fantastico.exceptions import FantasticoRouteNotFoundError
+from fantastico.routing_engine.dummy_routeloader import DummyRouteLoader
 
 class RouterIntegration(FantasticoIntegrationTestCase):
     '''This class provides all test cases to ensure router is correctly working in all available configuration profiles.'''
@@ -27,13 +28,36 @@ class RouterIntegration(FantasticoIntegrationTestCase):
     def init(self):
         self._environ = {}
         
+        self._router = Router()
+
+    def test_router_initialization(self):
+        '''Test case that ensures initialization sequence for the router does not throw exceptions.'''
+        
+        def exec_logic(env, settings_cls):
+            self.assertGreater(len(self._router.register_routes()), 0)
+            
+        self._run_test_all_envs(exec_logic)
+
     def test_route_not_found(self):
         '''Test case that ensures an exception is raised when a page is not found.'''
         
-        def exec_logic(env, settings_cls):
-            self._router = Router(settings_cls)
-            
+        def exec_logic(env, settings_cls):            
             self.assertRaises(FantasticoRouteNotFoundError, self._router.handle_route,
                               *["/sure/url/not/found/in/here", self._environ])
             
         self._run_test_all_envs(exec_logic)
+        
+    def test_route_found(self):
+        '''This test case ensures dummy loader route can be handled correctly. In addition it shows that router
+        does exactly what is supposed to do: populate environ dictionary with required object so that another
+        wsgi middleware can execute the current request controller method.'''
+        
+        def exec_logic(env, settings_cls):
+            self._router.handle_route(DummyRouteLoader.DUMMY_ROUTE, self._environ)
+            
+            route_handler = "route_%s_handler" % DummyRouteLoader.DUMMY_ROUTE
+            route_handler = self._environ.get(route_handler)
+            
+            self.assertIsNotNone(route_handler)
+            self.assertIsInstance(route_handler["controller"], DummyRouteLoader)
+            self.assertEqual("display_test", route_handler["method"])

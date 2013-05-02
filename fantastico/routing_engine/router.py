@@ -43,7 +43,7 @@ class Router(object):
         if len(conf_loaders) == 0:
             raise FantasticoNoRoutesError("No loaders configured.")
                         
-        if self._loader_lock is not None and len(self._loaders) == 0:
+        if self._loader_lock is None and len(self._loaders) == 0:
             self._loader_lock = threading.Lock()
             self._loaders = []
         
