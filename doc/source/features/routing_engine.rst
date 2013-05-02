@@ -63,3 +63,13 @@ DummyRouteLoader
 
 .. autoclass:: fantastico.routing_engine.dummy_routeloader.DummyRouteLoader
     :members:
+
+Routing middleware
+------------------
+
+**Fantastico** routing engine is designed as a standalone component. In order to be able to integrate it into Fantastico request
+lifecycle (:doc:/features/request_response.) we need an adapter component.
+
+
+.. autoclass:: fantastico.middleware.routing_middleware.RoutingMiddleware
+    :members:
