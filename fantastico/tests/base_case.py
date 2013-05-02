@@ -30,6 +30,13 @@ class FantasticoBaseTestCase(unittest.TestCase):
         if hasattr(self, "init"):
             init = getattr(self, "init")
             init()
+            
+    def tearDown(self):
+        '''We make the convention that teardown method will always invoke cleanup method for each test case.'''
+        
+        if hasattr(self, "cleanup"):
+            cleanup = getattr(self, "cleanup")
+            cleanup()
     
 class FantasticoUnitTestsCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each unit test written for fantastico.
@@ -45,6 +52,9 @@ class FantasticoUnitTestsCase(FantasticoBaseTestCase):
     
     def setUp(self):
         super(FantasticoUnitTestsCase, self).setUp()
+        
+    def tearDown(self):
+        super(FantasticoUnitTestsCase, self).tearDown()        
     
 class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each integration test written for fantastico.
@@ -72,6 +82,9 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         self.__envs = [("fantastico.settings.BasicSettings", BasicSettings)]
         
         super(FantasticoIntegrationTestCase, self).setUp()
+        
+    def tearDown(self):
+        super(FantasticoIntegrationTestCase, self).tearDown()
         
     def _run_test_all_envs(self, callable_obj):
         '''This method is used to execute a callable block of code on all environments. This is extremely useful for

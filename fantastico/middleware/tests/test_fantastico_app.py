@@ -25,8 +25,13 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
     '''Class that provides the test suite for ensuring that fantastico wsgi app is working as expected.'''
 
     def init(self):
+        self._old_call = FantasticoApp.__call__
+        
         self._settings_facade = Mock()
         self._settings_facade_cls = Mock(return_value=self._settings_facade)
+ 
+    def cleanup(self):
+        FantasticoApp.__call__ = self._old_call
         
     def test_middlewares_wrapped(self):
         '''Test case that ensures configured middlewares from a config profile are wrapped in the correct order.'''
@@ -38,7 +43,14 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         app = FantasticoApp(self._settings_facade_cls)        
         
         app(environ, Mock())
+
         self.assertTrue(environ.get("test_wrapped_ok"))
+        
+        chained_resp = environ.get("middlewares_responses")
+        self.assertIsNotNone(chained_resp)
+        self.assertEqual(1, len(chained_resp))
+        self.assertEqual(["middleware"], chained_resp)
+        
         
     def test_middleware_wrapped_in_order(self):
         self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware",
@@ -61,9 +73,7 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
     def test_wrap_no_middleware(self):
         '''Test case that ensures the app entry point works as expected even if no middlewares are installed.'''
         
-        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware",
-                                                       "fantastico.middleware.tests.test_fantastico_app.MockedMiddleware2",
-                                                       "fantastico.middleware.tests.test_fantastico_app.MockedMiddleware3"])
+        self._settings_facade.get = Mock(return_value=[])
         
         environ = {}
         
@@ -74,13 +84,22 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         self.assertTrue(True)
         
     def test_middleware_not_found_ex(self):
-        '''Test caes that ensures an exception is raised when an invalid middleware is specified.'''
+        '''Test case that ensures an exception is raised when an invalid middleware is specified.'''
         
         self._settings_facade.get = Mock(return_value=["not.found.exception"])        
         self.assertRaises(FantasticoClassNotFoundError, FantasticoApp, *[self._settings_facade_cls])
         
         self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware1099"])
         self.assertRaises(FantasticoClassNotFoundError, FantasticoApp, *[self._settings_facade_cls])
+        
+    def test_exec_controller_ok(self):
+        '''This test case ensures that requested route is executed - success scenario.'''
+
+        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+                
+        app_middleware = FantasticoApp(self._settings_facade_cls)
+        
+        mock_request = None
         
 class MockedMiddleware(object):
     '''This is a mocked middleware used for unit testing purposes.'''
@@ -92,7 +111,10 @@ class MockedMiddleware(object):
         '''Method used to provide a very simple middleware action which can be asserted against.'''
         
         environ["test_wrapped_ok"] = True
-        environ["middlewares_responses"] = ["middleware"]
+        
+        tmp = environ.get("middlewares_responses", [])
+        tmp.append("middleware")
+        environ["middlewares_responses"] = tmp
         
         return self._app(environ, start_response)
     
