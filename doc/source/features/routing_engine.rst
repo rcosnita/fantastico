@@ -57,3 +57,9 @@ configuration of available loaders:
             
 The above configuration tells **Fantastico routing engine** that only CustomLoader is a source of routes. If you want to learn
 more about multiple configurations please read :doc:`/get_started/settings`.
+
+DummyRouteLoader
+----------------
+
+.. autoclass:: fantastico.routing_engine.dummy_routeloader.DummyRouteLoader
+    :members:
