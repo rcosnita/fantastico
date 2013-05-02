@@ -14,8 +14,17 @@ be generated. Below, you can find a simple example of how requests are processed
  
 .. image:: /images/request_response/request_response_sd.png
 
-In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and response
-objects. For more information read `WebOB Doc <http://docs.webob.org/en/latest/reference.html>`_.
+In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and
+response objects. For more information read `WebOB Doc <http://docs.webob.org/en/latest/reference.html>`_.
+
+Request middleware
+------------------
+
+To have very good control of how WSGI environ is wrapped into **WebOb request** object a middleware component is configured. This
+is the first middleware that is executed for every single http request.
+
+.. autoclass:: fantastico.middleware.request_middleware.RequestMiddleware
+   :members:
 
 Request context
 ---------------
