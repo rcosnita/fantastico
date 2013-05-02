@@ -22,7 +22,7 @@
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b30 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b31 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -157,7 +157,8 @@ responsible for:</p>
 <li>handle route requests (<a class="reference internal" href="#fantastico.routing_engine.router.Router.handle_route" title="fantastico.routing_engine.router.Router.handle_route"><tt class="xref py py-func docutils literal"><span class="pre">fantastico.routing_engine.router.Router.handle_route()</span></tt></a>).</li>
 </ol>
 <p>It is important to understand that routing middleware assume a <strong>WebOb request</strong> available into WSGI environ. Otherwise, 
-an exception will be thrown. You can read more about request middleware at <a class="reference internal" href="request_response.html"><em>Request lifecycle</em></a>.</p>
+<a class="reference internal" href="exceptions.html#fantastico.exceptions.FantasticoNoRequestError" title="fantastico.exceptions.FantasticoNoRequestError"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.exceptions.FantasticoNoRequestError</span></tt></a> will be thrown. You can read more about request middleware 
+at <a class="reference internal" href="request_response.html"><em>Request lifecycle</em></a>.</p>
 </dd></dl>
 
 </div>

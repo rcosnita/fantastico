@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b30 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b31 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -60,7 +60,8 @@
 <span class="sd">    #. handle route requests (:py:func:`fantastico.routing_engine.router.Router.handle_route`).</span>
 <span class="sd">    </span>
 <span class="sd">    It is important to understand that routing middleware assume a **WebOb request** available into WSGI environ. Otherwise, </span>
-<span class="sd">    an exception will be thrown. You can read more about request middleware at :doc:`/features/request_response`.&#39;&#39;&#39;</span>
+<span class="sd">    :py:class:`fantastico.exceptions.FantasticoNoRequestError` will be thrown. You can read more about request middleware </span>
+<span class="sd">    at :doc:`/features/request_response`.&#39;&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">router_cls</span> <span class="o">=</span> <span class="n">Router</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">app</span>

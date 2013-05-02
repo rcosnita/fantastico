@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 02, 2013}
-\release{0.0.1-b30}
+\release{0.0.1-b31}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -594,6 +594,15 @@ This exception is usually raised by routing engine when a requested url is not r
 
 \end{fulllineitems}
 
+\index{FantasticoNoRequestError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNoRequestError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNoRequestError}}
+This exception is usually raised when some components try to use fantastico.request from WSGI environ before 
+{\hyperref[features/request_response:fantastico.middleware.request_middleware.RequestMiddleware]{\code{fantastico.middleware.request\_middleware.RequestMiddleware}}} was executed.
+
+\end{fulllineitems}
+
 
 
 \section{Request lifecycle}
@@ -618,8 +627,23 @@ be generated. Below, you can find a simple example of how requests are processed
 
 \includegraphics{request_response_sd.png}
 
-In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and response
-objects. For more information read \href{http://docs.webob.org/en/latest/reference.html}{WebOB Doc}.
+In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and
+response objects. For more information read \href{http://docs.webob.org/en/latest/reference.html}{WebOB Doc}.
+
+
+\subsection{Request middleware}
+\label{features/request_response:request-middleware}
+To have very good control of how WSGI environ is wrapped into \textbf{WebOb request} object a middleware component is configured. This
+is the first middleware that is executed for every single http request.
+\index{RequestMiddleware (class in fantastico.middleware.request\_middleware)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/request_response:fantastico.middleware.request_middleware.RequestMiddleware}\pysiglinewithargsret{\strong{class }\code{fantastico.middleware.request\_middleware.}\bfcode{RequestMiddleware}}{\emph{app}}{}
+This class provides the middleware responsible for converting wsgi environ dictionary into a request. The result is saved
+into current WSGI environ under key \textbf{fantastico.request}.
+
+\end{fulllineitems}
+
 
 
 \subsection{Request context}
@@ -878,7 +902,8 @@ handle route requests ({\hyperref[features/routing_engine:fantastico.routing_eng
 \end{enumerate}
 
 It is important to understand that routing middleware assume a \textbf{WebOb request} available into WSGI environ. Otherwise, 
-an exception will be thrown. You can read more about request middleware at {\hyperref[features/request_response::doc]{\emph{Request lifecycle}}}.
+{\hyperref[features/exceptions:fantastico.exceptions.FantasticoNoRequestError]{\code{fantastico.exceptions.FantasticoNoRequestError}}} will be thrown. You can read more about request middleware 
+at {\hyperref[features/request_response::doc]{\emph{Request lifecycle}}}.
 
 \end{fulllineitems}
 

@@ -24,6 +24,7 @@
   \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{6}
+  \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{9}
@@ -46,14 +47,15 @@
   \indexspace
   \bigletter L
   \item Language (class in fantastico.locale.language), \hyperpage{11}
-  \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{10}
+  \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{11}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
 		\hyperpage{13}
 
   \indexspace
   \bigletter R
   \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
-  \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{10}
+  \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{11}
+  \item RequestMiddleware (class in fantastico.middleware.request\_middleware), \hyperpage{10}
   \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{13}
   \item Router (class in fantastico.routing\_engine.router), \hyperpage{12}
   \item routes\_loaders (fantastico.settings.BasicSettings attribute), \hyperpage{4}
@@ -61,7 +63,7 @@
 
   \indexspace
   \bigletter S
-  \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{10}
+  \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{11}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
 

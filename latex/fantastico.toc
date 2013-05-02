@@ -18,9 +18,10 @@
 \contentsline {chapter}{\numberline {3}Fantastico features}{9}{chapter.3}
 \contentsline {section}{\numberline {3.1}Exceptions hierarchy}{9}{section.3.1}
 \contentsline {section}{\numberline {3.2}Request lifecycle}{10}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Request context}{10}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Obtain request language}{11}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Obtain settings using request}{11}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.1}Request middleware}{10}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Request context}{11}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Obtain request language}{11}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Obtain settings using request}{11}{subsection.3.2.4}
 \contentsline {section}{\numberline {3.3}Routing engine}{12}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Routes loaders}{13}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}How to write a new route loader}{13}{subsection.3.3.2}
@@ -29,4 +30,4 @@
 \contentsline {subsection}{\numberline {3.3.5}Routing middleware}{14}{subsection.3.3.5}
 \contentsline {chapter}{\numberline {4}Build status}{15}{chapter.4}
 \contentsline {chapter}{\numberline {5}License}{17}{chapter.5}
-\contentsline {chapter}{Index}{19}{section*.35}
+\contentsline {chapter}{Index}{19}{section*.37}

@@ -15,9 +15,11 @@
 \indexentry{FantasticoDuplicateRouteError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoNoRoutesError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoRouteNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
-\indexentry{RequestContext (class in fantastico.middleware.request\_context)|hyperpage}{10}
-\indexentry{language (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{10}
-\indexentry{settings (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{10}
+\indexentry{FantasticoNoRequestError (class in fantastico.exceptions)|hyperpage}{9}
+\indexentry{RequestMiddleware (class in fantastico.middleware.request\_middleware)|hyperpage}{10}
+\indexentry{RequestContext (class in fantastico.middleware.request\_context)|hyperpage}{11}
+\indexentry{language (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{11}
+\indexentry{settings (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{11}
 \indexentry{Language (class in fantastico.locale.language)|hyperpage}{11}
 \indexentry{code (fantastico.locale.language.Language attribute)|hyperpage}{11}
 \indexentry{Router (class in fantastico.routing\_engine.router)|hyperpage}{12}

@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="exceptions.html" title="Exceptions hierarchy"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b30 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b31 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -49,8 +49,20 @@ that contains various useful keys:</p>
 framework follows a Request / Response paradigm. This mean that for every single http request only one single http response will
 be generated. Below, you can find a simple example of how requests are processed by fantastico framework:</p>
 <img alt="../_images/request_response_sd.png" src="../_images/request_response_sd.png" />
-<p>In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and response
-objects. For more information read <a class="reference external" href="http://docs.webob.org/en/latest/reference.html">WebOB Doc</a><span class="link-target"> [http://docs.webob.org/en/latest/reference.html]</span>.</p>
+<p>In order to not reinvent the wheels fantastico relies on WebOb python framework in order to correctly generate request and
+response objects. For more information read <a class="reference external" href="http://docs.webob.org/en/latest/reference.html">WebOB Doc</a><span class="link-target"> [http://docs.webob.org/en/latest/reference.html]</span>.</p>
+<div class="section" id="request-middleware">
+<h2>Request middleware</h2>
+<p>To have very good control of how WSGI environ is wrapped into <strong>WebOb request</strong> object a middleware component is configured. This
+is the first middleware that is executed for every single http request.</p>
+<dl class="class">
+<dt id="fantastico.middleware.request_middleware.RequestMiddleware">
+<em class="property">class </em><tt class="descclassname">fantastico.middleware.request_middleware.</tt><tt class="descname">RequestMiddleware</tt><big>(</big><em>app</em><big>)</big><a class="reference internal" href="../_modules/fantastico/middleware/request_middleware.html#RequestMiddleware"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the middleware responsible for converting wsgi environ dictionary into a request. The result is saved
+into current WSGI environ under key <strong>fantastico.request</strong>.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="request-context">
 <h2>Request context</h2>
 <p>In comparison with WebOb <strong>Fantastico</strong> provides a nice improvement. For facilitating easy development of code, each fantastico

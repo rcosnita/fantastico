@@ -91,6 +91,9 @@
     <item id="_modules_fantastico_exceptions.html"
           href="_modules/fantastico/exceptions.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_middleware_request_middleware.html"
+          href="_modules/fantastico/middleware/request_middleware.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_middleware_routing_middleware.html"
           href="_modules/fantastico/middleware/routing_middleware.html"
           media-type="application/xhtml+xml" />
