@@ -22,7 +22,7 @@
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b28 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b29 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -138,6 +138,26 @@ more about multiple configurations please read <a class="reference internal" hre
 <dd><p>This class represents an example of how to write a route loader. <strong>DummyRouteLoader</strong> is available in all configurations
 and it provides a single route to the routing engine: <em>/dummy/route/loader/test</em>. Integration tests rely on this loader
 to be configured in each available profile.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="routing-middleware">
+<h2>Routing middleware</h2>
+<p><strong>Fantastico</strong> routing engine is designed as a standalone component. In order to be able to integrate it into Fantastico request
+lifecycle (:doc:/features/request_response.) we need an adapter component.</p>
+<dl class="class">
+<dt id="fantastico.middleware.routing_middleware.RoutingMiddleware">
+<em class="property">class </em><tt class="descclassname">fantastico.middleware.routing_middleware.</tt><tt class="descname">RoutingMiddleware</tt><big>(</big><em>app</em>, <em>router_cls=&lt;class 'fantastico.routing_engine.router.Router'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/middleware/routing_middleware.html#RoutingMiddleware"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Class used to integrate routing engine fantastico component into request / response lifecycle. This middleware is 
+responsible for:</p>
+<ol class="arabic simple">
+<li>instantiating the router component and make it available to other components / middlewares through WSGI environment.</li>
+<li>register all configured fantastico loaders (<a class="reference internal" href="#fantastico.routing_engine.router.Router.get_loaders" title="fantastico.routing_engine.router.Router.get_loaders"><tt class="xref py py-func docutils literal"><span class="pre">fantastico.routing_engine.router.Router.get_loaders()</span></tt></a>).</li>
+<li>register all available routes (<a class="reference internal" href="#fantastico.routing_engine.router.Router.register_routes" title="fantastico.routing_engine.router.Router.register_routes"><tt class="xref py py-func docutils literal"><span class="pre">fantastico.routing_engine.router.Router.register_routes()</span></tt></a>).</li>
+<li>handle route requests (<a class="reference internal" href="#fantastico.routing_engine.router.Router.handle_route" title="fantastico.routing_engine.router.Router.handle_route"><tt class="xref py py-func docutils literal"><span class="pre">fantastico.routing_engine.router.Router.handle_route()</span></tt></a>).</li>
+</ol>
+<p>It is important to understand that routing middleware assume a <strong>WebOb request</strong> available into WSGI environ. Otherwise, 
+an exception will be thrown. You can read more about request middleware at <a class="reference internal" href="request_response.html"><em>Request lifecycle</em></a>.</p>
 </dd></dl>
 
 </div>

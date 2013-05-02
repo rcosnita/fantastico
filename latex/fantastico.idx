@@ -27,3 +27,4 @@
 \indexentry{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)|hyperpage}{13}
 \indexentry{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)|hyperpage}{13}
 \indexentry{DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader)|hyperpage}{14}
+\indexentry{RoutingMiddleware (class in fantastico.middleware.routing\_middleware)|hyperpage}{14}

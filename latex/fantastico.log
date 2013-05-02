@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  2 MAY 2013 08:21
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  2 MAY 2013 14:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -973,16 +973,16 @@ Overfull \hbox (21.31381pt too wide) in paragraph at lines 503--503
 
 ]
 Chapter 3.
-<exceptions.png, id=183, 829.98743pt x 327.07762pt>
+<exceptions.png, id=183, 836.69289pt x 365.82031pt>
 File: exceptions.png Graphic file (type png)
  <use exceptions.png>
 Package pdftex.def Info: exceptions.png used on input line 547.
-(pdftex.def)             Requested size: 829.98541pt x 327.07681pt.
+(pdftex.def)             Requested size: 836.69084pt x 365.81941pt.
 File: exceptions.png Graphic file (type png)
 
 <use exceptions.png>
 Package pdftex.def Info: exceptions.png used on input line 547.
-(pdftex.def)             Requested size: 444.75497pt x 175.26677pt.
+(pdftex.def)             Requested size: 444.75497pt x 194.4532pt.
  [9 <./exceptions.png>]
 <request_response_sd.png, id=195, 873.2625pt x 435.87843pt>
 File: request_response_sd.png Graphic file (type png)
@@ -1013,6 +1013,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 732--732
 [12 <./routing_engine.png>] [13]
 Overfull \hbox (11.96382pt too wide) in paragraph at lines 846--846
 []\T1/ptm/m/it/10 settings_facade\T1/pcr/m/n/10 ) 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 862--862
+[]\T1/ptm/m/it/10 app\T1/ptm/m/n/10 ,
+ []
+
+
+Overfull \hbox (5.90364pt too wide) in paragraph at lines 862--862
+\T1/ptm/m/it/10 router_cls=<class
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 862--862
+\T1/ptm/m/it/10 `fan-tas-
+ []
+
+
+Overfull \hbox (81.49327pt too wide) in paragraph at lines 862--862
+\T1/ptm/m/it/10 tico.routing_engine.router.Router'>\T1/pcr/m/n/10 ) 
+ []
+
+
+Overfull \hbox (64.17311pt too wide) in paragraph at lines 870--871
+[]\T1/ptm/m/n/10 register all con-fig-ured fan-tas-tico load-ers ([][]\T1/pcr/m
+/n/10 fantastico.routing_engine.router.Router.get_loaders()[][]\T1/ptm/m/n/10 )
+. 
+ []
+
+
+Overfull \hbox (35.9335pt too wide) in paragraph at lines 873--874
+[]\T1/ptm/m/n/10 register all avail-able routes ([][]\T1/pcr/m/n/10 fantastico.
+routing_engine.router.Router.register_routes()[][]\T1/ptm/m/n/10 ). 
  []
 
 [14]
@@ -1124,36 +1157,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 59--60
  []
 
 
-Overfull \hbox (25.9594pt too wide) in paragraph at lines 63--64
+Underfull \hbox (badness 10000) in paragraph at lines 60--61
+[]\T1/ptm/m/n/10 RoutingMiddleware (class in fan-tas-
+ []
+
+
+Overfull \hbox (25.9594pt too wide) in paragraph at lines 64--65
 []\T1/ptm/m/n/10 settings (fan-tas-tico.middleware.request_context.RequestConte
 xt
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--66
+Underfull \hbox (badness 10000) in paragraph at lines 66--67
 []\T1/ptm/m/n/10 supported_languages (fan-tas-tico.settings.BasicSettings
  []
 
 [19
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 880.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 880.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 912.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 912.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 880.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 880.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 912.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 912.
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
-(rerunfilecheck)             Checksum: 1A510F201E15FC6C1696D90B6668F9B9;809.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 880.
+(rerunfilecheck)             Checksum: 23F0CA4E314B62954B0DCBEB5E63621B;809.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 912.
  ) 
 Here is how much of TeX's memory you used:
- 9073 strings out of 493485
- 127718 string characters out of 3143526
- 224420 words of memory out of 3000000
- 12022 multiletter control sequences out of 15000+200000
+ 9081 strings out of 493485
+ 127901 string characters out of 3143526
+ 224523 words of memory out of 3000000
+ 12024 multiletter control sequences out of 15000+200000
  61581 words of font info for 70 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 36i,12n,45p,310b,476s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,12n,45p,361b,476s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
@@ -1163,10 +1201,10 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (23 pages, 203908 bytes).
+Output written on fantastico.pdf (23 pages, 207889 bytes).
 PDF statistics:
- 353 PDF objects out of 1000 (max. 8388607)
- 306 compressed objects within 4 object streams
- 106 named destinations out of 1000 (max. 500000)
+ 366 PDF objects out of 1000 (max. 8388607)
+ 319 compressed objects within 4 object streams
+ 112 named destinations out of 1000 (max. 500000)
  153 words of extra memory for PDF output out of 10000 (max. 10000000)
 

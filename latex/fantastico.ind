@@ -57,6 +57,7 @@
   \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{13}
   \item Router (class in fantastico.routing\_engine.router), \hyperpage{12}
   \item routes\_loaders (fantastico.settings.BasicSettings attribute), \hyperpage{4}
+  \item RoutingMiddleware (class in fantastico.middleware.routing\_middleware), \hyperpage{14}
 
   \indexspace
   \bigletter S

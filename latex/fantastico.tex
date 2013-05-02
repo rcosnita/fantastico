@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 02, 2013}
-\release{0.0.1-b28}
+\release{0.0.1-b29}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -847,6 +847,38 @@ more about multiple configurations please read {\hyperref[get_started/settings::
 This class represents an example of how to write a route loader. \textbf{DummyRouteLoader} is available in all configurations
 and it provides a single route to the routing engine: \emph{/dummy/route/loader/test}. Integration tests rely on this loader
 to be configured in each available profile.
+
+\end{fulllineitems}
+
+
+
+\subsection{Routing middleware}
+\label{features/routing_engine:routing-middleware}
+\textbf{Fantastico} routing engine is designed as a standalone component. In order to be able to integrate it into Fantastico request
+lifecycle (:doc:/features/request\_response.) we need an adapter component.
+\index{RoutingMiddleware (class in fantastico.middleware.routing\_middleware)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/routing_engine:fantastico.middleware.routing_middleware.RoutingMiddleware}\pysiglinewithargsret{\strong{class }\code{fantastico.middleware.routing\_middleware.}\bfcode{RoutingMiddleware}}{\emph{app}, \emph{router\_cls=\textless{}class `fantastico.routing\_engine.router.Router'\textgreater{}}}{}
+Class used to integrate routing engine fantastico component into request / response lifecycle. This middleware is 
+responsible for:
+\begin{enumerate}
+\item {} 
+instantiating the router component and make it available to other components / middlewares through WSGI environment.
+
+\item {} 
+register all configured fantastico loaders ({\hyperref[features/routing_engine:fantastico.routing_engine.router.Router.get_loaders]{\code{fantastico.routing\_engine.router.Router.get\_loaders()}}}).
+
+\item {} 
+register all available routes ({\hyperref[features/routing_engine:fantastico.routing_engine.router.Router.register_routes]{\code{fantastico.routing\_engine.router.Router.register\_routes()}}}).
+
+\item {} 
+handle route requests ({\hyperref[features/routing_engine:fantastico.routing_engine.router.Router.handle_route]{\code{fantastico.routing\_engine.router.Router.handle\_route()}}}).
+
+\end{enumerate}
+
+It is important to understand that routing middleware assume a \textbf{WebOb request} available into WSGI environ. Otherwise, 
+an exception will be thrown. You can read more about request middleware at {\hyperref[features/request_response::doc]{\emph{Request lifecycle}}}.
 
 \end{fulllineitems}
 

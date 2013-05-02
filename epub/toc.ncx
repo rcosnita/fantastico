@@ -212,6 +212,12 @@
           </navLabel>
           <content src="features/routing_engine.html#dummyrouteloader" />
         </navPoint>
+        <navPoint id="navPoint26" playOrder="26">
+          <navLabel>
+            <text>Routing middleware</text>
+          </navLabel>
+          <content src="features/routing_engine.html#routing-middleware" />
+        </navPoint>
       </navPoint>
     </navPoint>
   </navMap>
