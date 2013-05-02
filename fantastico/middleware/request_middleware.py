@@ -23,7 +23,8 @@ from fantastico.settings import SettingsFacade
 from webob.request import Request
 
 class RequestMiddleware(object):
-    '''This class provides the middleware responsible for converting wsgi environ dictionary to a request.'''
+    '''This class provides the middleware responsible for converting wsgi environ dictionary into a request. The result is saved
+    into current WSGI environ under key **fantastico.request**.'''
     
     def __init__(self, app):
         self._app = app
