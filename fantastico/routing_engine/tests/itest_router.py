@@ -53,6 +53,7 @@ class RouterIntegration(FantasticoIntegrationTestCase):
         wsgi middleware can execute the current request controller method.'''
         
         def exec_logic(env, settings_cls):
+            self._router.register_routes()
             self._router.handle_route(DummyRouteLoader.DUMMY_ROUTE, self._environ)
             
             route_handler = "route_%s_handler" % DummyRouteLoader.DUMMY_ROUTE
