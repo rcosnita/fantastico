@@ -45,6 +45,12 @@ class BasicSettings(object):
         '''Property that holds all supported languages by this fantastico instance.''' 
         
         return ["en_us"]
+    
+    @property
+    def routes_loaders(self):
+        '''This property holds all routes loaders available.'''
+        
+        return ["fantastico.routing_engine.dummy_routeloader.DummyRouteLoader"]
         
 class SettingsFacade(object):
     '''For using a specific fantastico configuration you need to do two simple steps:

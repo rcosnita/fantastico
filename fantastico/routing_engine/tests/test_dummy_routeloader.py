@@ -15,30 +15,25 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 
-.. py:module:: fantastico.routing_engine.routing_loaders
+.. py:module:: fantastico.routing_engine.tests.test_dummy_routeloader
 '''
+from fantastico.routing_engine.dummy_routeloader import DummyRouteLoader
+from fantastico.tests.base_case import FantasticoIntegrationTestCase
+from mock import Mock
 
-from abc import abstractmethod, ABCMeta
-
-class RouteLoader(metaclass=ABCMeta):
-    '''This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible
-    for implementing its own business logic for loading routes.
+class TestDummyRouteLoader(FantasticoIntegrationTestCase):
+    '''Test suite that ensures dummy route loader works as expected.'''
     
-    .. code-block:: python
+    def init(self):
+        self._dummy_loader = DummyRouteLoader(Mock())
     
-        class DummyRouteLoader(RouteLoader):
-            def __init__(self, settings_facade=SettingsFacade):
-                self_settings_facade = settings_facade()
-                
-            def load_routes(self):
-                return {"/index.html", "fantastico.plugins.static_assets.StaticAssetsController.resolve_text",
-                        "/images/image.png", "fantastico.plugins.static_assets.StaticAssetsController.resolve_binary"}
-    '''
-
-    def __init__(self, settings_facade):
-        self._settings_facade = settings_facade
-    
-    @abstractmethod
-    def load_routes(self):
-        '''This method must be overriden by each concrete implementation so that all loaded routes can be handled by
-        fantastico routing engine middleware.'''
+    def test_load_routes_ok(self):
+        '''Test case that ensures only one route is loaded by this dummy route loader.'''
+        
+        routes = self._dummy_loader.load_routes()
+        
+        self.assertIsNotNone(routes)
+        self.assertEqual(1, len(routes))
+        self.assertTrue(DummyRouteLoader.DUMMY_ROUTE in routes)
+        self.assertEqual("fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test",
+                         routes["/dummy/route/loader/test"])

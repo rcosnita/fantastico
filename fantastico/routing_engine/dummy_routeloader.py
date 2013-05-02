@@ -15,30 +15,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 
-.. py:module:: fantastico.routing_engine.routing_loaders
+.. py:module:: fantastico.routing_engine.dummy_routeloader
 '''
+from fantastico.routing_engine.routing_loaders import RouteLoader
 
-from abc import abstractmethod, ABCMeta
-
-class RouteLoader(metaclass=ABCMeta):
-    '''This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible
-    for implementing its own business logic for loading routes.
+class DummyRouteLoader(RouteLoader):
+    '''Class used to provide a single route that makes sure router core is always instantiated and can register
+    routes as expected. This route is: /dummy/route/loader/test/'''
     
-    .. code-block:: python
+    DUMMY_ROUTE = "/dummy/route/loader/test"
     
-        class DummyRouteLoader(RouteLoader):
-            def __init__(self, settings_facade=SettingsFacade):
-                self_settings_facade = settings_facade()
-                
-            def load_routes(self):
-                return {"/index.html", "fantastico.plugins.static_assets.StaticAssetsController.resolve_text",
-                        "/images/image.png", "fantastico.plugins.static_assets.StaticAssetsController.resolve_binary"}
-    '''
-
-    def __init__(self, settings_facade):
-        self._settings_facade = settings_facade
-    
-    @abstractmethod
     def load_routes(self):
-        '''This method must be overriden by each concrete implementation so that all loaded routes can be handled by
-        fantastico routing engine middleware.'''
+        return {DummyRouteLoader.DUMMY_ROUTE: "fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test"}
