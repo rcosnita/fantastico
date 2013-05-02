@@ -39,7 +39,7 @@ class FantasticoApp(object):
         self._settings_facade = settings_facade()
         
         self._wrap_middlewares()
-        
+    
     def _wrap_middlewares(self):
         '''Method used to register all configured middlewares in the correct order.'''
         
@@ -50,10 +50,10 @@ class FantasticoApp(object):
         for middleware_cls in reversed(installed_middlewares):            
             middleware = instantiator.instantiate_class(middleware_cls, [curr_app_inst])
                                     
-            curr_app_cls.__call__ = lambda inst, environ, start_response: middleware(environ, start_response)
+            curr_app_cls.__call__ = lambda inst, *args: middleware(*args)
                                     
             curr_app_cls, curr_app_inst = middleware.__class__, FantasticoApp.OldCallableApp(middleware.__call__)
-        
+    
     def __call__(self, environ, start_response):
         '''This method is used to execute the application and all configured middlewares in the correct order.'''
         
