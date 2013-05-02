@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.middleware.tests.itest_routing_middleware
 '''
+from fantastico.exceptions import FantasticoNoRequestError
 from fantastico.middleware.routing_middleware import RoutingMiddleware
 from fantastico.routing_engine.dummy_routeloader import DummyRouteLoader
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
@@ -31,14 +32,30 @@ class RoutingMiddlewareIntegration(FantasticoIntegrationTestCase):
     def test_route_handling_ok(self):
         '''This test case makes sure an existing route is correctly handled.'''
         
-        request = Request.blank(DummyRouteLoader.DUMMY_ROUTE)
+        def exec_test(env, settings_cls):
+            request = Request.blank(DummyRouteLoader.DUMMY_ROUTE)
+            
+            environ = {"fantastico.request": request}
+            
+            self._routing_middleware(environ, Mock())
+            
+            route_handler = environ.get("route_%s_handler" % DummyRouteLoader.DUMMY_ROUTE)
+            
+            self.assertIsNotNone(route_handler)
+            self.assertIsInstance(route_handler.get("controller"), DummyRouteLoader)
+            self.assertEqual("display_test", route_handler.get("method"))
+            
+        self._run_test_all_envs(exec_test)
         
-        environ = {"fantastico.request": request}
+    def test_route_handling_before_requestbuild(self):
+        '''This test cases ensures that a fantastico exception is thrown if RequestMiddleware was not executed before.'''
         
-        self._routing_middleware(environ, Mock())
-        
-        route_handler = environ.get("route_%s_handler" % DummyRouteLoader.DUMMY_ROUTE)
-        
-        self.assertIsNotNone(route_handler)
-        self.assertIsInstance(route_handler.get("controller"), DummyRouteLoader)
-        self.assertEqual("display_test", route_handler.get("method"))
+        def exec_test(env, settings_cls):
+            environ = {}
+            
+            with self.assertRaises(FantasticoNoRequestError) as cm:
+                self._routing_middleware(environ, Mock())
+                
+            self.assertIsNotNone(cm.exception)
+            
+        self._run_test_all_envs(exec_test)
