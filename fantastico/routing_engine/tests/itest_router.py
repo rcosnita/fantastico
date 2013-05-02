@@ -61,3 +61,5 @@ class RouterIntegration(FantasticoIntegrationTestCase):
             self.assertIsNotNone(route_handler)
             self.assertIsInstance(route_handler["controller"], DummyRouteLoader)
             self.assertEqual("display_test", route_handler["method"])
+            
+        self._run_test_all_envs(exec_logic)
