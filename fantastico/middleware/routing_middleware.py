@@ -29,7 +29,8 @@ class RoutingMiddleware(object):
     #. handle route requests (:py:func:`fantastico.routing_engine.router.Router.handle_route`).
     
     It is important to understand that routing middleware assume a **WebOb request** available into WSGI environ. Otherwise, 
-    an exception will be thrown. You can read more about request middleware at :doc:`/features/request_response`.'''
+    :py:class:`fantastico.exceptions.FantasticoNoRequestError` will be thrown. You can read more about request middleware 
+    at :doc:`/features/request_response`.'''
     
     def __init__(self, app, router_cls = Router):
         self._app = app
