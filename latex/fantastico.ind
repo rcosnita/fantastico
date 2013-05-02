@@ -12,20 +12,28 @@
 
   \indexspace
   \bigletter C
-  \item code (fantastico.locale.language.Language attribute), \hyperpage{9}
+  \item code (fantastico.locale.language.Language attribute), \hyperpage{11}
 
   \indexspace
   \bigletter F
-  \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{7}
-  \item FantasticoError (class in fantastico.exceptions), \hyperpage{7}
+  \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{9}
+  \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{9}
+  \item FantasticoError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{6}
-  \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{7}
+  \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{9}
+  \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{9}
+  \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{6}
 
   \indexspace
   \bigletter G
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}
+  \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
+
+  \indexspace
+  \bigletter H
+  \item handle\_route() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
 
   \indexspace
   \bigletter I
@@ -33,17 +41,22 @@
 
   \indexspace
   \bigletter L
-  \item Language (class in fantastico.locale.language), \hyperpage{8}
-  \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{8}
+  \item Language (class in fantastico.locale.language), \hyperpage{11}
+  \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{10}
+  \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
+		\hyperpage{13}
 
   \indexspace
   \bigletter R
-  \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{8}
-  \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{10}
+  \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{13}
+  \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{10}
+  \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{13}
+  \item Router (class in fantastico.routing\_engine.router), \hyperpage{12}
+  \item routes\_loaders (fantastico.settings.BasicSettings attribute), \hyperpage{4}
 
   \indexspace
   \bigletter S
-  \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{8}
+  \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{10}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
 

@@ -200,6 +200,12 @@
           </navLabel>
           <content src="features/routing_engine.html#how-to-write-a-new-route-loader" />
         </navPoint>
+        <navPoint id="navPoint24" playOrder="24">
+          <navLabel>
+            <text>Configuring available loaders</text>
+          </navLabel>
+          <content src="features/routing_engine.html#configuring-available-loaders" />
+        </navPoint>
       </navPoint>
     </navPoint>
   </navMap>

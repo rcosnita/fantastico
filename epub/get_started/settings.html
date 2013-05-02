@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b26 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -71,6 +71,12 @@ for the attributes you want to overwrite.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.routes_loaders">
+<tt class="descname">routes_loaders</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.routes_loaders"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property holds all routes loaders available.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="fantastico.settings.BasicSettings.supported_languages">
 <tt class="descname">supported_languages</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.supported_languages"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Property that holds all supported languages by this fantastico instance.</p>
@@ -98,7 +104,7 @@ can do the same for <strong>Stage</strong>, <strong>Prod</strong> or any other c
 <em class="property">class </em><tt class="descclassname">fantastico.settings.</tt><tt class="descname">SettingsFacade</tt><big>(</big><em>environ=None</em><big>)</big><a class="reference internal" href="../_modules/fantastico/settings.html#SettingsFacade"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>For using a specific fantastico configuration you need to do two simple steps:</p>
 <ul>
-<li><p class="first">Set <strong>FANTASTICO_ACTIVE_CONFIG</strong> to the fully python qualified class name you want to use. E.g: <a class="reference internal" href="#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a></p>
+<li><p class="first">Set <strong>FANTASTICO_ACTIVE_CONFIG</strong> environment variable to the fully python qualified class name you want to use. E.g: <a class="reference internal" href="#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a></p>
 </li>
 <li><p class="first">In your code, you can use the following snippet to access a specific setting:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>

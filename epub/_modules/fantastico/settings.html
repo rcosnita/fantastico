@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b26 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -76,11 +76,17 @@
         <span class="sd">&#39;&#39;&#39;Property that holds all supported languages by this fantastico instance.&#39;&#39;&#39;</span> 
         
         <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">]</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.routes_loaders"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.routes_loaders">[docs]</a>    <span class="k">def</span> <span class="nf">routes_loaders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds all routes loaders available.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader&quot;</span><span class="p">]</span>
         </div></div>
 <div class="viewcode-block" id="SettingsFacade"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade">[docs]</a><span class="k">class</span> <span class="nc">SettingsFacade</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;For using a specific fantastico configuration you need to do two simple steps:</span>
 
-<span class="sd">    * Set **FANTASTICO_ACTIVE_CONFIG** to the fully python qualified class name you want to use. E.g: :py:class:`fantastico.settings.BasicSettings`</span>
+<span class="sd">    * Set **FANTASTICO_ACTIVE_CONFIG** environment variable to the fully python qualified class name you want to use. E.g: :py:class:`fantastico.settings.BasicSettings`</span>
 <span class="sd">    * In your code, you can use the following snippet to access a specific setting:</span>
 <span class="sd">      </span>
 <span class="sd">      .. code-block:: python</span>

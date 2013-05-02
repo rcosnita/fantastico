@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{April 27, 2013}
-\release{0.0.1-b26}
+\date{May 02, 2013}
+\release{0.0.1-b27}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -308,6 +308,14 @@ Property that holds all installed middlewares.
 
 \end{fulllineitems}
 
+\index{routes\_loaders (fantastico.settings.BasicSettings attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.routes_loaders}\pysigline{\bfcode{routes\_loaders}}
+This property holds all routes loaders available.
+
+\end{fulllineitems}
+
 \index{supported\_languages (fantastico.settings.BasicSettings attribute)}
 
 \begin{fulllineitems}
@@ -344,7 +352,7 @@ can do the same for \textbf{Stage}, \textbf{Prod} or any other custom configurat
 For using a specific fantastico configuration you need to do two simple steps:
 \begin{itemize}
 \item {} 
-Set \textbf{FANTASTICO\_ACTIVE\_CONFIG} to the fully python qualified class name you want to use. E.g: {\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}}
+Set \textbf{FANTASTICO\_ACTIVE\_CONFIG} environment variable to the fully python qualified class name you want to use. E.g: {\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}}
 
 \item {} 
 In your code, you can use the following snippet to access a specific setting:
@@ -562,6 +570,30 @@ configuration.
 
 \end{fulllineitems}
 
+\index{FantasticoDuplicateRouteError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDuplicateRouteError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDuplicateRouteError}}
+This exception is usually raised by routing engine when it detects duplicate routes.
+
+\end{fulllineitems}
+
+\index{FantasticoNoRoutesError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNoRoutesError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNoRoutesError}}
+This exception is usually raised by routing engine when no loaders are configured or no routes are registered.
+
+\end{fulllineitems}
+
+\index{FantasticoRouteNotFoundError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoRouteNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoRouteNotFoundError}}
+This exception is usually raised by routing engine when a requested url is not registered.
+
+\end{fulllineitems}
+
 
 
 \section{Request lifecycle}
@@ -694,6 +726,43 @@ Load all available routes.
 Select the controller that can handle the request route (if any available).
 
 \end{enumerate}
+\index{Router (class in fantastico.routing\_engine.router)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/routing_engine:fantastico.routing_engine.router.Router}\pysiglinewithargsret{\strong{class }\code{fantastico.routing\_engine.router.}\bfcode{Router}}{\emph{settings\_facade=\textless{}class `fantastico.settings.SettingsFacade'\textgreater{}}}{}
+This class is used for registering all available routes by using all registered loaders.
+\index{get\_loaders() (fantastico.routing\_engine.router.Router method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/routing_engine:fantastico.routing_engine.router.Router.get_loaders}\pysiglinewithargsret{\bfcode{get\_loaders}}{}{}
+Method used to retrieve all available loaders. If loaders are not currently instantiated they are by these method.
+This method also supports multi threaded workers mode of wsgi with really small memory footprint. It uses an internal
+lock so that it makes sure available loaders are instantiated only once per wsgi worker.
+
+\end{fulllineitems}
+
+\index{handle\_route() (fantastico.routing\_engine.router.Router method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/routing_engine:fantastico.routing_engine.router.Router.handle_route}\pysiglinewithargsret{\bfcode{handle\_route}}{\emph{url}, \emph{environ}}{}
+Method used to identify the given url method handler. It enrich the environ dictionary with a new entry that
+holds a controller instance and a function to be executed from that controller.
+
+\end{fulllineitems}
+
+\index{register\_routes() (fantastico.routing\_engine.router.Router method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/routing_engine:fantastico.routing_engine.router.Router.register_routes}\pysiglinewithargsret{\bfcode{register\_routes}}{}{}
+Method used to register all routes from all loaders. If the loaders are not yet initialized this method will first
+load all available loaders and then it will register all available routes. Also, this method initialize available routes
+only once when it is first invoked.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
 
 
 \subsection{Routes loaders}
@@ -719,7 +788,7 @@ Before digging in further details see the RouteLoader class documentation below:
 \index{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/routing_engine:fantastico.routing_engine.routing_loaders.RouteLoader}\pysigline{\strong{class }\code{fantastico.routing\_engine.routing\_loaders.}\bfcode{RouteLoader}}
+\phantomsection\label{features/routing_engine:fantastico.routing_engine.routing_loaders.RouteLoader}\pysiglinewithargsret{\strong{class }\code{fantastico.routing\_engine.routing\_loaders.}\bfcode{RouteLoader}}{\emph{settings\_facade}}{}
 This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible
 for implementing its own business logic for loading routes.
 
@@ -732,6 +801,15 @@ for implementing its own business logic for loading routes.
         \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/index.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}text}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
                 \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/images/image.png}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}binary}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}
 \end{Verbatim}
+\index{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/routing_engine:fantastico.routing_engine.routing_loaders.RouteLoader.load_routes}\pysiglinewithargsret{\bfcode{load\_routes}}{}{}
+This method must be overriden by each concrete implementation so that all loaded routes can be handled by
+fantastico routing engine middleware.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -743,6 +821,22 @@ addition this design decision also make sure clear separation of concerned is fo
 
 Once your \textbf{RouteLoader} implementation is ready you must register it into settings profile. The safest bet is to add it into
 BaseSettings provider. For more information read {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
+
+
+\subsection{Configuring available loaders}
+\label{features/routing_engine:configuring-available-loaders}
+You can find all available loaders for the framework configured in your settings profile. You can find below a sample
+configuration of available loaders:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{CustomSettings}\PYG{p}{(}\PYG{n}{BasicSettings}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n+nd}{@property}
+    \PYG{k}{def} \PYG{n+nf}{routes\PYGZus{}loaders}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{return} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.routing\PYGZus{}engine.custom\PYGZus{}loader.CustomLoader}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}
+\end{Verbatim}
+
+The above configuration tells \textbf{Fantastico routing engine} that only CustomLoader is a source of routes. If you want to learn
+more about multiple configurations please read {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
 
 
 \chapter{Build status}

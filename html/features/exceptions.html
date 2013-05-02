@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Exceptions hierarchy &mdash; fantastico 0.0.1-b26 documentation</title>
+    <title>Exceptions hierarchy &mdash; fantastico 0.0.1-b27 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b26',
+        VERSION:     '0.0.1-b27',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b26 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b27 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="Request lifecycle" href="request_response.html" />
     <link rel="prev" title="Fantastico features" href="features.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b26 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -74,6 +74,24 @@ that at no moment errors will cause fantastico framework wsgi container to crash
 <em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoSettingNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoSettingNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoSettingNotFoundError" title="Permalink to this definition">¶</a></dt>
 <dd><p>This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
 configuration.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoDuplicateRouteError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDuplicateRouteError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDuplicateRouteError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoDuplicateRouteError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is usually raised by routing engine when it detects duplicate routes.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoNoRoutesError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNoRoutesError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNoRoutesError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoNoRoutesError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is usually raised by routing engine when no loaders are configured or no routes are registered.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoRouteNotFoundError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoRouteNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoRouteNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoRouteNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is usually raised by routing engine when a requested url is not registered.</p>
 </dd></dl>
 
 </div>
@@ -124,7 +142,7 @@ configuration.</p>
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b26 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

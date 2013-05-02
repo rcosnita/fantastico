@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.routing_engine.router</title>
+    
+    <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.routing_engine.router</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+
+<span class="sd">.. py:module:: fantastico.routing_engine.router</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoDuplicateRouteError</span><span class="p">,</span> <span class="n">FantasticoNoRoutesError</span><span class="p">,</span> \
+    <span class="n">FantasticoRouteNotFoundError</span>
+
+<div class="viewcode-block" id="Router"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.router.Router">[docs]</a><span class="k">class</span> <span class="nc">Router</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class is used for registering all available routes by using all registered loaders.&#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loader_lock</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_routes_lock</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_routes</span> <span class="o">=</span> <span class="p">{}</span>
+        
+<div class="viewcode-block" id="Router.get_loaders"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.router.Router.get_loaders">[docs]</a>    <span class="k">def</span> <span class="nf">get_loaders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Method used to retrieve all available loaders. If loaders are not currently instantiated they are by these method.</span>
+<span class="sd">        This method also supports multi threaded workers mode of wsgi with really small memory footprint. It uses an internal</span>
+<span class="sd">        lock so that it makes sure available loaders are instantiated only once per wsgi worker.&#39;&#39;&#39;</span>
+                
+        <span class="n">conf_loaders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;routes_loaders&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
+                
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">conf_loaders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoNoRoutesError</span><span class="p">(</span><span class="s">&quot;No loaders configured.&quot;</span><span class="p">)</span>
+                        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader_lock</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loader_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loader_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">loader_cls</span> <span class="ow">in</span> <span class="n">conf_loaders</span><span class="p">:</span>
+                <span class="n">loader</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">instantiate_class</span><span class="p">(</span><span class="n">loader_cls</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="p">])</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loader</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader_lock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loader_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_loader_lock</span> <span class="o">=</span> <span class="bp">None</span>
+            
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span>
+    </div>
+<div class="viewcode-block" id="Router.register_routes"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.router.Router.register_routes">[docs]</a>    <span class="k">def</span> <span class="nf">register_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Method used to register all routes from all loaders. If the loaders are not yet initialized this method will first</span>
+<span class="sd">        load all available loaders and then it will register all available routes. Also, this method initialize available routes</span>
+<span class="sd">        only once when it is first invoked.&#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_loaders</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_routes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_routes_lock</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_routes_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+            
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_routes_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_routes_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_routes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">loader</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span><span class="p">:</span>
+                <span class="n">loader_routes</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_routes</span><span class="p">()</span>
+                
+                <span class="k">for</span> <span class="n">route</span> <span class="ow">in</span> <span class="n">loader_routes</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">route</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_routes</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">FantasticoDuplicateRouteError</span><span class="p">(</span><span class="s">&quot;Route </span><span class="si">%s</span><span class="s"> already registered.&quot;</span> <span class="o">%</span> <span class="n">route</span><span class="p">)</span>
+                
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_routes</span><span class="p">[</span><span class="n">route</span><span class="p">]</span> <span class="o">=</span> <span class="n">loader_routes</span><span class="p">[</span><span class="n">route</span><span class="p">]</span>
+                    
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_routes_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_routes_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_routes_lock</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_routes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoNoRoutesError</span><span class="p">(</span><span class="s">&quot;No routes found with </span><span class="si">%s</span><span class="s"> registered loaders.&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loaders</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_routes</span>
+    </div>
+<div class="viewcode-block" id="Router.handle_route"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.router.Router.handle_route">[docs]</a>    <span class="k">def</span> <span class="nf">handle_route</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">environ</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Method used to identify the given url method handler. It enrich the environ dictionary with a new entry that</span>
+<span class="sd">        holds a controller instance and a function to be executed from that controller.&#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_routes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoRouteNotFoundError</span><span class="p">(</span><span class="s">&quot;Route </span><span class="si">%s</span><span class="s"> is not registered.&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+        
+        <span class="n">route_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_routes</span><span class="p">[</span><span class="n">url</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">route_config</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoNoRoutesError</span><span class="p">(</span><span class="s">&quot;Route </span><span class="si">%s</span><span class="s"> has an invalid controller mapped.&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+        
+        <span class="n">last_dot</span> <span class="o">=</span> <span class="n">route_config</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">last_dot</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoNoRoutesError</span><span class="p">(</span><span class="s">&quot;Route </span><span class="si">%s</span><span class="s"> has an invalid controller mapped.&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">)</span>
+        
+        <span class="n">controller_cls</span> <span class="o">=</span>  <span class="n">route_config</span><span class="p">[:</span><span class="n">last_dot</span><span class="p">]</span>
+        <span class="n">controller_meth</span> <span class="o">=</span> <span class="n">route_config</span><span class="p">[</span><span class="n">last_dot</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        
+        <span class="n">environ</span><span class="p">[</span><span class="s">&quot;route_</span><span class="si">%s</span><span class="s">_handler&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;controller&quot;</span><span class="p">:</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">instantiate_class</span><span class="p">(</span><span class="n">controller_cls</span><span class="p">,</span> 
+                                                                                          <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="p">]),</span>
+                                             <span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="n">controller_meth</span><span class="p">}</span></div></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

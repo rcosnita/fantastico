@@ -1,5 +1,6 @@
 \indexentry{BasicSettings (class in fantastico.settings)|hyperpage}{4}
 \indexentry{installed\_middleware (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
+\indexentry{routes\_loaders (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{supported\_languages (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{5}
 \indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
@@ -8,12 +9,20 @@
 \indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{6}
 \indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{6}
 \indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{6}
-\indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{7}
-\indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{7}
-\indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{7}
-\indexentry{RequestContext (class in fantastico.middleware.request\_context)|hyperpage}{8}
-\indexentry{language (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{8}
-\indexentry{settings (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{8}
-\indexentry{Language (class in fantastico.locale.language)|hyperpage}{8}
-\indexentry{code (fantastico.locale.language.Language attribute)|hyperpage}{9}
-\indexentry{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)|hyperpage}{10}
+\indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{9}
+\indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
+\indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
+\indexentry{FantasticoDuplicateRouteError (class in fantastico.exceptions)|hyperpage}{9}
+\indexentry{FantasticoNoRoutesError (class in fantastico.exceptions)|hyperpage}{9}
+\indexentry{FantasticoRouteNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
+\indexentry{RequestContext (class in fantastico.middleware.request\_context)|hyperpage}{10}
+\indexentry{language (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{10}
+\indexentry{settings (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{10}
+\indexentry{Language (class in fantastico.locale.language)|hyperpage}{11}
+\indexentry{code (fantastico.locale.language.Language attribute)|hyperpage}{11}
+\indexentry{Router (class in fantastico.routing\_engine.router)|hyperpage}{12}
+\indexentry{get\_loaders() (fantastico.routing\_engine.router.Router method)|hyperpage}{12}
+\indexentry{handle\_route() (fantastico.routing\_engine.router.Router method)|hyperpage}{12}
+\indexentry{register\_routes() (fantastico.routing\_engine.router.Router method)|hyperpage}{13}
+\indexentry{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)|hyperpage}{13}
+\indexentry{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)|hyperpage}{13}

@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b26 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -48,7 +48,8 @@
 
 <span class="sd">.. py:module:: fantastico.routing_engine.routing_loaders</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">ABCMeta</span>
 
 <div class="viewcode-block" id="RouteLoader"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.routing_loaders.RouteLoader">[docs]</a><span class="k">class</span> <span class="nc">RouteLoader</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible</span>
@@ -64,8 +65,14 @@
 <span class="sd">                return {&quot;/index.html&quot;, &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_text&quot;,</span>
 <span class="sd">                        &quot;/images/image.png&quot;, &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_binary&quot;}</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span>
     
-    </div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="RouteLoader.load_routes"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.routing_loaders.RouteLoader.load_routes">[docs]</a>    <span class="k">def</span> <span class="nf">load_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each concrete implementation so that all loaded routes can be handled by</span>
+<span class="sd">        fantastico routing engine middleware.&#39;&#39;&#39;</span></div></div>
 </pre></div>
 
           </div>

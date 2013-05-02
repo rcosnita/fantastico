@@ -13,17 +13,18 @@
 \contentsline {subsection}{\numberline {2.2.3}Using a specifc configuration}{5}{subsection.2.2.3}
 \contentsline {section}{\numberline {2.3}Contribute}{5}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Code contribution}{5}{subsection.2.3.1}
-\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.9}
-\contentsline {subsubsection}{Writing integration tests}{6}{subsubsection*.11}
-\contentsline {chapter}{\numberline {3}Fantastico features}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}Exceptions hierarchy}{7}{section.3.1}
-\contentsline {section}{\numberline {3.2}Request lifecycle}{7}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Request context}{8}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Obtain request language}{8}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Obtain settings using request}{9}{subsection.3.2.3}
-\contentsline {section}{\numberline {3.3}Routing engine}{9}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Routes loaders}{10}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}How to write a new route loader}{10}{subsection.3.3.2}
-\contentsline {chapter}{\numberline {4}Build status}{11}{chapter.4}
-\contentsline {chapter}{\numberline {5}License}{13}{chapter.5}
-\contentsline {chapter}{Index}{15}{section*.24}
+\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.10}
+\contentsline {subsubsection}{Writing integration tests}{6}{subsubsection*.12}
+\contentsline {chapter}{\numberline {3}Fantastico features}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Exceptions hierarchy}{9}{section.3.1}
+\contentsline {section}{\numberline {3.2}Request lifecycle}{10}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Request context}{10}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Obtain request language}{11}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Obtain settings using request}{11}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Routing engine}{12}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Routes loaders}{13}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}How to write a new route loader}{13}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Configuring available loaders}{13}{subsection.3.3.3}
+\contentsline {chapter}{\numberline {4}Build status}{15}{chapter.4}
+\contentsline {chapter}{\numberline {5}License}{17}{chapter.5}
+\contentsline {chapter}{Index}{19}{section*.33}

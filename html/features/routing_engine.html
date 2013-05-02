@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Routing engine &mdash; fantastico 0.0.1-b26 documentation</title>
+    <title>Routing engine &mdash; fantastico 0.0.1-b27 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b26',
+        VERSION:     '0.0.1-b27',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b26 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b27 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="prev" title="Request lifecycle" href="request_response.html" /> 
   </head>
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b26 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -58,6 +58,35 @@
 <li>Select the controller that can handle the request route (if any available).</li>
 </ol>
 </div></blockquote>
+<dl class="class">
+<dt id="fantastico.routing_engine.router.Router">
+<em class="property">class </em><tt class="descclassname">fantastico.routing_engine.router.</tt><tt class="descname">Router</tt><big>(</big><em>settings_facade=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/routing_engine/router.html#Router"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.routing_engine.router.Router" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is used for registering all available routes by using all registered loaders.</p>
+<dl class="method">
+<dt id="fantastico.routing_engine.router.Router.get_loaders">
+<tt class="descname">get_loaders</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/routing_engine/router.html#Router.get_loaders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.routing_engine.router.Router.get_loaders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method used to retrieve all available loaders. If loaders are not currently instantiated they are by these method.
+This method also supports multi threaded workers mode of wsgi with really small memory footprint. It uses an internal
+lock so that it makes sure available loaders are instantiated only once per wsgi worker.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.routing_engine.router.Router.handle_route">
+<tt class="descname">handle_route</tt><big>(</big><em>url</em>, <em>environ</em><big>)</big><a class="reference internal" href="../_modules/fantastico/routing_engine/router.html#Router.handle_route"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.routing_engine.router.Router.handle_route" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method used to identify the given url method handler. It enrich the environ dictionary with a new entry that
+holds a controller instance and a function to be executed from that controller.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.routing_engine.router.Router.register_routes">
+<tt class="descname">register_routes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/routing_engine/router.html#Router.register_routes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.routing_engine.router.Router.register_routes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method used to register all routes from all loaders. If the loaders are not yet initialized this method will first
+load all available loaders and then it will register all available routes. Also, this method initialize available routes
+only once when it is first invoked.</p>
+</dd></dl>
+
+</dd></dl>
+
 <div class="section" id="routes-loaders">
 <h2>Routes loaders<a class="headerlink" href="#routes-loaders" title="Permalink to this headline">¶</a></h2>
 <p>Fantastico routing engine is designed so that routes can be loaded from multiple sources (database, disk locations, and others).
@@ -76,7 +105,7 @@ adding a simple loader in which the business logic is encapsulated allows routin
 <p>Before digging in further details see the RouteLoader class documentation below:</p>
 <dl class="class">
 <dt id="fantastico.routing_engine.routing_loaders.RouteLoader">
-<em class="property">class </em><tt class="descclassname">fantastico.routing_engine.routing_loaders.</tt><tt class="descname">RouteLoader</tt><a class="reference internal" href="../_modules/fantastico/routing_engine/routing_loaders.html#RouteLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.routing_engine.routing_loaders.RouteLoader" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.routing_engine.routing_loaders.</tt><tt class="descname">RouteLoader</tt><big>(</big><em>settings_facade</em><big>)</big><a class="reference internal" href="../_modules/fantastico/routing_engine/routing_loaders.html#RouteLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.routing_engine.routing_loaders.RouteLoader" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible
 for implementing its own business logic for loading routes.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DummyRouteLoader</span><span class="p">(</span><span class="n">RouteLoader</span><span class="p">):</span>
@@ -88,6 +117,13 @@ for implementing its own business logic for loading routes.</p>
                 <span class="s">&quot;/images/image.png&quot;</span><span class="p">,</span> <span class="s">&quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_binary&quot;</span><span class="p">}</span>
 </pre></div>
 </div>
+<dl class="method">
+<dt id="fantastico.routing_engine.routing_loaders.RouteLoader.load_routes">
+<tt class="descname">load_routes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/routing_engine/routing_loaders.html#RouteLoader.load_routes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.routing_engine.routing_loaders.RouteLoader.load_routes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each concrete implementation so that all loaded routes can be handled by
+fantastico routing engine middleware.</p>
+</dd></dl>
+
 </dd></dl>
 
 <p>As you can, each concrete route loader receives in the constructor settings facade that can be used to access fantastico settings.
@@ -96,6 +132,19 @@ mind that a route loader is a stateless component and it can&#8217;t in anyway d
 addition this design decision also make sure clear separation of concerned is followed.</p>
 <p>Once your <strong>RouteLoader</strong> implementation is ready you must register it into settings profile. The safest bet is to add it into
 BaseSettings provider. For more information read <a class="reference internal" href="../get_started/settings.html"><em>Fantastico settings</em></a>.</p>
+</div>
+<div class="section" id="configuring-available-loaders">
+<h2>Configuring available loaders<a class="headerlink" href="#configuring-available-loaders" title="Permalink to this headline">¶</a></h2>
+<p>You can find all available loaders for the framework configured in your settings profile. You can find below a sample
+configuration of available loaders:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">CustomSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">routes_loaders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.routing_engine.custom_loader.CustomLoader&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The above configuration tells <strong>Fantastico routing engine</strong> that only CustomLoader is a source of routes. If you want to learn
+more about multiple configurations please read <a class="reference internal" href="../get_started/settings.html"><em>Fantastico settings</em></a>.</p>
 </div>
 </div>
 
@@ -110,6 +159,7 @@ BaseSettings provider. For more information read <a class="reference internal" h
 <li><a class="reference internal" href="#">Routing engine</a><ul>
 <li><a class="reference internal" href="#routes-loaders">Routes loaders</a></li>
 <li><a class="reference internal" href="#how-to-write-a-new-route-loader">How to write a new route loader</a></li>
+<li><a class="reference internal" href="#configuring-available-loaders">Configuring available loaders</a></li>
 </ul>
 </li>
 </ul>
@@ -148,7 +198,7 @@ BaseSettings provider. For more information read <a class="reference internal" h
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b26 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b27 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

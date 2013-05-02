@@ -8,6 +8,10 @@ Fantastico routing engine is design by having extensibility in mind. Below you c
    #. Support multiple sources for routes.
    #. Load all available routes.
    #. Select the controller that can handle the request route (if any available).
+
+.. autoclass:: fantastico.routing_engine.router.Router
+    :members:
+
    
 Routes loaders
 --------------
@@ -36,3 +40,20 @@ addition this design decision also make sure clear separation of concerned is fo
 
 Once your **RouteLoader** implementation is ready you must register it into settings profile. The safest bet is to add it into
 BaseSettings provider. For more information read :doc:`/get_started/settings`.
+
+Configuring available loaders
+-----------------------------
+
+You can find all available loaders for the framework configured in your settings profile. You can find below a sample
+configuration of available loaders:
+
+
+.. code-block:: python
+
+    class CustomSettings(BasicSettings):
+        @property
+        def routes_loaders(self):
+            return ["fantastico.routing_engine.custom_loader.CustomLoader"]
+            
+The above configuration tells **Fantastico routing engine** that only CustomLoader is a source of routes. If you want to learn
+more about multiple configurations please read :doc:`/get_started/settings`.
