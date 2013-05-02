@@ -20,8 +20,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.routing_engine.routing_loaders import RouteLoader
 
 class DummyRouteLoader(RouteLoader):
-    '''Class used to provide a single route that makes sure router core is always instantiated and can register
-    routes as expected. This route is: /dummy/route/loader/test/'''
+    '''This class represents an example of how to write a route loader. **DummyRouteLoader** is available in all configurations
+    and it provides a single route to the routing engine: */dummy/route/loader/test*. Integration tests rely on this loader
+    to be configured in each available profile.'''
     
     DUMMY_ROUTE = "/dummy/route/loader/test"
     
