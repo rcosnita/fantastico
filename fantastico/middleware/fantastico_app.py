@@ -19,8 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
-from fantastico.exceptions import FantasticoContentTypeError,\
-    FantasticoNoRequestError, FantasticoRouteNotFoundError
+from fantastico.exceptions import FantasticoContentTypeError, FantasticoNoRequestError, FantasticoRouteNotFoundError
 
 class FantasticoApp(object):
     '''This class represents the wsgi application entry point. It is designed to wrap together all configured middlewares
