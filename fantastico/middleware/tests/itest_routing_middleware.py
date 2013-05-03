@@ -28,6 +28,9 @@ class RoutingMiddlewareIntegration(FantasticoIntegrationTestCase):
 
     def init(self):
         self._routing_middleware = RoutingMiddleware(Mock())
+        
+    def cleanup(self):
+        self._routing_middleware = None
 
     def test_route_handling_ok(self):
         '''This test case makes sure an existing route is correctly handled.'''
@@ -47,7 +50,7 @@ class RoutingMiddlewareIntegration(FantasticoIntegrationTestCase):
             self.assertEqual("display_test", route_handler.get("method"))
             
         self._run_test_all_envs(exec_test)
-        
+    
     def test_route_handling_before_requestbuild(self):
         '''This test cases ensures that a fantastico exception is thrown if RequestMiddleware was not executed before.'''
         
