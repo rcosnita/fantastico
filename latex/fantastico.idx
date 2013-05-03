@@ -7,8 +7,10 @@
 \indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
 \indexentry{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)|hyperpage}{6}
 \indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{6}
-\indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{6}
-\indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{6}
+\indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{7}
+\indexentry{\_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
+\indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
+\indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
@@ -16,6 +18,7 @@
 \indexentry{FantasticoNoRoutesError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoRouteNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoNoRequestError (class in fantastico.exceptions)|hyperpage}{9}
+\indexentry{FantasticoContentTypeError (class in fantastico.exceptions)|hyperpage}{10}
 \indexentry{RequestMiddleware (class in fantastico.middleware.request\_middleware)|hyperpage}{10}
 \indexentry{RequestContext (class in fantastico.middleware.request\_context)|hyperpage}{11}
 \indexentry{language (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{11}
@@ -29,4 +32,5 @@
 \indexentry{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)|hyperpage}{13}
 \indexentry{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)|hyperpage}{13}
 \indexentry{DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader)|hyperpage}{14}
+\indexentry{display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method)|hyperpage}{14}
 \indexentry{RoutingMiddleware (class in fantastico.middleware.routing\_middleware)|hyperpage}{14}

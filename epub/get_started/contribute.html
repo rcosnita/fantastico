@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="settings.html" title="Fantastico settings"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b31 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b32 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -98,7 +98,10 @@ high quality and zero bugs.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SimpleIntegration</span><span class="p">(</span><span class="n">FantasticoIntegrationTestCase</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">simple_class</span> <span class="o">=</span> <span class="p">{}</span>
-        
+    
+    <span class="k">def</span> <span class="nf">cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simple_class</span> <span class="o">=</span> <span class="bp">None</span>
+    
     <span class="k">def</span> <span class="nf">test_simple_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">do_stuff</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">env_cls</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">simple_class</span><span class="p">[</span><span class="n">env</span><span class="p">],</span> <span class="n">env_cls</span><span class="p">)</span>
@@ -106,6 +109,8 @@ high quality and zero bugs.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="n">do_stuff</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>If you used this class you don&#8217;t have to mind about restoring call methods from each middleware once they are wrapped
+by fantastico app. This is a must because otherwise you will crash some other tests.</p>
 <dl class="attribute">
 <dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._envs">
 <tt class="descname">_envs</tt><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._envs"><span class="viewcode-link">[source]</span></a></dt>
@@ -113,10 +118,22 @@ high quality and zero bugs.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._restore_call_methods">
+<tt class="descname">_restore_call_methods</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._restore_call_methods"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method restore original call methods to all affected middlewares.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs">
 <tt class="descname">_run_test_all_envs</tt><big>(</big><em>callable_obj</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._run_test_all_envs"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This method is used to execute a callable block of code on all environments. This is extremely useful for
 avoid boiler plate code duplication and executing test logic against all environments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._save_call_methods">
+<tt class="descname">_save_call_methods</tt><big>(</big><em>middlewares</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._save_call_methods"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method save all call methods for each listed middleware so that later on they can be restored.</p>
 </dd></dl>
 
 </dd></dl>

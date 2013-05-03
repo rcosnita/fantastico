@@ -2,9 +2,13 @@
 \def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
 
   \bigletter {Symbols}
-  \item \_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), \hyperpage{6}
+  \item \_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), \hyperpage{7}
+  \item \_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method), 
+		\hyperpage{7}
   \item \_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method), 
-		\hyperpage{6}
+		\hyperpage{7}
+  \item \_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method), 
+		\hyperpage{7}
 
   \indexspace
   \bigletter B
@@ -16,11 +20,14 @@
 
   \indexspace
   \bigletter D
+  \item display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method), 
+		\hyperpage{14}
   \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{14}
 
   \indexspace
   \bigletter F
   \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{9}
+  \item FantasticoContentTypeError (class in fantastico.exceptions), \hyperpage{10}
   \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{6}

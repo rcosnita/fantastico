@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Routing engine &mdash; fantastico 0.0.1-b31 documentation</title>
+    <title>Routing engine &mdash; fantastico 0.0.1-b32 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b31',
+        VERSION:     '0.0.1-b32',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b31 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b32 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="prev" title="Request lifecycle" href="request_response.html" /> 
   </head>
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b31 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b32 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -154,6 +154,13 @@ more about multiple configurations please read <a class="reference internal" hre
 <dd><p>This class represents an example of how to write a route loader. <strong>DummyRouteLoader</strong> is available in all configurations
 and it provides a single route to the routing engine: <em>/dummy/route/loader/test</em>. Integration tests rely on this loader
 to be configured in each available profile.</p>
+<dl class="method">
+<dt id="fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test">
+<tt class="descname">display_test</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../_modules/fantastico/routing_engine/dummy_routeloader.html#DummyRouteLoader.display_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method handles <strong>/dummy/route/loader/test route</strong>. It is expected to receive a response with status code 400.
+We do this for being able to test rendering and also avoid false positive security scans messages.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -232,7 +239,7 @@ at <a class="reference internal" href="request_response.html"><em>Request lifecy
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b31 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b32 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

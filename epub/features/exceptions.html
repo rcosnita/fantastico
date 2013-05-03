@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b31 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b32 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -82,6 +82,13 @@ configuration.</p>
 <em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNoRequestError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNoRequestError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually raised when some components try to use fantastico.request from WSGI environ before 
 <a class="reference internal" href="request_response.html#fantastico.middleware.request_middleware.RequestMiddleware" title="fantastico.middleware.request_middleware.RequestMiddleware"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.middleware.request_middleware.RequestMiddleware</span></tt></a> was executed.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoContentTypeError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoContentTypeError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoContentTypeError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is usually thrown when a mismatch between request content type and received content type differ. In
+Fantastico we think it&#8217;s mandatory to fulfill requests correctly and to take in consideration sent headers.</p>
 </dd></dl>
 
 </div>

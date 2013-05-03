@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b31 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b32 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -36,22 +36,21 @@
             
   <div class="section" id="fantastico-settings">
 <h1>Fantastico settings</h1>
-<p>Fantastico is configured using a plain settings file. This file is located in the root of fantastico framework
-or in the root folder of your project. Before we dig further into configuration options lets see a very simple settings
-file:</p>
+<p>Fantastico is configured using a plain settings file. This file is located in the root of fantastico framework or in the root
+folder of your project. Before we dig further into configuration options lets see a very simple settings file:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BasicSettings</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">installed_middleware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.middleware.request_middleware.RequestMiddleware&quot;</span><span class="p">,</span>
-             <span class="s">&quot;fantastico.middleware.routing_engine.RoutingEngineMiddleware&quot;</span><span class="p">]</span>
+             <span class="s">&quot;fantastico.middleware.routing_middleware.RoutingMiddleware&quot;</span><span class="p">]</span>
 
    <span class="nd">@property</span>
    <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>The above code sample represent the minimum required configuration for fantastico framework to run. The order in which
-middlewares are listed is the order in which they are executed when an http request is made.</p>
+<p>The above code sample represent the minimum required configuration for fantastico framework to run. The order in which middlewares
+are listed is the order in which they are executed when an http request is made.</p>
 <div class="section" id="settings-api">
 <h2>Settings API</h2>
 <p>Below you can find technical information about settings.</p>
@@ -94,8 +93,8 @@ for the attributes you want to overwrite.</p>
       <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">,</span> <span class="s">&quot;ro_ro&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>The above configuration actually overwrites supported languages. This mean that only en_us is relevant for <strong>Dev</strong> environment. You
-can do the same for <strong>Stage</strong>, <strong>Prod</strong> or any other custom configuration.</p>
+<p>The above configuration actually overwrites supported languages. This mean that only en_us is relevant for <strong>Dev</strong> environment.
+You can do the same for <strong>Stage</strong>, <strong>Prod</strong> or any other custom configuration.</p>
 </div>
 <div class="section" id="using-a-specifc-configuration">
 <h2>Using a specifc configuration</h2>
