@@ -129,96 +129,114 @@
           <content src="get_started/contribute.html#code-contribution" />
         </navPoint>
       </navPoint>
+      <navPoint id="navPoint15" playOrder="15">
+        <navLabel>
+          <text>Development mode</text>
+        </navLabel>
+        <content src="get_started/dev_mode.html" />
+      </navPoint>
+      <navPoint id="navPoint16" playOrder="16">
+        <navLabel>
+          <text>Hot deploy</text>
+        </navLabel>
+        <content src="get_started/dev_mode.html#hot-deploy" />
+      </navPoint>
+      <navPoint id="navPoint17" playOrder="17">
+        <navLabel>
+          <text>API</text>
+        </navLabel>
+        <content src="get_started/dev_mode.html#api" />
+      </navPoint>
     </navPoint>
-    <navPoint id="navPoint15" playOrder="15">
+    <navPoint id="navPoint18" playOrder="18">
       <navLabel>
         <text>Fantastico features</text>
       </navLabel>
       <content src="features/features.html" />
-      <navPoint id="navPoint15" playOrder="15">
+      <navPoint id="navPoint18" playOrder="18">
         <navLabel>
           <text>Fantastico features</text>
         </navLabel>
         <content src="features/features.html" />
       </navPoint>
-      <navPoint id="navPoint16" playOrder="16">
+      <navPoint id="navPoint19" playOrder="19">
         <navLabel>
           <text>Exceptions hierarchy</text>
         </navLabel>
         <content src="features/exceptions.html" />
       </navPoint>
-      <navPoint id="navPoint17" playOrder="17">
+      <navPoint id="navPoint20" playOrder="20">
         <navLabel>
           <text>Request lifecycle</text>
         </navLabel>
         <content src="features/request_response.html" />
-        <navPoint id="navPoint17" playOrder="17">
+        <navPoint id="navPoint20" playOrder="20">
           <navLabel>
             <text>Request lifecycle</text>
           </navLabel>
           <content src="features/request_response.html" />
         </navPoint>
-        <navPoint id="navPoint18" playOrder="18">
+        <navPoint id="navPoint21" playOrder="21">
           <navLabel>
             <text>Request middleware</text>
           </navLabel>
           <content src="features/request_response.html#request-middleware" />
         </navPoint>
-        <navPoint id="navPoint19" playOrder="19">
+        <navPoint id="navPoint22" playOrder="22">
           <navLabel>
             <text>Request context</text>
           </navLabel>
           <content src="features/request_response.html#request-context" />
         </navPoint>
-        <navPoint id="navPoint20" playOrder="20">
+        <navPoint id="navPoint23" playOrder="23">
           <navLabel>
             <text>Obtain request language</text>
           </navLabel>
           <content src="features/request_response.html#obtain-request-language" />
         </navPoint>
-        <navPoint id="navPoint21" playOrder="21">
+        <navPoint id="navPoint24" playOrder="24">
           <navLabel>
             <text>Obtain settings using request</text>
           </navLabel>
           <content src="features/request_response.html#obtain-settings-using-request" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint22" playOrder="22">
+      <navPoint id="navPoint25" playOrder="25">
         <navLabel>
           <text>Routing engine</text>
         </navLabel>
         <content src="features/routing_engine.html" />
-        <navPoint id="navPoint22" playOrder="22">
+        <navPoint id="navPoint25" playOrder="25">
           <navLabel>
             <text>Routing engine</text>
           </navLabel>
           <content src="features/routing_engine.html" />
         </navPoint>
-        <navPoint id="navPoint23" playOrder="23">
+        <navPoint id="navPoint26" playOrder="26">
           <navLabel>
             <text>Routes loaders</text>
           </navLabel>
           <content src="features/routing_engine.html#routes-loaders" />
         </navPoint>
-        <navPoint id="navPoint24" playOrder="24">
+        <navPoint id="navPoint27" playOrder="27">
           <navLabel>
             <text>How to write a new route loader</text>
           </navLabel>
           <content src="features/routing_engine.html#how-to-write-a-new-route-loader" />
         </navPoint>
-        <navPoint id="navPoint25" playOrder="25">
+        <navPoint id="navPoint28" playOrder="28">
           <navLabel>
             <text>Configuring available loaders</text>
           </navLabel>
           <content src="features/routing_engine.html#configuring-available-loaders" />
         </navPoint>
-        <navPoint id="navPoint26" playOrder="26">
+        <navPoint id="navPoint29" playOrder="29">
           <navLabel>
             <text>DummyRouteLoader</text>
           </navLabel>
           <content src="features/routing_engine.html#dummyrouteloader" />
         </navPoint>
-        <navPoint id="navPoint27" playOrder="27">
+        <navPoint id="navPoint30" playOrder="30">
           <navLabel>
             <text>Routing middleware</text>
           </navLabel>

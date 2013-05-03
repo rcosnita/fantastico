@@ -5,10 +5,13 @@
 \BOOKMARK [1][-]{section.2.1}{Installation manual}{chapter.2}% 5
 \BOOKMARK [1][-]{section.2.2}{Fantastico settings}{chapter.2}% 6
 \BOOKMARK [1][-]{section.2.3}{Contribute}{chapter.2}% 7
-\BOOKMARK [0][-]{chapter.3}{Fantastico features}{}% 8
-\BOOKMARK [1][-]{section.3.1}{Exceptions hierarchy}{chapter.3}% 9
-\BOOKMARK [1][-]{section.3.2}{Request lifecycle}{chapter.3}% 10
-\BOOKMARK [1][-]{section.3.3}{Routing engine}{chapter.3}% 11
-\BOOKMARK [0][-]{chapter.4}{Build status}{}% 12
-\BOOKMARK [0][-]{chapter.5}{License}{}% 13
-\BOOKMARK [0][-]{section*.41}{Index}{}% 14
+\BOOKMARK [1][-]{section.2.4}{Development mode}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.5}{Hot deploy}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.6}{API}{chapter.2}% 10
+\BOOKMARK [0][-]{chapter.3}{Fantastico features}{}% 11
+\BOOKMARK [1][-]{section.3.1}{Exceptions hierarchy}{chapter.3}% 12
+\BOOKMARK [1][-]{section.3.2}{Request lifecycle}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.3}{Routing engine}{chapter.3}% 14
+\BOOKMARK [0][-]{chapter.4}{Build status}{}% 15
+\BOOKMARK [0][-]{chapter.5}{License}{}% 16
+\BOOKMARK [0][-]{section*.43}{Index}{}% 17

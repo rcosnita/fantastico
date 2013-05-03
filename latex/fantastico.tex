@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 03, 2013}
-\release{0.0.1-b34}
+\release{0.0.1-b35}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -127,9 +127,9 @@
 
 \section{Why another python framework?}
 \label{intro:why-another-python-framework}
-The main reason for developing a new framework is simple: I want to use it for teaching purposes. I have seen
-many projects which fail either because of poor coding or because they become legacy very fast. I will not get into details
-why and what could have been done. It defeats the purpose.
+The main reason for developing a new framework is simple: I want to use it for teaching purposes. I have seen many projects which
+fail either because of poor coding or because they become legacy very fast. I will not get into details why and what could have
+been done. It defeats the purpose.
 
 Each piece of code that is being added to fantastico will follow these simple rules:
 \begin{enumerate}
@@ -154,8 +154,8 @@ The code is fully documented and included into documentation.
 \subsection{What do you want to teach who?}
 \label{intro:what-do-you-want-to-teach-who}
 I am a big fan of Agile practices and currently I own a domain called scrum-expert.ro. This is meant to become a collection of
-hands on resource of how to develop good software with high quality and in a reasonable amount of time. Resources will cover topics
-like
+hands on resource of how to develop good software with high quality and in a reasonable amount of time. Resources will cover
+topics like
 \begin{enumerate}
 \item {} 
 Incremental development always ready for rollout.
@@ -174,7 +174,8 @@ Projects setup for Continuous Delivery
 
 \end{enumerate}
 
-and many other topics that are required for delivering high quality software but apparently so many companies are ignoring nowadays.
+and many other topics that are required for delivering high quality software but apparently so many companies are ignoring
+nowadays.
 
 
 \section{Fantastico's initial ideas}
@@ -550,6 +551,54 @@ avoid boiler plate code duplication and executing test logic against all environ
 \begin{fulllineitems}
 \phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoIntegrationTestCase._save_call_methods}\pysiglinewithargsret{\bfcode{\_save\_call\_methods}}{\emph{middlewares}}{}
 This method save all call methods for each listed middleware so that later on they can be restored.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\section{Development mode}
+\label{get_started/dev_mode::doc}\label{get_started/dev_mode:development-mode}
+\textbf{Fantastico} framework is a web framework designed to be developers friendly. In order to simplify setup sequence, fantastico
+provides a standalone WSGI compatible server that can be started from command line. This server is fully compliant with WSGI
+standard. Below you can find some easy steps to achieve this:
+\begin{enumerate}
+\item {} 
+Goto fantastico framework or project location
+
+\item {} 
+sh run\_dev\_server.sh
+
+\end{enumerate}
+
+This is it. Now you have a running fantastico server on which you can test your work.
+
+By default, \textbf{Fantastico} dev server starts on port 12000, but you can customize it from
+{\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}}.
+
+
+\section{Hot deploy}
+\label{get_started/dev_mode:hot-deploy}
+Currently, this is not implemented, but it is on todo list on short term.
+
+
+\section{API}
+\label{get_started/dev_mode:api}
+For more information about Fantastico development server see the API below.
+\index{DevServer (class in fantastico.server.dev\_server)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer}\pysiglinewithargsret{\strong{class }\code{fantastico.server.dev\_server.}\bfcode{DevServer}}{\emph{settings\_facade=\textless{}class `fantastico.settings.SettingsFacade'\textgreater{}}}{}
+This class provides a very simple wsgi http server that embeds Fantastico framework into it. As developer you can use
+it to simply test your new components.
+\index{start() (fantastico.server.dev\_server.DevServer method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x48097c0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
+configuration file.
 
 \end{fulllineitems}
 

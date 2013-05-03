@@ -79,6 +79,9 @@
     <item id="get_started_installation.html"
           href="get_started/installation.html"
           media-type="application/xhtml+xml" />
+    <item id="get_started_dev_mode.html"
+          href="get_started/dev_mode.html"
+          media-type="application/xhtml+xml" />
     <item id="get_started_getting_started.html"
           href="get_started/getting_started.html"
           media-type="application/xhtml+xml" />
@@ -111,6 +114,9 @@
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_routing_engine_routing_loaders.html"
           href="_modules/fantastico/routing_engine/routing_loaders.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_server_dev_server.html"
+          href="_modules/fantastico/server/dev_server.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_tests_base_case.html"
           href="_modules/fantastico/tests/base_case.html"
@@ -147,6 +153,7 @@
     <itemref idref="get_started_installation.html" />
     <itemref idref="get_started_settings.html" />
     <itemref idref="get_started_contribute.html" />
+    <itemref idref="get_started_dev_mode.html" />
     <itemref idref="features_features.html" />
     <itemref idref="features_exceptions.html" />
     <itemref idref="features_request_response.html" />

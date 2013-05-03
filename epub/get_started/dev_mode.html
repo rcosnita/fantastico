@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development mode</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../features/features.html" title="Fantastico features"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contribute.html" title="Contribute"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b35 documentation</a> &raquo;</li>
+          <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="development-mode">
+<h1>Development mode</h1>
+<p><strong>Fantastico</strong> framework is a web framework designed to be developers friendly. In order to simplify setup sequence, fantastico
+provides a standalone WSGI compatible server that can be started from command line. This server is fully compliant with WSGI
+standard. Below you can find some easy steps to achieve this:</p>
+<ol class="arabic simple">
+<li>Goto fantastico framework or project location</li>
+<li>sh run_dev_server.sh</li>
+</ol>
+<p>This is it. Now you have a running fantastico server on which you can test your work.</p>
+<p>By default, <strong>Fantastico</strong> dev server starts on port 12000, but you can customize it from
+<a class="reference internal" href="settings.html#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a>.</p>
+</div>
+<div class="section" id="hot-deploy">
+<h1>Hot deploy</h1>
+<p>Currently, this is not implemented, but it is on todo list on short term.</p>
+</div>
+<div class="section" id="api">
+<h1>API</h1>
+<p>For more information about Fantastico development server see the API below.</p>
+<dl class="class">
+<dt id="fantastico.server.dev_server.DevServer">
+<em class="property">class </em><tt class="descclassname">fantastico.server.dev_server.</tt><tt class="descname">DevServer</tt><big>(</big><em>settings_facade=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/dev_server.html#DevServer"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides a very simple wsgi http server that embeds Fantastico framework into it. As developer you can use
+it to simply test your new components.</p>
+<dl class="method">
+<dt id="fantastico.server.dev_server.DevServer.start">
+<tt class="descname">start</tt><big>(</big><em>build_server=&lt;function make_server at 0x48097c0&gt;</em>, <em>app=&lt;class 'fantastico.middleware.fantastico_app.FantasticoApp'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/dev_server.html#DevServer.start"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
+configuration file.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

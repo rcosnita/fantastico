@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development mode &mdash; fantastico 0.0.1-b35 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1-b35',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.0.1-b35 documentation" href="../index.html" />
+    <link rel="up" title="Getting started" href="getting_started.html" />
+    <link rel="next" title="Fantastico features" href="../features/features.html" />
+    <link rel="prev" title="Contribute" href="contribute.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../features/features.html" title="Fantastico features"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contribute.html" title="Contribute"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b35 documentation</a> &raquo;</li>
+          <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="development-mode">
+<h1>Development mode<a class="headerlink" href="#development-mode" title="Permalink to this headline">¶</a></h1>
+<p><strong>Fantastico</strong> framework is a web framework designed to be developers friendly. In order to simplify setup sequence, fantastico
+provides a standalone WSGI compatible server that can be started from command line. This server is fully compliant with WSGI
+standard. Below you can find some easy steps to achieve this:</p>
+<ol class="arabic simple">
+<li>Goto fantastico framework or project location</li>
+<li>sh run_dev_server.sh</li>
+</ol>
+<p>This is it. Now you have a running fantastico server on which you can test your work.</p>
+<p>By default, <strong>Fantastico</strong> dev server starts on port 12000, but you can customize it from
+<a class="reference internal" href="settings.html#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a>.</p>
+</div>
+<div class="section" id="hot-deploy">
+<h1>Hot deploy<a class="headerlink" href="#hot-deploy" title="Permalink to this headline">¶</a></h1>
+<p>Currently, this is not implemented, but it is on todo list on short term.</p>
+</div>
+<div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<p>For more information about Fantastico development server see the API below.</p>
+<dl class="class">
+<dt id="fantastico.server.dev_server.DevServer">
+<em class="property">class </em><tt class="descclassname">fantastico.server.dev_server.</tt><tt class="descname">DevServer</tt><big>(</big><em>settings_facade=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/dev_server.html#DevServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.server.dev_server.DevServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a very simple wsgi http server that embeds Fantastico framework into it. As developer you can use
+it to simply test your new components.</p>
+<dl class="method">
+<dt id="fantastico.server.dev_server.DevServer.start">
+<tt class="descname">start</tt><big>(</big><em>build_server=&lt;function make_server at 0x48097c0&gt;</em>, <em>app=&lt;class 'fantastico.middleware.fantastico_app.FantasticoApp'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/dev_server.html#DevServer.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.server.dev_server.DevServer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
+configuration file.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Development mode</a></li>
+<li><a class="reference internal" href="#hot-deploy">Hot deploy</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="contribute.html"
+                        title="previous chapter">Contribute</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../features/features.html"
+                        title="next chapter">Fantastico features</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/get_started/dev_mode.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../features/features.html" title="Fantastico features"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="contribute.html" title="Contribute"
+             >previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b35 documentation</a> &raquo;</li>
+          <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

@@ -20,6 +20,7 @@
 
   \indexspace
   \bigletter D
+  \item DevServer (class in fantastico.server.dev\_server), \hyperpage{7}
   \item display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method), 
 		\hyperpage{14}
   \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{14}
@@ -72,6 +73,7 @@
   \bigletter S
   \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{11}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
+  \item start() (fantastico.server.dev\_server.DevServer method), \hyperpage{7}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
 
 \end{theindex}
