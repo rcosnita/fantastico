@@ -16,10 +16,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.middleware.tests.fantastico_app
 '''
+from fantastico.exceptions import FantasticoClassNotFoundError, \
+    FantasticoContentTypeError, FantasticoNoRequestError,\
+    FantasticoRouteNotFoundError
 from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
-from fantastico.exceptions import FantasticoClassNotFoundError
+from webob.request import Request
+from webob.response import Response
 
 class FantasticoAppTests(FantasticoUnitTestsCase):
     '''Class that provides the test suite for ensuring that fantastico wsgi app is working as expected.'''
@@ -29,6 +33,14 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         
         self._settings_facade = Mock()
         self._settings_facade_cls = Mock(return_value=self._settings_facade)
+        
+        self._request = Request.blank("/simple/request")
+        self._request.content_type = "text/html"
+        self._controller = Mock()
+        self._controller.exec_logic = Mock(return_value=Response(content_type="text/html"))
+        self._environ = {"fantastico.request": self._request, 
+                         "route_/simple/request_handler": {"controller": self._controller,
+                                                           "method": "exec_logic"}}
  
     def cleanup(self):
         FantasticoApp.__call__ = self._old_call
@@ -38,15 +50,13 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         
         self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])
         
-        environ = {}
-
         app = FantasticoApp(self._settings_facade_cls)        
         
-        app(environ, Mock())
+        app(self._environ, Mock())
 
-        self.assertTrue(environ.get("test_wrapped_ok"))
+        self.assertTrue(self._environ.get("test_wrapped_ok"))
         
-        chained_resp = environ.get("middlewares_responses")
+        chained_resp = self._environ.get("middlewares_responses")
         self.assertIsNotNone(chained_resp)
         self.assertEqual(1, len(chained_resp))
         self.assertEqual(["middleware"], chained_resp)
@@ -57,15 +67,13 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
                                                        "fantastico.middleware.tests.test_fantastico_app.MockedMiddleware2",
                                                        "fantastico.middleware.tests.test_fantastico_app.MockedMiddleware3"])
         
-        environ = {}
-        
         app = FantasticoApp(self._settings_facade_cls)
 
-        app(environ, Mock())
+        app(self._environ, Mock())
         
-        self.assertTrue(environ.get("test_wrapped_ok"))
+        self.assertTrue(self._environ.get("test_wrapped_ok"))
         
-        chained_resp = environ.get("middlewares_responses")
+        chained_resp = self._environ.get("middlewares_responses")
         self.assertIsNotNone(chained_resp)
         self.assertEqual(3, len(chained_resp))
         self.assertEqual(["middleware", "middleware2", "middleware3"], chained_resp)
@@ -75,11 +83,9 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         
         self._settings_facade.get = Mock(return_value=[])
         
-        environ = {}
-        
         app = FantasticoApp(self._settings_facade_cls)
 
-        app(environ, Mock())
+        app(self._environ, Mock())
         
         self.assertTrue(True)
         
@@ -99,7 +105,90 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
                 
         app_middleware = FantasticoApp(self._settings_facade_cls)
         
-        mock_request = None
+        response = Response()
+        response.content_type = "text/html"
+        response.text = "Hello world"
+        
+        self._controller.exec_logic = lambda request: response
+        
+        self.assertEqual(b"Hello world", app_middleware(self._environ, Mock()))
+        self.assertTrue(self._environ["test_wrapped_ok"])
+    
+    def test_missing_request(self):
+        '''This test case ensures an exception is raised if request middleware was not executed correctly.'''
+
+        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+                
+        app_middleware = FantasticoApp(self._settings_facade_cls)
+        
+        del self._environ["fantastico.request"]
+        self.assertRaises(FantasticoNoRequestError, app_middleware, *[self._environ, Mock()])
+        
+        self._environ["fantastico.request"] = None
+        self.assertRaises(FantasticoNoRequestError, app_middleware, *[self._environ, Mock()])
+        
+    def test_route_notfound(self):
+        '''This test case ensures an exception is raised whenever the route requested can not be find.'''
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+                
+        app_middleware = FantasticoApp(self._settings_facade_cls)
+
+        del self._environ["route_/simple/request_handler"]
+        self.assertRaises(FantasticoRouteNotFoundError, app_middleware, *[self._environ, Mock()])
+        
+        self._environ["route_/simple/request_handler"] = None
+        self.assertRaises(FantasticoRouteNotFoundError, app_middleware, *[self._environ, Mock()])
+    
+    def test_route_nomethod(self):
+        '''This test case ensures an exception is raised whenever route method is not set correctly.'''
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+                
+        app_middleware = FantasticoApp(self._settings_facade_cls)
+        
+        route_handler = "route_/simple/request_handler" 
+        
+        del self._environ[route_handler]["method"]        
+        self.assertRaises(FantasticoRouteNotFoundError, app_middleware, *[self._environ, Mock()])
+        
+        self._environ[route_handler]["method"] = None
+        self.assertRaises(FantasticoRouteNotFoundError, app_middleware, *[self._environ, Mock()])
+
+        self._environ[route_handler]["method"] = ""
+        self.assertRaises(FantasticoRouteNotFoundError, app_middleware, *[self._environ, Mock()])
+        
+    def test_route_nocontroller(self):
+        '''This test case ensures an exception is raised whenever route controller is not set correctly.'''
+
+        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+                
+        app_middleware = FantasticoApp(self._settings_facade_cls)
+        
+        route_handler = "route_/simple/request_handler" 
+        
+        del self._environ[route_handler]["controller"]
+        self.assertRaises(FantasticoRouteNotFoundError, app_middleware, *[self._environ, Mock()])        
+
+        self._environ[route_handler]["controller"] = None
+        self.assertRaises(FantasticoRouteNotFoundError, app_middleware, *[self._environ, Mock()])        
+        
+    def test_mistmatch_content_headers(self):
+        '''This test case makes sure an exception is raised whenever request content type is different than response
+        content type.'''
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+
+        response = Response()
+        response.content_type = "application/json"
+        response.text = "Hello world"
+        
+        self._controller.exec_logic = lambda request: response
+        
+        app_middleware = FantasticoApp(self._settings_facade_cls)
+        
+        self.assertRaises(FantasticoContentTypeError, app_middleware, *[self._environ, Mock()])            
+        self.assertTrue(self._environ["test_wrapped_ok"])
         
 class MockedMiddleware(object):
     '''This is a mocked middleware used for unit testing purposes.'''
@@ -142,4 +231,4 @@ class MockedMiddleware3(object):
         
         environ["middlewares_responses"].append("middleware3")
         
-        return self._app(environ, start_response)            
+        return self._app(environ, start_response)
