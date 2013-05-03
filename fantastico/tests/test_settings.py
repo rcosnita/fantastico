@@ -65,7 +65,7 @@ class TestSettingsFacadeSuite(FantasticoUnitTestsCase):
         
         self.assertGreaterEqual(len(installed_middleware), 2)
         self.assertEqual("fantastico.middleware.request_middleware.RequestMiddleware", installed_middleware[0])
-        self.assertEqual("fantastico.middleware.routing_engine.RoutingEngineMiddleware", installed_middleware[1])
+        self.assertEqual("fantastico.middleware.routing_middleware.RoutingMiddleware", installed_middleware[1])
         
     def test_get_setting_unavailable(self):
         '''Test case that ensures an exception is thrown whenever we try to get a setting that is not 
