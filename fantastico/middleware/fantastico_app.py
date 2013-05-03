@@ -19,6 +19,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
+from fantastico.exceptions import FantasticoContentTypeError,\
+    FantasticoNoRequestError, FantasticoRouteNotFoundError
 
 class FantasticoApp(object):
     '''This class represents the wsgi application entry point. It is designed to wrap together all configured middlewares
@@ -57,4 +59,33 @@ class FantasticoApp(object):
     def __call__(self, environ, start_response):
         '''This method is used to execute the application and all configured middlewares in the correct order.'''
         
-        return None
+        request = environ.get("fantastico.request")
+
+        if not request:
+            raise FantasticoNoRequestError()
+
+        route_handler_key = "route_%s_handler" % request.path
+        route_handler = environ.get(route_handler_key)
+        
+        if not route_handler:
+            raise FantasticoRouteNotFoundError("Route handler %s is not correctly built in the current request cycle." %\
+                                               route_handler_key)
+
+        route_contr = route_handler.get("controller")
+        if not route_contr:
+            raise FantasticoRouteNotFoundError("Route handler %s does not contain a controller instance." % route_handler_key)
+        
+        route_method = route_handler.get("method")
+        if not route_method:
+            raise FantasticoRouteNotFoundError("Route handler %s does not contain a method to execute." % route_handler_key)
+        
+        contr_method = getattr(route_contr, route_method)
+        
+        response = contr_method(request)
+        
+        if request.content_type != response.content_type:
+            raise FantasticoContentTypeError("User request %s but received %s." % (request.content_type, response.content_type))
+        
+        start_response(response.status, response.headers)
+        
+        return response.body
