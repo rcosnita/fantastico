@@ -51,6 +51,7 @@ class DevServerTests(FantasticoUnitTestsCase):
         
         self.assertEqual("localhost", self._server.hostname)
         self.assertEqual(12000, self._server.port)
+        self.assertTrue(self._server.started)
         
     def test_start_error(self):
         '''This test case ensures development server does not start if an exception is raised by make_server or 

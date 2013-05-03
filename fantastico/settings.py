@@ -51,6 +51,18 @@ class BasicSettings(object):
         '''This property holds all routes loaders available.'''
         
         return ["fantastico.routing_engine.dummy_routeloader.DummyRouteLoader"]
+    
+    @property
+    def dev_server_port(self):
+        '''This property holds development server port. By default this is 12000.'''
+        
+        return 12000
+    
+    @property
+    def dev_server_host(self):
+        '''This property holds development server hostname. By default this is localhost.'''
+        
+        return "localhost"
         
 class SettingsFacade(object):
     '''For using a specific fantastico configuration you need to do two simple steps:

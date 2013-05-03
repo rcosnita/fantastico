@@ -85,6 +85,6 @@ class FantasticoApp(object):
         if request.content_type != response.content_type:
             raise FantasticoContentTypeError("User request %s but received %s." % (request.content_type, response.content_type))
         
-        start_response(response.status, response.headers)
+        start_response(response.status, response.headerlist)
         
-        return response.body
+        return [response.body]

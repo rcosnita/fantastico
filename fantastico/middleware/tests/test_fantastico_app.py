@@ -111,7 +111,7 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         
         self._controller.exec_logic = lambda request: response
         
-        self.assertEqual(b"Hello world", app_middleware(self._environ, Mock()))
+        self.assertEqual([b"Hello world"], app_middleware(self._environ, Mock()))
         self.assertTrue(self._environ["test_wrapped_ok"])
     
     def test_missing_request(self):

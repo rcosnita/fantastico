@@ -31,6 +31,10 @@ class DevServer(object):
         self.port = None
         self.hostname = None
     
+    @property
+    def started(self):
+        return self._httpd is not None
+    
     def start(self, build_server=make_server, app=FantasticoApp):
         '''This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
         configuration file.'''
@@ -41,6 +45,15 @@ class DevServer(object):
         self._httpd = build_server(self.hostname, self.port, app())
         
         self._httpd.serve_forever()
+        
+    def stop(self):
+        '''This method stops the current running server (if any available).'''
+        
+        if self._httpd:
+            try:
+                self._httpd.shutdown()
+            finally:
+                self._httpd = None
         
 if __name__ == "__main__":
     server = DevServer()

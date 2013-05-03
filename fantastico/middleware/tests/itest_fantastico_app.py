@@ -56,7 +56,7 @@ class FantasticoAppIntegration(FantasticoIntegrationTestCase):
             response = self._middleware(self._environ, Mock())
             
             self.assertIsNotNone(self._environ.get("fantastico.request"))
-            self.assertEqual(b"Hello world.", response)
+            self.assertEqual([b"Hello world."], response)
             
         self._run_test_all_envs(exec_test)
         
