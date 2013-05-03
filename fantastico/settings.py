@@ -38,7 +38,7 @@ class BasicSettings(object):
         '''Property that holds all installed middlewares.'''
         
         return ["fantastico.middleware.request_middleware.RequestMiddleware",
-                "fantastico.middleware.routing_engine.RoutingEngineMiddleware"]
+                "fantastico.middleware.routing_middleware.RoutingMiddleware"]
     
     @property
     def supported_languages(self):
