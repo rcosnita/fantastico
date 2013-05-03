@@ -37,3 +37,28 @@ class TestDummyRouteLoader(FantasticoIntegrationTestCase):
         self.assertTrue(DummyRouteLoader.DUMMY_ROUTE in routes)
         self.assertEqual("fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test",
                          routes["/dummy/route/loader/test"])
+        
+    def test_display_ok(self):
+        '''This test case ensures display_test method works as expected when request content type is different than
+        response content type.'''
+        
+        request = Mock()
+        request.content_type = "application/json"
+        
+        response = self._dummy_loader.display_test(request)
+        
+        self.assertEqual(400, response.status_code)
+        self.assertEqual("application/json", response.content_type)
+        self.assertEqual("UTF-8", response.charset)
+        
+    def test_invalid_type(self):
+        '''This test case ensures that for request_type text/html a new content type is returned: application/html.'''
+        
+        request = Mock()
+        request.content_type = "text/html; charset=UTF-8"
+        
+        response = self._dummy_loader.display_test(request)
+        
+        self.assertEqual(400, response.status_code)
+        self.assertEqual("application/html", response.content_type)
+        self.assertEqual("UTF-8", response.charset)
