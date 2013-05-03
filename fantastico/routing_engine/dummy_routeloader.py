@@ -34,9 +34,8 @@ class DummyRouteLoader(RouteLoader):
         '''This method handles **/dummy/route/loader/test route**. It is expected to receive a response with status code 400.
         We do this for being able to test rendering and also avoid false positive security scans messages.'''
         
-        response = Response()
-        response.content_type = request.content_type
-        response.status_code = 400
+        response = Response(status_code=400)
+        response.headers["Content-Type"] = request.content_type
         response.charset = "UTF-8"
         response.text = "Hello world."
         
