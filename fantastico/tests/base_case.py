@@ -17,7 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.tests.base_case
 '''
+from fantastico import middleware
 from fantastico.settings import BasicSettings
+from fantastico.utils import instantiator
+from mock import Mock
 import os
 import unittest
 
@@ -64,12 +67,18 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         class SimpleIntegration(FantasticoIntegrationTestCase):
             def init(self):
                 self.simple_class = {}
-                
+            
+            def cleanup(self):
+                self.simple_class = None
+            
             def test_simple_ok(self):
                 def do_stuff(env, env_cls):
                     self.assertEqual(simple_class[env], env_cls)
                     
                 self._run_test_all_envs(do_stuff)
+                
+    If you used this class you don't have to mind about restoring call methods from each middleware once they are wrapped
+    by fantastico app. This is a must because otherwise you will crash some other tests.
     '''
     
     @property
@@ -80,12 +89,27 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     
     def setUp(self):
         self.__envs = [("fantastico.settings.BasicSettings", BasicSettings)]
+        self.__old_middlewares_call = []
         
         super(FantasticoIntegrationTestCase, self).setUp()
         
     def tearDown(self):
         super(FantasticoIntegrationTestCase, self).tearDown()
+    
+    def _save_call_methods(self, middlewares):
+        '''This method save all call methods for each listed middleware so that later on they can be restored.'''
         
+        for middleware_cls in middlewares:
+            middleware = instantiator.instantiate_class(middleware_cls, [Mock()])
+            
+            self.__old_middlewares_call.append((middleware.__class__, middleware.__class__.__call__))
+            
+    def _restore_call_methods(self):
+        '''This method restore original call methods to all affected middlewares.'''
+        
+        for middleware in self.__old_middlewares_call:
+            middleware[0].__call__ = middleware[1]
+            
     def _run_test_all_envs(self, callable_obj):
         '''This method is used to execute a callable block of code on all environments. This is extremely useful for
         avoid boiler plate code duplication and executing test logic against all environments.        
@@ -94,11 +118,14 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
         
         for env, settings_cls in self._envs:
-            try:
+            try:                
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
+                self._save_call_methods(settings_cls().installed_middleware)
                 
                 callable_obj(env, settings_cls)
             finally:
+                self._restore_call_methods()
+                
                 if old_env is None:
                     old_env = ""
                     
