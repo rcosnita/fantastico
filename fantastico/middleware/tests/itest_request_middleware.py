@@ -43,6 +43,7 @@ class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
                            "wsgi.run_once": False,
                            "wsgi.url_scheme": 'http',
                            "wsgi.version": (1, 0)}
+        
         self._middleware = RequestMiddleware(Mock())
 
     def test_context_initialization(self):

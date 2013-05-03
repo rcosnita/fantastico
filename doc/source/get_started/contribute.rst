@@ -1,8 +1,8 @@
 Contribute
 ==========
 
-Fantastico framework is open source so every contribution is welcome. For the moment we are looking for more developers willing
-to contribute.
+Fantastico framework is open source so every contribution is welcome. For the moment we are looking for more developers willing to
+contribute.
 
 Code contribution
 -----------------
@@ -27,8 +27,9 @@ When you push on master a set of jobs are cascaded executed:
    #. Run all integration tests job (only if unit tests succeeds).
    #. Generate documentation and publish it (only if integration tests job succeeds).
    
-You can follow the above build process by visiting `Jenkins build <http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/>`_.
-Login with your github account and everything should work smoothly.
+You can follow the above build process by visiting
+`Jenkins build <http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/>`_. Login with your github account and everything
+should work smoothly.
 
 In the end do not forget that in Fantastico framework we love to develop against a **stable** base. We really think code will have
 high quality and zero bugs.   

@@ -25,10 +25,10 @@ from webob.request import Request
 
 class RoutingMiddlewareIntegration(FantasticoIntegrationTestCase):
     '''This class provides the test suite for making sure routing middleware correctly works with fantastico router.'''
-    
+
     def init(self):
         self._routing_middleware = RoutingMiddleware(Mock())
-        
+
     def test_route_handling_ok(self):
         '''This test case makes sure an existing route is correctly handled.'''
         
@@ -37,7 +37,7 @@ class RoutingMiddlewareIntegration(FantasticoIntegrationTestCase):
             
             environ = request.environ
             environ["fantastico.request"] = request
-            
+    
             self._routing_middleware(environ, Mock())
             
             route_handler = environ.get("route_%s_handler" % DummyRouteLoader.DUMMY_ROUTE)

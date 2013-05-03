@@ -20,12 +20,13 @@ from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
 from fantastico.routing_engine.dummy_routeloader import DummyRouteLoader
+from fantastico.exceptions import FantasticoContentTypeError
 
 class FantasticoAppIntegration(FantasticoIntegrationTestCase):
     '''Class used to make sure fantastico can correctly handle requests.'''
     
     def init(self):
-        self._environ = {"CONTENT_TYPE": "text/html",
+        self._environ = {"CONTENT_TYPE": "text/html; charset=UTF-8",
                            "HTTP_ACCEPT": "text/html",
                            "HTTP_ACCEPT_LANGUAGE": "ro-ro,en-US;q=0.8",
                            "HTTP_OAUTH_BEARER": "123",
@@ -41,16 +42,29 @@ class FantasticoAppIntegration(FantasticoIntegrationTestCase):
                            "wsgi.multithread": False,
                            "wsgi.run_once": False,
                            "wsgi.url_scheme": 'http',
-                           "wsgi.version": (1, 0)}        
+                           "wsgi.version": (1, 0)}
+
+        self._middleware = FantasticoApp()
         
     def test_request_ok(self):
         '''Test case than ensures requests are handled correctly by fantastico app (all configured middlewares are doing)
         what they are supposed to do.'''
         
         def exec_test(env, settings_cls):
-            middleware = FantasticoApp()
             
-            middleware(self._environ, Mock())
+            self._environ["CONTENT_TYPE"] = "application/json"
+            response = self._middleware(self._environ, Mock())
+            
+            self.assertIsNotNone(self._environ.get("fantastico.request"))
+            self.assertEqual(b"Hello world.", response)
+            
+        self._run_test_all_envs(exec_test)
+        
+    def test_request_incompatible_content(self):
+        '''This test case ensures request content type different than response content type raises an exception.'''
+        
+        def exec_test(env, settings_cls):
+            self.assertRaises(FantasticoContentTypeError, self._middleware, *[self._environ, Mock()])
             
             self.assertIsNotNone(self._environ.get("fantastico.request"))
             
