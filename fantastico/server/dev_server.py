@@ -33,6 +33,8 @@ class DevServer(object):
     
     @property
     def started(self):
+        '''Property used to tell if development server is started or not.'''
+        
         return self._httpd is not None
     
     def start(self, build_server=make_server, app=FantasticoApp):
@@ -56,5 +58,5 @@ class DevServer(object):
                 self._httpd = None
         
 if __name__ == "__main__":
-    server = DevServer()
-    server.start()
+    SERVER = DevServer()
+    SERVER.start()
