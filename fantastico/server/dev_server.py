@@ -41,3 +41,7 @@ class DevServer(object):
         self._httpd = build_server(self.hostname, self.port, app())
         
         self._httpd.serve_forever()
+        
+if __name__ == "__main__":
+    server = DevServer()
+    server.start()
