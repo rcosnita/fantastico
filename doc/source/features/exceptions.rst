@@ -21,3 +21,6 @@ Exceptions hierarchy
 
 .. autoclass:: fantastico.exceptions.FantasticoNoRequestError
    :members:
+
+.. autoclass:: fantastico.exceptions.FantasticoContentTypeError
+   :members: 

@@ -48,3 +48,7 @@ class FantasticoRouteNotFoundError(FantasticoError):
 class FantasticoNoRequestError(FantasticoError):
     '''This exception is usually raised when some components try to use fantastico.request from WSGI environ before 
     :py:class:`fantastico.middleware.request_middleware.RequestMiddleware` was executed.'''
+    
+class FantasticoContentTypeError(FantasticoError):
+    '''This exception is usually thrown when a mismatch between request content type and received content type differ. In
+    Fantastico we think it's mandatory to fulfill requests correctly and to take in consideration sent headers.'''
