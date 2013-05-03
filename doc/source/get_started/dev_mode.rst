@@ -1,5 +1,5 @@
 Development mode
-----------------
+================
 
 **Fantastico** framework is a web framework designed to be developers friendly. In order to simplify setup sequence, fantastico
 provides a standalone WSGI compatible server that can be started from command line. This server is fully compliant with WSGI
