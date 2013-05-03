@@ -15,6 +15,7 @@
 \indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{7}
 \indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{7}
+\indexentry{started (fantastico.server.dev\_server.DevServer attribute)|hyperpage}{7}
 \indexentry{stop() (fantastico.server.dev\_server.DevServer method)|hyperpage}{7}
 \indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{9}

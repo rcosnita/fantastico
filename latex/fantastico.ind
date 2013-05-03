@@ -76,6 +76,7 @@
   \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{11}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item start() (fantastico.server.dev\_server.DevServer method), \hyperpage{7}
+  \item started (fantastico.server.dev\_server.DevServer attribute), \hyperpage{7}
   \item stop() (fantastico.server.dev\_server.DevServer method), \hyperpage{7}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
 

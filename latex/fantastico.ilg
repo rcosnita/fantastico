@@ -1,7 +1,7 @@
 This is makeindex, version 2.15 [TeX Live 2012] (kpathsea + Thai support).
 Scanning style file ./python.ist......done (6 attributes redefined, 0 ignored).
-Scanning input file fantastico.idx....done (41 entries accepted, 0 rejected).
-Sorting entries....done (221 comparisons).
-Generating output file fantastico.ind....done (82 lines written, 0 warnings).
+Scanning input file fantastico.idx....done (42 entries accepted, 0 rejected).
+Sorting entries....done (231 comparisons).
+Generating output file fantastico.ind....done (83 lines written, 0 warnings).
 Output written in fantastico.ind.
 Transcript written in fantastico.ilg.

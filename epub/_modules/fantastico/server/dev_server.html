@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b36 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b37 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -63,9 +63,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="bp">None</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DevServer.started"><a class="viewcode-back" href="../../../get_started/dev_mode.html#fantastico.server.dev_server.DevServer.started">[docs]</a>    <span class="k">def</span> <span class="nf">started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Property used to tell if development server is started or not.&#39;&#39;&#39;</span>
+        
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
-    
+    </div>
 <div class="viewcode-block" id="DevServer.start"><a class="viewcode-back" href="../../../get_started/dev_mode.html#fantastico.server.dev_server.DevServer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_server</span><span class="o">=</span><span class="n">make_server</span><span class="p">,</span> <span class="n">app</span><span class="o">=</span><span class="n">FantasticoApp</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method starts a WSGI development server. All attributes like port, hostname and protocol are read from</span>
 <span class="sd">        configuration file.&#39;&#39;&#39;</span>
@@ -87,8 +89,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span> <span class="o">=</span> <span class="bp">None</span>
         </div></div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">server</span> <span class="o">=</span> <span class="n">DevServer</span><span class="p">()</span>
-    <span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">SERVER</span> <span class="o">=</span> <span class="n">DevServer</span><span class="p">()</span>
+    <span class="n">SERVER</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 </pre></div>
 
           </div>
