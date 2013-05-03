@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b35 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b36 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -82,6 +82,18 @@
         <span class="sd">&#39;&#39;&#39;This property holds all routes loaders available.&#39;&#39;&#39;</span>
         
         <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader&quot;</span><span class="p">]</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.dev_server_port"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.dev_server_port">[docs]</a>    <span class="k">def</span> <span class="nf">dev_server_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds development server port. By default this is 12000.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="mi">12000</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.dev_server_host"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.dev_server_host">[docs]</a>    <span class="k">def</span> <span class="nf">dev_server_host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds development server hostname. By default this is localhost.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="s">&quot;localhost&quot;</span>
         </div></div>
 <div class="viewcode-block" id="SettingsFacade"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade">[docs]</a><span class="k">class</span> <span class="nc">SettingsFacade</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;For using a specific fantastico configuration you need to do two simple steps:</span>

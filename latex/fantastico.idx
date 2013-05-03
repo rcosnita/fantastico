@@ -1,4 +1,6 @@
 \indexentry{BasicSettings (class in fantastico.settings)|hyperpage}{4}
+\indexentry{dev\_server\_host (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
+\indexentry{dev\_server\_port (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{installed\_middleware (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{routes\_loaders (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{supported\_languages (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
@@ -13,6 +15,7 @@
 \indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{7}
 \indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{7}
+\indexentry{stop() (fantastico.server.dev\_server.DevServer method)|hyperpage}{7}
 \indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{9}

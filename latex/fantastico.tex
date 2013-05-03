@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 03, 2013}
-\release{0.0.1-b35}
+\release{0.0.1-b36}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -300,6 +300,22 @@ configuration: Dev / Stage / Production.
 
 As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values
 for the attributes you want to overwrite.
+\index{dev\_server\_host (fantastico.settings.BasicSettings attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.dev_server_host}\pysigline{\bfcode{dev\_server\_host}}
+This property holds development server hostname. By default this is localhost.
+
+\end{fulllineitems}
+
+\index{dev\_server\_port (fantastico.settings.BasicSettings attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.dev_server_port}\pysigline{\bfcode{dev\_server\_port}}
+This property holds development server port. By default this is 12000.
+
+\end{fulllineitems}
+
 \index{installed\_middleware (fantastico.settings.BasicSettings attribute)}
 
 \begin{fulllineitems}
@@ -596,9 +612,17 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x48097c0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x2f63af0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
+
+\end{fulllineitems}
+
+\index{stop() (fantastico.server.dev\_server.DevServer method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.stop}\pysiglinewithargsret{\bfcode{stop}}{}{}
+This method stops the current running server (if any available).
 
 \end{fulllineitems}
 

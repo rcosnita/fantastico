@@ -9,12 +9,12 @@
 \contentsline {subsection}{\numberline {2.1.2}Contributing to fantastico framework}{3}{subsection.2.1.2}
 \contentsline {section}{\numberline {2.2}Fantastico settings}{4}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Settings API}{4}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Create Dev configuration}{4}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.2}Create Dev configuration}{5}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}Using a specifc configuration}{5}{subsection.2.2.3}
 \contentsline {section}{\numberline {2.3}Contribute}{5}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Code contribution}{5}{subsection.2.3.1}
-\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.10}
-\contentsline {subsubsection}{Writing integration tests}{6}{subsubsection*.12}
+\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.12}
+\contentsline {subsubsection}{Writing integration tests}{6}{subsubsection*.14}
 \contentsline {section}{\numberline {2.4}Development mode}{7}{section.2.4}
 \contentsline {section}{\numberline {2.5}Hot deploy}{7}{section.2.5}
 \contentsline {section}{\numberline {2.6}API}{7}{section.2.6}
@@ -33,4 +33,4 @@
 \contentsline {subsection}{\numberline {3.3.5}Routing middleware}{14}{subsection.3.3.5}
 \contentsline {chapter}{\numberline {4}Build status}{15}{chapter.4}
 \contentsline {chapter}{\numberline {5}License}{17}{chapter.5}
-\contentsline {chapter}{Index}{19}{section*.43}
+\contentsline {chapter}{Index}{19}{section*.46}
