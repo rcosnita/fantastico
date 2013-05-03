@@ -18,6 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.routing_engine.dummy_routeloader
 '''
 from fantastico.routing_engine.routing_loaders import RouteLoader
+from webob.response import Response
 
 class DummyRouteLoader(RouteLoader):
     '''This class represents an example of how to write a route loader. **DummyRouteLoader** is available in all configurations
@@ -28,3 +29,9 @@ class DummyRouteLoader(RouteLoader):
     
     def load_routes(self):
         return {DummyRouteLoader.DUMMY_ROUTE: "fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test"}
+    
+    def display_test(self, request):
+        '''This method handles **/dummy/route/loader/test route**. It is expected to receive a response with status code 400.
+        We do this for being able to test rendering and also avoid false positive security scans messages.'''
+        
+        return Response(content_type="text/html", text="Hello world.", status_code=400)
