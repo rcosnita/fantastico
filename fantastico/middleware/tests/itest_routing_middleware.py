@@ -55,7 +55,7 @@ class RoutingMiddlewareIntegration(FantasticoIntegrationTestCase):
             request = Request.blank(DummyRouteLoader.DUMMY_ROUTE, environ=None)
             
             environ = request.environ
-            
+
             self.assertRaises(FantasticoNoRequestError, self._routing_middleware, *[environ, Mock()])
             
         self._run_test_all_envs(exec_test)
