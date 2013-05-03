@@ -28,14 +28,16 @@ class DevServer(object):
         self._settings_facade = settings_facade()
         
         self._httpd = None
+        self.port = None
+        self.hostname = None
     
-    def start(self, make_server=make_server, app=FantasticoApp):
+    def start(self, build_server=make_server, app=FantasticoApp):
         '''This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
         configuration file.'''
         
         self.port = self._settings_facade.get("dev_server_port")
         self.hostname = self._settings_facade.get("dev_server_host")
         
-        self._httpd = make_server(self.hostname, self.port, app())
+        self._httpd = build_server(self.hostname, self.port, app())
         
         self._httpd.serve_forever()

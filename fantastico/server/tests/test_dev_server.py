@@ -64,3 +64,6 @@ class DevServerTests(FantasticoUnitTestsCase):
                 self._server.start(make_server, app)
                 
             self.assertTrue(str(cm.exception).find(expected_msg) > -1)
+            
+    def test_stop(self):
+        pass
