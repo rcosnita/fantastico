@@ -35,8 +35,12 @@ class DummyRouteLoader(RouteLoader):
         We do this for being able to test rendering and also avoid false positive security scans messages.'''
         
         response = Response(status_code=400)
-        response.headers["Content-Type"] = request.content_type
-        response.charset = "UTF-8"
+        
+        if "text/html" in request.content_type:
+            response.content_type = "application/html; charset=UTF-8"
+        else:
+            response.content_type = request.content_type
+            
         response.text = "Hello world."
         
         return response
