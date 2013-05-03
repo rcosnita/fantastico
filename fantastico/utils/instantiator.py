@@ -23,7 +23,7 @@ import importlib
 from fantastico.exceptions import FantasticoClassNotFoundError
 
 def instantiate_class(full_name, constr_args=None):
-    '''Method used to instantiate a class starting from it's full name.
+    '''Method used to instantiate a class starting from its full name.
     
     :param full_name: fully qualified class name.
     :type full_name: string
@@ -35,6 +35,14 @@ def instantiate_class(full_name, constr_args=None):
     if constr_args is None:
         constr_args = []
     
+    return import_class(full_name)(*constr_args)
+    
+def import_class(full_name):
+    '''Method used to import a class dynamically starting from its full name.
+    
+    :param full_name: fully qualified class name.
+    :type full_name: string'''
+    
     last_dot = full_name.rfind(".")
     
     module_name, class_name = full_name[:last_dot], full_name[last_dot + 1:]
@@ -43,8 +51,8 @@ def instantiate_class(full_name, constr_args=None):
         module = importlib.import_module(module_name)
     except ImportError as ex:
         raise FantasticoClassNotFoundError(str(ex))
-    
+
     try:
-        return getattr(module, class_name)(*constr_args)
+        return getattr(module, class_name)
     except AttributeError as ex:
-        raise FantasticoClassNotFoundError(str(ex))    
+        raise FantasticoClassNotFoundError(str(ex))
