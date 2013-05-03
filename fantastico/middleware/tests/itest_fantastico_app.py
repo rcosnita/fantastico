@@ -19,17 +19,18 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
+from fantastico.routing_engine.dummy_routeloader import DummyRouteLoader
 
 class FantasticoAppIntegration(FantasticoIntegrationTestCase):
     '''Class used to make sure fantastico can correctly handle requests.'''
     
     def init(self):
-        self._environ = {"CONTENT_TYPE": "application/json",
-                           "HTTP_ACCEPT": "application/json",
+        self._environ = {"CONTENT_TYPE": "text/html",
+                           "HTTP_ACCEPT": "text/html",
                            "HTTP_ACCEPT_LANGUAGE": "ro-ro,en-US;q=0.8",
                            "HTTP_OAUTH_BEARER": "123",
                            "HTTP_HOST": "localhost:80",
-                           "PATH_INFO": "/article",
+                           "PATH_INFO": DummyRouteLoader.DUMMY_ROUTE,
                            "QUERY_STRING": "id=1",
                            "REQUEST_METHOD": "GET",
                            "SCRIPT_NAME": "",
@@ -50,6 +51,4 @@ class FantasticoAppIntegration(FantasticoIntegrationTestCase):
         
         self._middleware(self._environ, Mock())
         
-        request = self._environ.get("fantastico.request")
-        
-        self.assertIsNotNone(request)
+        self.assertIsNotNone(self._environ.get("fantastico.request"))
