@@ -105,6 +105,8 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     def _save_call_methods(self, middlewares):
         '''This method save all call methods for each listed middleware so that later on they can be restored.'''
         
+        self.__old_middlewares_call.append((FantasticoApp, FantasticoApp.__call__))
+        
         for middleware_cls in middlewares:
             middleware_cls = instantiator.import_class(middleware_cls)
             
@@ -126,8 +128,6 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         for env, settings_cls in self._envs:
             try:                
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
-                self.setUp()
-                self._save_call_methods(settings_cls().installed_middleware)
                 
                 callable_obj(env, settings_cls)
             finally:
@@ -135,4 +135,3 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
                     old_env = ""
                     
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env
-                self.tearDown()
