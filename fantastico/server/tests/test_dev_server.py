@@ -65,3 +65,30 @@ class DevServerTests(FantasticoUnitTestsCase):
                 self._server.start(make_server, app)
                 
             self.assertTrue(str(cm.exception).find(expected_msg) > -1)
+            
+    def test_stop_server_notstarted(self):
+        '''This test case makes sure stop method does not crash when dev server was not started.'''
+        
+        self._server.stop()
+        
+        self.assertFalse(self._server.started)
+        
+    def test_stop_server_whenstarted(self):
+        '''This test case makes sure stop method correctly shutdowns a running dev server.'''
+        
+        self._shutdown_invoked = False
+                
+        def fake_shutdown():
+            self._shutdown_invoked = True
+        
+        http_server = Mock()
+        http_server.shutdown = fake_shutdown
+        make_server = Mock(return_value=http_server) 
+        app = Mock()
+        
+        self._server.start(make_server, app)
+        
+        self._server.stop()
+        
+        self.assertTrue(self._shutdown_invoked)
+        self.assertFalse(self._server.started)        
