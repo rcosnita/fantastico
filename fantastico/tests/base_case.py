@@ -102,7 +102,7 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         for middleware_cls in middlewares:
             middleware = instantiator.instantiate_class(middleware_cls, [Mock()])
             
-            self.__old_middlewares_call.append((middleware.__class__, middleware.__class__.__call__))
+            self.__old_middlewares_call.append((middleware.__class__, middleware.__call__))
             
     def _restore_call_methods(self):
         '''This method restore original call methods to all affected middlewares.'''
@@ -120,6 +120,7 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         for env, settings_cls in self._envs:
             try:                
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
+                self.setUp()
                 self._save_call_methods(settings_cls().installed_middleware)
                 
                 callable_obj(env, settings_cls)
@@ -130,3 +131,4 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
                     old_env = ""
                     
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env
+                self.tearDown()

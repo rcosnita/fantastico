@@ -41,14 +41,17 @@ class FantasticoAppIntegration(FantasticoIntegrationTestCase):
                            "wsgi.multithread": False,
                            "wsgi.run_once": False,
                            "wsgi.url_scheme": 'http',
-                           "wsgi.version": (1, 0)}
-
-        self._middleware = FantasticoApp()
+                           "wsgi.version": (1, 0)}        
         
     def test_request_ok(self):
         '''Test case than ensures requests are handled correctly by fantastico app (all configured middlewares are doing)
         what they are supposed to do.'''
         
-        self._middleware(self._environ, Mock())
-        
-        self.assertIsNotNone(self._environ.get("fantastico.request"))
+        def exec_test(env, settings_cls):
+            middleware = FantasticoApp()
+            
+            middleware(self._environ, Mock())
+            
+            self.assertIsNotNone(self._environ.get("fantastico.request"))
+            
+        self._run_test_all_envs(exec_test)
