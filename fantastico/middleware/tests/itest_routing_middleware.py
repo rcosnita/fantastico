@@ -35,7 +35,8 @@ class RoutingMiddlewareIntegration(FantasticoIntegrationTestCase):
         def exec_test(env, settings_cls):
             request = Request.blank(DummyRouteLoader.DUMMY_ROUTE)
             
-            environ = {"fantastico.request": request}
+            environ = request.environ
+            environ["fantastico.request"] = request
             
             self._routing_middleware(environ, Mock())
             
@@ -51,7 +52,9 @@ class RoutingMiddlewareIntegration(FantasticoIntegrationTestCase):
         '''This test cases ensures that a fantastico exception is thrown if RequestMiddleware was not executed before.'''
         
         def exec_test(env, settings_cls):
-            environ = {}
+            request = Request.blank(DummyRouteLoader.DUMMY_ROUTE)
+            
+            environ = request.environ
             
             with self.assertRaises(FantasticoNoRequestError) as cm:
                 self._routing_middleware(environ, Mock())
