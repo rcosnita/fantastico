@@ -47,7 +47,9 @@ Code the controller
                                    where_expr=[eq_(Post.blog_id, blog_id)])
                             
             response = Response()
-            response.text = self.load_template("/posts_listing.html", {"posts": posts, "blog_id": blog_id})
+            response.text = self.load_template("/posts_listing.html", 
+                                               {"posts": posts, 
+                                                "blog_id": blog_id})
             
             return response
             
