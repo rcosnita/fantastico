@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 05, 2013}
-\release{0.0.1-b38}
+\release{0.0.1-b39}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -612,7 +612,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x3a54c00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4a53c00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1209,7 +1209,9 @@ Create a new module called \textbf{blog\_controller} and paste the following cod
                            \PYG{n}{where\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{eq\PYGZus{}}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
 
     \PYG{n}{response} \PYG{o}{=} \PYG{n}{Response}\PYG{p}{(}\PYG{p}{)}
-    \PYG{n}{response}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/posts\PYGZus{}listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{posts}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{blog\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{blog\PYGZus{}id}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+    \PYG{n}{response}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/posts\PYGZus{}listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                                       \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{posts}\PYG{p}{,}
+                                        \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{blog\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{blog\PYGZus{}id}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
 
     \PYG{k}{return} \PYG{n}{response}
 \end{Verbatim}
