@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Model View Controller</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../how_to/how_to.html" title="How to articles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="routing_engine.html" title="Routing engine"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b38 documentation</a> &raquo;</li>
+          <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="model-view-controller">
+<h1>Model View Controller</h1>
+<p><strong>Fantastico</strong> framework provides quite a powerful model - view - controller implementation. Here you can find details about
+design decisions and how to benefit from it.</p>
+<div class="section" id="classic-approach">
+<h2>Classic approach</h2>
+<p>Usually when you want to work with models as understood by MVC pattern you have in many cases boiler plate code:</p>
+<ol class="arabic simple">
+<li>Write your model class (or entity)</li>
+<li>Write a repository that provides various methods for this model class.</li>
+<li>Write a facade that works with the repository.</li>
+<li>Write a web service / page that relies on the facade.</li>
+<li>Write one or multiple views.</li>
+</ol>
+<p>As this is usually a good in theory, in practice you will see that many methods from facade are converting a data transfer object
+to an entity and pass it down to repository.</p>
+</div>
+<div class="section" id="fantastico-approach">
+<h2>Fantastico approach</h2>
+<p><strong>Fantastico</strong> framework provides an alternative to this classic approach (you can still work in the old way if you really really
+want). Let&#8217;s see a simple example below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">list_blogs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="n">Blog</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Blog</span>
+
+    <span class="n">blogs</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">all_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">asc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">create_date</span><span class="p">),</span> <span class="n">desc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">title</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">blogs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code assume the following:</p>
+<ol class="arabic simple">
+<li>As developer you created a model called blog (this is already mapped to some sort of storage).</li>
+<li>Fantastico framework generate the facade automatically (and you never have to know anything about underlining repository).</li>
+<li>Fantastico framework takes care of data conversion.</li>
+<li>As developer you create the method that knows how to handle <strong>/blog/</strong> url.</li>
+<li>Write your view.</li>
+</ol>
+<p>Below you can find the design for MVC provided by <strong>Fantastico</strong> framework:</p>
+<img alt="../_images/mvc.png" src="../_images/mvc.png" />
+</div>
+<div class="section" id="model">
+<h2>Model</h2>
+<p>A model is a very simple object that inherits <tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.BaseModel</span></tt>.</p>
+</div>
+<div class="section" id="view">
+<h2>View</h2>
+<p>A view can be a simple html plain file or html + jinja2 enriched support. You can read more about <strong>Jinja2</strong>
+<a class="reference external" href="http://jinja.pocoo.org/docs/">here</a><span class="link-target"> [http://jinja.pocoo.org/docs/]</span>. Usually, if you need some logical block statements in your view (if, for, ...)
+it is easier to use jinja 2 template engine. The good news is that you can easily embed jinja 2 markup in your views
+and it will be rendered automatically.</p>
+</div>
+<div class="section" id="controller">
+<h2>Controller</h2>
+<p>A controller is the <em>brain</em>; it actually combines a model execute some business logic and pass data to the desired view
+that needs to be rendered. In some cases you don&#8217;t really need view in order to provide the logic you want:</p>
+<blockquote>
+<div><ul class="simple">
+<li>A REST Web service.</li>
+<li>A RSS feed provider.</li>
+<li>A file download service</li>
+</ul>
+</div></blockquote>
+<p>Though writing REST services does not require a view, you can load external text templates that might be useful for assembling the
+response:</p>
+<blockquote>
+<div><ul class="simple">
+<li>An invoice generator service</li>
+<li>An xml file that must be filled with product data</li>
+<li>A <a class="reference external" href="http://en.wikipedia.org/wiki/VCard">vCard</a><span class="link-target"> [http://en.wikipedia.org/wiki/VCard]</span>. export service.</li>
+</ul>
+</div></blockquote>
+<p>If you want to read a small tutorial and to start coding very fast on Fantastico MVC read <a class="reference internal" href="../how_to/mvc_how_to.html"><em>MVC How to</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{May 03, 2013}
-\release{0.0.1-b37}
+\date{May 05, 2013}
+\release{0.0.1-b38}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -595,12 +595,12 @@ By default, \textbf{Fantastico} dev server starts on port 12000, but you can cus
 {\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}}.
 
 
-\section{Hot deploy}
+\subsection{Hot deploy}
 \label{get_started/dev_mode:hot-deploy}
 Currently, this is not implemented, but it is on todo list on short term.
 
 
-\section{API}
+\subsection{API}
 \label{get_started/dev_mode:api}
 For more information about Fantastico development server see the API below.
 \index{DevServer (class in fantastico.server.dev\_server)}
@@ -612,7 +612,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x3601af0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x3a54c00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1028,6 +1028,236 @@ at {\hyperref[features/request_response::doc]{\emph{Request lifecycle}}}.
 
 \end{fulllineitems}
 
+
+
+\section{Model View Controller}
+\label{features/mvc:model-view-controller}\label{features/mvc::doc}
+\textbf{Fantastico} framework provides quite a powerful model - view - controller implementation. Here you can find details about
+design decisions and how to benefit from it.
+
+
+\subsection{Classic approach}
+\label{features/mvc:classic-approach}
+Usually when you want to work with models as understood by MVC pattern you have in many cases boiler plate code:
+\begin{enumerate}
+\item {} 
+Write your model class (or entity)
+
+\item {} 
+Write a repository that provides various methods for this model class.
+
+\item {} 
+Write a facade that works with the repository.
+
+\item {} 
+Write a web service / page that relies on the facade.
+
+\item {} 
+Write one or multiple views.
+
+\end{enumerate}
+
+As this is usually a good in theory, in practice you will see that many methods from facade are converting a data transfer object
+to an entity and pass it down to repository.
+
+
+\subsection{Fantastico approach}
+\label{features/mvc:fantastico-approach}
+\textbf{Fantastico} framework provides an alternative to this classic approach (you can still work in the old way if you really really
+want). Let's see a simple example below:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blogs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{Blog} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Blog}
+
+    \PYG{n}{blogs} \PYG{o}{=} \PYG{n}{Blog}\PYG{o}{.}\PYG{n}{all\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{asc}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{blogs}\PYG{p}{)}
+\end{Verbatim}
+
+The above code assume the following:
+\begin{enumerate}
+\item {} 
+As developer you created a model called blog (this is already mapped to some sort of storage).
+
+\item {} 
+Fantastico framework generate the facade automatically (and you never have to know anything about underlining repository).
+
+\item {} 
+Fantastico framework takes care of data conversion.
+
+\item {} 
+As developer you create the method that knows how to handle \textbf{/blog/} url.
+
+\item {} 
+Write your view.
+
+\end{enumerate}
+
+Below you can find the design for MVC provided by \textbf{Fantastico} framework:
+
+\includegraphics{mvc.png}
+
+
+\subsection{Model}
+\label{features/mvc:model}
+A model is a very simple object that inherits \code{fantastico.mvc.models.BaseModel}.
+
+
+\subsection{View}
+\label{features/mvc:view}
+A view can be a simple html plain file or html + jinja2 enriched support. You can read more about \textbf{Jinja2}
+\href{http://jinja.pocoo.org/docs/}{here}. Usually, if you need some logical block statements in your view (if, for, ...)
+it is easier to use jinja 2 template engine. The good news is that you can easily embed jinja 2 markup in your views
+and it will be rendered automatically.
+
+
+\subsection{Controller}
+\label{features/mvc:controller}
+A controller is the \emph{brain}; it actually combines a model execute some business logic and pass data to the desired view
+that needs to be rendered. In some cases you don't really need view in order to provide the logic you want:
+\begin{itemize}
+\item {} 
+A REST Web service.
+
+\item {} 
+A RSS feed provider.
+
+\item {} 
+A file download service
+
+\end{itemize}
+
+Though writing REST services does not require a view, you can load external text templates that might be useful for assembling the
+response:
+\begin{itemize}
+\item {} 
+An invoice generator service
+
+\item {} 
+An xml file that must be filled with product data
+
+\item {} 
+A \href{http://en.wikipedia.org/wiki/VCard}{vCard}. export service.
+
+\end{itemize}
+
+If you want to read a small tutorial and to start coding very fast on Fantastico MVC read {\hyperref[how_to/mvc_how_to::doc]{\emph{MVC How to}}}.
+
+
+\chapter{How to articles}
+\label{how_to/how_to:how-to-articles}\label{how_to/how_to::doc}
+
+\section{MVC How to}
+\label{how_to/mvc_how_to::doc}\label{how_to/mvc_how_to:mvc-how-to}
+In this article you can see how to assemble various pieces together in order to create a feature for a virtual blog application.
+If you follow this step by step guide in the end you will have a running blog which can list all posts.
+
+
+\subsection{Code the model}
+\label{how_to/mvc_how_to:code-the-model}
+Below you can find how to easily create \textbf{post} model.
+\begin{enumerate}
+\item {} 
+Create a new package called \textbf{blog}
+
+\item {} 
+Create a new package called \textbf{blog.models}
+
+\item {} 
+Create a new module called posts and paste the following code into it:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Post}\PYG{p}{(}\PYG{n}{BaseModel}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}
+
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{blog\PYGZus{}id} \PYG{o}{=}
+    \PYG{n}{title} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{title}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{150}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{tags} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{tags}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{150}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{created\PYGZus{}date} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{registered\PYGZus{}date}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{DateTime}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{default}\PYG{o}{=}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{)}
+    \PYG{n}{content} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{content}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}
+\end{quote}
+
+\end{enumerate}
+
+Now you have a fully functional post model mapped over \textbf{posts} table.
+
+
+\subsection{Code the controller}
+\label{how_to/mvc_how_to:code-the-controller}\begin{enumerate}
+\item {} 
+Create a new package called \textbf{blog.controllers}
+
+\item {} 
+Create a new module called \textbf{blog\_controller} and paste the following code into it:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/1/posts/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.posts.Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blog\PYGZus{}posts}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{Post} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Post}
+
+    \PYG{n}{blog\PYGZus{}id} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{request}\PYG{o}{.}\PYG{n}{params}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+
+    \PYG{n}{posts} \PYG{o}{=} \PYG{n}{Post}\PYG{o}{.}\PYG{n}{all\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}
+                           \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{asc}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{created\PYGZus{}date}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                           \PYG{n}{where\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{eq\PYGZus{}}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+
+    \PYG{n}{response} \PYG{o}{=} \PYG{n}{Response}\PYG{p}{(}\PYG{p}{)}
+    \PYG{n}{response}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/posts\PYGZus{}listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{posts}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{blog\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{blog\PYGZus{}id}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n}{response}
+\end{Verbatim}
+\end{quote}
+
+\end{enumerate}
+
+Now you have a fully functional controller that will list all posts.
+
+
+\subsection{Code the view}
+\label{how_to/mvc_how_to:code-the-view}\begin{enumerate}
+\item {} 
+Create a new folder called \textbf{blog.views}
+
+\item {} 
+Create a new view under \textbf{blog.views} called \emph{posts\_listing.html} and paste the following code into it:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nt}{\PYGZlt{}html}\PYG{n+nt}{\PYGZgt{}}
+    \PYG{n+nt}{\PYGZlt{}head}\PYG{n+nt}{\PYGZgt{}}
+        \PYG{n+nt}{\PYGZlt{}title}\PYG{n+nt}{\PYGZgt{}}List all available posts from blog \PYGZob{}\PYGZob{}blog\PYGZus{}id\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/title\PYGZgt{}}
+    \PYG{n+nt}{\PYGZlt{}/head\PYGZgt{}}
+
+    \PYG{n+nt}{\PYGZlt{}body}\PYG{n+nt}{\PYGZgt{}}
+        \PYG{n+nt}{\PYGZlt{}ul}\PYG{n+nt}{\PYGZgt{}}
+        \PYGZob{}\PYGZpc{} for post in posts \PYGZpc{}\PYGZcb{}
+            \PYG{n+nt}{\PYGZlt{}li}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}post.title\PYGZcb{}\PYGZcb{} \textbar{} \PYGZob{}\PYGZob{}post.created\PYGZus{}date\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/li\PYGZgt{}}
+        \PYGZob{}\PYGZpc{} endfor \PYGZpc{}\PYGZcb{}
+        \PYG{n+nt}{\PYGZlt{}/ul\PYGZgt{}}
+    \PYG{n+nt}{\PYGZlt{}/body\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}/html\PYGZgt{}}
+\end{Verbatim}
+\end{quote}
+
+\end{enumerate}
+
+
+\subsection{Test your application}
+\label{how_to/mvc_how_to:test-your-application}\begin{enumerate}
+\item {} 
+Start fantastico dev server by executing script \textbf{run\_dev\_server.sh} ({\hyperref[get_started/dev_mode::doc]{\emph{Development mode}}})
+
+\item {} 
+Open a browser and visit \href{http://localhost:12000/blogs/1/posts}{http://localhost:12000/blogs/1/posts}.
+
+\end{enumerate}
 
 
 \chapter{Build status}

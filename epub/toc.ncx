@@ -134,18 +134,24 @@
           <text>Development mode</text>
         </navLabel>
         <content src="get_started/dev_mode.html" />
-      </navPoint>
-      <navPoint id="navPoint16" playOrder="16">
-        <navLabel>
-          <text>Hot deploy</text>
-        </navLabel>
-        <content src="get_started/dev_mode.html#hot-deploy" />
-      </navPoint>
-      <navPoint id="navPoint17" playOrder="17">
-        <navLabel>
-          <text>API</text>
-        </navLabel>
-        <content src="get_started/dev_mode.html#api" />
+        <navPoint id="navPoint15" playOrder="15">
+          <navLabel>
+            <text>Development mode</text>
+          </navLabel>
+          <content src="get_started/dev_mode.html" />
+        </navPoint>
+        <navPoint id="navPoint16" playOrder="16">
+          <navLabel>
+            <text>Hot deploy</text>
+          </navLabel>
+          <content src="get_started/dev_mode.html#hot-deploy" />
+        </navPoint>
+        <navPoint id="navPoint17" playOrder="17">
+          <navLabel>
+            <text>API</text>
+          </navLabel>
+          <content src="get_started/dev_mode.html#api" />
+        </navPoint>
       </navPoint>
     </navPoint>
     <navPoint id="navPoint18" playOrder="18">
@@ -241,6 +247,96 @@
             <text>Routing middleware</text>
           </navLabel>
           <content src="features/routing_engine.html#routing-middleware" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint31" playOrder="31">
+        <navLabel>
+          <text>Model View Controller</text>
+        </navLabel>
+        <content src="features/mvc.html" />
+        <navPoint id="navPoint31" playOrder="31">
+          <navLabel>
+            <text>Model View Controller</text>
+          </navLabel>
+          <content src="features/mvc.html" />
+        </navPoint>
+        <navPoint id="navPoint32" playOrder="32">
+          <navLabel>
+            <text>Classic approach</text>
+          </navLabel>
+          <content src="features/mvc.html#classic-approach" />
+        </navPoint>
+        <navPoint id="navPoint33" playOrder="33">
+          <navLabel>
+            <text>Fantastico approach</text>
+          </navLabel>
+          <content src="features/mvc.html#fantastico-approach" />
+        </navPoint>
+        <navPoint id="navPoint34" playOrder="34">
+          <navLabel>
+            <text>Model</text>
+          </navLabel>
+          <content src="features/mvc.html#model" />
+        </navPoint>
+        <navPoint id="navPoint35" playOrder="35">
+          <navLabel>
+            <text>View</text>
+          </navLabel>
+          <content src="features/mvc.html#view" />
+        </navPoint>
+        <navPoint id="navPoint36" playOrder="36">
+          <navLabel>
+            <text>Controller</text>
+          </navLabel>
+          <content src="features/mvc.html#controller" />
+        </navPoint>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint37" playOrder="37">
+      <navLabel>
+        <text>How to articles</text>
+      </navLabel>
+      <content src="how_to/how_to.html" />
+      <navPoint id="navPoint37" playOrder="37">
+        <navLabel>
+          <text>How to articles</text>
+        </navLabel>
+        <content src="how_to/how_to.html" />
+      </navPoint>
+      <navPoint id="navPoint38" playOrder="38">
+        <navLabel>
+          <text>MVC How to</text>
+        </navLabel>
+        <content src="how_to/mvc_how_to.html" />
+        <navPoint id="navPoint38" playOrder="38">
+          <navLabel>
+            <text>MVC How to</text>
+          </navLabel>
+          <content src="how_to/mvc_how_to.html" />
+        </navPoint>
+        <navPoint id="navPoint39" playOrder="39">
+          <navLabel>
+            <text>Code the model</text>
+          </navLabel>
+          <content src="how_to/mvc_how_to.html#code-the-model" />
+        </navPoint>
+        <navPoint id="navPoint40" playOrder="40">
+          <navLabel>
+            <text>Code the controller</text>
+          </navLabel>
+          <content src="how_to/mvc_how_to.html#code-the-controller" />
+        </navPoint>
+        <navPoint id="navPoint41" playOrder="41">
+          <navLabel>
+            <text>Code the view</text>
+          </navLabel>
+          <content src="how_to/mvc_how_to.html#code-the-view" />
+        </navPoint>
+        <navPoint id="navPoint42" playOrder="42">
+          <navLabel>
+            <text>Test your application</text>
+          </navLabel>
+          <content src="how_to/mvc_how_to.html#test-your-application" />
         </navPoint>
       </navPoint>
     </navPoint>
