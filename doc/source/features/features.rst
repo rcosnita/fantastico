@@ -7,3 +7,4 @@ Fantastico features
    exceptions
    request_response
    routing_engine
+   mvc
