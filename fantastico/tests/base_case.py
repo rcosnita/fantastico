@@ -19,8 +19,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico import middleware
 from fantastico.middleware.fantastico_app import FantasticoApp
-from fantastico.middleware.request_middleware import RequestMiddleware
-from fantastico.middleware.routing_middleware import RoutingMiddleware
 from fantastico.settings import BasicSettings, SettingsFacade
 from fantastico.utils import instantiator
 import os
@@ -43,6 +41,23 @@ class FantasticoBaseTestCase(unittest.TestCase):
             cleanup = getattr(self, "cleanup")
             cleanup()
     
+    @classmethod
+    def setUpClass(cls):
+        '''We make the convention that setUpClass method will always invoke setup_once method for each test case class.'''
+        
+        if hasattr(cls, "setup_once"):
+            cleanup = getattr(cls, "setup_once")
+            cleanup(cls)
+        
+                    
+    @classmethod
+    def tearDownClass(cls):
+        '''We make the convention that tearDownClass method will always invoke cleanup_once method for each test case class.''' 
+        
+        if hasattr(cls, "cleanup_once"):
+            cleanup = getattr(cls, "cleanup_once")
+            cleanup(cls)
+    
 class FantasticoUnitTestsCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each unit test written for fantastico.
     
@@ -54,12 +69,6 @@ class FantasticoUnitTestsCase(FantasticoBaseTestCase):
                 
             def test_simple_flow_ok(self):
                 self.assertEqual("Hello world", self._msg)'''
-    
-    def setUp(self):
-        super(FantasticoUnitTestsCase, self).setUp()
-        
-    def tearDown(self):
-        super(FantasticoUnitTestsCase, self).tearDown()        
     
 class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each integration test written for fantastico.
