@@ -96,17 +96,3 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
         '''This method returns the absolute url for a given relative url (route).'''
         
         return "http://localhost:12000%s" % route
-        
-    def test_server_runs_ok(self):
-        '''This test case makes sure dev server can start correctly. In addition it requests dummy route test page
-        and assert for the result.'''
-        
-        def request_logic(server):
-            request = Request(self._get_server_base_url(server, DummyRouteLoader.DUMMY_ROUTE)) 
-            with self.assertRaises(HTTPError) as cm:
-                urllib.request.urlopen(request)
-                
-            self.assertEqual(400, cm.exception.code)
-            self.assertEqual("Hello world.", cm.exception.read().decode())
-            
-        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
