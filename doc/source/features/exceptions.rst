@@ -23,4 +23,7 @@ Exceptions hierarchy
    :members:
 
 .. autoclass:: fantastico.exceptions.FantasticoContentTypeError
-   :members: 
+   :members:
+
+.. autoclass:: fantastico.exceptions.FantasticoHttpVerbNotSupported
+   :members:  

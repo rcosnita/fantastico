@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.exceptions import FantasticoClassNotFoundError, \
     FantasticoDuplicateRouteError, FantasticoNoRoutesError, \
-    FantasticoRouteNotFoundError
+    FantasticoRouteNotFoundError, FantasticoHttpVerbNotSupported
 from fantastico.routing_engine.router import Router
 from fantastico.routing_engine.routing_loaders import RouteLoader
 from fantastico.tests.base_case import FantasticoUnitTestsCase
@@ -167,7 +167,7 @@ class RouterTests(FantasticoUnitTestsCase):
     def test_handle_route_ok(self):
         '''Test case that ensures handle route correctly instantiate the route handler and add it to WSGI environ dictionary.'''
         
-        environ = {}
+        environ = {"REQUEST_METHOD": "GET"}
         
         self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader"])
         
@@ -184,7 +184,7 @@ class RouterTests(FantasticoUnitTestsCase):
     def test_handle_route_controller_missing(self):
         '''Test case that ensures handle route correctly raise an exception if it can't locate the requested controller.'''
         
-        environ = {}
+        environ = {"REQUEST_METHOD": "GET"}
         
         self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader3"])
         
@@ -215,6 +215,20 @@ class RouterTests(FantasticoUnitTestsCase):
         
         self.assertRaises(FantasticoRouteNotFoundError, self._router.handle_route, *["/not_found_route.html", environ])
         
+    def test_invalid_http_verb(self):
+        '''This test case makes sure a route can not be invoked with an http verb that is not supported.'''
+        
+        environ = {"REQUEST_METHOD": "post"}
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader"])
+
+        self._router.register_routes()
+        
+        with self.assertRaises(FantasticoHttpVerbNotSupported) as cm:
+            self._router.handle_route("/index.html", environ)
+        
+        self.assertEqual("POST", cm.exception.http_verb)
+                
 class TestLoader(RouteLoader):
     '''Simple route loader used for unit testing.'''
     
