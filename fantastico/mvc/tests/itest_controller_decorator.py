@@ -19,7 +19,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.mvc.controller_decorators import Controller
 from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
-from mock import Mock
 from webob.request import Request
 from webob.response import Response
 
