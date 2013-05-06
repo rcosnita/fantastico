@@ -81,6 +81,9 @@ class ControllerRouteLoader(RouteLoader):
         routes = {} 
         
         for route in controller_routes:
-            routes[route] = controller_routes[route].fn_handler.full_name
+            controller = controller_routes[route]
+            
+            routes[route] = {"method": controller.fn_handler.full_name,
+                             "http_verbs": controller.method}
         
         return routes

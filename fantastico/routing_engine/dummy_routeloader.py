@@ -28,7 +28,10 @@ class DummyRouteLoader(RouteLoader):
     DUMMY_ROUTE = "/dummy/route/loader/test"
     
     def load_routes(self):
-        return {DummyRouteLoader.DUMMY_ROUTE: "fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test"}
+        routes = {"method": "fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test",
+                  "http_verbs": ["GET"]}
+        
+        return {DummyRouteLoader.DUMMY_ROUTE: routes}
     
     def display_test(self, request):
         '''This method handles **/dummy/route/loader/test route**. It is expected to receive a response with status code 400.

@@ -80,8 +80,10 @@ class RouterTests(FantasticoUnitTestsCase):
         routes = self._router.register_routes()
         
         self.assertIsNotNone(routes)
-        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff", routes.get("/index.html"))
-        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff2", routes.get("/index2.html"))
+        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff", 
+                         routes.get("/index.html")["method"])
+        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff2", 
+                         routes.get("/index2.html")["method"])
         
     def test_register_routes_conflict(self):
         '''Test case that ensures an exception is thrown whenever duplicate routes are detected.'''
@@ -143,8 +145,10 @@ class RouterTests(FantasticoUnitTestsCase):
         routes = self._router.register_routes()
         
         self.assertIsNotNone(routes)
-        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff", routes.get("/index.html"))
-        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff2", routes.get("/index2.html"))
+        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff", 
+                         routes.get("/index.html")["method"])
+        self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff2", 
+                         routes.get("/index2.html")["method"])
 
     def test_no_loaders_error(self):
         '''Test case that ensures router will not work correctly without loaders configured in current configuration.'''
@@ -215,20 +219,24 @@ class TestLoader(RouteLoader):
     '''Simple route loader used for unit testing.'''
     
     def load_routes(self):
-        return {"/index.html": "fantastico.routing_engine.tests.test_router.Controller.do_stuff"}
+        return {"/index.html": {"method": "fantastico.routing_engine.tests.test_router.Controller.do_stuff",
+                                "http_verbs": ["GET"]}}
     
 class TestLoader2(RouteLoader):
     '''Simple route loader used for unit testing.'''
     
     def load_routes(self):
-        return {"/index2.html": "fantastico.routing_engine.tests.test_router.Controller.do_stuff2"}
+        return {"/index2.html": {"method": "fantastico.routing_engine.tests.test_router.Controller.do_stuff2",
+                                 "http_verbs": ["GET"]}}
     
 class TestLoader3(RouteLoader):
     '''Simple route loader used for unit testing.'''
     
     def load_routes(self):
-        return {"/index.html": "fantastico.routing_engine.tests.test_router.not_found.Controller.do_stuff2",
-                "/index2.html": ""}
+        return {"/index.html": {"method": "fantastico.routing_engine.tests.test_router.not_found.Controller.do_stuff2",
+                                "http_verbs": ["GET"]},
+                "/index2.html": {"method": "",
+                                 "http_verbs": ["GET"]}}
     
 class TestLoaderEmpty(RouteLoader):
     '''Simple route loader meant to return no routes - unit testing purposes.'''

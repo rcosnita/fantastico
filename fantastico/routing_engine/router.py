@@ -107,13 +107,13 @@ class Router(object):
         if route_config is None:
             raise FantasticoNoRoutesError("Route %s has an invalid controller mapped." % url)
         
-        last_dot = route_config.rfind(".")
+        last_dot = route_config["method"].rfind(".")
 
         if last_dot == -1:
             raise FantasticoNoRoutesError("Route %s has an invalid controller mapped." % url)
         
-        controller_cls =  route_config[:last_dot]
-        controller_meth = route_config[last_dot + 1:]
+        controller_cls =  route_config["method"][:last_dot]
+        controller_meth = route_config["method"][last_dot + 1:]
         
         environ["route_%s_handler" % url] = {"controller": instantiator.instantiate_class(controller_cls, 
                                                                                           [self._settings_facade]),
