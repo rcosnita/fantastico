@@ -71,7 +71,7 @@ class Controller(object):
         
         return self._fn_handler
     
-    def __init__(self, url, method="GET", models={}):
+    def __init__(self, url, method="GET", models=None):
         self._url = url
         
         if isinstance(method, str):
@@ -79,7 +79,12 @@ class Controller(object):
         elif isinstance(method, list):
             self._method = method
         
+        if not models:
+            models = {}
+            
         self._models = models
+        
+        self._fn_handler = None
     
     @classmethod
     def get_registered_routes(cls):
@@ -87,13 +92,13 @@ class Controller(object):
         
         return cls._REGISTERED_ROUTES
     
-    def __call__(self, fn):
+    def __call__(self, orig_fn):
         '''This method takes care of registering the controller when the class is first loaded by python vm.'''
         
         def new_handler(*args):
             '''This method is the one that replaces the original decorated method.'''
             
-            return fn(*args)
+            return orig_fn(*args)
         
         self._fn_handler = new_handler
         
