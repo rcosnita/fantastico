@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b44 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -61,11 +61,13 @@ want).</p>
 <dd><p>This class provides a decorator for magically registering methods as route handlers. This is an extremely important
 piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
 must be executed when an http request to an url is made:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog.Blog&quot;</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> 
+            <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog.Blog&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">list_blogs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
     <span class="n">Blog</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Blog</span>
 
-    <span class="n">blogs</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">all_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">asc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">create_date</span><span class="p">),</span> <span class="n">desc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">title</span><span class="p">)])</span>
+    <span class="n">blogs</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">all_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                           <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">asc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">create_date</span><span class="p">),</span> <span class="n">desc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">title</span><span class="p">)])</span>
 
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">blogs</span><span class="p">)</span>
 </pre></div>

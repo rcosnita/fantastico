@@ -48,7 +48,7 @@
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
   \item get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method), 
-		\hyperpage{15}
+		\hyperpage{16}
 
   \indexspace
   \bigletter H

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  6 MAY 2013 08:29
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  6 MAY 2013 08:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -982,7 +982,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 609--609
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 615--615
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x3baaa68>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x37ce8d0>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -1074,11 +1074,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 1071--1071
 <mvc.png, id=300, 1001.99344pt x 438.8897pt>
 File: mvc.png Graphic file (type png)
  <use mvc.png>
-Package pdftex.def Info: mvc.png used on input line 1107.
+Package pdftex.def Info: mvc.png used on input line 1109.
 (pdftex.def)             Requested size: 1001.991pt x 438.88863pt.
 File: mvc.png Graphic file (type png)
  <use mvc.png>
-Package pdftex.def Info: mvc.png used on input line 1107.
+Package pdftex.def Info: mvc.png used on input line 1109.
 (pdftex.def)             Requested size: 444.75497pt x 194.81308pt.
 
 [15 <./mvc.png>] [16]
@@ -1280,15 +1280,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 90--91
 [24
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1344.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1344.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1346.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1346.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1344.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1344.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1346.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1346.
 
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
 (rerunfilecheck)             Checksum: 11CD5D4119191B471F0F9D4046A0EEA9;1048.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1344.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1346.
  ) 
 Here is how much of TeX's memory you used:
  9189 strings out of 493485
@@ -1297,7 +1297,7 @@ Here is how much of TeX's memory you used:
  12071 multiletter control sequences out of 15000+200000
  61581 words of font info for 70 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 36i,12n,45p,481b,531s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,12n,45p,361b,531s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
@@ -1307,7 +1307,7 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (28 pages, 258648 bytes).
+Output written on fantastico.pdf (28 pages, 258729 bytes).
 PDF statistics:
  498 PDF objects out of 1000 (max. 8388607)
  444 compressed objects within 5 object streams

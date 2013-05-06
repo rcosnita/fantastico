@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Model View Controller &mdash; fantastico 0.0.1-b44 documentation</title>
+    <title>Model View Controller &mdash; fantastico 0.0.1-b45 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b44',
+        VERSION:     '0.0.1-b45',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b44 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b45 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="How to articles" href="../how_to/how_to.html" />
     <link rel="prev" title="Routing engine" href="routing_engine.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b44 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -78,11 +78,13 @@ want).</p>
 <dd><p>This class provides a decorator for magically registering methods as route handlers. This is an extremely important
 piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
 must be executed when an http request to an url is made:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog.Blog&quot;</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> 
+            <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog.Blog&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">list_blogs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
     <span class="n">Blog</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Blog</span>
 
-    <span class="n">blogs</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">all_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">asc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">create_date</span><span class="p">),</span> <span class="n">desc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">title</span><span class="p">)])</span>
+    <span class="n">blogs</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">all_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                           <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">asc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">create_date</span><span class="p">),</span> <span class="n">desc</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">title</span><span class="p">)])</span>
 
     <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">blogs</span><span class="p">)</span>
 </pre></div>
@@ -226,7 +228,7 @@ API is documented <tt class="xref py py-class docutils literal"><span class="pre
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b44 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

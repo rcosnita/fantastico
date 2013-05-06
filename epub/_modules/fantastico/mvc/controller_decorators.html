@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b44 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -55,11 +55,13 @@
 <span class="sd">    </span>
 <span class="sd">    .. code-block:: python</span>
 <span class="sd">    </span>
-<span class="sd">        @Controller(url=&quot;/blogs/&quot;, method=&quot;GET&quot;, models={&quot;Blog&quot;: &quot;fantastico.plugins.blog.models.blog.Blog&quot;])</span>
+<span class="sd">        @Controller(url=&quot;/blogs/&quot;, method=&quot;GET&quot;, </span>
+<span class="sd">                    models={&quot;Blog&quot;: &quot;fantastico.plugins.blog.models.blog.Blog&quot;])</span>
 <span class="sd">        def list_blogs(self, request):</span>
 <span class="sd">            Blog = request.models.Blog</span>
 <span class="sd">        </span>
-<span class="sd">            blogs = Blog.all_paged(start_record=1, end_record=0, sort_expr=[asc(Blog.create_date), desc(Blog.title)])</span>
+<span class="sd">            blogs = Blog.all_paged(start_record=1, end_record=0, </span>
+<span class="sd">                                   sort_expr=[asc(Blog.create_date), desc(Blog.title)])</span>
 <span class="sd">        </span>
 <span class="sd">            return Response(blogs)</span>
 <span class="sd">            </span>
