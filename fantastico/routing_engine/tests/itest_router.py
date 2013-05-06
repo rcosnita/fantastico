@@ -26,7 +26,7 @@ class RouterIntegration(FantasticoIntegrationTestCase):
     '''This class provides all test cases to ensure router is correctly working in all available configuration profiles.'''
     
     def init(self):
-        self._environ = {}
+        self._environ = {"REQUEST_METHOD": "get"}
         
         self._router = Router()
 
