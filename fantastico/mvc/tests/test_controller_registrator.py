@@ -40,9 +40,14 @@ class ControllerRouteLoaderTests(FantasticoIntegrationTestCase):
         
         self.assertIsNotNone(routes)
 
-        self.assertEqual(routes.get("/say_hello"), 
-                         "fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.say_hello")
-        self.assertEqual(routes.get("/upload_file"), 
-                         "fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.upload_file")
-        self.assertEqual(routes.get("/route_from_subfolder"), 
-                         "fantastico.mvc.tests.subroutes.subroutes_controller.SubroutesController.handle_route")
+        self.assertEqual("fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.say_hello", 
+                         routes.get("/say_hello")["method"])
+        self.assertEqual(["GET"], routes.get("/say_hello")["http_verbs"])
+
+        self.assertEqual("fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.upload_file",
+                         routes.get("/upload_file")["method"])
+        self.assertEqual(["POST"], routes.get("/upload_file")["http_verbs"])
+        
+        self.assertEqual("fantastico.mvc.tests.subroutes.subroutes_controller.SubroutesController.handle_route",
+                         routes.get("/route_from_subfolder")["method"])
+        self.assertEqual(["GET"], routes.get("/route_from_subfolder")["http_verbs"])

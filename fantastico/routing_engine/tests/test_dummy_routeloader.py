@@ -36,7 +36,8 @@ class TestDummyRouteLoader(FantasticoIntegrationTestCase):
         self.assertEqual(1, len(routes))
         self.assertTrue(DummyRouteLoader.DUMMY_ROUTE in routes)
         self.assertEqual("fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test",
-                         routes["/dummy/route/loader/test"])
+                         routes["/dummy/route/loader/test"]["method"])
+        self.assertEqual(["GET"], routes["/dummy/route/loader/test"]["http_verbs"])
         
     def test_display_ok(self):
         '''This test case ensures display_test method works as expected when request content type is different than
