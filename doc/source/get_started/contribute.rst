@@ -51,3 +51,7 @@ For better understanding how to write integration tests see the documentation be
 .. autoclass:: fantastico.tests.base_case.FantasticoIntegrationTestCase
    :members:
    :private-members: 
+   
+.. autoclass:: fantastico.server.tests.itest_dev_server.DevServerIntegration
+    :members:
+    :private-members:

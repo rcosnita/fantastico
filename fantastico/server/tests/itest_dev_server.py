@@ -26,12 +26,37 @@ import time
 import urllib
 
 class DevServerIntegration(FantasticoIntegrationTestCase):
-    '''This class provides the test cases for making sure dev server component works as expected.'''
+    '''This class provides the foundation for writing integration tests that do http requests against a fantastico server.
     
-    def test_server_runs_ok(self):
-        '''This test case makes sure dev server can start correctly. In addition it requests dummy route test page
-        and assert for the result.'''
-        
+    .. code-block:: python
+    
+        class DummyLoaderIntegration(DevServerIntegration):
+            def test_server_runs_ok(self):
+                def request_logic(server):
+                    request = Request(self._get_server_base_url(server, DummyRouteLoader.DUMMY_ROUTE)) 
+                    with self.assertRaises(HTTPError) as cm:
+                        urllib.request.urlopen(request)
+                        
+                    self.assertEqual(400, cm.exception.code)
+                    self.assertEqual("Hello world.", cm.exception.read().decode())
+                    
+                def assert_logic(server):
+                    self._check_server_started(server)
+                    
+                self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
+                
+            self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
+            
+    As you can see from above listed code, when you write a new integration test against Fantastico server you only need
+    to provide the request logic and assert logic functions. Request logic is executed while the server is up and running.
+    Assert logic is executed after the server has stopped.
+    '''
+    
+    def _run_test_against_dev_server(self, request_logic, assert_logic=None):
+        '''This method provides a template for writing integration tests that requires a development server being active.
+        It accepts a request logic (code that actually do the http request) and an assert logic for making sure 
+        code is correct.''' 
+
         server = DevServer()
         
         def start_server():
@@ -41,16 +66,10 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
             try:
                 while not server.started:
                     time.sleep(0.01)
-                    
-                self.assertTrue(server.started)
                 
-                url = "http://localhost:12000%s" % DummyRouteLoader.DUMMY_ROUTE
-                request = Request(url) 
-                with self.assertRaises(HTTPError) as cm:
-                    urllib.request.urlopen(request)
-                    
-                self.assertEqual(400, cm.exception.code)
-                self.assertEqual("Hello world.", cm.exception.read().decode())
+                request_logic(server)
+                
+                self.assertTrue(server.started)                
             finally:
                 server.stop()
         
@@ -62,5 +81,32 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
                 
         thread_stop.join()
         
+        if assert_logic is None:
+            assert_logic = self._check_server_started
+
+        assert_logic(server)
+    
+    def _check_server_started(self, server):
+        '''This method holds the sanity checks to ensure a server is started correctly.'''
+        
         self.assertEqual(12000, server.port)
         self.assertEqual("localhost", server.hostname)
+    
+    def _get_server_base_url(self, server, route):
+        '''This method returns the absolute url for a given relative url (route).'''
+        
+        return "http://localhost:12000%s" % route
+        
+    def test_server_runs_ok(self):
+        '''This test case makes sure dev server can start correctly. In addition it requests dummy route test page
+        and assert for the result.'''
+        
+        def request_logic(server):
+            request = Request(self._get_server_base_url(server, DummyRouteLoader.DUMMY_ROUTE)) 
+            with self.assertRaises(HTTPError) as cm:
+                urllib.request.urlopen(request)
+                
+            self.assertEqual(400, cm.exception.code)
+            self.assertEqual("Hello world.", cm.exception.read().decode())
+            
+        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
