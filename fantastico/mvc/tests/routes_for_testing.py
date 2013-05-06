@@ -16,9 +16,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.routes_for_testing
 '''
-from fantastico.mvc.controller_decorators import Controller
+from fantastico.mvc.controller_decorators import Controller, ControllerProvider
 from webob.response import Response
 
+@ControllerProvider()
 class RoutesForControllerTesting(object):
     '''This class defines two methods as Controllers.'''
     

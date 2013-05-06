@@ -16,14 +16,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.server.tests.itest_dev_server
 '''
-from fantastico.routing_engine.dummy_routeloader import DummyRouteLoader
 from fantastico.server.dev_server import DevServer
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
-from urllib.error import HTTPError
-from urllib.request import Request
 import threading
 import time
-import urllib
 
 class DevServerIntegration(FantasticoIntegrationTestCase):
     '''This class provides the foundation for writing integration tests that do http requests against a fantastico server.

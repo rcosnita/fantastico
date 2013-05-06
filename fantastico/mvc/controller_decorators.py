@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.controller_decorator
 '''
+import inspect
 
 class Controller(object):
     '''This class provides a decorator for magically registering methods as route handlers. This is an extremely important
@@ -107,3 +108,28 @@ class Controller(object):
         Controller.get_registered_routes()[self.url] = self
         
         return self._fn_handler
+    
+class ControllerProvider(object):
+    '''This class marks a class as being a controller provider. It means that some of the methods from decorated class 
+    provide routes that must be registered into routing engine.'''
+    
+    def __init__(self):
+        self._decorated_cls = None
+        
+    def __call__(self, cls):
+        '''This method is used to enrich all methods of the class with full_name attribute.'''
+        
+        for meth_name, meth_value in inspect.getmembers(cls, lambda obj: inspect.isfunction(obj)):
+            full_name = "%s.%s.%s" % (cls.__module__, cls.__name__, meth_name)
+            setattr(meth_value, "full_name", full_name)
+                
+        self._decorated_cls = cls
+        self.__doc__ = cls.__doc__
+        
+        def instantiate(*args, **kwargs):
+            instance = object.__new__(self._decorated_cls)
+            self._decorated_cls.__init__(instance, *args, **kwargs)
+            
+            return instance
+        
+        return instantiate

@@ -14,17 +14,23 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.mvc.tests.subroutes.subroutes_controller
+.. py:module:: fantastico.samples.mvc.mvc_hello
 '''
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from fantastico.settings import SettingsFacade
 from webob.response import Response
 
 @ControllerProvider()
-class SubroutesController(object):
-    @Controller(url="/route_from_subfolder", method="GET")
-    def handle_route(self, request):
+class MvcHelloController(object):
+    '''This class provides some simple examples of how to write controllers based on Fantastico mvc.'''
+    
+    def __init__(self, settings_facade=SettingsFacade):
+        self._settings_facade = settings_facade
+    
+    @Controller(url="/mvc/hello-world", method="GET")
+    def say_hello(self, request):
         response = Response(content_type=request.content_type)
         
-        response.text = "Subfolder route."
+        response.text = "<h1>Hello world. It works like a charm.</h1>"
         
         return response
