@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Model View Controller &mdash; fantastico 0.0.1-b47 documentation</title>
+    <title>Model View Controller &mdash; fantastico 0.0.1-b49 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b47',
+        VERSION:     '0.0.1-b49',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b47 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b49 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="How to articles" href="../how_to/how_to.html" />
     <link rel="prev" title="Routing engine" href="routing_engine.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -79,10 +79,7 @@ want).</p>
 piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
 must be executed when an http request to an url is made:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
-<span class="k">class</span> <span class="nc">BlogsController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span>
-
+<span class="k">class</span> <span class="nc">BlogsController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>        
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> 
                 <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog.Blog&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">list_blogs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
@@ -187,6 +184,13 @@ it ignores tests subfolder as well as test_* / itest_* modules.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="fantastico.mvc.base_controller.BaseController">
+<em class="property">class </em><tt class="descclassname">fantastico.mvc.base_controller.</tt><tt class="descname">BaseController</tt><big>(</big><em>settings_facade=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.base_controller.BaseController" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides common methods useful for every concrete controller. Even if no type checking is done in 
+Fantastico it is recommended that every controller implementation inherits this class.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -248,7 +252,7 @@ it ignores tests subfolder as well as test_* / itest_* modules.</p>
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -89,6 +89,18 @@ configuration.</p>
 <em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoContentTypeError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoContentTypeError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when a mismatch between request content type and received content type differ. In
 Fantastico we think it&#8217;s mandatory to fulfill requests correctly and to take in consideration sent headers.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoHttpVerbNotSupported">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoHttpVerbNotSupported</tt><big>(</big><em>http_verb</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoHttpVerbNotSupported"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is usually thrown when a route is accessed with an http verb which does not support.</p>
+<dl class="attribute">
+<dt id="fantastico.exceptions.FantasticoHttpVerbNotSupported.http_verb">
+<tt class="descname">http_verb</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoHttpVerbNotSupported.http_verb"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property returns the http verb that caused the problems.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>

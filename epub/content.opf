@@ -109,6 +109,9 @@
     <item id="_modules_fantastico_middleware_request_context.html"
           href="_modules/fantastico/middleware/request_context.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_mvc_base_controller.html"
+          href="_modules/fantastico/mvc/base_controller.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_mvc_controller_decorators.html"
           href="_modules/fantastico/mvc/controller_decorators.html"
           media-type="application/xhtml+xml" />

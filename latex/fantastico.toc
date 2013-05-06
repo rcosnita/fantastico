@@ -21,7 +21,7 @@
 \contentsline {chapter}{\numberline {3}Fantastico features}{9}{chapter.3}
 \contentsline {section}{\numberline {3.1}Exceptions hierarchy}{9}{section.3.1}
 \contentsline {section}{\numberline {3.2}Request lifecycle}{10}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Request middleware}{10}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.1}Request middleware}{11}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Request context}{11}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Obtain request language}{11}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}Obtain settings using request}{11}{subsection.3.2.4}
@@ -45,4 +45,4 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{20}{subsection.4.1.4}
 \contentsline {chapter}{\numberline {5}Build status}{21}{chapter.5}
 \contentsline {chapter}{\numberline {6}License}{23}{chapter.6}
-\contentsline {chapter}{Index}{25}{section*.59}
+\contentsline {chapter}{Index}{25}{section*.62}

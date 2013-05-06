@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -57,10 +57,7 @@
 <span class="sd">    .. code-block:: python</span>
 <span class="sd">    </span>
 <span class="sd">        @ControllerProvider()</span>
-<span class="sd">        class BlogsController(object):</span>
-<span class="sd">            def __init__(self, settings_facade=SettingsFacade):</span>
-<span class="sd">                self._settings_facade = settings_facade</span>
-<span class="sd">        </span>
+<span class="sd">        class BlogsController(BaseController):        </span>
 <span class="sd">            @Controller(url=&quot;/blogs/&quot;, method=&quot;GET&quot;, </span>
 <span class="sd">                        models={&quot;Blog&quot;: &quot;fantastico.plugins.blog.models.blog.Blog&quot;])</span>
 <span class="sd">            def list_blogs(self, request):</span>

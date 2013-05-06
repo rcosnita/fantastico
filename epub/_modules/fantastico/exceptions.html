@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -82,7 +82,21 @@
     </div>
 <div class="viewcode-block" id="FantasticoContentTypeError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoContentTypeError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoContentTypeError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a mismatch between request content type and received content type differ. In</span>
-<span class="sd">    Fantastico we think it&#39;s mandatory to fulfill requests correctly and to take in consideration sent headers.&#39;&#39;&#39;</span></div>
+<span class="sd">    Fantastico we think it&#39;s mandatory to fulfill requests correctly and to take in consideration sent headers.&#39;&#39;&#39;</span>
+    </div>
+<div class="viewcode-block" id="FantasticoHttpVerbNotSupported"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoHttpVerbNotSupported">[docs]</a><span class="k">class</span> <span class="nc">FantasticoHttpVerbNotSupported</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a route is accessed with an http verb which does not support.&#39;&#39;&#39;</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="FantasticoHttpVerbNotSupported.http_verb"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoHttpVerbNotSupported.http_verb">[docs]</a>    <span class="k">def</span> <span class="nf">http_verb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns the http verb that caused the problems.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_http_verb</span>
+    </div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_verb</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoHttpVerbNotSupported</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_http_verb</span> <span class="o">=</span> <span class="n">http_verb</span></div>
 </pre></div>
 
           </div>

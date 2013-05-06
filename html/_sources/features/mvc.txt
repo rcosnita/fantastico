@@ -66,3 +66,6 @@ API is documented :py:class:`fantastico.mvc.controller_decorator.Controller`.
 
 .. autoclass:: fantastico.mvc.controller_registrator.ControllerRouteLoader
     :members:
+    
+.. autoclass:: fantastico.mvc.base_controller.BaseController
+    :members:

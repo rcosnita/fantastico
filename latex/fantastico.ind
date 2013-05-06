@@ -18,13 +18,14 @@
 
   \indexspace
   \bigletter B
+  \item BaseController (class in fantastico.mvc.base\_controller), \hyperpage{17}
   \item BasicSettings (class in fantastico.settings), \hyperpage{4}
 
   \indexspace
   \bigletter C
   \item code (fantastico.locale.language.Language attribute), \hyperpage{11}
   \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{15}
-  \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{16}
+  \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{17}
 
   \indexspace
   \bigletter D
@@ -42,13 +43,14 @@
   \item FantasticoContentTypeError (class in fantastico.exceptions), \hyperpage{10}
   \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoError (class in fantastico.exceptions), \hyperpage{9}
+  \item FantasticoHttpVerbNotSupported (class in fantastico.exceptions), \hyperpage{10}
   \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{6}
-  \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{9}
+  \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{10}
   \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{6}
-  \item fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{15}
+  \item fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{16}
 
   \indexspace
   \bigletter G
@@ -56,11 +58,12 @@
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
   \item get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method), 
-		\hyperpage{15}
+		\hyperpage{16}
 
   \indexspace
   \bigletter H
   \item handle\_route() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
+  \item http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute), \hyperpage{10}
 
   \indexspace
   \bigletter I
@@ -71,7 +74,7 @@
   \item Language (class in fantastico.locale.language), \hyperpage{11}
   \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{11}
   \item load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method), 
-		\hyperpage{16}
+		\hyperpage{17}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
 		\hyperpage{13}
 
@@ -84,7 +87,7 @@
   \bigletter R
   \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
   \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{11}
-  \item RequestMiddleware (class in fantastico.middleware.request\_middleware), \hyperpage{10}
+  \item RequestMiddleware (class in fantastico.middleware.request\_middleware), \hyperpage{11}
   \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{13}
   \item Router (class in fantastico.routing\_engine.router), \hyperpage{12}
   \item routes\_loaders (fantastico.settings.BasicSettings attribute), \hyperpage{4}

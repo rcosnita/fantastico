@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -59,7 +59,10 @@
     <span class="n">DUMMY_ROUTE</span> <span class="o">=</span> <span class="s">&quot;/dummy/route/loader/test&quot;</span>
     
     <span class="k">def</span> <span class="nf">load_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">:</span> <span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test&quot;</span><span class="p">}</span>
+        <span class="n">routes</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test&quot;</span><span class="p">,</span>
+                  <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">]}</span>
+        
+        <span class="k">return</span> <span class="p">{</span><span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">:</span> <span class="n">routes</span><span class="p">}</span>
     
 <div class="viewcode-block" id="DummyRouteLoader.display_test"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test">[docs]</a>    <span class="k">def</span> <span class="nf">display_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method handles **/dummy/route/loader/test route**. It is expected to receive a response with status code 400.</span>

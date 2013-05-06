@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>MVC How to &mdash; fantastico 0.0.1-b47 documentation</title>
+    <title>MVC How to &mdash; fantastico 0.0.1-b49 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b47',
+        VERSION:     '0.0.1-b49',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b47 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b49 documentation" href="../index.html" />
     <link rel="up" title="How to articles" href="how_to.html" />
     <link rel="prev" title="How to articles" href="how_to.html" /> 
   </head>
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="how_to.html" title="How to articles"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
           <li><a href="how_to.html" accesskey="U">How to articles</a> &raquo;</li> 
       </ul>
     </div>  
@@ -85,10 +85,7 @@ If you follow this step by step guide in the end you will have a running blog wh
 <li><p class="first">Create a new module called <strong>blog_controller</strong> and paste the following code into it:</p>
 <blockquote>
 <div><div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
-<span class="k">class</span> <span class="nc">BlogsController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span>
-
+<span class="k">class</span> <span class="nc">BlogsController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/1/posts/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span>
                 <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Post&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.posts.Post&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">list_blog_posts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
@@ -199,7 +196,7 @@ If you follow this step by step guide in the end you will have a running blog wh
         <li class="right" >
           <a href="how_to.html" title="How to articles"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
           <li><a href="how_to.html" >How to articles</a> &raquo;</li> 
       </ul>
     </div>

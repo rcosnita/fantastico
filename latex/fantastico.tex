@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 06, 2013}
-\release{0.0.1-b47}
+\release{0.0.1-b49}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -669,7 +669,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4952b78\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x339aea8\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -769,6 +769,22 @@ This exception is usually raised when some components try to use fantastico.requ
 \phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoContentTypeError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoContentTypeError}}
 This exception is usually thrown when a mismatch between request content type and received content type differ. In
 Fantastico we think it's mandatory to fulfill requests correctly and to take in consideration sent headers.
+
+\end{fulllineitems}
+
+\index{FantasticoHttpVerbNotSupported (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoHttpVerbNotSupported}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoHttpVerbNotSupported}}{\emph{http\_verb}}{}
+This exception is usually thrown when a route is accessed with an http verb which does not support.
+\index{http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoHttpVerbNotSupported.http_verb}\pysigline{\bfcode{http\_verb}}
+This property returns the http verb that caused the problems.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -991,8 +1007,10 @@ for implementing its own business logic for loading routes.
         \PYG{n}{self\PYGZus{}settings\PYGZus{}facade} \PYG{o}{=} \PYG{n}{settings\PYGZus{}facade}\PYG{p}{(}\PYG{p}{)}
         
     \PYG{k}{def} \PYG{n+nf}{load\PYGZus{}routes}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
-        \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/index.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}text}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
-                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/images/image.png}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}binary}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/index.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{method}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}text}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http\PYGZus{}verbs}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/images/image.png}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{method}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}binary}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                                      \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http\PYGZus{}verbs}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 \index{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)}
 
@@ -1132,10 +1150,7 @@ must be executed when an http request to an url is made:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
-\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n+nb}{object}\PYG{p}{)}\PYG{p}{:}
-    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{settings\PYGZus{}facade}\PYG{o}{=}\PYG{n}{SettingsFacade}\PYG{p}{)}\PYG{p}{:}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}settings\PYGZus{}facade} \PYG{o}{=} \PYG{n}{settings\PYGZus{}facade}
-
+\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}        
     \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} 
                 \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.blog.Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
     \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blogs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
@@ -1281,6 +1296,15 @@ This method is used for loading all routes that are mapped through
 
 \end{fulllineitems}
 
+\index{BaseController (class in fantastico.mvc.base\_controller)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.base\_controller.}\bfcode{BaseController}}{\emph{settings\_facade=\textless{}class `fantastico.settings.SettingsFacade'\textgreater{}}}{}
+This class provides common methods useful for every concrete controller. Even if no type checking is done in 
+Fantastico it is recommended that every controller implementation inherits this class.
+
+\end{fulllineitems}
+
 
 
 \chapter{How to articles}
@@ -1335,10 +1359,7 @@ Create a new module called \textbf{blog\_controller} and paste the following cod
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
-\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n+nb}{object}\PYG{p}{)}\PYG{p}{:}
-    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{settings\PYGZus{}facade}\PYG{o}{=}\PYG{n}{SettingsFacade}\PYG{p}{)}\PYG{p}{:}
-        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}settings\PYGZus{}facade} \PYG{o}{=} \PYG{n}{settings\PYGZus{}facade}
-
+\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
     \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/1/posts/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
                 \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.posts.Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
     \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blog\PYGZus{}posts}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}

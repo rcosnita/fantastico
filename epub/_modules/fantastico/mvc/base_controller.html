@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.locale.language</title>
+    <title>fantastico.mvc.base_controller</title>
     
     <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
@@ -28,7 +28,7 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <h1>Source code for fantastico.locale.language</h1><div class="highlight"><pre>
+  <h1>Source code for fantastico.mvc.base_controller</h1><div class="highlight"><pre>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
@@ -46,36 +46,16 @@
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 
-<span class="sd">.. py:module:: fantastico.locale.language</span>
+<span class="sd">.. py:module:: fantastico.mvc.base_controller</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
 
-<div class="viewcode-block" id="Language"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language">[docs]</a><span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Class used to define how does language object looks like. There are various use cases for using language but</span>
-<span class="sd">    the simplest one is in request context object: </span>
-<span class="sd">    </span>
-<span class="sd">    .. code-block:: python</span>
-<span class="sd">    </span>
-<span class="sd">       language = request.context.language</span>
-<span class="sd">       </span>
-<span class="sd">       if language.code = &quot;en_us&quot;:</span>
-<span class="sd">          print(&quot;English (US) language&quot;).</span>
-<span class="sd">       else:</span>
-<span class="sd">          raise Exception(&quot;Language %s is not supported.&quot; % language.code) </span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="BaseController"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController">[docs]</a><span class="k">class</span> <span class="nc">BaseController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides common methods useful for every concrete controller. Even if no type checking is done in </span>
+<span class="sd">    Fantastico it is recommended that every controller implementation inherits this class.&#39;&#39;&#39;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span>
-    
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="Language.code"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language.code">[docs]</a>    <span class="k">def</span> <span class="nf">code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Property that holds the language code. This is readonly because once instantiated we mustn&#39;t be able to change it.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span>
-    </div>
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Method used to convert the current instance into a string object.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span><span class="p">()</span></div>
 </pre></div>
 
           </div>
