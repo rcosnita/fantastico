@@ -52,3 +52,15 @@ class FantasticoNoRequestError(FantasticoError):
 class FantasticoContentTypeError(FantasticoError):
     '''This exception is usually thrown when a mismatch between request content type and received content type differ. In
     Fantastico we think it's mandatory to fulfill requests correctly and to take in consideration sent headers.'''
+    
+class FantasticoHttpVerbNotSupported(FantasticoError):
+    '''This exception is usually thrown when a route is accessed with an http verb which does not support.'''
+    
+    @property
+    def http_verb(self):
+        '''This property returns the http verb that caused the problems.'''
+        
+        return self._http_verb
+    
+    def __init__(self, http_verb):
+        self._http_verb = http_verb

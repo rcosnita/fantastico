@@ -21,7 +21,7 @@ from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
 import threading
 from fantastico.exceptions import FantasticoDuplicateRouteError, FantasticoNoRoutesError, \
-    FantasticoRouteNotFoundError
+    FantasticoRouteNotFoundError, FantasticoHttpVerbNotSupported
 
 class Router(object):
     '''This class is used for registering all available routes by using all registered loaders.'''
@@ -114,6 +114,10 @@ class Router(object):
         
         controller_cls =  route_config["method"][:last_dot]
         controller_meth = route_config["method"][last_dot + 1:]
+        
+        http_verb = environ.get("REQUEST_METHOD").upper()
+        if http_verb not in route_config["http_verbs"]:
+            raise FantasticoHttpVerbNotSupported(http_verb)
         
         environ["route_%s_handler" % url] = {"controller": instantiator.instantiate_class(controller_cls, 
                                                                                           [self._settings_facade]),
