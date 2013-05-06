@@ -25,13 +25,14 @@ import os
 
 class ControllerRouteLoader(RouteLoader):
     '''This class provides a route loader that is capable of scanning the disk and registering only the routes that 
-    contain a controller decorator in them.'''
+    contain a controller decorator in them. This happens when **Fantastico** servers starts. In standard configuration
+    it ignores tests subfolder as well as test_* / itest_* modules.'''
     
     def __init__(self, settings_facade=SettingsFacade, scanned_folder=None, ignore_prefix=None):
         super(ControllerRouteLoader, self).__init__(settings_facade)
         
         self._scanned_folder = scanned_folder
-        self._ignore_prefix = ignore_prefix or []
+        self._ignore_prefix = ignore_prefix or ["__init__", "__pycache__", "tests", "test", "itest"]
     
     def _transform_to_fqdn(self, abspath):
         '''This method transform an absolute file location to fully qualified name python notation.'''

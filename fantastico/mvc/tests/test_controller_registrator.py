@@ -30,8 +30,7 @@ class ControllerRouteLoaderTests(FantasticoIntegrationTestCase):
         self._settings_facade_cls = Mock(return_value=self._settings_facade)
         
         self._route_loader = ControllerRouteLoader(settings_facade=self._settings_facade_cls, 
-                                                   scanned_folder=instantiator.get_class_abslocation(ControllerRouteLoaderTests),
-                                                   ignore_prefix=["__init__.py", "test_", "itest_", "__pycache__"])
+                                                   scanned_folder=instantiator.get_class_abslocation(ControllerRouteLoaderTests))
         
     def test_route_loading_ok(self):
         '''Test case that ensure routes mapped through Controller decorator are registered ok. It also makes sure
