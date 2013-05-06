@@ -32,18 +32,27 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
         '''Test case that ensures settings are functional for each environment available.'''
         
         def exec_test(env, settings_cls):
-            os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
-            
             self.assertIsInstance(self._settings_facade.get_config(), settings_cls)
             
             self.assertEqual(["fantastico.middleware.request_middleware.RequestMiddleware",
                               "fantastico.middleware.routing_middleware.RoutingMiddleware"], 
                               self._settings_facade.get("installed_middleware"))
-            
+                        
             self.assertEqual(["en_us"], self._settings_facade.get("supported_languages"))
             
         self._run_test_all_envs(exec_test)
-                    
+
+    def test_routes_loaders_ok(self):
+        '''This test case makes sure routes loaders are configured correctly for each configuration.'''
+        
+        def exec_test(env, settings_cls):
+            self.assertTrue("fantastico.routing_engine.dummy_routeloader.DummyRouteLoader" in \
+                            self._settings_facade.get("routes_loaders"))
+            self.assertTrue("fantastico.mvc.controller_registrator.ControllerRouteLoader" in \
+                            self._settings_facade.get("routes_loaders"))
+
+        self._run_test_all_envs(exec_test)
+        
     def test_settings_invalid_ok(self):
         '''Test case that ensures settings exception cases raise strong type exception.'''
         
