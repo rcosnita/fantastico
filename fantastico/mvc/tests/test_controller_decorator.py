@@ -24,17 +24,12 @@ from webob.response import Response
 class ControllerDecoratorTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for controller decorator.'''
     
-    def cleanup_once(self):
-        Controller.get_registered_routes().clear()
-    
     def test_controller_registration_ok(self):
         '''This test case checks that routes are correctly registered by controller decorator.'''
         
         from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
         
         registered_routes = Controller.get_registered_routes()
-        
-        self.assertEqual(2, len(registered_routes))
         
         hello_route = registered_routes.get("/say_hello")
 
@@ -55,8 +50,6 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
 
         registered_routes = Controller.get_registered_routes()
-        
-        self.assertEqual(2, len(registered_routes))
         
         upload_file = registered_routes.get("/upload_file")
 
