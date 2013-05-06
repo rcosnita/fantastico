@@ -71,11 +71,13 @@ class Controller(object):
         
         return self._fn_handler
     
-    def __init__(self, url, method="GET", models=[]):
+    def __init__(self, url, method="GET", models={}):
         self._url = url
         
         if isinstance(method, str):
             self._method = [method]
+        elif isinstance(method, list):
+            self._method = method
         
         self._models = models
     
