@@ -36,10 +36,7 @@ Code the controller
     .. code-block:: python
 
         @ControllerProvider()
-        class BlogsController(object):
-            def __init__(self, settings_facade=SettingsFacade):
-                self._settings_facade = settings_facade
-
+        class BlogsController(BaseController):
             @Controller(url="/blogs/1/posts/", method="GET", 
                         models={"Post": "fantastico.plugins.blog.models.posts.Post"])
             def list_blog_posts(self, request):

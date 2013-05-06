@@ -14,26 +14,14 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.mvc.tests.routes_for_testing
-'''
-from fantastico.mvc.controller_decorators import Controller, ControllerProvider
-from webob.response import Response
-from fantastico.mvc.base_controller import BaseController
 
-@ControllerProvider()
-class RoutesForControllerTesting(BaseController):
-    '''This class defines two methods as Controllers.'''
+.. py:module:: fantastico.mvc.base_controller
+'''
+from fantastico.settings import SettingsFacade
+
+class BaseController(object):
+    '''This class provides common methods useful for every concrete controller. Even if no type checking is done in 
+    Fantastico it is recommended that every controller implementation inherits this class.'''
     
-    @Controller(url="/say_hello", method="GET")
-    def say_hello(self, request):
-        response = Response()
-        response.text = "Hello world."
-        
-        return response
-    
-    @Controller(url="/upload_file", method=["POST"], models={"File": "fantastico.filesystem.models.File"})
-    def upload_file(self, request):
-        response = Response()
-        response.text = "Hello world."
-        
-        return response
+    def __init__(self, settings_facade=SettingsFacade):
+        self._settings_facade = SettingsFacade() 
