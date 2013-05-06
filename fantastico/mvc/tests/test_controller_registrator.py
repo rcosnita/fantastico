@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.itest_controller_registrator
 '''
-from fantastico.mvc.controller_decorators import Controller
+
 from fantastico.mvc.controller_registrator import ControllerRouteLoader
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from fantastico.utils import instantiator
@@ -39,8 +39,10 @@ class ControllerRouteLoaderTests(FantasticoIntegrationTestCase):
         routes = self._route_loader.load_routes()
         
         self.assertIsNotNone(routes)
-        self.assertEqual(3, len(routes))
-        
-        self.assertIsInstance(routes.get("/say_hello"), Controller)
-        self.assertIsInstance(routes.get("/upload_file"), Controller)
-        self.assertIsInstance(routes.get("/route_from_subfolder"), Controller)
+
+        self.assertEqual(routes.get("/say_hello"), 
+                         "fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.say_hello")
+        self.assertEqual(routes.get("/upload_file"), 
+                         "fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.upload_file")
+        self.assertEqual(routes.get("/route_from_subfolder"), 
+                         "fantastico.mvc.tests.subroutes.subroutes_controller.SubroutesController.handle_route")
