@@ -34,10 +34,14 @@ class ControllerDecoratorIntegration(DevServerIntegration):
         mapped through decorators is working as expected.'''
         
         def request_logic(server):
+            content_type = "text/html; charset=UTF-8"
+            
             request = Request(self._get_server_base_url(server, "/mvc/hello-world"))
+            request.headers["Content-Type"] = content_type 
             
             response = urllib.request.urlopen(request)
             
-            self.assertTrue(response.read().find("Hello world." > -1))
+            self.assertTrue(response.read().decode().find("Hello world.") > -1)
+            self.assertEqual(content_type, response.info()["Content-Type"])
             
         self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
