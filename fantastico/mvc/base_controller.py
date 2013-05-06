@@ -24,4 +24,4 @@ class BaseController(object):
     Fantastico it is recommended that every controller implementation inherits this class.'''
     
     def __init__(self, settings_facade=SettingsFacade):
-        self._settings_facade = SettingsFacade() 
+        self._settings_facade = settings_facade()

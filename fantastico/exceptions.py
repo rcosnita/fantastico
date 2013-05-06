@@ -63,4 +63,6 @@ class FantasticoHttpVerbNotSupported(FantasticoError):
         return self._http_verb
     
     def __init__(self, http_verb):
+        super(FantasticoHttpVerbNotSupported, self).__init__()
+        
         self._http_verb = http_verb
