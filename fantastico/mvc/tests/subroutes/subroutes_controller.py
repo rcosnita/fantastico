@@ -16,11 +16,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.subroutes.subroutes_controller
 '''
+from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
 from webob.response import Response
 
 @ControllerProvider()
-class SubroutesController(object):
+class SubroutesController(BaseController):
     @Controller(url="/route_from_subfolder", method="GET")
     def handle_route(self, request):
         response = Response(content_type=request.content_type)
