@@ -24,7 +24,7 @@ from webob.response import Response
 class ControllerDecoratorTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for controller decorator.'''
     
-    def cleanup(self):
+    def cleanup_once(self):
         Controller.get_registered_routes().clear()
     
     def test_controller_registration_ok(self):
@@ -32,7 +32,7 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         
         registered_routes = Controller.get_registered_routes()
         
-        self.assertEqual(1, len(registered_routes))
+        self.assertEqual(2, len(registered_routes))
         
         hello_route = registered_routes.get("/say_hello")
 
@@ -40,10 +40,30 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         self.assertIsInstance(hello_route, Controller)
         self.assertEqual("/say_hello", hello_route.url)
         self.assertEqual(["GET"], hello_route.method)
-        self.assertEqual([], hello_route.models)
+        self.assertEqual({}, hello_route.models)
         self.assertEqual(RoutesForControllerTesting.say_hello, hello_route.fn_handler)
         
         response = hello_route.fn_handler(RoutesForControllerTesting(), Mock())
+        self.assertIsInstance(response, Response)
+        self.assertEqual(b"Hello world.", response.body)
+        
+    def test_controller_list_params_ok(self):
+        '''This test case checks list parameters of controller (models, method) work as expected.'''
+
+        registered_routes = Controller.get_registered_routes()
+        
+        self.assertEqual(2, len(registered_routes))
+        
+        upload_file = registered_routes.get("/upload_file")
+
+        self.assertIsNotNone(upload_file)
+        self.assertIsInstance(upload_file, Controller)
+        self.assertEqual("/upload_file", upload_file.url)
+        self.assertEqual(["POST"], upload_file.method)
+        self.assertEqual({"File": "fantastico.filesystem.models.File"}, upload_file.models)
+        self.assertEqual(RoutesForControllerTesting.upload_file, upload_file.fn_handler)
+        
+        response = upload_file.fn_handler(RoutesForControllerTesting(), Mock())
         self.assertIsInstance(response, Response)
         self.assertEqual(b"Hello world.", response.body)
         
@@ -57,6 +77,9 @@ class RoutesForControllerTesting(object):
         
         return response
     
-    #@Controller(url="/upload_file", method="POST", models={"File": "fantastico.filesystem.models.File"})
-    #def upload_file(self, request):
-    #    return Response()
+    @Controller(url="/upload_file", method=["POST"], models={"File": "fantastico.filesystem.models.File"})
+    def upload_file(self, request):
+        response = Response()
+        response.text = "Hello world."
+        
+        return response
