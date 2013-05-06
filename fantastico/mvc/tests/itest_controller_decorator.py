@@ -16,42 +16,28 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.itest_controller_decorator
 '''
-from fantastico.mvc.controller_decorators import Controller
-from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
-from fantastico.tests.base_case import FantasticoIntegrationTestCase
-from webob.request import Request
-from webob.response import Response
 
-class ControllerDecoratorIntegration(FantasticoIntegrationTestCase):
+from fantastico.server.tests.itest_dev_server import DevServerIntegration
+from urllib.request import Request
+import urllib
+
+class ControllerDecoratorIntegration(DevServerIntegration):
     '''This class provides the test cases that ensures controller decorator works as expected into integration environment.'''
     
     def test_route_registration(self):
         '''This test case ensures routes are registered correctly by Controller decorator.'''
         
-        registered_routes = Controller.get_registered_routes()
-
-        hello_route = registered_routes.get("/say_hello")
-
-        self.assertIsNotNone(hello_route)
-        self.assertIsInstance(hello_route, Controller)
-        self.assertEqual("/say_hello", hello_route.url)
-        self.assertEqual(["GET"], hello_route.method)
-        self.assertEqual({}, hello_route.models)
-        self.assertEqual(RoutesForControllerTesting.say_hello, hello_route.fn_handler)
+        pass
         
-        response = hello_route.fn_handler(RoutesForControllerTesting(), Request.blank("/say_hello"))
-        self.assertIsInstance(response, Response)
-        self.assertEqual(b"Hello world.", response.body)
+    def test_mvc_sample_hello_ok(self):
+        '''This test case does an http request against mvc hello world controller. It proves that registration of routes
+        mapped through decorators is working as expected.'''
         
-        upload_route = registered_routes.get("/upload_file")
-
-        self.assertIsNotNone(upload_route)
-        self.assertIsInstance(upload_route, Controller)
-        self.assertEqual("/upload_file", upload_route.url)
-        self.assertEqual(["POST"], upload_route.method)
-        self.assertEqual({"File": "fantastico.filesystem.models.File"}, upload_route.models)
-        self.assertEqual(RoutesForControllerTesting.upload_file, upload_route.fn_handler)
-        
-        response = upload_route.fn_handler(RoutesForControllerTesting(), Request.blank("/upload_file"))
-        self.assertIsInstance(response, Response)
-        self.assertEqual(b"Hello world.", response.body)        
+        def request_logic(server):
+            request = Request(self._get_server_base_url(server, "/mvc/hello-world"))
+            
+            response = urllib.request.urlopen(request)
+            
+            self.assertTrue(response.read().find("Hello world." > -1))
+            
+        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))

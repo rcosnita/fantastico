@@ -76,5 +76,11 @@ class ControllerRouteLoader(RouteLoader):
         :py:class:`fantastico.mvc.controller_decorators.Controller` decorator.'''
         
         self._register_from_folder(self._scanned_folder)
-            
-        return Controller.get_registered_routes()
+        
+        controller_routes = Controller.get_registered_routes()
+        routes = {} 
+        
+        for route in controller_routes:
+            routes[route] = controller_routes[route].fn_handler.full_name
+        
+        return routes
