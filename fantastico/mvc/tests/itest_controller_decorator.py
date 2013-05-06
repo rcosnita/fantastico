@@ -20,6 +20,7 @@ from fantastico.mvc.controller_decorators import Controller
 from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
+from webob.request import Request
 from webob.response import Response
 
 class ControllerDecoratorIntegration(FantasticoIntegrationTestCase):
@@ -39,6 +40,19 @@ class ControllerDecoratorIntegration(FantasticoIntegrationTestCase):
         self.assertEqual({}, hello_route.models)
         self.assertEqual(RoutesForControllerTesting.say_hello, hello_route.fn_handler)
         
-        response = hello_route.fn_handler(RoutesForControllerTesting(), Mock())
+        response = hello_route.fn_handler(RoutesForControllerTesting(), Request.blank("/say_hello"))
+        self.assertIsInstance(response, Response)
+        self.assertEqual(b"Hello world.", response.body)
+        
+        upload_route = registered_routes.get("/upload_file")
+
+        self.assertIsNotNone(upload_route)
+        self.assertIsInstance(upload_route, Controller)
+        self.assertEqual("/upload_file", upload_route.url)
+        self.assertEqual(["POST"], upload_route.method)
+        self.assertEqual({"File": "fantastico.filesystem.models.File"}, upload_route.models)
+        self.assertEqual(RoutesForControllerTesting.upload_file, upload_route.fn_handler)
+        
+        response = upload_route.fn_handler(RoutesForControllerTesting(), Request.blank("/upload_file"))
         self.assertIsInstance(response, Response)
         self.assertEqual(b"Hello world.", response.body)        
