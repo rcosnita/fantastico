@@ -24,7 +24,7 @@ Fantastico approach
 **Fantastico** framework provides an alternative to this classic approach (you can still work in the old way if you really really
 want).
 
-.. autoclass:: fantastico.mvc.controller_decorator.Controller
+.. autoclass:: fantastico.mvc.controller_decorators.Controller
     :members:
     
 If you want to find more details and use cases for controller read :ref:`core-controller-section` section.

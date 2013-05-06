@@ -16,7 +16,47 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.test_controller_decorator
 '''
+from fantastico.mvc.controller_decorators import Controller
 from fantastico.tests.base_case import FantasticoUnitTestsCase
+from mock import Mock
+from webob.response import Response
 
 class ControllerDecoratorTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for controller decorator.'''
+    
+    def cleanup(self):
+        Controller.get_registered_routes().clear()
+    
+    def test_controller_registration_ok(self):
+        '''This test case checks that routes are correctly registered by controller decorator.'''
+        
+        registered_routes = Controller.get_registered_routes()
+        
+        self.assertEqual(1, len(registered_routes))
+        
+        hello_route = registered_routes.get("/say_hello")
+
+        self.assertIsNotNone(hello_route)
+        self.assertIsInstance(hello_route, Controller)
+        self.assertEqual("/say_hello", hello_route.url)
+        self.assertEqual(["GET"], hello_route.method)
+        self.assertEqual([], hello_route.models)
+        self.assertEqual(RoutesForControllerTesting.say_hello, hello_route.fn_handler)
+        
+        response = hello_route.fn_handler(RoutesForControllerTesting(), Mock())
+        self.assertIsInstance(response, Response)
+        self.assertEqual(b"Hello world.", response.body)
+        
+class RoutesForControllerTesting(object):
+    '''This class defines two methods as Controllers.'''
+    
+    @Controller(url="/say_hello", method="GET")
+    def say_hello(self, request):
+        response = Response()
+        response.text = "Hello world."
+        
+        return response
+    
+    #@Controller(url="/upload_file", method="POST", models={"File": "fantastico.filesystem.models.File"})
+    #def upload_file(self, request):
+    #    return Response()
