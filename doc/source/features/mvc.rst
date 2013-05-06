@@ -64,5 +64,5 @@ response:
 If you want to read a small tutorial and to start coding very fast on Fantastico MVC read :doc:`/how_to/mvc_how_to`. Controller
 API is documented :py:class:`fantastico.mvc.controller_decorator.Controller`.
 
-.. autodoc:: fantastico.mvc.controller_registrator.ControllerRouteLoader
+.. autoclass:: fantastico.mvc.controller_registrator.ControllerRouteLoader
     :members:
