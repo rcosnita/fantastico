@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.0.1-b40 documentation</title>
+    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.0.1-b41 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.0.1-b40',
+        VERSION:     '0.0.1-b41',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b40 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b41 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b41 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -117,7 +117,7 @@
         
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span>
     </div>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
         
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -125,7 +125,12 @@
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="n">method</span>
         
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">models</span><span class="p">:</span>
+            <span class="n">models</span> <span class="o">=</span> <span class="p">{}</span>
+            
         <span class="bp">self</span><span class="o">.</span><span class="n">_models</span> <span class="o">=</span> <span class="n">models</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span> <span class="o">=</span> <span class="bp">None</span>
     
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Controller.get_registered_routes"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.get_registered_routes">[docs]</a>    <span class="k">def</span> <span class="nf">get_registered_routes</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
@@ -133,13 +138,13 @@
         
         <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_REGISTERED_ROUTES</span>
     </div>
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orig_fn</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method takes care of registering the controller when the class is first loaded by python vm.&#39;&#39;&#39;</span>
         
         <span class="k">def</span> <span class="nf">new_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;This method is the one that replaces the original decorated method.&#39;&#39;&#39;</span>
             
-            <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">orig_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span> <span class="o">=</span> <span class="n">new_handler</span>
         
@@ -176,7 +181,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b41 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

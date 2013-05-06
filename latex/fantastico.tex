@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 06, 2013}
-\release{0.0.1-b40}
+\release{0.0.1-b41}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -612,7 +612,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x34438d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x33388d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1068,7 +1068,7 @@ want).
 \index{Controller (class in fantastico.mvc.controller\_decorators)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.controller\_decorators.}\bfcode{Controller}}{\emph{url}, \emph{method='GET'}, \emph{models=\{\}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.controller\_decorators.}\bfcode{Controller}}{\emph{url}, \emph{method='GET'}, \emph{models=None}}{}
 This class provides a decorator for magically registering methods as route handlers. This is an extremely important
 piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
 must be executed when an http request to an url is made:

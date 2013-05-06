@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  6 MAY 2013 08:03
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  6 MAY 2013 08:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -982,7 +982,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 609--609
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 615--615
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x34438d0>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x33388d0>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -1065,7 +1065,13 @@ Overfull \hbox (35.9335pt too wide) in paragraph at lines 1018--1019
 routing_engine.router.Router.register_routes()[][]\T1/ptm/m/n/10 ). 
  []
 
-[14] <mvc.png, id=300, 1001.99344pt x 438.8897pt>
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 1071--1071
+[]\T1/ptm/m/it/10 url\T1/ptm/m/n/10 , \T1/ptm/m/it/10 method='GET'\T1/ptm/m/n/1
+0 , \T1/ptm/m/it/10 mod-
+ []
+
+<mvc.png, id=300, 1001.99344pt x 438.8897pt>
 File: mvc.png Graphic file (type png)
  <use mvc.png>
 Package pdftex.def Info: mvc.png used on input line 1107.
@@ -1301,7 +1307,7 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (28 pages, 259395 bytes).
+Output written on fantastico.pdf (28 pages, 258485 bytes).
 PDF statistics:
  498 PDF objects out of 1000 (max. 8388607)
  444 compressed objects within 5 object streams
