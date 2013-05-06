@@ -115,11 +115,17 @@ class ControllerProvider(object):
     
     def __init__(self):
         self._decorated_cls = None
+        self.__doc__ = None
         
     def __call__(self, cls):
         '''This method is used to enrich all methods of the class with full_name attribute.'''
         
-        for meth_name, meth_value in inspect.getmembers(cls, lambda obj: inspect.isfunction(obj)):
+        def is_function(obj):
+            '''This function determines if the given obj argument is a function or not.'''
+            
+            return inspect.isfunction(obj)
+        
+        for meth_name, meth_value in inspect.getmembers(cls, is_function):
             full_name = "%s.%s.%s" % (cls.__module__, cls.__name__, meth_name)
             setattr(meth_value, "full_name", full_name)
                 
@@ -127,6 +133,9 @@ class ControllerProvider(object):
         self.__doc__ = cls.__doc__
         
         def instantiate(*args, **kwargs):
+            '''This method returns a new instance of the decorated class. It passes all arguments to the underlining class
+            __init__ method.'''
+            
             instance = object.__new__(self._decorated_cls)
             self._decorated_cls.__init__(instance, *args, **kwargs)
             

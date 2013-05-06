@@ -29,6 +29,8 @@ class MvcHelloController(object):
     
     @Controller(url="/mvc/hello-world", method="GET")
     def say_hello(self, request):
+        '''This method simple say hello world and wrap it into compatible response.'''
+        
         response = Response(content_type=request.content_type)
         
         response.text = "<h1>Hello world. It works like a charm.</h1>"

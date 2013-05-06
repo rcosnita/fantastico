@@ -17,9 +17,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.tests.itest_controller_decorator
 '''
 
+from fantastico.routing_engine.dummy_routeloader import DummyRouteLoader
 from fantastico.server.tests.itest_dev_server import DevServerIntegration
 from urllib.request import Request
 import urllib
+from urllib.error import HTTPError
 
 class ControllerDecoratorIntegration(DevServerIntegration):
     '''This class provides the test cases that ensures controller decorator works as expected into integration environment.'''
@@ -27,7 +29,19 @@ class ControllerDecoratorIntegration(DevServerIntegration):
     def test_route_registration(self):
         '''This test case ensures routes are registered correctly by Controller decorator.'''
         
-        pass
+        def request_logic(server):
+            content_type = "application/html; charset=UTF-8"
+            
+            request = Request(self._get_server_base_url(server, DummyRouteLoader.DUMMY_ROUTE))
+            request.headers["Content-Type"] = content_type
+        
+            with self.assertRaises(HTTPError) as cm:
+                urllib.request.urlopen(request)
+                
+                self.assertTrue(cm.exception.read().decode().find("Hello world.") > -1)
+                self.assertEqual(content_type, cm.exception.info()["Content-Type"])
+        
+        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
         
     def test_mvc_sample_hello_ok(self):
         '''This test case does an http request against mvc hello world controller. It proves that registration of routes
