@@ -24,11 +24,13 @@ class Controller(object):
     
     .. code-block:: python
     
-        @Controller(url="/blogs/", method="GET", models={"Blog": "fantastico.plugins.blog.models.blog.Blog"])
+        @Controller(url="/blogs/", method="GET", 
+                    models={"Blog": "fantastico.plugins.blog.models.blog.Blog"])
         def list_blogs(self, request):
             Blog = request.models.Blog
         
-            blogs = Blog.all_paged(start_record=1, end_record=0, sort_expr=[asc(Blog.create_date), desc(Blog.title)])
+            blogs = Blog.all_paged(start_record=1, end_record=0, 
+                                   sort_expr=[asc(Blog.create_date), desc(Blog.title)])
         
             return Response(blogs)
             
