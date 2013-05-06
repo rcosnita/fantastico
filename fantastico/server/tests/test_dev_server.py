@@ -35,11 +35,6 @@ class DevServerTests(FantasticoUnitTestsCase):
         
         if key == "dev_server_host":
             return "localhost"
-        
-        if key == "dev_server_protocol":
-            return "http"
-        
-        raise NotImplementedError()
     
     def test_start_ok(self):
         '''This test case ensures development server starts ok scenario.'''
