@@ -19,8 +19,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 This module provides helper methods used for instantiating classes by given string values.
 '''
-import importlib
 from fantastico.exceptions import FantasticoClassNotFoundError
+import importlib
+import inspect
 
 def instantiate_class(full_name, constr_args=None):
     '''Method used to instantiate a class starting from its full name.
@@ -56,3 +57,10 @@ def import_class(full_name):
         return getattr(module, class_name)
     except AttributeError as ex:
         raise FantasticoClassNotFoundError(str(ex))
+    
+def get_class_abslocation(cls):
+    '''This method returns the absolute location for a given class (without class name and module name).'''
+    
+    module_name = cls.__module__[cls.__module__.rfind(".") + 1:]
+    
+    return inspect.getabsfile(cls).replace(module_name + ".py", "")
