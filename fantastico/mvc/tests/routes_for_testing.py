@@ -14,31 +14,24 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.mvc.tests.itest_controller_decorator
+.. py:module:: fantastico.mvc.tests.routes_for_testing
 '''
 from fantastico.mvc.controller_decorators import Controller
-from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
-from fantastico.tests.base_case import FantasticoIntegrationTestCase
-from mock import Mock
 from webob.response import Response
 
-class ControllerDecoratorIntegration(FantasticoIntegrationTestCase):
-    '''This class provides the test cases that ensures controller decorator works as expected into integration environment.'''
+class RoutesForControllerTesting(object):
+    '''This class defines two methods as Controllers.'''
     
-    def test_route_registration(self):
-        '''This test case ensures routes are registered correctly by Controller decorator.'''
+    @Controller(url="/say_hello", method="GET")
+    def say_hello(self, request):
+        response = Response()
+        response.text = "Hello world."
         
-        registered_routes = Controller.get_registered_routes()
-
-        hello_route = registered_routes.get("/say_hello")
-
-        self.assertIsNotNone(hello_route)
-        self.assertIsInstance(hello_route, Controller)
-        self.assertEqual("/say_hello", hello_route.url)
-        self.assertEqual(["GET"], hello_route.method)
-        self.assertEqual({}, hello_route.models)
-        self.assertEqual(RoutesForControllerTesting.say_hello, hello_route.fn_handler)
+        return response
+    
+    @Controller(url="/upload_file", method=["POST"], models={"File": "fantastico.filesystem.models.File"})
+    def upload_file(self, request):
+        response = Response()
+        response.text = "Hello world."
         
-        response = hello_route.fn_handler(RoutesForControllerTesting(), Mock())
-        self.assertIsInstance(response, Response)
-        self.assertEqual(b"Hello world.", response.body)        
+        return response
