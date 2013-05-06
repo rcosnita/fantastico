@@ -47,7 +47,7 @@
 \indexentry{Controller (class in fantastico.mvc.controller\_decorators)|hyperpage}{15}
 \indexentry{fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{15}
 \indexentry{get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method)|hyperpage}{15}
-\indexentry{method (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{15}
+\indexentry{method (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}
 \indexentry{models (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}
 \indexentry{url (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}
 \indexentry{ControllerRouteLoader (class in fantastico.mvc.controller\_registrator)|hyperpage}{16}

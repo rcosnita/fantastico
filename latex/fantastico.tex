@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 06, 2013}
-\release{0.0.1-b46}
+\release{0.0.1-b47}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -669,7 +669,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x31fd6b0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4952b78\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1131,15 +1131,20 @@ piece of Fantastico framework because it simplifies the way you as developer can
 must be executed when an http request to an url is made:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} 
-            \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.blog.Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
-\PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blogs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{Blog} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Blog}
+\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n+nb}{object}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{settings\PYGZus{}facade}\PYG{o}{=}\PYG{n}{SettingsFacade}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}settings\PYGZus{}facade} \PYG{o}{=} \PYG{n}{settings\PYGZus{}facade}
 
-    \PYG{n}{blogs} \PYG{o}{=} \PYG{n}{Blog}\PYG{o}{.}\PYG{n}{all\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} 
-                           \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{asc}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
-
-    \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{blogs}\PYG{p}{)}
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} 
+                \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.blog.Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blogs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{Blog} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Blog}
+    
+        \PYG{n}{blogs} \PYG{o}{=} \PYG{n}{Blog}\PYG{o}{.}\PYG{n}{all\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} 
+                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{asc}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+    
+        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{blogs}\PYG{p}{)}
 \end{Verbatim}
 
 The above code assume the following:
@@ -1329,23 +1334,28 @@ Create a new module called \textbf{blog\_controller} and paste the following cod
 \begin{quote}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/1/posts/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
-            \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.posts.Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
-\PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blog\PYGZus{}posts}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{Post} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Post}
+\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n+nb}{object}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{settings\PYGZus{}facade}\PYG{o}{=}\PYG{n}{SettingsFacade}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}settings\PYGZus{}facade} \PYG{o}{=} \PYG{n}{settings\PYGZus{}facade}
 
-    \PYG{n}{blog\PYGZus{}id} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{request}\PYG{o}{.}\PYG{n}{params}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/1/posts/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.posts.Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blog\PYGZus{}posts}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{Post} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Post}
 
-    \PYG{n}{posts} \PYG{o}{=} \PYG{n}{Post}\PYG{o}{.}\PYG{n}{all\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}
-                           \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{asc}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{created\PYGZus{}date}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
-                           \PYG{n}{where\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{eq\PYGZus{}}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{blog\PYGZus{}id} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{request}\PYG{o}{.}\PYG{n}{params}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
 
-    \PYG{n}{response} \PYG{o}{=} \PYG{n}{Response}\PYG{p}{(}\PYG{p}{)}
-    \PYG{n}{response}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/posts\PYGZus{}listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
-                                       \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{posts}\PYG{p}{,}
-                                        \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{blog\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{blog\PYGZus{}id}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+        \PYG{n}{posts} \PYG{o}{=} \PYG{n}{Post}\PYG{o}{.}\PYG{n}{all\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}
+                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{asc}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{created\PYGZus{}date}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                               \PYG{n}{where\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{eq\PYGZus{}}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
 
-    \PYG{k}{return} \PYG{n}{response}
+        \PYG{n}{response} \PYG{o}{=} \PYG{n}{Response}\PYG{p}{(}\PYG{p}{)}
+        \PYG{n}{response}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/posts\PYGZus{}listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                                           \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{posts}\PYG{p}{,}
+                                            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{blog\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{blog\PYGZus{}id}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{n}{response}
 \end{Verbatim}
 \end{quote}
 

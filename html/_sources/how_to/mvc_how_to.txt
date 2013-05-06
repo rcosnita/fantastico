@@ -35,23 +35,28 @@ Code the controller
 
     .. code-block:: python
 
-        @Controller(url="/blogs/1/posts/", method="GET", 
-                    models={"Post": "fantastico.plugins.blog.models.posts.Post"])
-        def list_blog_posts(self, request):
-            Post = request.models.Post
-        
-            blog_id = int(request.params.id)
-        
-            posts = Post.all_paged(start_record=1,  
-                                   sort_expr=[asc(Post.created_date), desc(Post.title)],
-                                   where_expr=[eq_(Post.blog_id, blog_id)])
-                            
-            response = Response()
-            response.text = self.load_template("/posts_listing.html", 
-                                               {"posts": posts, 
-                                                "blog_id": blog_id})
+        @ControllerProvider()
+        class BlogsController(object):
+            def __init__(self, settings_facade=SettingsFacade):
+                self._settings_facade = settings_facade
+
+            @Controller(url="/blogs/1/posts/", method="GET", 
+                        models={"Post": "fantastico.plugins.blog.models.posts.Post"])
+            def list_blog_posts(self, request):
+                Post = request.models.Post
             
-            return response
+                blog_id = int(request.params.id)
+            
+                posts = Post.all_paged(start_record=1,  
+                                       sort_expr=[asc(Post.created_date), desc(Post.title)],
+                                       where_expr=[eq_(Post.blog_id, blog_id)])
+                                
+                response = Response()
+                response.text = self.load_template("/posts_listing.html", 
+                                                   {"posts": posts, 
+                                                    "blog_id": blog_id})
+                
+                return response
             
 Now you have a fully functional controller that will list all posts.
 

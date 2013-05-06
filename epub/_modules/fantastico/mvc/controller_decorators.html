@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b46 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b47 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -47,6 +47,7 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.mvc.controller_decorator</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
 
 <div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides a decorator for magically registering methods as route handlers. This is an extremely important</span>
@@ -55,15 +56,20 @@
 <span class="sd">    </span>
 <span class="sd">    .. code-block:: python</span>
 <span class="sd">    </span>
-<span class="sd">        @Controller(url=&quot;/blogs/&quot;, method=&quot;GET&quot;, </span>
-<span class="sd">                    models={&quot;Blog&quot;: &quot;fantastico.plugins.blog.models.blog.Blog&quot;])</span>
-<span class="sd">        def list_blogs(self, request):</span>
-<span class="sd">            Blog = request.models.Blog</span>
+<span class="sd">        @ControllerProvider()</span>
+<span class="sd">        class BlogsController(object):</span>
+<span class="sd">            def __init__(self, settings_facade=SettingsFacade):</span>
+<span class="sd">                self._settings_facade = settings_facade</span>
 <span class="sd">        </span>
-<span class="sd">            blogs = Blog.all_paged(start_record=1, end_record=0, </span>
-<span class="sd">                                   sort_expr=[asc(Blog.create_date), desc(Blog.title)])</span>
-<span class="sd">        </span>
-<span class="sd">            return Response(blogs)</span>
+<span class="sd">            @Controller(url=&quot;/blogs/&quot;, method=&quot;GET&quot;, </span>
+<span class="sd">                        models={&quot;Blog&quot;: &quot;fantastico.plugins.blog.models.blog.Blog&quot;])</span>
+<span class="sd">            def list_blogs(self, request):</span>
+<span class="sd">                Blog = request.models.Blog</span>
+<span class="sd">            </span>
+<span class="sd">                blogs = Blog.all_paged(start_record=1, end_record=0, </span>
+<span class="sd">                                       sort_expr=[asc(Blog.create_date), desc(Blog.title)])</span>
+<span class="sd">            </span>
+<span class="sd">                return Response(blogs)</span>
 <span class="sd">            </span>
 <span class="sd">    The above code assume the following:</span>
 <span class="sd">    </span>
@@ -137,7 +143,41 @@
         
         <span class="n">Controller</span><span class="o">.</span><span class="n">get_registered_routes</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
         
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span>
+    </div>
+<span class="k">class</span> <span class="nc">ControllerProvider</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class marks a class as being a controller provider. It means that some of the methods from decorated class </span>
+<span class="sd">    provide routes that must be registered into routing engine.&#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="bp">None</span>
+        
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to enrich all methods of the class with full_name attribute.&#39;&#39;&#39;</span>
+        
+        <span class="k">def</span> <span class="nf">is_function</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;This function determines if the given obj argument is a function or not.&#39;&#39;&#39;</span>
+            
+            <span class="k">return</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">meth_name</span><span class="p">,</span> <span class="n">meth_value</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">is_function</span><span class="p">):</span>
+            <span class="n">full_name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__module__</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">meth_value</span><span class="p">,</span> <span class="s">&quot;full_name&quot;</span><span class="p">,</span> <span class="n">full_name</span><span class="p">)</span>
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span> <span class="o">=</span> <span class="n">cls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__doc__</span>
+        
+        <span class="k">def</span> <span class="nf">instantiate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;This method returns a new instance of the decorated class. It passes all arguments to the underlining class</span>
+<span class="sd">            __init__ method.&#39;&#39;&#39;</span>
+            
+            <span class="n">instance</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            
+            <span class="k">return</span> <span class="n">instance</span>
+        
+        <span class="k">return</span> <span class="n">instantiate</span>
 </pre></div>
 
           </div>
