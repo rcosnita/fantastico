@@ -31,7 +31,7 @@ class ControllerRouteLoader(RouteLoader):
     def __init__(self, settings_facade=SettingsFacade, scanned_folder=None, ignore_prefix=None):
         super(ControllerRouteLoader, self).__init__(settings_facade)
         
-        self._scanned_folder = scanned_folder
+        self._scanned_folder = scanned_folder or instantiator.get_class_abslocation(settings_facade.__class__)
         self._ignore_prefix = ignore_prefix or ["__init__", "__pycache__", "tests", "test", "itest"]
     
     def _transform_to_fqdn(self, abspath):
@@ -63,10 +63,13 @@ class ControllerRouteLoader(RouteLoader):
             
             if os.path.isdir(abspath):
                 self._register_from_folder(abspath + "/")
+            else:
+                if not filename.endswith(".py"):
+                    continue
+                
+                module_name = self._transform_to_fqdn(abspath)
             
-            module_name = self._transform_to_fqdn(abspath)
-            
-            importlib.import_module(module_name)
+                importlib.import_module(module_name)
     
     def load_routes(self):
         '''This method is used for loading all routes that are mapped through 
