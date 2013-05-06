@@ -30,6 +30,8 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
     def test_controller_registration_ok(self):
         '''This test case checks that routes are correctly registered by controller decorator.'''
         
+        from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
+        
         registered_routes = Controller.get_registered_routes()
         
         self.assertEqual(2, len(registered_routes))
@@ -50,6 +52,8 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
     def test_controller_list_params_ok(self):
         '''This test case checks list parameters of controller (models, method) work as expected.'''
 
+        from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
+
         registered_routes = Controller.get_registered_routes()
         
         self.assertEqual(2, len(registered_routes))
@@ -66,20 +70,3 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         response = upload_file.fn_handler(RoutesForControllerTesting(), Mock())
         self.assertIsInstance(response, Response)
         self.assertEqual(b"Hello world.", response.body)
-        
-class RoutesForControllerTesting(object):
-    '''This class defines two methods as Controllers.'''
-    
-    @Controller(url="/say_hello", method="GET")
-    def say_hello(self, request):
-        response = Response()
-        response.text = "Hello world."
-        
-        return response
-    
-    @Controller(url="/upload_file", method=["POST"], models={"File": "fantastico.filesystem.models.File"})
-    def upload_file(self, request):
-        response = Response()
-        response.text = "Hello world."
-        
-        return response
