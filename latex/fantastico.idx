@@ -13,10 +13,14 @@
 \indexentry{\_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
-\indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{7}
-\indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{7}
-\indexentry{started (fantastico.server.dev\_server.DevServer attribute)|hyperpage}{7}
-\indexentry{stop() (fantastico.server.dev\_server.DevServer method)|hyperpage}{7}
+\indexentry{DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server)|hyperpage}{7}
+\indexentry{\_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{7}
+\indexentry{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{7}
+\indexentry{\_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{7}
+\indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{8}
+\indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{8}
+\indexentry{started (fantastico.server.dev\_server.DevServer attribute)|hyperpage}{8}
+\indexentry{stop() (fantastico.server.dev\_server.DevServer method)|hyperpage}{8}
 \indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
 \indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{9}
@@ -42,7 +46,9 @@
 \indexentry{RoutingMiddleware (class in fantastico.middleware.routing\_middleware)|hyperpage}{14}
 \indexentry{Controller (class in fantastico.mvc.controller\_decorators)|hyperpage}{15}
 \indexentry{fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{15}
-\indexentry{get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method)|hyperpage}{16}
-\indexentry{method (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}
+\indexentry{get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method)|hyperpage}{15}
+\indexentry{method (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{15}
 \indexentry{models (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}
 \indexentry{url (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}
+\indexentry{ControllerRouteLoader (class in fantastico.mvc.controller\_registrator)|hyperpage}{16}
+\indexentry{load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method)|hyperpage}{16}

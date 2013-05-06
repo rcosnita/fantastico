@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Contribute &mdash; fantastico 0.0.1-b45 documentation</title>
+    <title>Contribute &mdash; fantastico 0.0.1-b46 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b45',
+        VERSION:     '0.0.1-b46',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b45 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b46 documentation" href="../index.html" />
     <link rel="up" title="Getting started" href="getting_started.html" />
     <link rel="next" title="Development mode" href="dev_mode.html" />
     <link rel="prev" title="Fantastico settings" href="settings.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="settings.html" title="Fantastico settings"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b46 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>  
@@ -156,6 +156,53 @@ avoid boiler plate code duplication and executing test logic against all environ
 
 </dd></dl>
 
+<dl class="class">
+<dt id="fantastico.server.tests.itest_dev_server.DevServerIntegration">
+<em class="property">class </em><tt class="descclassname">fantastico.server.tests.itest_dev_server.</tt><tt class="descname">DevServerIntegration</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/tests/itest_dev_server.html#DevServerIntegration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.server.tests.itest_dev_server.DevServerIntegration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the foundation for writing integration tests that do http requests against a fantastico server.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DummyLoaderIntegration</span><span class="p">(</span><span class="n">DevServerIntegration</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_server_runs_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">request_logic</span><span class="p">(</span><span class="n">server</span><span class="p">):</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_server_base_url</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">))</span> 
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">HTTPError</span><span class="p">)</span> <span class="k">as</span> <span class="n">cm</span><span class="p">:</span>
+                <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+                
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="n">cm</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;Hello world.&quot;</span><span class="p">,</span> <span class="n">cm</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+            
+        <span class="k">def</span> <span class="nf">assert_logic</span><span class="p">(</span><span class="n">server</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_server_started</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="k">lambda</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_against_dev_server</span><span class="p">(</span><span class="n">request_logic</span><span class="p">))</span>
+        
+    <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="k">lambda</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_against_dev_server</span><span class="p">(</span><span class="n">request_logic</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>As you can see from above listed code, when you write a new integration test against Fantastico server you only need
+to provide the request logic and assert logic functions. Request logic is executed while the server is up and running.
+Assert logic is executed after the server has stopped.</p>
+<dl class="method">
+<dt id="fantastico.server.tests.itest_dev_server.DevServerIntegration._check_server_started">
+<tt class="descname">_check_server_started</tt><big>(</big><em>server</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/tests/itest_dev_server.html#DevServerIntegration._check_server_started"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.server.tests.itest_dev_server.DevServerIntegration._check_server_started" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method holds the sanity checks to ensure a server is started correctly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.server.tests.itest_dev_server.DevServerIntegration._get_server_base_url">
+<tt class="descname">_get_server_base_url</tt><big>(</big><em>server</em>, <em>route</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/tests/itest_dev_server.html#DevServerIntegration._get_server_base_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.server.tests.itest_dev_server.DevServerIntegration._get_server_base_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the absolute url for a given relative url (route).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.server.tests.itest_dev_server.DevServerIntegration._run_test_against_dev_server">
+<tt class="descname">_run_test_against_dev_server</tt><big>(</big><em>request_logic</em>, <em>assert_logic=None</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/tests/itest_dev_server.html#DevServerIntegration._run_test_against_dev_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.server.tests.itest_dev_server.DevServerIntegration._run_test_against_dev_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method provides a template for writing integration tests that requires a development server being active.
+It accepts a request logic (code that actually do the http request) and an assert logic for making sure 
+code is correct.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -218,7 +265,7 @@ avoid boiler plate code duplication and executing test logic against all environ
         <li class="right" >
           <a href="settings.html" title="Fantastico settings"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b46 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
       </ul>
     </div>

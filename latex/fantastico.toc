@@ -16,8 +16,8 @@
 \contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.12}
 \contentsline {subsubsection}{Writing integration tests}{6}{subsubsection*.14}
 \contentsline {section}{\numberline {2.4}Development mode}{7}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Hot deploy}{7}{subsection.2.4.1}
-\contentsline {subsection}{\numberline {2.4.2}API}{7}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.1}Hot deploy}{8}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}API}{8}{subsection.2.4.2}
 \contentsline {chapter}{\numberline {3}Fantastico features}{9}{chapter.3}
 \contentsline {section}{\numberline {3.1}Exceptions hierarchy}{9}{section.3.1}
 \contentsline {section}{\numberline {3.2}Request lifecycle}{10}{section.3.2}
@@ -45,4 +45,4 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{18}{subsection.4.1.4}
 \contentsline {chapter}{\numberline {5}Build status}{19}{chapter.5}
 \contentsline {chapter}{\numberline {6}License}{21}{chapter.6}
-\contentsline {chapter}{Index}{23}{section*.53}
+\contentsline {chapter}{Index}{23}{section*.59}

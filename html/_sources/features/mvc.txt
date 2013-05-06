@@ -62,4 +62,7 @@ response:
     * A `vCard <http://en.wikipedia.org/wiki/VCard>`_. export service.
     
 If you want to read a small tutorial and to start coding very fast on Fantastico MVC read :doc:`/how_to/mvc_how_to`. Controller
-API is documented :py:class:`fantastico.mvc.controller_decorator.Controller`.     
+API is documented :py:class:`fantastico.mvc.controller_decorator.Controller`.
+
+.. autoclass:: fantastico.mvc.controller_registrator.ControllerRouteLoader
+    :members:

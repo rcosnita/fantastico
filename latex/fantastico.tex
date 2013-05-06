@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 06, 2013}
-\release{0.0.1-b45}
+\release{0.0.1-b46}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -573,6 +573,63 @@ This method save all call methods for each listed middleware so that later on th
 
 \end{fulllineitems}
 
+\index{DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.server.tests.itest_dev_server.DevServerIntegration}\pysiglinewithargsret{\strong{class }\code{fantastico.server.tests.itest\_dev\_server.}\bfcode{DevServerIntegration}}{\emph{methodName='runTest'}}{}
+This class provides the foundation for writing integration tests that do http requests against a fantastico server.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{DummyLoaderIntegration}\PYG{p}{(}\PYG{n}{DevServerIntegration}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{test\PYGZus{}server\PYGZus{}runs\PYGZus{}ok}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{def} \PYG{n+nf}{request\PYGZus{}logic}\PYG{p}{(}\PYG{n}{server}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n}{request} \PYG{o}{=} \PYG{n}{Request}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}get\PYGZus{}server\PYGZus{}base\PYGZus{}url}\PYG{p}{(}\PYG{n}{server}\PYG{p}{,} \PYG{n}{DummyRouteLoader}\PYG{o}{.}\PYG{n}{DUMMY\PYGZus{}ROUTE}\PYG{p}{)}\PYG{p}{)} 
+            \PYG{k}{with} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertRaises}\PYG{p}{(}\PYG{n}{HTTPError}\PYG{p}{)} \PYG{k}{as} \PYG{n}{cm}\PYG{p}{:}
+                \PYG{n}{urllib}\PYG{o}{.}\PYG{n}{request}\PYG{o}{.}\PYG{n}{urlopen}\PYG{p}{(}\PYG{n}{request}\PYG{p}{)}
+                
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{l+m+mi}{400}\PYG{p}{,} \PYG{n}{cm}\PYG{o}{.}\PYG{n}{exception}\PYG{o}{.}\PYG{n}{code}\PYG{p}{)}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world.}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{cm}\PYG{o}{.}\PYG{n}{exception}\PYG{o}{.}\PYG{n}{read}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{decode}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+            
+        \PYG{k}{def} \PYG{n+nf}{assert\PYGZus{}logic}\PYG{p}{(}\PYG{n}{server}\PYG{p}{)}\PYG{p}{:}
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}check\PYGZus{}server\PYGZus{}started}\PYG{p}{(}\PYG{n}{server}\PYG{p}{)}
+            
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}run\PYGZus{}test\PYGZus{}all\PYGZus{}envs}\PYG{p}{(}\PYG{k}{lambda} \PYG{n}{env}\PYG{p}{,} \PYG{n}{settings\PYGZus{}cls}\PYG{p}{:} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}run\PYGZus{}test\PYGZus{}against\PYGZus{}dev\PYGZus{}server}\PYG{p}{(}\PYG{n}{request\PYGZus{}logic}\PYG{p}{)}\PYG{p}{)}
+        
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}run\PYGZus{}test\PYGZus{}all\PYGZus{}envs}\PYG{p}{(}\PYG{k}{lambda} \PYG{n}{env}\PYG{p}{,} \PYG{n}{settings\PYGZus{}cls}\PYG{p}{:} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}run\PYGZus{}test\PYGZus{}against\PYGZus{}dev\PYGZus{}server}\PYG{p}{(}\PYG{n}{request\PYGZus{}logic}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}
+
+As you can see from above listed code, when you write a new integration test against Fantastico server you only need
+to provide the request logic and assert logic functions. Request logic is executed while the server is up and running.
+Assert logic is executed after the server has stopped.
+\index{\_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.server.tests.itest_dev_server.DevServerIntegration._check_server_started}\pysiglinewithargsret{\bfcode{\_check\_server\_started}}{\emph{server}}{}
+This method holds the sanity checks to ensure a server is started correctly.
+
+\end{fulllineitems}
+
+\index{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.server.tests.itest_dev_server.DevServerIntegration._get_server_base_url}\pysiglinewithargsret{\bfcode{\_get\_server\_base\_url}}{\emph{server}, \emph{route}}{}
+This method returns the absolute url for a given relative url (route).
+
+\end{fulllineitems}
+
+\index{\_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.server.tests.itest_dev_server.DevServerIntegration._run_test_against_dev_server}\pysiglinewithargsret{\bfcode{\_run\_test\_against\_dev\_server}}{\emph{request\_logic}, \emph{assert\_logic=None}}{}
+This method provides a template for writing integration tests that requires a development server being active.
+It accepts a request logic (code that actually do the http request) and an assert logic for making sure 
+code is correct.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
 
 
 \section{Development mode}
@@ -612,7 +669,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x37ce8d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x31fd6b0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1200,6 +1257,25 @@ A \href{http://en.wikipedia.org/wiki/VCard}{vCard}. export service.
 
 If you want to read a small tutorial and to start coding very fast on Fantastico MVC read {\hyperref[how_to/mvc_how_to::doc]{\emph{MVC How to}}}. Controller
 API is documented \code{fantastico.mvc.controller\_decorator.Controller}.
+\index{ControllerRouteLoader (class in fantastico.mvc.controller\_registrator)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_registrator.ControllerRouteLoader}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.controller\_registrator.}\bfcode{ControllerRouteLoader}}{\emph{settings\_facade=\textless{}class `fantastico.settings.SettingsFacade'\textgreater{}}, \emph{scanned\_folder=None}, \emph{ignore\_prefix=None}}{}
+This class provides a route loader that is capable of scanning the disk and registering only the routes that 
+contain a controller decorator in them. This happens when \textbf{Fantastico} servers starts. In standard configuration
+it ignores tests subfolder as well as test\_* / itest\_* modules.
+\index{load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_registrator.ControllerRouteLoader.load_routes}\pysiglinewithargsret{\bfcode{load\_routes}}{}{}
+This method is used for loading all routes that are mapped through 
+{\hyperref[features/mvc:fantastico.mvc.controller_decorators.Controller]{\code{fantastico.mvc.controller\_decorators.Controller}}} decorator.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
 
 
 \chapter{How to articles}

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Model View Controller &mdash; fantastico 0.0.1-b45 documentation</title>
+    <title>Model View Controller &mdash; fantastico 0.0.1-b46 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b45',
+        VERSION:     '0.0.1-b46',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b45 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b46 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="How to articles" href="../how_to/how_to.html" />
     <link rel="prev" title="Routing engine" href="routing_engine.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b46 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -167,6 +167,21 @@ response:</p>
 </div></blockquote>
 <p>If you want to read a small tutorial and to start coding very fast on Fantastico MVC read <a class="reference internal" href="../how_to/mvc_how_to.html"><em>MVC How to</em></a>. Controller
 API is documented <tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.controller_decorator.Controller</span></tt>.</p>
+<dl class="class">
+<dt id="fantastico.mvc.controller_registrator.ControllerRouteLoader">
+<em class="property">class </em><tt class="descclassname">fantastico.mvc.controller_registrator.</tt><tt class="descname">ControllerRouteLoader</tt><big>(</big><em>settings_facade=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em>, <em>scanned_folder=None</em>, <em>ignore_prefix=None</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/controller_registrator.html#ControllerRouteLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.controller_registrator.ControllerRouteLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a route loader that is capable of scanning the disk and registering only the routes that 
+contain a controller decorator in them. This happens when <strong>Fantastico</strong> servers starts. In standard configuration
+it ignores tests subfolder as well as test_* / itest_* modules.</p>
+<dl class="method">
+<dt id="fantastico.mvc.controller_registrator.ControllerRouteLoader.load_routes">
+<tt class="descname">load_routes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/controller_registrator.html#ControllerRouteLoader.load_routes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.controller_registrator.ControllerRouteLoader.load_routes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used for loading all routes that are mapped through 
+<a class="reference internal" href="#fantastico.mvc.controller_decorators.Controller" title="fantastico.mvc.controller_decorators.Controller"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.controller_decorators.Controller</span></tt></a> decorator.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -228,7 +243,7 @@ API is documented <tt class="xref py py-class docutils literal"><span class="pre
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b45 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b46 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
