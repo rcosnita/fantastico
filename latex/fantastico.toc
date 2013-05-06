@@ -34,7 +34,7 @@
 \contentsline {section}{\numberline {3.4}Model View Controller}{14}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}Classic approach}{14}{subsection.3.4.1}
 \contentsline {subsection}{\numberline {3.4.2}Fantastico approach}{15}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Model}{15}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.3}Model}{16}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}View}{16}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}Controller}{16}{subsection.3.4.5}
 \contentsline {chapter}{\numberline {4}How to articles}{17}{chapter.4}
@@ -45,4 +45,4 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{18}{subsection.4.1.4}
 \contentsline {chapter}{\numberline {5}Build status}{19}{chapter.5}
 \contentsline {chapter}{\numberline {6}License}{21}{chapter.6}
-\contentsline {chapter}{Index}{23}{section*.47}
+\contentsline {chapter}{Index}{23}{section*.53}

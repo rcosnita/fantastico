@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-05-05</dc:date>
+    <dc:date>2013-05-06</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -108,6 +108,9 @@
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_middleware_request_context.html"
           href="_modules/fantastico/middleware/request_context.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_mvc_controller_decorators.html"
+          href="_modules/fantastico/mvc/controller_decorators.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_locale_language.html"
           href="_modules/fantastico/locale/language.html"

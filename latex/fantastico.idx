@@ -40,3 +40,9 @@
 \indexentry{DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader)|hyperpage}{14}
 \indexentry{display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method)|hyperpage}{14}
 \indexentry{RoutingMiddleware (class in fantastico.middleware.routing\_middleware)|hyperpage}{14}
+\indexentry{Controller (class in fantastico.mvc.controller\_decorators)|hyperpage}{15}
+\indexentry{fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{15}
+\indexentry{get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method)|hyperpage}{15}
+\indexentry{method (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}
+\indexentry{models (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}
+\indexentry{url (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{16}

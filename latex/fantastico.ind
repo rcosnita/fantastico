@@ -17,6 +17,7 @@
   \indexspace
   \bigletter C
   \item code (fantastico.locale.language.Language attribute), \hyperpage{11}
+  \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{15}
 
   \indexspace
   \bigletter D
@@ -39,12 +40,15 @@
   \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{6}
+  \item fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{15}
 
   \indexspace
   \bigletter G
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
+  \item get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method), 
+		\hyperpage{15}
 
   \indexspace
   \bigletter H
@@ -60,6 +64,11 @@
   \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{11}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
 		\hyperpage{13}
+
+  \indexspace
+  \bigletter M
+  \item method (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{16}
+  \item models (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{16}
 
   \indexspace
   \bigletter R
@@ -79,5 +88,9 @@
   \item started (fantastico.server.dev\_server.DevServer attribute), \hyperpage{7}
   \item stop() (fantastico.server.dev\_server.DevServer method), \hyperpage{7}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
+
+  \indexspace
+  \bigletter U
+  \item url (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{16}
 
 \end{theindex}

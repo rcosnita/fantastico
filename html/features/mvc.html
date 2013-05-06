@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Model View Controller &mdash; fantastico 0.0.1-b39 documentation</title>
+    <title>Model View Controller &mdash; fantastico 0.0.1-b40 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b39',
+        VERSION:     '0.0.1-b40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b39 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b40 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="How to articles" href="../how_to/how_to.html" />
     <link rel="prev" title="Routing engine" href="routing_engine.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b39 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -71,8 +71,14 @@ to an entity and pass it down to repository.</p>
 <div class="section" id="fantastico-approach">
 <h2>Fantastico approach<a class="headerlink" href="#fantastico-approach" title="Permalink to this headline">¶</a></h2>
 <p><strong>Fantastico</strong> framework provides an alternative to this classic approach (you can still work in the old way if you really really
-want). Let&#8217;s see a simple example below:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog&quot;</span><span class="p">])</span>
+want).</p>
+<dl class="class">
+<dt id="fantastico.mvc.controller_decorators.Controller">
+<em class="property">class </em><tt class="descclassname">fantastico.mvc.controller_decorators.</tt><tt class="descname">Controller</tt><big>(</big><em>url</em>, <em>method='GET'</em>, <em>models={}</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.controller_decorators.Controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a decorator for magically registering methods as route handlers. This is an extremely important
+piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
+must be executed when an http request to an url is made:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog.Blog&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">list_blogs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
     <span class="n">Blog</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Blog</span>
 
@@ -91,6 +97,40 @@ want). Let&#8217;s see a simple example below:</p>
 </ol>
 <p>Below you can find the design for MVC provided by <strong>Fantastico</strong> framework:</p>
 <img alt="../_images/mvc.png" src="../_images/mvc.png" />
+<dl class="attribute">
+<dt id="fantastico.mvc.controller_decorators.Controller.fn_handler">
+<tt class="descname">fn_handler</tt><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#Controller.fn_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.controller_decorators.Controller.fn_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property retrieves the method which is executed by this controller.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="fantastico.mvc.controller_decorators.Controller.get_registered_routes">
+<em class="property">classmethod </em><tt class="descname">get_registered_routes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#Controller.get_registered_routes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.controller_decorators.Controller.get_registered_routes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class methods retrieve all registered routes through Controller decorator.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.mvc.controller_decorators.Controller.method">
+<tt class="descname">method</tt><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#Controller.method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.controller_decorators.Controller.method" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property retrieves the method(s) for which this controller can be invoked. Most of the time only one value is
+retrieved.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.mvc.controller_decorators.Controller.models">
+<tt class="descname">models</tt><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#Controller.models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.controller_decorators.Controller.models" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property retrieves all the models required by this controller in order to work correctly.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.mvc.controller_decorators.Controller.url">
+<tt class="descname">url</tt><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#Controller.url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.controller_decorators.Controller.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property retrieves the url used when registering this controller.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>If you want to find more details and use cases for controller read <a class="reference internal" href="#core-controller-section"><em>Controller</em></a> section.</p>
 </div>
 <div class="section" id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
@@ -104,7 +144,7 @@ it is easier to use jinja 2 template engine. The good news is that you can easil
 and it will be rendered automatically.</p>
 </div>
 <div class="section" id="controller">
-<h2>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h2>
+<span id="core-controller-section"></span><h2>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h2>
 <p>A controller is the <em>brain</em>; it actually combines a model execute some business logic and pass data to the desired view
 that needs to be rendered. In some cases you don&#8217;t really need view in order to provide the logic you want:</p>
 <blockquote>
@@ -123,7 +163,8 @@ response:</p>
 <li>A <a class="reference external" href="http://en.wikipedia.org/wiki/VCard">vCard</a>. export service.</li>
 </ul>
 </div></blockquote>
-<p>If you want to read a small tutorial and to start coding very fast on Fantastico MVC read <a class="reference internal" href="../how_to/mvc_how_to.html"><em>MVC How to</em></a>.</p>
+<p>If you want to read a small tutorial and to start coding very fast on Fantastico MVC read <a class="reference internal" href="../how_to/mvc_how_to.html"><em>MVC How to</em></a>. Controller
+API is documented <tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.controller_decorator.Controller</span></tt>.</p>
 </div>
 </div>
 
@@ -185,7 +226,7 @@ response:</p>
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b39 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

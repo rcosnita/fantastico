@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.0.1-b40 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.0.1-b40',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.0.1-b40 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.mvc.controller_decorators</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.mvc.controller_decorator</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a decorator for magically registering methods as route handlers. This is an extremely important</span>
+<span class="sd">    piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that</span>
+<span class="sd">    must be executed when an http request to an url is made:</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">    </span>
+<span class="sd">        @Controller(url=&quot;/blogs/&quot;, method=&quot;GET&quot;, models={&quot;Blog&quot;: &quot;fantastico.plugins.blog.models.blog.Blog&quot;])</span>
+<span class="sd">        def list_blogs(self, request):</span>
+<span class="sd">            Blog = request.models.Blog</span>
+<span class="sd">        </span>
+<span class="sd">            blogs = Blog.all_paged(start_record=1, end_record=0, sort_expr=[asc(Blog.create_date), desc(Blog.title)])</span>
+<span class="sd">        </span>
+<span class="sd">            return Response(blogs)</span>
+<span class="sd">            </span>
+<span class="sd">    The above code assume the following:</span>
+<span class="sd">    </span>
+<span class="sd">    #. As developer you created a model called blog (this is already mapped to some sort of storage).</span>
+<span class="sd">    #. Fantastico framework generate the facade automatically (and you never have to know anything about underlining repository).</span>
+<span class="sd">    #. Fantastico framework takes care of data conversion.</span>
+<span class="sd">    #. As developer you create the method that knows how to handle **/blog/** url.</span>
+<span class="sd">    #. Write your view.</span>
+<span class="sd">    </span>
+<span class="sd">    Below you can find the design for MVC provided by **Fantastico** framework:</span>
+<span class="sd">    </span>
+<span class="sd">    .. image:: /images/core/mvc.png&#39;&#39;&#39;</span>
+    
+    <span class="n">_REGISTERED_ROUTES</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Controller.url"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.url">[docs]</a>    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property retrieves the url used when registering this controller.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Controller.method"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.method">[docs]</a>    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property retrieves the method(s) for which this controller can be invoked. Most of the time only one value is</span>
+<span class="sd">        retrieved.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Controller.models"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.models">[docs]</a>    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property retrieves all the models required by this controller in order to work correctly.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Controller.fn_handler"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.fn_handler">[docs]</a>    <span class="k">def</span> <span class="nf">fn_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property retrieves the method which is executed by this controller.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span>
+    </div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="p">[</span><span class="n">method</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="n">method</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_models</span> <span class="o">=</span> <span class="n">models</span>
+    
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="Controller.get_registered_routes"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.get_registered_routes">[docs]</a>    <span class="k">def</span> <span class="nf">get_registered_routes</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This class methods retrieve all registered routes through Controller decorator.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_REGISTERED_ROUTES</span>
+    </div>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method takes care of registering the controller when the class is first loaded by python vm.&#39;&#39;&#39;</span>
+        
+        <span class="k">def</span> <span class="nf">new_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;This method is the one that replaces the original decorated method.&#39;&#39;&#39;</span>
+            
+            <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span> <span class="o">=</span> <span class="n">new_handler</span>
+        
+        <span class="n">Controller</span><span class="o">.</span><span class="n">get_registered_routes</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

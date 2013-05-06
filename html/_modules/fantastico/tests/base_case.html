@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.tests.base_case &mdash; fantastico 0.0.1-b39 documentation</title>
+    <title>fantastico.tests.base_case &mdash; fantastico 0.0.1-b40 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.0.1-b39',
+        VERSION:     '0.0.1-b40',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b39 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b40 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b39 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -65,8 +65,6 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">middleware</span>
 <span class="kn">from</span> <span class="nn">fantastico.middleware.fantastico_app</span> <span class="kn">import</span> <span class="n">FantasticoApp</span>
-<span class="kn">from</span> <span class="nn">fantastico.middleware.request_middleware</span> <span class="kn">import</span> <span class="n">RequestMiddleware</span>
-<span class="kn">from</span> <span class="nn">fantastico.middleware.routing_middleware</span> <span class="kn">import</span> <span class="n">RoutingMiddleware</span>
 <span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span><span class="p">,</span> <span class="n">SettingsFacade</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -89,6 +87,23 @@
             <span class="n">cleanup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;cleanup&quot;</span><span class="p">)</span>
             <span class="n">cleanup</span><span class="p">()</span>
     
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;We make the convention that setUpClass method will always invoke setup_once method for each test case class.&#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;setup_once&quot;</span><span class="p">):</span>
+            <span class="n">cleanup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;setup_once&quot;</span><span class="p">)</span>
+            <span class="n">cleanup</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+        
+                    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">tearDownClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;We make the convention that tearDownClass method will always invoke cleanup_once method for each test case class.&#39;&#39;&#39;</span> 
+        
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;cleanup_once&quot;</span><span class="p">):</span>
+            <span class="n">cleanup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;cleanup_once&quot;</span><span class="p">)</span>
+            <span class="n">cleanup</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+    
 <div class="viewcode-block" id="FantasticoUnitTestsCase"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase">[docs]</a><span class="k">class</span> <span class="nc">FantasticoUnitTestsCase</span><span class="p">(</span><span class="n">FantasticoBaseTestCase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each unit test written for fantastico.</span>
 <span class="sd">    </span>
@@ -100,12 +115,6 @@
 <span class="sd">                </span>
 <span class="sd">            def test_simple_flow_ok(self):</span>
 <span class="sd">                self.assertEqual(&quot;Hello world&quot;, self._msg)&#39;&#39;&#39;</span>
-    
-    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoUnitTestsCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
-        
-    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoUnitTestsCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>        
     </div>
 <div class="viewcode-block" id="FantasticoIntegrationTestCase"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase">[docs]</a><span class="k">class</span> <span class="nc">FantasticoIntegrationTestCase</span><span class="p">(</span><span class="n">FantasticoBaseTestCase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each integration test written for fantastico.</span>
@@ -211,7 +220,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b39 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b40 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

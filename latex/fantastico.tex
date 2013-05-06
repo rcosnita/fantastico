@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{May 05, 2013}
-\release{0.0.1-b39}
+\date{May 06, 2013}
+\release{0.0.1-b40}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -612,7 +612,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4a53c00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x34438d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1064,10 +1064,17 @@ to an entity and pass it down to repository.
 \subsection{Fantastico approach}
 \label{features/mvc:fantastico-approach}
 \textbf{Fantastico} framework provides an alternative to this classic approach (you can still work in the old way if you really really
-want). Let's see a simple example below:
+want).
+\index{Controller (class in fantastico.mvc.controller\_decorators)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.controller\_decorators.}\bfcode{Controller}}{\emph{url}, \emph{method='GET'}, \emph{models=\{\}}}{}
+This class provides a decorator for magically registering methods as route handlers. This is an extremely important
+piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
+must be executed when an http request to an url is made:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.blog.Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
 \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blogs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{Blog} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Blog}
 
@@ -1098,6 +1105,52 @@ Write your view.
 Below you can find the design for MVC provided by \textbf{Fantastico} framework:
 
 \includegraphics{mvc.png}
+\index{fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller.fn_handler}\pysigline{\bfcode{fn\_handler}}
+This property retrieves the method which is executed by this controller.
+
+\end{fulllineitems}
+
+\index{get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller.get_registered_routes}\pysiglinewithargsret{\strong{classmethod }\bfcode{get\_registered\_routes}}{}{}
+This class methods retrieve all registered routes through Controller decorator.
+
+\end{fulllineitems}
+
+\index{method (fantastico.mvc.controller\_decorators.Controller attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller.method}\pysigline{\bfcode{method}}
+This property retrieves the method(s) for which this controller can be invoked. Most of the time only one value is
+retrieved.
+
+\end{fulllineitems}
+
+\index{models (fantastico.mvc.controller\_decorators.Controller attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller.models}\pysigline{\bfcode{models}}
+This property retrieves all the models required by this controller in order to work correctly.
+
+\end{fulllineitems}
+
+\index{url (fantastico.mvc.controller\_decorators.Controller attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller.url}\pysigline{\bfcode{url}}
+This property retrieves the url used when registering this controller.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+If you want to find more details and use cases for controller read {\hyperref[features/mvc:core-controller-section]{\emph{Controller}}} section.
 
 
 \subsection{Model}
@@ -1114,7 +1167,7 @@ and it will be rendered automatically.
 
 
 \subsection{Controller}
-\label{features/mvc:controller}
+\label{features/mvc:controller}\label{features/mvc:core-controller-section}
 A controller is the \emph{brain}; it actually combines a model execute some business logic and pass data to the desired view
 that needs to be rendered. In some cases you don't really need view in order to provide the logic you want:
 \begin{itemize}
@@ -1143,7 +1196,8 @@ A \href{http://en.wikipedia.org/wiki/VCard}{vCard}. export service.
 
 \end{itemize}
 
-If you want to read a small tutorial and to start coding very fast on Fantastico MVC read {\hyperref[how_to/mvc_how_to::doc]{\emph{MVC How to}}}.
+If you want to read a small tutorial and to start coding very fast on Fantastico MVC read {\hyperref[how_to/mvc_how_to::doc]{\emph{MVC How to}}}. Controller
+API is documented \code{fantastico.mvc.controller\_decorator.Controller}.
 
 
 \chapter{How to articles}
