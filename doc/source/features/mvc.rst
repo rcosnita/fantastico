@@ -22,30 +22,13 @@ Fantastico approach
 -------------------
 
 **Fantastico** framework provides an alternative to this classic approach (you can still work in the old way if you really really
-want). Let's see a simple example below:
+want).
 
-.. code-block:: python
-
-    @Controller(url="/blogs/", method="GET", models={"Blog": "fantastico.plugins.blog.models.blog"])
-    def list_blogs(self, request):
-        Blog = request.models.Blog
+.. autoclass:: fantastico.mvc.controller_decorator.Controller
+    :members:
     
-        blogs = Blog.all_paged(start_record=1, end_record=0, sort_expr=[asc(Blog.create_date), desc(Blog.title)])
+If you want to find more details and use cases for controller read :ref:`core-controller-section` section.
         
-        return Response(blogs)
-        
-The above code assume the following:
-
-#. As developer you created a model called blog (this is already mapped to some sort of storage).
-#. Fantastico framework generate the facade automatically (and you never have to know anything about underlining repository).
-#. Fantastico framework takes care of data conversion.
-#. As developer you create the method that knows how to handle **/blog/** url.
-#. Write your view.
-
-Below you can find the design for MVC provided by **Fantastico** framework:
-
-.. image:: /images/core/mvc.png
-
 Model
 -----
 
@@ -58,6 +41,8 @@ A view can be a simple html plain file or html + jinja2 enriched support. You ca
 `here <http://jinja.pocoo.org/docs/>`_. Usually, if you need some logical block statements in your view (if, for, ...)
 it is easier to use jinja 2 template engine. The good news is that you can easily embed jinja 2 markup in your views
 and it will be rendered automatically.
+
+.. _core-controller-section:
 
 Controller
 ----------
@@ -76,4 +61,5 @@ response:
     * An xml file that must be filled with product data
     * A `vCard <http://en.wikipedia.org/wiki/VCard>`_. export service.
     
-If you want to read a small tutorial and to start coding very fast on Fantastico MVC read :doc:`/how_to/mvc_how_to`.     
+If you want to read a small tutorial and to start coding very fast on Fantastico MVC read :doc:`/how_to/mvc_how_to`. Controller
+API is documented :py:class:`fantastico.mvc.controller_decorator.Controller`.     
