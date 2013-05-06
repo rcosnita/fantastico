@@ -36,6 +36,22 @@ class DummyRouteLoaderIntegration(DevServerIntegration):
                 urllib.request.urlopen(request)
                 
             self.assertEqual(400, cm.exception.code)
-            self.assertEqual("Hello world.", cm.exception.read().decode())
+            self.assertTrue(cm.exception.read().decode().find("Hello world.") > -1)
+            
+        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
+        
+    def test_http_verb_incompatible(self):
+        '''This test case guarantees that a route can not be invoked with the wrong http verb.'''
+        
+        def request_logic(server):
+            request = Request(self._get_server_base_url(server, DummyRouteLoader.DUMMY_ROUTE))
+             
+            data = {"username": "radu"}
+            data = urllib.parse.urlencode(data).encode()
+            
+            with self.assertRaises(HTTPError) as cm:
+                urllib.request.urlopen(request, data)
+            
+            self.assertEqual(500, cm.exception.code)
             
         self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
