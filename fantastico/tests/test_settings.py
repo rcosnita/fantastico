@@ -92,7 +92,6 @@ class TestSettingsFacadeSuite(FantasticoUnitTestsCase):
         expected_root = inspect.getabsfile(BasicSettings).replace(module_name + ".py", "")
         expected_root = expected_root[:-len("fantastico/")]
         
-        (component_folder, root_folder) = self._settings.get_root_folder()
+        root_folder = self._settings.get_root_folder()
         
-        self.assertEqual("fantastico", component_folder)
         self.assertEqual(expected_root, root_folder)
