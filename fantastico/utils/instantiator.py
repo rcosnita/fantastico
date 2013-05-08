@@ -64,3 +64,22 @@ def get_class_abslocation(cls):
     module_name = cls.__module__[cls.__module__.rfind(".") + 1:]
     
     return inspect.getabsfile(cls).replace(module_name + ".py", "")
+
+def get_component_path_data(abspath, cls):
+    '''This method is used to return component folder name and framework root folder starting from an absolute path and a class.'''
+
+    root_folder = get_class_abslocation(cls)[:-1]
+    component_folder = root_folder[root_folder.rfind("/") + 1:]
+    root_folder = root_folder[:-len(component_folder)]
+
+    return (component_folder, root_folder)
+
+def get_path_to_module_fqdn(abspath, settings_facade):
+    '''This method returns the fully qualified module name represented by the given **abspath**.'''
+    
+    root_folder = get_component_path_data(abspath, settings_facade.get_config().__class__)[1] 
+    
+    module_name = abspath.replace(root_folder, "").replace("/", ".")
+    
+    return "%s" % module_name[:module_name.rfind(".")]
+    

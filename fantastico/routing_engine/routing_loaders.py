@@ -27,8 +27,8 @@ class RouteLoader(metaclass=ABCMeta):
     .. code-block:: python
     
         class DummyRouteLoader(RouteLoader):
-            def __init__(self, settings_facade=SettingsFacade):
-                self_settings_facade = settings_facade()
+            def __init__(self, settings_facade):
+                self_settings_facade = settings_facade
                 
             def load_routes(self):
                 return {"/index.html": {"method": "fantastico.plugins.static_assets.StaticAssetsController.resolve_text",
@@ -38,6 +38,10 @@ class RouteLoader(metaclass=ABCMeta):
     '''
 
     def __init__(self, settings_facade):
+        '''
+        :param settings_facade: An active instance of settings facade that can be used for accessing framework settings.
+        :type settings_facade: :py:class:`fantastico.settings.SettingsFacade` 
+        '''
         self._settings_facade = settings_facade
     
     @abstractmethod

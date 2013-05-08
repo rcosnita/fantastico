@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.tests.itest_controller_registrator
 '''
 
+from fantastico import settings
 from fantastico.mvc.controller_registrator import ControllerRouteLoader
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from fantastico.utils import instantiator
@@ -27,9 +28,9 @@ class ControllerRouteLoaderTests(FantasticoIntegrationTestCase):
     
     def init(self):        
         self._settings_facade = Mock()
-        self._settings_facade_cls = Mock(return_value=self._settings_facade)
+        self._settings_facade.get_config = Mock(return_value=settings.BasicSettings())
         
-        self._route_loader = ControllerRouteLoader(settings_facade=self._settings_facade_cls, 
+        self._route_loader = ControllerRouteLoader(settings_facade=self._settings_facade, 
                                                    scanned_folder=instantiator.get_class_abslocation(ControllerRouteLoaderTests))
         
     def test_route_loading_ok(self):
