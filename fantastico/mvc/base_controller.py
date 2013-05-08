@@ -17,11 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.mvc.base_controller
 '''
-from fantastico.settings import SettingsFacade
 
 class BaseController(object):
     '''This class provides common methods useful for every concrete controller. Even if no type checking is done in 
     Fantastico it is recommended that every controller implementation inherits this class.'''
     
-    def __init__(self, settings_facade=SettingsFacade):
-        self._settings_facade = settings_facade()
+    def __init__(self, settings_facade):
+        self._settings_facade = settings_facade

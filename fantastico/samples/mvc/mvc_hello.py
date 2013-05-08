@@ -16,16 +16,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.samples.mvc.mvc_hello
 '''
+from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
-from fantastico.settings import SettingsFacade
 from webob.response import Response
 
 @ControllerProvider()
-class MvcHelloController(object):
+class MvcHelloController(BaseController):
     '''This class provides some simple examples of how to write controllers based on Fantastico mvc.'''
-    
-    def __init__(self, settings_facade=SettingsFacade):
-        self._settings_facade = settings_facade
     
     @Controller(url="/mvc/hello-world", method="GET")
     def say_hello(self, request):
