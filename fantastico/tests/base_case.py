@@ -21,6 +21,7 @@ from fantastico import middleware
 from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.settings import BasicSettings, SettingsFacade
 from fantastico.utils import instantiator
+import inspect
 import os
 import unittest
 
@@ -69,6 +70,16 @@ class FantasticoUnitTestsCase(FantasticoBaseTestCase):
                 
             def test_simple_flow_ok(self):
                 self.assertEqual("Hello world", self._msg)'''
+    
+    def _get_root_folder(self):
+        '''This method determines the root folder under which core is executed.'''
+
+        module_name = BasicSettings.__module__[BasicSettings.__module__.rfind(".") + 1:]
+        
+        expected_root = inspect.getabsfile(BasicSettings).replace(module_name + ".py", "")
+        expected_root = expected_root[:-len("fantastico/")]
+
+        return expected_root
     
 class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each integration test written for fantastico.
