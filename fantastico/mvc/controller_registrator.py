@@ -31,17 +31,8 @@ class ControllerRouteLoader(RouteLoader):
     def __init__(self, settings_facade=SettingsFacade, scanned_folder=None, ignore_prefix=None):
         super(ControllerRouteLoader, self).__init__(settings_facade)
         
-        self._scanned_folder = scanned_folder or instantiator.get_class_abslocation(settings_facade.__class__)
+        self._scanned_folder = scanned_folder or instantiator.get_class_abslocation(self._settings_facade.__class__)
         self._ignore_prefix = ignore_prefix or ["__init__", "__pycache__", "tests", "test", "itest"]
-    
-    def _transform_to_fqdn(self, abspath):
-        '''This method transform an absolute file location to fully qualified name python notation.'''
-        
-        root_folder = instantiator.get_class_abslocation(SettingsFacade)
-        
-        module_name = abspath.replace(root_folder, "").replace("/", ".")
-        
-        return "fantastico.%s" % module_name[:module_name.rfind(".")]
 
     def _is_ignored_file(self, filename):
         '''This method determines if a filename is ignored or not.'''
@@ -67,7 +58,7 @@ class ControllerRouteLoader(RouteLoader):
                 if not filename.endswith(".py"):
                     continue
                 
-                module_name = self._transform_to_fqdn(abspath)
+                module_name = instantiator.get_path_to_module_fqdn(abspath, self._settings_facade)
             
                 importlib.import_module(module_name)
     
