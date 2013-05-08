@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.0.1-b50 documentation</title>
+    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.0.1-b51 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.0.1-b50',
+        VERSION:     '0.0.1-b51',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b50 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b51 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b50 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b51 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -146,10 +146,14 @@
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orig_fn</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method takes care of registering the controller when the class is first loaded by python vm.&#39;&#39;&#39;</span>
         
-        <span class="k">def</span> <span class="nf">new_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">new_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;This method is the one that replaces the original decorated method.&#39;&#39;&#39;</span>
             
-            <span class="k">return</span> <span class="n">orig_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">orig_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="n">new_handler</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="n">new_handler</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__doc__</span>
+        <span class="n">new_handler</span><span class="o">.</span><span class="n">__module</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__module__</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span> <span class="o">=</span> <span class="n">new_handler</span>
         
@@ -179,6 +183,8 @@
                 
         <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span> <span class="o">=</span> <span class="n">cls</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__doc__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__module__</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__module__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span>
         
         <span class="k">def</span> <span class="nf">instantiate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;This method returns a new instance of the decorated class. It passes all arguments to the underlining class</span>
@@ -188,6 +194,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             
             <span class="k">return</span> <span class="n">instance</span>
+        
+        <span class="n">instantiate</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span><span class="o">.</span><span class="n">__init__</span><span class="o">.</span><span class="n">__doc__</span>
         
         <span class="k">return</span> <span class="n">instantiate</span>
 </pre></div>
@@ -220,7 +228,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b50 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b51 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
