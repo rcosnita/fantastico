@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="request_response.html" title="Request lifecycle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b50 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -96,8 +96,8 @@ adding a simple loader in which the business logic is encapsulated allows routin
 <dd><p>This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible
 for implementing its own business logic for loading routes.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DummyRouteLoader</span><span class="p">(</span><span class="n">RouteLoader</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
-        <span class="n">self_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">):</span>
+        <span class="n">self_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span>
         
     <span class="k">def</span> <span class="nf">load_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s">&quot;/index.html&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_text&quot;</span><span class="p">,</span>

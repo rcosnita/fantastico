@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  6 MAY 2013 18:55
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  8 MAY 2013 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 666--666
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 672--672
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x339aea8>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x3e8ae20>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -1410,7 +1410,7 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (30 pages, 267879 bytes).
+Output written on fantastico.pdf (30 pages, 266673 bytes).
 PDF statistics:
  528 PDF objects out of 1000 (max. 8388607)
  472 compressed objects within 5 object streams

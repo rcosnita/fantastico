@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b50 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -62,17 +62,8 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">,</span> <span class="n">scanned_folder</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ignore_prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ControllerRouteLoader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">settings_facade</span><span class="p">)</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">_scanned_folder</span> <span class="o">=</span> <span class="n">scanned_folder</span> <span class="ow">or</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_class_abslocation</span><span class="p">(</span><span class="n">settings_facade</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scanned_folder</span> <span class="o">=</span> <span class="n">scanned_folder</span> <span class="ow">or</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_class_abslocation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ignore_prefix</span> <span class="o">=</span> <span class="n">ignore_prefix</span> <span class="ow">or</span> <span class="p">[</span><span class="s">&quot;__init__&quot;</span><span class="p">,</span> <span class="s">&quot;__pycache__&quot;</span><span class="p">,</span> <span class="s">&quot;tests&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;itest&quot;</span><span class="p">]</span>
-    
-    <span class="k">def</span> <span class="nf">_transform_to_fqdn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">abspath</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;This method transform an absolute file location to fully qualified name python notation.&#39;&#39;&#39;</span>
-        
-        <span class="n">root_folder</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_class_abslocation</span><span class="p">(</span><span class="n">SettingsFacade</span><span class="p">)</span>
-        
-        <span class="n">module_name</span> <span class="o">=</span> <span class="n">abspath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="p">)</span>
-        
-        <span class="k">return</span> <span class="s">&quot;fantastico.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">module_name</span><span class="p">[:</span><span class="n">module_name</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="nf">_is_ignored_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method determines if a filename is ignored or not.&#39;&#39;&#39;</span>
@@ -98,7 +89,7 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.py&quot;</span><span class="p">):</span>
                     <span class="k">continue</span>
                 
-                <span class="n">module_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_to_fqdn</span><span class="p">(</span><span class="n">abspath</span><span class="p">)</span>
+                <span class="n">module_name</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_path_to_module_fqdn</span><span class="p">(</span><span class="n">abspath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="p">)</span>
             
                 <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
     

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.routing_engine.routing_loaders &mdash; fantastico 0.0.1-b49 documentation</title>
+    <title>fantastico.routing_engine.routing_loaders &mdash; fantastico 0.0.1-b50 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.0.1-b49',
+        VERSION:     '0.0.1-b50',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b49 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b50 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b50 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -73,8 +73,8 @@
 <span class="sd">    .. code-block:: python</span>
 <span class="sd">    </span>
 <span class="sd">        class DummyRouteLoader(RouteLoader):</span>
-<span class="sd">            def __init__(self, settings_facade=SettingsFacade):</span>
-<span class="sd">                self_settings_facade = settings_facade()</span>
+<span class="sd">            def __init__(self, settings_facade):</span>
+<span class="sd">                self_settings_facade = settings_facade</span>
 <span class="sd">                </span>
 <span class="sd">            def load_routes(self):</span>
 <span class="sd">                return {&quot;/index.html&quot;: {&quot;method&quot;: &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_text&quot;,</span>
@@ -84,6 +84,10 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param settings_facade: An active instance of settings facade that can be used for accessing framework settings.</span>
+<span class="sd">        :type settings_facade: :py:class:`fantastico.settings.SettingsFacade` </span>
+<span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span>
     
     <span class="nd">@abstractmethod</span>
@@ -120,7 +124,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b49 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b50 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
