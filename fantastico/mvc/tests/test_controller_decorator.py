@@ -41,7 +41,7 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         self.assertEqual("fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.say_hello",
                          hello_route.fn_handler.full_name)
         
-        response = hello_route.fn_handler(RoutesForControllerTesting(), Mock())
+        response = hello_route.fn_handler(RoutesForControllerTesting(settings_facade=Mock()), Mock())
         self.assertIsInstance(response, Response)
         self.assertEqual(b"Hello world.", response.body)
         
@@ -62,6 +62,6 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         self.assertEqual("fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.upload_file",
                          upload_file.fn_handler.full_name)
         
-        response = upload_file.fn_handler(RoutesForControllerTesting(), Mock())
+        response = upload_file.fn_handler(RoutesForControllerTesting(settings_facade=Mock()), Mock())
         self.assertIsInstance(response, Response)
         self.assertEqual(b"Hello world.", response.body)
