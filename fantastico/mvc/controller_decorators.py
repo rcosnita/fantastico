@@ -100,10 +100,14 @@ class Controller(object):
     def __call__(self, orig_fn):
         '''This method takes care of registering the controller when the class is first loaded by python vm.'''
         
-        def new_handler(*args):
+        def new_handler(*args, **kwargs):
             '''This method is the one that replaces the original decorated method.'''
             
-            return orig_fn(*args)
+            return orig_fn(*args, **kwargs)
+        
+        new_handler.__name__ = orig_fn.__name__
+        new_handler.__doc__ = orig_fn.__doc__
+        new_handler.__module = orig_fn.__module__
         
         self._fn_handler = new_handler
         
@@ -133,6 +137,8 @@ class ControllerProvider(object):
                 
         self._decorated_cls = cls
         self.__doc__ = cls.__doc__
+        self.__module__ = cls.__module__
+        self.__name__ = cls.__name__
         
         def instantiate(*args, **kwargs):
             '''This method returns a new instance of the decorated class. It passes all arguments to the underlining class
@@ -142,5 +148,7 @@ class ControllerProvider(object):
             self._decorated_cls.__init__(instance, *args, **kwargs)
             
             return instance
+        
+        instantiate.__doc__ = self._decorated_cls.__init__.__doc__
         
         return instantiate
