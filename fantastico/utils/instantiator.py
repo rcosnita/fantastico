@@ -82,4 +82,3 @@ def get_path_to_module_fqdn(abspath, settings_facade):
     module_name = abspath.replace(root_folder, "").replace("/", ".")
     
     return "%s" % module_name[:module_name.rfind(".")]
-    
