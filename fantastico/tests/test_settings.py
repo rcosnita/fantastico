@@ -22,7 +22,6 @@ from fantastico.exceptions import FantasticoClassNotFoundError, \
     FantasticoSettingNotFoundError
 from fantastico.settings import SettingsFacade, BasicSettings
 from fantastico.tests.base_case import FantasticoUnitTestsCase
-from fantastico.utils import instantiator
 import inspect
 
 class SampleSettings(BasicSettings):
@@ -87,11 +86,8 @@ class TestSettingsFacadeSuite(FantasticoUnitTestsCase):
         
         self._environ["FANTASTICO_ACTIVE_CONFIG"] = "fantastico.settings.BasicSettings"
         
-        module_name = BasicSettings.__module__[BasicSettings.__module__.rfind(".") + 1:]
-    
-        expected_root = inspect.getabsfile(BasicSettings).replace(module_name + ".py", "")
-        expected_root = expected_root[:-len("fantastico/")]
-        
+        expected_root = self._get_root_folder()
+                
         root_folder = self._settings.get_root_folder()
         
         self.assertEqual(expected_root, root_folder)
