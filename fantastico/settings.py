@@ -114,4 +114,12 @@ class SettingsFacade(object):
         
         active_config = self._environ.get(self.__ENV_ACTIVE_CONFIG) or "fantastico.settings.BasicSettings"
         
-        return instantiator.instantiate_class(active_config)
+        self._cached_config = self._cached_config or instantiator.instantiate_class(active_config) 
+        
+        return self._cached_config
+    
+    def get_root_folder(self):
+        '''Method used to return the root folder of the current fantastico project (detected starting from settings)
+        profile used.'''
+        
+        return instantiator.get_component_path_data(self.get_config().__class__)
