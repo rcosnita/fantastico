@@ -137,8 +137,6 @@ class ControllerProvider(object):
                 
         self._decorated_cls = cls
         self.__doc__ = cls.__doc__
-        self.__module__ = cls.__module__
-        self.__name__ = cls.__name__
         
         def instantiate(*args, **kwargs):
             '''This method returns a new instance of the decorated class. It passes all arguments to the underlining class
