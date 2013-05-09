@@ -26,6 +26,10 @@ from urllib.error import HTTPError
 class ControllerDecoratorIntegration(DevServerIntegration):
     '''This class provides the test cases that ensures controller decorator works as expected into integration environment.'''
     
+    def init(self):
+        self._response = None
+        self._exception = None
+        
     def test_route_registration(self):
         '''This test case ensures routes are registered correctly by Controller decorator.'''
         
@@ -37,11 +41,16 @@ class ControllerDecoratorIntegration(DevServerIntegration):
         
             with self.assertRaises(HTTPError) as cm:
                 urllib.request.urlopen(request)
-                
-                self.assertTrue(cm.exception.read().decode().find("Hello world.") > -1)
-                self.assertEqual(content_type, cm.exception.info()["Content-Type"])
-        
-        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
+            
+            self._exception = cm.exception
+            
+        def assert_logic(server):
+            content_type = "application/html; charset=UTF-8"
+            
+            self.assertTrue(self._exception.read().decode().find("Hello world.") > -1)
+            self.assertEqual(content_type, self._exception.info()["Content-Type"])
+
+        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))
         
     def test_mvc_sample_hello_ok(self):
         '''This test case does an http request against mvc hello world controller. It proves that registration of routes
@@ -53,9 +62,13 @@ class ControllerDecoratorIntegration(DevServerIntegration):
             request = Request(self._get_server_base_url(server, "/mvc/hello-world"))
             request.headers["Content-Type"] = content_type 
             
-            response = urllib.request.urlopen(request)
+            self._response = urllib.request.urlopen(request)
+        
+        def assert_logic(server):
+            content_type = "text/html; charset=UTF-8"
             
-            self.assertTrue(response.read().decode().find("Hello world.") > -1)
-            self.assertEqual(content_type, response.info()["Content-Type"])
+            self.assertTrue(200, self._response.getcode())
+            self.assertTrue(self._response.read().decode().find("Hello world.") > -1)
+            self.assertEqual(content_type, self._response.info()["Content-Type"])            
             
-        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
+        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))
