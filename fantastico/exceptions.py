@@ -66,3 +66,6 @@ class FantasticoHttpVerbNotSupported(FantasticoError):
         super(FantasticoHttpVerbNotSupported, self).__init__()
         
         self._http_verb = http_verb
+        
+class FantasticoTemplateNotFoundError(FantasticoError):
+    '''This exception is usually thrown when a controller tries to load a template which it does not found.'''
