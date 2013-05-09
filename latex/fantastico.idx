@@ -4,19 +4,23 @@
 \indexentry{installed\_middleware (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{routes\_loaders (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{supported\_languages (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
+\indexentry{templates\_config (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{5}
 \indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
 \indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
+\indexentry{get\_root\_folder() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
 \indexentry{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)|hyperpage}{6}
-\indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{6}
+\indexentry{\_get\_class\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{6}
+\indexentry{\_get\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{6}
+\indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{7}
 \indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{7}
 \indexentry{\_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server)|hyperpage}{7}
 \indexentry{\_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{7}
-\indexentry{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{7}
-\indexentry{\_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{7}
+\indexentry{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
+\indexentry{\_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
 \indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{8}
 \indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{8}
 \indexentry{started (fantastico.server.dev\_server.DevServer attribute)|hyperpage}{8}
@@ -31,6 +35,7 @@
 \indexentry{FantasticoContentTypeError (class in fantastico.exceptions)|hyperpage}{10}
 \indexentry{FantasticoHttpVerbNotSupported (class in fantastico.exceptions)|hyperpage}{10}
 \indexentry{http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute)|hyperpage}{10}
+\indexentry{FantasticoTemplateNotFoundError (class in fantastico.exceptions)|hyperpage}{10}
 \indexentry{RequestMiddleware (class in fantastico.middleware.request\_middleware)|hyperpage}{11}
 \indexentry{RequestContext (class in fantastico.middleware.request\_context)|hyperpage}{11}
 \indexentry{language (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{11}
@@ -55,3 +60,5 @@
 \indexentry{ControllerRouteLoader (class in fantastico.mvc.controller\_registrator)|hyperpage}{17}
 \indexentry{load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method)|hyperpage}{17}
 \indexentry{BaseController (class in fantastico.mvc.base\_controller)|hyperpage}{17}
+\indexentry{get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{17}
+\indexentry{load\_template() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{17}

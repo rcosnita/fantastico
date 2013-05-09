@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b52 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b53 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -52,6 +52,7 @@
 <span class="kn">from</span> <span class="nn">fantastico.middleware.fantastico_app</span> <span class="kn">import</span> <span class="n">FantasticoApp</span>
 <span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span><span class="p">,</span> <span class="n">SettingsFacade</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 
@@ -100,7 +101,17 @@
 <span class="sd">                </span>
 <span class="sd">            def test_simple_flow_ok(self):</span>
 <span class="sd">                self.assertEqual(&quot;Hello world&quot;, self._msg)&#39;&#39;&#39;</span>
+    
+<div class="viewcode-block" id="FantasticoUnitTestsCase._get_root_folder"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase._get_root_folder">[docs]</a>    <span class="k">def</span> <span class="nf">_get_root_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method determines the root folder under which core is executed.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     </div>
+<div class="viewcode-block" id="FantasticoUnitTestsCase._get_class_root_folder"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase._get_class_root_folder">[docs]</a>    <span class="k">def</span> <span class="nf">_get_class_root_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This methods determines the root folder under which the test is executed.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    </div></div>
 <div class="viewcode-block" id="FantasticoIntegrationTestCase"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase">[docs]</a><span class="k">class</span> <span class="nc">FantasticoIntegrationTestCase</span><span class="p">(</span><span class="n">FantasticoBaseTestCase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each integration test written for fantastico.</span>
 

@@ -5,12 +5,16 @@
   \item \_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method), 
 		\hyperpage{7}
   \item \_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), \hyperpage{7}
+  \item \_get\_class\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method), 
+		\hyperpage{6}
+  \item \_get\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method), 
+		\hyperpage{6}
   \item \_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method), 
-		\hyperpage{7}
+		\hyperpage{8}
   \item \_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method), 
 		\hyperpage{7}
   \item \_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method), 
-		\hyperpage{7}
+		\hyperpage{8}
   \item \_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method), 
 		\hyperpage{7}
   \item \_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method), 
@@ -44,21 +48,25 @@
   \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoHttpVerbNotSupported (class in fantastico.exceptions), \hyperpage{10}
-  \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{6}
+  \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{7}
   \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{10}
   \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{9}
   \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{9}
+  \item FantasticoTemplateNotFoundError (class in fantastico.exceptions), \hyperpage{10}
   \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{6}
   \item fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{16}
 
   \indexspace
   \bigletter G
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
+  \item get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method), 
+		\hyperpage{17}
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{12}
   \item get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method), 
 		\hyperpage{16}
+  \item get\_root\_folder() (fantastico.settings.SettingsFacade method), \hyperpage{5}
 
   \indexspace
   \bigletter H
@@ -77,6 +85,7 @@
 		\hyperpage{17}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
 		\hyperpage{13}
+  \item load\_template() (fantastico.mvc.base\_controller.BaseController method), \hyperpage{17}
 
   \indexspace
   \bigletter M
@@ -101,6 +110,10 @@
   \item started (fantastico.server.dev\_server.DevServer attribute), \hyperpage{8}
   \item stop() (fantastico.server.dev\_server.DevServer method), \hyperpage{8}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{4}
+
+  \indexspace
+  \bigletter T
+  \item templates\_config (fantastico.settings.BasicSettings attribute), \hyperpage{4}
 
   \indexspace
   \bigletter U

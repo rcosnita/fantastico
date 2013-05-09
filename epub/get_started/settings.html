@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b52 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b53 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -91,6 +91,13 @@ for the attributes you want to overwrite.</p>
 <dt id="fantastico.settings.BasicSettings.supported_languages">
 <tt class="descname">supported_languages</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.supported_languages"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Property that holds all supported languages by this fantastico instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.templates_config">
+<tt class="descname">templates_config</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.templates_config"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property holds configuration of templates rendering engine. For the moment this influence how 
+<a class="reference external" href="http://jinja.pocoo.org/docs/">Jinja2</a><span class="link-target"> [http://jinja.pocoo.org/docs/]</span> acts.</p>
 </dd></dl>
 
 </dd></dl>
@@ -164,6 +171,13 @@ You can do the same for <strong>Stage</strong>, <strong>Prod</strong> or any oth
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.settings.SettingsFacade.get_root_folder">
+<tt class="descname">get_root_folder</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/settings.html#SettingsFacade.get_root_folder"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Method used to return the root folder of the current fantastico project (detected starting from settings)
+profile used.</p>
 </dd></dl>
 
 </dd></dl>

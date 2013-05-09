@@ -11,11 +11,11 @@
 \contentsline {subsection}{\numberline {2.2.1}Settings API}{4}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Create Dev configuration}{5}{subsection.2.2.2}
 \contentsline {subsection}{\numberline {2.2.3}Using a specifc configuration}{5}{subsection.2.2.3}
-\contentsline {section}{\numberline {2.3}Contribute}{5}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Code contribution}{5}{subsection.2.3.1}
-\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.12}
-\contentsline {subsubsection}{Writing integration tests}{6}{subsubsection*.14}
-\contentsline {section}{\numberline {2.4}Development mode}{7}{section.2.4}
+\contentsline {section}{\numberline {2.3}Contribute}{6}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Code contribution}{6}{subsection.2.3.1}
+\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.14}
+\contentsline {subsubsection}{Writing integration tests}{7}{subsubsection*.18}
+\contentsline {section}{\numberline {2.4}Development mode}{8}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}Hot deploy}{8}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}API}{8}{subsection.2.4.2}
 \contentsline {chapter}{\numberline {3}Fantastico features}{9}{chapter.3}
@@ -45,4 +45,4 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{20}{subsection.4.1.4}
 \contentsline {chapter}{\numberline {5}Build status}{21}{chapter.5}
 \contentsline {chapter}{\numberline {6}License}{23}{chapter.6}
-\contentsline {chapter}{Index}{25}{section*.62}
+\contentsline {chapter}{Index}{25}{section*.69}

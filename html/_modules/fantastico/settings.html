@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.settings &mdash; fantastico 0.0.1-b52 documentation</title>
+    <title>fantastico.settings &mdash; fantastico 0.0.1-b53 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.0.1-b52',
+        VERSION:     '0.0.1-b53',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b52 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b53 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b52 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b53 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -110,6 +110,21 @@
         <span class="sd">&#39;&#39;&#39;This property holds development server hostname. By default this is localhost.&#39;&#39;&#39;</span>
         
         <span class="k">return</span> <span class="s">&quot;localhost&quot;</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.templates_config"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.templates_config">[docs]</a>    <span class="k">def</span> <span class="nf">templates_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds configuration of templates rendering engine. For the moment this influence how </span>
+<span class="sd">        `Jinja2 &lt;http://jinja.pocoo.org/docs/&gt;`_ acts.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;block_start_string&quot;</span><span class="p">:</span> <span class="s">&quot;{%&quot;</span><span class="p">,</span>
+                <span class="s">&quot;block_end_string&quot;</span><span class="p">:</span> <span class="s">&quot;%}&quot;</span><span class="p">,</span>
+                <span class="s">&quot;variable_start_string&quot;</span><span class="p">:</span> <span class="s">&quot;{{&quot;</span><span class="p">,</span>
+                <span class="s">&quot;variable_end_string&quot;</span><span class="p">:</span> <span class="s">&quot;}}&quot;</span><span class="p">,</span>
+                <span class="s">&quot;comment_start_string&quot;</span><span class="p">:</span> <span class="s">&quot;{#&quot;</span><span class="p">,</span>
+                <span class="s">&quot;comment_end_string&quot;</span><span class="p">:</span> <span class="s">&quot;#}&quot;</span><span class="p">,</span>
+                <span class="s">&quot;trim_blocks&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s">&quot;optimized&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s">&quot;auto_reload&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
         </div></div>
 <div class="viewcode-block" id="SettingsFacade"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade">[docs]</a><span class="k">class</span> <span class="nc">SettingsFacade</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;For using a specific fantastico configuration you need to do two simple steps:</span>
@@ -160,7 +175,15 @@
         
         <span class="n">active_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ENV_ACTIVE_CONFIG</span><span class="p">)</span> <span class="ow">or</span> <span class="s">&quot;fantastico.settings.BasicSettings&quot;</span>
         
-        <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">instantiate_class</span><span class="p">(</span><span class="n">active_config</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="ow">or</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">instantiate_class</span><span class="p">(</span><span class="n">active_config</span><span class="p">)</span> 
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span>
+    </div>
+<div class="viewcode-block" id="SettingsFacade.get_root_folder"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade.get_root_folder">[docs]</a>    <span class="k">def</span> <span class="nf">get_root_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Method used to return the root folder of the current fantastico project (detected starting from settings)</span>
+<span class="sd">        profile used.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">__class__</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div></div>
 </pre></div>
 
           </div>
@@ -191,7 +214,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b52 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b53 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{May 08, 2013}
-\release{0.0.1-b52}
+\date{May 09, 2013}
+\release{0.0.1-b53}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -340,6 +340,15 @@ Property that holds all supported languages by this fantastico instance.
 
 \end{fulllineitems}
 
+\index{templates\_config (fantastico.settings.BasicSettings attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.templates_config}\pysigline{\bfcode{templates\_config}}
+This property holds configuration of templates rendering engine. For the moment this influence how 
+\href{http://jinja.pocoo.org/docs/}{Jinja2} acts.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -420,6 +429,15 @@ Method used to return the active configuration which is used by this facade.
 Active configuration currently used.
 
 \end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{get\_root\_folder() (fantastico.settings.SettingsFacade method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.SettingsFacade.get_root_folder}\pysiglinewithargsret{\bfcode{get\_root\_folder}}{}{}
+Method used to return the root folder of the current fantastico project (detected starting from settings)
+profile used.
 
 \end{fulllineitems}
 
@@ -506,6 +524,22 @@ This is the base class that must be inherited by each unit test written for fant
     \PYG{k}{def} \PYG{n+nf}{test\PYGZus{}simple\PYGZus{}flow\PYGZus{}ok}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}msg}\PYG{p}{)}
 \end{Verbatim}
+\index{\_get\_class\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoUnitTestsCase._get_class_root_folder}\pysiglinewithargsret{\bfcode{\_get\_class\_root\_folder}}{}{}
+This methods determines the root folder under which the test is executed.
+
+\end{fulllineitems}
+
+\index{\_get\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoUnitTestsCase._get_root_folder}\pysiglinewithargsret{\bfcode{\_get\_root\_folder}}{}{}
+This method determines the root folder under which core is executed.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -669,7 +703,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x3a73d98\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x35c87c0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -785,6 +819,14 @@ This property returns the http verb that caused the problems.
 
 \end{fulllineitems}
 
+
+\end{fulllineitems}
+
+\index{FantasticoTemplateNotFoundError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoTemplateNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoTemplateNotFoundError}}
+This exception is usually thrown when a controller tries to load a template which it does not found.
 
 \end{fulllineitems}
 
@@ -1302,6 +1344,32 @@ This method is used for loading all routes that are mapped through
 \phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.base\_controller.}\bfcode{BaseController}}{\emph{settings\_facade}}{}
 This class provides common methods useful for every concrete controller. Even if no type checking is done in 
 Fantastico it is recommended that every controller implementation inherits this class.
+\index{get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.get_component_folder}\pysiglinewithargsret{\bfcode{get\_component\_folder}}{}{}
+This method is used to retrieve the component folder name under which this controller is defined.
+
+\end{fulllineitems}
+
+\index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1854408\textgreater{}}}{}
+This method is responsible for loading a template from disk and render it using the given model data.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{TestController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/simple/test/hello}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{say\PYGZus{}hello}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/hello.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+        
+\PYG{n}{The} \PYG{n}{above} \PYG{n}{snippet} \PYG{n}{will} \PYG{n}{search} \PYG{k}{for} \PYG{o}{*}\PYG{o}{*}\PYG{n}{hello}\PYG{o}{.}\PYG{n}{html}\PYG{o}{*}\PYG{o}{*} \PYG{n}{into} \PYG{n}{component} \PYG{n}{folder}\PYG{o}{/}\PYG{n}{views}\PYG{o}{/}\PYG{o}{.}
+\end{Verbatim}
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
