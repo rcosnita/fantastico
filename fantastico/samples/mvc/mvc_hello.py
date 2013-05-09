@@ -28,8 +28,8 @@ class MvcHelloController(BaseController):
     def say_hello(self, request):
         '''This method simple say hello world and wrap it into compatible response.'''
         
-        response = Response(content_type=request.content_type)
+        tpl = self.load_template(tpl_name="/say_hello.html", model_data={"hello_msg": "Hello world. It works like a charm."})
         
-        response.text = "<h1>Hello world. It works like a charm.</h1>"
+        response = Response(tpl.encode(), content_type=request.content_type)
         
         return response
