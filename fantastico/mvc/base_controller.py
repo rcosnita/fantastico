@@ -37,7 +37,7 @@ class BaseController(object):
         views_folder = ("%s%s/views/" % (self._settings_facade.get_root_folder(), self.get_component_folder()))
         
         self._tpl_loader = FileSystemLoader(searchpath=views_folder)
-        self._tpl_env = Environment(loader=self._tpl_loader)
+        self._tpl_env = Environment(loader=self._tpl_loader, **self._settings_facade.get("templates_config"))
     
     def get_component_folder(self):
         '''This method is used to retrieve the component folder name under which this controller is defined.'''
@@ -65,4 +65,4 @@ class BaseController(object):
         
         model_data = model_data or {}
         
-        return self._tpl_env.get_template(tpl_name, model_data) 
+        return self._tpl_env.get_template(tpl_name, model_data)
