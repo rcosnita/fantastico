@@ -64,6 +64,21 @@ class BasicSettings(object):
         '''This property holds development server hostname. By default this is localhost.'''
         
         return "localhost"
+    
+    @property
+    def templates_config(self):
+        '''This property holds configuration of templates rendering engine. For the moment this influence how 
+        `Jinja2 <http://jinja.pocoo.org/docs/>`_ acts.'''
+        
+        return {"block_start_string": "{%",
+                "block_end_string": "%}",
+                "variable_start_string": "{{",
+                "variable_end_string": "}}",
+                "comment_start_string": "{#",
+                "comment_end_string": "#}",
+                "trim_blocks": True,
+                "optimized": False,
+                "auto_reload": True}
         
 class SettingsFacade(object):
     '''For using a specific fantastico configuration you need to do two simple steps:

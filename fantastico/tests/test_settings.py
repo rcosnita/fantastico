@@ -22,7 +22,6 @@ from fantastico.exceptions import FantasticoClassNotFoundError, \
     FantasticoSettingNotFoundError
 from fantastico.settings import SettingsFacade, BasicSettings
 from fantastico.tests.base_case import FantasticoUnitTestsCase
-import inspect
 
 class SampleSettings(BasicSettings):
     '''Just a simple settings implementation for testing purposes.'''
