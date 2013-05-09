@@ -27,3 +27,6 @@ Exceptions hierarchy
 
 .. autoclass:: fantastico.exceptions.FantasticoHttpVerbNotSupported
    :members:  
+
+.. autoclass:: fantastico.exceptions.FantasticoTemplateNotFoundError
+   :members:     
