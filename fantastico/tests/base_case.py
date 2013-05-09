@@ -74,12 +74,12 @@ class FantasticoUnitTestsCase(FantasticoBaseTestCase):
     def _get_root_folder(self):
         '''This method determines the root folder under which core is executed.'''
 
-        module_name = BasicSettings.__module__[BasicSettings.__module__.rfind(".") + 1:]
+        return instantiator.get_component_path_data(BasicSettings)[1]
+    
+    def _get_class_root_folder(self):
+        '''This methods determines the root folder under which the test is executed.'''
         
-        expected_root = inspect.getabsfile(BasicSettings).replace(module_name + ".py", "")
-        expected_root = expected_root[:-len("fantastico/")]
-
-        return expected_root
+        return instantiator.get_component_path_data(self.__class__)[1]
     
 class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each integration test written for fantastico.
