@@ -65,22 +65,18 @@ def get_class_abslocation(cls):
     
     return inspect.getabsfile(cls).replace(module_name + ".py", "")
 
-def get_component_path_data(cls, root_folder=None):
+def get_component_path_data(cls, root_folder_ref=None):
     '''This method is used to return component folder name and framework root folder starting from a class.'''
     
-    root_determined = False
-    root_no_trailslash = None
-
-    if not root_folder:
-        root_determined = True
-        root_no_trailslash = root_folder = get_class_abslocation(cls)[:-1]
-    else:
-        root_no_trailslash = root_folder[:-1]
-        
-    component_folder = root_no_trailslash[root_no_trailslash.rfind("/") + 1:]
-    
-    if root_determined:
+    root_folder = root_folder_ref
+    cls_folder = get_class_abslocation(cls)[:-1]
+   
+    if not root_folder_ref:
+        root_folder = cls_folder
+        component_folder = root_folder[root_folder.rfind("/") + 1:]
         root_folder = root_folder[:-len(component_folder)]
+    else:
+        component_folder = cls_folder[len(root_folder_ref):]
 
     return (component_folder, root_folder)
 
