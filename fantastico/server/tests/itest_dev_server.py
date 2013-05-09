@@ -27,19 +27,22 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
     .. code-block:: python
     
         class DummyLoaderIntegration(DevServerIntegration):
+            def init(self):
+                self._exception = None
+        
             def test_server_runs_ok(self):
                 def request_logic(server):
                     request = Request(self._get_server_base_url(server, DummyRouteLoader.DUMMY_ROUTE)) 
                     with self.assertRaises(HTTPError) as cm:
                         urllib.request.urlopen(request)
                         
-                    self.assertEqual(400, cm.exception.code)
-                    self.assertEqual("Hello world.", cm.exception.read().decode())
+                    self._exception = cm.exception
                     
                 def assert_logic(server):
-                    self._check_server_started(server)
+                    self.assertEqual(400, self._exception.code)
+                    self.assertEqual("Hello world.", self._exception.read().decode())                    
                     
-                self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
+                self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))
                 
             self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
             
@@ -79,7 +82,8 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
         
         if assert_logic is None:
             assert_logic = self._check_server_started
-
+            
+        self._check_server_started(server)
         assert_logic(server)
     
     def _check_server_started(self, server):
