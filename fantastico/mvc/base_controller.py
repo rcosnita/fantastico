@@ -17,9 +17,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.mvc.base_controller
 '''
+from fantastico.exceptions import FantasticoTemplateNotFoundError
 from fantastico.utils import instantiator
-from jinja2.loaders import FileSystemLoader
 from jinja2.environment import Environment
+from jinja2.exceptions import TemplateNotFound
+from jinja2.loaders import FileSystemLoader
 
 class BaseController(object):
     '''This class provides common methods useful for every concrete controller. Even if no type checking is done in 
@@ -65,4 +67,7 @@ class BaseController(object):
         
         model_data = model_data or {}
         
-        return self._tpl_env.get_template(tpl_name, model_data)
+        try:
+            return self._tpl_env.get_template(tpl_name, model_data)
+        except TemplateNotFound as ex:
+            raise FantasticoTemplateNotFoundError(ex)
