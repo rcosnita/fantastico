@@ -23,7 +23,6 @@ from fantastico.utils import instantiator
 from jinja2.environment import Environment
 from jinja2.exceptions import TemplateNotFound
 from jinja2.loaders import FileSystemLoader
-import jinja2
 
 class BaseController(object):
     '''This class provides common methods useful for every concrete controller. Even if no type checking is done in 
@@ -61,7 +60,7 @@ class BaseController(object):
                 def say_hello(self, request):
                     return Response(self.load_template("/hello.html"))
                     
-            The above snippet will search for **hello.html** into component folder/views/.
+        The above snippet will search for **hello.html** into component folder/views/.
         '''
         
         if self._tpl_env is None:
