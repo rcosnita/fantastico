@@ -3,7 +3,7 @@
 
   \bigletter {Symbols}
   \item \_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method), 
-		\hyperpage{7}
+		\hyperpage{8}
   \item \_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), \hyperpage{7}
   \item \_get\_class\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method), 
 		\hyperpage{6}

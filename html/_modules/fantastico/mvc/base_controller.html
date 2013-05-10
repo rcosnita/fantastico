@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.mvc.base_controller &mdash; fantastico 0.0.1-b53 documentation</title>
+    <title>fantastico.mvc.base_controller &mdash; fantastico 0.0.1-b54 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.0.1-b53',
+        VERSION:     '0.0.1-b54',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b53 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b54 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b53 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b54 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -69,7 +69,6 @@
 <span class="kn">from</span> <span class="nn">jinja2.environment</span> <span class="kn">import</span> <span class="n">Environment</span>
 <span class="kn">from</span> <span class="nn">jinja2.exceptions</span> <span class="kn">import</span> <span class="n">TemplateNotFound</span>
 <span class="kn">from</span> <span class="nn">jinja2.loaders</span> <span class="kn">import</span> <span class="n">FileSystemLoader</span>
-<span class="kn">import</span> <span class="nn">jinja2</span>
 
 <div class="viewcode-block" id="BaseController"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController">[docs]</a><span class="k">class</span> <span class="nc">BaseController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides common methods useful for every concrete controller. Even if no type checking is done in </span>
@@ -107,7 +106,7 @@
 <span class="sd">                def say_hello(self, request):</span>
 <span class="sd">                    return Response(self.load_template(&quot;/hello.html&quot;))</span>
 <span class="sd">                    </span>
-<span class="sd">            The above snippet will search for **hello.html** into component folder/views/.</span>
+<span class="sd">        The above snippet will search for **hello.html** into component folder/views/.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -151,7 +150,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b53 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b54 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

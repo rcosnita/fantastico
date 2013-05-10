@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="settings.html" title="Fantastico settings"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b53 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b54 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -156,19 +156,22 @@ avoid boiler plate code duplication and executing test logic against all environ
 <em class="property">class </em><tt class="descclassname">fantastico.server.tests.itest_dev_server.</tt><tt class="descname">DevServerIntegration</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/tests/itest_dev_server.html#DevServerIntegration"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This class provides the foundation for writing integration tests that do http requests against a fantastico server.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DummyLoaderIntegration</span><span class="p">(</span><span class="n">DevServerIntegration</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span> <span class="o">=</span> <span class="bp">None</span>
+
     <span class="k">def</span> <span class="nf">test_server_runs_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">request_logic</span><span class="p">(</span><span class="n">server</span><span class="p">):</span>
             <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_server_base_url</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">))</span> 
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">HTTPError</span><span class="p">)</span> <span class="k">as</span> <span class="n">cm</span><span class="p">:</span>
                 <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
                 
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="n">cm</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;Hello world.&quot;</span><span class="p">,</span> <span class="n">cm</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">exception</span>
             
         <span class="k">def</span> <span class="nf">assert_logic</span><span class="p">(</span><span class="n">server</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_check_server_started</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;Hello world.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>                    
             
-        <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="k">lambda</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_against_dev_server</span><span class="p">(</span><span class="n">request_logic</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="k">lambda</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_against_dev_server</span><span class="p">(</span><span class="n">request_logic</span><span class="p">,</span> <span class="n">assert_logic</span><span class="p">))</span>
         
     <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="k">lambda</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_against_dev_server</span><span class="p">(</span><span class="n">request_logic</span><span class="p">))</span>
 </pre></div>
