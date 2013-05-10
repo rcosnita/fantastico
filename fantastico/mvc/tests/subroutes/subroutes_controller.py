@@ -18,14 +18,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
-from webob.response import Response
 
 @ControllerProvider()
 class SubroutesController(BaseController):
     @Controller(url="/route_from_subfolder", method="GET")
     def handle_route(self, request):
-        response = Response(content_type=request.content_type)
-        
-        response.text = "Subfolder route."
-        
-        return response
+        pass

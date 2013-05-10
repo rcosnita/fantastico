@@ -19,11 +19,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from fantastico import settings
 from fantastico.mvc.controller_registrator import ControllerRouteLoader
-from fantastico.tests.base_case import FantasticoIntegrationTestCase
+from fantastico.tests.base_case import FantasticoUnitTestsCase
 from fantastico.utils import instantiator
 from mock import Mock
 
-class ControllerRouteLoaderTests(FantasticoIntegrationTestCase):
+class ControllerRouteLoaderTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for ensuring routes are correctly registered using Controller decorator.'''
     
     def init(self):        
@@ -48,7 +48,8 @@ class ControllerRouteLoaderTests(FantasticoIntegrationTestCase):
         self.assertEqual("fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.upload_file",
                          routes.get("/upload_file")["method"])
         self.assertEqual(["POST"], routes.get("/upload_file")["http_verbs"])
-        
+
         self.assertEqual("fantastico.mvc.tests.subroutes.subroutes_controller.SubroutesController.handle_route",
                          routes.get("/route_from_subfolder")["method"])
         self.assertEqual(["GET"], routes.get("/route_from_subfolder")["http_verbs"])
+        
