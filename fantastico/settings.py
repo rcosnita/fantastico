@@ -80,6 +80,33 @@ class BasicSettings(object):
                 "optimized": False,
                 "auto_reload": True}
         
+    @property
+    def database_config(self):
+        '''This property holds the configuration of database. It is recommended to have all environment configured the same.
+        An exception can be done for host but the rest must remain the same. Below you can find an example of functional
+        configuration:
+        
+        .. code-block:: python
+        
+            config = {"drivername": "mysql+mysqldb",
+                        "username": "fantastico",
+                        "password": "12345",
+                        "port": 3306,
+                        "host": "localhost",
+                        "database": "fantastico",
+                        "additional_params": {"charset": "utf8"}}
+                        
+        As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
+        '''
+        
+        return {"drivername": "mysql+mysqldb",
+                "username": "fantastico",
+                "password": "12345",
+                "port": 3306,
+                "host": "localhost",
+                "database": "fantastico",
+                "additional_params": {"charset": "utf8"}}
+        
 class SettingsFacade(object):
     '''For using a specific fantastico configuration you need to do two simple steps:
 

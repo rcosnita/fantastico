@@ -66,3 +66,24 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
             self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
         
         self._run_test_all_envs(exec_test)
+        
+    def test_database_config_ok(self):
+        '''This test case ensures we have a database configured for fantastico framework.'''
+        
+        def exec_test(env, settings_cls):
+            expected_config = {"drivername": "mysql+mysqldb",
+                               "username": "fantastico",
+                               "password": "12345",
+                               "port": 3306,
+                               "database": "fantastico"}
+            
+            config = self._settings_facade.get("database_config")
+            
+            self.assertEqual(expected_config["drivername"], config["drivername"])
+            self.assertEqual(expected_config["username"], config["username"])
+            self.assertEqual(expected_config["password"], config["password"])
+            self.assertEqual(expected_config["port"], config["port"])
+            self.assertEqual(expected_config["database"], config["database"])
+            self.assertEqual("utf8", config["additional_params"]["charset"])
+            
+        self._run_test_all_envs(exec_test)
