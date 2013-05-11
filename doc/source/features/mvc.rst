@@ -35,7 +35,7 @@ Model
 A model is a very simple object that inherits :py:class:`fantastico.mvc.models.BaseModel`.
 
 In order for models to work correctly and to be injected correctly into controller you must make sure you have
-a valid database configuration in your settings file. By default, :py:class:`fantastico.settings.BasicSetings` provides a usable
+a valid database configuration in your settings file. By default, :py:class:`fantastico.settings.BasicSettings` provides a usable
 database configuration.
 
 .. code-block:: python
