@@ -23,4 +23,6 @@ from fantastico.mvc.controller_decorators import Controller, ControllerProvider
 class SubroutesController(BaseController):
     @Controller(url="/route_from_subfolder", method="GET")
     def handle_route(self, request):
-        pass
+        '''This method tries to load a template which does not exist in this controller scope.'''
+        
+        self.load_template("404_super_not_found_template.html")
