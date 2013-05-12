@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b55 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b57 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -122,6 +122,22 @@ retrieved.</p>
 <div class="section" id="model">
 <h2>Model</h2>
 <p>A model is a very simple object that inherits <tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.BaseModel</span></tt>.</p>
+<p>In order for models to work correctly and to be injected correctly into controller you must make sure you have
+a valid database configuration in your settings file. By default, <a class="reference internal" href="../get_started/settings.html#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a> provides a usable
+database configuration.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># fantastico.settings.BasicSettings</span>
+<span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">database_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">&quot;drivername&quot;</span><span class="p">:</span> <span class="s">&quot;mysql+mysqldb&quot;</span><span class="p">,</span>
+            <span class="s">&quot;username&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
+            <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;12345&quot;</span><span class="p">,</span>
+            <span class="s">&quot;host&quot;</span><span class="p">:</span> <span class="s">&quot;localhost&quot;</span><span class="p">,</span>
+            <span class="s">&quot;port&quot;</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
+            <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>By default, each time a new build is generated for fantastico each environment is validated to ensure connectivity to configured
+database works.</p>
 </div>
 <div class="section" id="view">
 <h2>View</h2>
@@ -180,7 +196,7 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 <dl class="method">
 <dt id="fantastico.mvc.base_controller.BaseController.load_template">
-<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x16a3408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a></dt>
+<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x1b43408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This method is responsible for loading a template from disk and render it using the given model data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">TestController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>

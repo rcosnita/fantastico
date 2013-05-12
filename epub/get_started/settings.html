@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b55 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b57 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -63,6 +63,24 @@ configuration: Dev / Stage / Production.</p>
 <img alt="../_images/settings.png" src="../_images/settings.png" />
 <p>As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values
 for the attributes you want to overwrite.</p>
+<dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.database_config">
+<tt class="descname">database_config</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.database_config"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property holds the configuration of database. It is recommended to have all environment configured the same.
+An exception can be done for host but the rest must remain the same. Below you can find an example of functional
+configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;drivername&quot;</span><span class="p">:</span> <span class="s">&quot;mysql+mysqldb&quot;</span><span class="p">,</span>
+            <span class="s">&quot;username&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
+            <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;12345&quot;</span><span class="p">,</span>
+            <span class="s">&quot;port&quot;</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
+            <span class="s">&quot;host&quot;</span><span class="p">:</span> <span class="s">&quot;localhost&quot;</span><span class="p">,</span>
+            <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
+            <span class="s">&quot;additional_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;charset&quot;</span><span class="p">:</span> <span class="s">&quot;utf8&quot;</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>As you can see, in your configuration you can influence many attributes used when configuring the driver / database.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="fantastico.settings.BasicSettings.dev_server_host">
 <tt class="descname">dev_server_host</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.dev_server_host"><span class="viewcode-link">[source]</span></a></dt>

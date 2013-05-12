@@ -13,36 +13,36 @@
 \contentsline {subsection}{\numberline {2.2.3}Using a specifc configuration}{5}{subsection.2.2.3}
 \contentsline {section}{\numberline {2.3}Contribute}{6}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Code contribution}{6}{subsection.2.3.1}
-\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.14}
-\contentsline {subsubsection}{Writing integration tests}{7}{subsubsection*.18}
+\contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.15}
+\contentsline {subsubsection}{Writing integration tests}{7}{subsubsection*.19}
 \contentsline {section}{\numberline {2.4}Development mode}{8}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}Hot deploy}{8}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}API}{8}{subsection.2.4.2}
-\contentsline {chapter}{\numberline {3}Fantastico features}{9}{chapter.3}
-\contentsline {section}{\numberline {3.1}Exceptions hierarchy}{9}{section.3.1}
-\contentsline {section}{\numberline {3.2}Request lifecycle}{10}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Request middleware}{11}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Request context}{11}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Obtain request language}{11}{subsection.3.2.3}
-\contentsline {subsection}{\numberline {3.2.4}Obtain settings using request}{11}{subsection.3.2.4}
-\contentsline {section}{\numberline {3.3}Routing engine}{12}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Routes loaders}{13}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}How to write a new route loader}{13}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Configuring available loaders}{13}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}DummyRouteLoader}{14}{subsection.3.3.4}
-\contentsline {subsection}{\numberline {3.3.5}Routing middleware}{14}{subsection.3.3.5}
-\contentsline {section}{\numberline {3.4}Model View Controller}{14}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Classic approach}{14}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Fantastico approach}{15}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Model}{16}{subsection.3.4.3}
-\contentsline {subsection}{\numberline {3.4.4}View}{16}{subsection.3.4.4}
-\contentsline {subsection}{\numberline {3.4.5}Controller}{16}{subsection.3.4.5}
-\contentsline {chapter}{\numberline {4}How to articles}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{19}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{19}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{19}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{20}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{20}{subsection.4.1.4}
-\contentsline {chapter}{\numberline {5}Build status}{21}{chapter.5}
-\contentsline {chapter}{\numberline {6}License}{23}{chapter.6}
-\contentsline {chapter}{Index}{25}{section*.69}
+\contentsline {chapter}{\numberline {3}Fantastico features}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}Exceptions hierarchy}{11}{section.3.1}
+\contentsline {section}{\numberline {3.2}Request lifecycle}{12}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Request middleware}{13}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Request context}{13}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Obtain request language}{13}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Obtain settings using request}{13}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}Routing engine}{14}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Routes loaders}{15}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}How to write a new route loader}{15}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Configuring available loaders}{15}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}DummyRouteLoader}{16}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.3.5}Routing middleware}{16}{subsection.3.3.5}
+\contentsline {section}{\numberline {3.4}Model View Controller}{16}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Classic approach}{16}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Fantastico approach}{17}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Model}{18}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}View}{19}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}Controller}{19}{subsection.3.4.5}
+\contentsline {chapter}{\numberline {4}How to articles}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}MVC How to}{21}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Code the model}{21}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Code the controller}{21}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Code the view}{22}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Test your application}{22}{subsection.4.1.4}
+\contentsline {chapter}{\numberline {5}Build status}{23}{chapter.5}
+\contentsline {chapter}{\numberline {6}License}{25}{chapter.6}
+\contentsline {chapter}{Index}{27}{section*.70}

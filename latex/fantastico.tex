@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{May 11, 2013}
-\release{0.0.1-b55}
+\date{May 12, 2013}
+\release{0.0.1-b57}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -300,6 +300,28 @@ configuration: Dev / Stage / Production.
 
 As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values
 for the attributes you want to overwrite.
+\index{database\_config (fantastico.settings.BasicSettings attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.database_config}\pysigline{\bfcode{database\_config}}
+This property holds the configuration of database. It is recommended to have all environment configured the same.
+An exception can be done for host but the rest must remain the same. Below you can find an example of functional
+configuration:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{config} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{drivername}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mysql+mysqldb}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{username}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{password}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{12345}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{port}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{3306}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{host}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{localhost}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{database}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{additional\PYGZus{}params}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{charset}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{utf8}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
+
+\end{fulllineitems}
+
 \index{dev\_server\_host (fantastico.settings.BasicSettings attribute)}
 
 \begin{fulllineitems}
@@ -706,7 +728,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x346c7c0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x38999e0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1281,6 +1303,25 @@ If you want to find more details and use cases for controller read {\hyperref[fe
 \label{features/mvc:model}
 A model is a very simple object that inherits \code{fantastico.mvc.models.BaseModel}.
 
+In order for models to work correctly and to be injected correctly into controller you must make sure you have
+a valid database configuration in your settings file. By default, {\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}} provides a usable
+database configuration.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZsh{} fantastico.settings.BasicSettings}
+\PYG{n+nd}{@property}
+\PYG{k}{def} \PYG{n+nf}{database\PYGZus{}config}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{drivername}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mysql+mysqldb}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{username}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{password}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{12345}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{host}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{localhost}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{port}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{3306}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{database}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+By default, each time a new build is generated for fantastico each environment is validated to ensure connectivity to configured
+database works.
+
 
 \subsection{View}
 \label{features/mvc:view}
@@ -1358,7 +1399,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x16a3408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1b43408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]

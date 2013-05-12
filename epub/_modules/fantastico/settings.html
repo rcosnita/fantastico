@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b55 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b57 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -110,6 +110,33 @@
                 <span class="s">&quot;trim_blocks&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
                 <span class="s">&quot;optimized&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
                 <span class="s">&quot;auto_reload&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.database_config"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.database_config">[docs]</a>    <span class="k">def</span> <span class="nf">database_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds the configuration of database. It is recommended to have all environment configured the same.</span>
+<span class="sd">        An exception can be done for host but the rest must remain the same. Below you can find an example of functional</span>
+<span class="sd">        configuration:</span>
+<span class="sd">        </span>
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">        </span>
+<span class="sd">            config = {&quot;drivername&quot;: &quot;mysql+mysqldb&quot;,</span>
+<span class="sd">                        &quot;username&quot;: &quot;fantastico&quot;,</span>
+<span class="sd">                        &quot;password&quot;: &quot;12345&quot;,</span>
+<span class="sd">                        &quot;port&quot;: 3306,</span>
+<span class="sd">                        &quot;host&quot;: &quot;localhost&quot;,</span>
+<span class="sd">                        &quot;database&quot;: &quot;fantastico&quot;,</span>
+<span class="sd">                        &quot;additional_params&quot;: {&quot;charset&quot;: &quot;utf8&quot;}}</span>
+<span class="sd">                        </span>
+<span class="sd">        As you can see, in your configuration you can influence many attributes used when configuring the driver / database.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;drivername&quot;</span><span class="p">:</span> <span class="s">&quot;mysql+mysqldb&quot;</span><span class="p">,</span>
+                <span class="s">&quot;username&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
+                <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;12345&quot;</span><span class="p">,</span>
+                <span class="s">&quot;port&quot;</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
+                <span class="s">&quot;host&quot;</span><span class="p">:</span> <span class="s">&quot;localhost&quot;</span><span class="p">,</span>
+                <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
+                <span class="s">&quot;additional_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;charset&quot;</span><span class="p">:</span> <span class="s">&quot;utf8&quot;</span><span class="p">}}</span>
         </div></div>
 <div class="viewcode-block" id="SettingsFacade"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade">[docs]</a><span class="k">class</span> <span class="nc">SettingsFacade</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;For using a specific fantastico configuration you need to do two simple steps:</span>
