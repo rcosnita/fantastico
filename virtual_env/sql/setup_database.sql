@@ -34,14 +34,14 @@ CREATE PROCEDURE spr_setup_db()
 BEGIN
 	DECLARE user_exist INT DEFAULT 0;
 
-	SELECT 1 INTO user_exist FROM mysql.user WHERE User = 'fantastico' AND Host = '%';
+	SELECT 1 INTO user_exist FROM mysql.user WHERE User = 'fantastico' AND Host = 'localhost';
 
 	IF user_exist = 1 THEN
-		DROP USER 'fantastico'@'%';
+		DROP USER 'fantastico'@'localhost';
 	END IF;
 
-	CREATE USER 'fantastico'@'%' IDENTIFIED BY '12345';
-	GRANT ALL ON fantastico.* TO 'fantastico'@'%';
+	CREATE USER 'fantastico'@'localhost' IDENTIFIED BY '12345';
+	GRANT ALL ON fantastico.* TO 'fantastico'@'localhost';
 END $$
 
 DELIMITER ;
