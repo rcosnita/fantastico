@@ -88,7 +88,7 @@ class BasicSettings(object):
         
         .. code-block:: python
         
-            config = {"drivername": "mysql+mysqldb",
+            config = {"drivername": "mysql+mysqlconnector",
                         "username": "fantastico",
                         "password": "12345",
                         "port": 3306,
@@ -99,7 +99,7 @@ class BasicSettings(object):
         As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
         '''
         
-        return {"drivername": "mysql+mysqldb",
+        return {"drivername": "mysql+mysqlconnector",
                 "username": "fantastico",
                 "password": "12345",
                 "port": 3306,
