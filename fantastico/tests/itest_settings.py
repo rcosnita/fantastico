@@ -71,7 +71,7 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
         '''This test case ensures we have a database configured for fantastico framework.'''
         
         def exec_test(env, settings_cls):
-            expected_config = {"drivername": "mysql+mysqldb",
+            expected_config = {"drivername": "mysql+mysqlconnector",
                                "username": "fantastico",
                                "password": "12345",
                                "port": 3306,
