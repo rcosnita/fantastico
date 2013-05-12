@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b57 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b58 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -119,7 +119,7 @@
 <span class="sd">        </span>
 <span class="sd">        .. code-block:: python</span>
 <span class="sd">        </span>
-<span class="sd">            config = {&quot;drivername&quot;: &quot;mysql+mysqldb&quot;,</span>
+<span class="sd">            config = {&quot;drivername&quot;: &quot;mysql+mysqlconnector&quot;,</span>
 <span class="sd">                        &quot;username&quot;: &quot;fantastico&quot;,</span>
 <span class="sd">                        &quot;password&quot;: &quot;12345&quot;,</span>
 <span class="sd">                        &quot;port&quot;: 3306,</span>
@@ -130,7 +130,7 @@
 <span class="sd">        As you can see, in your configuration you can influence many attributes used when configuring the driver / database.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         
-        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;drivername&quot;</span><span class="p">:</span> <span class="s">&quot;mysql+mysqldb&quot;</span><span class="p">,</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;drivername&quot;</span><span class="p">:</span> <span class="s">&quot;mysql+mysqlconnector&quot;</span><span class="p">,</span>
                 <span class="s">&quot;username&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
                 <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;12345&quot;</span><span class="p">,</span>
                 <span class="s">&quot;port&quot;</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
@@ -138,6 +138,19 @@
                 <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
                 <span class="s">&quot;additional_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;charset&quot;</span><span class="p">:</span> <span class="s">&quot;utf8&quot;</span><span class="p">}}</span>
         </div></div>
+<span class="k">class</span> <span class="nc">AwsStageSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the configuration profile for Aws Stage environment integration.&#39;&#39;&#39;</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">database_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property is used to change the hostname used by Aws Stage environment for connecting to fantastico database.&#39;&#39;&#39;</span>
+        
+        <span class="n">db_config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">AwsStageSettings</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">database_config</span>
+        
+        <span class="n">db_config</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;fantastico.ccv3dqqpsvpf.eu-west-1.rds.amazonaws.com&quot;</span>
+        
+        <span class="k">return</span> <span class="n">db_config</span>
+        
 <div class="viewcode-block" id="SettingsFacade"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade">[docs]</a><span class="k">class</span> <span class="nc">SettingsFacade</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;For using a specific fantastico configuration you need to do two simple steps:</span>
 
