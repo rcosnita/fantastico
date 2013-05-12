@@ -107,6 +107,19 @@ class BasicSettings(object):
                 "database": "fantastico",
                 "additional_params": {"charset": "utf8"}}
         
+class AwsStageSettings(BasicSettings):
+    '''This class provides the configuration profile for Aws Stage environment integration.'''
+    
+    @property
+    def database_config(self):
+        '''This property is used to change the hostname used by Aws Stage environment for connecting to fantastico database.'''
+        
+        db_config = super(AwsStageSettings, self).database_config
+        
+        db_config["host"] = "fantastico.ccv3dqqpsvpf.eu-west-1.rds.amazonaws.com"
+        
+        return db_config
+        
 class SettingsFacade(object):
     '''For using a specific fantastico configuration you need to do two simple steps:
 
