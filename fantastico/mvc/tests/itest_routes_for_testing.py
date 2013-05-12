@@ -18,8 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.exceptions import FantasticoTemplateNotFoundError
 from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
-from fantastico.mvc.tests.subroutes.subroutes_controller import \
-    SubroutesController
+from fantastico.mvc.tests.subroutes.subroutes_controller import SubroutesController
 from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
