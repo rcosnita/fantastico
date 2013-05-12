@@ -34,8 +34,10 @@ class BaseModelIntegration(FantasticoIntegrationTestCase):
         
         mvc.init_dm_db_engine(db_config)
         
-        self.assertIsNotNone(mvc.Session)
+        self.assertIsNotNone(mvc.BASEMODEL)
+        self.assertIsNotNone(mvc.SESSION)
+        self.assertIsNotNone(mvc.ENGINE)
         
-        session = mvc.Session()
+        session = mvc.SESSION()
         
         session.execute("SELECT 1")
