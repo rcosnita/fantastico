@@ -202,3 +202,35 @@ class ModelFacade(object):
             raise FantasticoDbNotFoundError("Model %s does not exist." % ",".join(pk_msg))
         
         return results[0]
+    
+    def delete(self, model):
+        '''This method deletes a given model from database. Below you can find a simple example of how to use this:
+        
+        .. code-block:: python
+        
+            class PersonModel(BASEMODEL):
+                __tablename__ = "persons"
+                
+                id = Column("id", Integer, autoincrement=True, primary_key=True)
+                first_name = Column("first_name", String(50))
+                last_name = Column("last_name", String(50))
+                
+                def __init__(self, first_name, last_name):
+                    self.first_name = first_name
+                    self.last_name = last_name
+                    
+            facade = ModelFacade(PersonModel, fantastico.mvc.SESSION)
+            model = facade.find_by_pk({PersonModel.id: 1})
+            facade.delete(model)
+
+        :raises fantastico.exceptions.FantasticoDbError: Raised when an unhandled exception occurs. By default, session
+            is rollback automatically so that other consumers can still work as expected.
+        '''
+        
+        try:
+            self._session.delete(model)
+            self._session.commit()
+        except Exception as ex:
+            self._session.rollback()
+            
+            raise FantasticoDbError(ex)
