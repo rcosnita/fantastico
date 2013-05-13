@@ -29,4 +29,7 @@ Exceptions hierarchy
    :members:  
 
 .. autoclass:: fantastico.exceptions.FantasticoTemplateNotFoundError
-   :members:     
+   :members:
+
+.. autoclass:: fantastico.exceptions.FantasticoIncompatibleClassError
+   :members:

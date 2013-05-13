@@ -69,3 +69,8 @@ class FantasticoHttpVerbNotSupported(FantasticoError):
         
 class FantasticoTemplateNotFoundError(FantasticoError):
     '''This exception is usually thrown when a controller tries to load a template which it does not found.'''
+    
+class FantasticoIncompatibleClassError(FantasticoError):
+    '''This exception is usually thrown when we want to decorate / inject / mixin a class into another class
+    that does not support it. For instance, we want to build a :py:class:`fantastico.mvc.model_facade.ModelFacade`
+    with a class that does not extend **BASEMODEL.**''' 
