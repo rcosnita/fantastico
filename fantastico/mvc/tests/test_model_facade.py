@@ -16,7 +16,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.test_model_facade
 '''
-from fantastico.exceptions import FantasticoIncompatibleClassError
+from fantastico.exceptions import FantasticoIncompatibleClassError, \
+    FantasticoDbError, FantasticoDbNotFoundError
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.tests.base_case import FantasticoUnitTestsCase
@@ -58,6 +59,82 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         '''This test case makes sure a model facade instance raises an exception if given model class does not
         extend **BASEMODEL**.'''
 
-        self._facade = ModelFacade(Mock(), Mock())
+        with self.assertRaises(FantasticoIncompatibleClassError):
+            ModelFacade(Mock(), Mock())
+        
+    def test_create_ok(self):
+        '''This test case makes sure a model can be correctly saved using a facade.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe")
+        
+        def add(model):
+            model.id = 1
+            
+            return self._session
+        
+        self._session.add = add
+        self._session.commit = lambda: None
+        
+        model_id = self._facade.create(model)
+        
+        self.assertEqual(1, len(model_id))
+        self.assertEqual(1, model_id[0])
+        self.assertEqual(1, model.id)
+        
+    def test_create_exception_unhandled(self):
+        '''This test case makes sure a model creation exception is wrapped correctly into a concrete fantastico exception.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe") 
+        
+        self._session.add = Mock(side_effect=Exception("Unhandled exception"))
+        
+        self.assertRaises(FantasticoDbError, self._facade.create, *[model])
+        
+    def test_update_ok(self):
+        '''This test case ensures a model can be updated correctly using model facade.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe")
+        model.id = 1
+        
+        self._session.query = Mock(return_value=self._session)
+        self._session.filter_by = Mock(return_value=self._session)
+        self._session.all = Mock(return_value=[model])
 
-        self.assertRaises(FantasticoIncompatibleClassError, self._facade.new_model, *[])
+        
+        def merge(model):
+            model.first_name = "John Changed"
+        
+        self._session.merge = merge
+        self._session.commit = lambda: None
+        
+        self._facade.update(model)
+        
+        self.assertEqual("John Changed", model.first_name)
+        
+    def test_update_exception_unhandled(self):
+        '''This test case ensures a model update gracefully handles all unhandled exceptions.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe")
+        model.id = 1
+        
+        self._session.query = Mock(return_value=self._session)
+        self._session.filter_by = Mock(return_value=self._session)
+        self._session.all = Mock(return_value=[model])
+
+        
+        self._session.merge = Mock(side_effect=Exception("Unhandled exception"))
+        self._session.commit = lambda: None
+        
+        self.assertRaises(FantasticoDbError, self._facade.update, *[model])
+        
+    def test_update_exception_notfound(self):
+        '''This test case ensures a model update exception is raised when the given model does not exist.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe")
+        model.id = 1
+        
+        self._session.query = Mock(return_value=self._session)
+        self._session.filter_by = Mock(return_value=self._session)
+        self._session.all = Mock(return_value=[])
+        
+        self.assertRaises(FantasticoDbNotFoundError, self._facade.update, *[model])

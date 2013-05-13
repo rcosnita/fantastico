@@ -73,4 +73,12 @@ class FantasticoTemplateNotFoundError(FantasticoError):
 class FantasticoIncompatibleClassError(FantasticoError):
     '''This exception is usually thrown when we want to decorate / inject / mixin a class into another class
     that does not support it. For instance, we want to build a :py:class:`fantastico.mvc.model_facade.ModelFacade`
-    with a class that does not extend **BASEMODEL.**''' 
+    with a class that does not extend **BASEMODEL.**'''
+    
+class FantasticoDbError(FantasticoError):
+    '''This exception is usually thrown when a database exception occurs. For one good example where this is used see
+    :py:class:`fantastico.mvc.model_facade.ModelFacade`.'''
+    
+class FantasticoDbNotFoundError(FantasticoError):
+    '''This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is 
+    used see :py:class:`fantastico.mvc.model_facade.ModelFacade`.'''    
