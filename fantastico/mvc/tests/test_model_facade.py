@@ -44,6 +44,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
     def init(self):
         self._session = Mock()
         self._facade = ModelFacade(PersonModelTest, self._session)
+        self._rollbacked = False
         
     def test_new_model_ok(self):
         '''This test case ensures a model facade can obtain an instance of a given class.'''
@@ -76,6 +77,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         
         model_id = self._facade.create(model)
         
+        self.assertFalse(self._rollbacked)
         self.assertEqual(1, len(model_id))
         self.assertEqual(1, model_id[0])
         self.assertEqual(1, model.id)
@@ -87,7 +89,13 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         
         self._session.add = Mock(side_effect=Exception("Unhandled exception"))
         
+        def rollback():
+            self._rollbacked = True
+            
+        self._session.rollback = rollback
+        
         self.assertRaises(FantasticoDbError, self._facade.create, *[model])
+        self.assertTrue(self._rollbacked)
         
     def test_update_ok(self):
         '''This test case ensures a model can be updated correctly using model facade.'''
@@ -107,6 +115,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         
         self._facade.update(model)
         
+        self.assertFalse(self._rollbacked)
         self.assertEqual("John Changed", model.first_name)
         
     def test_update_exception_unhandled(self):
@@ -121,7 +130,13 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
 
         self._session.merge = Mock(side_effect=Exception("Unhandled exception"))
         
+        def rollback():
+            self._rollbacked = True
+            
+        self._session.rollback = rollback        
+        
         self.assertRaises(FantasticoDbError, self._facade.update, *[model])
+        self.assertTrue(self._rollbacked)
         
     def test_update_exception_notfound(self):
         '''This test case ensures a model update exception is raised when the given model does not exist.'''
@@ -133,7 +148,13 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         self._session.filter_by = Mock(return_value=self._session)
         self._session.all = Mock(return_value=[])
         
+        def rollback():
+            self._rollbacked = True
+            
+        self._session.rollback = rollback
+        
         self.assertRaises(FantasticoDbNotFoundError, self._facade.update, *[model])
+        self.assertTrue(self._rollbacked)
     
     def test_find_by_pk_ok(self):
         '''This test case ensures find_by_pk method retrieves a model instance when a record is found by id.'''
@@ -147,6 +168,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
 
         response = self._facade.find_by_pk({PersonModelTest.id: 1})
         
+        self.assertFalse(self._rollbacked)
         self.assertEqual(model, response)
         
     def test_find_by_pk_notfound(self):
@@ -159,9 +181,16 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         self._session.filter_by = Mock(return_value=self._session)
         self._session.all = Mock(return_value=[])
 
+        def rollback():
+            self._rollbacked = True
+            
+        self._session.rollback = rollback
+
         with self.assertRaises(FantasticoDbNotFoundError):
             self._facade.find_by_pk({PersonModelTest.id: 1})
-            
+
+        self.assertTrue(self._rollbacked)
+                    
     def test_delete_ok(self):
         '''This test case ensures a model can be deleted successfully if no exception occurs.'''
         
@@ -169,6 +198,8 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         model.id = 1
         
         self._facade.delete(model)
+        
+        self.assertFalse(self._rollbacked)
 
     def test_delete_exception_unhandled(self):
         '''This test case ensures unhandled exceptions are gracefully handled by delete method.'''
@@ -178,5 +209,13 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         
         self._session.delete = Mock(side_effect=Exception("Unhandled exception"))
         
+        def rollback():
+            self._rollbacked = True
+            
+        self._session.rollback = rollback
+
+        
         with self.assertRaises(FantasticoDbError):
             self._facade.delete(model)
+        
+        self.assertTrue(self._rollbacked)
