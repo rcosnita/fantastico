@@ -73,7 +73,6 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
             return self._session
         
         self._session.add = add
-        self._session.commit = lambda: None
         
         model_id = self._facade.create(model)
         
@@ -105,7 +104,6 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
             model.first_name = "John Changed"
         
         self._session.merge = merge
-        self._session.commit = lambda: None
         
         self._facade.update(model)
         
@@ -122,7 +120,6 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         self._session.all = Mock(return_value=[model])
 
         self._session.merge = Mock(side_effect=Exception("Unhandled exception"))
-        self._session.commit = lambda: None
         
         self.assertRaises(FantasticoDbError, self._facade.update, *[model])
         
@@ -164,3 +161,22 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
 
         with self.assertRaises(FantasticoDbNotFoundError):
             self._facade.find_by_pk({PersonModelTest.id: 1})
+            
+    def test_delete_ok(self):
+        '''This test case ensures a model can be deleted successfully if no exception occurs.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe")
+        model.id = 1
+        
+        self._facade.delete(model)
+
+    def test_delete_exception_unhandled(self):
+        '''This test case ensures unhandled exceptions are gracefully handled by delete method.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe")
+        model.id = 1
+        
+        self._session.delete = Mock(side_effect=Exception("Unhandled exception"))
+        
+        with self.assertRaises(FantasticoDbError):
+            self._facade.delete(model)
