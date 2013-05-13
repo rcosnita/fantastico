@@ -121,7 +121,6 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         self._session.filter_by = Mock(return_value=self._session)
         self._session.all = Mock(return_value=[model])
 
-        
         self._session.merge = Mock(side_effect=Exception("Unhandled exception"))
         self._session.commit = lambda: None
         
@@ -138,3 +137,30 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         self._session.all = Mock(return_value=[])
         
         self.assertRaises(FantasticoDbNotFoundError, self._facade.update, *[model])
+    
+    def test_find_by_pk_ok(self):
+        '''This test case ensures find_by_pk method retrieves a model instance when a record is found by id.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe")
+        model.id = 1
+        
+        self._session.query = Mock(return_value=self._session)
+        self._session.filter_by = Mock(return_value=self._session)
+        self._session.all = Mock(return_value=[model])
+
+        response = self._facade.find_by_pk({PersonModelTest.id: 1})
+        
+        self.assertEqual(model, response)
+        
+    def test_find_by_pk_notfound(self):
+        '''This test case ensures find_by_pk method raises an exception when a matching record is not found.'''
+        
+        model = PersonModelTest(first_name="John", last_name="Doe")
+        model.id = 1
+        
+        self._session.query = Mock(return_value=self._session)
+        self._session.filter_by = Mock(return_value=self._session)
+        self._session.all = Mock(return_value=[])
+
+        with self.assertRaises(FantasticoDbNotFoundError):
+            self._facade.find_by_pk({PersonModelTest.id: 1})
