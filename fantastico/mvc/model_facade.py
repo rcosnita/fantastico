@@ -236,6 +236,15 @@ class ModelFacade(object):
     
     def get_records_paged(self, start_record, end_record, filter_expr=None, sort_expr=None):
         '''This method retrieves all records matching the given filters sorted by the given expression.
+
+        .. code-block:: python
+        
+            records = facade.get_records_paged(start_record=0, end_record=5, 
+                                       sort_expr=[ModelSort(Blog.create_date, ModelSort.ASC,
+                                                  ModelSort(Blog.title, ModelSort.DESC)],
+                                       filter_expr=ModelFilterAnd(
+                                                       ModelFilter(Blog.id, 1, ModelFilter.GT),
+                                                       ModelFilter(Blog.id, 5, ModelFilter.LT))))
         
         :param start_record: A zero indexed integer that specifies the first record number.
         :type start_record: int
@@ -268,6 +277,38 @@ class ModelFacade(object):
             query = query.offset(start_record).limit(end_record - start_record)
             
             return query.all()
+        except Exception as ex:
+            self._session.rollback()
+            
+            raise FantasticoDbError(ex)
+    
+    def count_records(self, filter_expr=None):
+        '''This method is used for counting the number of records from underlining facade. In addition it applies the
+        filter expressions specified (if any).
+        
+        .. code-block:: python
+        
+            records = facade.count_records(
+                                       filter_expr=ModelFilterAnd(
+                                                       ModelFilter(Blog.id, 1, ModelFilter.GT),
+                                                       ModelFilter(Blog.id, 5, ModelFilter.LT)))
+        
+        :param filter_expr: A list of :py:class:`fantastico.mvc.models.model_filter.ModelFilterAbstract` which are applied in order.
+        :type filter_expr: list
+        :raises fantastico.exceptions.FantasticoDbError: This exception is raised whenever an exception occurs in retrieving
+            desired dataset. The underlining session used is automatically rollbacked in order to guarantee data integrity.
+        '''
+        
+        if filter_expr and not isinstance(filter_expr, list):
+            filter_expr = [filter_expr]
+        
+        try:
+            query = self._session.query(self.model_cls)
+    
+            for model_filter in filter_expr or []:
+                query = model_filter.build(query)
+    
+            return query.count()
         except Exception as ex:
             self._session.rollback()
             

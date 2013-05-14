@@ -19,6 +19,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico import mvc
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.model_facade import ModelFacade
+from fantastico.mvc.models.model_filter import ModelFilter
+from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
 from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from sqlalchemy.schema import Column
@@ -63,6 +65,9 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
             
             cls.last_generated_pk = message_id[0]
             cls.entities_created.append(message_entity)
+        
+        records_count = cls.model_facade.count_records(ModelFilter(ModelFacadeMessage.id, 0, ModelFilter.GT))
+        assert records_count == len(cls.MESSAGES)
     
     @classmethod
     def cleanup_once(cls):
@@ -70,6 +75,8 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
         
         for entity in cls.entities_created:
             cls.model_facade.delete(entity)
+            
+        assert cls.model_facade.count_records() == 0
     
     def test_retrieve_message_bypk(self):
         '''This test case ensures filtering message by primary key works.'''
@@ -78,3 +85,16 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
         
         self.assertIsNotNone(message)
         self.assertEqual(self.MESSAGES[-1], message.message)
+    
+    def test_retrieve_message_byfilter_and(self):
+        '''This test case ensures filtering message using compound filter works as expected.'''
+        
+        model_filter_gt = ModelFilter(ModelFacadeMessage.id, 1, ModelFilter.GE)
+        model_filter_like = ModelFilter(ModelFacadeMessage.message, "%%world 4%%", ModelFilter.LIKE)
+        model_filter_and = ModelFilterAnd(model_filter_gt, model_filter_like)
+        
+        records = self.model_facade.get_records_paged(0, 100, filter_expr=model_filter_and)
+        
+        self.assertEqual(1, len(records))
+        self.assertEqual(self.last_generated_pk, records[0].id)
+        self.assertEqual(self.MESSAGES[-1], records[0].message)

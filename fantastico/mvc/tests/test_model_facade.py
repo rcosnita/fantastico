@@ -316,3 +316,57 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
             self._facade.get_records_paged(start_record=0, end_record=4, filter_expr=self._model_filter)
 
         self.assertTrue(self._rollbacked)
+        
+    def test_count_records_default_ok(self):
+        '''This test case ensures count method works correctly.'''
+
+        def query_mock(cls_obj):
+            self.assertEqual(PersonModelTest, cls_obj)
+            
+            return self._session
+        
+        self._session.query = query_mock
+        self._session.count = Mock(return_value=20)
+        
+        records_count = self._facade.count_records()
+        
+        self.assertEqual(20, records_count)
+    
+    def test_count_records_filtered_ok(self):
+        '''This test case ensures count method works correctly when a filter is given.'''
+        
+        self._model_filter = ModelFilter(PersonModelTest.id, 1, ModelFilter.GT)
+        
+        def query_mock(cls_obj):
+            self.assertEqual(PersonModelTest, cls_obj)
+            
+            return self._session
+        
+        def filter_mock(expr):
+            self.assertEqual(self._model_filter.get_expression(), expr)
+            
+            return self._session
+        
+        self._session.query = query_mock
+        self._session.filter = filter_mock
+        self._session.count = Mock(return_value=20)
+        
+        records_count = self._facade.count_records(self._model_filter)
+        
+        self.assertEqual(20, records_count)
+
+    def test_count_records_unhandled_exception(self):
+        '''This test case ensures count method gracefully handles unexpected exceptions.'''
+        
+        self._model_filter = ModelFilter(PersonModelTest.id, 1, ModelFilter.GT)
+        self._model_filter.build = Mock(side_effect=Exception("Unhandled exception"))
+        
+        def rollback():
+            self._rollbacked = True
+            
+        self._session.rollback = rollback
+        
+        with self.assertRaises(FantasticoDbError):
+            self._facade.count_records(self._model_filter)
+
+        self.assertTrue(self._rollbacked)        
