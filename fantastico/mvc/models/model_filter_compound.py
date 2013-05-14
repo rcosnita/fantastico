@@ -17,10 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:fantastico.mvc.models.model_filter_compound
 '''
 from fantastico.exceptions import FantasticoNotSupportedError, FantasticoError
-from fantastico.mvc.models.model_filter import ModelFilter
+from fantastico.mvc.models.model_filter import ModelFilter, ModelFilterAbstract
 from sqlalchemy.sql.expression import and_, or_
 
-class ModelFilterCompound(object):
+class ModelFilterCompound(ModelFilterAbstract):
     '''This class provides the api for compounding ModelFilter objects into a specified sql alchemy operation.'''
     
     def __init__(self, operation, *args):
@@ -38,11 +38,16 @@ class ModelFilterCompound(object):
         '''This method transform the current compound statement into an sql alchemy filter.'''
         
         try:
-            query = query.filter(self._operation(*[model_filter.get_expression() for model_filter in self._model_filters]))
+            query = query.filter(self.get_expression())
             
             return query
         except Exception as ex:
-            raise FantasticoError(ex)    
+            raise FantasticoError(ex)
+    
+    def get_expression(self):
+        '''This method transforms calculates sqlalchemy expression held by this filter.'''
+        
+        return self._operation(*[model_filter.get_expression() for model_filter in self._model_filters])
     
 class ModelFilterAnd(ModelFilterCompound):
     '''This class provides a compound filter that allows **and** conditions against models. Below you can find a simple example:
