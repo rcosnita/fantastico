@@ -20,7 +20,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from abc import abstractmethod, ABCMeta
 
-class RouteLoader(metaclass=ABCMeta):
+class RouteLoader(object, metaclass=ABCMeta):
     '''This class provides the contract that must be provided by each concrete implementation. Each route loader is responsible
     for implementing its own business logic for loading routes.
     
