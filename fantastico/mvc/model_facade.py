@@ -124,7 +124,7 @@ class ModelFacade(object):
         pk_values = {}
         
         for pk_col in self._model_pk:
-            pk_values[pk_col.name] = getattr(model, pk_col.name)
+            pk_values[pk_col] = getattr(model, pk_col.name)
             
         return pk_values
         
