@@ -16,8 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.model_facade
 '''
-from fantastico.exceptions import FantasticoIncompatibleClassError,\
-    FantasticoDbError, FantasticoDbNotFoundError
+from fantastico.exceptions import FantasticoIncompatibleClassError, FantasticoDbError, FantasticoDbNotFoundError
 from sqlalchemy.ext.declarative.api import DeclarativeMeta
 from sqlalchemy.orm.util import class_mapper
 
@@ -124,8 +123,8 @@ class ModelFacade(object):
         
         pk_values = {}
         
-        for pk in self._model_pk:
-            pk_values[pk.name] = getattr(model, pk.name)
+        for pk_col in self._model_pk:
+            pk_values[pk_col.name] = getattr(model, pk_col.name)
             
         return pk_values
         
