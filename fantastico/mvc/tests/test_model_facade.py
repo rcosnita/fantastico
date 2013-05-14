@@ -232,6 +232,11 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         self._model_filter = ModelFilter(PersonModelTest.id, 1, ModelFilter.GT)
         self._model_sort = ModelSort(PersonModelTest.first_name)
         
+        def query_mock(cls_obj):
+            self.assertEqual(PersonModelTest, cls_obj)
+            
+            return self._session
+        
         def filter_mock(expr):
             self.assertEqual(self._model_filter.get_expression(), expr)
             
@@ -252,7 +257,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
             
             return self._session
         
-        self._session.query = lambda obj_cls: self._session        
+        self._session.query = query_mock
         self._session.filter = filter_mock
         self._session.order_by = sort_mock
         self._session.offset = offset_mock
@@ -268,3 +273,31 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         
         for model in records:
             self.assertEqual(expected_model, model)
+    
+    def test_get_records_paged_default(self):
+        '''This test case ensure records are retrieved when no filter / sort_expr are specified.'''
+
+        def query_mock(cls_obj):
+            self.assertEqual(PersonModelTest, cls_obj)
+            
+            return self._session
+        
+        def offset_mock(offset):
+            self.assertEqual(0, offset)
+            
+            return self._session
+        
+        def limit_mock(limit_count):
+            self.assertEqual(4, limit_count)
+            
+            return self._session
+        
+        self._session.query = query_mock
+        self._session.offset = offset_mock
+        self._session.limit = limit_mock
+        self._session.all = Mock(return_value=[])
+        
+        records = self._facade.get_records_paged(start_record=0, end_record=4)
+        
+        self.assertIsNotNone(records)
+        self.assertEqual(0, len(records))
