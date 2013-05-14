@@ -20,11 +20,14 @@ from fantastico import mvc
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.mvc.models.model_filter import ModelFilter
-from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
+from fantastico.mvc.models.model_filter_compound import ModelFilterAnd, \
+    ModelFilterOr
+from fantastico.mvc.models.model_sort import ModelSort
 from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, Text
+from fantastico.exceptions import FantasticoDbError
 
 class ModelFacadeMessage(BASEMODEL):
     '''This class is a simple mapping over mvc_model_facade_messages table.'''
@@ -87,9 +90,9 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
         self.assertEqual(self.MESSAGES[-1], message.message)
     
     def test_retrieve_message_byfilter_and(self):
-        '''This test case ensures filtering message using compound filter works as expected.'''
+        '''This test case ensures filtering message using compound **and** works as expected.'''
         
-        model_filter_gt = ModelFilter(ModelFacadeMessage.id, 1, ModelFilter.GE)
+        model_filter_gt = ModelFilter(ModelFacadeMessage.id, 1, ModelFilter.GT)
         model_filter_like = ModelFilter(ModelFacadeMessage.message, "%%world 4%%", ModelFilter.LIKE)
         model_filter_and = ModelFilterAnd(model_filter_gt, model_filter_like)
         
@@ -98,3 +101,81 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
         self.assertEqual(1, len(records))
         self.assertEqual(self.last_generated_pk, records[0].id)
         self.assertEqual(self.MESSAGES[-1], records[0].message)
+    
+    def test_retrieve_message_byfilter_or(self):
+        '''This test case ensures filtering message using compound **or** works as expected.'''
+        
+        model_filter_gt = ModelFilter(ModelFacadeMessage.id, self.last_generated_pk, ModelFilter.GT)
+        model_filter_ge = ModelFilter(ModelFacadeMessage.id, self.last_generated_pk + 1, ModelFilter.GT)
+        model_filter_eq = ModelFilter(ModelFacadeMessage.id, 1, ModelFilter.EQ)
+        model_filter_lt = ModelFilter(ModelFacadeMessage.id, -1, ModelFilter.LT)
+        model_filter_le = ModelFilter(ModelFacadeMessage.id, -1, ModelFilter.LE)
+        model_filter_like = ModelFilter(ModelFacadeMessage.message, "%%world 4%%", ModelFilter.LIKE)
+        model_filter_or = ModelFilterOr(model_filter_gt, model_filter_ge, model_filter_eq, model_filter_like, 
+                                        model_filter_lt, model_filter_le)
+        
+        records = self.model_facade.get_records_paged(0, 100, filter_expr=model_filter_or)
+        
+        self.assertEqual(1, len(records))
+        self.assertEqual(self.last_generated_pk, records[0].id)
+        self.assertEqual(self.MESSAGES[-1], records[0].message)
+    
+    def test_retrieve_subset_ordered_desc(self):
+        '''This test case ensures subset records retrieval work as expected for desc order.'''
+        
+        model_filter_like = ModelFilter(ModelFacadeMessage.message, "%%world%%", ModelFilter.LIKE)
+        model_sort = ModelSort(ModelFacadeMessage.message, ModelSort.DESC)
+        
+        records = self.model_facade.get_records_paged(1, 3, filter_expr=model_filter_like, sort_expr=model_sort)
+        
+        self.assertIsNotNone(records)
+        self.assertEqual(2, len(records))
+        
+        self.assertEqual(self.MESSAGES[-2], records[0].message)
+        self.assertEqual(self.MESSAGES[-3], records[1].message)
+        self.assertLess(records[1].id, records[0].id)
+
+    def test_retrieve_subset_ordered_asc(self):
+        '''This test case ensures subset records retrieval work as expected for asc order.'''
+        
+        model_filter_like = ModelFilter(ModelFacadeMessage.message, "%%world%%", ModelFilter.LIKE)
+        model_sort = ModelSort(ModelFacadeMessage.message, ModelSort.ASC)
+        
+        records = self.model_facade.get_records_paged(1, 3, filter_expr=model_filter_like, sort_expr=model_sort)
+        
+        self.assertIsNotNone(records)
+        self.assertEqual(2, len(records))
+        
+        self.assertEqual(self.MESSAGES[1], records[0].message)
+        self.assertEqual(self.MESSAGES[2], records[1].message)
+        self.assertLess(records[0].id, records[1].id)
+    
+    def test_create_duplicate(self):
+        '''This test case ensure duplicate records insert attempt result in an exception.'''
+        
+        model = self.model_facade.new_model(message="duplicate entry")
+        model.id = self.last_generated_pk
+        
+        with self.assertRaises(FantasticoDbError):
+            self.model_facade.create(model)
+    
+    def test_update_entry(self):
+        '''This test case ensures updating a record work as expected.'''
+        
+        model = self.model_facade.new_model(message="update sequence")
+        
+        try:
+            self.model_facade.create(model)
+            
+            self.assertGreater(model.id, self.last_generated_pk)
+            
+            model.message = "simple message"
+            
+            self.model_facade.update(model)
+            
+            model = self.model_facade.find_by_pk({ModelFacadeMessage.id: model.id})
+            
+            self.assertIsNotNone(model)
+            self.assertEqual("simple message", model.message)
+        finally:
+            self.model_facade.delete(model)
