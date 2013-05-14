@@ -16,9 +16,21 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:fantastico.mvc.models.model_filter
 '''
+from abc import abstractmethod, ABCMeta
 from fantastico.exceptions import FantasticoNotSupportedError
 
-class ModelFilter(object):
+class ModelFilterAbstract(metaclass=ABCMeta):
+    '''This is the base class that defines the contract a model filter must follow.'''
+    
+    @abstractmethod
+    def build(self, query):
+        '''This method is used for appending the current filter to the query using sqlalchemy specific language.'''
+    
+    @abstractmethod
+    def get_expression(self):
+        '''This method is used for retrieving native sqlalchemy expression held by this filter.'''
+
+class ModelFilter(ModelFilterAbstract):
     '''This class provides a model filter wrapper used to dynamically transform an operation to sql alchemy filter
     statements. You can see below how to use it:
     
