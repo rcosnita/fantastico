@@ -31,6 +31,9 @@ class FantasticoError(Exception):
     
 class FantasticoClassNotFoundError(FantasticoError):
     '''This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.'''
+
+class FantasticoNotSupportedError(FantasticoError):
+    '''This exception is raised whenever code tries to do an operation that is  not supported.'''
     
 class FantasticoSettingNotFoundError(FantasticoError):
     '''This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
