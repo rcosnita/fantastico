@@ -107,7 +107,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         model.id = 1
         
         self._session.query = Mock(return_value=self._session)
-        self._session.filter_by = Mock(return_value=self._session)
+        self._session.filter = Mock(return_value=self._session)
         self._session.all = Mock(return_value=[model])
 
         
@@ -128,7 +128,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         model.id = 1
         
         self._session.query = Mock(return_value=self._session)
-        self._session.filter_by = Mock(return_value=self._session)
+        self._session.filter = Mock(return_value=self._session)
         self._session.all = Mock(return_value=[model])
 
         self._session.merge = Mock(side_effect=Exception("Unhandled exception"))
@@ -148,7 +148,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         model.id = 1
         
         self._session.query = Mock(return_value=self._session)
-        self._session.filter_by = Mock(return_value=self._session)
+        self._session.filter = Mock(return_value=self._session)
         self._session.all = Mock(return_value=[])
         
         def rollback():
@@ -166,7 +166,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         model.id = 1
         
         self._session.query = Mock(return_value=self._session)
-        self._session.filter_by = Mock(return_value=self._session)
+        self._session.filter = Mock(return_value=self._session)
         self._session.all = Mock(return_value=[model])
 
         response = self._facade.find_by_pk({PersonModelTest.id: 1})
@@ -181,7 +181,7 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         model.id = 1
         
         self._session.query = Mock(return_value=self._session)
-        self._session.filter_by = Mock(return_value=self._session)
+        self._session.filter = Mock(return_value=self._session)
         self._session.all = Mock(return_value=[])
 
         def rollback():

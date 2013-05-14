@@ -189,7 +189,7 @@ class ModelFacade(object):
         query = self._session.query(self.model_cls)
         
         for pk_col in pk_values.keys():
-            query = query.filter_by(pk_col = pk_values[pk_col])
+            query = query.filter(pk_col == pk_values[pk_col])
         
         results = query.all()
         
