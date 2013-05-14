@@ -102,5 +102,5 @@ Below you can find a detailed list of filters provided by **Fantastico** MVC:
 .. autoclass:: fantastico.mvc.models.model_filter.ModelFilter
     :members:
 
-.. autoclass:: fantastico.mvc.models.model_filter.ModelFilterAnd
+.. autoclass:: fantastico.mvc.models.model_filter_compound.ModelFilterAnd
     :members:

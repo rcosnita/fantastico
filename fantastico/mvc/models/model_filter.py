@@ -91,39 +91,30 @@ class ModelFilter(object):
         if not query:
             return None
 
-        if self.operation == ModelFilter.GT:
-            return query.filter(self.column > self.ref_value)
-
-        if self.operation == ModelFilter.GE:
-            return query.filter(self.column >= self.ref_value)
-
-        if self.operation == ModelFilter.EQ:
-            return query.filter(self.column == self.ref_value)
-
-        if self.operation == ModelFilter.LE:
-            return query.filter(self.column <= self.ref_value)
-
-        if self.operation == ModelFilter.LT:
-            return query.filter(self.column < self.ref_value)
+        return query.filter(self.get_expression())
         
-        if self.operation == ModelFilter.LIKE:
-            return query.filter(self.column.like(self.ref_value))
-
-        if self.operation == ModelFilter.IN:
+    def get_expression(self):
+        '''Method used to return the underlining sqlalchemy exception held by this filter.'''
+        
+        expr = None
+        
+        if self.operation == ModelFilter.GT:
+            expr = self.column > self.ref_value
+        elif self.operation == ModelFilter.GE:
+            expr = self.column >= self.ref_value
+        elif self.operation == ModelFilter.EQ:
+            expr = self.column == self.ref_value
+        elif self.operation == ModelFilter.LE:
+            expr = self.column <= self.ref_value
+        elif self.operation == ModelFilter.LT:
+            expr = self.column < self.ref_value        
+        elif self.operation == ModelFilter.LIKE:
+            expr = self.column.like(self.ref_value)
+        elif self.operation == ModelFilter.IN:
             if not isinstance(self.ref_value, list):
                 raise FantasticoNotSupportedError("Ref value %s is not a list. Lists are required for in comparison." %\
                                                   self.ref_value)
-            
-            return query.filter(self.column.in_(self.ref_value))
 
-class ModelFilterAnd(object):
-    '''This class provides a compound filter that allows and conditions against models. Below you can find a simple example:
-    
-    .. code-block:: python
-    
-        id_gt_filter = ModelFilter(PersonModel.id, 1, ModelFilter.GT)
-        id_lt_filter = ModelFilter(PersonModel.id, 5, ModelFilter.LT)
-        name_like_filter = ModelFilter(PersonModel.name, '%%john%%', ModelFilter.LIKE)
+            expr = self.column.in_(self.ref_value)
         
-        complex_condition = ModelFilterAnd(id_gt_filter, id_lt_filter, name_like_filter)
-    '''
+        return expr
