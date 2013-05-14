@@ -16,13 +16,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.test_model_facade
 '''
-from fantastico.exceptions import FantasticoIncompatibleClassError, FantasticoDbError, FantasticoDbNotFoundError
+from fantastico.exceptions import FantasticoIncompatibleClassError, \
+    FantasticoDbError, FantasticoDbNotFoundError
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.model_facade import ModelFacade
+from fantastico.mvc.models.model_filter import ModelFilter
+from fantastico.mvc.models.model_sort import ModelSort
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from sqlalchemy.schema import Column
-from sqlalchemy.sql.expression import asc, desc
 from sqlalchemy.types import Integer, String
 
 class PersonModelTest(BASEMODEL):
@@ -45,6 +47,8 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         self._session = Mock()
         self._facade = ModelFacade(PersonModelTest, self._session)
         self._rollbacked = False
+        self._model_filter = None
+        self._model_sort = None
         
     def test_new_model_ok(self):
         '''This test case ensures a model facade can obtain an instance of a given class.'''
@@ -223,11 +227,44 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
     def test_get_paged_records_ok(self):
         '''This test case ensures records can be retrieved correctly from a facade.'''
         
-        '''records = self._facade.get_records_paged(start_record=0, end_record=4, 
-                                                 sort_expr=[ModelSort(PersonModelTest.first_name),
-                                                            ModelSort(PersonModelTest.last_name)],
-                                                 filter_expr=[ModelFilter(PersonModelTest.id, 1, "gt")])
+        expected_model = Mock()
+        
+        self._model_filter = ModelFilter(PersonModelTest.id, 1, ModelFilter.GT)
+        self._model_sort = ModelSort(PersonModelTest.first_name)
+        
+        def filter_mock(expr):
+            self.assertEqual(self._model_filter.get_expression(), expr)
+            
+            return self._session
+        
+        def sort_mock(expr):
+            self.assertEqual(self._model_sort.get_expression(), expr)
+            
+            return self._session
+        
+        def offset_mock(offset):
+            self.assertEqual(0, offset)
+            
+            return self._session
+        
+        def limit_mock(limit_count):
+            self.assertEqual(4, limit_count)
+            
+            return self._session
+        
+        self._session.query = lambda obj_cls: self._session        
+        self._session.filter = filter_mock
+        self._session.order_by = sort_mock
+        self._session.offset = offset_mock
+        self._session.limit = limit_mock
+        self._session.all = Mock(return_value=[expected_model, expected_model, expected_model])
+                
+        records = self._facade.get_records_paged(start_record=0, end_record=4, 
+                                                 sort_expr=self._model_sort,
+                                                 filter_expr=self._model_filter)
         
         self.assertIsNotNone(records)
-        self.assertEqual(3, len(records))'''
-        raise NotImplementedError()
+        self.assertEqual(3, len(records))
+        
+        for model in records:
+            self.assertEqual(expected_model, model)

@@ -233,3 +233,35 @@ class ModelFacade(object):
             self._session.rollback()
             
             raise FantasticoDbError(ex)
+    
+    def get_records_paged(self, start_record, end_record, filter_expr=None, sort_expr=None):
+        '''This method retrieves all records matching the given filters sorted by the given expression.
+        
+        :param start_record: A zero indexed integer that specifies the first record number.
+        :type start_record: int
+        :param end_record: A zero indexed integer that specifies the last record number.
+        :type end_record: int
+        :param filter_expr: A list of :py:class:`fantastico.mvc.models.model_filter.ModelFilterAbstract` which are applied in order.
+        :type filter_expr: list
+        :param sort_expr: A list of :py:class:`fantastico.mvc.models.model_sort.ModelSort` which are applied in order.
+        :type sort_expr: list
+        :returns: A list of matching records strongly converted to underlining model.
+        '''
+        
+        if filter_expr and not isinstance(filter_expr, list):
+            filter_expr = [filter_expr]
+            
+        if sort_expr and not isinstance(sort_expr, list):
+            sort_expr = [sort_expr]
+
+        query = self._session.query(self.model_cls)
+        
+        for model_filter in filter_expr:
+            query = model_filter.build(query)
+            
+        for model_sort in sort_expr:
+            query = model_sort.build(query)
+        
+        query = query.offset(start_record).limit(end_record - start_record)
+        
+        return query.all()
