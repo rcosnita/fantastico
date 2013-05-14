@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.exceptions import FantasticoNotSupportedError
 from fantastico.mvc.models.model_filter import ModelFilterAbstract
 from sqlalchemy.schema import Column
+from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 class ModelSort(ModelFilterAbstract):
     '''This class provides a filter that knows how to sort rows from a query result set. It is extremely easy to use:
@@ -47,7 +48,9 @@ class ModelSort(ModelFilterAbstract):
         return self._sort_dir
     
     def __init__(self, column, sort_dir=None):
-        if not isinstance(column, Column):
+        sort_dir = sort_dir or ModelSort.ASC
+        
+        if not isinstance(column, Column) and not isinstance(column, InstrumentedAttribute):
             raise FantasticoNotSupportedError("ModelSort column must be of type Column.")
         
         if not self._is_sort_dir_supported(sort_dir):
@@ -55,6 +58,7 @@ class ModelSort(ModelFilterAbstract):
         
         self._column = column
         self._sort_dir = sort_dir
+        self._cached_expr = None
     
     def _is_sort_dir_supported(self, sort_dir):
         '''This method detects if the specified sort dir is supported.'''
@@ -74,11 +78,12 @@ class ModelSort(ModelFilterAbstract):
     def get_expression(self):
         '''This method returns the sqlalchemy expression held by this filter.'''
         
-        expr = None
+        if self._cached_expr is not None:
+            return self._cached_expr
         
         if self.sort_dir == ModelSort.ASC:
-            expr = self.column.asc()
+            self._cached_expr = self.column.asc()
         elif self.sort_dir == ModelSort.DESC:
-            expr = self.column.desc()
+            self._cached_expr = self.column.desc()
         
-        return expr
+        return self._cached_expr

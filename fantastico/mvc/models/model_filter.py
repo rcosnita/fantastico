@@ -102,7 +102,8 @@ class ModelFilter(ModelFilterAbstract):
         
         self._column = column
         self._ref_value = ref_value
-        self._operation = operation        
+        self._operation = operation
+        self._cached_expr = None
     
     def _is_operation_supported(self, operation):
         '''This method determines if an operation is supported or not.'''
@@ -120,25 +121,26 @@ class ModelFilter(ModelFilterAbstract):
     def get_expression(self):
         '''Method used to return the underlining sqlalchemy exception held by this filter.'''
         
-        expr = None
+        if self._cached_expr is not None:
+            return self._cached_expr
         
         if self.operation == ModelFilter.GT:
-            expr = self.column > self.ref_value
+            self._cached_expr = self.column > self.ref_value
         elif self.operation == ModelFilter.GE:
-            expr = self.column >= self.ref_value
+            self._cached_expr = self.column >= self.ref_value
         elif self.operation == ModelFilter.EQ:
-            expr = self.column == self.ref_value
+            self._cached_expr = self.column == self.ref_value
         elif self.operation == ModelFilter.LE:
-            expr = self.column <= self.ref_value
+            self._cached_expr = self.column <= self.ref_value
         elif self.operation == ModelFilter.LT:
-            expr = self.column < self.ref_value        
+            self._cached_expr = self.column < self.ref_value        
         elif self.operation == ModelFilter.LIKE:
-            expr = self.column.like(self.ref_value)
+            self._cached_expr = self.column.like(self.ref_value)
         elif self.operation == ModelFilter.IN:
             if not isinstance(self.ref_value, list):
                 raise FantasticoNotSupportedError("Ref value %s is not a list. Lists are required for in comparison." %\
                                                   self.ref_value)
 
-            expr = self.column.in_(self.ref_value)
+            self._cached_expr = self.column.in_(self.ref_value)
         
-        return expr
+        return self._cached_expr
