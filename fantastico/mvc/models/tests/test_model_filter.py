@@ -45,17 +45,37 @@ class ModelFilterTests(FantasticoUnitTestsCase):
     def test_model_filter_ok(self):
         '''This test case ensures model filter can correctly enrich a given query with the right filters for
         all supported operations.'''
+
+        expected_result = Mock()
         
         model = Mock()
         model.id = Column("id", Integer)
-        expected_result = Mock()
-        
+        model.id.like = Mock(return_value=expected_result)
+        model.id.in_ = Mock(return_value=expected_result)
+
         query = Mock()
-        query.filter = lambda *args, **kwargs: expected_result 
+        query.filter = lambda *args, **kwargs: expected_result
         
         for operation in ModelFilter.get_supported_operations():
-            model_filter = ModelFilter(model.id, 1, operation)
+            ref_value = 1
+            
+            if operation == ModelFilter.IN:
+                ref_value = [ref_value]
+            
+            model_filter = ModelFilter(model.id, ref_value, operation)
             new_query = model_filter.build(query)
             
             self.assertEqual(expected_result, new_query)
-            
+    
+    def test_model_filter_in_notsupported(self):
+        '''This test case ensures in filter raises an exception if ref_value is not a list.'''
+        
+        model = Mock()
+        model.id = Column("id", Integer)
+        
+        model_filter = ModelFilter(model.id, "invalid list", ModelFilter.IN)
+        
+        query = Mock()
+        
+        with self.assertRaises(FantasticoNotSupportedError):
+            model_filter.build(query)
