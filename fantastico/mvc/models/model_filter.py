@@ -20,7 +20,19 @@ from abc import abstractmethod, ABCMeta
 from fantastico.exceptions import FantasticoNotSupportedError
 
 class ModelFilterAbstract(metaclass=ABCMeta):
-    '''This is the base class that defines the contract a model filter must follow.'''
+    '''This is the base class that defines the contract a model filter must follow. A model filter is a class that decouples
+    sqlalchemy framework from Fantastico MVC. This is required because in the future we might want to change the ORM that
+    powers Fantastico without breaking all existing code.
+    
+    .. image:: /images/core/mvc_filters.png
+    
+    For seeing how to implement filters (probably you won't need to do this) see some existing filters:
+    
+        * :py:class:`fantastico.mvc.models.model_filter.ModelFilter`
+        * :py:class:`fantastico.mvc.models.model_filter_compound.ModelFilterCompound`
+        * :py:class:`fantastico.mvc.models.model_filter_compound.ModelFilterAnd`
+        * :py:class:`fantastico.mvc.models.model_filter_compound.ModelFilterOr`
+    '''
     
     @abstractmethod
     def build(self, query):
