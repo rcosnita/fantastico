@@ -20,7 +20,11 @@ from fantastico.exceptions import FantasticoNotSupportedError
 
 class ModelFilter(object):
     '''This class provides a model filter wrapper used to dynamically transform an operation to sql alchemy filter
-    statements.'''
+    statements. You can see below how to use it:
+    
+    .. code-block:: python
+    
+        id_gt_filter = ModelFilter(PersonModel.id, 1, ModelFilter.GT)'''
     
     GT = "gt"
     GE = "ge"
@@ -52,7 +56,14 @@ class ModelFilter(object):
     
     @staticmethod
     def get_supported_operations():
-        '''This method returns all supported operations for model filter.'''
+        '''This method returns all supported operations for model filter. For now only the following operations are supported:
+        
+            * GT - greater than comparison
+            * GE - greater or equals than comparison
+            * EQ - equals comparison
+            * LE - less or equals than comparison
+            * LT - less than comparison
+        '''
         
         return [ModelFilter.GT, ModelFilter.GE, ModelFilter.EQ, ModelFilter.LT, ModelFilter.LE]
     
