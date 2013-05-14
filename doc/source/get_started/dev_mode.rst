@@ -34,7 +34,7 @@ we use a sample database for integration. You can easily use it as well to play 
 
 #. Goto fantastico framework location
 #. export MYSQL_PASSWD=***** (your mysql password)
-#. export MYSQL_HOST=localhost (your mysql localhost)
+#. export MYSQL_HOST=<hostname> (your mysql hostname: e.g localhost)
 #. sh run_setup_db.sh
 
 **run_setup_db.sh** create an initial fantastico database and a user called fantastico identified by **12345** password. After
