@@ -62,7 +62,7 @@ class ModelSort(ModelFilterAbstract):
         return sort_dir in self.get_supported_sort_dirs()
     
     def get_supported_sort_dirs(self):
-        '''This method returns all supported sort directions.'''
+        '''This method returns all supported sort directions. Currently only ASC / DESC directions are supported.'''
     
         return [ModelSort.ASC, ModelSort.DESC]
     

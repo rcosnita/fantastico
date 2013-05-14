@@ -65,6 +65,8 @@ class ModelFilterTests(FantasticoUnitTestsCase):
             model_filter = ModelFilter(model.id, ref_value, operation)
             new_query = model_filter.build(query)
             
+            self.assertEqual(model.id, model_filter.column)
+            self.assertEqual(operation, model_filter.operation)
             self.assertEqual(expected_result, new_query)
     
     def test_model_filter_in_notsupported(self):
