@@ -31,6 +31,8 @@ class ModelFilter(object):
     EQ = "eq"
     LE = "le"    
     LT = "lt"
+    LIKE = "like"
+    IN = "in"
     
     _column = None
     _ref_value = None
@@ -63,9 +65,12 @@ class ModelFilter(object):
             * EQ - equals comparison
             * LE - less or equals than comparison
             * LT - less than comparison
+            * LIKE - like comparison
+            * IN - in comparison.
         '''
         
-        return [ModelFilter.GT, ModelFilter.GE, ModelFilter.EQ, ModelFilter.LT, ModelFilter.LE]
+        return [ModelFilter.GT, ModelFilter.GE, ModelFilter.EQ, ModelFilter.LT, ModelFilter.LE, ModelFilter.LIKE,
+                ModelFilter.IN]
     
     def __init__(self, column, ref_value, operation):
         if not self._is_operation_supported(operation):
@@ -100,3 +105,25 @@ class ModelFilter(object):
 
         if self.operation == ModelFilter.LT:
             return query.filter(self.column < self.ref_value)
+        
+        if self.operation == ModelFilter.LIKE:
+            return query.filter(self.column.like(self.ref_value))
+
+        if self.operation == ModelFilter.IN:
+            if not isinstance(self.ref_value, list):
+                raise FantasticoNotSupportedError("Ref value %s is not a list. Lists are required for in comparison." %\
+                                                  self.ref_value)
+            
+            return query.filter(self.column.in_(self.ref_value))
+
+class ModelFilterAnd(object):
+    '''This class provides a compound filter that allows and conditions against models. Below you can find a simple example:
+    
+    .. code-block:: python
+    
+        id_gt_filter = ModelFilter(PersonModel.id, 1, ModelFilter.GT)
+        id_lt_filter = ModelFilter(PersonModel.id, 5, ModelFilter.LT)
+        name_like_filter = ModelFilter(PersonModel.name, '%%john%%', ModelFilter.LIKE)
+        
+        complex_condition = ModelFilterAnd(id_gt_filter, id_lt_filter, name_like_filter)
+    '''
