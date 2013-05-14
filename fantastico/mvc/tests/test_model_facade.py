@@ -16,13 +16,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.test_model_facade
 '''
-from fantastico.exceptions import FantasticoIncompatibleClassError, \
-    FantasticoDbError, FantasticoDbNotFoundError
+from fantastico.exceptions import FantasticoIncompatibleClassError, FantasticoDbError, FantasticoDbNotFoundError
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from sqlalchemy.schema import Column
+from sqlalchemy.sql.expression import asc, desc
 from sqlalchemy.types import Integer, String
 
 class PersonModelTest(BASEMODEL):
@@ -219,3 +219,15 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
             self._facade.delete(model)
         
         self.assertTrue(self._rollbacked)
+        
+    def test_get_paged_records_ok(self):
+        '''This test case ensures records can be retrieved correctly from a facade.'''
+        
+        '''records = self._facade.get_records_paged(start_record=0, end_record=4, 
+                                                 sort_expr=[ModelSort(PersonModelTest.first_name),
+                                                            ModelSort(PersonModelTest.last_name)],
+                                                 filter_expr=[ModelFilter(PersonModelTest.id, 1, "gt")])
+        
+        self.assertIsNotNone(records)
+        self.assertEqual(3, len(records))'''
+        raise NotImplementedError()
