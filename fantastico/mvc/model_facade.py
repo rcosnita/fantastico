@@ -256,10 +256,10 @@ class ModelFacade(object):
 
         query = self._session.query(self.model_cls)
         
-        for model_filter in filter_expr:
+        for model_filter in filter_expr or []:
             query = model_filter.build(query)
             
-        for model_sort in sort_expr:
+        for model_sort in sort_expr or []:
             query = model_sort.build(query)
         
         query = query.offset(start_record).limit(end_record - start_record)
