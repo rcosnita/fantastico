@@ -52,7 +52,7 @@ class ModelFilterAndTests(FantasticoUnitTestsCase):
     def test_modelfilterand_ok(self):
         '''This test case ensures compound **and** filter correctly transform the filter into sql alchemy and_ statement.'''
         
-        self._and_invoked = False
+        self._or_invoked = False
         
         model_filter = ModelFilterAnd(ModelFilter(self._model.id, 1, ModelFilter.EQ),
                                       ModelFilter(self._model.id, 1, ModelFilter.EQ),
@@ -61,7 +61,7 @@ class ModelFilterAndTests(FantasticoUnitTestsCase):
         query = Mock()
         
         def filter_fn(expr):
-            self._and_invoked = True
+            self._or_invoked = True
             
             return Mock()
             
@@ -69,7 +69,7 @@ class ModelFilterAndTests(FantasticoUnitTestsCase):
         
         query_new = model_filter.build(query)
         
-        self.assertTrue(self._and_invoked)
+        self.assertTrue(self._or_invoked)
         self.assertIsInstance(query_new, Mock)
 
     def test_modelfiterand_unhandled_exception(self):

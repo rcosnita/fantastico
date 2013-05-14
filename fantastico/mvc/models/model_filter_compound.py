@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.exceptions import FantasticoNotSupportedError, FantasticoError
 from fantastico.mvc.models.model_filter import ModelFilter
-from sqlalchemy.sql.expression import and_
+from sqlalchemy.sql.expression import and_, or_
 
 class ModelFilterCompound(object):
     '''This class provides the api for compounding ModelFilter objects into a specified sql alchemy operation.'''
@@ -45,16 +45,31 @@ class ModelFilterCompound(object):
             raise FantasticoError(ex)    
     
 class ModelFilterAnd(ModelFilterCompound):
-    '''This class provides a compound filter that allows and conditions against models. Below you can find a simple example:
+    '''This class provides a compound filter that allows **and** conditions against models. Below you can find a simple example:
     
-    .. code-block:: python
-    
-        id_gt_filter = ModelFilter(PersonModel.id, 1, ModelFilter.GT)
-        id_lt_filter = ModelFilter(PersonModel.id, 5, ModelFilter.LT)
-        name_like_filter = ModelFilter(PersonModel.name, '%%john%%', ModelFilter.LIKE)
+        .. code-block:: python
         
-        complex_condition = ModelFilterAnd(id_gt_filter, id_lt_filter, name_like_filter)
+            id_gt_filter = ModelFilter(PersonModel.id, 1, ModelFilter.GT)
+            id_lt_filter = ModelFilter(PersonModel.id, 5, ModelFilter.LT)
+            name_like_filter = ModelFilter(PersonModel.name, '%%john%%', ModelFilter.LIKE)
+            
+            complex_condition = ModelFilterAnd(id_gt_filter, id_lt_filter, name_like_filter)
     '''
     
     def __init__(self, *args):
         super(ModelFilterAnd, self).__init__(and_, *args)
+        
+class ModelFilterOr(ModelFilterCompound):
+    '''This class provides a compound filter that allows **or** conditions against models. Below you can find a simple example:
+
+        .. code-block:: python
+        
+            id_gt_filter = ModelFilter(PersonModel.id, 1, ModelFilter.GT)
+            id_lt_filter = ModelFilter(PersonModel.id, 5, ModelFilter.LT)
+            name_like_filter = ModelFilter(PersonModel.name, '%%john%%', ModelFilter.LIKE)
+            
+            complex_condition = ModelFilterOr(id_gt_filter, id_lt_filter, name_like_filter)
+    '''
+    
+    def __init__(self, *args):
+        super(ModelFilterOr, self).__init__(or_, *args)
