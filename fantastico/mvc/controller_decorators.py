@@ -33,11 +33,11 @@ class Controller(object):
                 Blog = request.models.Blog
             
                 blogs = Blog.get_records_paged(start_record=0, end_record=5, 
-                                       sort_expr=[ModelSort(Blog.create_date, "asc"), 
-                                                  ModelSort(Blog.title, "desc")],
-                                       filter_expr=[ModelFilterAnd(
-                                                       ModelFilter(Blog.id, 1, "gt"),
-                                                       ModelFilter(Blog.id, 5, "lt"))])
+                                       sort_expr=[ModelSort(Blog.create_date, ModelSort.ASC,
+                                                  ModelSort(Blog.title, ModelSort.DESC)],
+                                       filter_expr=ModelFilterAnd(
+                                                       ModelFilter(Blog.id, 1, ModelFilter.GT),
+                                                       ModelFilter(Blog.id, 5, ModelFilter.LT))))
             
                 return Response(blogs)
             
