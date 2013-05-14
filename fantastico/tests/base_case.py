@@ -21,7 +21,6 @@ from fantastico import middleware
 from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.settings import BasicSettings, SettingsFacade
 from fantastico.utils import instantiator
-import inspect
 import os
 import unittest
 
@@ -47,8 +46,8 @@ class FantasticoBaseTestCase(unittest.TestCase):
         '''We make the convention that setUpClass method will always invoke setup_once method for each test case class.'''
         
         if hasattr(cls, "setup_once"):
-            cleanup = getattr(cls, "setup_once")
-            cleanup(cls)
+            setup_once = getattr(cls, "setup_once")
+            setup_once()
         
                     
     @classmethod
@@ -57,7 +56,7 @@ class FantasticoBaseTestCase(unittest.TestCase):
         
         if hasattr(cls, "cleanup_once"):
             cleanup = getattr(cls, "cleanup_once")
-            cleanup(cls)
+            cleanup()
     
 class FantasticoUnitTestsCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each unit test written for fantastico.

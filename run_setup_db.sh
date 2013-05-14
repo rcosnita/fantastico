@@ -6,6 +6,6 @@
 
 echo "Database Fantastico created correctly." 
 
-find . -name 'module_setup.sql' | xargs /usr/bin/mysql --user=root --password=$MYSQL_PASSWD -h $MYSQL_HOST -v
+find . -name 'module_setup.sql' | awk '{ print "source",$0 }' | /usr/bin/mysql --user=root --password=$MYSQL_PASSWD -h $MYSQL_HOST -v --database=fantastico
 
 echo "All module_setup.sql executed correctly."
