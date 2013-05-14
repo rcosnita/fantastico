@@ -311,7 +311,6 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
             self._rollbacked = True
             
         self._session.rollback = rollback
-
         
         with self.assertRaises(FantasticoDbError):
             self._facade.get_records_paged(start_record=0, end_record=4, filter_expr=self._model_filter)
