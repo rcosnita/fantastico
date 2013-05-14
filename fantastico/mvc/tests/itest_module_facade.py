@@ -150,6 +150,20 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
         self.assertEqual(self.MESSAGES[2], records[1].message)
         self.assertLess(records[0].id, records[1].id)
     
+    def test_retrieve_subset_ordered_asc_in(self):
+        '''This test case ensures a subset of records is retrieved correctly when order expression and in 
+        filter are specified.'''
+
+        model_filter_in = ModelFilter(ModelFacadeMessage.message, ["Hello world 2", "Hello world 3"], ModelFilter.IN)
+        model_sort = ModelSort(ModelFacadeMessage.message, ModelSort.ASC)
+        
+        records = self.model_facade.get_records_paged(1, 2, filter_expr=model_filter_in, sort_expr=model_sort)
+        
+        self.assertIsNotNone(records)
+        self.assertEqual(1, len(records))
+        
+        self.assertEqual(self.MESSAGES[-2], records[0].message)
+    
     def test_create_duplicate(self):
         '''This test case ensure duplicate records insert attempt result in an exception.'''
         
