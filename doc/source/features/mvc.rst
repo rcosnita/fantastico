@@ -111,5 +111,5 @@ Below you can find a detailed list of filters provided by **Fantastico** MVC:
 .. autoclass:: fantastico.mvc.models.model_filter_compound.ModelFilterOr
     :members:
 
-.. autoclass:: fantastico.mvc.models.model_filter_compound.ModelSort
+.. autoclass:: fantastico.mvc.models.model_sort.ModelSort
     :members:
