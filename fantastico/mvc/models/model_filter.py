@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from abc import abstractmethod, ABCMeta
 from fantastico.exceptions import FantasticoNotSupportedError
 
-class ModelFilterAbstract(metaclass=ABCMeta):
+class ModelFilterAbstract(object, metaclass=ABCMeta):
     '''This is the base class that defines the contract a model filter must follow. A model filter is a class that decouples
     sqlalchemy framework from Fantastico MVC. This is required because in the future we might want to change the ORM that
     powers Fantastico without breaking all existing code.
