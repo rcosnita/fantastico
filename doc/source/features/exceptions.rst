@@ -3,10 +3,13 @@ Exceptions hierarchy
 
 .. autoclass:: fantastico.exceptions.FantasticoError
    :members:
-   
+
 .. autoclass:: fantastico.exceptions.FantasticoClassNotFoundError
    :members:
-   
+
+.. autoclass:: fantastico.exceptions.FantasticoNotSupportedError
+   :members:
+
 .. autoclass:: fantastico.exceptions.FantasticoSettingNotFoundError
    :members:
 
