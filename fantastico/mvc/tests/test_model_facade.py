@@ -16,8 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.test_model_facade
 '''
-from fantastico.exceptions import FantasticoIncompatibleClassError, \
-    FantasticoDbError, FantasticoDbNotFoundError
+from fantastico.exceptions import FantasticoIncompatibleClassError, FantasticoDbError, FantasticoDbNotFoundError
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.mvc.models.model_filter import ModelFilter
@@ -301,3 +300,20 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
         
         self.assertIsNotNone(records)
         self.assertEqual(0, len(records))
+    
+    def test_get_records_paged_unhandled_exception(self):
+        '''This test case ensures that any unhandled exception from filters / sql alchemy is gracefully handled.'''
+        
+        self._model_filter = ModelFilter(PersonModelTest.id, 1, ModelFilter.GT)
+        self._model_filter.build = Mock(side_effect=Exception("Unhandled exception"))
+        
+        def rollback():
+            self._rollbacked = True
+            
+        self._session.rollback = rollback
+
+        
+        with self.assertRaises(FantasticoDbError):
+            self._facade.get_records_paged(start_record=0, end_record=4, filter_expr=self._model_filter)
+
+        self.assertTrue(self._rollbacked)

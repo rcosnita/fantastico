@@ -246,6 +246,8 @@ class ModelFacade(object):
         :param sort_expr: A list of :py:class:`fantastico.mvc.models.model_sort.ModelSort` which are applied in order.
         :type sort_expr: list
         :returns: A list of matching records strongly converted to underlining model.
+        :raises fantastico.exceptions.FantasticoDbError: This exception is raised whenever an exception occurs in retrieving
+            desired dataset. The underlining session used is automatically rollbacked in order to guarantee data integrity.
         '''
         
         if filter_expr and not isinstance(filter_expr, list):
@@ -256,12 +258,17 @@ class ModelFacade(object):
 
         query = self._session.query(self.model_cls)
         
-        for model_filter in filter_expr or []:
-            query = model_filter.build(query)
+        try:
+            for model_filter in filter_expr or []:
+                query = model_filter.build(query)
+                
+            for model_sort in sort_expr or []:
+                query = model_sort.build(query)
             
-        for model_sort in sort_expr or []:
-            query = model_sort.build(query)
-        
-        query = query.offset(start_record).limit(end_record - start_record)
-        
-        return query.all()
+            query = query.offset(start_record).limit(end_record - start_record)
+            
+            return query.all()
+        except Exception as ex:
+            self._session.rollback()
+            
+            raise FantasticoDbError(ex)
