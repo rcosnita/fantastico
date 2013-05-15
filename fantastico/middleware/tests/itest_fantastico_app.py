@@ -27,7 +27,7 @@ class FantasticoAppIntegration(FantasticoIntegrationTestCase):
     
     def init(self):
         self._environ = {"CONTENT_TYPE": "text/html; charset=UTF-8",
-                           "HTTP_ACCEPT": "text/html",
+                           "HTTP_ACCEPT": "text/html;q=1,application/json;q=0.9",
                            "HTTP_ACCEPT_LANGUAGE": "ro-ro,en-US;q=0.8",
                            "HTTP_OAUTH_BEARER": "123",
                            "HTTP_HOST": "localhost:80",

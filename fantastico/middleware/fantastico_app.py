@@ -82,8 +82,9 @@ class FantasticoApp(object):
         
         response = contr_method(request)
         
-        if request.content_type != response.content_type:
-            raise FantasticoContentTypeError("User request %s but received %s." % (request.content_type, response.content_type))
+        if request.accept.quality(response.content_type) is None:
+            raise FantasticoContentTypeError("User brower accepts %s but received %s." %\
+                                             (request.accept, response.content_type))
         
         start_response(response.status, response.headerlist)
         
