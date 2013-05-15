@@ -45,8 +45,9 @@ Code the controller
                 blog_id = int(request.params.id)
             
                 posts = Post.all_paged(start_record=1,  
-                                       sort_expr=[asc(Post.created_date), desc(Post.title)],
-                                       where_expr=[eq_(Post.blog_id, blog_id)])
+                                       sort_expr=[ModelSort(Post.model_cls.created_date, ModelSort.ASC), 
+                                                  ModelSort(Post.title, ModelSort.DESC)],
+                                       where_expr=[ModelFilter(Post.model_cls.blog_id, blog_id, ModelFilter.EQ)])
                                 
                 response = Response()
                 response.text = self.load_template("/posts_listing.html", 
