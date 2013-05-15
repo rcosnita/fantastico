@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 '''
 
+from fantastico.exceptions import FantasticoError
 from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.declarative import declarative_base
@@ -26,22 +27,31 @@ SESSION = None
 
 ENGINE = None
 
-def init_dm_db_engine(db_config, echo=False):
+def init_dm_db_engine(db_config, echo=False, create_engine_fn=None, create_session_fn=None):
     '''Method used to configure the SQL Alchemy ORM behavior for Fantastico framework. It must be executed once per wsgi
     fantastico worker.'''
 
+    create_engine_fn = create_engine_fn or create_engine
+    create_session_fn = create_session_fn or scoped_session
+
     global ENGINE, SESSION
-
-    conn_props = {"drivername": db_config["drivername"],
-                  "username": db_config["username"],
-                  "password": db_config["password"],
-                  "host": db_config["host"],
-                  "port": db_config["port"],
-                  "database": db_config["database"],
-                  "query": db_config["additional_params"]}
-
-    if not ENGINE and isinstance(conn_props, dict):
-        conn_data = URL(**conn_props)
-        ENGINE = create_engine(conn_data, echo=echo)
-
-        SESSION = scoped_session(sessionmaker(bind=ENGINE))
+    
+    try:
+        conn_props = {"drivername": db_config["drivername"],
+                      "username": db_config["username"],
+                      "password": db_config["password"],
+                      "host": db_config["host"],
+                      "port": db_config["port"],
+                      "database": db_config["database"],
+                      "query": db_config["additional_params"]}
+    
+        if not ENGINE and isinstance(conn_props, dict):
+            conn_data = URL(**conn_props)
+            ENGINE = create_engine_fn(conn_data, echo=echo)
+    
+            SESSION = create_session_fn(sessionmaker(bind=ENGINE))
+    except Exception as ex:
+        ENGINE = None
+        SESSION = None
+        
+        raise FantasticoError(ex)
