@@ -35,6 +35,7 @@ class ModelSessionMiddleware(object):
         
         db_config = self._settings_facade.get("database_config")
         
-        mvc.init_dm_db_engine(db_config, create_engine_fn=create_engine, create_session_fn=create_session)
+        mvc.init_dm_db_engine(db_config, echo=db_config.get("show_sql", False),
+                              create_engine_fn=create_engine, create_session_fn=create_session)
                 
         return self._app(environ, start_response)
