@@ -16,7 +16,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.controller_decorator
 '''
+from fantastico import mvc
+from fantastico.mvc.model_facade import ModelFacade
+from fantastico.utils import instantiator
 import inspect
+from fantastico.exceptions import FantasticoControllerInvalidError
 
 class Controller(object):
     '''This class provides a decorator for magically registering methods as route handlers. This is an extremely important
@@ -33,11 +37,11 @@ class Controller(object):
                 Blog = request.models.Blog
             
                 blogs = Blog.get_records_paged(start_record=0, end_record=5, 
-                                       sort_expr=[ModelSort(Blog.create_date, ModelSort.ASC,
-                                                  ModelSort(Blog.title, ModelSort.DESC)],
+                                       sort_expr=[ModelSort(Blog.model_cls.create_date, ModelSort.ASC,
+                                                  ModelSort(Blog.model_cls.title, ModelSort.DESC)],
                                        filter_expr=ModelFilterAnd(
-                                                       ModelFilter(Blog.id, 1, ModelFilter.GT),
-                                                       ModelFilter(Blog.id, 5, ModelFilter.LT))))
+                                                       ModelFilter(Blog.model_cls.id, 1, ModelFilter.GT),
+                                                       ModelFilter(Blog.model_cls.id, 5, ModelFilter.LT))))
             
                 return Response(blogs)
             
@@ -52,6 +56,14 @@ class Controller(object):
     Below you can find the design for MVC provided by **Fantastico** framework:
     
     .. image:: /images/core/mvc.png'''
+    
+    class ModelsHolder(dict):
+        '''This class is used for holding all models injected into a controller.'''
+        
+        def __getattr__(self, name):
+            '''This method allows dictionary keys to be accessed as attributes.'''
+
+            return self.get(name)
     
     _REGISTERED_ROUTES = {}
     
@@ -80,7 +92,7 @@ class Controller(object):
         
         return self._fn_handler
     
-    def __init__(self, url, method="GET", models=None):
+    def __init__(self, url, method="GET", models=None, model_facade=ModelFacade):
         self._url = url
         
         if isinstance(method, str):
@@ -92,6 +104,7 @@ class Controller(object):
             models = {}
             
         self._models = models
+        self._model_facade = model_facade
         
         self._fn_handler = None
     
@@ -101,11 +114,33 @@ class Controller(object):
         
         return cls._REGISTERED_ROUTES
     
+    def _inject_models(self, request, session):
+        '''This method is used to inject the models required by a controller into request. Model fully qualified
+        name is resolved to a class and appended to request.models attribute.'''
+        
+        models_to_inject = Controller.ModelsHolder()
+        
+        for model_name in self.models:
+            model_cls = instantiator.import_class(self.models[model_name])
+            
+            models_to_inject[model_name] = self._model_facade(model_cls, session)
+        
+        request.models = models_to_inject
+    
     def __call__(self, orig_fn):
         '''This method takes care of registering the controller when the class is first loaded by python vm.'''
         
         def new_handler(*args, **kwargs):
             '''This method is the one that replaces the original decorated method.'''
+            
+            request = None
+            
+            try:
+                request = args[0]
+            except IndexError as ex:
+                raise FantasticoControllerInvalidError(ex)
+            
+            self._inject_models(request, mvc.SESSION)
             
             return orig_fn(*args, **kwargs)
         

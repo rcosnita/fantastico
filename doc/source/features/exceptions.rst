@@ -4,6 +4,9 @@ Exceptions hierarchy
 .. autoclass:: fantastico.exceptions.FantasticoError
    :members:
 
+.. autoclass:: fantastico.exceptions.FantasticoControllerInvalidError
+   :members:
+
 .. autoclass:: fantastico.exceptions.FantasticoClassNotFoundError
    :members:
 
