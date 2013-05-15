@@ -58,7 +58,7 @@ class FantasticoNoRequestError(FantasticoError):
     :py:class:`fantastico.middleware.request_middleware.RequestMiddleware` was executed.'''
     
 class FantasticoContentTypeError(FantasticoError):
-    '''This exception is usually thrown when a mismatch between request content type and received content type differ. In
+    '''This exception is usually thrown when a mismatch between request accept and response content type. In
     Fantastico we think it's mandatory to fulfill requests correctly and to take in consideration sent headers.'''
     
 class FantasticoHttpVerbNotSupported(FantasticoError):
