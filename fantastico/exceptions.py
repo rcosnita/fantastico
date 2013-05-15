@@ -28,6 +28,11 @@ class FantasticoError(Exception):
     We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
     that at no moment errors will cause fantastico framework wsgi container to crash.
     '''
+
+class FantasticoControllerInvalidError(FantasticoError):
+    '''This exception is raised whenever a method is decorated with 
+    :py:class:`fantastico.mvc.controller_decorators.Controller` and the number of arguments is not correct. Usually
+    developer forgot to add request as argument to the controller.'''
     
 class FantasticoClassNotFoundError(FantasticoError):
     '''This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.'''

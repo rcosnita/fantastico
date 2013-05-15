@@ -16,9 +16,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.routes_for_testing
 '''
-from fantastico.mvc.controller_decorators import Controller, ControllerProvider
-from webob.response import Response
+from fantastico.mvc import BASEMODEL
 from fantastico.mvc.base_controller import BaseController
+from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from sqlalchemy.schema import Column
+from sqlalchemy.types import Integer, String
+from webob.response import Response
+
+class File(BASEMODEL):
+    '''This is a really simple model used in tests.'''
+    
+    __tablename__ = "mvc_tests_all_files"
+    
+    id = Column("id", Integer, primary_key=True, autoincrement=True)
+    path = Column("path", String(200))
+    
+    def __init__(self, path):
+        self.path = path
 
 @ControllerProvider()
 class RoutesForControllerTesting(BaseController):
@@ -31,7 +45,8 @@ class RoutesForControllerTesting(BaseController):
         
         return response
     
-    @Controller(url="/upload_file", method=["POST"], models={"File": "fantastico.filesystem.models.File"})
+    @Controller(url="/upload_file", method=["POST"], 
+                models={"File": "fantastico.mvc.tests.routes_for_testing.File"})
     def upload_file(self, request):
         response = Response()
         response.text = "Hello world."
