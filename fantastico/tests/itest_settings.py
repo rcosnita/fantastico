@@ -26,12 +26,14 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
     '''Test suite that ensures current settings for various environments remain stable.'''
     
     def init(self):
-        self._settings_facade = SettingsFacade() 
+        self._settings_facade = None
     
     def test_settings_ok(self):
         '''Test case that ensures settings are functional for each environment available.'''
         
         def exec_test(env, settings_cls):
+            self._settings_facade = SettingsFacade()
+            
             self.assertIsInstance(self._settings_facade.get_config(), settings_cls)
             
             self.assertEqual(["fantastico.middleware.request_middleware.RequestMiddleware",
@@ -46,6 +48,8 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
         '''This test case makes sure routes loaders are configured correctly for each configuration.'''
         
         def exec_test(env, settings_cls):
+            self._settings_facade = SettingsFacade()
+            
             self.assertTrue("fantastico.routing_engine.dummy_routeloader.DummyRouteLoader" in \
                             self._settings_facade.get("routes_loaders"))
             self.assertTrue("fantastico.mvc.controller_registrator.ControllerRouteLoader" in \
@@ -57,9 +61,13 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
         '''Test case that ensures settings exception cases raise strong type exception.'''
         
         def exec_test(env, settings_cls):
+            self._settings_facade = SettingsFacade()
+            
             os.environ["FANTASTICO_ACTIVE_CONFIG"] = "not.found.package"
             
             self.assertRaises(FantasticoSettingNotFoundError, self._settings_facade.get, *["not_found_attr_1234"])
+            
+            self._settings_facade = SettingsFacade()
             
             os.environ["FANTASTICO_ACTIVE_CONFIG"] = self._envs[0][0]
                         
@@ -71,6 +79,8 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
         '''This test case ensures we have a database configured for fantastico framework.'''
         
         def exec_test(env, settings_cls):
+            self._settings_facade = SettingsFacade()
+            
             expected_config = {"drivername": "mysql+mysqlconnector",
                                "username": "fantastico",
                                "password": "12345",

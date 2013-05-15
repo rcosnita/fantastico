@@ -20,8 +20,7 @@ from fantastico import mvc
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.mvc.models.model_filter import ModelFilter
-from fantastico.mvc.models.model_filter_compound import ModelFilterAnd, \
-    ModelFilterOr
+from fantastico.mvc.models.model_filter_compound import ModelFilterAnd, ModelFilterOr
 from fantastico.mvc.models.model_sort import ModelSort
 from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
@@ -58,28 +57,30 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
         mvc.init_dm_db_engine(cls.settings_facade.get("database_config"), echo=True)
         
         cls.model_facade = ModelFacade(ModelFacadeMessage, mvc.SESSION())
+    
+    def init(self):
+        '''This method creates a number of messages before each test case.'''
         
         for message in ModelFacadeIntegration.MESSAGES:
-            message_entity = cls.model_facade.new_model(message=message)
-            message_id = cls.model_facade.create(message_entity)
+            message_entity = self.model_facade.new_model(message=message)
+            message_id = self.model_facade.create(message_entity)
             
             assert message_id[0] == message_entity.id
             assert message_id[0] > 0
             
-            cls.last_generated_pk = message_id[0]
-            cls.entities_created.append(message_entity)
+            self.last_generated_pk = message_id[0]
+            self.entities_created.append(message_entity)
         
-        records_count = cls.model_facade.count_records(ModelFilter(ModelFacadeMessage.id, 0, ModelFilter.GT))
-        assert records_count == len(cls.MESSAGES)
-    
-    @classmethod
-    def cleanup_once(cls):
-        '''This method is invoked only once after all test cases have been executed in order to delete all messages.'''
-        
-        for entity in cls.entities_created:
-            cls.model_facade.delete(entity)
+        records_count = self.model_facade.count_records(ModelFilter(ModelFacadeMessage.id, 0, ModelFilter.GT))
+        self.assertEqual(len(self.MESSAGES), records_count)
             
-        assert cls.model_facade.count_records() == 0
+    def cleanup(self):
+        '''This method is invoked after each test case in order to remove all added messages.'''
+        
+        for entity in self.entities_created:
+            self.model_facade.delete(entity)
+            
+        self.assertEqual(0, self.model_facade.count_records())
     
     def test_retrieve_message_bypk(self):
         '''This test case ensures filtering message by primary key works.'''
