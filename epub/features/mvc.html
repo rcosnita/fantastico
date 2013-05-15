@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b61 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b62 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -57,7 +57,7 @@ to an entity and pass it down to repository.</p>
 want).</p>
 <dl class="class">
 <dt id="fantastico.mvc.controller_decorators.Controller">
-<em class="property">class </em><tt class="descclassname">fantastico.mvc.controller_decorators.</tt><tt class="descname">Controller</tt><big>(</big><em>url</em>, <em>method='GET'</em>, <em>models=None</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#Controller"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.mvc.controller_decorators.</tt><tt class="descname">Controller</tt><big>(</big><em>url</em>, <em>method='GET'</em>, <em>models=None</em>, <em>model_facade=&lt;class 'fantastico.mvc.model_facade.ModelFacade'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#Controller"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This class provides a decorator for magically registering methods as route handlers. This is an extremely important
 piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
 must be executed when an http request to an url is made:</p>
@@ -69,11 +69,11 @@ must be executed when an http request to an url is made:</p>
         <span class="n">Blog</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Blog</span>
     
         <span class="n">blogs</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
-                               <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">ModelSort</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">create_date</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span><span class="p">,</span>
-                                          <span class="n">ModelSort</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">DESC</span><span class="p">)],</span>
+                               <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">ModelSort</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">create_date</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span><span class="p">,</span>
+                                          <span class="n">ModelSort</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">DESC</span><span class="p">)],</span>
                                <span class="n">filter_expr</span><span class="o">=</span><span class="n">ModelFilterAnd</span><span class="p">(</span>
-                                               <span class="n">ModelFilter</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">GT</span><span class="p">),</span>
-                                               <span class="n">ModelFilter</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">LT</span><span class="p">))))</span>
+                                               <span class="n">ModelFilter</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">GT</span><span class="p">),</span>
+                                               <span class="n">ModelFilter</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">LT</span><span class="p">))))</span>
     
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">blogs</span><span class="p">)</span>
 </pre></div>
@@ -137,7 +137,8 @@ database configuration.</p>
             <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;12345&quot;</span><span class="p">,</span>
             <span class="s">&quot;host&quot;</span><span class="p">:</span> <span class="s">&quot;localhost&quot;</span><span class="p">,</span>
             <span class="s">&quot;port&quot;</span><span class="p">:</span> <span class="mi">3306</span><span class="p">,</span>
-            <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">}</span>
+            <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
+            <span class="s">&quot;show_sql&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>By default, each time a new build is generated for fantastico each environment is validated to ensure connectivity to configured
@@ -440,7 +441,7 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 <dl class="method">
 <dt id="fantastico.mvc.base_controller.BaseController.load_template">
-<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x1f99408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a></dt>
+<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x28a8408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This method is responsible for loading a template from disk and render it using the given model data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">TestController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
@@ -454,33 +455,22 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 </dd></dl>
 
-<p>Below you can find a detailed list of filters provided by <strong>Fantastico</strong> MVC:</p>
+<div class="section" id="available-filters">
+<h3>Available filters</h3>
 <dl class="class">
-<dt id="fantastico.mvc.models.model_filter_compound.ModelFilterAbstract">
-<em class="property">class </em><tt class="descclassname">fantastico.mvc.models.model_filter_compound.</tt><tt class="descname">ModelFilterAbstract</tt></dt>
-<dd><p>This is the base class that defines the contract a model filter must follow. A model filter is a class that decouples
-sqlalchemy framework from Fantastico MVC. This is required because in the future we might want to change the ORM that
-powers Fantastico without breaking all existing code.</p>
-<img alt="../_images/mvc_filters.png" src="../_images/mvc_filters.png" />
-<p>For seeing how to implement filters (probably you won&#8217;t need to do this) see some existing filters:</p>
-<blockquote>
-<div><ul class="simple">
-<li><a class="reference internal" href="#fantastico.mvc.models.model_filter.ModelFilter" title="fantastico.mvc.models.model_filter.ModelFilter"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter.ModelFilter</span></tt></a></li>
-<li><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter_compound.ModelFilterCompound</span></tt></li>
-<li><a class="reference internal" href="#fantastico.mvc.models.model_filter_compound.ModelFilterAnd" title="fantastico.mvc.models.model_filter_compound.ModelFilterAnd"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter_compound.ModelFilterAnd</span></tt></a></li>
-<li><a class="reference internal" href="#fantastico.mvc.models.model_filter_compound.ModelFilterOr" title="fantastico.mvc.models.model_filter_compound.ModelFilterOr"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter_compound.ModelFilterOr</span></tt></a></li>
-</ul>
-</div></blockquote>
+<dt id="fantastico.mvc.models.model_filter_compound.ModelFilterCompound">
+<em class="property">class </em><tt class="descclassname">fantastico.mvc.models.model_filter_compound.</tt><tt class="descname">ModelFilterCompound</tt><big>(</big><em>operation</em>, <em>*args</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter_compound.html#ModelFilterCompound"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the api for compounding ModelFilter objects into a specified sql alchemy operation.</p>
 <dl class="method">
-<dt id="fantastico.mvc.models.model_filter_compound.ModelFilterAbstract.build">
-<tt class="descname">build</tt><big>(</big><em>query</em><big>)</big></dt>
-<dd><p>This method is used for appending the current filter to the query using sqlalchemy specific language.</p>
+<dt id="fantastico.mvc.models.model_filter_compound.ModelFilterCompound.build">
+<tt class="descname">build</tt><big>(</big><em>query</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter_compound.html#ModelFilterCompound.build"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method transform the current compound statement into an sql alchemy filter.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="fantastico.mvc.models.model_filter_compound.ModelFilterAbstract.get_expression">
-<tt class="descname">get_expression</tt><big>(</big><big>)</big></dt>
-<dd><p>This method is used for retrieving native sqlalchemy expression held by this filter.</p>
+<dt id="fantastico.mvc.models.model_filter_compound.ModelFilterCompound.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter_compound.html#ModelFilterCompound.get_expression"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method transforms calculates sqlalchemy expression held by this filter.</p>
 </dd></dl>
 
 </dd></dl>
@@ -605,6 +595,7 @@ statements. You can see below how to use it:</p>
 
 </dd></dl>
 
+</div>
 </div>
 <div class="section" id="database-session-management">
 <h2>Database session management</h2>

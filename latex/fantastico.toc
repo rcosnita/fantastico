@@ -14,7 +14,7 @@
 \contentsline {section}{\numberline {2.3}Contribute}{6}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Code contribution}{6}{subsection.2.3.1}
 \contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.15}
-\contentsline {subsubsection}{Writing integration tests}{7}{subsubsection*.19}
+\contentsline {subsubsection}{Writing integration tests}{7}{subsubsection*.20}
 \contentsline {section}{\numberline {2.4}Development mode}{8}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}Hot deploy}{8}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}API}{8}{subsection.2.4.2}
@@ -38,7 +38,8 @@
 \contentsline {subsection}{\numberline {3.4.3}Model}{19}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}View}{23}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}Controller}{23}{subsection.3.4.5}
-\contentsline {subsection}{\numberline {3.4.6}Database session management}{26}{subsection.3.4.6}
+\contentsline {subsubsection}{Available filters}{24}{subsubsection*.85}
+\contentsline {subsection}{\numberline {3.4.6}Database session management}{25}{subsection.3.4.6}
 \contentsline {chapter}{\numberline {4}How to articles}{27}{chapter.4}
 \contentsline {section}{\numberline {4.1}MVC How to}{27}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Code the model}{27}{subsection.4.1.1}
@@ -47,4 +48,4 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{28}{subsection.4.1.4}
 \contentsline {chapter}{\numberline {5}Build status}{29}{chapter.5}
 \contentsline {chapter}{\numberline {6}License}{31}{chapter.6}
-\contentsline {chapter}{Index}{33}{section*.102}
+\contentsline {chapter}{Index}{33}{section*.105}

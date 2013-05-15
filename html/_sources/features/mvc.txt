@@ -48,7 +48,8 @@ database configuration.
                 "password": "12345",
                 "host": "localhost",
                 "port": 3306,
-                "database": "fantastico"}
+                "database": "fantastico",
+                "show_sql": True}
 
 By default, each time a new build is generated for fantastico each environment is validated to ensure connectivity to configured
 database works.
@@ -97,9 +98,10 @@ API is documented :py:class:`fantastico.mvc.controller_decorator.Controller`.
 .. autoclass:: fantastico.mvc.base_controller.BaseController
     :members:
 
-Below you can find a detailed list of filters provided by **Fantastico** MVC:
+Available filters
+~~~~~~~~~~~~~~~~~
 
-.. autoclass:: fantastico.mvc.models.model_filter_compound.ModelFilterAbstract
+.. autoclass:: fantastico.mvc.models.model_filter_compound.ModelFilterCompound
     :members:
 
 .. autoclass:: fantastico.mvc.models.model_filter.ModelFilter

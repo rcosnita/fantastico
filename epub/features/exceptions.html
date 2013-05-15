@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b61 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b62 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -44,6 +44,14 @@
 each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception. 
 We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
 that at no moment errors will cause fantastico framework wsgi container to crash.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoControllerInvalidError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoControllerInvalidError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoControllerInvalidError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is raised whenever a method is decorated with 
+<a class="reference internal" href="mvc.html#fantastico.mvc.controller_decorators.Controller" title="fantastico.mvc.controller_decorators.Controller"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.controller_decorators.Controller</span></tt></a> and the number of arguments is not correct. Usually
+developer forgot to add request as argument to the controller.</p>
 </dd></dl>
 
 <dl class="class">
@@ -93,7 +101,7 @@ configuration.</p>
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoContentTypeError">
 <em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoContentTypeError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoContentTypeError"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>This exception is usually thrown when a mismatch between request content type and received content type differ. In
+<dd><p>This exception is usually thrown when a mismatch between request accept and response content type. In
 Fantastico we think it&#8217;s mandatory to fulfill requests correctly and to take in consideration sent headers.</p>
 </dd></dl>
 

@@ -169,9 +169,6 @@
     <item id="_images_routing_engine.png"
           href="_images/routing_engine.png"
           media-type="image/png" />
-    <item id="_images_mvc_filters.png"
-          href="_images/mvc_filters.png"
-          media-type="image/png" />
     <item id="features_mvc.html"
           href="features/mvc.html"
           media-type="application/xhtml+xml" />

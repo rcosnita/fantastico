@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 15, 2013}
-\release{0.0.1-b61}
+\release{0.0.1-b62}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -564,6 +564,19 @@ This method determines the root folder under which core is executed.
 
 \end{fulllineitems}
 
+\index{setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoUnitTestsCase.setup_once}\pysiglinewithargsret{\strong{classmethod }\bfcode{setup\_once}}{}{}
+This method is overriden in order to correctly mock some dependencies:
+\begin{itemize}
+\item {} 
+{\hyperref[features/mvc:fantastico.mvc.controller_decorators.Controller]{\code{fantastico.mvc.controller\_decorators.Controller}}}
+
+\end{itemize}
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -730,7 +743,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4c82c88\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x55f7848\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -798,6 +811,16 @@ that at no moment errors will cause fantastico framework wsgi container to crash
 
 \end{fulllineitems}
 
+\index{FantasticoControllerInvalidError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoControllerInvalidError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoControllerInvalidError}}
+This exception is raised whenever a method is decorated with 
+{\hyperref[features/mvc:fantastico.mvc.controller_decorators.Controller]{\code{fantastico.mvc.controller\_decorators.Controller}}} and the number of arguments is not correct. Usually
+developer forgot to add request as argument to the controller.
+
+\end{fulllineitems}
+
 \index{FantasticoClassNotFoundError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
@@ -860,7 +883,7 @@ This exception is usually raised when some components try to use fantastico.requ
 
 \begin{fulllineitems}
 \phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoContentTypeError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoContentTypeError}}
-This exception is usually thrown when a mismatch between request content type and received content type differ. In
+This exception is usually thrown when a mismatch between request accept and response content type. In
 Fantastico we think it's mandatory to fulfill requests correctly and to take in consideration sent headers.
 
 \end{fulllineitems}
@@ -1272,7 +1295,7 @@ want).
 \index{Controller (class in fantastico.mvc.controller\_decorators)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.controller\_decorators.}\bfcode{Controller}}{\emph{url}, \emph{method='GET'}, \emph{models=None}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.controller\_decorators.}\bfcode{Controller}}{\emph{url}, \emph{method='GET'}, \emph{models=None}, \emph{model\_facade=\textless{}class `fantastico.mvc.model\_facade.ModelFacade'\textgreater{}}}{}
 This class provides a decorator for magically registering methods as route handlers. This is an extremely important
 piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
 must be executed when an http request to an url is made:
@@ -1286,11 +1309,11 @@ must be executed when an http request to an url is made:
         \PYG{n}{Blog} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Blog}
     
         \PYG{n}{blogs} \PYG{o}{=} \PYG{n}{Blog}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} 
-                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{,}
-                                          \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{,}
+                                          \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
                                \PYG{n}{filter\PYGZus{}expr}\PYG{o}{=}\PYG{n}{ModelFilterAnd}\PYG{p}{(}
-                                               \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}\PYG{p}{,}
-                                               \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
+                                               \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}\PYG{p}{,}
+                                               \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
     
         \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{blogs}\PYG{p}{)}
 \end{Verbatim}
@@ -1382,7 +1405,8 @@ database configuration.
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{password}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{12345}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{host}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{localhost}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{port}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{3306}\PYG{p}{,}
-            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{database}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{database}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{show\PYGZus{}sql}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n+nb+bp}{True}\PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 
 By default, each time a new build is generated for fantastico each environment is validated to ensure connectivity to configured
@@ -1722,7 +1746,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1f99408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x28a8408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -1741,45 +1765,26 @@ The above snippet will search for \textbf{hello.html} into component folder/view
 \end{fulllineitems}
 
 
-Below you can find a detailed list of filters provided by \textbf{Fantastico} MVC:
-\index{ModelFilterAbstract (class in fantastico.mvc.models.model\_filter\_compound)}
+
+\subsubsection{Available filters}
+\label{features/mvc:available-filters}\index{ModelFilterCompound (class in fantastico.mvc.models.model\_filter\_compound)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAbstract}\pysigline{\strong{class }\code{fantastico.mvc.models.model\_filter\_compound.}\bfcode{ModelFilterAbstract}}
-This is the base class that defines the contract a model filter must follow. A model filter is a class that decouples
-sqlalchemy framework from Fantastico MVC. This is required because in the future we might want to change the ORM that
-powers Fantastico without breaking all existing code.
-
-\includegraphics{mvc_filters.png}
-
-For seeing how to implement filters (probably you won't need to do this) see some existing filters:
-\begin{itemize}
-\item {} 
-{\hyperref[features/mvc:fantastico.mvc.models.model_filter.ModelFilter]{\code{fantastico.mvc.models.model\_filter.ModelFilter}}}
-
-\item {} 
-\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound}
-
-\item {} 
-{\hyperref[features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAnd]{\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterAnd}}}
-
-\item {} 
-{\hyperref[features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterOr]{\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterOr}}}
-
-\end{itemize}
-\index{build() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method)}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterCompound}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.models.model\_filter\_compound.}\bfcode{ModelFilterCompound}}{\emph{operation}, \emph{*args}}{}
+This class provides the api for compounding ModelFilter objects into a specified sql alchemy operation.
+\index{build() (fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAbstract.build}\pysiglinewithargsret{\bfcode{build}}{\emph{query}}{}
-This method is used for appending the current filter to the query using sqlalchemy specific language.
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterCompound.build}\pysiglinewithargsret{\bfcode{build}}{\emph{query}}{}
+This method transform the current compound statement into an sql alchemy filter.
 
 \end{fulllineitems}
 
-\index{get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method)}
+\index{get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAbstract.get_expression}\pysiglinewithargsret{\bfcode{get\_expression}}{}{}
-This method is used for retrieving native sqlalchemy expression held by this filter.
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterCompound.get_expression}\pysiglinewithargsret{\bfcode{get\_expression}}{}{}
+This method transforms calculates sqlalchemy expression held by this filter.
 
 \end{fulllineitems}
 
@@ -2035,8 +2040,9 @@ Create a new module called \textbf{blog\_controller} and paste the following cod
         \PYG{n}{blog\PYGZus{}id} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{request}\PYG{o}{.}\PYG{n}{params}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
 
         \PYG{n}{posts} \PYG{o}{=} \PYG{n}{Post}\PYG{o}{.}\PYG{n}{all\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,}
-                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{asc}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{created\PYGZus{}date}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
-                               \PYG{n}{where\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{eq\PYGZus{}}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{created\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{)}\PYG{p}{,}
+                                          \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                               \PYG{n}{where\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{EQ}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
 
         \PYG{n}{response} \PYG{o}{=} \PYG{n}{Response}\PYG{p}{(}\PYG{p}{)}
         \PYG{n}{response}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/posts\PYGZus{}listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}

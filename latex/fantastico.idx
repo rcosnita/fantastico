@@ -13,6 +13,7 @@
 \indexentry{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)|hyperpage}{6}
 \indexentry{\_get\_class\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
 \indexentry{\_get\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
+\indexentry{setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method)|hyperpage}{7}
 \indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{7}
 \indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{7}
 \indexentry{\_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
@@ -23,14 +24,15 @@
 \indexentry{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
 \indexentry{\_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
 \indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{8}
-\indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{8}
+\indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{9}
 \indexentry{started (fantastico.server.dev\_server.DevServer attribute)|hyperpage}{9}
 \indexentry{stop() (fantastico.server.dev\_server.DevServer method)|hyperpage}{9}
 \indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{11}
+\indexentry{FantasticoControllerInvalidError (class in fantastico.exceptions)|hyperpage}{11}
 \indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{11}
 \indexentry{FantasticoNotSupportedError (class in fantastico.exceptions)|hyperpage}{11}
-\indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{11}
-\indexentry{FantasticoDuplicateRouteError (class in fantastico.exceptions)|hyperpage}{11}
+\indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{12}
+\indexentry{FantasticoDuplicateRouteError (class in fantastico.exceptions)|hyperpage}{12}
 \indexentry{FantasticoNoRoutesError (class in fantastico.exceptions)|hyperpage}{12}
 \indexentry{FantasticoRouteNotFoundError (class in fantastico.exceptions)|hyperpage}{12}
 \indexentry{FantasticoNoRequestError (class in fantastico.exceptions)|hyperpage}{12}
@@ -76,17 +78,17 @@
 \indexentry{BaseController (class in fantastico.mvc.base\_controller)|hyperpage}{23}
 \indexentry{get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{23}
 \indexentry{load\_template() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{23}
-\indexentry{ModelFilterAbstract (class in fantastico.mvc.models.model\_filter\_compound)|hyperpage}{24}
-\indexentry{build() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method)|hyperpage}{24}
-\indexentry{get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method)|hyperpage}{24}
+\indexentry{ModelFilterCompound (class in fantastico.mvc.models.model\_filter\_compound)|hyperpage}{24}
+\indexentry{build() (fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound method)|hyperpage}{24}
+\indexentry{get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound method)|hyperpage}{24}
 \indexentry{ModelFilter (class in fantastico.mvc.models.model\_filter)|hyperpage}{24}
 \indexentry{build() (fantastico.mvc.models.model\_filter.ModelFilter method)|hyperpage}{24}
 \indexentry{column (fantastico.mvc.models.model\_filter.ModelFilter attribute)|hyperpage}{24}
 \indexentry{get\_expression() (fantastico.mvc.models.model\_filter.ModelFilter method)|hyperpage}{24}
 \indexentry{get\_supported\_operations() (fantastico.mvc.models.model\_filter.ModelFilter static method)|hyperpage}{24}
-\indexentry{operation (fantastico.mvc.models.model\_filter.ModelFilter attribute)|hyperpage}{25}
-\indexentry{ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute)|hyperpage}{25}
-\indexentry{ModelFilterAnd (class in fantastico.mvc.models.model\_filter\_compound)|hyperpage}{25}
+\indexentry{operation (fantastico.mvc.models.model\_filter.ModelFilter attribute)|hyperpage}{24}
+\indexentry{ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute)|hyperpage}{24}
+\indexentry{ModelFilterAnd (class in fantastico.mvc.models.model\_filter\_compound)|hyperpage}{24}
 \indexentry{ModelFilterOr (class in fantastico.mvc.models.model\_filter\_compound)|hyperpage}{25}
 \indexentry{ModelSort (class in fantastico.mvc.models.model\_sort)|hyperpage}{25}
 \indexentry{build() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
@@ -94,4 +96,4 @@
 \indexentry{get\_expression() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
 \indexentry{get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
 \indexentry{sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute)|hyperpage}{25}
-\indexentry{ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware)|hyperpage}{26}
+\indexentry{ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware)|hyperpage}{25}
