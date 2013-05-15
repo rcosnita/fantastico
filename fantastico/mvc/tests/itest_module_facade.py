@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.tests.itest_model_facade
 '''
 from fantastico import mvc
+from fantastico.exceptions import FantasticoDbError, FantasticoDbNotFoundError
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.mvc.models.model_filter import ModelFilter
@@ -24,9 +25,9 @@ from fantastico.mvc.models.model_filter_compound import ModelFilterAnd, ModelFil
 from fantastico.mvc.models.model_sort import ModelSort
 from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
+from mock import Mock
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, Text
-from fantastico.exceptions import FantasticoDbError
 
 class ModelFacadeMessage(BASEMODEL):
     '''This class is a simple mapping over mvc_model_facade_messages table.'''
@@ -89,6 +90,12 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
         
         self.assertIsNotNone(message)
         self.assertEqual(self.MESSAGES[-1], message.message)
+    
+    def test_retrieve_message_bypk_notfound(self):
+        '''This test case ensures an exception is raised if a record is not found.'''
+        
+        with self.assertRaises(FantasticoDbNotFoundError):
+            self.model_facade.find_by_pk({ModelFacadeMessage.id: -1})
     
     def test_retrieve_message_byfilter_and(self):
         '''This test case ensures filtering message using compound **and** works as expected.'''
@@ -194,3 +201,12 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
             self.assertEqual("simple message", model.message)
         finally:
             self.model_facade.delete(model)
+    
+    def test_count_records_exception_unhandled(self):
+        '''This integration test make sure an unhandled exception is converted into a db error.'''
+        
+        filter = Mock()
+        filter.build = Mock(side_effect=Exception("Unhandled exception"))
+        
+        with self.assertRaises(FantasticoDbError):
+            self.model_facade.count_records(filter)
