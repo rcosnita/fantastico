@@ -38,7 +38,8 @@ class BasicSettings(object):
         '''Property that holds all installed middlewares.'''
         
         return ["fantastico.middleware.request_middleware.RequestMiddleware",
-                "fantastico.middleware.routing_middleware.RoutingMiddleware"]
+                "fantastico.middleware.routing_middleware.RoutingMiddleware",
+                "fantastico.middleware.model_session_middleware.ModelSessionMiddleware"]
     
     @property
     def supported_languages(self):
@@ -94,9 +95,11 @@ class BasicSettings(object):
                         "port": 3306,
                         "host": "localhost",
                         "database": "fantastico",
-                        "additional_params": {"charset": "utf8"}}
+                        "additional_params": {"charset": "utf8"},
+                        "show_sql": True}
                         
         As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
+        **show_sql** key tells orm engine from **Fantastico** to display all generated queries.
         '''
         
         return {"drivername": "mysql+mysqlconnector",
@@ -105,7 +108,8 @@ class BasicSettings(object):
                 "port": 3306,
                 "host": "localhost",
                 "database": "fantastico",
-                "additional_params": {"charset": "utf8"}}
+                "additional_params": {"charset": "utf8"},
+                "show_sql": True}
         
 class AwsStageSettings(BasicSettings):
     '''This class provides the configuration profile for Aws Stage environment integration.'''
@@ -117,6 +121,7 @@ class AwsStageSettings(BasicSettings):
         db_config = super(AwsStageSettings, self).database_config
         
         db_config["host"] = "fantastico.ccv3dqqpsvpf.eu-west-1.rds.amazonaws.com"
+        db_config["show_sql"] = False
         
         return db_config
         
