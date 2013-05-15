@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico import middleware
 from fantastico.middleware.fantastico_app import FantasticoApp
-from fantastico.settings import BasicSettings, SettingsFacade
+from fantastico.settings import BasicSettings, SettingsFacade, AwsStageSettings
 from fantastico.utils import instantiator
 import os
 import unittest
@@ -109,7 +109,8 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         return self.__envs
     
     def setUp(self):
-        self.__envs = [("fantastico.settings.BasicSettings", BasicSettings)]
+        self.__envs = [("fantastico.settings.BasicSettings", BasicSettings),
+                       ("fantastico.settings.AwsStageSettings", AwsStageSettings)]
         self.__old_middlewares_call = []
         
         self._save_call_methods(SettingsFacade().get_config().installed_middleware)
