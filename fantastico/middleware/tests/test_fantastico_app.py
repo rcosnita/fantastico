@@ -36,6 +36,7 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         
         self._request = Request.blank("/simple/request")
         self._request.content_type = "text/html"
+        self._request.accept = "text/html;q=1"
         self._controller = Mock()
         self._controller.exec_logic = Mock(return_value=Response(content_type="text/html"))
         self._environ = {"fantastico.request": self._request, 
@@ -174,13 +175,13 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         self.assertRaises(FantasticoRouteNotFoundError, app_middleware, *[self._environ, Mock()])        
         
     def test_mistmatch_content_headers(self):
-        '''This test case makes sure an exception is raised whenever request content type is different than response
+        '''This test case makes sure an exception is raised whenever client browser does not accept response
         content type.'''
         
         self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
 
         response = Response()
-        response.content_type = "application/json"
+        response.content_type = "not supported"
         response.text = "Hello world"
         
         self._controller.exec_logic = lambda request: response
