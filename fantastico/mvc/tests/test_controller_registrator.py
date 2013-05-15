@@ -18,15 +18,25 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico import settings
-from fantastico.mvc.controller_registrator import ControllerRouteLoader
-from fantastico.tests.base_case import FantasticoUnitTestsCase
+from fantastico.mvc import controller_decorators
+from fantastico.tests.base_case import FantasticoUnitTestsCase, FakeControllerDecorator
 from fantastico.utils import instantiator
 from mock import Mock
 
 class ControllerRouteLoaderTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for ensuring routes are correctly registered using Controller decorator.'''
     
-    def init(self):        
+    @classmethod
+    def setup_once(cls):
+        '''We rebind original Controller decorator to its module.'''
+        
+        super(ControllerRouteLoaderTests, cls).setup_once()
+        
+        controller_decorators.Controller = cls._old_controller_decorator
+    
+    def init(self):
+        from fantastico.mvc.controller_registrator import ControllerRouteLoader
+        
         self._settings_facade = Mock()
         self._settings_facade.get_config = Mock(return_value=settings.BasicSettings())
         

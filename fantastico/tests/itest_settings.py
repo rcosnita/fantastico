@@ -37,8 +37,8 @@ class SettingsIntegration(FantasticoIntegrationTestCase):
             self.assertIsInstance(self._settings_facade.get_config(), settings_cls)
             
             self.assertEqual(["fantastico.middleware.request_middleware.RequestMiddleware",
-                              "fantastico.middleware.routing_middleware.RoutingMiddleware",
-                              "fantastico.middleware.model_session_middleware.ModelSessionMiddleware"], 
+                              "fantastico.middleware.model_session_middleware.ModelSessionMiddleware",
+                              "fantastico.middleware.routing_middleware.RoutingMiddleware"], 
                               self._settings_facade.get("installed_middleware"))
                         
             self.assertEqual(["en_us"], self._settings_facade.get("supported_languages"))

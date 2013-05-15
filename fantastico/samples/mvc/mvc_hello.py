@@ -17,19 +17,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.samples.mvc.mvc_hello
 '''
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from fantastico.mvc.controller_decorators import ControllerProvider, Controller
 from webob.response import Response
 
 @ControllerProvider()
 class MvcHelloController(BaseController):
     '''This class provides some simple examples of how to write controllers based on Fantastico mvc.'''
     
-    @Controller(url="/mvc/hello-world", method="GET")
+    @Controller(url="/mvc/hello-world", method="GET", 
+                models={"FriendlyMessage": "fantastico.samples.mvc.models.friendly_message.MvcFriendlyMessage"})
     def say_hello(self, request):
         '''This method simple say hello world and wrap it into compatible response.'''
         
-        tpl = self.load_template(tpl_name="/say_hello.html", model_data={"hello_msg": "Hello world. It works like a charm."})
+        message_model = request.models.FriendlyMessage
+        
+        msg = message_model.new_model(message="Hello world. It works like a charm.")
+        
+        msg_pk = message_model.create(msg)[0]
+        
+        msg_persisted = message_model.find_by_pk({message_model.model_cls.id: msg_pk})
+        
+        tpl = self.load_template(tpl_name="/say_hello.html", model_data={"hello_msg": msg_persisted.message})
         
         response = Response(tpl, content_type=request.content_type)
+        
+        message_model.delete(msg)
         
         return response

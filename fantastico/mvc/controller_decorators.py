@@ -17,10 +17,19 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.controller_decorator
 '''
 from fantastico import mvc
+from fantastico.exceptions import FantasticoControllerInvalidError
+from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.utils import instantiator
 import inspect
-from fantastico.exceptions import FantasticoControllerInvalidError
+
+class ModelsHolder(dict):
+    '''This class is used for holding all models injected into a controller.'''
+    
+    def __getattr__(self, name):
+        '''This method allows dictionary keys to be accessed as attributes.'''
+
+        return self.get(name)
 
 class Controller(object):
     '''This class provides a decorator for magically registering methods as route handlers. This is an extremely important
@@ -56,15 +65,7 @@ class Controller(object):
     Below you can find the design for MVC provided by **Fantastico** framework:
     
     .. image:: /images/core/mvc.png'''
-    
-    class ModelsHolder(dict):
-        '''This class is used for holding all models injected into a controller.'''
         
-        def __getattr__(self, name):
-            '''This method allows dictionary keys to be accessed as attributes.'''
-
-            return self.get(name)
-    
     _REGISTERED_ROUTES = {}
     
     @property
@@ -118,7 +119,7 @@ class Controller(object):
         '''This method is used to inject the models required by a controller into request. Model fully qualified
         name is resolved to a class and appended to request.models attribute.'''
         
-        models_to_inject = Controller.ModelsHolder()
+        models_to_inject = ModelsHolder()
         
         for model_name in self.models:
             model_cls = instantiator.import_class(self.models[model_name])
@@ -137,6 +138,9 @@ class Controller(object):
             
             try:
                 request = args[0]
+                
+                if isinstance(request, BaseController):
+                    request = args[1]
             except IndexError as ex:
                 raise FantasticoControllerInvalidError(ex)
             
@@ -150,7 +154,7 @@ class Controller(object):
         
         self._fn_handler = new_handler
         
-        Controller.get_registered_routes()[self.url] = self
+        self.get_registered_routes()[self.url] = self
         
         return self._fn_handler
     
