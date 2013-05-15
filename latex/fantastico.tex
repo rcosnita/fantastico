@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{May 12, 2013}
-\release{0.0.1-b59}
+\date{May 15, 2013}
+\release{0.0.1-b60}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -728,7 +728,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x54366b0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5a378d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -755,6 +755,30 @@ This method stops the current running server (if any available).
 
 
 
+\subsection{Database config}
+\label{get_started/dev_mode:database-config}
+Usually you will use \textbf{Fantastico} framework together with a database. When we develop new core features of \textbf{Fantastico}
+we use a sample database for integration. You can easily use it as well to play around:
+\begin{enumerate}
+\item {} 
+Goto fantastico framework location
+
+\item {} 
+export MYSQL\_PASSWD=***** (your mysql password)
+
+\item {} 
+export MYSQL\_HOST=\textless{}hostname\textgreater{} (your mysql hostname: e.g localhost)
+
+\item {} 
+sh run\_setup\_db.sh
+
+\end{enumerate}
+
+\textbf{run\_setup\_db.sh} create an initial fantastico database and a user called fantastico identified by \textbf{12345} password. After
+database is successfully created, it scans for all available \textbf{module\_setup.sql} files and execute them against newly created
+database.
+
+
 \chapter{Fantastico features}
 \label{features/features::doc}\label{features/features:fantastico-features}
 
@@ -777,6 +801,14 @@ that at no moment errors will cause fantastico framework wsgi container to crash
 \begin{fulllineitems}
 \phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoClassNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoClassNotFoundError}}
 This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.
+
+\end{fulllineitems}
+
+\index{FantasticoNotSupportedError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNotSupportedError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNotSupportedError}}
+This exception is raised whenever code tries to do an operation that is  not supported.
 
 \end{fulllineitems}
 
@@ -852,6 +884,34 @@ This property returns the http verb that caused the problems.
 \begin{fulllineitems}
 \phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoTemplateNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoTemplateNotFoundError}}
 This exception is usually thrown when a controller tries to load a template which it does not found.
+
+\end{fulllineitems}
+
+\index{FantasticoIncompatibleClassError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoIncompatibleClassError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoIncompatibleClassError}}
+This exception is usually thrown when we want to decorate / inject / mixin a class into another class
+that does not support it. For instance, we want to build a {\hyperref[features/mvc:fantastico.mvc.model_facade.ModelFacade]{\code{fantastico.mvc.model\_facade.ModelFacade}}}
+with a class that does not extend \textbf{BASEMODEL.}
+
+\end{fulllineitems}
+
+\index{FantasticoDbError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDbError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDbError}}
+This exception is usually thrown when a database exception occurs. For one good example where this is used see
+{\hyperref[features/mvc:fantastico.mvc.model_facade.ModelFacade]{\code{fantastico.mvc.model\_facade.ModelFacade}}}.
+
+\end{fulllineitems}
+
+\index{FantasticoDbNotFoundError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDbNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDbNotFoundError}}
+This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is 
+used see {\hyperref[features/mvc:fantastico.mvc.model_facade.ModelFacade]{\code{fantastico.mvc.model\_facade.ModelFacade}}}.
 
 \end{fulllineitems}
 
@@ -1223,8 +1283,12 @@ must be executed when an http request to an url is made:
     \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blogs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
         \PYG{n}{Blog} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Blog}
     
-        \PYG{n}{blogs} \PYG{o}{=} \PYG{n}{Blog}\PYG{o}{.}\PYG{n}{all\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} 
-                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{asc}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{)}\PYG{p}{,} \PYG{n}{desc}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{title}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+        \PYG{n}{blogs} \PYG{o}{=} \PYG{n}{Blog}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} 
+                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{,}
+                                          \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                               \PYG{n}{filter\PYGZus{}expr}\PYG{o}{=}\PYG{n}{ModelFilterAnd}\PYG{p}{(}
+                                               \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}\PYG{p}{,}
+                                               \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
     
         \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{blogs}\PYG{p}{)}
 \end{Verbatim}
@@ -1322,6 +1386,263 @@ database configuration.
 By default, each time a new build is generated for fantastico each environment is validated to ensure connectivity to configured
 database works.
 
+There are multiple ways in how a model is used but the easiest way is to use an autogenerated model facade:
+\index{ModelFacade (class in fantastico.mvc.model\_facade)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.model\_facade.}\bfcode{ModelFacade}}{\emph{model\_cls}, \emph{session}}{}
+This class provides a generic model facade factory. In order to work \textbf{Fantastico} base model it is recommended
+to use autogenerated facade objects. A facade object is binded to a given model and given database session.
+\index{count\_records() (fantastico.mvc.model\_facade.ModelFacade method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.count_records}\pysiglinewithargsret{\bfcode{count\_records}}{\emph{filter\_expr=None}}{}
+This method is used for counting the number of records from underlining facade. In addition it applies the
+filter expressions specified (if any).
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{records} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{count\PYGZus{}records}\PYG{p}{(}
+                           \PYG{n}{filter\PYGZus{}expr}\PYG{o}{=}\PYG{n}{ModelFilterAnd}\PYG{p}{(}
+                                           \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}\PYG{p}{,}
+                                           \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{filter\_expr} (\emph{list}) -- A list of \code{fantastico.mvc.models.model\_filter.ModelFilterAbstract} which are applied in order.
+
+\item[{Raises {\hyperref[features/exceptions:fantastico.exceptions.FantasticoDbError]{fantastico.exceptions.FantasticoDbError}}}] \leavevmode
+This exception is raised whenever an exception occurs in retrieving
+desired dataset. The underlining session used is automatically rollbacked in order to guarantee data integrity.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{create() (fantastico.mvc.model\_facade.ModelFacade method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.create}\pysiglinewithargsret{\bfcode{create}}{\emph{model}}{}
+This method add the given model in the database.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
+    
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
+        
+\PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
+
+\PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{new\PYGZus{}model}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{John}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Doe}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{facade}\PYG{o}{.}\PYG{n}{create}\PYG{p}{(}\PYG{n}{model}\PYG{p}{)}
+\end{Verbatim}
+\begin{quote}\begin{description}
+\item[{Returns}] \leavevmode
+The newly generated primary key or the specified primary key (it might be a scalar value or a tuple).
+
+\item[{Raises {\hyperref[features/exceptions:fantastico.exceptions.FantasticoDbError]{fantastico.exceptions.FantasticoDbError}}}] \leavevmode
+Raised when an unhandled exception occurs. By default, session
+is rollback automatically so that other consumers can still work as expected.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{delete() (fantastico.mvc.model\_facade.ModelFacade method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.delete}\pysiglinewithargsret{\bfcode{delete}}{\emph{model}}{}
+This method deletes a given model from database. Below you can find a simple example of how to use this:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
+    
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
+        
+\PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
+\PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{find\PYGZus{}by\PYGZus{}pk}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{:} \PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+\PYG{n}{facade}\PYG{o}{.}\PYG{n}{delete}\PYG{p}{(}\PYG{n}{model}\PYG{p}{)}
+\end{Verbatim}
+\begin{quote}\begin{description}
+\item[{Raises {\hyperref[features/exceptions:fantastico.exceptions.FantasticoDbError]{fantastico.exceptions.FantasticoDbError}}}] \leavevmode
+Raised when an unhandled exception occurs. By default, session
+is rollback automatically so that other consumers can still work as expected.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{find\_by\_pk() (fantastico.mvc.model\_facade.ModelFacade method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.find_by_pk}\pysiglinewithargsret{\bfcode{find\_by\_pk}}{\emph{pk\_values}}{}
+This method returns the entity which matches the given primary key values.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
+    
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
+        
+\PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
+\PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{find\PYGZus{}by\PYGZus{}pk}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{:} \PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{get\_records\_paged() (fantastico.mvc.model\_facade.ModelFacade method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.get_records_paged}\pysiglinewithargsret{\bfcode{get\_records\_paged}}{\emph{start\_record}, \emph{end\_record}, \emph{filter\_expr=None}, \emph{sort\_expr=None}}{}
+This method retrieves all records matching the given filters sorted by the given expression.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{records} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} 
+                           \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{,}
+                                      \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                           \PYG{n}{filter\PYGZus{}expr}\PYG{o}{=}\PYG{n}{ModelFilterAnd}\PYG{p}{(}
+                                           \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}\PYG{p}{,}
+                                           \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{start\_record} (\emph{int}) -- A zero indexed integer that specifies the first record number.
+
+\item {} 
+\textbf{end\_record} (\emph{int}) -- A zero indexed integer that specifies the last record number.
+
+\item {} 
+\textbf{filter\_expr} (\emph{list}) -- A list of \code{fantastico.mvc.models.model\_filter.ModelFilterAbstract} which are applied in order.
+
+\item {} 
+\textbf{sort\_expr} (\emph{list}) -- A list of {\hyperref[features/mvc:fantastico.mvc.models.model_sort.ModelSort]{\code{fantastico.mvc.models.model\_sort.ModelSort}}} which are applied in order.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+A list of matching records strongly converted to underlining model.
+
+\item[{Raises {\hyperref[features/exceptions:fantastico.exceptions.FantasticoDbError]{fantastico.exceptions.FantasticoDbError}}}] \leavevmode
+This exception is raised whenever an exception occurs in retrieving
+desired dataset. The underlining session used is automatically rollbacked in order to guarantee data integrity.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{model\_cls (fantastico.mvc.model\_facade.ModelFacade attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.model_cls}\pysigline{\bfcode{model\_cls}}
+This property holds the model based on which this facade is built.
+
+\end{fulllineitems}
+
+\index{new\_model() (fantastico.mvc.model\_facade.ModelFacade method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.new_model}\pysiglinewithargsret{\bfcode{new\_model}}{\emph{*args}, \emph{**kwargs}}{}
+This method is used to obtain an instance of the underlining model. Below you can find a very simple example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
+    
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
+        
+\PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
+
+\PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{new\PYGZus{}model}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{John}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Doe}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{args} (\emph{list}) -- A list of positional arguments we want to pass to underlining model constructor.
+
+\item {} 
+\textbf{kwargs} (\emph{dict}) -- A dictionary containing named parameters we want to pass to underlining model constructor.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+A BASEMODEL instance if everything is ok.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{update() (fantastico.mvc.model\_facade.ModelFacade method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.update}\pysiglinewithargsret{\bfcode{update}}{\emph{model}}{}
+This method updates an existing model from the database based on primary key.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
+    
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
+        
+\PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
+
+\PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{new\PYGZus{}model}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{John}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Doe}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{n}{model}\PYG{o}{.}\PYG{n}{id} \PYG{o}{=} \PYG{l+m+mi}{5}
+\PYG{n}{facade}\PYG{o}{.}\PYG{n}{update}\PYG{p}{(}\PYG{n}{model}\PYG{p}{)}
+\end{Verbatim}
+\begin{quote}\begin{description}
+\item[{Raises}] \leavevmode\begin{itemize}
+\item {} 
+{\hyperref[features/exceptions:fantastico.exceptions.FantasticoDbNotFoundError]{\textbf{fantastico.exceptions.FantasticoDbNotFoundError}}} -- Raised when the given model does not exist in database.
+By default, session is rollback automatically so that other consumers can still work as expected.
+
+\item {} 
+{\hyperref[features/exceptions:fantastico.exceptions.FantasticoDbError]{\textbf{fantastico.exceptions.FantasticoDbError}}} -- Raised when an unhandled exception occurs. By default, session
+is rollback automatically so that other consumers can still work as expected.
+
+\end{itemize}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+If you are using the \textbf{Fantastico MVC} support you don't need to manually create a model facade instance because
+{\hyperref[features/mvc:fantastico.mvc.controller_decorators.Controller]{\code{fantastico.mvc.controller\_decorators.Controller}}} injects defined models automatically.
+
 
 \subsection{View}
 \label{features/mvc:view}
@@ -1399,7 +1720,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2958408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2d79408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -1411,6 +1732,220 @@ This method is responsible for loading a template from disk and render it using 
 \end{Verbatim}
 
 The above snippet will search for \textbf{hello.html} into component folder/views/.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+Below you can find a detailed list of filters provided by \textbf{Fantastico} MVC:
+\index{ModelFilterAbstract (class in fantastico.mvc.models.model\_filter\_compound)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAbstract}\pysigline{\strong{class }\code{fantastico.mvc.models.model\_filter\_compound.}\bfcode{ModelFilterAbstract}}
+This is the base class that defines the contract a model filter must follow. A model filter is a class that decouples
+sqlalchemy framework from Fantastico MVC. This is required because in the future we might want to change the ORM that
+powers Fantastico without breaking all existing code.
+
+\includegraphics{mvc_filters.png}
+
+For seeing how to implement filters (probably you won't need to do this) see some existing filters:
+\begin{itemize}
+\item {} 
+{\hyperref[features/mvc:fantastico.mvc.models.model_filter.ModelFilter]{\code{fantastico.mvc.models.model\_filter.ModelFilter}}}
+
+\item {} 
+\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound}
+
+\item {} 
+{\hyperref[features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAnd]{\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterAnd}}}
+
+\item {} 
+{\hyperref[features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterOr]{\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterOr}}}
+
+\end{itemize}
+\index{build() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAbstract.build}\pysiglinewithargsret{\bfcode{build}}{\emph{query}}{}
+This method is used for appending the current filter to the query using sqlalchemy specific language.
+
+\end{fulllineitems}
+
+\index{get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAbstract.get_expression}\pysiglinewithargsret{\bfcode{get\_expression}}{}{}
+This method is used for retrieving native sqlalchemy expression held by this filter.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{ModelFilter (class in fantastico.mvc.models.model\_filter)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilter}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.models.model\_filter.}\bfcode{ModelFilter}}{\emph{column}, \emph{ref\_value}, \emph{operation}}{}
+This class provides a model filter wrapper used to dynamically transform an operation to sql alchemy filter
+statements. You can see below how to use it:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{id\PYGZus{}gt\PYGZus{}filter} \PYG{o}{=} \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}
+\end{Verbatim}
+\index{build() (fantastico.mvc.models.model\_filter.ModelFilter method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilter.build}\pysiglinewithargsret{\bfcode{build}}{\emph{query}}{}
+This method appends the current filter to a query object.
+
+\end{fulllineitems}
+
+\index{column (fantastico.mvc.models.model\_filter.ModelFilter attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilter.column}\pysigline{\bfcode{column}}
+This property holds the column used in the current filter.
+
+\end{fulllineitems}
+
+\index{get\_expression() (fantastico.mvc.models.model\_filter.ModelFilter method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilter.get_expression}\pysiglinewithargsret{\bfcode{get\_expression}}{}{}
+Method used to return the underlining sqlalchemy exception held by this filter.
+
+\end{fulllineitems}
+
+\index{get\_supported\_operations() (fantastico.mvc.models.model\_filter.ModelFilter static method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilter.get_supported_operations}\pysiglinewithargsret{\strong{static }\bfcode{get\_supported\_operations}}{}{}
+This method returns all supported operations for model filter. For now only the following operations are supported:
+\begin{itemize}
+\item {} 
+GT - greater than comparison
+
+\item {} 
+GE - greater or equals than comparison
+
+\item {} 
+EQ - equals comparison
+
+\item {} 
+LE - less or equals than comparison
+
+\item {} 
+LT - less than comparison
+
+\item {} 
+LIKE - like comparison
+
+\item {} 
+IN - in comparison.
+
+\end{itemize}
+
+\end{fulllineitems}
+
+\index{operation (fantastico.mvc.models.model\_filter.ModelFilter attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilter.operation}\pysigline{\bfcode{operation}}
+This property holds the operation used in the current filter.
+
+\end{fulllineitems}
+
+\index{ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilter.ref_value}\pysigline{\bfcode{ref\_value}}
+This property holds the reference value used in the current filter.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{ModelFilterAnd (class in fantastico.mvc.models.model\_filter\_compound)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAnd}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.models.model\_filter\_compound.}\bfcode{ModelFilterAnd}}{\emph{*args}}{}
+This class provides a compound filter that allows \textbf{and} conditions against models. Below you can find a simple example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{id\PYGZus{}gt\PYGZus{}filter} \PYG{o}{=} \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}
+\PYG{n}{id\PYGZus{}lt\PYGZus{}filter} \PYG{o}{=} \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}
+\PYG{n}{name\PYGZus{}like\PYGZus{}filter} \PYG{o}{=} \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}\PYGZpc{}}\PYG{l+s}{john}\PYG{l+s+si}{\PYGZpc{}\PYGZpc{}}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LIKE}\PYG{p}{)}
+
+\PYG{n}{complex\PYGZus{}condition} \PYG{o}{=} \PYG{n}{ModelFilterAnd}\PYG{p}{(}\PYG{n}{id\PYGZus{}gt\PYGZus{}filter}\PYG{p}{,} \PYG{n}{id\PYGZus{}lt\PYGZus{}filter}\PYG{p}{,} \PYG{n}{name\PYGZus{}like\PYGZus{}filter}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{ModelFilterOr (class in fantastico.mvc.models.model\_filter\_compound)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterOr}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.models.model\_filter\_compound.}\bfcode{ModelFilterOr}}{\emph{*args}}{}
+This class provides a compound filter that allows \textbf{or} conditions against models. Below you can find a simple example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{id\PYGZus{}gt\PYGZus{}filter} \PYG{o}{=} \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}
+\PYG{n}{id\PYGZus{}lt\PYGZus{}filter} \PYG{o}{=} \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}
+\PYG{n}{name\PYGZus{}like\PYGZus{}filter} \PYG{o}{=} \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{name}\PYG{p}{,} \PYG{l+s}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}\PYGZpc{}}\PYG{l+s}{john}\PYG{l+s+si}{\PYGZpc{}\PYGZpc{}}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LIKE}\PYG{p}{)}
+
+\PYG{n}{complex\PYGZus{}condition} \PYG{o}{=} \PYG{n}{ModelFilterOr}\PYG{p}{(}\PYG{n}{id\PYGZus{}gt\PYGZus{}filter}\PYG{p}{,} \PYG{n}{id\PYGZus{}lt\PYGZus{}filter}\PYG{p}{,} \PYG{n}{name\PYGZus{}like\PYGZus{}filter}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{ModelSort (class in fantastico.mvc.models.model\_sort)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_sort.ModelSort}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.models.model\_sort.}\bfcode{ModelSort}}{\emph{column}, \emph{sort\_dir=None}}{}
+This class provides a filter that knows how to sort rows from a query result set. It is extremely easy to use:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{id\PYGZus{}sort\PYGZus{}asc} \PYG{o}{=} \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{)}
+\end{Verbatim}
+\index{build() (fantastico.mvc.models.model\_sort.ModelSort method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_sort.ModelSort.build}\pysiglinewithargsret{\bfcode{build}}{\emph{query}}{}
+This method appends sort\_by clause to the given query.
+
+\end{fulllineitems}
+
+\index{column (fantastico.mvc.models.model\_sort.ModelSort attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_sort.ModelSort.column}\pysigline{\bfcode{column}}
+This property holds the column we are currently sorting.
+
+\end{fulllineitems}
+
+\index{get\_expression() (fantastico.mvc.models.model\_sort.ModelSort method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_sort.ModelSort.get_expression}\pysiglinewithargsret{\bfcode{get\_expression}}{}{}
+This method returns the sqlalchemy expression held by this filter.
+
+\end{fulllineitems}
+
+\index{get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_sort.ModelSort.get_supported_sort_dirs}\pysiglinewithargsret{\bfcode{get\_supported\_sort\_dirs}}{}{}
+This method returns all supported sort directions. Currently only ASC / DESC directions are supported.
+
+\end{fulllineitems}
+
+\index{sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_sort.ModelSort.sort_dir}\pysigline{\bfcode{sort\_dir}}
+This property holds the sort direction we are currently using.
 
 \end{fulllineitems}
 

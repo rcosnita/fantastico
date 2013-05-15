@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-05-12</dc:date>
+    <dc:date>2013-05-15</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -115,8 +115,20 @@
     <item id="_modules_fantastico_mvc_controller_decorators.html"
           href="_modules/fantastico/mvc/controller_decorators.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_mvc_model_facade.html"
+          href="_modules/fantastico/mvc/model_facade.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_mvc_controller_registrator.html"
           href="_modules/fantastico/mvc/controller_registrator.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_mvc_models_model_filter.html"
+          href="_modules/fantastico/mvc/models/model_filter.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_mvc_models_model_filter_compound.html"
+          href="_modules/fantastico/mvc/models/model_filter_compound.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_mvc_models_model_sort.html"
+          href="_modules/fantastico/mvc/models/model_sort.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_locale_language.html"
           href="_modules/fantastico/locale/language.html"
@@ -153,6 +165,9 @@
           media-type="image/png" />
     <item id="_images_routing_engine.png"
           href="_images/routing_engine.png"
+          media-type="image/png" />
+    <item id="_images_mvc_filters.png"
+          href="_images/mvc_filters.png"
           media-type="image/png" />
     <item id="features_mvc.html"
           href="features/mvc.html"

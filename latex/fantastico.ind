@@ -22,56 +22,79 @@
 
   \indexspace
   \bigletter B
-  \item BaseController (class in fantastico.mvc.base\_controller), \hyperpage{19}
+  \item BaseController (class in fantastico.mvc.base\_controller), \hyperpage{23}
   \item BasicSettings (class in fantastico.settings), \hyperpage{4}
+  \item build() (fantastico.mvc.models.model\_filter.ModelFilter method), \hyperpage{24}
+  \item build() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method), 
+		\hyperpage{24}
+  \item build() (fantastico.mvc.models.model\_sort.ModelSort method), \hyperpage{25}
 
   \indexspace
   \bigletter C
-  \item code (fantastico.locale.language.Language attribute), \hyperpage{13}
-  \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{17}
-  \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{19}
+  \item code (fantastico.locale.language.Language attribute), \hyperpage{14}
+  \item column (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{24}
+  \item column (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{25}
+  \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{18}
+  \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{23}
+  \item count\_records() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
+  \item create() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
 
   \indexspace
   \bigletter D
   \item database\_config (fantastico.settings.BasicSettings attribute), \hyperpage{4}
+  \item delete() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
   \item dev\_server\_host (fantastico.settings.BasicSettings attribute), \hyperpage{4}
   \item dev\_server\_port (fantastico.settings.BasicSettings attribute), \hyperpage{5}
   \item DevServer (class in fantastico.server.dev\_server), \hyperpage{8}
   \item DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server), \hyperpage{7}
   \item display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method), 
-		\hyperpage{16}
-  \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{16}
+		\hyperpage{17}
+  \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{17}
 
   \indexspace
   \bigletter F
   \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{11}
   \item FantasticoContentTypeError (class in fantastico.exceptions), \hyperpage{12}
+  \item FantasticoDbError (class in fantastico.exceptions), \hyperpage{12}
+  \item FantasticoDbNotFoundError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{11}
   \item FantasticoError (class in fantastico.exceptions), \hyperpage{11}
   \item FantasticoHttpVerbNotSupported (class in fantastico.exceptions), \hyperpage{12}
+  \item FantasticoIncompatibleClassError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{7}
   \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{11}
-  \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{11}
+  \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{12}
+  \item FantasticoNotSupportedError (class in fantastico.exceptions), \hyperpage{11}
+  \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{11}
   \item FantasticoTemplateNotFoundError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{6}
-  \item fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{18}
+  \item find\_by\_pk() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{21}
+  \item fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
 
   \indexspace
   \bigletter G
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method), 
-		\hyperpage{19}
+		\hyperpage{23}
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}
-  \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{14}
+  \item get\_expression() (fantastico.mvc.models.model\_filter.ModelFilter method), \hyperpage{24}
+  \item get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method), 
+		\hyperpage{24}
+  \item get\_expression() (fantastico.mvc.models.model\_sort.ModelSort method), \hyperpage{25}
+  \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
+  \item get\_records\_paged() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{21}
   \item get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method), 
-		\hyperpage{18}
+		\hyperpage{19}
   \item get\_root\_folder() (fantastico.settings.SettingsFacade method), \hyperpage{6}
+  \item get\_supported\_operations() (fantastico.mvc.models.model\_filter.ModelFilter static method), 
+		\hyperpage{24}
+  \item get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method), 
+		\hyperpage{25}
 
   \indexspace
   \bigletter H
-  \item handle\_route() (fantastico.routing\_engine.router.Router method), \hyperpage{14}
+  \item handle\_route() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
   \item http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute), \hyperpage{12}
 
   \indexspace
@@ -80,33 +103,51 @@
 
   \indexspace
   \bigletter L
-  \item Language (class in fantastico.locale.language), \hyperpage{13}
+  \item Language (class in fantastico.locale.language), \hyperpage{14}
   \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{13}
   \item load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method), 
-		\hyperpage{19}
+		\hyperpage{23}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
-		\hyperpage{15}
-  \item load\_template() (fantastico.mvc.base\_controller.BaseController method), \hyperpage{19}
+		\hyperpage{16}
+  \item load\_template() (fantastico.mvc.base\_controller.BaseController method), \hyperpage{23}
 
   \indexspace
   \bigletter M
-  \item method (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{18}
-  \item models (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{18}
+  \item method (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
+  \item model\_cls (fantastico.mvc.model\_facade.ModelFacade attribute), \hyperpage{22}
+  \item ModelFacade (class in fantastico.mvc.model\_facade), \hyperpage{20}
+  \item ModelFilter (class in fantastico.mvc.models.model\_filter), \hyperpage{24}
+  \item ModelFilterAbstract (class in fantastico.mvc.models.model\_filter\_compound), 
+		\hyperpage{24}
+  \item ModelFilterAnd (class in fantastico.mvc.models.model\_filter\_compound), \hyperpage{25}
+  \item ModelFilterOr (class in fantastico.mvc.models.model\_filter\_compound), \hyperpage{25}
+  \item models (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
+  \item ModelSort (class in fantastico.mvc.models.model\_sort), \hyperpage{25}
+
+  \indexspace
+  \bigletter N
+  \item new\_model() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{22}
+
+  \indexspace
+  \bigletter O
+  \item operation (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{25}
 
   \indexspace
   \bigletter R
-  \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{14}
+  \item ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{25}
+  \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
   \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{13}
   \item RequestMiddleware (class in fantastico.middleware.request\_middleware), \hyperpage{13}
-  \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{15}
-  \item Router (class in fantastico.routing\_engine.router), \hyperpage{14}
+  \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{16}
+  \item Router (class in fantastico.routing\_engine.router), \hyperpage{15}
   \item routes\_loaders (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item RoutingMiddleware (class in fantastico.middleware.routing\_middleware), \hyperpage{16}
+  \item RoutingMiddleware (class in fantastico.middleware.routing\_middleware), \hyperpage{17}
 
   \indexspace
   \bigletter S
   \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{13}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
+  \item sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{25}
   \item start() (fantastico.server.dev\_server.DevServer method), \hyperpage{8}
   \item started (fantastico.server.dev\_server.DevServer attribute), \hyperpage{9}
   \item stop() (fantastico.server.dev\_server.DevServer method), \hyperpage{9}
@@ -118,6 +159,7 @@
 
   \indexspace
   \bigletter U
-  \item url (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{18}
+  \item update() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{22}
+  \item url (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
 
 \end{theindex}

@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -50,9 +50,8 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">middleware</span>
 <span class="kn">from</span> <span class="nn">fantastico.middleware.fantastico_app</span> <span class="kn">import</span> <span class="n">FantasticoApp</span>
-<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span><span class="p">,</span> <span class="n">SettingsFacade</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span><span class="p">,</span> <span class="n">SettingsFacade</span><span class="p">,</span> <span class="n">AwsStageSettings</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 
@@ -78,8 +77,8 @@
         <span class="sd">&#39;&#39;&#39;We make the convention that setUpClass method will always invoke setup_once method for each test case class.&#39;&#39;&#39;</span>
         
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;setup_once&quot;</span><span class="p">):</span>
-            <span class="n">cleanup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;setup_once&quot;</span><span class="p">)</span>
-            <span class="n">cleanup</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+            <span class="n">setup_once</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;setup_once&quot;</span><span class="p">)</span>
+            <span class="n">setup_once</span><span class="p">()</span>
         
                     
     <span class="nd">@classmethod</span>
@@ -88,7 +87,7 @@
         
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;cleanup_once&quot;</span><span class="p">):</span>
             <span class="n">cleanup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;cleanup_once&quot;</span><span class="p">)</span>
-            <span class="n">cleanup</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+            <span class="n">cleanup</span><span class="p">()</span>
     
 <div class="viewcode-block" id="FantasticoUnitTestsCase"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase">[docs]</a><span class="k">class</span> <span class="nc">FantasticoUnitTestsCase</span><span class="p">(</span><span class="n">FantasticoBaseTestCase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each unit test written for fantastico.</span>
@@ -141,7 +140,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__envs</span>
     </div>
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__envs</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&quot;fantastico.settings.BasicSettings&quot;</span><span class="p">,</span> <span class="n">BasicSettings</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__envs</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&quot;fantastico.settings.BasicSettings&quot;</span><span class="p">,</span> <span class="n">BasicSettings</span><span class="p">),</span>
+                       <span class="p">(</span><span class="s">&quot;fantastico.settings.AwsStageSettings&quot;</span><span class="p">,</span> <span class="n">AwsStageSettings</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__old_middlewares_call</span> <span class="o">=</span> <span class="p">[]</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_call_methods</span><span class="p">(</span><span class="n">SettingsFacade</span><span class="p">()</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">installed_middleware</span><span class="p">)</span>

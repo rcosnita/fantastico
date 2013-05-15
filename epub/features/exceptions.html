@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -50,6 +50,12 @@ that at no moment errors will cause fantastico framework wsgi container to crash
 <dt id="fantastico.exceptions.FantasticoClassNotFoundError">
 <em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoClassNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoClassNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoNotSupportedError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNotSupportedError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNotSupportedError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is raised whenever code tries to do an operation that is  not supported.</p>
 </dd></dl>
 
 <dl class="class">
@@ -107,6 +113,28 @@ Fantastico we think it&#8217;s mandatory to fulfill requests correctly and to ta
 <dt id="fantastico.exceptions.FantasticoTemplateNotFoundError">
 <em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoTemplateNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoTemplateNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when a controller tries to load a template which it does not found.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoIncompatibleClassError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoIncompatibleClassError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoIncompatibleClassError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is usually thrown when we want to decorate / inject / mixin a class into another class
+that does not support it. For instance, we want to build a <a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>
+with a class that does not extend <strong>BASEMODEL.</strong></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoDbError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDbError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDbError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is usually thrown when a database exception occurs. For one good example where this is used see
+<a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoDbNotFoundError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDbNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDbNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is 
+used see <a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>.</p>
 </dd></dl>
 
 </div>

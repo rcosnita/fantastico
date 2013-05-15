@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Development mode &mdash; fantastico 0.0.1-b59 documentation</title>
+    <title>Development mode &mdash; fantastico 0.0.1-b60 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b59',
+        VERSION:     '0.0.1-b60',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b59 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b60 documentation" href="../index.html" />
     <link rel="up" title="Getting started" href="getting_started.html" />
     <link rel="next" title="Fantastico features" href="../features/features.html" />
     <link rel="prev" title="Contribute" href="contribute.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="contribute.html" title="Contribute"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>  
@@ -77,7 +77,7 @@ standard. Below you can find some easy steps to achieve this:</p>
 it to simply test your new components.</p>
 <dl class="method">
 <dt id="fantastico.server.dev_server.DevServer.start">
-<tt class="descname">start</tt><big>(</big><em>build_server=&lt;function make_server at 0x54366b0&gt;</em>, <em>app=&lt;class 'fantastico.middleware.fantastico_app.FantasticoApp'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/dev_server.html#DevServer.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.server.dev_server.DevServer.start" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">start</tt><big>(</big><em>build_server=&lt;function make_server at 0x5a378d0&gt;</em>, <em>app=&lt;class 'fantastico.middleware.fantastico_app.FantasticoApp'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/server/dev_server.html#DevServer.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.server.dev_server.DevServer.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.</p>
 </dd></dl>
@@ -97,6 +97,20 @@ configuration file.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="database-config">
+<h2>Database config<a class="headerlink" href="#database-config" title="Permalink to this headline">¶</a></h2>
+<p>Usually you will use <strong>Fantastico</strong> framework together with a database. When we develop new core features of <strong>Fantastico</strong>
+we use a sample database for integration. You can easily use it as well to play around:</p>
+<ol class="arabic simple">
+<li>Goto fantastico framework location</li>
+<li>export MYSQL_PASSWD=***** (your mysql password)</li>
+<li>export MYSQL_HOST=&lt;hostname&gt; (your mysql hostname: e.g localhost)</li>
+<li>sh run_setup_db.sh</li>
+</ol>
+<p><strong>run_setup_db.sh</strong> create an initial fantastico database and a user called fantastico identified by <strong>12345</strong> password. After
+database is successfully created, it scans for all available <strong>module_setup.sql</strong> files and execute them against newly created
+database.</p>
+</div>
 </div>
 
 
@@ -110,6 +124,7 @@ configuration file.</p>
 <li><a class="reference internal" href="#">Development mode</a><ul>
 <li><a class="reference internal" href="#hot-deploy">Hot deploy</a></li>
 <li><a class="reference internal" href="#api">API</a></li>
+<li><a class="reference internal" href="#database-config">Database config</a></li>
 </ul>
 </li>
 </ul>
@@ -154,7 +169,7 @@ configuration file.</p>
         <li class="right" >
           <a href="contribute.html" title="Contribute"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
       </ul>
     </div>

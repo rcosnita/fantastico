@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -63,8 +63,12 @@
 <span class="sd">            def list_blogs(self, request):</span>
 <span class="sd">                Blog = request.models.Blog</span>
 <span class="sd">            </span>
-<span class="sd">                blogs = Blog.all_paged(start_record=1, end_record=0, </span>
-<span class="sd">                                       sort_expr=[asc(Blog.create_date), desc(Blog.title)])</span>
+<span class="sd">                blogs = Blog.get_records_paged(start_record=0, end_record=5, </span>
+<span class="sd">                                       sort_expr=[ModelSort(Blog.create_date, ModelSort.ASC,</span>
+<span class="sd">                                                  ModelSort(Blog.title, ModelSort.DESC)],</span>
+<span class="sd">                                       filter_expr=ModelFilterAnd(</span>
+<span class="sd">                                                       ModelFilter(Blog.id, 1, ModelFilter.GT),</span>
+<span class="sd">                                                       ModelFilter(Blog.id, 5, ModelFilter.LT))))</span>
 <span class="sd">            </span>
 <span class="sd">                return Response(blogs)</span>
 <span class="sd">            </span>

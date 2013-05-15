@@ -28,38 +28,69 @@
 \indexentry{stop() (fantastico.server.dev\_server.DevServer method)|hyperpage}{9}
 \indexentry{FantasticoError (class in fantastico.exceptions)|hyperpage}{11}
 \indexentry{FantasticoClassNotFoundError (class in fantastico.exceptions)|hyperpage}{11}
+\indexentry{FantasticoNotSupportedError (class in fantastico.exceptions)|hyperpage}{11}
 \indexentry{FantasticoSettingNotFoundError (class in fantastico.exceptions)|hyperpage}{11}
 \indexentry{FantasticoDuplicateRouteError (class in fantastico.exceptions)|hyperpage}{11}
-\indexentry{FantasticoNoRoutesError (class in fantastico.exceptions)|hyperpage}{11}
-\indexentry{FantasticoRouteNotFoundError (class in fantastico.exceptions)|hyperpage}{11}
+\indexentry{FantasticoNoRoutesError (class in fantastico.exceptions)|hyperpage}{12}
+\indexentry{FantasticoRouteNotFoundError (class in fantastico.exceptions)|hyperpage}{12}
 \indexentry{FantasticoNoRequestError (class in fantastico.exceptions)|hyperpage}{12}
 \indexentry{FantasticoContentTypeError (class in fantastico.exceptions)|hyperpage}{12}
 \indexentry{FantasticoHttpVerbNotSupported (class in fantastico.exceptions)|hyperpage}{12}
 \indexentry{http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute)|hyperpage}{12}
 \indexentry{FantasticoTemplateNotFoundError (class in fantastico.exceptions)|hyperpage}{12}
+\indexentry{FantasticoIncompatibleClassError (class in fantastico.exceptions)|hyperpage}{12}
+\indexentry{FantasticoDbError (class in fantastico.exceptions)|hyperpage}{12}
+\indexentry{FantasticoDbNotFoundError (class in fantastico.exceptions)|hyperpage}{12}
 \indexentry{RequestMiddleware (class in fantastico.middleware.request\_middleware)|hyperpage}{13}
 \indexentry{RequestContext (class in fantastico.middleware.request\_context)|hyperpage}{13}
 \indexentry{language (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{13}
 \indexentry{settings (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{13}
-\indexentry{Language (class in fantastico.locale.language)|hyperpage}{13}
-\indexentry{code (fantastico.locale.language.Language attribute)|hyperpage}{13}
-\indexentry{Router (class in fantastico.routing\_engine.router)|hyperpage}{14}
-\indexentry{get\_loaders() (fantastico.routing\_engine.router.Router method)|hyperpage}{14}
-\indexentry{handle\_route() (fantastico.routing\_engine.router.Router method)|hyperpage}{14}
-\indexentry{register\_routes() (fantastico.routing\_engine.router.Router method)|hyperpage}{14}
-\indexentry{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)|hyperpage}{15}
-\indexentry{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)|hyperpage}{15}
-\indexentry{DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader)|hyperpage}{16}
-\indexentry{display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method)|hyperpage}{16}
-\indexentry{RoutingMiddleware (class in fantastico.middleware.routing\_middleware)|hyperpage}{16}
-\indexentry{Controller (class in fantastico.mvc.controller\_decorators)|hyperpage}{17}
-\indexentry{fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{18}
-\indexentry{get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method)|hyperpage}{18}
-\indexentry{method (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{18}
-\indexentry{models (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{18}
-\indexentry{url (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{18}
-\indexentry{ControllerRouteLoader (class in fantastico.mvc.controller\_registrator)|hyperpage}{19}
-\indexentry{load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method)|hyperpage}{19}
-\indexentry{BaseController (class in fantastico.mvc.base\_controller)|hyperpage}{19}
-\indexentry{get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{19}
-\indexentry{load\_template() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{19}
+\indexentry{Language (class in fantastico.locale.language)|hyperpage}{14}
+\indexentry{code (fantastico.locale.language.Language attribute)|hyperpage}{14}
+\indexentry{Router (class in fantastico.routing\_engine.router)|hyperpage}{15}
+\indexentry{get\_loaders() (fantastico.routing\_engine.router.Router method)|hyperpage}{15}
+\indexentry{handle\_route() (fantastico.routing\_engine.router.Router method)|hyperpage}{15}
+\indexentry{register\_routes() (fantastico.routing\_engine.router.Router method)|hyperpage}{15}
+\indexentry{RouteLoader (class in fantastico.routing\_engine.routing\_loaders)|hyperpage}{16}
+\indexentry{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)|hyperpage}{16}
+\indexentry{DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader)|hyperpage}{17}
+\indexentry{display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method)|hyperpage}{17}
+\indexentry{RoutingMiddleware (class in fantastico.middleware.routing\_middleware)|hyperpage}{17}
+\indexentry{Controller (class in fantastico.mvc.controller\_decorators)|hyperpage}{18}
+\indexentry{fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{19}
+\indexentry{get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method)|hyperpage}{19}
+\indexentry{method (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{19}
+\indexentry{models (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{19}
+\indexentry{url (fantastico.mvc.controller\_decorators.Controller attribute)|hyperpage}{19}
+\indexentry{ModelFacade (class in fantastico.mvc.model\_facade)|hyperpage}{20}
+\indexentry{count\_records() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{20}
+\indexentry{create() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{20}
+\indexentry{delete() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{20}
+\indexentry{find\_by\_pk() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{21}
+\indexentry{get\_records\_paged() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{21}
+\indexentry{model\_cls (fantastico.mvc.model\_facade.ModelFacade attribute)|hyperpage}{22}
+\indexentry{new\_model() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{22}
+\indexentry{update() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{22}
+\indexentry{ControllerRouteLoader (class in fantastico.mvc.controller\_registrator)|hyperpage}{23}
+\indexentry{load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method)|hyperpage}{23}
+\indexentry{BaseController (class in fantastico.mvc.base\_controller)|hyperpage}{23}
+\indexentry{get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{23}
+\indexentry{load\_template() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{23}
+\indexentry{ModelFilterAbstract (class in fantastico.mvc.models.model\_filter\_compound)|hyperpage}{24}
+\indexentry{build() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method)|hyperpage}{24}
+\indexentry{get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method)|hyperpage}{24}
+\indexentry{ModelFilter (class in fantastico.mvc.models.model\_filter)|hyperpage}{24}
+\indexentry{build() (fantastico.mvc.models.model\_filter.ModelFilter method)|hyperpage}{24}
+\indexentry{column (fantastico.mvc.models.model\_filter.ModelFilter attribute)|hyperpage}{24}
+\indexentry{get\_expression() (fantastico.mvc.models.model\_filter.ModelFilter method)|hyperpage}{24}
+\indexentry{get\_supported\_operations() (fantastico.mvc.models.model\_filter.ModelFilter static method)|hyperpage}{24}
+\indexentry{operation (fantastico.mvc.models.model\_filter.ModelFilter attribute)|hyperpage}{25}
+\indexentry{ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute)|hyperpage}{25}
+\indexentry{ModelFilterAnd (class in fantastico.mvc.models.model\_filter\_compound)|hyperpage}{25}
+\indexentry{ModelFilterOr (class in fantastico.mvc.models.model\_filter\_compound)|hyperpage}{25}
+\indexentry{ModelSort (class in fantastico.mvc.models.model\_sort)|hyperpage}{25}
+\indexentry{build() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
+\indexentry{column (fantastico.mvc.models.model\_sort.ModelSort attribute)|hyperpage}{25}
+\indexentry{get\_expression() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
+\indexentry{get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
+\indexentry{sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute)|hyperpage}{25}

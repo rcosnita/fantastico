@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Exceptions hierarchy &mdash; fantastico 0.0.1-b59 documentation</title>
+    <title>Exceptions hierarchy &mdash; fantastico 0.0.1-b60 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b59',
+        VERSION:     '0.0.1-b60',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b59 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b60 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="Request lifecycle" href="request_response.html" />
     <link rel="prev" title="Fantastico features" href="features.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -67,6 +67,12 @@ that at no moment errors will cause fantastico framework wsgi container to crash
 <dt id="fantastico.exceptions.FantasticoClassNotFoundError">
 <em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoClassNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoClassNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoClassNotFoundError" title="Permalink to this definition">¶</a></dt>
 <dd><p>This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoNotSupportedError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNotSupportedError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNotSupportedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is raised whenever code tries to do an operation that is  not supported.</p>
 </dd></dl>
 
 <dl class="class">
@@ -126,6 +132,28 @@ Fantastico we think it&#8217;s mandatory to fulfill requests correctly and to ta
 <dd><p>This exception is usually thrown when a controller tries to load a template which it does not found.</p>
 </dd></dl>
 
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoIncompatibleClassError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoIncompatibleClassError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoIncompatibleClassError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoIncompatibleClassError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is usually thrown when we want to decorate / inject / mixin a class into another class
+that does not support it. For instance, we want to build a <a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>
+with a class that does not extend <strong>BASEMODEL.</strong></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoDbError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDbError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDbError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoDbError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is usually thrown when a database exception occurs. For one good example where this is used see
+<a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.exceptions.FantasticoDbNotFoundError">
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDbNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDbNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.exceptions.FantasticoDbNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is 
+used see <a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>.</p>
+</dd></dl>
+
 </div>
 
 
@@ -174,7 +202,7 @@ Fantastico we think it&#8217;s mandatory to fulfill requests correctly and to ta
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

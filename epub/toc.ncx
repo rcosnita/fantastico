@@ -152,139 +152,145 @@
           </navLabel>
           <content src="get_started/dev_mode.html#api" />
         </navPoint>
+        <navPoint id="navPoint18" playOrder="18">
+          <navLabel>
+            <text>Database config</text>
+          </navLabel>
+          <content src="get_started/dev_mode.html#database-config" />
+        </navPoint>
       </navPoint>
     </navPoint>
-    <navPoint id="navPoint18" playOrder="18">
+    <navPoint id="navPoint19" playOrder="19">
       <navLabel>
         <text>Fantastico features</text>
       </navLabel>
       <content src="features/features.html" />
-      <navPoint id="navPoint18" playOrder="18">
+      <navPoint id="navPoint19" playOrder="19">
         <navLabel>
           <text>Fantastico features</text>
         </navLabel>
         <content src="features/features.html" />
       </navPoint>
-      <navPoint id="navPoint19" playOrder="19">
+      <navPoint id="navPoint20" playOrder="20">
         <navLabel>
           <text>Exceptions hierarchy</text>
         </navLabel>
         <content src="features/exceptions.html" />
       </navPoint>
-      <navPoint id="navPoint20" playOrder="20">
+      <navPoint id="navPoint21" playOrder="21">
         <navLabel>
           <text>Request lifecycle</text>
         </navLabel>
         <content src="features/request_response.html" />
-        <navPoint id="navPoint20" playOrder="20">
+        <navPoint id="navPoint21" playOrder="21">
           <navLabel>
             <text>Request lifecycle</text>
           </navLabel>
           <content src="features/request_response.html" />
         </navPoint>
-        <navPoint id="navPoint21" playOrder="21">
+        <navPoint id="navPoint22" playOrder="22">
           <navLabel>
             <text>Request middleware</text>
           </navLabel>
           <content src="features/request_response.html#request-middleware" />
         </navPoint>
-        <navPoint id="navPoint22" playOrder="22">
+        <navPoint id="navPoint23" playOrder="23">
           <navLabel>
             <text>Request context</text>
           </navLabel>
           <content src="features/request_response.html#request-context" />
         </navPoint>
-        <navPoint id="navPoint23" playOrder="23">
+        <navPoint id="navPoint24" playOrder="24">
           <navLabel>
             <text>Obtain request language</text>
           </navLabel>
           <content src="features/request_response.html#obtain-request-language" />
         </navPoint>
-        <navPoint id="navPoint24" playOrder="24">
+        <navPoint id="navPoint25" playOrder="25">
           <navLabel>
             <text>Obtain settings using request</text>
           </navLabel>
           <content src="features/request_response.html#obtain-settings-using-request" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint25" playOrder="25">
+      <navPoint id="navPoint26" playOrder="26">
         <navLabel>
           <text>Routing engine</text>
         </navLabel>
         <content src="features/routing_engine.html" />
-        <navPoint id="navPoint25" playOrder="25">
+        <navPoint id="navPoint26" playOrder="26">
           <navLabel>
             <text>Routing engine</text>
           </navLabel>
           <content src="features/routing_engine.html" />
         </navPoint>
-        <navPoint id="navPoint26" playOrder="26">
+        <navPoint id="navPoint27" playOrder="27">
           <navLabel>
             <text>Routes loaders</text>
           </navLabel>
           <content src="features/routing_engine.html#routes-loaders" />
         </navPoint>
-        <navPoint id="navPoint27" playOrder="27">
+        <navPoint id="navPoint28" playOrder="28">
           <navLabel>
             <text>How to write a new route loader</text>
           </navLabel>
           <content src="features/routing_engine.html#how-to-write-a-new-route-loader" />
         </navPoint>
-        <navPoint id="navPoint28" playOrder="28">
+        <navPoint id="navPoint29" playOrder="29">
           <navLabel>
             <text>Configuring available loaders</text>
           </navLabel>
           <content src="features/routing_engine.html#configuring-available-loaders" />
         </navPoint>
-        <navPoint id="navPoint29" playOrder="29">
+        <navPoint id="navPoint30" playOrder="30">
           <navLabel>
             <text>DummyRouteLoader</text>
           </navLabel>
           <content src="features/routing_engine.html#dummyrouteloader" />
         </navPoint>
-        <navPoint id="navPoint30" playOrder="30">
+        <navPoint id="navPoint31" playOrder="31">
           <navLabel>
             <text>Routing middleware</text>
           </navLabel>
           <content src="features/routing_engine.html#routing-middleware" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint31" playOrder="31">
+      <navPoint id="navPoint32" playOrder="32">
         <navLabel>
           <text>Model View Controller</text>
         </navLabel>
         <content src="features/mvc.html" />
-        <navPoint id="navPoint31" playOrder="31">
+        <navPoint id="navPoint32" playOrder="32">
           <navLabel>
             <text>Model View Controller</text>
           </navLabel>
           <content src="features/mvc.html" />
         </navPoint>
-        <navPoint id="navPoint32" playOrder="32">
+        <navPoint id="navPoint33" playOrder="33">
           <navLabel>
             <text>Classic approach</text>
           </navLabel>
           <content src="features/mvc.html#classic-approach" />
         </navPoint>
-        <navPoint id="navPoint33" playOrder="33">
+        <navPoint id="navPoint34" playOrder="34">
           <navLabel>
             <text>Fantastico approach</text>
           </navLabel>
           <content src="features/mvc.html#fantastico-approach" />
         </navPoint>
-        <navPoint id="navPoint34" playOrder="34">
+        <navPoint id="navPoint35" playOrder="35">
           <navLabel>
             <text>Model</text>
           </navLabel>
           <content src="features/mvc.html#model" />
         </navPoint>
-        <navPoint id="navPoint35" playOrder="35">
+        <navPoint id="navPoint36" playOrder="36">
           <navLabel>
             <text>View</text>
           </navLabel>
           <content src="features/mvc.html#view" />
         </navPoint>
-        <navPoint id="navPoint36" playOrder="36">
+        <navPoint id="navPoint37" playOrder="37">
           <navLabel>
             <text>Controller</text>
           </navLabel>
@@ -292,47 +298,47 @@
         </navPoint>
       </navPoint>
     </navPoint>
-    <navPoint id="navPoint37" playOrder="37">
+    <navPoint id="navPoint38" playOrder="38">
       <navLabel>
         <text>How to articles</text>
       </navLabel>
       <content src="how_to/how_to.html" />
-      <navPoint id="navPoint37" playOrder="37">
+      <navPoint id="navPoint38" playOrder="38">
         <navLabel>
           <text>How to articles</text>
         </navLabel>
         <content src="how_to/how_to.html" />
       </navPoint>
-      <navPoint id="navPoint38" playOrder="38">
+      <navPoint id="navPoint39" playOrder="39">
         <navLabel>
           <text>MVC How to</text>
         </navLabel>
         <content src="how_to/mvc_how_to.html" />
-        <navPoint id="navPoint38" playOrder="38">
+        <navPoint id="navPoint39" playOrder="39">
           <navLabel>
             <text>MVC How to</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html" />
         </navPoint>
-        <navPoint id="navPoint39" playOrder="39">
+        <navPoint id="navPoint40" playOrder="40">
           <navLabel>
             <text>Code the model</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-model" />
         </navPoint>
-        <navPoint id="navPoint40" playOrder="40">
+        <navPoint id="navPoint41" playOrder="41">
           <navLabel>
             <text>Code the controller</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-controller" />
         </navPoint>
-        <navPoint id="navPoint41" playOrder="41">
+        <navPoint id="navPoint42" playOrder="42">
           <navLabel>
             <text>Code the view</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-view" />
         </navPoint>
-        <navPoint id="navPoint42" playOrder="42">
+        <navPoint id="navPoint43" playOrder="43">
           <navLabel>
             <text>Test your application</text>
           </navLabel>

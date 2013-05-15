@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.exceptions &mdash; fantastico 0.0.1-b59 documentation</title>
+    <title>fantastico.exceptions &mdash; fantastico 0.0.1-b60 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.0.1-b59',
+        VERSION:     '0.0.1-b60',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b59 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b60 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -77,6 +77,9 @@
     </div>
 <div class="viewcode-block" id="FantasticoClassNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoClassNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoClassNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.&#39;&#39;&#39;</span>
+</div>
+<div class="viewcode-block" id="FantasticoNotSupportedError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoNotSupportedError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoNotSupportedError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This exception is raised whenever code tries to do an operation that is  not supported.&#39;&#39;&#39;</span>
     </div>
 <div class="viewcode-block" id="FantasticoSettingNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoSettingNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoSettingNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico</span>
@@ -114,7 +117,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_http_verb</span> <span class="o">=</span> <span class="n">http_verb</span>
         </div>
 <div class="viewcode-block" id="FantasticoTemplateNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoTemplateNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoTemplateNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a controller tries to load a template which it does not found.&#39;&#39;&#39;</span></div>
+    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a controller tries to load a template which it does not found.&#39;&#39;&#39;</span>
+    </div>
+<div class="viewcode-block" id="FantasticoIncompatibleClassError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoIncompatibleClassError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoIncompatibleClassError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when we want to decorate / inject / mixin a class into another class</span>
+<span class="sd">    that does not support it. For instance, we want to build a :py:class:`fantastico.mvc.model_facade.ModelFacade`</span>
+<span class="sd">    with a class that does not extend **BASEMODEL.**&#39;&#39;&#39;</span>
+    </div>
+<div class="viewcode-block" id="FantasticoDbError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoDbError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoDbError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a database exception occurs. For one good example where this is used see</span>
+<span class="sd">    :py:class:`fantastico.mvc.model_facade.ModelFacade`.&#39;&#39;&#39;</span>
+    </div>
+<div class="viewcode-block" id="FantasticoDbNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoDbNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoDbNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is </span>
+<span class="sd">    used see :py:class:`fantastico.mvc.model_facade.ModelFacade`.&#39;&#39;&#39;</span>    </div>
 </pre></div>
 
           </div>
@@ -145,7 +161,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">fantastico 0.0.1-b59 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

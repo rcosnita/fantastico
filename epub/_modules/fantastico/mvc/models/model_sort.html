@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.mvc.models.model_sort</title>
+    
+    <link rel="stylesheet" href="../../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../../index.html">fantastico 0.0.1-b60 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.mvc.models.model_sort</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.mvc.models.model_sort</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoNotSupportedError</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter</span> <span class="kn">import</span> <span class="n">ModelFilterAbstract</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.schema</span> <span class="kn">import</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm.attributes</span> <span class="kn">import</span> <span class="n">InstrumentedAttribute</span>
+
+<div class="viewcode-block" id="ModelSort"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_sort.ModelSort">[docs]</a><span class="k">class</span> <span class="nc">ModelSort</span><span class="p">(</span><span class="n">ModelFilterAbstract</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a filter that knows how to sort rows from a query result set. It is extremely easy to use:</span>
+<span class="sd">    </span>
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">        </span>
+<span class="sd">            id_sort_asc = ModelSort(PersonModel.id, ModelSort.ASC)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">ASC</span> <span class="o">=</span> <span class="s">&quot;asc&quot;</span>
+    <span class="n">DESC</span> <span class="o">=</span> <span class="s">&quot;desc&quot;</span>
+    
+    <span class="n">_column</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">_sort_dir</span> <span class="o">=</span> <span class="bp">None</span>
+    
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="ModelSort.column"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_sort.ModelSort.column">[docs]</a>    <span class="k">def</span> <span class="nf">column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds the column we are currently sorting.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_column</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="ModelSort.sort_dir"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_sort.ModelSort.sort_dir">[docs]</a>    <span class="k">def</span> <span class="nf">sort_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds the sort direction we are currently using.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_dir</span>
+    </div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">sort_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">sort_dir</span> <span class="o">=</span> <span class="n">sort_dir</span> <span class="ow">or</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">InstrumentedAttribute</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FantasticoNotSupportedError</span><span class="p">(</span><span class="s">&quot;ModelSort column must be of type Column.&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_sort_dir_supported</span><span class="p">(</span><span class="n">sort_dir</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FantasticoNotSupportedError</span><span class="p">(</span><span class="s">&quot;ModelSort does not support </span><span class="si">%s</span><span class="s"> sort direction.&quot;</span> <span class="o">%</span> <span class="n">sort_dir</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_column</span> <span class="o">=</span> <span class="n">column</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_dir</span> <span class="o">=</span> <span class="n">sort_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_expr</span> <span class="o">=</span> <span class="bp">None</span>
+    
+    <span class="k">def</span> <span class="nf">_is_sort_dir_supported</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sort_dir</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method detects if the specified sort dir is supported.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="n">sort_dir</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_supported_sort_dirs</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="ModelSort.get_supported_sort_dirs"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_sort.ModelSort.get_supported_sort_dirs">[docs]</a>    <span class="k">def</span> <span class="nf">get_supported_sort_dirs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns all supported sort directions. Currently only ASC / DESC directions are supported.&#39;&#39;&#39;</span>
+    
+        <span class="k">return</span> <span class="p">[</span><span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">DESC</span><span class="p">]</span>
+    </div>
+<div class="viewcode-block" id="ModelSort.build"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_sort.ModelSort.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method appends sort_by clause to the given query.&#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">())</span>
+    </div>
+<div class="viewcode-block" id="ModelSort.get_expression"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_sort.ModelSort.get_expression">[docs]</a>    <span class="k">def</span> <span class="nf">get_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the sqlalchemy expression held by this filter.&#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_expr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_expr</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_dir</span> <span class="o">==</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cached_expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">asc</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_dir</span> <span class="o">==</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">DESC</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cached_expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">desc</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_expr</span></div></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
