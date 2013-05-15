@@ -43,7 +43,7 @@
   \bigletter D
   \item database\_config (fantastico.settings.BasicSettings attribute), \hyperpage{4}
   \item delete() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
-  \item dev\_server\_host (fantastico.settings.BasicSettings attribute), \hyperpage{4}
+  \item dev\_server\_host (fantastico.settings.BasicSettings attribute), \hyperpage{5}
   \item dev\_server\_port (fantastico.settings.BasicSettings attribute), \hyperpage{5}
   \item DevServer (class in fantastico.server.dev\_server), \hyperpage{8}
   \item DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server), \hyperpage{7}
@@ -77,7 +77,7 @@
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method), 
 		\hyperpage{23}
-  \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{5}
+  \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{6}
   \item get\_expression() (fantastico.mvc.models.model\_filter.ModelFilter method), \hyperpage{24}
   \item get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterAbstract method), 
 		\hyperpage{24}
@@ -122,6 +122,8 @@
   \item ModelFilterAnd (class in fantastico.mvc.models.model\_filter\_compound), \hyperpage{25}
   \item ModelFilterOr (class in fantastico.mvc.models.model\_filter\_compound), \hyperpage{25}
   \item models (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
+  \item ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware), 
+		\hyperpage{26}
   \item ModelSort (class in fantastico.mvc.models.model\_sort), \hyperpage{25}
 
   \indexspace

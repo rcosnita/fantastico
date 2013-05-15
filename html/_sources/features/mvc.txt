@@ -113,3 +113,13 @@ Below you can find a detailed list of filters provided by **Fantastico** MVC:
 
 .. autoclass:: fantastico.mvc.models.model_sort.ModelSort
     :members:
+
+Database session management
+---------------------------
+
+We all know database session management is painful and adds a lot of boiler plate code. In fantastico you don't need
+to manage database session by yourself. There is a dedicated middleware which automatically ensures there is an
+active session ready to be used:
+
+.. autoclass:: fantastico.middleware.model_session_middleware.ModelSessionMiddleware
+   :members:

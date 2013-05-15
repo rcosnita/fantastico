@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.locale.language &mdash; fantastico 0.0.1-b61 documentation</title>
+    <title>fantastico.middleware.model_session_middleware &mdash; fantastico 0.0.1-b61 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -43,7 +43,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for fantastico.locale.language</h1><div class="highlight"><pre>
+  <h1>Source code for fantastico.middleware.model_session_middleware</h1><div class="highlight"><pre>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
@@ -60,37 +60,31 @@
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
-
-<span class="sd">.. py:module:: fantastico.locale.language</span>
+<span class="sd">.. py:module:: fantastico.middleware.model_session_middleware</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">mvc</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
 
-<div class="viewcode-block" id="Language"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language">[docs]</a><span class="k">class</span> <span class="nc">Language</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Class used to define how does language object looks like. There are various use cases for using language but</span>
-<span class="sd">    the simplest one is in request context object: </span>
-<span class="sd">    </span>
-<span class="sd">    .. code-block:: python</span>
-<span class="sd">    </span>
-<span class="sd">       language = request.context.language</span>
-<span class="sd">       </span>
-<span class="sd">       if language.code = &quot;en_us&quot;:</span>
-<span class="sd">          print(&quot;English (US) language&quot;).</span>
-<span class="sd">       else:</span>
-<span class="sd">          raise Exception(&quot;Language %s is not supported.&quot; % language.code) </span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="ModelSessionMiddleware"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.middleware.model_session_middleware.ModelSessionMiddleware">[docs]</a><span class="k">class</span> <span class="nc">ModelSessionMiddleware</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class is responsible for managing database connections across requests. It also takes care of </span>
+<span class="sd">    connection data pools. By default, the middleware is automatically configured to open a connection. If</span>
+<span class="sd">    you don&#39;t need mvc (really improbable but still) you simply need to change your project active settings</span>
+<span class="sd">    profile. You can read more on :py:class:`fantastico.settings.BasicSettings`&#39;&#39;&#39;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="n">code</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">app</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span><span class="p">()</span>
     
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="Language.code"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.locale.language.Language.code">[docs]</a>    <span class="k">def</span> <span class="nf">code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Property that holds the language code. This is readonly because once instantiated we mustn&#39;t be able to change it.&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">create_engine</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">create_session</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method actively creates a db session class ready to be used. Create_ parameters are here</span>
+<span class="sd">        only for easing dependency injection and unit testing. You should not use them.&#39;&#39;&#39;</span>
         
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span>
-    </div>
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Method used to convert the current instance into a string object.&#39;&#39;&#39;</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;database_config&quot;</span><span class="p">)</span>
         
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_code</span></div>
+        <span class="n">mvc</span><span class="o">.</span><span class="n">init_dm_db_engine</span><span class="p">(</span><span class="n">db_config</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="n">db_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;show_sql&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">),</span>
+                              <span class="n">create_engine_fn</span><span class="o">=</span><span class="n">create_engine</span><span class="p">,</span> <span class="n">create_session_fn</span><span class="o">=</span><span class="n">create_session</span><span class="p">)</span>
+                
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

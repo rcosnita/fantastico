@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{May 15, 2013}
-\release{0.0.1-b60}
+\release{0.0.1-b61}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -315,10 +315,12 @@ configuration:
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{port}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{3306}\PYG{p}{,}
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{host}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{localhost}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{database}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
-            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{additional\PYGZus{}params}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{charset}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{utf8}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{\PYGZcb{}}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{additional\PYGZus{}params}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{charset}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{utf8}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{show\PYGZus{}sql}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n+nb+bp}{True}\PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 
 As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
+\textbf{show\_sql} key tells orm engine from \textbf{Fantastico} to display all generated queries.
 
 \end{fulllineitems}
 
@@ -728,7 +730,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5a378d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4c82c88\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1720,7 +1722,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2d79408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1f99408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -1949,6 +1951,24 @@ This property holds the sort direction we are currently using.
 
 \end{fulllineitems}
 
+
+\end{fulllineitems}
+
+
+
+\subsection{Database session management}
+\label{features/mvc:database-session-management}
+We all know database session management is painful and adds a lot of boiler plate code. In fantastico you don't need
+to manage database session by yourself. There is a dedicated middleware which automatically ensures there is an
+active session ready to be used:
+\index{ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.middleware.model_session_middleware.ModelSessionMiddleware}\pysiglinewithargsret{\strong{class }\code{fantastico.middleware.model\_session\_middleware.}\bfcode{ModelSessionMiddleware}}{\emph{app}, \emph{settings\_facade=\textless{}class `fantastico.settings.SettingsFacade'\textgreater{}}}{}
+This class is responsible for managing database connections across requests. It also takes care of 
+connection data pools. By default, the middleware is automatically configured to open a connection. If
+you don't need mvc (really improbable but still) you simply need to change your project active settings
+profile. You can read more on {\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}}
 
 \end{fulllineitems}
 

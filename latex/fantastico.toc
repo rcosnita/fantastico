@@ -38,6 +38,7 @@
 \contentsline {subsection}{\numberline {3.4.3}Model}{19}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}View}{23}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}Controller}{23}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}Database session management}{26}{subsection.3.4.6}
 \contentsline {chapter}{\numberline {4}How to articles}{27}{chapter.4}
 \contentsline {section}{\numberline {4.1}MVC How to}{27}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Code the model}{27}{subsection.4.1.1}
@@ -46,4 +47,4 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{28}{subsection.4.1.4}
 \contentsline {chapter}{\numberline {5}Build status}{29}{chapter.5}
 \contentsline {chapter}{\numberline {6}License}{31}{chapter.6}
-\contentsline {chapter}{Index}{33}{section*.101}
+\contentsline {chapter}{Index}{33}{section*.102}

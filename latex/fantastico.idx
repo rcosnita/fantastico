@@ -1,6 +1,6 @@
 \indexentry{BasicSettings (class in fantastico.settings)|hyperpage}{4}
 \indexentry{database\_config (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
-\indexentry{dev\_server\_host (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
+\indexentry{dev\_server\_host (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{dev\_server\_port (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{installed\_middleware (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{routes\_loaders (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
@@ -8,7 +8,7 @@
 \indexentry{templates\_config (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{5}
 \indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
-\indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
+\indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
 \indexentry{get\_root\_folder() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
 \indexentry{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)|hyperpage}{6}
 \indexentry{\_get\_class\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
@@ -94,3 +94,4 @@
 \indexentry{get\_expression() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
 \indexentry{get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
 \indexentry{sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute)|hyperpage}{25}
+\indexentry{ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware)|hyperpage}{26}

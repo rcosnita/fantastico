@@ -296,49 +296,55 @@
           </navLabel>
           <content src="features/mvc.html#controller" />
         </navPoint>
+        <navPoint id="navPoint38" playOrder="38">
+          <navLabel>
+            <text>Database session management</text>
+          </navLabel>
+          <content src="features/mvc.html#database-session-management" />
+        </navPoint>
       </navPoint>
     </navPoint>
-    <navPoint id="navPoint38" playOrder="38">
+    <navPoint id="navPoint39" playOrder="39">
       <navLabel>
         <text>How to articles</text>
       </navLabel>
       <content src="how_to/how_to.html" />
-      <navPoint id="navPoint38" playOrder="38">
+      <navPoint id="navPoint39" playOrder="39">
         <navLabel>
           <text>How to articles</text>
         </navLabel>
         <content src="how_to/how_to.html" />
       </navPoint>
-      <navPoint id="navPoint39" playOrder="39">
+      <navPoint id="navPoint40" playOrder="40">
         <navLabel>
           <text>MVC How to</text>
         </navLabel>
         <content src="how_to/mvc_how_to.html" />
-        <navPoint id="navPoint39" playOrder="39">
+        <navPoint id="navPoint40" playOrder="40">
           <navLabel>
             <text>MVC How to</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html" />
         </navPoint>
-        <navPoint id="navPoint40" playOrder="40">
+        <navPoint id="navPoint41" playOrder="41">
           <navLabel>
             <text>Code the model</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-model" />
         </navPoint>
-        <navPoint id="navPoint41" playOrder="41">
+        <navPoint id="navPoint42" playOrder="42">
           <navLabel>
             <text>Code the controller</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-controller" />
         </navPoint>
-        <navPoint id="navPoint42" playOrder="42">
+        <navPoint id="navPoint43" playOrder="43">
           <navLabel>
             <text>Code the view</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-view" />
         </navPoint>
-        <navPoint id="navPoint43" playOrder="43">
+        <navPoint id="navPoint44" playOrder="44">
           <navLabel>
             <text>Test your application</text>
           </navLabel>
