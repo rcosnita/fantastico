@@ -28,5 +28,5 @@ class MvcFriendlyMessage(BASEMODEL):
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     message = Column("message", Text)
     
-    def __init_(self, message):
+    def __init__(self, message):
         self.message = message
