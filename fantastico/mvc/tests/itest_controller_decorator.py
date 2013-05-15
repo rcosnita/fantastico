@@ -71,4 +71,4 @@ class ControllerDecoratorIntegration(DevServerIntegration):
             self.assertTrue(self._response.read().decode().find("Hello world.") > -1)
             self.assertEqual(content_type, self._response.info()["Content-Type"])            
             
-        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))
+        self._run_test_against_dev_server(request_logic, assert_logic)

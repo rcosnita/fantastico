@@ -19,8 +19,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico import middleware
 from fantastico.middleware.fantastico_app import FantasticoApp
+from fantastico.mvc import controller_decorators
 from fantastico.settings import BasicSettings, SettingsFacade, AwsStageSettings
 from fantastico.utils import instantiator
+from mock import Mock
 import os
 import unittest
 
@@ -57,7 +59,20 @@ class FantasticoBaseTestCase(unittest.TestCase):
         if hasattr(cls, "cleanup_once"):
             cleanup = getattr(cls, "cleanup_once")
             cleanup()
+
+class FakeControllerDecorator(object):
+    '''This is a simple mock that can be used to replace Controller decorator.'''
     
+    def __init__(self, *args, **kwargs):
+        pass
+    
+    def __call__(self, orig_fn):
+        def fn_replace(*args, **kwargs):
+            return orig_fn(*args, **kwargs)
+        
+        return fn_replace
+
+
 class FantasticoUnitTestsCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each unit test written for fantastico.
     
@@ -79,6 +94,20 @@ class FantasticoUnitTestsCase(FantasticoBaseTestCase):
         '''This methods determines the root folder under which the test is executed.'''
         
         return instantiator.get_component_path_data(self.__class__)[1]
+    
+    @classmethod
+    def setup_once(cls):
+        '''This method is overriden in order to correctly mock some dependencies:
+        
+        * :py:class:`fantastico.mvc.controller_decorators.Controller`
+        '''
+        
+        cls._old_controller_decorator = controller_decorators.Controller
+        controller_decorators.Controller = FakeControllerDecorator
+    
+    @classmethod
+    def cleanup_once(cls):        
+        controller_decorators.Controller = cls._old_controller_decorator
     
 class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each integration test written for fantastico.

@@ -14,27 +14,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.samples.mvc.tests.test_mvc_hello
 '''
-from fantastico.samples.mvc.mvc_hello import MvcHelloController
-from fantastico.tests.base_case import FantasticoUnitTestsCase
-from mock import Mock
-
-class MvcHelloTests(FantasticoUnitTestsCase):
-    '''This class provides the test cases for ensuring that MvcHello controller works as expected.'''
-    
-    def init(self):
-        self._controller = MvcHelloController(settings_facade=Mock())
-        
-    def test_say_hello_ok(self):
-        '''Test case that ensures say hello method works as expected.'''
-        
-        self._controller.load_template = Mock(return_value="Hello world.")
-        
-        request = Mock()
-        request.content_type = "text/html"
-        
-        response = self._controller.say_hello(request)
-        
-        self.assertIsNotNone(response)
-        self.assertEqual("Hello world.", response.text)

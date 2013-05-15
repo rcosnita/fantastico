@@ -17,8 +17,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.tests.test_controller_decorator
 '''
 from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoControllerInvalidError
-from fantastico.mvc.controller_decorators import Controller
-from fantastico.tests.base_case import FantasticoUnitTestsCase
+from fantastico.mvc import controller_decorators
+from fantastico.tests.base_case import FantasticoUnitTestsCase, FakeControllerDecorator
 from mock import Mock
 from webob.response import Response
 
@@ -31,17 +31,25 @@ class Model2(object):
 class ControllerDecoratorTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for controller decorator.'''
     
+    @classmethod
+    def setup_once(cls):
+        '''We rebind original Controller decorator to its module.'''
+        
+        super(ControllerDecoratorTests, cls).setup_once()
+         
+        controller_decorators.Controller = cls._old_controller_decorator
+    
     def test_controller_registration_ok(self):
         '''This test case checks that routes are correctly registered by controller decorator.'''
         
         from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
         
-        registered_routes = Controller.get_registered_routes()
+        registered_routes = controller_decorators.Controller.get_registered_routes()
         
         hello_route = registered_routes.get("/say_hello")
 
         self.assertIsNotNone(hello_route)
-        self.assertIsInstance(hello_route, Controller)
+        self.assertIsInstance(hello_route, controller_decorators.Controller)
         self.assertEqual("/say_hello", hello_route.url)
         self.assertEqual(["GET"], hello_route.method)
         self.assertEqual({}, hello_route.models)
@@ -57,12 +65,12 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
 
         from fantastico.mvc.tests.routes_for_testing import RoutesForControllerTesting
 
-        registered_routes = Controller.get_registered_routes()
+        registered_routes = controller_decorators.Controller.get_registered_routes()
         
         upload_file = registered_routes.get("/upload_file")
 
         self.assertIsNotNone(upload_file)
-        self.assertIsInstance(upload_file, Controller)
+        self.assertIsInstance(upload_file, controller_decorators.Controller)
         self.assertEqual("/upload_file", upload_file.url)
         self.assertEqual(["POST"], upload_file.method)
         self.assertEqual({"File": "fantastico.mvc.tests.routes_for_testing.File"}, upload_file.models)
@@ -81,7 +89,7 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
                 self.model_cls = model_cls
                 self._session = session
                     
-        @Controller(url="/simple/controller", method="GET",
+        @controller_decorators.Controller(url="/simple/controller", method="GET",
             models={"Model1": "fantastico.mvc.tests.test_controller_decorator.Model1",
                     "Model2": "fantastico.mvc.tests.test_controller_decorator.Model2"},
             model_facade=FakeFacade)
@@ -102,7 +110,7 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
     def test_controller_model_injection_clsnotfound(self):
         '''This test case ensures a fantastico exception is raised when a model is not found.'''
         
-        @Controller(url="/simple/controller", method="GET",
+        @controller_decorators.Controller(url="/simple/controller", method="GET",
                     models={"Model1": "fantastico.mvc.tests.test_controller_decorator.ModelNotFound"})
         def do_stuff(request):
             pass
@@ -114,7 +122,7 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         '''This test case ensures a fantastico exception is raised when a controller method does not have
         a request parameter.'''
         
-        @Controller(url="/simple/controller", method="GET")
+        @controller_decorators.Controller(url="/simple/controller", method="GET")
         def do_stuff():
             pass
         

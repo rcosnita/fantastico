@@ -17,30 +17,43 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.mvc.tests.test_base_controller
 '''
-from fantastico.exceptions import FantasticoTemplateNotFoundError, \
-    FantasticoError
+from fantastico.exceptions import FantasticoTemplateNotFoundError, FantasticoError
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import ControllerProvider, Controller
+from fantastico.mvc import controller_decorators
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from webob.response import Response
 
-@ControllerProvider()
-class NewControllerTesting(BaseController):
-    '''This is just a simple controller used for testing purposes.'''
-    
-    @Controller(url="/unit/tests/base/say-hello", method="GET")
-    def say_hello(self, request):
-        tpl = self.load_template("/say_hello.html")
-        
-        response = Response(tpl)
-        response.content_type = "text/html"
-        
-        return response
+NewControllerTesting = None
 
 class BaseControllerTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for base controller class.'''
     
+    @classmethod
+    def setup_once(cls):
+        '''We rebind original Controller decorator to its module.'''
+        
+        super(BaseControllerTests, cls).setup_once()
+         
+        controller_decorators.Controller = cls._old_controller_decorator
+        
+        @controller_decorators.ControllerProvider()
+        class NewControllerTestingNested(BaseController):
+            '''This is just a simple controller used for testing purposes.'''
+            
+            @controller_decorators.Controller(url="/unit/tests/base/say-hello", method="GET")
+            def say_hello(self, request):
+                tpl = self.load_template("/say_hello.html")
+                
+                response = Response(tpl)
+                response.content_type = "text/html"
+                
+                return response
+        
+        global NewControllerTesting
+        
+        NewControllerTesting = NewControllerTestingNested
+        
     def init(self):
         self._settings_facade = Mock()
         self._settings_facade.get_root_folder = Mock(return_value=self._get_root_folder())
@@ -66,8 +79,6 @@ class BaseControllerTests(FantasticoUnitTestsCase):
     def test_load_template_correctly(self):
         '''This test case ensures a controller can correctly loads a template using jinja2.'''
 
-        expected_response = None
-        
         with open(self._get_root_folder() + "fantastico/mvc/tests/views/say_hello.html", "r") as template:
             expected_response = template.read()
 
