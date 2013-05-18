@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Low usage (simplest scenario)</title>
+    
+    <link rel="stylesheet" href="../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="aws_low_usage_scenario.html" title="Low usage AWS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../deployment_how_to.html" title="Fantastico deployment how to"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b63 documentation</a> &raquo;</li>
+          <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
+          <li><a href="../deployment_how_to.html" accesskey="U">Fantastico deployment how to</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="low-usage-simplest-scenario">
+<h1>Low usage (simplest scenario)</h1>
+<img alt="../../_images/low_usage_all_in_one.png" src="../../_images/low_usage_all_in_one.png" />
+<p>Above diagram described the simplest scenario for rolling out Fantastico to production. You can use this scenario
+for minimalistic web applications like:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Presentation website</li>
+<li>Personal website</li>
+<li>Blog</li>
+</ul>
+</div></blockquote>
+<p>We usually recommend to start with this deployment scenario and the migrate to more complex scenarios when
+you application requires it.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Advantages</th>
+<th class="head">Disadvantages</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Extremely easy to deploy</td>
+<td>Does not scale well for more than couple of requests / second</td>
+</tr>
+<tr class="row-odd"><td>Minimal os configuration</td>
+<td>All components are bundled on one node without any failover.</td>
+</tr>
+<tr class="row-even"><td>Automatic scripts for configuring the os</td>
+<td>Does not support vertical scaling out of the box.</td>
+</tr>
+<tr class="row-odd"><td>Easy to achieve horizontal scaling for all components at once.</td>
+<td>Static files are not served from a cdn.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="setup">
+<h2>Setup</h2>
+<ol class="arabic simple">
+<li>Install Fantastico framework on the production machine (<a class="reference internal" href="../../get_started/installation.html"><em>Installation manual</em></a>.).</li>
+<li>Goto $FANTASTICO_ROOT/deployment</li>
+<li>sh setup_low_usage_&lt;os_distribution).sh (e.g sh setup_low_usage_ubuntu.sh)</li>
+<li>Done.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

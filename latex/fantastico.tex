@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{May 15, 2013}
-\release{0.0.1-b62}
+\date{May 18, 2013}
+\release{0.0.1-b63}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -743,7 +743,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x55f7848\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x550f848\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1746,7 +1746,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x28a8408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2803408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2094,6 +2094,199 @@ Start fantastico dev server by executing script \textbf{run\_dev\_server.sh} ({\
 
 \item {} 
 Open a browser and visit \href{http://localhost:12000/blogs/1/posts}{http://localhost:12000/blogs/1/posts}.
+
+\end{enumerate}
+
+
+\section{Fantastico deployment how to}
+\label{how_to/deployment_how_to:fantastico-deployment-how-to}\label{how_to/deployment_how_to::doc}
+In this how to we guide you to Fantastico deployment to production. Below you can find various deployment scenarios
+that can be used for various needs.
+
+
+\subsection{Low usage (simplest scenario)}
+\label{how_to/deployment/low_usage_scenario::doc}\label{how_to/deployment/low_usage_scenario:low-usage-simplest-scenario}
+\includegraphics{low_usage_all_in_one.png}
+
+Above diagram described the simplest scenario for rolling out Fantastico to production. You can use this scenario
+for minimalistic web applications like:
+\begin{itemize}
+\item {} 
+Presentation website
+
+\item {} 
+Personal website
+
+\item {} 
+Blog
+
+\end{itemize}
+
+We usually recommend to start with this deployment scenario and the migrate to more complex scenarios when
+you application requires it.
+
+\begin{tabulary}{\linewidth}{|L|L|}
+\hline
+\textbf{\relax 
+Advantages
+} & \textbf{\relax 
+Disadvantages
+}\\\hline
+
+Extremely easy to deploy
+ & 
+Does not scale well for more than couple of requests / second
+\\\hline
+
+Minimal os configuration
+ & 
+All components are bundled on one node without any failover.
+\\\hline
+
+Automatic scripts for configuring the os
+ & 
+Does not support vertical scaling out of the box.
+\\\hline
+
+Easy to achieve horizontal scaling for all components at once.
+ & 
+Static files are not served from a cdn.
+\\\hline
+\end{tabulary}
+
+
+
+\subsubsection{Setup}
+\label{how_to/deployment/low_usage_scenario:setup}\begin{enumerate}
+\item {} 
+Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
+
+\item {} 
+Goto \$FANTASTICO\_ROOT/deployment
+
+\item {} 
+sh setup\_low\_usage\_\textless{}os\_distribution).sh (e.g sh setup\_low\_usage\_ubuntu.sh)
+
+\item {} 
+Done.
+
+\end{enumerate}
+
+
+\subsection{Low usage AWS}
+\label{how_to/deployment/aws_low_usage_scenario:low-usage-aws}\label{how_to/deployment/aws_low_usage_scenario::doc}
+\includegraphics{low_usage_aws.png}
+
+This scenario is a little bit more complex than {\hyperref[how_to/deployment/low_usage_scenario::doc]{\emph{Low usage (simplest scenario)}}} but it provides some
+advantages:
+
+\begin{tabulary}{\linewidth}{|L|L|}
+\hline
+\textbf{\relax 
+Advantages
+} & \textbf{\relax 
+Disadvantages
+}\\\hline
+
+Can be autoscaled.
+ & 
+Requires AWS EC2 instances
+\\\hline
+
+Easier crash recovery
+ & 
+Requires manual configuration
+\\\hline
+
+Very easy monitoring support (CloudWatch)
+ & 
+Requires AWS EBS.
+\\\hline
+ & 
+Requires some AWS know how.
+\\\hline
+ & 
+Static files are not served from a cdn.
+\\\hline
+\end{tabulary}
+
+
+This scenario is recommended if you want to rollout you application on AWS infrastructure. Usually it is non expensive
+to do this as it requires micro instances and low cost storage. For more information about AWS required components
+read:
+\begin{enumerate}
+\item {} 
+\href{http://aws.amazon.com/ec2/instance-types/}{AWS Instance types}.
+
+\item {} 
+\href{http://aws.amazon.com/ebs/}{AWS EBS}.
+
+\end{enumerate}
+
+
+\subsubsection{Setup}
+\label{how_to/deployment/aws_low_usage_scenario:setup}\begin{enumerate}
+\item {} 
+Create an AWS account. (\href{http://aws.amazon.com/documentation/gettingstarted/}{AWS Getting Started}).
+
+\item {} 
+Create an EC2 instance from AWS Management Console (\href{http://www.youtube.com/watch?v=WBro0TEAd7g}{EC2 setup}).
+
+\item {} 
+SSH on EC2 instance.
+
+\item {} 
+Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
+
+\item {} 
+Goto \$FANTASTICO\_ROOT/deployment
+
+\item {} 
+sh setup\_low\_usage\_\textless{}os\_distribution).sh (e.g sh setup\_low\_usage\_ubuntu.sh)
+
+\item {} 
+Done.
+
+\end{enumerate}
+
+
+\subsubsection{Optimization}
+\label{how_to/deployment/aws_low_usage_scenario:optimization}
+This scenario can be easily optimized by using \textbf{AWS S3} buckets for static files. This ensures faileover for static
+files and very easy horizontal scaling for sites. Below you can find the new diagram:
+
+\includegraphics{low_usage_s3_aws.png}
+
+You can read more about \textbf{AWS S3} storage on \href{http://aws.amazon.com/s3/}{http://aws.amazon.com/s3/}. In this version of fantastico there is no
+way to sync static module files with S3 buckets. This feature is going to be implemented in upcoming \textbf{Fantastico}
+features. As a workaround you can easily copy \textbf{static} folder content from each module on S3 using the tool
+provided from AWS Management Console.
+
+You can see how to use AWS Management Console S3 tool on \href{http://www.youtube.com/watch?v=1qrjFb0ZTm8}{http://www.youtube.com/watch?v=1qrjFb0ZTm8}
+
+
+\subsubsection{Setup with S3}
+\label{how_to/deployment/aws_low_usage_scenario:setup-with-s3}\begin{enumerate}
+\item {} 
+Create an AWS account. (\href{http://aws.amazon.com/documentation/gettingstarted/}{AWS Getting Started}).
+
+\item {} 
+Create an EC2 instance from AWS Management Console (\href{http://www.youtube.com/watch?v=WBro0TEAd7g}{EC2 setup}).
+
+\item {} 
+SSH on EC2 instance.
+
+\item {} 
+Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
+
+\item {} 
+Goto \$FANTASTICO\_ROOT/deployment
+
+\item {} 
+sh setup\_low\_usage\_s3\_\textless{}os\_distribution).sh (e.g sh setup\_low\_usage\_s3\_ubuntu.sh)
+
+\item {} 
+Done.
 
 \end{enumerate}
 
