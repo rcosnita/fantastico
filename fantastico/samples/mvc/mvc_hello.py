@@ -39,7 +39,7 @@ class MvcHelloController(BaseController):
         
         tpl = self.load_template(tpl_name="/say_hello.html", model_data={"hello_msg": msg_persisted.message})
         
-        response = Response(tpl, content_type=request.content_type)
+        response = Response(tpl, content_type="text/html")
         
         message_model.delete(msg)
         
