@@ -1,0 +1,36 @@
+##
+#
+# This configuration file is an example of how dmsmart platform can be configured for production purposes.
+# It is ready to be deployed on Cloud. It optimizes traffic of static assets and automatically configure the routes
+# which nginx must handle.
+#
+##
+
+server {
+	# listen   80; ## listen for ipv4; this line is default and implied
+	#listen   [::]:80 default ipv6only=on; ## listen for ipv6
+
+	listen 127.0.0.1:80;
+
+	include /etc/nginx/uwsgi_params;
+
+	error_log /var/log/nginx/fantastico_wsgi notice;
+	rewrite_log on;
+	
+	root /home/rcosnita/workspace_fantastico/fantastico;
+	index index.html index.htm;
+
+	# Make site accessible from http://fantastico-framework.com/
+	server_name fantastico-framework.com;
+
+	set $modules_holder /fantastico/samples;
+		
+	location / {
+		# Matching normal modules static resources
+		rewrite ^/(.*?)/static/(.*)$ $modules_holder/$1/static/$2 break;
+	
+		if (!-f $request_filename) {
+		   uwsgi_pass 127.0.0.1:12090;
+		}
+	}
+}
