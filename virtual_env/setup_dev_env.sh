@@ -13,3 +13,4 @@ pip-3.2 install webob
 pip-3.2 install virtual_env/libs/mysql-connector
 pip-3.2 install sqlalchemy
 pip-3.2 install mock
+pip-3.2 install uwsgi
