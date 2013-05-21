@@ -7,10 +7,7 @@
 ##
 
 server {
-	# listen   80; ## listen for ipv4; this line is default and implied
-	#listen   [::]:80 default ipv6only=on; ## listen for ipv6
-
-	listen 127.0.0.1:80;
+	listen {{ip_address}}:{{http_port}};
 
 	include /etc/nginx/uwsgi_params;
 
@@ -20,8 +17,8 @@ server {
 	root /home/rcosnita/workspace_fantastico/fantastico;
 	index index.html index.htm;
 
-	# Make site accessible from http://fantastico-framework.com/
-	server_name fantastico-framework.com;
+	# Make site accessible from http://{{vhost_name}}/
+	server_name {{vhost_name}};
 
 	set $modules_holder /fantastico/samples;
 		
@@ -30,7 +27,7 @@ server {
 		rewrite ^/(.*?)/static/(.*)$ $modules_holder/$1/static/$2 break;
 	
 		if (!-f $request_filename) {
-		   uwsgi_pass 127.0.0.1:12090;
+		   uwsgi_pass {{ip_address}}:{{uwsgi_port}};
 		}
 	}
 }
