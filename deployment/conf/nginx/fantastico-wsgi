@@ -11,16 +11,16 @@ server {
 
 	include /etc/nginx/uwsgi_params;
 
-	error_log /var/log/nginx/fantastico_wsgi notice;
+	error_log /var/log/nginx/{{vhost_name}} notice;
 	rewrite_log on;
 	
-	root /home/rcosnita/workspace_fantastico/fantastico;
+	root {{root_folder}};
 	index index.html index.htm;
 
 	# Make site accessible from http://{{vhost_name}}/
 	server_name {{vhost_name}};
 
-	set $modules_holder /fantastico/samples;
+	set $modules_holder {{modules_folder}};
 		
 	location / {
 		# Matching normal modules static resources
