@@ -22,7 +22,6 @@ from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.mvc import controller_decorators
 from fantastico.settings import BasicSettings, SettingsFacade, AwsStageSettings
 from fantastico.utils import instantiator
-from mock import Mock
 import os
 import unittest
 
@@ -174,7 +173,7 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         
         old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
         
-        for env, settings_cls in self._envs:
+        for env, settings_cls in self._envs:            
             try:                
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
                 
