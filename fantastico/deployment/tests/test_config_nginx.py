@@ -20,39 +20,57 @@ from fantastico.deployment.config_nginx import ConfigNginx
 from fantastico.settings import BasicSettings
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from fantastico.utils import instantiator
-from jinja2.environment import Template, Environment
+from jinja2.environment import Environment
 from jinja2.loaders import FileSystemLoader
 from mock import Mock
 import os
+from argparse import ArgumentParser
 
 class ConfigNginxTests(FantasticoUnitTestsCase):
     '''This class provides the test suite for checking the correct behavior of config nginx script.'''
     
+    def mocked_error(self, err_msg):
+        '''This method is used to replace argparse error handling method.'''
+        
+        raise ValueError(err_msg)
+    
     def init(self):
         self._os_provider = Mock()
-        self._config_nginx = ConfigNginx(os_provider=self._os_provider, 
-                                         args=["python_script.py", "/etc/nginx"])
+        self._args = []
+        self._config_nginx = ConfigNginx()
         
-        self.assertEqual("python_script.py", self._config_nginx.script_name)
-        self.assertEqual("/etc/nginx", self._config_nginx.nginx_conf_folder)
+        self._old_error_handler = ArgumentParser.error
+        ArgumentParser.error  = self.mocked_error
     
-    def test_noargs_invalid(self):
-        '''This test case ensures an exception is raised if nginx location is not specified.'''
+    def cleanup(self):
+        ArgumentParser.error = self._old_error_handler
+
+    def test_missing_args(self):
+        '''This test case ensures exception are raised if not all arguments are provided.'''
         
-        with self.assertRaises(ValueError):
-            ConfigNginx()
-    
-    def test_conf_folder_inexistent(self):
-        '''This test case ensures an exception is raised when nginx location folder does not exist.'''
+        case_inputs = [("ipaddress required", []),
+                       ("vhost-name required", ["--ipaddress", "127.0.0.1"]),
+                       ("uwsgi-port required", ["--ipaddress", "127.0.0.1",
+                                                 "--vhost-name", "fantastico-test.com"]),
+                       ("root-folder required", ["--ipaddress", "127.0.0.1",
+                                                 "--vhost-name", "fantastico-test.com",
+                                                 "--uwsgi-port", "12080"])]
         
-        self._os_provider.path = self._os_provider
-        self._os_provider.exists = Mock(return_value=False)
-        
-        with self.assertRaises(IOError):
-            self._config_nginx()
-    
+        for expected_msg, args in case_inputs:
+            with self.assertRaises(ValueError) as cm:
+                self._config_nginx(args)
+            
+            self.assertTrue(str(cm.exception).find(expected_msg))
+               
     def test_conf_generated_ok(self):
         '''This test case ensures configuration file is generated correctly and added to nginx enabled sites.'''
+        
+        self._args.extend([
+                           "--ipaddress", "127.0.0.1",
+                           "--vhost-name", "test-app.com",
+                           "--uwsgi-port", "12090",
+                           "--root-folder", "/test/folder/vhost",
+                           "--modules-folder", "/"])
         
         root_folder = os.path.abspath(instantiator.get_class_abslocation(BasicSettings) + "../")        
         
@@ -64,31 +82,10 @@ class ConfigNginxTests(FantasticoUnitTestsCase):
                        "http_port": 80,
                        "uwsgi_port": 12090,
                        "root_folder": "/test/folder/vhost",
-                       "modules_folder": "/fantastico/modules"}
+                       "modules_folder": "/"}
         
         expected_config = tpl_env.get_template("/deployment/conf/nginx/fantastico-wsgi").render(config_data)
         
-        def keyboard_read(msg):
-            if msg.lower().find("address") > -1:
-                return "127.0.0.1"
-            
-            if msg.lower().find("vhost") > -1:
-                return "test-app.com"
-            
-            if msg.lower().find("http port") > -1:
-                return 80
-            
-            if msg.lower().find("uwsgi port") > -1:
-                return 12090
-            
-            if msg.lower().find("root folder") > -1:
-                return "/test/folder/vhost"
-            
-            if msg.lower().find("modules folder") > -1:
-                return "/fantastico/modules"
-            
-            raise NotImplementedError()
-
-        config = self._config_nginx(keyboard_read)
+        config = self._config_nginx(self._args)
         
         self.assertEqual(expected_config, config)
