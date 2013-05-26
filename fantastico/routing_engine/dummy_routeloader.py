@@ -42,7 +42,7 @@ class DummyRouteLoader(RouteLoader):
         if "text/html" in request.content_type:
             response.content_type = "application/html; charset=UTF-8"
         else:
-            response.content_type = request.content_type
+            response.content_type = request.content_type or "application/html; charset=UTF-8"
             
         response.text = "Hello world."
         

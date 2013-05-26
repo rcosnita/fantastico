@@ -103,5 +103,5 @@ class ConfigNginx(object):
 
 if __name__ == "__main__":
     config_generator = ConfigNginx(args=sys.argv)
-    
+
     print(config_generator())

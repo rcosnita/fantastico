@@ -19,4 +19,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from fantastico.middleware.fantastico_app import FantasticoApp
 
-application = FantasticoApp()
+class WsgiFantasticoStarter(object):
+    '''This class is a wrapper used to start fantastico production server.'''
+    
+    def __init__(self):
+        self._fantastico = None
+        self._instantiator_lock = None
+    
+    def __call__(self, environ, start_response):
+        if not self._fantastico:
+            if not self._instantiator_lock:
+                self._instantiator_lock.acquire()
+                
+                self._fantastico = FantasticoApp()
+                
+                self._instantiator_lock.release()
+            else:
+                self._instantiator_lock.acquire()
+        
+        return self._fantastico(environ, start_response)
+    
+application = WsgiFantasticoStarter()
