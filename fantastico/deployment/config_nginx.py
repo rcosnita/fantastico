@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.config_nginx
 '''
+from argparse import ArgumentParser
 from fantastico.settings import BasicSettings
 from fantastico.utils import instantiator
 from jinja2.environment import Environment
@@ -25,71 +26,48 @@ import sys
 
 class ConfigNginx(object):
     '''This class provides all required operations for generating a valid nginx configuration file for
-    a given domain name and ip address. Config file will be automatically included into active nginx configuration.'''
+    a given domain name and ip address. The configuration can be used together with other scripts in order
+    to include the configuration into nginx enabled sites.'''
 
-    @property
-    def script_name(self):
-        '''This property returns the script file name used for configuring nginx.'''
-        
-        return self._script_name
-    
-    @property
-    def nginx_conf_folder(self):
-        '''This property return the nginx conf folder given as argument.'''
-        
-        return self._nginx_conf_folder
-
-    def __init__(self, os_provider=os, args=None):
-        self._os_provider = os_provider
-        self._args = args or []
-        
-        if len(self._args) < 2:
-            raise ValueError("You must specify nginx config folder location.")
-        
-        self._script_name = self._args[0]
-        self._nginx_conf_folder = self._args[1]
+    def __init__(self):
+        self._args_parser = ArgumentParser(description="This script generates an nginx vhost file for the" +
+                                           " current fantastico project.")
 
         root_folder = os.path.abspath(instantiator.get_class_abslocation(BasicSettings) + "../")
         
         tpl_loader = FileSystemLoader(searchpath=root_folder)
         self._tpl_env = Environment(loader=tpl_loader)
         
-        self._ip_address = None
-        self._vhost_name = None
-        self._http_port = None
-        self._uwsgi_port = None
-        self._root_folder = None
-        self._modules_folder = None
+        self._build_args_parser()
     
-    def _read_config_attributes(self, keyboard_read=input):
-        '''This method is used to read configuration attributes from console.'''
+    def _build_args_parser(self):
+        '''This method builds the args parser required to split an array of arguments into config attributes.'''
+        
+        self._args_parser.add_argument("--ipaddress", dest="_ip_address", type=str,
+                                       help="The ip address binded to the current virtual host.",
+                                       required=True)
+        self._args_parser.add_argument("--vhost-name", dest="_vhost_name", type=str,
+                                       help="The virtual host name for this project: e.g fantastico.org",
+                                       required=True)
+        self._args_parser.add_argument("--http-port", dest="_http_port", type=int,
+                                       help="The http port where nginx should listen for this virtual host.",
+                                       default=80)
+        self._args_parser.add_argument("--uwsgi-port", dest="_uwsgi_port", type=int,
+                                       help="Uwsgi port where nginx should proxy fantastico specific requests.",
+                                       required=True)
+        self._args_parser.add_argument("--root-folder", dest="_root_folder", type=str,
+                                       help="Root folder of this fantastico project.",
+                                       required=True)
+        self._args_parser.add_argument("--modules-folder", dest="_modules_folder", type=str,
+                                       help="Modules folder where this project holds fantastico custom components.",
+                                       default="/")
     
-        if not self._ip_address:
-            self._ip_address = keyboard_read("IP Address: ")
+    def __call__(self, args):
+        '''This method coordinate the config generation by parsing the given arguments and using them
+        to generate nginx config file.'''
         
-        if not self._vhost_name:
-            self._vhost_name = keyboard_read("VHost name: ")
+        self._args_parser.parse_args(args, namespace=self)
         
-        if not self._http_port:
-            self._http_port = keyboard_read("Http port: ")
-        
-        if not self._uwsgi_port:
-            self._uwsgi_port = keyboard_read("Uwsgi port: ")
-        
-        if not self._root_folder:
-            self._root_folder = keyboard_read("Root folder: ")
-        
-        if not self._modules_folder:
-            self._modules_folder = keyboard_read("Modules folder: ")
-    
-    def __call__(self, keyboard_read=input):
-        '''This method coordinate the config generation and installation into active nginx server.'''
-        
-        if not self._os_provider.path.exists(self.nginx_conf_folder):
-            raise IOError("Nginx config folder %s does not exist." % self.nginx_conf_folder)
-
-        self._read_config_attributes(keyboard_read)
-
         config_data = {"ip_address": self._ip_address,
                        "vhost_name": self._vhost_name,
                        "http_port": self._http_port,
