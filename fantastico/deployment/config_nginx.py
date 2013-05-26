@@ -79,7 +79,13 @@ class ConfigNginx(object):
         
         return config
 
-if __name__ == "__main__":
-    config_generator = ConfigNginx(args=sys.argv)
+def main(stdout=sys.stdout):
+    '''This method is executed by script __main__ entry point in order to generate the configuration.'''
+    
+    config_generator = ConfigNginx()
 
-    print(config_generator())
+    stdout.write(config_generator(sys.argv[1:]))
+    stdout.flush()
+    
+if __name__ == "__main__":
+    main()
