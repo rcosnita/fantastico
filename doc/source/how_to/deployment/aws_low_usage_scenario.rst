@@ -64,3 +64,10 @@ Setup with S3
 #. Goto $FANTASTICO_ROOT/deployment
 #. sh setup_low_usage_s3_<os_distribution).sh --ipaddress <desired_ip> --vhost-name <desired_vhost> --uwsgi-port <uwsgi port> --root-folder <desired root folder> --modules-folder <desired modules folder> (e.g sh setup_low_usage_s3_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder \`pwd\` --modules-folder /fantastico/samples)
 #. Done.
+
+It is usually a good idea to change the number of parallel connections supported by your linux kernel:
+
+1. sudo nano /etc/sysctl.conf
+2. Search for **net.core.somaxconn**.
+3. If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the file.
+4. Restart the os.
