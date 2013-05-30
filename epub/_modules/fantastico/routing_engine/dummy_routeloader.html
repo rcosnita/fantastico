@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b63 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b64 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -73,7 +73,7 @@
         <span class="k">if</span> <span class="s">&quot;text/html&quot;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">content_type</span><span class="p">:</span>
             <span class="n">response</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s">&quot;application/html; charset=UTF-8&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">response</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">content_type</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">content_type</span> <span class="ow">or</span> <span class="s">&quot;application/html; charset=UTF-8&quot;</span>
             
         <span class="n">response</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Hello world.&quot;</span>
         

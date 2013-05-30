@@ -50,9 +50,9 @@
 \contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{29}{subsection.4.2.1}
 \contentsline {subsubsection}{Setup}{30}{subsubsection*.105}
 \contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{30}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{30}{subsubsection*.106}
+\contentsline {subsubsection}{Setup}{31}{subsubsection*.106}
 \contentsline {subsubsection}{Optimization}{31}{subsubsection*.107}
-\contentsline {subsubsection}{Setup with S3}{31}{subsubsection*.108}
+\contentsline {subsubsection}{Setup with S3}{32}{subsubsection*.108}
 \contentsline {chapter}{\numberline {5}Build status}{33}{chapter.5}
 \contentsline {chapter}{\numberline {6}License}{35}{chapter.6}
 \contentsline {chapter}{Index}{37}{section*.109}

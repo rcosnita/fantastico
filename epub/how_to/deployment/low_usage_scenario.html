@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../deployment_how_to.html" title="Fantastico deployment how to"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.0.1-b63 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.0.1-b64 documentation</a> &raquo;</li>
           <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
           <li><a href="../deployment_how_to.html" accesskey="U">Fantastico deployment how to</a> &raquo;</li> 
       </ul>
@@ -79,8 +79,16 @@ you application requires it.</p>
 <ol class="arabic simple">
 <li>Install Fantastico framework on the production machine (<a class="reference internal" href="../../get_started/installation.html"><em>Installation manual</em></a>.).</li>
 <li>Goto $FANTASTICO_ROOT/deployment</li>
-<li>sh setup_low_usage_&lt;os_distribution).sh (e.g sh setup_low_usage_ubuntu.sh)</li>
+<li>export ROOT_PASSWD=&lt;your root password&gt;</li>
+<li>sh setup_low_usage_&lt;os_distribution).sh &#8211;ipaddress &lt;desired_ip&gt; &#8211;vhost-name &lt;desired_vhost&gt; &#8211;uwsgi-port &lt;uwsgi port&gt; &#8211;root-folder &lt;desired root folder&gt; &#8211;modules-folder &lt;desired modules folder&gt; (e.g sh setup_low_usage_ubuntu.sh &#8211;ipaddress 127.0.0.1 &#8211;vhost-name fantastico-framework.com &#8211;uwsgi-port 12090 &#8211;root-folder `pwd` &#8211;modules-folder /fantastico/samples)</li>
 <li>Done.</li>
+</ol>
+<p>It is usually a good idea to change the number of parallel connections supported by your linux kernel:</p>
+<ol class="arabic simple">
+<li>sudo nano /etc/sysctl.conf</li>
+<li>Search for <strong>net.core.somaxconn</strong>.</li>
+<li>If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the file.</li>
+<li>Restart the os.</li>
 </ol>
 </div>
 </div>

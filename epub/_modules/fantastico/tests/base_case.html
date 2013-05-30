@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b63 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b64 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -53,7 +53,6 @@
 <span class="kn">from</span> <span class="nn">fantastico.mvc</span> <span class="kn">import</span> <span class="n">controller_decorators</span>
 <span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span><span class="p">,</span> <span class="n">SettingsFacade</span><span class="p">,</span> <span class="n">AwsStageSettings</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
-<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">Mock</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 
@@ -205,7 +204,7 @@
         
         <span class="n">old_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">)</span>
         
-        <span class="k">for</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_envs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_envs</span><span class="p">:</span>            
             <span class="k">try</span><span class="p">:</span>                
                 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">env</span>
                 

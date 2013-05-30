@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{May 18, 2013}
-\release{0.0.1-b63}
+\date{May 30, 2013}
+\release{0.0.1-b64}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -743,7 +743,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x550f848\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x40848d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1746,7 +1746,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2803408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1373408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2165,10 +2165,29 @@ Install Fantastico framework on the production machine ({\hyperref[get_started/i
 Goto \$FANTASTICO\_ROOT/deployment
 
 \item {} 
-sh setup\_low\_usage\_\textless{}os\_distribution).sh (e.g sh setup\_low\_usage\_ubuntu.sh)
+export ROOT\_PASSWD=\textless{}your root password\textgreater{}
+
+\item {} 
+sh setup\_low\_usage\_\textless{}os\_distribution).sh --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g sh setup\_low\_usage\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
 
 \item {} 
 Done.
+
+\end{enumerate}
+
+It is usually a good idea to change the number of parallel connections supported by your linux kernel:
+\begin{enumerate}
+\item {} 
+sudo nano /etc/sysctl.conf
+
+\item {} 
+Search for \textbf{net.core.somaxconn}.
+
+\item {} 
+If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the file.
+
+\item {} 
+Restart the os.
 
 \end{enumerate}
 
@@ -2268,6 +2287,9 @@ You can see how to use AWS Management Console S3 tool on \href{http://www.youtub
 \subsubsection{Setup with S3}
 \label{how_to/deployment/aws_low_usage_scenario:setup-with-s3}\begin{enumerate}
 \item {} 
+export ROOT\_PASSWD=\textless{}your root password\textgreater{}
+
+\item {} 
 Create an AWS account. (\href{http://aws.amazon.com/documentation/gettingstarted/}{AWS Getting Started}).
 
 \item {} 
@@ -2283,10 +2305,26 @@ Install Fantastico framework on the production machine ({\hyperref[get_started/i
 Goto \$FANTASTICO\_ROOT/deployment
 
 \item {} 
-sh setup\_low\_usage\_s3\_\textless{}os\_distribution).sh (e.g sh setup\_low\_usage\_s3\_ubuntu.sh)
+sh setup\_low\_usage\_s3\_\textless{}os\_distribution).sh --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g sh setup\_low\_usage\_s3\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
 
 \item {} 
 Done.
+
+\end{enumerate}
+
+It is usually a good idea to change the number of parallel connections supported by your linux kernel:
+\begin{enumerate}
+\item {} 
+sudo nano /etc/sysctl.conf
+
+\item {} 
+Search for \textbf{net.core.somaxconn}.
+
+\item {} 
+If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the file.
+
+\item {} 
+Restart the os.
 
 \end{enumerate}
 
