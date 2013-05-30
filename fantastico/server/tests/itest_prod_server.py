@@ -18,7 +18,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from subprocess import Popen
-from urllib.error import HTTPError
 from urllib.request import Request
 import os
 import subprocess
@@ -59,6 +58,6 @@ class ProdServerIntegration(FantasticoIntegrationTestCase):
         self.assertEqual(200, response.code)
         
         try:
-            self._server_proc.kill()
+            self.server_thread.kill()
         except:
             pass
