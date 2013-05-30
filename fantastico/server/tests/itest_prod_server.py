@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
-from io import StringIO
+from fantastico.utils import instantiator
 from subprocess import Popen
 from urllib.request import Request
 import os
@@ -54,7 +54,7 @@ class ProdServerIntegration(FantasticoIntegrationTestCase):
         
         
         def start_server():
-            root_folder = os.path.realpath(os.getcwd() + "/../../../") + "/"
+            root_folder = os.path.realpath(instantiator.get_class_abslocation(ProdServerIntegration) + "/../../../") + "/"
             start_prod_server = ["%srun_prod_server.sh" % root_folder]
 
             self._server_proc = Popen(start_prod_server, cwd=root_folder, env=os.environ,
