@@ -6,3 +6,4 @@ How to articles
     
     mvc_how_to
     deployment_how_to
+    static_assets

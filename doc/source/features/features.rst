@@ -8,3 +8,4 @@ Fantastico features
    request_response
    routing_engine
    mvc
+   component_model
