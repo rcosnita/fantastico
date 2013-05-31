@@ -40,19 +40,25 @@
 \contentsline {subsection}{\numberline {3.4.5}Controller}{23}{subsection.3.4.5}
 \contentsline {subsubsection}{Available filters}{24}{subsubsection*.85}
 \contentsline {subsection}{\numberline {3.4.6}Database session management}{25}{subsection.3.4.6}
-\contentsline {chapter}{\numberline {4}How to articles}{27}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{27}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{27}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{27}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{28}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{28}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Fantastico deployment how to}{28}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{29}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{30}{subsubsection*.105}
-\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{30}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{31}{subsubsection*.106}
-\contentsline {subsubsection}{Optimization}{31}{subsubsection*.107}
-\contentsline {subsubsection}{Setup with S3}{32}{subsubsection*.108}
-\contentsline {chapter}{\numberline {5}Build status}{33}{chapter.5}
-\contentsline {chapter}{\numberline {6}License}{35}{chapter.6}
-\contentsline {chapter}{Index}{37}{section*.109}
+\contentsline {section}{\numberline {3.5}Component model}{26}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Static folder}{26}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Sql folder}{26}{subsection.3.5.2}
+\contentsline {subsubsection}{Sql folder example}{26}{subsubsection*.105}
+\contentsline {chapter}{\numberline {4}How to articles}{29}{chapter.4}
+\contentsline {section}{\numberline {4.1}MVC How to}{29}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Code the model}{29}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Code the controller}{29}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Code the view}{30}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Test your application}{30}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Fantastico deployment how to}{30}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{31}{subsection.4.2.1}
+\contentsline {subsubsection}{Setup}{32}{subsubsection*.106}
+\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{32}{subsection.4.2.2}
+\contentsline {subsubsection}{Setup}{33}{subsubsection*.107}
+\contentsline {subsubsection}{Optimization}{33}{subsubsection*.108}
+\contentsline {subsubsection}{Setup with S3}{34}{subsubsection*.109}
+\contentsline {section}{\numberline {4.3}Static assets}{34}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{34}{subsection.4.3.1}
+\contentsline {chapter}{\numberline {5}Build status}{35}{chapter.5}
+\contentsline {chapter}{\numberline {6}License}{37}{chapter.6}
+\contentsline {chapter}{Index}{39}{section*.110}

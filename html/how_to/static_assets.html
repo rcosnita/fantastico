@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Fantastico deployment how to &mdash; fantastico 0.0.1-b65 documentation</title>
+    <title>Static assets &mdash; fantastico 0.0.1-b65 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="fantastico 0.0.1-b65 documentation" href="../index.html" />
     <link rel="up" title="How to articles" href="how_to.html" />
-    <link rel="next" title="Low usage (simplest scenario)" href="deployment/low_usage_scenario.html" />
-    <link rel="prev" title="MVC How to" href="mvc_how_to.html" /> 
+    <link rel="prev" title="Low usage AWS" href="deployment/aws_low_usage_scenario.html" /> 
   </head>
   <body>
     <div class="related">
@@ -36,10 +35,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="deployment/low_usage_scenario.html" title="Low usage (simplest scenario)"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="mvc_how_to.html" title="MVC How to"
+          <a href="deployment/aws_low_usage_scenario.html" title="Low usage AWS"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">fantastico 0.0.1-b65 documentation</a> &raquo;</li>
           <li><a href="how_to.html" accesskey="U">How to articles</a> &raquo;</li> 
@@ -51,23 +47,29 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="fantastico-deployment-how-to">
-<h1>Fantastico deployment how to<a class="headerlink" href="#fantastico-deployment-how-to" title="Permalink to this headline">¶</a></h1>
-<p>In this how to we guide you to Fantastico deployment to production. Below you can find various deployment scenarios
-that can be used for various needs.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="deployment/low_usage_scenario.html">Low usage (simplest scenario)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="deployment/low_usage_scenario.html#setup">Setup</a></li>
+  <div class="section" id="static-assets">
+<h1>Static assets<a class="headerlink" href="#static-assets" title="Permalink to this headline">¶</a></h1>
+<p>By default, static assets can be any file that is publicly available. Most of the time, here you can place:</p>
+<blockquote>
+<div><ul class="simple">
+<li>css files</li>
+<li>png, jpg, gif files</li>
+<li>downloadable pdf</li>
+<li>movie files</li>
+<li>any other file format you can think about</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="deployment/aws_low_usage_scenario.html">Low usage AWS</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="deployment/aws_low_usage_scenario.html#setup">Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deployment/aws_low_usage_scenario.html#optimization">Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="deployment/aws_low_usage_scenario.html#setup-with-s3">Setup with S3</a></li>
-</ul>
-</li>
-</ul>
+</div></blockquote>
+<p>For Production environment, requests to these files are handled by the web server you are using. You only need to
+place them under <strong>static</strong> folder of your component (<a class="reference internal" href="../features/component_model.html"><em>Component model</em></a>).</p>
+<p>There are several scenario in which Fantastico projects are deployed which influence where your component static files
+are stored. I recommend you read <a class="reference internal" href="deployment_how_to.html"><em>Fantastico deployment how to</em></a> section.</p>
+<div class="section" id="static-assets-on-dev">
+<h2>Static assets on dev<a class="headerlink" href="#static-assets-on-dev" title="Permalink to this headline">¶</a></h2>
+<p>Of course, on development environment you are not required to have a web server in front of your Fantastico dev server.
+For this purpose, fantastico framework provides a special controller which can easily serve static files. Even this
+works as expected, please do not use it in production. It does not send headers required by browser for caching
+purposes.</p>
+<p>Static assets routes are the same between <strong>prod</strong> and <strong>dev</strong> environments.</p>
 </div>
 </div>
 
@@ -77,15 +79,20 @@ that can be used for various needs.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Static assets</a><ul>
+<li><a class="reference internal" href="#static-assets-on-dev">Static assets on dev</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="mvc_how_to.html"
-                        title="previous chapter">MVC How to</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="deployment/low_usage_scenario.html"
-                        title="next chapter">Low usage (simplest scenario)</a></p>
+  <p class="topless"><a href="deployment/aws_low_usage_scenario.html"
+                        title="previous chapter">Low usage AWS</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/how_to/deployment_how_to.txt"
+    <li><a href="../_sources/how_to/static_assets.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -112,10 +119,7 @@ that can be used for various needs.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="deployment/low_usage_scenario.html" title="Low usage (simplest scenario)"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="mvc_how_to.html" title="MVC How to"
+          <a href="deployment/aws_low_usage_scenario.html" title="Low usage AWS"
              >previous</a> |</li>
         <li><a href="../index.html">fantastico 0.0.1-b65 documentation</a> &raquo;</li>
           <li><a href="how_to.html" >How to articles</a> &raquo;</li> 

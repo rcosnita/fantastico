@@ -303,76 +303,118 @@
           <content src="features/mvc.html#database-session-management" />
         </navPoint>
       </navPoint>
+      <navPoint id="navPoint39" playOrder="39">
+        <navLabel>
+          <text>Component model</text>
+        </navLabel>
+        <content src="features/component_model.html" />
+        <navPoint id="navPoint39" playOrder="39">
+          <navLabel>
+            <text>Component model</text>
+          </navLabel>
+          <content src="features/component_model.html" />
+        </navPoint>
+        <navPoint id="navPoint40" playOrder="40">
+          <navLabel>
+            <text>Static folder</text>
+          </navLabel>
+          <content src="features/component_model.html#static-folder" />
+        </navPoint>
+        <navPoint id="navPoint41" playOrder="41">
+          <navLabel>
+            <text>Sql folder</text>
+          </navLabel>
+          <content src="features/component_model.html#sql-folder" />
+        </navPoint>
+      </navPoint>
     </navPoint>
-    <navPoint id="navPoint39" playOrder="39">
+    <navPoint id="navPoint42" playOrder="42">
       <navLabel>
         <text>How to articles</text>
       </navLabel>
       <content src="how_to/how_to.html" />
-      <navPoint id="navPoint39" playOrder="39">
+      <navPoint id="navPoint42" playOrder="42">
         <navLabel>
           <text>How to articles</text>
         </navLabel>
         <content src="how_to/how_to.html" />
       </navPoint>
-      <navPoint id="navPoint40" playOrder="40">
+      <navPoint id="navPoint43" playOrder="43">
         <navLabel>
           <text>MVC How to</text>
         </navLabel>
         <content src="how_to/mvc_how_to.html" />
-        <navPoint id="navPoint40" playOrder="40">
+        <navPoint id="navPoint43" playOrder="43">
           <navLabel>
             <text>MVC How to</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html" />
         </navPoint>
-        <navPoint id="navPoint41" playOrder="41">
+        <navPoint id="navPoint44" playOrder="44">
           <navLabel>
             <text>Code the model</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-model" />
         </navPoint>
-        <navPoint id="navPoint42" playOrder="42">
+        <navPoint id="navPoint45" playOrder="45">
           <navLabel>
             <text>Code the controller</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-controller" />
         </navPoint>
-        <navPoint id="navPoint43" playOrder="43">
+        <navPoint id="navPoint46" playOrder="46">
           <navLabel>
             <text>Code the view</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-view" />
         </navPoint>
-        <navPoint id="navPoint44" playOrder="44">
+        <navPoint id="navPoint47" playOrder="47">
           <navLabel>
             <text>Test your application</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#test-your-application" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint45" playOrder="45">
+      <navPoint id="navPoint48" playOrder="48">
         <navLabel>
           <text>Fantastico deployment how to</text>
         </navLabel>
         <content src="how_to/deployment_how_to.html" />
-        <navPoint id="navPoint45" playOrder="45">
+        <navPoint id="navPoint48" playOrder="48">
           <navLabel>
             <text>Fantastico deployment how to</text>
           </navLabel>
           <content src="how_to/deployment_how_to.html" />
         </navPoint>
-        <navPoint id="navPoint46" playOrder="46">
+        <navPoint id="navPoint49" playOrder="49">
           <navLabel>
             <text>Low usage (simplest scenario)</text>
           </navLabel>
           <content src="how_to/deployment/low_usage_scenario.html" />
         </navPoint>
-        <navPoint id="navPoint47" playOrder="47">
+        <navPoint id="navPoint50" playOrder="50">
           <navLabel>
             <text>Low usage AWS</text>
           </navLabel>
           <content src="how_to/deployment/aws_low_usage_scenario.html" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint51" playOrder="51">
+        <navLabel>
+          <text>Static assets</text>
+        </navLabel>
+        <content src="how_to/static_assets.html" />
+        <navPoint id="navPoint51" playOrder="51">
+          <navLabel>
+            <text>Static assets</text>
+          </navLabel>
+          <content src="how_to/static_assets.html" />
+        </navPoint>
+        <navPoint id="navPoint52" playOrder="52">
+          <navLabel>
+            <text>Static assets on dev</text>
+          </navLabel>
+          <content src="how_to/static_assets.html#static-assets-on-dev" />
         </navPoint>
       </navPoint>
     </navPoint>

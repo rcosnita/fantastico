@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{May 30, 2013}
-\release{0.0.1-b64}
+\date{May 31, 2013}
+\release{0.0.1-b65}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -743,7 +743,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x40848d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x517c9e0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1746,7 +1746,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1373408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x242f408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -1977,6 +1977,101 @@ profile. You can read more on {\hyperref[get_started/settings:fantastico.setting
 
 \end{fulllineitems}
 
+
+
+\section{Component model}
+\label{features/component_model::doc}\label{features/component_model:component-model}
+In Fantastico there is no enforced component model for your code but there are a set of recommendations
+that will make your life a lot easier when organizing projects. A typical \textbf{component} structure looks like:
+\begin{itemize}
+\item {} \begin{description}
+\item[{\textless{}your project folder\textgreater{}}] \leavevmode\begin{itemize}
+\item {} \begin{description}
+\item[{component\_1}] \leavevmode\begin{itemize}
+\item {} 
+models (sql alchemy models)
+
+\item {} 
+static (static files holder)
+
+\item {} 
+views (all views used by this component controllers')
+
+\item {} 
+sql (sql scripts required to setup the component)
+
+\item {} 
+\_\_init\_\_.py
+
+\item {} 
+{\color{red}\bfseries{}*}.py (controller module files)
+
+\end{itemize}
+
+\end{description}
+
+\end{itemize}
+
+\end{description}
+
+\end{itemize}
+
+You can usually structure your code as you want, but Fantastico default {\hyperref[features/mvc::doc]{\emph{Model View Controller}}} registrators are assuming
+component name is the parent folder of the controller module. This is why is best to follow the above mentioned structure.
+None of the above folders are mandatory which gives you, developer, plenty of flexibility but also responsibility. For
+more information about \textbf{models}, \textbf{views} and \textbf{controllers} read {\hyperref[how_to/mvc_how_to::doc]{\emph{MVC How to}}} section.
+
+
+\subsection{Static folder}
+\label{features/component_model:static-folder}
+By default, static folder holds all static assets belonging to a component. You can find more information about this
+in {\hyperref[how_to/static_assets::doc]{\emph{Static assets}}} section.
+
+
+\subsection{Sql folder}
+\label{features/component_model:sql-folder}
+Sql folder is used to hold all sql scripts required for a component to work correctly. In our continuous delivery
+process we scan all available sql folders and execute \textbf{module\_setup.sql} scripts. By default, we want to give
+developers the chance to provide a setup script for each component in order to easily install the component database
+dependencies.
+
+
+\subsubsection{Sql folder example}
+\label{features/component_model:sql-folder-example}
+Assume you want to create a blog module that requires a storage for \textbf{Authors} and \textbf{Posts}. module\_setup.sql script
+is the perfect place to provide the code. We recommend to make this code idempotent, meaning that once dependencies are
+created they should not be altered anymore by this script.
+
+An example of such a script we use in integration tests can be found under: \textbf{/\textless{}fantastico\_framework\textgreater{}/samples/mvc/sql/module\_setup.sql}.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{Copyright} \PYG{l+m+mi}{2013} \PYG{n}{Cosnita} \PYG{n}{Radu} \PYG{n}{Viorel}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{Permission} \PYG{k}{is} \PYG{n}{hereby} \PYG{k}{granted}\PYG{p}{,} \PYG{k}{free} \PYG{k}{of} \PYG{n}{charge}\PYG{p}{,} \PYG{k}{to} \PYG{k}{any} \PYG{n}{person} \PYG{n}{obtaining} \PYG{n}{a} \PYG{k}{copy} \PYG{k}{of} \PYG{n}{this} \PYG{n}{software}
+\PYG{o}{\PYGZsh{}} \PYG{k}{and} \PYG{n}{associated} \PYG{n}{documentation} \PYG{n}{files} \PYG{p}{(}\PYG{n}{the} \PYG{l+s+ss}{\PYGZdq{}Software\PYGZdq{}}\PYG{p}{)}\PYG{p}{,} \PYG{k}{to} \PYG{n}{deal} \PYG{k}{in} \PYG{n}{the} \PYG{n}{Software} \PYG{k}{without}
+\PYG{o}{\PYGZsh{}} \PYG{n}{restriction}\PYG{p}{,} \PYG{k}{including} \PYG{k}{without} \PYG{n}{limitation} \PYG{n}{the} \PYG{n}{rights} \PYG{k}{to} \PYG{n}{use}\PYG{p}{,} \PYG{k}{copy}\PYG{p}{,} \PYG{k}{modify}\PYG{p}{,} \PYG{n}{merge}\PYG{p}{,} \PYG{n}{publish}\PYG{p}{,}
+\PYG{o}{\PYGZsh{}} \PYG{n}{distribute}\PYG{p}{,} \PYG{n}{sublicense}\PYG{p}{,} \PYG{k}{and}\PYG{o}{/}\PYG{k}{or} \PYG{n}{sell} \PYG{n}{copies} \PYG{k}{of} \PYG{n}{the} \PYG{n}{Software}\PYG{p}{,} \PYG{k}{and} \PYG{k}{to} \PYG{n}{permit} \PYG{n}{persons} \PYG{k}{to} \PYG{n}{whom}
+\PYG{o}{\PYGZsh{}} \PYG{n}{the} \PYG{n}{Software} \PYG{k}{is} \PYG{n}{furnished} \PYG{k}{to} \PYG{k}{do} \PYG{n}{so}\PYG{p}{,} \PYG{n}{subject} \PYG{k}{to} \PYG{n}{the} \PYG{n}{following} \PYG{n}{conditions}\PYG{p}{:}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{The} \PYG{n}{above} \PYG{n}{copyright} \PYG{n}{notice} \PYG{k}{and} \PYG{n}{this} \PYG{n}{permission} \PYG{n}{notice} \PYG{n}{shall} \PYG{n}{be} \PYG{n}{included} \PYG{k}{in} \PYG{k}{all} \PYG{n}{copies} \PYG{k}{or}
+\PYG{o}{\PYGZsh{}} \PYG{n}{substantial} \PYG{n}{portions} \PYG{k}{of} \PYG{n}{the} \PYG{n}{Software}\PYG{p}{.}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{THE} \PYG{n}{SOFTWARE} \PYG{k}{IS} \PYG{n}{PROVIDED} \PYG{l+s+ss}{\PYGZdq{}AS IS\PYGZdq{}}\PYG{p}{,} \PYG{k}{WITHOUT} \PYG{n}{WARRANTY} \PYG{k}{OF} \PYG{k}{ANY} \PYG{n}{KIND}\PYG{p}{,} \PYG{n}{EXPRESS} \PYG{k}{OR} \PYG{n}{IMPLIED}\PYG{p}{,}
+\PYG{o}{\PYGZsh{}} \PYG{k}{INCLUDING} \PYG{n}{BUT} \PYG{k}{NOT} \PYG{n}{LIMITED} \PYG{k}{TO} \PYG{n}{THE} \PYG{n}{WARRANTIES} \PYG{k}{OF} \PYG{n}{MERCHANTABILITY}\PYG{p}{,} \PYG{n}{FITNESS} \PYG{k}{FOR} \PYG{n}{A} \PYG{n}{PARTICULAR}
+\PYG{o}{\PYGZsh{}} \PYG{n}{PURPOSE} \PYG{k}{AND} \PYG{n}{NONINFRINGEMENT}\PYG{p}{.} \PYG{k}{IN} \PYG{k}{NO} \PYG{n}{EVENT} \PYG{n}{SHALL} \PYG{n}{THE} \PYG{n}{AUTHORS} \PYG{k}{OR} \PYG{n}{COPYRIGHT} \PYG{n}{HOLDERS} \PYG{n}{BE} \PYG{n}{LIABLE} \PYG{k}{FOR}
+\PYG{o}{\PYGZsh{}} \PYG{k}{ANY} \PYG{n}{CLAIM}\PYG{p}{,} \PYG{n}{DAMAGES} \PYG{k}{OR} \PYG{n}{OTHER} \PYG{n}{LIABILITY}\PYG{p}{,} \PYG{n}{WHETHER} \PYG{k}{IN} \PYG{n}{AN} \PYG{n}{ACTION} \PYG{k}{OF} \PYG{n}{CONTRACT}\PYG{p}{,} \PYG{n}{TORT} \PYG{k}{OR} \PYG{n}{OTHERWISE}\PYG{p}{,}
+\PYG{o}{\PYGZsh{}} \PYG{n}{ARISING} \PYG{k}{FROM}\PYG{p}{,} \PYG{k}{OUT} \PYG{k}{OF} \PYG{k}{OR} \PYG{k}{IN} \PYG{k}{CONNECTION} \PYG{k}{WITH} \PYG{n}{THE} \PYG{n}{SOFTWARE} \PYG{k}{OR} \PYG{n}{THE} \PYG{n}{USE} \PYG{k}{OR} \PYG{n}{OTHER} \PYG{n}{DEALINGS}
+\PYG{o}{\PYGZsh{}} \PYG{k}{IN} \PYG{n}{THE} \PYG{n}{SOFTWARE}\PYG{p}{.}
+\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}
+
+
+\PYG{k}{DROP} \PYG{k}{TABLE} \PYG{n}{IF} \PYG{k}{EXISTS} \PYG{n}{mvc\PYGZus{}friendly\PYGZus{}messages}\PYG{p}{;}
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{mvc\PYGZus{}friendly\PYGZus{}messages}\PYG{p}{(}
+   \PYG{n}{Id} \PYG{n+nb}{INT} \PYG{n}{AUTO\PYGZus{}INCREMENT}\PYG{p}{,}
+   \PYG{n}{Message} \PYG{n+nb}{TEXT}\PYG{p}{,}
+   \PYG{k}{PRIMARY} \PYG{k}{KEY}\PYG{p}{(}\PYG{n}{id}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
 
 
 \chapter{How to articles}
@@ -2327,6 +2422,44 @@ If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the 
 Restart the os.
 
 \end{enumerate}
+
+
+\section{Static assets}
+\label{how_to/static_assets:static-assets}\label{how_to/static_assets::doc}
+By default, static assets can be any file that is publicly available. Most of the time, here you can place:
+\begin{itemize}
+\item {} 
+css files
+
+\item {} 
+png, jpg, gif files
+
+\item {} 
+downloadable pdf
+
+\item {} 
+movie files
+
+\item {} 
+any other file format you can think about
+
+\end{itemize}
+
+For Production environment, requests to these files are handled by the web server you are using. You only need to
+place them under \textbf{static} folder of your component ({\hyperref[features/component_model::doc]{\emph{Component model}}}).
+
+There are several scenario in which Fantastico projects are deployed which influence where your component static files
+are stored. I recommend you read {\hyperref[how_to/deployment_how_to::doc]{\emph{Fantastico deployment how to}}} section.
+
+
+\subsection{Static assets on dev}
+\label{how_to/static_assets:static-assets-on-dev}
+Of course, on development environment you are not required to have a web server in front of your Fantastico dev server.
+For this purpose, fantastico framework provides a special controller which can easily serve static files. Even this
+works as expected, please do not use it in production. It does not send headers required by browser for caching
+purposes.
+
+Static assets routes are the same between \textbf{prod} and \textbf{dev} environments.
 
 
 \chapter{Build status}

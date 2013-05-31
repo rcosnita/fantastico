@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Static assets</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="deployment/aws_low_usage_scenario.html" title="Low usage AWS"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b65 documentation</a> &raquo;</li>
+          <li><a href="how_to.html" accesskey="U">How to articles</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="static-assets">
+<h1>Static assets</h1>
+<p>By default, static assets can be any file that is publicly available. Most of the time, here you can place:</p>
+<blockquote>
+<div><ul class="simple">
+<li>css files</li>
+<li>png, jpg, gif files</li>
+<li>downloadable pdf</li>
+<li>movie files</li>
+<li>any other file format you can think about</li>
+</ul>
+</div></blockquote>
+<p>For Production environment, requests to these files are handled by the web server you are using. You only need to
+place them under <strong>static</strong> folder of your component (<a class="reference internal" href="../features/component_model.html"><em>Component model</em></a>).</p>
+<p>There are several scenario in which Fantastico projects are deployed which influence where your component static files
+are stored. I recommend you read <a class="reference internal" href="deployment_how_to.html"><em>Fantastico deployment how to</em></a> section.</p>
+<div class="section" id="static-assets-on-dev">
+<h2>Static assets on dev</h2>
+<p>Of course, on development environment you are not required to have a web server in front of your Fantastico dev server.
+For this purpose, fantastico framework provides a special controller which can easily serve static files. Even this
+works as expected, please do not use it in production. It does not send headers required by browser for caching
+purposes.</p>
+<p>Static assets routes are the same between <strong>prod</strong> and <strong>dev</strong> environments.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Component model &mdash; fantastico 0.0.1-b65 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.1-b65',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.0.1-b65 documentation" href="../index.html" />
+    <link rel="up" title="Fantastico features" href="features.html" />
+    <link rel="next" title="How to articles" href="../how_to/how_to.html" />
+    <link rel="prev" title="Model View Controller" href="mvc.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../how_to/how_to.html" title="How to articles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mvc.html" title="Model View Controller"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b65 documentation</a> &raquo;</li>
+          <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="component-model">
+<h1>Component model<a class="headerlink" href="#component-model" title="Permalink to this headline">¶</a></h1>
+<p>In Fantastico there is no enforced component model for your code but there are a set of recommendations
+that will make your life a lot easier when organizing projects. A typical <strong>component</strong> structure looks like:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>&lt;your project folder&gt;</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>component_1</dt>
+<dd><ul class="first last simple">
+<li>models (sql alchemy models)</li>
+<li>static (static files holder)</li>
+<li>views (all views used by this component controllers&#8217;)</li>
+<li>sql (sql scripts required to setup the component)</li>
+<li>__init__.py</li>
+<li><a href="#id1"><span class="problematic" id="id2">*</span></a>.py (controller module files)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>You can usually structure your code as you want, but Fantastico default <a class="reference internal" href="mvc.html"><em>Model View Controller</em></a> registrators are assuming
+component name is the parent folder of the controller module. This is why is best to follow the above mentioned structure.
+None of the above folders are mandatory which gives you, developer, plenty of flexibility but also responsibility. For
+more information about <strong>models</strong>, <strong>views</strong> and <strong>controllers</strong> read <a class="reference internal" href="../how_to/mvc_how_to.html"><em>MVC How to</em></a> section.</p>
+<div class="section" id="static-folder">
+<h2>Static folder<a class="headerlink" href="#static-folder" title="Permalink to this headline">¶</a></h2>
+<p>By default, static folder holds all static assets belonging to a component. You can find more information about this
+in <a class="reference internal" href="../how_to/static_assets.html"><em>Static assets</em></a> section.</p>
+</div>
+<div class="section" id="sql-folder">
+<h2>Sql folder<a class="headerlink" href="#sql-folder" title="Permalink to this headline">¶</a></h2>
+<p>Sql folder is used to hold all sql scripts required for a component to work correctly. In our continuous delivery
+process we scan all available sql folders and execute <strong>module_setup.sql</strong> scripts. By default, we want to give
+developers the chance to provide a setup script for each component in order to easily install the component database
+dependencies.</p>
+<div class="section" id="sql-folder-example">
+<h3>Sql folder example<a class="headerlink" href="#sql-folder-example" title="Permalink to this headline">¶</a></h3>
+<p>Assume you want to create a blog module that requires a storage for <strong>Authors</strong> and <strong>Posts</strong>. module_setup.sql script
+is the perfect place to provide the code. We recommend to make this code idempotent, meaning that once dependencies are
+created they should not be altered anymore by this script.</p>
+<p>An example of such a script we use in integration tests can be found under: <strong>/&lt;fantastico_framework&gt;/samples/mvc/sql/module_setup.sql</strong>.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="o">###############################################################################################</span>
+<span class="o">#</span> <span class="n">Copyright</span> <span class="mi">2013</span> <span class="n">Cosnita</span> <span class="n">Radu</span> <span class="n">Viorel</span>
+<span class="o">#</span>
+<span class="o">#</span> <span class="n">Permission</span> <span class="k">is</span> <span class="n">hereby</span> <span class="k">granted</span><span class="p">,</span> <span class="k">free</span> <span class="k">of</span> <span class="n">charge</span><span class="p">,</span> <span class="k">to</span> <span class="k">any</span> <span class="n">person</span> <span class="n">obtaining</span> <span class="n">a</span> <span class="k">copy</span> <span class="k">of</span> <span class="n">this</span> <span class="n">software</span>
+<span class="o">#</span> <span class="k">and</span> <span class="n">associated</span> <span class="n">documentation</span> <span class="n">files</span> <span class="p">(</span><span class="n">the</span> <span class="ss">&quot;Software&quot;</span><span class="p">),</span> <span class="k">to</span> <span class="n">deal</span> <span class="k">in</span> <span class="n">the</span> <span class="n">Software</span> <span class="k">without</span>
+<span class="o">#</span> <span class="n">restriction</span><span class="p">,</span> <span class="k">including</span> <span class="k">without</span> <span class="n">limitation</span> <span class="n">the</span> <span class="n">rights</span> <span class="k">to</span> <span class="n">use</span><span class="p">,</span> <span class="k">copy</span><span class="p">,</span> <span class="k">modify</span><span class="p">,</span> <span class="n">merge</span><span class="p">,</span> <span class="n">publish</span><span class="p">,</span>
+<span class="o">#</span> <span class="n">distribute</span><span class="p">,</span> <span class="n">sublicense</span><span class="p">,</span> <span class="k">and</span><span class="o">/</span><span class="k">or</span> <span class="n">sell</span> <span class="n">copies</span> <span class="k">of</span> <span class="n">the</span> <span class="n">Software</span><span class="p">,</span> <span class="k">and</span> <span class="k">to</span> <span class="n">permit</span> <span class="n">persons</span> <span class="k">to</span> <span class="n">whom</span>
+<span class="o">#</span> <span class="n">the</span> <span class="n">Software</span> <span class="k">is</span> <span class="n">furnished</span> <span class="k">to</span> <span class="k">do</span> <span class="n">so</span><span class="p">,</span> <span class="n">subject</span> <span class="k">to</span> <span class="n">the</span> <span class="n">following</span> <span class="n">conditions</span><span class="p">:</span>
+<span class="o">#</span>
+<span class="o">#</span> <span class="n">The</span> <span class="n">above</span> <span class="n">copyright</span> <span class="n">notice</span> <span class="k">and</span> <span class="n">this</span> <span class="n">permission</span> <span class="n">notice</span> <span class="n">shall</span> <span class="n">be</span> <span class="n">included</span> <span class="k">in</span> <span class="k">all</span> <span class="n">copies</span> <span class="k">or</span>
+<span class="o">#</span> <span class="n">substantial</span> <span class="n">portions</span> <span class="k">of</span> <span class="n">the</span> <span class="n">Software</span><span class="p">.</span>
+<span class="o">#</span>
+<span class="o">#</span> <span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="k">IS</span> <span class="n">PROVIDED</span> <span class="ss">&quot;AS IS&quot;</span><span class="p">,</span> <span class="k">WITHOUT</span> <span class="n">WARRANTY</span> <span class="k">OF</span> <span class="k">ANY</span> <span class="n">KIND</span><span class="p">,</span> <span class="n">EXPRESS</span> <span class="k">OR</span> <span class="n">IMPLIED</span><span class="p">,</span>
+<span class="o">#</span> <span class="k">INCLUDING</span> <span class="n">BUT</span> <span class="k">NOT</span> <span class="n">LIMITED</span> <span class="k">TO</span> <span class="n">THE</span> <span class="n">WARRANTIES</span> <span class="k">OF</span> <span class="n">MERCHANTABILITY</span><span class="p">,</span> <span class="n">FITNESS</span> <span class="k">FOR</span> <span class="n">A</span> <span class="n">PARTICULAR</span>
+<span class="o">#</span> <span class="n">PURPOSE</span> <span class="k">AND</span> <span class="n">NONINFRINGEMENT</span><span class="p">.</span> <span class="k">IN</span> <span class="k">NO</span> <span class="n">EVENT</span> <span class="n">SHALL</span> <span class="n">THE</span> <span class="n">AUTHORS</span> <span class="k">OR</span> <span class="n">COPYRIGHT</span> <span class="n">HOLDERS</span> <span class="n">BE</span> <span class="n">LIABLE</span> <span class="k">FOR</span>
+<span class="o">#</span> <span class="k">ANY</span> <span class="n">CLAIM</span><span class="p">,</span> <span class="n">DAMAGES</span> <span class="k">OR</span> <span class="n">OTHER</span> <span class="n">LIABILITY</span><span class="p">,</span> <span class="n">WHETHER</span> <span class="k">IN</span> <span class="n">AN</span> <span class="n">ACTION</span> <span class="k">OF</span> <span class="n">CONTRACT</span><span class="p">,</span> <span class="n">TORT</span> <span class="k">OR</span> <span class="n">OTHERWISE</span><span class="p">,</span>
+<span class="o">#</span> <span class="n">ARISING</span> <span class="k">FROM</span><span class="p">,</span> <span class="k">OUT</span> <span class="k">OF</span> <span class="k">OR</span> <span class="k">IN</span> <span class="k">CONNECTION</span> <span class="k">WITH</span> <span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="k">OR</span> <span class="n">THE</span> <span class="n">USE</span> <span class="k">OR</span> <span class="n">OTHER</span> <span class="n">DEALINGS</span>
+<span class="o">#</span> <span class="k">IN</span> <span class="n">THE</span> <span class="n">SOFTWARE</span><span class="p">.</span>
+<span class="o">###############################################################################################</span>
+
+
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">mvc_friendly_messages</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">mvc_friendly_messages</span><span class="p">(</span>
+   <span class="n">Id</span> <span class="nb">INT</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+   <span class="n">Message</span> <span class="nb">TEXT</span><span class="p">,</span>
+   <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Component model</a><ul>
+<li><a class="reference internal" href="#static-folder">Static folder</a></li>
+<li><a class="reference internal" href="#sql-folder">Sql folder</a><ul>
+<li><a class="reference internal" href="#sql-folder-example">Sql folder example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mvc.html"
+                        title="previous chapter">Model View Controller</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../how_to/how_to.html"
+                        title="next chapter">How to articles</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/features/component_model.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../how_to/how_to.html" title="How to articles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mvc.html" title="Model View Controller"
+             >previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.0.1-b65 documentation</a> &raquo;</li>
+          <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
