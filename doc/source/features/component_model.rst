@@ -16,13 +16,13 @@ that will make your life a lot easier when organizing projects. A typical **comp
 You can usually structure your code as you want, but Fantastico default :doc:`/features/mvc` registrators are assuming
 component name is the parent folder of the controller module. This is why is best to follow the above mentioned structure.
 None of the above folders are mandatory which gives you, developer, plenty of flexibility but also responsibility. For 
-more information about **models**, **views** and **controllers** read :doc:`/how_to/mvc_how_to` document.
+more information about **models**, **views** and **controllers** read :doc:`/how_to/mvc_how_to` section.
 
 Static folder
 -------------
 
 By default, static folder holds all static assets belonging to a component. You can find more information about this
-in :doc:`/how_to/static_assets` document.
+in :doc:`/how_to/static_assets` section.
 
 Sql folder
 ----------
@@ -43,21 +43,25 @@ An example of such a script we use in integration tests can be found under: **/<
 
 .. code-block:: sql
 
-   ##############################################################################################################################
+   ###############################################################################################
    # Copyright 2013 Cosnita Radu Viorel
    #
-   # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
-   # documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
-   # the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
-   # and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+   # Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
+   # and associated documentation files (the "Software"), to deal in the Software without  
+   # restriction, including without limitation the rights to use, copy, modify, merge, publish,  
+   # distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom 
+   # the Software is furnished to do so, subject to the following conditions:
    #
-   # The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+   # The above copyright notice and this permission notice shall be included in all copies or 
+   # substantial portions of the Software.
    #
-   # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
-   # WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
-   # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
-   # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-   ##############################################################################################################################
+   # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,  
+   # INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR  
+   # PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR  
+   # ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,  
+   # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
+   # IN THE SOFTWARE.
+   ###############################################################################################
 
 
    DROP TABLE IF EXISTS mvc_friendly_messages;
