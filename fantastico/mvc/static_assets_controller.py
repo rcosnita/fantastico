@@ -28,11 +28,11 @@ class StaticAssetsController(BaseController):
     ensure correct http client side caching. In production, only the web server serves static assets and
     Fantastico wsgi server is bypassed.'''
     
-    @Controller(url="(?P<component_name>.*)/static/(?P<asset_path>.*)$")
+    @Controller(url="^(?P<component_name>.*)/static/(?P<asset_path>.*)$")
     def serve_asset(self, request, component_name, asset_path, os_provider=os, file_loader=None):
         '''This method is invoked whenever a request to a static asset is done.'''
         
-        file_path = "%s%s%s" % (self._settings_facade.get_root_folder(), component_name, asset_path)
+        file_path = "%s%s/%s" % (self._settings_facade.get_root_folder(), component_name, asset_path)
         err_content_type="text/html; charset=UTF-8"
         
         if not component_name or len(component_name.strip()) == 0:

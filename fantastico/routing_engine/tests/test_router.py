@@ -198,6 +198,11 @@ class RouterTests(FantasticoUnitTestsCase):
         self.assertIsInstance(handler.get("controller"), Controller)
         self.assertEqual("do_regex_action", handler.get("method"))
         
+        url_params = handler.get("url_params")
+        self.assertIsNotNone(url_params)
+        self.assertEqual("test-component", url_params.get("component_name"))
+        self.assertEqual("path/to/nowhere", url_params.get("path"))
+        
     def test_handle_route_controller_missing(self):
         '''Test case that ensures handle route correctly raise an exception if it can't locate the requested controller.'''
         

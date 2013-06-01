@@ -16,9 +16,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.middleware.tests.fantastico_app
 '''
-from fantastico.exceptions import FantasticoClassNotFoundError, \
-    FantasticoContentTypeError, FantasticoNoRequestError,\
-    FantasticoRouteNotFoundError
+from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoContentTypeError, FantasticoNoRequestError, \
+    FantasticoRouteNotFoundError, FantasticoError
 from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
@@ -61,7 +60,6 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(chained_resp)
         self.assertEqual(1, len(chained_resp))
         self.assertEqual(["middleware"], chained_resp)
-        
         
     def test_middleware_wrapped_in_order(self):
         self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware",
@@ -115,6 +113,44 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         self.assertEqual([b"Hello world"], app_middleware(self._environ, Mock()))
         self.assertTrue(self._environ["test_wrapped_ok"])
     
+    def test_exec_controller_url_params_ok(self):
+        '''This test case ensures that requested route is executed and url_params are passed correctly.'''
+
+        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+                
+        app_middleware = FantasticoApp(self._settings_facade_cls)
+        
+        comp_name = "component"
+        path =  "path/here"
+        
+        self._environ["route_/simple/request_handler"]["url_params"] = {"comp_name": comp_name, "path": path}
+        
+        self._controller.exec_logic = lambda request, comp_name, path: Response(content_type="text/html; charset=UTF-8",
+                                                                                text="/%s/%s" % (comp_name, path))
+        
+        self.assertEqual([b"/component/path/here"], app_middleware(self._environ, Mock()))
+        self.assertTrue(self._environ["test_wrapped_ok"])
+    
+    def test_exec_controller_url_params_wrong_method(self):
+        '''This test case ensures a concrete exception is raised if the method registered as controller does
+        not accept given named arguments.'''
+
+        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+                
+        app_middleware = FantasticoApp(self._settings_facade_cls)
+
+        comp_name = "component"
+        path =  "path/here"
+        
+        self._environ["route_/simple/request_handler"]["url_params"] = {"comp_name": comp_name, "path": path}
+        
+        self._controller.exec_logic = lambda request: None
+        
+        with self.assertRaises(FantasticoError) as cm:
+            app_middleware(self._environ, Mock())
+        
+        self.assertTrue(str(cm.exception).find("comp_name") > -1, "Missing named arguments must be reported.")
+        
     def test_missing_request(self):
         '''This test case ensures an exception is raised if request middleware was not executed correctly.'''
 
