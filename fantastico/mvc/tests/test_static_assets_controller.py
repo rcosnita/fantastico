@@ -59,7 +59,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         '''This test case makes sure a 404 response is retrieved if asset request is not found.'''
         
         component_name = "/component1"
-        asset_path ="/images/not_found.png"
+        asset_path ="images/not_found.png"
         
         self._mock_os_provider(component_name, asset_path, False)
         
@@ -74,7 +74,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         '''This test case makes sure valid assets are retrieved correctly to the client.'''
 
         component_name = "/component1"
-        asset_path ="/images/image.png"
+        asset_path ="images/image.png"
         
         self._mock_os_provider(component_name, asset_path)
         
@@ -96,17 +96,9 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         '''This test case ensures a default mimetype is detected if the given file has an unknown extension.'''
         
         component_name = "/component1"
-        asset_path ="/images/image.unknown"
+        asset_path ="images/image.unknown"
         
-        self._os_provider.path = Mock(return_value=self._os_provider)
-        
-        def exists(filename):
-            if filename == "/webapp/component1/images/image.unknown":
-                return True
-            
-            raise NotSupportedError()
-            
-        self._os_provider.path.exists = exists
+        self._mock_os_provider(component_name, asset_path)
         
         content = b"simple test"
         
@@ -128,7 +120,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         self._os_provider.path = Mock(return_value=self._os_provider)
         
         def exists(filename):
-            computed_path = "/webapp%(component_name)s%(asset_path)s" %\
+            computed_path = "/webapp%(component_name)s/%(asset_path)s" %\
                             {"component_name": component_name, 
                              "asset_path": asset_path}
             
