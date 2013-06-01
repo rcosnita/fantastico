@@ -17,11 +17,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.static_assets_controller
 '''
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import Controller
+from fantastico.mvc.controller_decorators import Controller, ControllerProvider
 from webob.response import Response
 import mimetypes
 import os
 
+@ControllerProvider()
 class StaticAssetsController(BaseController):
     '''This class provides a generic handler for static assets. It is used only by dev server and it does not
     ensure correct http client side caching. In production, only the web server serves static assets and

@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from fantastico import settings
 from fantastico.mvc import controller_decorators
-from fantastico.tests.base_case import FantasticoUnitTestsCase, FakeControllerDecorator
+from fantastico.tests.base_case import FantasticoUnitTestsCase
 from fantastico.utils import instantiator
 from mock import Mock
 

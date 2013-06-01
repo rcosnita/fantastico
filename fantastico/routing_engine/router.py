@@ -17,11 +17,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.routing_engine.router
 '''
+from fantastico.exceptions import FantasticoDuplicateRouteError, FantasticoNoRoutesError, FantasticoRouteNotFoundError, \
+    FantasticoHttpVerbNotSupported
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
+import re
 import threading
-from fantastico.exceptions import FantasticoDuplicateRouteError, FantasticoNoRoutesError, \
-    FantasticoRouteNotFoundError, FantasticoHttpVerbNotSupported
 
 class Router(object):
     '''This class is used for registering all available routes by using all registered loaders.'''
@@ -99,14 +100,8 @@ class Router(object):
         '''Method used to identify the given url method handler. It enrich the environ dictionary with a new entry that
         holds a controller instance and a function to be executed from that controller.'''
         
-        if url not in self._routes:
-            raise FantasticoRouteNotFoundError("Route %s is not registered." % url)
-        
-        route_config = self._routes[url]
-        
-        if route_config is None:
-            raise FantasticoNoRoutesError("Route %s has an invalid controller mapped." % url)
-        
+        route_config = self._find_url_regex(url)
+                
         last_dot = route_config["method"].rfind(".")
 
         if last_dot == -1:
@@ -122,3 +117,29 @@ class Router(object):
         environ["route_%s_handler" % url] = {"controller": instantiator.instantiate_class(controller_cls, 
                                                                                           [self._settings_facade]),
                                              "method": controller_meth}
+    
+    def _find_url_regex(self, url):
+        '''This method is used to obtain route configuration starting from a given url.
+        
+        :param url: the relative url we want to serve. E.g: /component1/test/url
+        :type url: string
+        :returns: A dictionary containing the method and http_verbs supported.
+        :raises FantasticoNoRoutesError: This exception is raised if the url does not match any registered patterns. 
+        '''
+        
+        route_config = None
+                
+        for route_pat in self._routes.keys():
+            match = re.search(route_pat, url)
+            
+            if not match:
+                continue
+                
+            route_config = self._routes[route_pat]
+                
+            route_config["url_params"] = match.groupdict()
+        
+        if not route_config:
+            raise FantasticoRouteNotFoundError("Route %s is not registered or no config registered." % url)
+        
+        return route_config
