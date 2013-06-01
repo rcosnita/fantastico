@@ -116,7 +116,8 @@ class Router(object):
         
         environ["route_%s_handler" % url] = {"controller": instantiator.instantiate_class(controller_cls, 
                                                                                           [self._settings_facade]),
-                                             "method": controller_meth}
+                                             "method": controller_meth,
+                                             "url_params": route_config.get("url_params")}
     
     def _find_url_regex(self, url):
         '''This method is used to obtain route configuration starting from a given url.

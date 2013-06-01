@@ -17,9 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.middleware.fantastico_app
 '''
 
+from fantastico.exceptions import FantasticoContentTypeError, FantasticoNoRequestError, FantasticoRouteNotFoundError, \
+    FantasticoError
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
-from fantastico.exceptions import FantasticoContentTypeError, FantasticoNoRequestError, FantasticoRouteNotFoundError
 
 class FantasticoApp(object):
     '''This class represents the wsgi application entry point. It is designed to wrap together all configured middlewares
@@ -80,7 +81,14 @@ class FantasticoApp(object):
         
         contr_method = getattr(route_contr, route_method)
         
-        response = contr_method(request)
+        kwargs = route_handler.get("url_params") or {}
+        
+        response = None
+        
+        try:
+            response = contr_method(request, **kwargs)
+        except TypeError as ex:
+            raise FantasticoError(ex)
         
         if request.accept.quality(response.content_type) is None:
             raise FantasticoContentTypeError("User brower accepts %s but received %s." %\
