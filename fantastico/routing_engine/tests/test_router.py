@@ -17,14 +17,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.routing_engine.tests.test_router
 '''
-from fantastico.exceptions import FantasticoClassNotFoundError, \
-    FantasticoDuplicateRouteError, FantasticoNoRoutesError, \
+from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoDuplicateRouteError, FantasticoNoRoutesError, \
     FantasticoRouteNotFoundError, FantasticoHttpVerbNotSupported
 from fantastico.routing_engine.router import Router
 from fantastico.routing_engine.routing_loaders import RouteLoader
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from threading import Thread
+from webob.response import Response
 
 class RouterTests(FantasticoUnitTestsCase):
     '''Test suite that ensures routing core works correctly: 
@@ -180,6 +180,23 @@ class RouterTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(handler)
         self.assertIsInstance(handler.get("controller"), Controller)
         self.assertEqual("do_stuff", handler.get("method"))
+    
+    def test_handle_route_regex_ok(self):
+        '''Test case that ensures handle route correctly identifies a reg ex mapped url and execute it accordingly.'''
+        
+        environ = {"REQUEST_METHOD": "GET"}
+        
+        self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader"])
+        
+        self._router.register_routes()
+        
+        self._router.handle_route("/test-component/static-test/path/to/nowhere", environ)
+        
+        handler = environ.get("route_/test-component/static-test/path/to/nowhere_handler")
+        
+        self.assertIsNotNone(handler)
+        self.assertIsInstance(handler.get("controller"), Controller)
+        self.assertEqual("do_regex_action", handler.get("method"))
         
     def test_handle_route_controller_missing(self):
         '''Test case that ensures handle route correctly raise an exception if it can't locate the requested controller.'''
@@ -234,7 +251,10 @@ class TestLoader(RouteLoader):
     
     def load_routes(self):
         return {"/index.html": {"method": "fantastico.routing_engine.tests.test_router.Controller.do_stuff",
-                                "http_verbs": ["GET"]}}
+                                "http_verbs": ["GET"]},
+                "^/(?P<component_name>.*)/static-test/(?P<path>.*)": 
+                    {"method": "fantastico.routing_engine.tests.test_router.Controller.do_regex_action",
+                     "http_verbs": ["GET"]}}
     
 class TestLoader2(RouteLoader):
     '''Simple route loader used for unit testing.'''
