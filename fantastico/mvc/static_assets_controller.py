@@ -36,13 +36,14 @@ class StaticAssetsController(BaseController):
         return "static"
     
     @Controller(url="^/(?P<component_name>.*)/static/(?P<asset_path>.*)$")
-    def serve_asset(self, request, component_name, asset_path, os_provider=os, file_loader=None,
-                    file_opener=open):
+    def serve_asset(self, request, component_name, asset_path, **kwargs):
         '''This method is invoked whenever a request to a static asset is done.'''
+        
+        os_provider = kwargs.get("os_provider") or os
         
         file_path = "%s%s/%s/%s" % (self._settings_facade.get_root_folder(), component_name, 
                                     self.static_folder, asset_path)
-        err_content_type="text/html; charset=UTF-8"
+        err_content_type = "text/html; charset=UTF-8"
         
         if not component_name or len(component_name.strip()) == 0:
             return Response(status=400, content_type=err_content_type, text="No component name provided.")
@@ -52,10 +53,12 @@ class StaticAssetsController(BaseController):
         
         if not self._is_asset_available(file_path, os_provider):
             return Response(status=404, content_type=err_content_type, text="Asset %s not found." % file_path)
-        
-        file_loader = file_loader or request.environ.get("wsgi.file_wrapper")
+         
+        file_loader = kwargs.get("file_loader") or request.environ.get("wsgi.file_wrapper")
         
         file_type = mimetypes.guess_type(file_path)[0] or "application/octet-stream"
+        
+        file_opener = kwargs.get("file_opener") or open
         file_content = file_loader(file_opener(file_path, "rb"))
         
         return Response(app_iter=file_content, content_type=file_type)
