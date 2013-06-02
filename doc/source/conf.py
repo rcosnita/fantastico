@@ -49,7 +49,7 @@ copyright = '2013, Radu Viorel Cosnita'
 # built documents.
 #
 # The short X.Y version.
-version = '0.0.1-b%s' % os.environ["BUILD_NUMBER"]
+version = '%s-b%s' % (os.environ.get("FANTASTICO_VERSION", "0.0.1"), os.environ.get("BUILD_NUMBER", "1"))
 # The full version, including alpha/beta/rc tags.
 release = version
 

@@ -1,6 +1,9 @@
 # include deployment, documentation and virtual environment scripts
 recursive-include deployment *
-recursive-include doc *
+recursive-include doc/build/doctrees *
+recursive-include doc/build/epub *
+recursive-include doc/build/html *
+recursive-include doc/build/latex *
 recursive-include virtual_env *
 
 # Include all helper scripts

@@ -20,9 +20,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from distutils.core import setup
+import os
 
 setup(name="fantastico",
-      version="1.0.0",
+      version=os.environ.get("FANTASTICO_VERSION", "0.0.1"),
       description="Python MVC web framework with built in capabilities for developing Web Services and modular Web Applications.",
       author="Radu Viorel Cosnita",
       author_email="radu.cosnita@gmail.com",
@@ -36,4 +37,7 @@ setup(name="fantastico",
                 "fantastico.samples", "fantastico.samples.mvc", "fantastico.samples.mvc.models", 
                 "fantastico.samples.mvc.tests", 
                 "fantastico.server", "fantastico.server.tests", 
-                "fantastico.tests", "fantastico.utils"])
+                "fantastico.tests", "fantastico.utils"],
+      data_files=[("deployment", ["deployment/conf/nginx/fantastico-uwsgi.ini", 
+                                  "deployment/conf/nginx/fantastico-wsgi"])],
+      scripts=["virtual_env/setup_dev_env.sh", "run_dev_server.sh", "run_prod_server.sh"])
