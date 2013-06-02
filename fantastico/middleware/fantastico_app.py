@@ -17,8 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.middleware.fantastico_app
 '''
 
-from fantastico.exceptions import FantasticoContentTypeError, FantasticoNoRequestError, FantasticoRouteNotFoundError, \
-    FantasticoError
+from fantastico.exceptions import FantasticoContentTypeError, FantasticoNoRequestError, FantasticoRouteNotFoundError
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
 
@@ -83,12 +82,7 @@ class FantasticoApp(object):
         
         kwargs = route_handler.get("url_params") or {}
         
-        response = None
-        
-        try:
-            response = contr_method(request, **kwargs)
-        except TypeError as ex:
-            raise FantasticoError(ex)
+        response = contr_method(request, **kwargs)
         
         if request.accept.quality(response.content_type) is None:
             raise FantasticoContentTypeError("User brower accepts %s but received %s." %\
