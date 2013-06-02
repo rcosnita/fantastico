@@ -1,2 +1,0 @@
-# include deployment, documentation and virtual environment scripts
-recursive-include fantastico/extra_data *

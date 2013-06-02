@@ -57,6 +57,9 @@ setup(name="fantastico",
                 "fantastico.samples.mvc.tests", 
                 "fantastico.server", "fantastico.server.tests", 
                 "fantastico.tests", "fantastico.utils"],
-      data_files=[("scripts/fantastico", ["virtual_env/setup_dev_env.sh",
-                                          "run_dev_server.sh", "run_prod_server.sh"])]
-                  + list_folder_recursive("doc/fantastico", "doc/build"))
+      package_data={"fantastico.samples.mvc": ["sql/*.sql", "static/*", "views/*.html"]},
+      data_files=[("scripts/fantastico", ["run_dev_server.sh", "run_prod_server.sh"])]
+                  + list_folder_recursive("scripts/fantastico/virtual_env", "virtual_env")
+                  + list_folder_recursive("doc/fantastico", "doc/build")
+                  + list_folder_recursive("scripts/fantastico/deployment", "deployment"),
+      scripts=["fantastico_setup_project.sh"])
