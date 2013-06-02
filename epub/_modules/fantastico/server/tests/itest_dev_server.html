@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.0.1-b65 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.0.1-b66 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -75,7 +75,8 @@
 <span class="sd">                    </span>
 <span class="sd">                self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))</span>
 <span class="sd">                </span>
-<span class="sd">            self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))</span>
+<span class="sd">                # you can also pass only request logic without assert logic</span>
+<span class="sd">                # self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))</span>
 <span class="sd">            </span>
 <span class="sd">    As you can see from above listed code, when you write a new integration test against Fantastico server you only need</span>
 <span class="sd">    to provide the request logic and assert logic functions. Request logic is executed while the server is up and running.</span>
