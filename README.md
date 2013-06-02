@@ -1,4 +1,4 @@
-fantastico
+Fantastico
 ==========
 
 [Build status](http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon/)
