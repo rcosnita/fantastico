@@ -146,7 +146,7 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         
         self._controller.exec_logic = lambda request: None
         
-        with self.assertRaises(FantasticoError) as cm:
+        with self.assertRaises(TypeError) as cm:
             app_middleware(self._environ, Mock())
         
         self.assertTrue(str(cm.exception).find("comp_name") > -1, "Missing named arguments must be reported.")
