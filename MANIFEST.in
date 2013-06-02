@@ -1,20 +1,2 @@
 # include deployment, documentation and virtual environment scripts
-recursive-include deployment *
-recursive-include doc/build/doctrees *
-recursive-include doc/build/epub *
-recursive-include doc/build/html *
-recursive-include doc/build/latex *
-recursive-include virtual_env *
-
-# Include all helper scripts
-include *.sh
-include *.md
-include LICENSE
-
-# include non python required files
-recursive-include fantastico/mvc/tests/sql *.sql
-recursive-include fantastico/mvc/tests/views *.html
-
-recursive-include fantastico/samples/mvc/sql *.sql
-recursive-include fantastico/samples/mvc/static *
-recursive-include fantastico/samples/mvc/views *.html
+recursive-include fantastico/extra_data *
