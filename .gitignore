@@ -40,6 +40,7 @@ pylint.out
 .project
 .pydevproject
 __pycache__
+.settings
 
 # virtual environment dependencies
 pip-deps
