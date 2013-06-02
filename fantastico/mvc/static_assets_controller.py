@@ -28,11 +28,20 @@ class StaticAssetsController(BaseController):
     ensure correct http client side caching. In production, only the web server serves static assets and
     Fantastico wsgi server is bypassed.'''
     
-    @Controller(url="^(?P<component_name>.*)/static/(?P<asset_path>.*)$")
-    def serve_asset(self, request, component_name, asset_path, os_provider=os, file_loader=None):
+    @property
+    def static_folder(self):
+        '''This property returns the static folder locatio for fantastico framework. Currently this is set to 
+        **static**.'''
+        
+        return "static"
+    
+    @Controller(url="^/(?P<component_name>.*)/static/(?P<asset_path>.*)$")
+    def serve_asset(self, request, component_name, asset_path, os_provider=os, file_loader=None,
+                    file_opener=open):
         '''This method is invoked whenever a request to a static asset is done.'''
         
-        file_path = "%s%s/%s" % (self._settings_facade.get_root_folder(), component_name, asset_path)
+        file_path = "%s%s/%s/%s" % (self._settings_facade.get_root_folder(), component_name, 
+                                    self.static_folder, asset_path)
         err_content_type="text/html; charset=UTF-8"
         
         if not component_name or len(component_name.strip()) == 0:
@@ -44,11 +53,12 @@ class StaticAssetsController(BaseController):
         if not self._is_asset_available(file_path, os_provider):
             return Response(status=404, content_type=err_content_type, text="Asset %s not found." % file_path)
         
-        file_loader = request.environ.get("wsgi.file_wrapper") or file_loader
+        file_loader = file_loader or request.environ.get("wsgi.file_wrapper")
         
         file_type = mimetypes.guess_type(file_path)[0] or "application/octet-stream"
+        file_content = file_loader(file_opener(file_path, "rb"))
         
-        return Response(body=file_loader(os_provider.open(file_path)), content_type=file_type)
+        return Response(app_iter=file_content, content_type=file_type)
     
     def _is_asset_available(self, file_path, os_provider=os):
         '''This method detects if an asset exists on disk or not.'''

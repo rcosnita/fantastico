@@ -85,12 +85,13 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         
         response = self._assets_contr.serve_asset(request, component_name, asset_path, 
                                                   os_provider=self._os_provider,
-                                                  file_loader=Mock(return_value=content))
+                                                  file_loader=Mock(return_value=content),
+                                                  file_opener=Mock())
         
         self.assertIsNotNone(response)
         self.assertEqual(200, response.status_code)
         self.assertEqual("image/png", response.content_type)
-        self.assertEqual(content, response.body)
+        self.assertEqual(content, response.app_iter)
     
     def test_serve_asset_unknown_mimetype(self):
         '''This test case ensures a default mimetype is detected if the given file has an unknown extension.'''
@@ -107,12 +108,13 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         
         response = self._assets_contr.serve_asset(request, component_name, asset_path, 
                                                   os_provider=self._os_provider,
-                                                  file_loader=Mock(return_value=content))
+                                                  file_loader=Mock(return_value=content),
+                                                  file_opener=Mock())
         
         self.assertIsNotNone(response)
         self.assertEqual(200, response.status_code)
         self.assertEqual("application/octet-stream", response.content_type)
-        self.assertEqual(content, response.body)
+        self.assertEqual(content, response.app_iter)
     
     def _mock_os_provider(self, component_name, asset_path, file_exists=True):
         '''This method correctly mocks the os provider based on the component name and asset path.'''
@@ -120,10 +122,10 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         self._os_provider.path = Mock(return_value=self._os_provider)
         
         def exists(filename):
-            computed_path = "/webapp%(component_name)s/%(asset_path)s" %\
+            computed_path = "/webapp%(component_name)s/static/%(asset_path)s" %\
                             {"component_name": component_name, 
                              "asset_path": asset_path}
-            
+
             if filename == computed_path:
                 return file_exists
             
