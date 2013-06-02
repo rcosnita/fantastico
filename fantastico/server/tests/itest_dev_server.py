@@ -44,7 +44,8 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
                     
                 self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))
                 
-            self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
+                # you can also pass only request logic without assert logic
+                # self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))
             
     As you can see from above listed code, when you write a new integration test against Fantastico server you only need
     to provide the request logic and assert logic functions. Request logic is executed while the server is up and running.
