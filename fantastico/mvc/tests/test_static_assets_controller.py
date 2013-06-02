@@ -63,7 +63,8 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         
         self._mock_os_provider(component_name, asset_path, False)
         
-        response = self._assets_contr.serve_asset(Mock(), component_name, asset_path, self._os_provider)
+        response = self._assets_contr.serve_asset(Mock(), component_name, asset_path, 
+                                                  os_provider=self._os_provider)
         
         self.assertIsNotNone(response)
         self.assertEqual("text/html", response.content_type)
