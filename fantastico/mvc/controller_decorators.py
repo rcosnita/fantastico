@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.controller_decorator
 '''
 from fantastico import mvc
-from fantastico.exceptions import FantasticoControllerInvalidError
+from fantastico.exceptions import FantasticoControllerInvalidError, FantasticoError
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.utils import instantiator
@@ -65,7 +65,8 @@ class Controller(object):
     Below you can find the design for MVC provided by **Fantastico** framework:
     
     .. image:: /images/core/mvc.png'''
-        
+    
+    _SUPPORTED_VERBS = ["get", "head", "post", "put", "delete", "trace", "options", "connect", "patch"]
     _REGISTERED_ROUTES = {}
     
     @property
@@ -95,11 +96,14 @@ class Controller(object):
     
     def __init__(self, url, method="GET", models=None, model_facade=ModelFacade):
         self._url = url
-        
+        self._method = None
+                
         if isinstance(method, str):
             self._method = [method]
         elif isinstance(method, list):
             self._method = method
+        
+        self._is_method_valid(self._method)
         
         if not models:
             models = {}
@@ -108,6 +112,16 @@ class Controller(object):
         self._model_facade = model_facade
         
         self._fn_handler = None
+    
+    def _is_method_valid(self, http_methods):
+        '''This method detects if the specified http method is valid or not.'''
+
+        if not isinstance(http_methods, list):
+            http_methods = [http_methods]
+        
+        for http_method in http_methods:
+            if not http_method or http_method.lower() not in Controller._SUPPORTED_VERBS:
+                raise FantasticoControllerInvalidError("Http verb %s not supported as controller method." % http_method)
     
     @classmethod
     def get_registered_routes(cls):
