@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.0.1-b69 documentation</title>
+    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.0.1-b70 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.0.1-b69',
+        VERSION:     '0.0.1-b70',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b69 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b70 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b69 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b70 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -63,7 +63,7 @@
 <span class="sd">.. py:module:: fantastico.mvc.controller_decorator</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">mvc</span>
-<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoControllerInvalidError</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoControllerInvalidError</span><span class="p">,</span> <span class="n">FantasticoError</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.model_facade</span> <span class="kn">import</span> <span class="n">ModelFacade</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
@@ -111,7 +111,8 @@
 <span class="sd">    Below you can find the design for MVC provided by **Fantastico** framework:</span>
 <span class="sd">    </span>
 <span class="sd">    .. image:: /images/core/mvc.png&#39;&#39;&#39;</span>
-        
+    
+    <span class="n">_SUPPORTED_VERBS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;get&quot;</span><span class="p">,</span> <span class="s">&quot;head&quot;</span><span class="p">,</span> <span class="s">&quot;post&quot;</span><span class="p">,</span> <span class="s">&quot;put&quot;</span><span class="p">,</span> <span class="s">&quot;delete&quot;</span><span class="p">,</span> <span class="s">&quot;trace&quot;</span><span class="p">,</span> <span class="s">&quot;options&quot;</span><span class="p">,</span> <span class="s">&quot;connect&quot;</span><span class="p">,</span> <span class="s">&quot;patch&quot;</span><span class="p">]</span>
     <span class="n">_REGISTERED_ROUTES</span> <span class="o">=</span> <span class="p">{}</span>
     
     <span class="nd">@property</span>
@@ -141,11 +142,14 @@
     </div>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model_facade</span><span class="o">=</span><span class="n">ModelFacade</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
-        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="bp">None</span>
+                
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="p">[</span><span class="n">method</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="n">method</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_method_valid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="n">models</span><span class="p">:</span>
             <span class="n">models</span> <span class="o">=</span> <span class="p">{}</span>
@@ -154,6 +158,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade</span> <span class="o">=</span> <span class="n">model_facade</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span> <span class="o">=</span> <span class="bp">None</span>
+    
+    <span class="k">def</span> <span class="nf">_is_method_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_methods</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method detects if the specified http method is valid or not.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">http_methods</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">http_methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">http_methods</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">http_method</span> <span class="ow">in</span> <span class="n">http_methods</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">http_method</span> <span class="ow">or</span> <span class="n">http_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Controller</span><span class="o">.</span><span class="n">_SUPPORTED_VERBS</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FantasticoControllerInvalidError</span><span class="p">(</span><span class="s">&quot;Http verb </span><span class="si">%s</span><span class="s"> not supported as controller method.&quot;</span> <span class="o">%</span> <span class="n">http_method</span><span class="p">)</span>
     
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Controller.get_registered_routes"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.get_registered_routes">[docs]</a>    <span class="k">def</span> <span class="nf">get_registered_routes</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
@@ -269,7 +283,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b69 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b70 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
