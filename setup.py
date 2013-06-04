@@ -61,5 +61,6 @@ setup(name="fantastico",
       data_files=[("scripts/fantastico", ["run_dev_server.sh", "run_prod_server.sh"])]
                   + list_folder_recursive("scripts/fantastico/virtual_env", "virtual_env")
                   + list_folder_recursive("doc/fantastico", "doc/build")
-                  + list_folder_recursive("scripts/fantastico/deployment", "deployment"),
+                  + list_folder_recursive("scripts/fantastico/deployment", "deployment")
+                  + list_folder_recursive("scripts/fantastico/project_template", "project_template"),
       scripts=["fantastico_setup_project.sh"])
