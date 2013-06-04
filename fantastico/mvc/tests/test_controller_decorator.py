@@ -16,9 +16,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.test_controller_decorator
 '''
-from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoControllerInvalidError
+from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoControllerInvalidError, FantasticoError
 from fantastico.mvc import controller_decorators
-from fantastico.tests.base_case import FantasticoUnitTestsCase, FakeControllerDecorator
+from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from webob.response import Response
 
@@ -128,3 +128,20 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         
         with self.assertRaises(FantasticoControllerInvalidError):
             do_stuff()
+    
+    def test_controller_invalid_method(self):
+        '''This test case ensures an empty method given for a controller raises a fantastico error.'''
+        
+        def mock_controller(http_method):
+            @controller_decorators.Controller(url="/simple/controller", method=http_method)
+            def do_stuff():
+                pass
+        
+        for http_method in [None, "", " ", "", "verb does not exists"]:
+            with self.assertRaises(FantasticoControllerInvalidError) as cm:
+                mock_controller(http_method)
+            
+            if http_method is None:
+                http_method = "None"
+            
+            self.assertTrue(str(cm.exception).find(http_method) > -1)
