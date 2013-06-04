@@ -62,4 +62,18 @@ class ControllerRouteLoaderTests(FantasticoUnitTestsCase):
         self.assertEqual("fantastico.mvc.tests.subroutes.subroutes_controller.SubroutesController.handle_route",
                          routes.get("/route_from_subfolder")["method"])
         self.assertEqual(["GET"], routes.get("/route_from_subfolder")["http_verbs"])
+
+    def test_scanned_folder_custom(self):
+        '''This test case ensures scanned folder is correctly detected based on active config.'''
         
+        from fantastico.mvc.controller_registrator import ControllerRouteLoader
+        
+        settings_facade = Mock()
+        settings_facade.get_config = Mock(return_value=TestProfileNotUsed())
+        
+        loader = ControllerRouteLoader(settings_facade)
+        
+        self.assertTrue(loader.scanned_folder.endswith("fantastico/mvc/tests/"))
+
+class TestProfileNotUsed(settings.BasicSettings):
+    '''This profile is used for testing purposes only.'''

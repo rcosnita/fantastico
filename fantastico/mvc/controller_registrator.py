@@ -28,10 +28,16 @@ class ControllerRouteLoader(RouteLoader):
     contain a controller decorator in them. This happens when **Fantastico** servers starts. In standard configuration
     it ignores tests subfolder as well as test_* / itest_* modules.'''
     
+    @property
+    def scanned_folder(self):
+        '''This property returns the currently scanned folder from where mvc routes are collected.'''
+        
+        return self._scanned_folder
+    
     def __init__(self, settings_facade=SettingsFacade, scanned_folder=None, ignore_prefix=None):
         super(ControllerRouteLoader, self).__init__(settings_facade)
         
-        self._scanned_folder = scanned_folder or instantiator.get_class_abslocation(self._settings_facade.__class__)
+        self._scanned_folder = scanned_folder or instantiator.get_class_abslocation(self._settings_facade.get_config().__class__)
         self._ignore_prefix = ignore_prefix or ["__init__", "__pycache__", "tests", "test", "itest"]
 
     def _is_ignored_file(self, filename):
