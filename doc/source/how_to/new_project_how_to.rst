@@ -30,8 +30,10 @@ After the new project it's correctly setup we can start to create our first comp
 #. cd my_project
 #. mkdir component1
 #. cd component1
+#. mkdir static
+#. Paste an image into static folder (e.g first_photo.jpg)
 #. touch __init__.py
 #. touch hello_world.py
 #. Paste the code listed below into hello_world.py
 
-.. code-block:: python 
+.. code-block:: python
