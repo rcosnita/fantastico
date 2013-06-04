@@ -21,13 +21,14 @@ from fantastico.mvc.static_assets_controller import StaticAssetsController
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from sqlalchemy.exc import NotSupportedError
+from fantastico.settings import BasicSettings
 
 class StaticAssetsControllerTests(FantasticoUnitTestsCase):
     '''This class provides the test suite for checking static assets are correctly handled by static controller.'''
     
     def init(self):
         self._settings_facade = Mock()
-        self._settings_facade.get_root_folder = Mock(return_value="/webapp")
+        self._settings_facade.get_config = Mock(return_value=TestProfileNotUsed())
         self._assets_contr = StaticAssetsController(self._settings_facade)
         self._os_provider = Mock()
         
@@ -45,7 +46,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
     def test_serve_asset_no_path(self):
         '''This test case makes sure serve asset returns bad request if no asset path is provided.'''
         
-        component_name = "/component1"
+        component_name = "component1"
         
         for asset_path in [None, "", "      "]:
             response = self._assets_contr.serve_asset(Mock(), component_name, asset_path)
@@ -58,7 +59,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
     def test_serve_asset_not_found(self):
         '''This test case makes sure a 404 response is retrieved if asset request is not found.'''
         
-        component_name = "/component1"
+        component_name = "component1"
         asset_path ="images/not_found.png"
         
         self._mock_os_provider(component_name, asset_path, False)
@@ -74,7 +75,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
     def test_serve_asset_ok(self):
         '''This test case makes sure valid assets are retrieved correctly to the client.'''
 
-        component_name = "/component1"
+        component_name = "component1"
         asset_path ="images/image.png"
         
         self._mock_os_provider(component_name, asset_path)
@@ -97,7 +98,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
     def test_serve_asset_unknown_mimetype(self):
         '''This test case ensures a default mimetype is detected if the given file has an unknown extension.'''
         
-        component_name = "/component1"
+        component_name = "component1"
         asset_path ="images/image.unknown"
         
         self._mock_os_provider(component_name, asset_path)
@@ -123,13 +124,16 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         self._os_provider.path = Mock(return_value=self._os_provider)
         
         def exists(filename):
-            computed_path = "/webapp%(component_name)s/static/%(asset_path)s" %\
+            computed_path = "/mvc/tests/%(component_name)s/static/%(asset_path)s" %\
                             {"component_name": component_name, 
                              "asset_path": asset_path}
 
-            if filename == computed_path:
+            if filename.endswith(computed_path):
                 return file_exists
             
             raise NotSupportedError()
             
         self._os_provider.path.exists = exists
+
+class TestProfileNotUsed(BasicSettings):
+    '''This class is used only for correctly mocking a settings profile.'''
