@@ -26,13 +26,20 @@ class DummyRouteLoader(RouteLoader):
     to be configured in each available profile.'''
     
     DUMMY_ROUTE = "/dummy/route/loader/test"
+    STATIC_ROUTE = "^/(?P<component_name>.*)/static/(?P<asset_path>.*)$"
     
     def load_routes(self):
-        routes = {"method": "fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test",
-                  "http_verbs": ["GET"]}
+        routes = {DummyRouteLoader.DUMMY_ROUTE: 
+                    {
+                     "method": "fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test",
+                     "http_verbs": ["GET"]},
+                  DummyRouteLoader.STATIC_ROUTE:
+                    {"method": "fantastico.mvc.static_assets_controller.StaticAssetsController.serve_asset",
+                     "http_verbs": ["GET"]}
+                 }
         
-        return {DummyRouteLoader.DUMMY_ROUTE: routes}
-    
+        return routes
+        
     def display_test(self, request):
         '''This method handles **/dummy/route/loader/test route**. It is expected to receive a response with status code 400.
         We do this for being able to test rendering and also avoid false positive security scans messages.'''

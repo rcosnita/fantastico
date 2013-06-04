@@ -36,4 +36,23 @@ After the new project it's correctly setup we can start to create our first comp
 #. touch hello_world.py
 #. Paste the code listed below into hello_world.py
 
-.. code-block:: python
+   .. code-block:: python
+   
+      from fantastico.mvc.base_controller import BaseController
+      from fantastico.mvc.controller_decorators import ControllerProvider, Controller
+      from webob.response import Response
+      
+      @ControllerProvider()
+      class HelloWorldController(BaseController):
+          '''This is a very simple controller provider.'''
+          
+          @Controller(url="/component1/hello")
+          def say_hello(self, request):
+              '''This method simply returns an html hello world text.'''
+              
+              msg = "Hello world from my project"
+              
+              return Response(content_type="text/html", text=msg)
+
+#. Now you can access `http://localhost:12000/component1/hello`_.
+#. Now you can access `http://localhost:12000/component1/static/first_photo.jpg`_.          
