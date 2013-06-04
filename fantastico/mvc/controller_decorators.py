@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.controller_decorator
 '''
 from fantastico import mvc
-from fantastico.exceptions import FantasticoControllerInvalidError, FantasticoError
+from fantastico.exceptions import FantasticoControllerInvalidError
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.utils import instantiator
