@@ -33,7 +33,7 @@ class StaticAssetsIntegration(DevServerIntegration):
     def test_image_serve_ok(self):
         '''This test case requests a binary jpg file from dev server.'''
         
-        img_route = "/fantastico/samples/mvc/static/sample.jpg"
+        img_route = "/samples/mvc/static/sample.jpg"
         
         def request_logic(server):
             request = Request(self._get_server_base_url(server, img_route))

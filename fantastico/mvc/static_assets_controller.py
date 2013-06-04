@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.mvc.static_assets_controller
 '''
 from fantastico.mvc.base_controller import BaseController
+from fantastico.utils import instantiator
 from webob.response import Response
 import mimetypes
 import os
@@ -38,8 +39,8 @@ class StaticAssetsController(BaseController):
         
         os_provider = kwargs.get("os_provider") or os
         
-        file_path = "%s%s/%s/%s" % (self._settings_facade.get_root_folder(), component_name, 
-                                    self.static_folder, asset_path)
+        file_path = "%s%s/%s/%s" % (instantiator.get_class_abslocation(self._settings_facade.get_config().__class__), 
+                                    component_name, self.static_folder, asset_path)
         err_content_type = "text/html; charset=UTF-8"
         
         if not component_name or len(component_name.strip()) == 0:
