@@ -34,7 +34,7 @@ fi
 # Publish Fantastico on PyPi.
 cd $WORKDIR
 echo "Publishing Fantastico $VERSION on PyPi."
-./setup.py register clean sdist upload
+python3 setup.py register clean sdist upload
 
 if [ $? -gt 0 ]; then
 	exit $?
