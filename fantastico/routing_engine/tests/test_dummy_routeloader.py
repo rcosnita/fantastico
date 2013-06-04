@@ -33,11 +33,17 @@ class TestDummyRouteLoader(FantasticoIntegrationTestCase):
         routes = self._dummy_loader.load_routes()
         
         self.assertIsNotNone(routes)
-        self.assertEqual(1, len(routes))
-        self.assertTrue(DummyRouteLoader.DUMMY_ROUTE in routes)
+        self.assertGreaterEqual(len(routes), 2)
+        
+        self.assertTrue(DummyRouteLoader.DUMMY_ROUTE in routes)        
         self.assertEqual("fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test",
                          routes["/dummy/route/loader/test"]["method"])
-        self.assertEqual(["GET"], routes["/dummy/route/loader/test"]["http_verbs"])
+        self.assertEqual(["GET"], routes[DummyRouteLoader.DUMMY_ROUTE]["http_verbs"])
+        
+        self.assertTrue(DummyRouteLoader.STATIC_ROUTE in routes)
+        self.assertEqual("fantastico.mvc.static_assets_controller.StaticAssetsController.serve_asset",
+                         routes[DummyRouteLoader.STATIC_ROUTE]["method"])
+        self.assertEqual(["GET"], routes[DummyRouteLoader.STATIC_ROUTE]["http_verbs"])
         
     def test_display_ok(self):
         '''This test case ensures display_test method works as expected when request content type is different than
