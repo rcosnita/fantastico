@@ -75,6 +75,7 @@
 \indexentry{update() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{22}
 \indexentry{ControllerRouteLoader (class in fantastico.mvc.controller\_registrator)|hyperpage}{23}
 \indexentry{load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method)|hyperpage}{23}
+\indexentry{scanned\_folder (fantastico.mvc.controller\_registrator.ControllerRouteLoader attribute)|hyperpage}{23}
 \indexentry{BaseController (class in fantastico.mvc.base\_controller)|hyperpage}{23}
 \indexentry{get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{23}
 \indexentry{load\_template() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{23}

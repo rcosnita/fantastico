@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{June 02, 2013}
-\release{0.0.1-b68}
+\date{June 04, 2013}
+\release{0.0.1-b69}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -744,7 +744,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x46d2a68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4d6ec00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1727,6 +1727,14 @@ This method is used for loading all routes that are mapped through
 
 \end{fulllineitems}
 
+\index{scanned\_folder (fantastico.mvc.controller\_registrator.ControllerRouteLoader attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_registrator.ControllerRouteLoader.scanned_folder}\pysigline{\bfcode{scanned\_folder}}
+This property returns the currently scanned folder from where mvc routes are collected.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -1747,7 +1755,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1974408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2003408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2461,6 +2469,107 @@ works as expected, please do not use it in production. It does not send headers 
 purposes.
 
 Static assets routes are the same between \textbf{prod} and \textbf{dev} environments.
+
+
+\section{Creating a new project}
+\label{how_to/new_project_how_to:creating-a-new-project}\label{how_to/new_project_how_to::doc}
+A new Fantastico based project can be easily setup by following this how to. In this how to we are going to create
+a project named \textbf{fantastico\_first}.
+\begin{enumerate}
+\item {} 
+cd \textasciitilde{}/
+
+\item {} 
+mkdir fantastico\_first
+
+\item {} 
+cd fantastico\_first
+
+\item {} 
+virtualenv-3.2 --distribute pip-deps
+
+\item {} 
+. pip-deps/bin/activate
+
+\item {} 
+pip install fantastico
+
+\item {} 
+fantastico\_setup\_project.sh python3.2 my\_project
+
+\end{enumerate}
+
+The last step might take a while because it will also install all fantastico dependencies (e.g sphinx, sqlalchemy, ...).
+Please make sure your replace python3.2 with the correct python version.
+In order to test the current project do the following:
+\begin{enumerate}
+\item {} 
+run\_dev\_server
+
+\item {} 
+Access {\color{red}\bfseries{}{}`http://localhost:12000/fantastico/samples/mvc/static/sample.jpg{}`\_}
+
+\item {} 
+Access {\color{red}\bfseries{}{}`http://localhost:12000/mvc/hello-world{}`\_}
+
+\end{enumerate}
+
+Your newly project is setup correctly and it runs fantastico default samples project.
+
+
+\subsection{Create first component}
+\label{how_to/new_project_how_to:create-first-component}
+After the new project it's correctly setup we can start to create our first component.
+\begin{enumerate}
+\item {} 
+cd my\_project
+
+\item {} 
+mkdir component1
+
+\item {} 
+cd component1
+
+\item {} 
+mkdir static
+
+\item {} 
+Paste an image into static folder (e.g first\_photo.jpg)
+
+\item {} 
+touch \_\_init\_\_.py
+
+\item {} 
+touch hello\_world.py
+
+\item {} 
+Paste the code listed below into hello\_world.py
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc.base\PYGZus{}controller} \PYG{k+kn}{import} \PYG{n}{BaseController}
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc.controller\PYGZus{}decorators} \PYG{k+kn}{import} \PYG{n}{ControllerProvider}\PYG{p}{,} \PYG{n}{Controller}
+\PYG{k+kn}{from} \PYG{n+nn}{webob.response} \PYG{k+kn}{import} \PYG{n}{Response}
+
+\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{HelloWorldController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
+    \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This is a very simple controller provider.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/component1/hello}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{say\PYGZus{}hello}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This method simply returns an html hello world text.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{msg} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world from my project}\PYG{l+s}{\PYGZdq{}}
+
+        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{content\PYGZus{}type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{text/html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{text}\PYG{o}{=}\PYG{n}{msg}\PYG{p}{)}
+\end{Verbatim}
+
+\item {} 
+Now you can access {\color{red}\bfseries{}{}`http://localhost:12000/component1/hello{}`\_}.
+
+\item {} 
+Now you can access {\color{red}\bfseries{}{}`http://localhost:12000/component1/static/first\_photo.jpg{}`\_}.
+
+\end{enumerate}
 
 
 \chapter{Build status}

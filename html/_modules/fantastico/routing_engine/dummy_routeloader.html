@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.routing_engine.dummy_routeloader &mdash; fantastico 0.0.1-b68 documentation</title>
+    <title>fantastico.routing_engine.dummy_routeloader &mdash; fantastico 0.0.1-b69 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.0.1-b68',
+        VERSION:     '0.0.1-b69',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b68 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b69 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b68 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b69 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -72,13 +72,20 @@
 <span class="sd">    to be configured in each available profile.&#39;&#39;&#39;</span>
     
     <span class="n">DUMMY_ROUTE</span> <span class="o">=</span> <span class="s">&quot;/dummy/route/loader/test&quot;</span>
+    <span class="n">STATIC_ROUTE</span> <span class="o">=</span> <span class="s">&quot;^/(?P&lt;component_name&gt;.*)/static/(?P&lt;asset_path&gt;.*)$&quot;</span>
     
     <span class="k">def</span> <span class="nf">load_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">routes</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test&quot;</span><span class="p">,</span>
-                  <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">]}</span>
+        <span class="n">routes</span> <span class="o">=</span> <span class="p">{</span><span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">:</span> 
+                    <span class="p">{</span>
+                     <span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test&quot;</span><span class="p">,</span>
+                     <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">]},</span>
+                  <span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">STATIC_ROUTE</span><span class="p">:</span>
+                    <span class="p">{</span><span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.mvc.static_assets_controller.StaticAssetsController.serve_asset&quot;</span><span class="p">,</span>
+                     <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">]}</span>
+                 <span class="p">}</span>
         
-        <span class="k">return</span> <span class="p">{</span><span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">:</span> <span class="n">routes</span><span class="p">}</span>
-    
+        <span class="k">return</span> <span class="n">routes</span>
+        
 <div class="viewcode-block" id="DummyRouteLoader.display_test"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test">[docs]</a>    <span class="k">def</span> <span class="nf">display_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method handles **/dummy/route/loader/test route**. It is expected to receive a response with status code 400.</span>
 <span class="sd">        We do this for being able to test rendering and also avoid false positive security scans messages.&#39;&#39;&#39;</span>
@@ -123,7 +130,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.0.1-b68 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.0.1-b69 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

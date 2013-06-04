@@ -417,6 +417,24 @@
           <content src="how_to/static_assets.html#static-assets-on-dev" />
         </navPoint>
       </navPoint>
+      <navPoint id="navPoint53" playOrder="53">
+        <navLabel>
+          <text>Creating a new project</text>
+        </navLabel>
+        <content src="how_to/new_project_how_to.html" />
+        <navPoint id="navPoint53" playOrder="53">
+          <navLabel>
+            <text>Creating a new project</text>
+          </navLabel>
+          <content src="how_to/new_project_how_to.html" />
+        </navPoint>
+        <navPoint id="navPoint54" playOrder="54">
+          <navLabel>
+            <text>Create first component</text>
+          </navLabel>
+          <content src="how_to/new_project_how_to.html#create-first-component" />
+        </navPoint>
+      </navPoint>
     </navPoint>
   </navMap>
 </ncx>

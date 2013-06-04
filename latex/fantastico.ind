@@ -148,6 +148,8 @@
 
   \indexspace
   \bigletter S
+  \item scanned\_folder (fantastico.mvc.controller\_registrator.ControllerRouteLoader attribute), 
+		\hyperpage{23}
   \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{13}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method), 
