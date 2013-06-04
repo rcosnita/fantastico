@@ -17,8 +17,8 @@ Please make sure your replace python3.2 with the correct python version.
 In order to test the current project do the following:
 
 #. run_dev_server
-#. Access `http://localhost:12000/fantastico/samples/mvc/static/sample.jpg`_
-#. Access `http://localhost:12000/mvc/hello-world`_
+#. Access http://localhost:12000/fantastico/samples/mvc/static/sample.jpg
+#. Access http://localhost:12000/mvc/hello-world
 
 Your newly project is setup correctly and it runs fantastico default samples project.
 
@@ -54,5 +54,5 @@ After the new project it's correctly setup we can start to create our first comp
               
               return Response(content_type="text/html", text=msg)
 
-#. Now you can access `http://localhost:12000/component1/hello`_.
-#. Now you can access `http://localhost:12000/component1/static/first_photo.jpg`_.          
+#. Now you can access `Hello route <http://localhost:12000/component1/hello>`_.
+#. Now you can access `First photo route <http://localhost:12000/component1/static/first_photo.jpg>`_.          
