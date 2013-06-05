@@ -18,13 +18,13 @@ if [ $? -gt 0 ]; then
 	exit $?
 fi
 
-git push origin --tags
+git push origin v$VERSION
 
 # Publish release documentation.
 echo "Create release doc tag $VERSION"
 cd ../fantastico-doc
 git tag -a v$VERSION-doc -m "Fantastico doc version $VERSION released."
-git push origin --tags
+git push origin v$VERSION-doc
 
 if [ $? -gt 0 ]; then
 	exit $?
@@ -36,7 +36,7 @@ cd $WORKDIR/doc
 ln -sf ../../fantastico-doc build
 
 cd $WORKDIR
-cp doc/source/changes.rst CHANGES.txt
+cp -f doc/source/changes.rst CHANGES.txt
 echo "Publishing Fantastico $VERSION on PyPi."
 python3 setup.py register clean sdist upload
 
