@@ -22,7 +22,7 @@ lib64
 # Installer logs
 pip-log.txt
 
-# Unit test / coverage reports
+# Unit test / coverage reports / doc transient files
 .coverage
 .tox
 nosetests.xml
@@ -31,6 +31,7 @@ coverage_integration.xml
 fantastico_tests.xml
 fantastico_integration_tests.xml
 pylint.out
+CHANGES.txt
 
 # Translations
 *.mo

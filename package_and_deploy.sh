@@ -36,11 +36,14 @@ cd $WORKDIR/doc
 ln -sf ../../fantastico-doc build
 
 cd $WORKDIR
+cp doc/source/changes.rst CHANGES.txt
 echo "Publishing Fantastico $VERSION on PyPi."
 python3 setup.py register clean sdist upload
 
 if [ $? -gt 0 ]; then
 	exit $?
 fi
+
+rm CHANGES.txt
 
 echo "Fantastico $VERSION released successfully."
