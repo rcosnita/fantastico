@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  4 JUN 2013 16:14
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  5 JUN 2013 07:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -954,7 +954,7 @@ LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
 (Font)              Font shape `T1/pcr/b/n' tried instead on input line 294.
 
-<settings.png, id=172, 888.8465pt x 263.74825pt>
+<settings.png, id=177, 888.8465pt x 263.74825pt>
 File: settings.png Graphic file (type png)
  <use settings.png>
 Package pdftex.def Info: settings.png used on input line 299.
@@ -987,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 741--741
 
 [8]
 Underfull \hbox (badness 10000) in paragraph at lines 747--747
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x5f05d10>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x5680d10>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -995,7 +995,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 747--747
 
 ]
 Chapter 3.
-<exceptions.png, id=263, 860.53453pt x 532.71185pt>
+<exceptions.png, id=268, 860.53453pt x 532.71185pt>
 File: exceptions.png Graphic file (type png)
  <use exceptions.png>
 Package pdftex.def Info: exceptions.png used on input line 806.
@@ -1012,7 +1012,7 @@ h [][]\T1/pcr/m/n/10 fantastico.mvc.controller_decorators.Controller[][]
  []
 
 [11 <./exceptions.png>]
-<request_response_sd.png, id=278, 873.2625pt x 435.87843pt>
+<request_response_sd.png, id=283, 873.2625pt x 435.87843pt>
 File: request_response_sd.png Graphic file (type png)
 
 <use request_response_sd.png>
@@ -1022,7 +1022,7 @@ File: request_response_sd.png Graphic file (type png)
  <use request_response_sd.png>
 Package pdftex.def Info: request_response_sd.png used on input line 966.
 (pdftex.def)             Requested size: 469.755pt x 234.47296pt.
- [12] [13 <./request_response_sd.png>] <routing_engine.png, id=309, 485.02855pt
+ [12] [13 <./request_response_sd.png>] <routing_engine.png, id=314, 485.02855pt
  x 356.13464pt>
 File: routing_engine.png Graphic file (type png)
 
@@ -1097,7 +1097,7 @@ Overfull \hbox (31.16351pt too wide) in paragraph at lines 1299--1299
 \T1/ptm/m/it/10 tico.mvc.model_facade.ModelFacade'>\T1/pcr/m/n/10 ) 
  []
 
-<mvc.png, id=364, 1031.35312pt x 572.89032pt>
+<mvc.png, id=369, 1031.35312pt x 572.89032pt>
 File: mvc.png Graphic file (type png)
  <use mvc.png>
 Package pdftex.def Info: mvc.png used on input line 1343.
@@ -1208,7 +1208,7 @@ an be found un-der: \T1/ptm/b/n/10 /<fan-tas-
 
 ]
 Chapter 4.
-[29] <low_usage_all_in_one.png, id=497, 382.9565pt x 379.97629pt>
+[29] <low_usage_all_in_one.png, id=502, 382.9565pt x 379.97629pt>
 File: low_usage_all_in_one.png Graphic file (type png)
 
 <use low_usage_all_in_one.png>
@@ -1218,7 +1218,7 @@ File: low_usage_all_in_one.png Graphic file (type png)
  <use low_usage_all_in_one.png>
 Package pdftex.def Info: low_usage_all_in_one.png used on input line 2213.
 (pdftex.def)             Requested size: 382.95555pt x 379.97534pt.
- [30] [31 <./low_usage_all_in_one.png>] <low_usage_aws.png, id=514, 571.45453pt
+ [30] [31 <./low_usage_all_in_one.png>] <low_usage_aws.png, id=519, 571.45453pt
  x 300.25577pt>
 File: low_usage_aws.png Graphic file (type png)
 
@@ -1230,7 +1230,7 @@ File: low_usage_aws.png Graphic file (type png)
 Package pdftex.def Info: low_usage_aws.png used on input line 2301.
 (pdftex.def)             Requested size: 469.755pt x 246.82523pt.
  [32 <./low_usage_aws.png>]
-<low_usage_s3_aws.png, id=536, 592.31598pt x 303.23598pt>
+<low_usage_s3_aws.png, id=541, 592.31598pt x 303.23598pt>
 File: low_usage_s3_aws.png Graphic file (type png)
 
 <use low_usage_s3_aws.png>
@@ -1248,7 +1248,11 @@ Chapter 5.
 
 ]
 Chapter 6.
-(./fantastico.ind [39] [40
+[39] [40
+
+]
+Chapter 7.
+(./fantastico.ind [41] [42
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 5--7
@@ -1438,7 +1442,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--62
 []\T1/ptm/m/n/10 FantasticoDuplicateRouteError (class in fan-tas-
  []
 
-[41
+[43
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 63--64
@@ -1679,7 +1683,7 @@ Overfull \hbox (2.1902pt too wide) in paragraph at lines 132--133
 []\T1/ptm/m/n/10 new_model() (fan-tas-tico.mvc.model_facade.ModelFacade
  []
 
-[42]
+[44]
 Overfull \hbox (4.12956pt too wide) in paragraph at lines 136--137
 []\T1/ptm/m/n/10 operation (fan-tas-tico.mvc.models.model_filter.ModelFilter
  []
@@ -1756,24 +1760,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 169--170
 []\T1/ptm/m/n/10 update() (fan-tas-tico.mvc.model_facade.ModelFacade
  []
 
-[43
+[45
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2600.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2600.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2656.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2656.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2600.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2600.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2656.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2656.
 
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
-(rerunfilecheck)             Checksum: A82277CDC44EE382C6B9545F1BD193CE;1315.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2600.
+(rerunfilecheck)             Checksum: C877174904E9F1BC69D8E8616441EE14;1358.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2656.
  ) 
 Here is how much of TeX's memory you used:
- 9438 strings out of 493485
- 137444 string characters out of 3143526
- 232960 words of memory out of 3000000
- 12174 multiletter control sequences out of 15000+200000
+ 9444 strings out of 493485
+ 137514 string characters out of 3143526
+ 233024 words of memory out of 3000000
+ 12177 multiletter control sequences out of 15000+200000
  61581 words of font info for 70 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
  36i,12n,45p,1744b,633s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1786,10 +1790,10 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (47 pages, 399655 bytes).
+Output written on fantastico.pdf (49 pages, 402164 bytes).
 PDF statistics:
- 845 PDF objects out of 1000 (max. 8388607)
- 766 compressed objects within 8 object streams
- 315 named destinations out of 1000 (max. 500000)
- 237 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 859 PDF objects out of 1000 (max. 8388607)
+ 778 compressed objects within 8 object streams
+ 318 named destinations out of 1000 (max. 500000)
+ 245 words of extra memory for PDF output out of 10000 (max. 10000000)
 

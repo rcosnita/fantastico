@@ -9,12 +9,15 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-06-04</dc:date>
+    <dc:date>2013-06-05</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
     <item id="genindex.html"
           href="genindex.html"
+          media-type="application/xhtml+xml" />
+    <item id="changes.html"
+          href="changes.html"
           media-type="application/xhtml+xml" />
     <item id="search.html"
           href="search.html"
@@ -233,6 +236,7 @@
     <itemref idref="how_to_deployment_aws_low_usage_scenario.html" />
     <itemref idref="how_to_static_assets.html" />
     <itemref idref="how_to_new_project_how_to.html" />
+    <itemref idref="changes.html" />
     <itemref idref="genindex.html" />
   </spine>
   <guide>

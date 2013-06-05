@@ -436,5 +436,11 @@
         </navPoint>
       </navPoint>
     </navPoint>
+    <navPoint id="navPoint55" playOrder="55">
+      <navLabel>
+        <text>Changes</text>
+      </navLabel>
+      <content src="changes.html" />
+    </navPoint>
   </navMap>
 </ncx>

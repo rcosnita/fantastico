@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{June 04, 2013}
-\release{0.0.1-b72}
+\date{June 05, 2013}
+\release{0.0.1-b73}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -744,7 +744,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5f05d10\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5680d10\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1755,7 +1755,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x30d7408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x281f408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2570,6 +2570,62 @@ Now you can access \href{http://localhost:12000/component1/hello}{Hello route}.
 Now you can access \href{http://localhost:12000/component1/static/first\_photo.jpg}{First photo route}.
 
 \end{enumerate}
+
+
+\chapter{Changes}
+\label{changes:changes}\label{changes::doc}\begin{itemize}
+\item {} \begin{description}
+\item[{v0.0.1}] \leavevmode\begin{itemize}
+\item {} 
+Built in router that can be easily extended.
+
+\item {} 
+WebOb Request / Response architecture.
+
+\item {} 
+Request context support for accessing various attributes (current language, current user and other attributes).
+
+\item {} 
+Multiple project profiles support.
+
+\item {} 
+Database simple configuration for multiple environments.
+
+\item {} 
+Model - View - Controller support.
+
+\item {} 
+Automatic model facade generator.
+
+\item {} 
+Model facade injection into Controllers.
+
+\item {} 
+Templating engine support for views (jinja2).
+
+\item {} 
+Documentation generator for pdf / html / epub formats.
+
+\item {} 
+Automatic framework packaging and deployment.
+
+\item {} 
+Helper scripts for creating projects based on Fantastico.
+
+\item {} 
+Easy rollout script for running Fantastico projects behind nginx.
+
+\item {} 
+Rollout scenarios for deploying Fantastico projects on Amazon (AWS).
+
+\item {} 
+How to sections for creating new projects and components using Fantastico.
+
+\end{itemize}
+
+\end{description}
+
+\end{itemize}
 
 
 \chapter{Build status}

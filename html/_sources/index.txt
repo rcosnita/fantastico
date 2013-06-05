@@ -8,6 +8,7 @@ Fantastico framework
    get_started/getting_started.rst
    features/features.rst
    how_to/how_to
+   changes
    
 Build status
 ------------
