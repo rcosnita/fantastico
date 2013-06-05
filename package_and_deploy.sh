@@ -43,10 +43,10 @@ echo "Removing previous doc build."
 rm -Rf build
 mkdir build
 cd build
-ln -s ../../../fantastico-doc/doctrees build/doctrees
-ln -s ../../../fantastico-doc/epub build/epub
-ln -s ../../../fantastico-doc/html build/html
-ln -s ../../../fantastico-doc/latex build/latex
+ln -s ../../../fantastico-doc/doctrees doctrees
+ln -s ../../../fantastico-doc/epub epub
+ln -s ../../../fantastico-doc/html html
+ln -s ../../../fantastico-doc/latex latex
 
 cd $WORKDIR
 cp -f doc/source/changes.rst CHANGES.txt
