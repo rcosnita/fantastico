@@ -1,7 +1,7 @@
 Changes
 =======
 
-* v0.0.1
+* v0.1.0
    * Built in router that can be easily extended.
    * WebOb Request / Response architecture.
    * Request context support for accessing various attributes (current language, current user and other attributes).
