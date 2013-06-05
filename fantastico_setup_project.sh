@@ -44,6 +44,9 @@ ln -sf pip-deps/lib/$PYTHON_LIB_FOLDER/site-packages/fantastico .
 if [ ! -d deployment ]; then
 	mkdir deployment
 	cp -R pip-deps/scripts/fantastico/deployment/conf deployment/
+else
+	echo "Overwritting nginx vhost template file with the lastest version."
+	cp -f pip-deps/scripts/fantastico/deployment/conf/nginx/fantastico-wsgi deployment/conf/nginx/fantastico-wsgi
 fi
 
 if [ ! -d $PROJECT_NAME ]; then

@@ -19,8 +19,8 @@ Static assets on dev
 --------------------
 
 Of course, on development environment you are not required to have a web server in front of your Fantastico dev server.
-For this purpose, fantastico framework provides a special controller which can easily serve static files. Even this
-works as expected, please do not use it in production. It does not send headers required by browser for caching
+For this purpose, fantastico framework provides a special controller which can easily serve static files. Even though
+it works as expected, please do not use it in production. It does not send headers required by browser for caching
 purposes.
 
 Static assets routes are the same between **prod** and **dev** environments.  
