@@ -31,7 +31,7 @@ Setup
 #. Install Fantastico framework on the production machine (:doc:`/get_started/installation`.).
 #. Goto $FANTASTICO_ROOT/deployment
 #. export ROOT_PASSWD=<your root password>
-#. sh setup_low_usage_<os_distribution).sh --ipaddress <desired_ip> --vhost-name <desired_vhost> --uwsgi-port <uwsgi port> --root-folder <desired root folder> --modules-folder <desired modules folder> (e.g sh setup_low_usage_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder \`pwd\` --modules-folder /fantastico/samples)
+#. fantastico_setup_low_usage_<os_distribution) --ipaddress <desired_ip> --vhost-name <desired_vhost> --uwsgi-port <uwsgi port> --root-folder <desired root folder> --modules-folder <desired modules folder> (e.g fantastico_setup_low_usage_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder \`pwd\` --modules-folder /fantastico/samples)
 #. Done.
 
 It is usually a good idea to change the number of parallel connections supported by your linux kernel:
