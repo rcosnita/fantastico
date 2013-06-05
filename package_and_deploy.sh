@@ -24,6 +24,11 @@ git push origin v$VERSION
 echo "Create release doc tag $VERSION"
 cd ../fantastico-doc
 git tag -a v$VERSION-doc -m "Fantastico doc version $VERSION released."
+
+if [ $? -gt 0 ]; then
+	exit $?
+fi
+
 git push origin v$VERSION-doc
 
 if [ $? -gt 0 ]; then
@@ -33,7 +38,10 @@ fi
 
 # Publish Fantastico on PyPi.
 cd $WORKDIR/doc
-ln -sf ../../fantastico-doc build
+
+echo "Removing previous doc build."
+rm -f build
+ln -s ../../fantastico-doc build
 
 cd $WORKDIR
 cp -f doc/source/changes.rst CHANGES.txt
