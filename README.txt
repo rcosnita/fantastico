@@ -15,3 +15,5 @@ The easiest way to get started using fantastico is to read our just in time gene
 * `PDF documentation <http://rcosnita.github.io/fantastico/latex/fantastico.pdf>`_.
 
 Have fun.
+
+.. include:: CHANGES.txt

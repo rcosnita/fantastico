@@ -46,7 +46,7 @@ ln -s ../../fantastico-doc build
 cd $WORKDIR
 cp -f doc/source/changes.rst CHANGES.txt
 echo "Publishing Fantastico $VERSION on PyPi."
-python3 setup.py register clean sdist upload
+python3 setup.py clean sdist bdist register upload
 
 if [ $? -gt 0 ]; then
 	exit $?
