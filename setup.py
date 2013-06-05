@@ -42,7 +42,7 @@ def list_folder_recursive(virtual_folder, folder):
 
 setup(name="fantastico",
       version=os.environ.get("FANTASTICO_VERSION", "0.0.1"),
-      description="Python MVC web framework with built in capabilities for developing Web Services and modular Web Applications.",
+      description="Python 3 MVC web framework with built in capabilities for developing Web Services and Modular Web Applications.",
       author="Radu Viorel Cosnita",
       author_email="radu.cosnita@gmail.com",
       maintainer_email="radu.cosnita@gmail.com",
