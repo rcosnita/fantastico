@@ -63,4 +63,19 @@ setup(name="fantastico",
                   + list_folder_recursive("doc/fantastico", "doc/build")
                   + list_folder_recursive("scripts/fantastico/deployment", "deployment")
                   + list_folder_recursive("scripts/fantastico/project_template", "project_template"),
-      scripts=["fantastico_setup_project.sh"])
+      scripts=["fantastico_setup_project.sh"],
+      classifiers=["Development Status :: 1 - Beta",
+                   "Environment :: Web Servers",
+                   "Environment :: Web Environment",
+                   "Intended Audience :: Developers",
+                   "Intended Audience :: Web designers",
+                   "Intended Audience :: System Administrators",
+                   "License :: OSI Approved :: MIT",
+                   "Operating System :: OS Independent",
+                   "Programming Language :: Python 3",
+                   "Topic :: Software Development :: Web development",
+                   "Topic :: Software Development :: Web Services",
+                   "Topic :: Software Development :: REST Services",
+                   "Topic :: Software Development :: Web Applications"
+                   "Topic :: Software Development :: Modular Web Applications",
+                   "Topic :: Software Development :: Social Integration"])
