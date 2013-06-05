@@ -32,6 +32,9 @@ fi
 
 
 # Publish Fantastico on PyPi.
+cd $WORKDIR/doc
+ln -sf ../../fantastico-doc build
+
 cd $WORKDIR
 echo "Publishing Fantastico $VERSION on PyPi."
 python3 setup.py register clean sdist upload
