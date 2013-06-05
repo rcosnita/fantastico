@@ -40,18 +40,26 @@ fi
 cd $WORKDIR/doc
 
 echo "Removing previous doc build."
-rm -f build
-ln -s ../../fantastico-doc build
+rm -Rf build
+mkdir build
+ln -s ../../fantastico-doc/doctrees build/doctrees
+ln -s ../../fantastico-doc/epub build/epub
+ln -s ../../fantastico-doc/html build/html
+ln -s ../../fantastico-doc/latex build/latex
 
 cd $WORKDIR
 cp -f doc/source/changes.rst CHANGES.txt
+
+cat README.txt CHANGES.txt >> README_NEW.txt
+rm -f README.txt
+rm CHANGES.txt
+mv README_NEW.txt README.txt
+
 echo "Publishing Fantastico $VERSION on PyPi."
 python3 setup.py clean sdist bdist register upload
 
 if [ $? -gt 0 ]; then
 	exit $?
 fi
-
-rm CHANGES.txt
 
 echo "Fantastico $VERSION released successfully."
