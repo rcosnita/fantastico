@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{June 05, 2013}
-\release{0.0.1-b73}
+\release{0.0.1-b74}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -744,7 +744,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5680d10\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x44bdd10\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1755,7 +1755,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x281f408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x165c408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2202,8 +2202,8 @@ Open a browser and visit \href{http://localhost:12000/blogs/1/posts}{http://loca
 \end{enumerate}
 
 
-\section{Fantastico deployment how to}
-\label{how_to/deployment_how_to:fantastico-deployment-how-to}\label{how_to/deployment_how_to::doc}
+\section{Deployment how to}
+\label{how_to/deployment_how_to::doc}\label{how_to/deployment_how_to:deployment-how-to}
 In this how to we guide you to Fantastico deployment to production. Below you can find various deployment scenarios
 that can be used for various needs.
 
@@ -2272,7 +2272,7 @@ Goto \$FANTASTICO\_ROOT/deployment
 export ROOT\_PASSWD=\textless{}your root password\textgreater{}
 
 \item {} 
-sh setup\_low\_usage\_\textless{}os\_distribution).sh --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g sh setup\_low\_usage\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
+fantastico\_setup\_low\_usage\_\textless{}os\_distribution) --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g fantastico\_setup\_low\_usage\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
 
 \item {} 
 Done.
@@ -2365,7 +2365,7 @@ Install Fantastico framework on the production machine ({\hyperref[get_started/i
 Goto \$FANTASTICO\_ROOT/deployment
 
 \item {} 
-sh setup\_low\_usage\_\textless{}os\_distribution).sh (e.g sh setup\_low\_usage\_ubuntu.sh)
+fantastico\_setup\_low\_usage\_\textless{}os\_distribution).sh (e.g fantastico\_setup\_low\_usage\_ubuntu.sh)
 
 \item {} 
 Done.
@@ -2409,7 +2409,7 @@ Install Fantastico framework on the production machine ({\hyperref[get_started/i
 Goto \$FANTASTICO\_ROOT/deployment
 
 \item {} 
-sh setup\_low\_usage\_s3\_\textless{}os\_distribution).sh --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g sh setup\_low\_usage\_s3\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
+fantastico\_setup\_low\_usage\_s3\_\textless{}os\_distribution).sh --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g fantastico\_setup\_low\_usage\_s3\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
 
 \item {} 
 Done.
@@ -2458,14 +2458,14 @@ For Production environment, requests to these files are handled by the web serve
 place them under \textbf{static} folder of your component ({\hyperref[features/component_model::doc]{\emph{Component model}}}).
 
 There are several scenario in which Fantastico projects are deployed which influence where your component static files
-are stored. I recommend you read {\hyperref[how_to/deployment_how_to::doc]{\emph{Fantastico deployment how to}}} section.
+are stored. I recommend you read {\hyperref[how_to/deployment_how_to::doc]{\emph{Deployment how to}}} section.
 
 
 \subsection{Static assets on dev}
 \label{how_to/static_assets:static-assets-on-dev}
 Of course, on development environment you are not required to have a web server in front of your Fantastico dev server.
-For this purpose, fantastico framework provides a special controller which can easily serve static files. Even this
-works as expected, please do not use it in production. It does not send headers required by browser for caching
+For this purpose, fantastico framework provides a special controller which can easily serve static files. Even though
+it works as expected, please do not use it in production. It does not send headers required by browser for caching
 purposes.
 
 Static assets routes are the same between \textbf{prod} and \textbf{dev} environments.
@@ -2504,7 +2504,7 @@ Please make sure your replace python3.2 with the correct python version.
 In order to test the current project do the following:
 \begin{enumerate}
 \item {} 
-run\_dev\_server
+fantastico\_run\_dev\_server
 
 \item {} 
 Access \href{http://localhost:12000/fantastico/samples/mvc/static/sample.jpg}{http://localhost:12000/fantastico/samples/mvc/static/sample.jpg}
@@ -2519,8 +2519,14 @@ Your newly project is setup correctly and it runs fantastico default samples pro
 
 \subsection{Create first component}
 \label{how_to/new_project_how_to:create-first-component}
-After the new project it's correctly setup we can start to create our first component.
+After the new project it's correctly setup we can create our first component.
 \begin{enumerate}
+\item {} 
+. pip-deps/bin/activate
+
+\item {} 
+export FANTASTICO\_ACTIVE\_CONFIG=my\_project.settings.BaseProfile
+
 \item {} 
 cd my\_project
 
@@ -2564,10 +2570,41 @@ Paste the code listed below into hello\_world.py
 \end{Verbatim}
 
 \item {} 
+fantastico\_dev\_server
+
+\item {} 
 Now you can access \href{http://localhost:12000/component1/hello}{Hello route}.
 
 \item {} 
 Now you can access \href{http://localhost:12000/component1/static/first\_photo.jpg}{First photo route}.
+
+\end{enumerate}
+
+
+\subsection{Customize dev server}
+\label{how_to/new_project_how_to:customize-dev-server}
+For understanding how to customize dev server please read {\hyperref[get_started/dev_mode::doc]{\emph{Development mode}}}
+
+
+\subsection{Customize uwsgi prod server}
+\label{how_to/new_project_how_to:customize-uwsgi-prod-server}
+By design, each Fantastico project provides built in support for running it on \href{http://uwsgi-docs.readthedocs.org/en/latest/}{uWSGI server}.
+If you want to customize uwsgi parameters for your server you can follow these steps:
+\begin{enumerate}
+\item {} 
+cd \$FANTASTICO\_PROJECT\_FOLDER/deployment/conf/nginx
+
+\item {} 
+nano fantastico-uwsgi.ini
+
+\item {} 
+Change the options you want and save the file.
+
+\item {} 
+fantastico\_run\_prod\_server (for testing the production server).
+
+\item {} 
+Be aware that first you need an nginx configured and your project config file deployed (Read {\hyperref[how_to/deployment_how_to::doc]{\emph{Deployment how to}}}).
 
 \end{enumerate}
 

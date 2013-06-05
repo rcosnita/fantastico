@@ -377,12 +377,12 @@
       </navPoint>
       <navPoint id="navPoint48" playOrder="48">
         <navLabel>
-          <text>Fantastico deployment how to</text>
+          <text>Deployment how to</text>
         </navLabel>
         <content src="how_to/deployment_how_to.html" />
         <navPoint id="navPoint48" playOrder="48">
           <navLabel>
-            <text>Fantastico deployment how to</text>
+            <text>Deployment how to</text>
           </navLabel>
           <content src="how_to/deployment_how_to.html" />
         </navPoint>
@@ -434,9 +434,21 @@
           </navLabel>
           <content src="how_to/new_project_how_to.html#create-first-component" />
         </navPoint>
+        <navPoint id="navPoint55" playOrder="55">
+          <navLabel>
+            <text>Customize dev server</text>
+          </navLabel>
+          <content src="how_to/new_project_how_to.html#customize-dev-server" />
+        </navPoint>
+        <navPoint id="navPoint56" playOrder="56">
+          <navLabel>
+            <text>Customize uwsgi prod server</text>
+          </navLabel>
+          <content src="how_to/new_project_how_to.html#customize-uwsgi-prod-server" />
+        </navPoint>
       </navPoint>
     </navPoint>
-    <navPoint id="navPoint55" playOrder="55">
+    <navPoint id="navPoint57" playOrder="57">
       <navLabel>
         <text>Changes</text>
       </navLabel>

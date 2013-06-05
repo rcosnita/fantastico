@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating a new project &mdash; fantastico 0.0.1-b73 documentation</title>
+    <title>Creating a new project &mdash; fantastico 0.0.1-b74 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.1-b73',
+        VERSION:     '0.0.1-b74',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.0.1-b73 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.0.1-b74 documentation" href="../index.html" />
     <link rel="up" title="How to articles" href="how_to.html" />
     <link rel="next" title="Changes" href="../changes.html" />
     <link rel="prev" title="Static assets" href="static_assets.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="static_assets.html" title="Static assets"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b73 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b74 documentation</a> &raquo;</li>
           <li><a href="how_to.html" accesskey="U">How to articles</a> &raquo;</li> 
       </ul>
     </div>  
@@ -68,15 +68,19 @@ a project named <strong>fantastico_first</strong>.</p>
 Please make sure your replace python3.2 with the correct python version.
 In order to test the current project do the following:</p>
 <ol class="arabic simple">
-<li>run_dev_server</li>
+<li>fantastico_run_dev_server</li>
 <li>Access <a class="reference external" href="http://localhost:12000/fantastico/samples/mvc/static/sample.jpg">http://localhost:12000/fantastico/samples/mvc/static/sample.jpg</a></li>
 <li>Access <a class="reference external" href="http://localhost:12000/mvc/hello-world">http://localhost:12000/mvc/hello-world</a></li>
 </ol>
 <p>Your newly project is setup correctly and it runs fantastico default samples project.</p>
 <div class="section" id="create-first-component">
 <h2>Create first component<a class="headerlink" href="#create-first-component" title="Permalink to this headline">¶</a></h2>
-<p>After the new project it&#8217;s correctly setup we can start to create our first component.</p>
+<p>After the new project it&#8217;s correctly setup we can create our first component.</p>
 <ol class="arabic">
+<li><p class="first">. pip-deps/bin/activate</p>
+</li>
+<li><p class="first">export FANTASTICO_ACTIVE_CONFIG=my_project.settings.BaseProfile</p>
+</li>
 <li><p class="first">cd my_project</p>
 </li>
 <li><p class="first">mkdir component1</p>
@@ -110,10 +114,28 @@ In order to test the current project do the following:</p>
 </pre></div>
 </div>
 </li>
+<li><p class="first">fantastico_dev_server</p>
+</li>
 <li><p class="first">Now you can access <a class="reference external" href="http://localhost:12000/component1/hello">Hello route</a>.</p>
 </li>
 <li><p class="first">Now you can access <a class="reference external" href="http://localhost:12000/component1/static/first_photo.jpg">First photo route</a>.</p>
 </li>
+</ol>
+</div>
+<div class="section" id="customize-dev-server">
+<h2>Customize dev server<a class="headerlink" href="#customize-dev-server" title="Permalink to this headline">¶</a></h2>
+<p>For understanding how to customize dev server please read <a class="reference internal" href="../get_started/dev_mode.html"><em>Development mode</em></a></p>
+</div>
+<div class="section" id="customize-uwsgi-prod-server">
+<h2>Customize uwsgi prod server<a class="headerlink" href="#customize-uwsgi-prod-server" title="Permalink to this headline">¶</a></h2>
+<p>By design, each Fantastico project provides built in support for running it on <a class="reference external" href="http://uwsgi-docs.readthedocs.org/en/latest/">uWSGI server</a>.
+If you want to customize uwsgi parameters for your server you can follow these steps:</p>
+<ol class="arabic simple">
+<li>cd $FANTASTICO_PROJECT_FOLDER/deployment/conf/nginx</li>
+<li>nano fantastico-uwsgi.ini</li>
+<li>Change the options you want and save the file.</li>
+<li>fantastico_run_prod_server (for testing the production server).</li>
+<li>Be aware that first you need an nginx configured and your project config file deployed (Read <a class="reference internal" href="deployment_how_to.html"><em>Deployment how to</em></a>).</li>
 </ol>
 </div>
 </div>
@@ -128,6 +150,8 @@ In order to test the current project do the following:</p>
   <ul>
 <li><a class="reference internal" href="#">Creating a new project</a><ul>
 <li><a class="reference internal" href="#create-first-component">Create first component</a></li>
+<li><a class="reference internal" href="#customize-dev-server">Customize dev server</a></li>
+<li><a class="reference internal" href="#customize-uwsgi-prod-server">Customize uwsgi prod server</a></li>
 </ul>
 </li>
 </ul>
@@ -172,7 +196,7 @@ In order to test the current project do the following:</p>
         <li class="right" >
           <a href="static_assets.html" title="Static assets"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.0.1-b73 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.0.1-b74 documentation</a> &raquo;</li>
           <li><a href="how_to.html" >How to articles</a> &raquo;</li> 
       </ul>
     </div>

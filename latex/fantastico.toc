@@ -50,7 +50,7 @@
 \contentsline {subsection}{\numberline {4.1.2}Code the controller}{29}{subsection.4.1.2}
 \contentsline {subsection}{\numberline {4.1.3}Code the view}{30}{subsection.4.1.3}
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{30}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Fantastico deployment how to}{30}{section.4.2}
+\contentsline {section}{\numberline {4.2}Deployment how to}{30}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{31}{subsection.4.2.1}
 \contentsline {subsubsection}{Setup}{32}{subsubsection*.107}
 \contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{32}{subsection.4.2.2}
@@ -61,6 +61,8 @@
 \contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{34}{subsection.4.3.1}
 \contentsline {section}{\numberline {4.4}Creating a new project}{35}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Create first component}{35}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{36}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{36}{subsection.4.4.3}
 \contentsline {chapter}{\numberline {5}Changes}{37}{chapter.5}
 \contentsline {chapter}{\numberline {6}Build status}{39}{chapter.6}
 \contentsline {chapter}{\numberline {7}License}{41}{chapter.7}
