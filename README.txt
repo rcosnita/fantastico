@@ -16,4 +16,3 @@ The easiest way to get started using fantastico is to read our just in time gene
 
 Have fun.
 
-.. include:: CHANGES.txt
