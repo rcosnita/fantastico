@@ -1,5 +1,5 @@
-Fantastico framework changes
-============================
+Changes
+=======
 
 * v0.0.1
    * Built in router that can be easily extended.
