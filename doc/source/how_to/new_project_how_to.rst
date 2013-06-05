@@ -16,7 +16,7 @@ The last step might take a while because it will also install all fantastico dep
 Please make sure your replace python3.2 with the correct python version.
 In order to test the current project do the following:
 
-#. run_dev_server
+#. fantastico_run_dev_server
 #. Access http://localhost:12000/fantastico/samples/mvc/static/sample.jpg
 #. Access http://localhost:12000/mvc/hello-world
 
@@ -25,8 +25,10 @@ Your newly project is setup correctly and it runs fantastico default samples pro
 Create first component
 ----------------------
 
-After the new project it's correctly setup we can start to create our first component.
+After the new project it's correctly setup we can create our first component.
 
+#. . pip-deps/bin/activate
+#. export FANTASTICO_ACTIVE_CONFIG=my_project.settings.BaseProfile
 #. cd my_project
 #. mkdir component1
 #. cd component1
@@ -54,5 +56,23 @@ After the new project it's correctly setup we can start to create our first comp
               
               return Response(content_type="text/html", text=msg)
 
+#. fantastico_dev_server
 #. Now you can access `Hello route <http://localhost:12000/component1/hello>`_.
-#. Now you can access `First photo route <http://localhost:12000/component1/static/first_photo.jpg>`_.          
+#. Now you can access `First photo route <http://localhost:12000/component1/static/first_photo.jpg>`_.
+
+Customize dev server
+--------------------
+
+For understanding how to customize dev server please read :doc:`/get_started/dev_mode`
+
+Customize uwsgi prod server
+---------------------------
+
+By design, each Fantastico project provides built in support for running it on `uWSGI server <http://uwsgi-docs.readthedocs.org/en/latest/>`_.
+If you want to customize uwsgi parameters for your server you can follow these steps:
+
+#. cd $FANTASTICO_PROJECT_FOLDER/deployment/conf/nginx
+#. nano fantastico-uwsgi.ini
+#. Change the options you want and save the file.
+#. fantastico_run_prod_server (for testing the production server).
+#. Be aware that first you need an nginx configured and your project config file deployed (Read :doc:`/how_to/deployment_how_to`).

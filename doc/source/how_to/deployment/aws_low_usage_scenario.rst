@@ -35,7 +35,7 @@ Setup
 #. SSH on EC2 instance.
 #. Install Fantastico framework on the production machine (:doc:`/get_started/installation`.).
 #. Goto $FANTASTICO_ROOT/deployment
-#. sh setup_low_usage_<os_distribution).sh (e.g sh setup_low_usage_ubuntu.sh)
+#. fantastico_setup_low_usage_<os_distribution).sh (e.g fantastico_setup_low_usage_ubuntu.sh)
 #. Done.
 
 Optimization
@@ -62,7 +62,7 @@ Setup with S3
 #. SSH on EC2 instance.
 #. Install Fantastico framework on the production machine (:doc:`/get_started/installation`.).
 #. Goto $FANTASTICO_ROOT/deployment
-#. sh setup_low_usage_s3_<os_distribution).sh --ipaddress <desired_ip> --vhost-name <desired_vhost> --uwsgi-port <uwsgi port> --root-folder <desired root folder> --modules-folder <desired modules folder> (e.g sh setup_low_usage_s3_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder \`pwd\` --modules-folder /fantastico/samples)
+#. fantastico_setup_low_usage_s3_<os_distribution).sh --ipaddress <desired_ip> --vhost-name <desired_vhost> --uwsgi-port <uwsgi port> --root-folder <desired root folder> --modules-folder <desired modules folder> (e.g fantastico_setup_low_usage_s3_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder \`pwd\` --modules-folder /fantastico/samples)
 #. Done.
 
 It is usually a good idea to change the number of parallel connections supported by your linux kernel:
