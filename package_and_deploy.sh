@@ -57,7 +57,7 @@ rm CHANGES.txt
 mv README_NEW.txt README.txt
 
 echo "Publishing Fantastico $VERSION on PyPi."
-python3 setup.py clean sdist bdist register upload
+python3 setup.py clean sdist register upload
 
 if [ $? -gt 0 ]; then
 	exit $?
