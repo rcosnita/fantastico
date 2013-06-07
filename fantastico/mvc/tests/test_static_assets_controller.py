@@ -140,7 +140,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         
         self.assertIsNotNone(response)
         self.assertEqual(200, response.status_code)
-        self.assertEqual("image/x-icon", response.content_type)
+        self.assertTrue(response.content_type in ["image/vnd.microsoft.icon", "image/x-icon"])
         self.assertEqual(content, response.app_iter)
     
     def test_favicon_not_found(self):
@@ -161,7 +161,7 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         
         self.assertIsNotNone(response)
         self.assertEqual(200, response.status_code)
-        self.assertEqual("image/x-icon", response.content_type)
+        self.assertTrue(response.content_type in ["image/vnd.microsoft.icon", "image/x-icon"])
         self.assertEqual(0, len(response.app_iter))        
     
     def _mock_os_provider(self, component_name, asset_path, file_exists=True, static_local=True):

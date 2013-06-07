@@ -66,6 +66,6 @@ class StaticAssetsIntegration(DevServerIntegration):
             
         def assert_logic(server):
             self.assertEqual(200, self._response.getcode())
-            self.assertEqual("image/x-icon", self._response.info()["Content-Type"])
+            self.assertTrue(self._response.info()["Content-Type"] in ["image/vnd.microsoft.icon", "image/x-icon"])
                         
         self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))        
