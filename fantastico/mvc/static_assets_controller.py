@@ -36,9 +36,7 @@ class StaticAssetsController(BaseController):
     
     def serve_asset(self, request, component_name, asset_path, **kwargs):
         '''This method is invoked whenever a request to a static asset is done.'''
-        
-        os_provider = kwargs.get("os_provider") or os
-        
+
         file_path = "%s%s/%s/%s" % (instantiator.get_class_abslocation(self._settings_facade.get_config().__class__), 
                                     component_name, self.static_folder, asset_path)
         err_content_type = "text/html; charset=UTF-8"
@@ -48,6 +46,40 @@ class StaticAssetsController(BaseController):
         
         if not asset_path or len(asset_path.strip()) == 0:
             return Response(status=400, content_type=err_content_type, text="No asset path provided.")
+        
+        os_provider = kwargs.get("os_provider") or os        
+        
+        if not self._is_asset_available(file_path, os_provider):
+            return Response(status=404, content_type=err_content_type, text="Asset %s not found." % file_path)
+         
+        return self._load_file_from_disk(request, file_path, **kwargs)
+    
+    def handle_favicon(self, request, **kwargs):
+        '''This method is used to handle favicon requests coming from browsers.'''
+        
+        os_provider = kwargs.get("os_provider") or os
+
+        file_path = "%sstatic/%s" % (instantiator.get_class_abslocation(self._settings_facade.get_config().__class__), 
+                                 "favicon.ico")
+        
+        if not os_provider.path.exists(file_path):
+            return Response(app_iter=[], content_type="image/x-icon")
+        
+        return self._load_file_from_disk(request, file_path, **kwargs)
+    
+    def _is_asset_available(self, file_path, os_provider=os):
+        '''This method detects if an asset exists on disk or not.'''
+
+        if not os_provider.path.exists(file_path):
+            return False
+        
+        return True
+    
+    def _load_file_from_disk(self, request, file_path, **kwargs):
+        '''This method is used to load a file from disk if it exists.'''
+        
+        os_provider = kwargs.get("os_provider") or os
+        err_content_type = "text/html; charset=UTF-8"
         
         if not self._is_asset_available(file_path, os_provider):
             return Response(status=404, content_type=err_content_type, text="Asset %s not found." % file_path)
@@ -60,11 +92,3 @@ class StaticAssetsController(BaseController):
         file_content = file_loader(file_opener(file_path, "rb"))
         
         return Response(app_iter=file_content, content_type=file_type)
-    
-    def _is_asset_available(self, file_path, os_provider=os):
-        '''This method detects if an asset exists on disk or not.'''
-
-        if not os_provider.path.exists(file_path):
-            return False
-        
-        return True
