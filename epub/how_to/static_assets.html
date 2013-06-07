@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="deployment/aws_low_usage_scenario.html" title="Low usage AWS"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.1.0-b83 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.1.1-b84 documentation</a> &raquo;</li>
           <li><a href="how_to.html" accesskey="U">How to articles</a> &raquo;</li> 
       </ul>
     </div>
@@ -57,6 +57,22 @@ For this purpose, fantastico framework provides a special controller which can e
 it works as expected, please do not use it in production. It does not send headers required by browser for caching
 purposes.</p>
 <p>Static assets routes are the same between <strong>prod</strong> and <strong>dev</strong> environments.</p>
+<div class="section" id="favicon">
+<h3>Favicon</h3>
+<p>If you want your site to also have an icon which is automatically presented by browsers, in your project root folder
+do the following:</p>
+<ol class="arabic simple">
+<li>mkdir static</li>
+<li>cd static</li>
+<li>Copy your favicon.ico file in here.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="static-assets-on-prod">
+<h2>Static assets on prod</h2>
+<p>There is no difference between static assets on dev and static assets on production from routes point of view.
+From handling requests point of view, nginx configuration for your project takes care of serving static assets
+and sending correct http caching headers.</p>
 </div>
 </div>
 

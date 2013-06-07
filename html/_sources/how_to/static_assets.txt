@@ -23,4 +23,21 @@ For this purpose, fantastico framework provides a special controller which can e
 it works as expected, please do not use it in production. It does not send headers required by browser for caching
 purposes.
 
-Static assets routes are the same between **prod** and **dev** environments.  
+Static assets routes are the same between **prod** and **dev** environments.
+
+Favicon
+~~~~~~~
+
+If you want your site to also have an icon which is automatically presented by browsers, in your project root folder
+do the following:
+
+#. mkdir static
+#. cd static
+#. Copy your favicon.ico file in here.
+
+Static assets on prod
+---------------------
+
+There is no difference between static assets on dev and static assets on production from routes point of view.
+From handling requests point of view, nginx configuration for your project takes care of serving static assets
+and sending correct http caching headers.  

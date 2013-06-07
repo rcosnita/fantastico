@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Static assets &mdash; fantastico 0.1.0-b83 documentation</title>
+    <title>Static assets &mdash; fantastico 0.1.1-b84 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1.0-b83',
+        VERSION:     '0.1.1-b84',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.1.0-b83 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.1.1-b84 documentation" href="../index.html" />
     <link rel="up" title="How to articles" href="how_to.html" />
     <link rel="next" title="Creating a new project" href="new_project_how_to.html" />
     <link rel="prev" title="Low usage AWS" href="deployment/aws_low_usage_scenario.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="deployment/aws_low_usage_scenario.html" title="Low usage AWS"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.1.0-b83 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.1.1-b84 documentation</a> &raquo;</li>
           <li><a href="how_to.html" accesskey="U">How to articles</a> &raquo;</li> 
       </ul>
     </div>  
@@ -74,6 +74,22 @@ For this purpose, fantastico framework provides a special controller which can e
 it works as expected, please do not use it in production. It does not send headers required by browser for caching
 purposes.</p>
 <p>Static assets routes are the same between <strong>prod</strong> and <strong>dev</strong> environments.</p>
+<div class="section" id="favicon">
+<h3>Favicon<a class="headerlink" href="#favicon" title="Permalink to this headline">¶</a></h3>
+<p>If you want your site to also have an icon which is automatically presented by browsers, in your project root folder
+do the following:</p>
+<ol class="arabic simple">
+<li>mkdir static</li>
+<li>cd static</li>
+<li>Copy your favicon.ico file in here.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="static-assets-on-prod">
+<h2>Static assets on prod<a class="headerlink" href="#static-assets-on-prod" title="Permalink to this headline">¶</a></h2>
+<p>There is no difference between static assets on dev and static assets on production from routes point of view.
+From handling requests point of view, nginx configuration for your project takes care of serving static assets
+and sending correct http caching headers.</p>
 </div>
 </div>
 
@@ -86,7 +102,11 @@ purposes.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Static assets</a><ul>
-<li><a class="reference internal" href="#static-assets-on-dev">Static assets on dev</a></li>
+<li><a class="reference internal" href="#static-assets-on-dev">Static assets on dev</a><ul>
+<li><a class="reference internal" href="#favicon">Favicon</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#static-assets-on-prod">Static assets on prod</a></li>
 </ul>
 </li>
 </ul>
@@ -131,7 +151,7 @@ purposes.</p>
         <li class="right" >
           <a href="deployment/aws_low_usage_scenario.html" title="Low usage AWS"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.1.0-b83 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.1.1-b84 documentation</a> &raquo;</li>
           <li><a href="how_to.html" >How to articles</a> &raquo;</li> 
       </ul>
     </div>

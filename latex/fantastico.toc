@@ -59,6 +59,8 @@
 \contentsline {subsubsection}{Setup with S3}{34}{subsubsection*.110}
 \contentsline {section}{\numberline {4.3}Static assets}{34}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{34}{subsection.4.3.1}
+\contentsline {subsubsection}{Favicon}{35}{subsubsection*.111}
+\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{35}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Creating a new project}{35}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Create first component}{35}{subsection.4.4.1}
 \contentsline {subsection}{\numberline {4.4.2}Customize dev server}{36}{subsection.4.4.2}
@@ -66,4 +68,4 @@
 \contentsline {chapter}{\numberline {5}Changes}{37}{chapter.5}
 \contentsline {chapter}{\numberline {6}Build status}{39}{chapter.6}
 \contentsline {chapter}{\numberline {7}License}{41}{chapter.7}
-\contentsline {chapter}{Index}{43}{section*.111}
+\contentsline {chapter}{Index}{43}{section*.112}
