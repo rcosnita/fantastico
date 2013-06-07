@@ -1,6 +1,9 @@
 Changes
 =======
 
+* v0.1.1
+   * Favicon route handling.
+
 * v0.1.0
    * Built in router that can be easily extended.
    * WebOb Request / Response architecture.

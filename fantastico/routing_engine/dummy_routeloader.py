@@ -27,6 +27,7 @@ class DummyRouteLoader(RouteLoader):
     
     DUMMY_ROUTE = "/dummy/route/loader/test"
     STATIC_ROUTE = "^/(?P<component_name>.*)/static/(?P<asset_path>.*)$"
+    FAVICON_ROUTE = "^/favicon.ico"
     
     def load_routes(self):
         routes = {DummyRouteLoader.DUMMY_ROUTE: 
@@ -35,7 +36,10 @@ class DummyRouteLoader(RouteLoader):
                      "http_verbs": ["GET"]},
                   DummyRouteLoader.STATIC_ROUTE:
                     {"method": "fantastico.mvc.static_assets_controller.StaticAssetsController.serve_asset",
-                     "http_verbs": ["GET"]}
+                     "http_verbs": ["GET"]},
+                  DummyRouteLoader.FAVICON_ROUTE:
+                    {"method": "fantastico.mvc.static_assets_controller.StaticAssetsController.handle_favicon",
+                     "http_verbs": ["GET"]}                  
                  }
         
         return routes
