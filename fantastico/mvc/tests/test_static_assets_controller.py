@@ -118,15 +118,66 @@ class StaticAssetsControllerTests(FantasticoUnitTestsCase):
         self.assertEqual("application/octet-stream", response.content_type)
         self.assertEqual(content, response.app_iter)
     
-    def _mock_os_provider(self, component_name, asset_path, file_exists=True):
+    def test_favicon_ok(self):
+        '''This test case ensures favicon is loaded correctly if it exists.'''
+        
+        component_name = "static"
+        asset_path = "favicon.ico"
+        
+        self._mock_os_provider(component_name, asset_path, 
+                               file_exists=True, 
+                               static_local=False)
+        
+        content = b"simple test"
+        
+        request = Mock()
+        request.environ = {}
+        
+        response = self._assets_contr.handle_favicon(request,
+                                                     os_provider=self._os_provider,
+                                                     file_loader=Mock(return_value=content),
+                                                     file_opener=Mock())
+        
+        self.assertIsNotNone(response)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual("image/x-icon", response.content_type)
+        self.assertEqual(content, response.app_iter)
+    
+    def test_favicon_not_found(self):
+        '''This test case makes sure an empty response is retrieved if the icon is not found.'''
+        
+        component_name = "static"
+        asset_path = "favicon.ico"
+        
+        self._mock_os_provider(component_name, asset_path, 
+                               file_exists=False, 
+                               static_local=False)
+        
+        request = Mock()
+        request.environ = {}
+        
+        response = self._assets_contr.handle_favicon(request,
+                                                     os_provider=self._os_provider)
+        
+        self.assertIsNotNone(response)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual("image/x-icon", response.content_type)
+        self.assertEqual(0, len(response.app_iter))        
+    
+    def _mock_os_provider(self, component_name, asset_path, file_exists=True, static_local=True):
         '''This method correctly mocks the os provider based on the component name and asset path.'''
 
         self._os_provider.path = Mock(return_value=self._os_provider)
         
         def exists(filename):
-            computed_path = "/mvc/tests/%(component_name)s/static/%(asset_path)s" %\
-                            {"component_name": component_name, 
-                             "asset_path": asset_path}
+            if static_local:
+                computed_path = "/mvc/tests/%(component_name)s/static/%(asset_path)s" %\
+                                {"component_name": component_name, 
+                                 "asset_path": asset_path}
+            else:
+                computed_path = "/mvc/tests/%(component_name)s/%(asset_path)s" %\
+                                {"component_name": component_name, 
+                                 "asset_path": asset_path}                
 
             if filename.endswith(computed_path):
                 return file_exists

@@ -53,3 +53,19 @@ class StaticAssetsIntegration(DevServerIntegration):
             self.assertEqual(expected_content, self._response.read())
             
         self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))
+    
+    def test_icon_serve_notfound(self):
+        '''This test case makes sure a favicon request is ignored if no icon is present on disk.'''
+        
+        icon_route = "/favicon.ico"
+        
+        def request_logic(server):
+            request = Request(self._get_server_base_url(server, icon_route))
+            
+            self._response = urllib.request.urlopen(request)
+            
+        def assert_logic(server):
+            self.assertEqual(200, self._response.getcode())
+            self.assertEqual("image/x-icon", self._response.info()["Content-Type"])
+                        
+        self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))        
