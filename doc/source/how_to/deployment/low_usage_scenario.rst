@@ -29,7 +29,7 @@ Setup
 -----
 
 #. Install Fantastico framework on the production machine (:doc:`/get_started/installation`.).
-#. Goto $FANTASTICO_ROOT/deployment
+#. Goto $FANTASTICO_ROOT
 #. export ROOT_PASSWD=<your root password>
 #. fantastico_setup_low_usage_<os_distribution) --ipaddress <desired_ip> --vhost-name <desired_vhost> --uwsgi-port <uwsgi port> --root-folder <desired root folder> --modules-folder <desired modules folder> (e.g fantastico_setup_low_usage_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder \`pwd\` --modules-folder /fantastico/samples)
 #. Done.
