@@ -2,6 +2,7 @@ Changes
 =======
 
 * v0.1.1
+   * deployment scripts error handling and root folder execution (rather than execution only for deployment subfolder).
    * Favicon route handling.
 
 * v0.1.0
