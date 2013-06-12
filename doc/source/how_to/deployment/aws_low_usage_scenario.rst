@@ -34,7 +34,7 @@ Setup
 #. Create an EC2 instance from AWS Management Console (`EC2 setup <http://www.youtube.com/watch?v=WBro0TEAd7g>`_). 
 #. SSH on EC2 instance.
 #. Install Fantastico framework on the production machine (:doc:`/get_started/installation`.).
-#. Goto $FANTASTICO_ROOT/deployment
+#. Goto $FANTASTICO_ROOT
 #. fantastico_setup_low_usage_<os_distribution).sh (e.g fantastico_setup_low_usage_ubuntu.sh)
 #. Done.
 
