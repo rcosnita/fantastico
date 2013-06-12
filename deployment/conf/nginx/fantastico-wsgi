@@ -25,6 +25,10 @@ server {
 	location /favicon.ico {
 		# Matching special favicon call.
 		rewrite ^/favicon.ico $modules_holder/static/favicon.ico break;
+		
+		if (!-f $request_filename) {
+		   uwsgi_pass {{ip_address}}:{{uwsgi_port}};
+		}		
 	}
 		
 	location / {
