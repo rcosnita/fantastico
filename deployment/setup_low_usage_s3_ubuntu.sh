@@ -1,6 +1,12 @@
 #!/bin/bash
 PATH=/usr/bin:/usr/sbin
 
+if [[ -z $ROOT_PASSWD ]]; then
+	echo "You must set ROOT_PASSWD environment variable before setting up prod environment."
+	
+	exit 1
+fi
+
 echo $ROOT_PASSWD | sudo -S apt-get install nginx -y
 
 . ../pip-deps/bin/activate

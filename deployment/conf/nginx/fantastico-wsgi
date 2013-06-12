@@ -21,6 +21,11 @@ server {
 	server_name {{vhost_name}};
 
 	set $modules_holder {{modules_folder}};
+	
+	location /favicon.ico {
+		# Matching special favicon call.
+		rewrite ^/favicon.ico $modules_holder/static/favicon.ico break;
+	}
 		
 	location / {
 		# Matching normal modules static resources
@@ -29,5 +34,5 @@ server {
 		if (!-f $request_filename) {
 		   uwsgi_pass {{ip_address}}:{{uwsgi_port}};
 		}
-	}
+	}	
 }
