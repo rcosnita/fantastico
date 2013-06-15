@@ -2,8 +2,9 @@ Changes
 =======
 
 * v0.1.1
-   * deployment scripts error handling and root folder execution (rather than execution only for deployment subfolder).
    * Favicon route handling.
+   * Deployment scripts error handling and root folder execution (rather than execution only for deployment subfolder).
+   * I updated mvc how to article to use get_records_paged instead of all_pageed method (it used to be a bug in documentation).
 
 * v0.1.0
    * Built in router that can be easily extended.
