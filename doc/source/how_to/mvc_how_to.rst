@@ -44,10 +44,10 @@ Code the controller
             
                 blog_id = int(request.params.id)
             
-                posts = Post.all_paged(start_record=1,  
+                posts = Post.get_records_paged(start_record=1, end_record=100,  
                                        sort_expr=[ModelSort(Post.model_cls.created_date, ModelSort.ASC), 
                                                   ModelSort(Post.title, ModelSort.DESC)],
-                                       where_expr=[ModelFilter(Post.model_cls.blog_id, blog_id, ModelFilter.EQ)])
+                                       filter_expr=[ModelFilter(Post.model_cls.blog_id, blog_id, ModelFilter.EQ)])
                                 
                 response = Response()
                 response.text = self.load_template("/posts_listing.html", 
@@ -56,7 +56,7 @@ Code the controller
                 
                 return response
             
-Now you have a fully functional controller that will list all posts.
+Now you have a fully functional controller that will list first 100 posts.
 
 Code the view
 -------------
