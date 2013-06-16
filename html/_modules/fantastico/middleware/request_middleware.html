@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.middleware.request_middleware &mdash; fantastico 0.1.1-b86 documentation</title>
+    <title>fantastico.middleware.request_middleware &mdash; fantastico 0.1.1-b87 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.1.1-b86',
+        VERSION:     '0.1.1-b87',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.1.1-b86 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.1.1-b87 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.1.1-b86 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.1.1-b87 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -63,14 +63,17 @@
 
 <span class="sd">.. py:module:: fantastico.middleware.request_response</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">mvc</span>
 <span class="kn">from</span> <span class="nn">fantastico.locale.language</span> <span class="kn">import</span> <span class="n">Language</span>
 <span class="kn">from</span> <span class="nn">fantastico.middleware.request_context</span> <span class="kn">import</span> <span class="n">RequestContext</span>
 <span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
 <span class="kn">from</span> <span class="nn">webob.request</span> <span class="kn">import</span> <span class="n">Request</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
 
 <div class="viewcode-block" id="RequestMiddleware"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.middleware.request_middleware.RequestMiddleware">[docs]</a><span class="k">class</span> <span class="nc">RequestMiddleware</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the middleware responsible for converting wsgi environ dictionary into a request. The result is saved</span>
-<span class="sd">    into current WSGI environ under key **fantastico.request**.&#39;&#39;&#39;</span>
+<span class="sd">    into current WSGI environ under key **fantastico.request**. In addition each new request receives an identifier. If subsequent</span>
+<span class="sd">    requests are triggered from that request then they will also receive the same request id.&#39;&#39;&#39;</span>
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">app</span>
@@ -108,13 +111,23 @@
                 
         <span class="k">return</span> <span class="n">Language</span><span class="p">(</span><span class="n">supported_languages</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>        
                 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">uuid_generator</span><span class="o">=</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">):</span>
         <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_build_context</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
         
+        <span class="n">request</span><span class="o">.</span><span class="n">request_id</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fantastico.current_request_id&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">request_id</span><span class="p">:</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">request_id</span> <span class="o">=</span> <span class="n">uuid_generator</span><span class="p">()</span>
+            
+        <span class="n">environ</span><span class="p">[</span><span class="s">&quot;fantastico.current_request_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">request_id</span>
         <span class="n">environ</span><span class="p">[</span><span class="s">&quot;fantastico.request&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span> 
         
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span></div>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mvc</span><span class="o">.</span><span class="n">CONN_MANAGER</span><span class="p">:</span>
+                <span class="n">mvc</span><span class="o">.</span><span class="n">CONN_MANAGER</span><span class="o">.</span><span class="n">close_connection</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">request_id</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -145,7 +158,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.1.1-b86 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.1.1-b87 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

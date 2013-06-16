@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{June 15, 2013}
-\release{0.1.1-b86}
+\date{June 16, 2013}
+\release{0.1.1-b87}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -641,6 +641,14 @@ This method save all call methods for each listed middleware so that later on th
 
 \end{fulllineitems}
 
+\index{fantastico\_cfg\_os\_key (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoIntegrationTestCase.fantastico_cfg_os_key}\pysigline{\bfcode{fantastico\_cfg\_os\_key}}
+This property holds the name of os environment variable used for setting up active fantastico configuration.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -744,7 +752,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4642d10\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4ae4408\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -978,7 +986,8 @@ is the first middleware that is executed for every single http request.
 \begin{fulllineitems}
 \phantomsection\label{features/request_response:fantastico.middleware.request_middleware.RequestMiddleware}\pysiglinewithargsret{\strong{class }\code{fantastico.middleware.request\_middleware.}\bfcode{RequestMiddleware}}{\emph{app}}{}
 This class provides the middleware responsible for converting wsgi environ dictionary into a request. The result is saved
-into current WSGI environ under key \textbf{fantastico.request}.
+into current WSGI environ under key \textbf{fantastico.request}. In addition each new request receives an identifier. If subsequent
+requests are triggered from that request then they will also receive the same request id.
 
 \end{fulllineitems}
 
@@ -1296,7 +1305,7 @@ want).
 \index{Controller (class in fantastico.mvc.controller\_decorators)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.controller\_decorators.}\bfcode{Controller}}{\emph{url}, \emph{method='GET'}, \emph{models=None}, \emph{model\_facade=\textless{}class `fantastico.mvc.model\_facade.ModelFacade'\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.controller_decorators.Controller}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.controller\_decorators.}\bfcode{Controller}}{\emph{url}, \emph{method='GET'}, \emph{models=None}, \emph{**kwargs}}{}
 This class provides a decorator for magically registering methods as route handlers. This is an extremely important
 piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
 must be executed when an http request to an url is made:
@@ -1755,7 +1764,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x17b9408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1c4b408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2644,7 +2653,13 @@ Favicon route handling.
 Deployment scripts error handling and root folder execution (rather than execution only for deployment subfolder).
 
 \item {} 
-I updated mvc how to article to use get\_records\_paged instead of all\_pageed method (it used to be a bug in documentation).
+MVC how to article was changed to use get\_records\_paged instead of all\_paged method (it used to be a bug in documentation).
+
+\item {} 
+DB Session manager was changed from one singleton connection to connection / request.
+
+\item {} 
+FantasticoIntegrationTestCase now has a property that holds os environment variable name for setting up Fantastico active config.
 
 \end{itemize}
 

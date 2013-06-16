@@ -19,11 +19,12 @@
 \indexentry{\_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
+\indexentry{fantastico\_cfg\_os\_key (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{7}
 \indexentry{DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server)|hyperpage}{7}
 \indexentry{\_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
 \indexentry{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
 \indexentry{\_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
-\indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{8}
+\indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{9}
 \indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{9}
 \indexentry{started (fantastico.server.dev\_server.DevServer attribute)|hyperpage}{9}
 \indexentry{stop() (fantastico.server.dev\_server.DevServer method)|hyperpage}{9}

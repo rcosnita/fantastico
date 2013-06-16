@@ -45,7 +45,7 @@
   \item delete() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
   \item dev\_server\_host (fantastico.settings.BasicSettings attribute), \hyperpage{5}
   \item dev\_server\_port (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item DevServer (class in fantastico.server.dev\_server), \hyperpage{8}
+  \item DevServer (class in fantastico.server.dev\_server), \hyperpage{9}
   \item DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server), \hyperpage{7}
   \item display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method), 
 		\hyperpage{17}
@@ -53,6 +53,8 @@
 
   \indexspace
   \bigletter F
+  \item fantastico\_cfg\_os\_key (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), 
+		\hyperpage{7}
   \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{11}
   \item FantasticoContentTypeError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoControllerInvalidError (class in fantastico.exceptions), \hyperpage{11}
