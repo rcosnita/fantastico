@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.middleware.tests.test_request_middleware
 '''
+from fantastico import mvc
 from fantastico.middleware.request_middleware import RequestMiddleware
 from fantastico.settings import BasicSettings
 from fantastico.tests.base_case import FantasticoUnitTestsCase
@@ -49,6 +50,9 @@ class RequestMiddlewareTests(FantasticoUnitTestsCase):
                        "wsgi.run_once": False,
                        "wsgi.url_scheme": 'http',
                        "wsgi.version": (1, 0)} 
+    
+    def cleanup(self):
+        mvc.CONN_MANAGER = None
     
     def test_convert_request_ok(self):
         '''Test case that ensuring that request conversion works as expected.'''
@@ -129,4 +133,21 @@ class RequestMiddlewareTests(FantasticoUnitTestsCase):
         
         self.assertIsNotNone(context)
         self.assertIsNotNone(context.language)
-        self.assertEqual("en_us", str(context.language))        
+        self.assertEqual("en_us", str(context.language))
+    
+    def test_connection_closed(self):
+        '''This test case ensures connection is closed once the request is done.'''
+        
+        conn_manager = Mock()
+        
+        mvc.CONN_MANAGER = conn_manager
+        
+        def close(request_id):
+            raise ValueError("Connection closed.")
+        
+        conn_manager.close_connection = close 
+        
+        with self.assertRaises(ValueError) as cm:
+            self._middleware(self._environ, self._start_response)
+        
+        self.assertEqual("Connection closed.", str(cm.exception))
