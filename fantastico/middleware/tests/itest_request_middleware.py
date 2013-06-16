@@ -55,6 +55,7 @@ class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
             request = self._environ.get("fantastico.request")
             
             self.assertIsNotNone(request)
+            self.assertIsNotNone(request.request_id)
             self.assertEqual("GET", request.method)
             self.assertEqual("application/json", request.content_type)
             self.assertEqual("123", request.headers.get("oauth_bearer"))

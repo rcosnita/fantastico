@@ -29,38 +29,31 @@ class ModelSessionMiddlewareIntegration(FantasticoIntegrationTestCase):
         self._normal_response = Mock()
         self._app = Mock(return_value=self._normal_response)
         self._middleware = ModelSessionMiddleware(self._app)
-        mvc.SESSION = None
-        mvc.ENGINE = None
+        mvc.CONN_MANAGER = None
     
     def test_session_init_ok(self):
         '''This test case ensures an active db session is opened by model session middleware.'''
         
-        self.assertIsNone(mvc.ENGINE)
-        self.assertIsNone(mvc.SESSION)
+        self.assertIsNone(mvc.CONN_MANAGER)
         
         response = self._middleware(self._environ, Mock())
         
         self.assertEqual(self._normal_response, response)
-        self.assertIsNotNone(mvc.ENGINE)
-        self.assertIsNotNone(mvc.SESSION)
+        self.assertIsNotNone(mvc.CONN_MANAGER)
     
     def test_session_init_cached(self):
         '''This test case ensures session objects are correctly cached across two subsequent init calls.'''
         
-        self.assertIsNone(mvc.ENGINE)
-        self.assertIsNone(mvc.SESSION)
+        self.assertIsNone(mvc.CONN_MANAGER)
         
         response = self._middleware(self._environ, Mock())
         
         self.assertEqual(self._normal_response, response)
-        self.assertIsNotNone(mvc.ENGINE)
-        self.assertIsNotNone(mvc.SESSION)
+        self.assertIsNotNone(mvc.CONN_MANAGER)
 
-        first_engine = mvc.ENGINE
-        first_session = mvc.SESSION
+        first_engine = mvc.CONN_MANAGER
         
         response = self._middleware(self._environ, Mock())
         
         self.assertEqual(self._normal_response, response)
-        self.assertEqual(first_engine, mvc.ENGINE)
-        self.assertEqual(first_session, mvc.SESSION)
+        self.assertEqual(first_engine, mvc.CONN_MANAGER)
