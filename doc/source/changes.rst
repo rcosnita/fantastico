@@ -4,7 +4,9 @@ Changes
 * v0.1.1
    * Favicon route handling.
    * Deployment scripts error handling and root folder execution (rather than execution only for deployment subfolder).
-   * I updated mvc how to article to use get_records_paged instead of all_pageed method (it used to be a bug in documentation).
+   * MVC how to article was changed to use get_records_paged instead of all_paged method (it used to be a bug in documentation).
+   * DB Session manager was changed from one singleton connection to connection / request.
+   * FantasticoIntegrationTestCase now has a property that holds os environment variable name for setting up Fantastico active config. 
 
 * v0.1.0
    * Built in router that can be easily extended.
