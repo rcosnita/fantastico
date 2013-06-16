@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.middleware.model_session_middleware
 '''
-from fantastico.exceptions import FantasticoError
+
 from fantastico import mvc
 from fantastico.settings import SettingsFacade
 
