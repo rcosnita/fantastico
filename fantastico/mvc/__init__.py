@@ -23,9 +23,76 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 BASEMODEL = declarative_base()
-SESSION = None
 
-ENGINE = None
+class DbSessionManager(object):
+    '''This class is responsible for managing db connections for fantastico framework. The current strategy implemented 
+    is based on a request id. This means once a request is done, it receives a request identifier which remains constant
+    for the whole request.'''
+    
+    class ConnectionData(object):
+        '''This class is responsible for description the connection data descriptor.'''
+        
+        def __init__(self, session, engine):
+            self.session = session
+            self.engine = engine 
+        
+    def __init__(self, db_config, echo=False, create_engine_fn=None, create_session_fn=None):
+        self._conn_props = self._build_conn_props(db_config)
+        self._echo = echo
+        self._create_engine_fn = create_engine_fn
+        self._create_session_fn = create_session_fn
+        
+        self._cached_conns = {}
+    
+    def _build_conn_props(self, db_config):
+        '''This method is used to build the connection properties required for connecting to fantastico configured database.'''
+        
+        conn_props = {"drivername": db_config["drivername"],
+                      "username": db_config["username"],
+                      "password": db_config["password"],
+                      "host": db_config["host"],
+                      "port": db_config["port"],
+                      "database": db_config["database"],
+                      "query": db_config["additional_params"]}
+
+        return conn_props
+    
+    def get_connection(self, request_id):
+        '''This method is responsible for retrieving a connection for the given connection.'''
+        
+        conn = self._cached_conns.get(request_id) 
+        
+        if conn:
+            return conn.session
+        
+        try:
+            conn_data = URL(**self._conn_props)
+            engine = self._create_engine_fn(conn_data, echo=self._echo)
+            session = self._create_session_fn(sessionmaker(bind=engine))
+            
+            conn = DbSessionManager.ConnectionData(session, engine)
+            
+            self._cached_conns[request_id] = conn
+        
+            return session
+        except Exception as ex:
+            raise FantasticoError(ex)
+    
+    def close_connection(self, request_id):
+        '''This method is used to close the connection for a given request. It is recommended to invoke this only once per request
+        cycle. Fantastico framework does this automatically at the end of each request cycle so you don't have to call this
+        manually.'''
+        
+        conn = self._cached_conns.get(request_id)
+        
+        if not conn:
+            return
+        
+        conn.session.close()
+        
+        del self._cached_conns[request_id]
+        
+CONN_MANAGER = None
 
 def init_dm_db_engine(db_config, echo=False, create_engine_fn=None, create_session_fn=None):
     '''Method used to configure the SQL Alchemy ORM behavior for Fantastico framework. It must be executed once per wsgi
@@ -34,24 +101,7 @@ def init_dm_db_engine(db_config, echo=False, create_engine_fn=None, create_sessi
     create_engine_fn = create_engine_fn or create_engine
     create_session_fn = create_session_fn or scoped_session
 
-    global ENGINE, SESSION
-    
-    try:
-        conn_props = {"drivername": db_config["drivername"],
-                      "username": db_config["username"],
-                      "password": db_config["password"],
-                      "host": db_config["host"],
-                      "port": db_config["port"],
-                      "database": db_config["database"],
-                      "query": db_config["additional_params"]}
-    
-        if not ENGINE and isinstance(conn_props, dict):
-            conn_data = URL(**conn_props)
-            ENGINE = create_engine_fn(conn_data, echo=echo)
-    
-            SESSION = create_session_fn(sessionmaker(bind=ENGINE))
-    except Exception as ex:
-        ENGINE = None
-        SESSION = None
-        
-        raise FantasticoError(ex)
+    global CONN_MANAGER
+
+    if not CONN_MANAGER:
+        CONN_MANAGER = DbSessionManager(db_config, echo, create_engine_fn, create_session_fn)
