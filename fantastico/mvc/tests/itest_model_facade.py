@@ -28,6 +28,7 @@ from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, Text
+import uuid
 
 class ModelFacadeMessage(BASEMODEL):
     '''This class is a simple mapping over mvc_model_facade_messages table.'''
@@ -57,7 +58,7 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
         cls.settings_facade = SettingsFacade()
         mvc.init_dm_db_engine(cls.settings_facade.get("database_config"), echo=True)
         
-        cls.model_facade = ModelFacade(ModelFacadeMessage, mvc.SESSION())
+        cls.model_facade = ModelFacade(ModelFacadeMessage, mvc.CONN_MANAGER.get_connection(uuid.uuid4()))
     
     def init(self):
         '''This method creates a number of messages before each test case.'''

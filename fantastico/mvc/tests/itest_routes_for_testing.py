@@ -57,4 +57,4 @@ class RoutesForTestingIntegration(FantasticoIntegrationTestCase):
             controller = SubroutesController(SettingsFacade())
             self.assertRaises(FantasticoTemplateNotFoundError, controller.handle_route, *[Mock()])
             
-        self._run_test_all_envs(exec_test)        
+        self._run_test_all_envs(exec_test)

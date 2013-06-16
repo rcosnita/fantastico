@@ -18,10 +18,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from mock import Mock
 
 @ControllerProvider()
 class SubroutesController(BaseController):
-    @Controller(url="/route_from_subfolder", method="GET")
+    @Controller(url="/route_from_subfolder", method="GET", conn_manager=Mock())
     def handle_route(self, request):
         '''This method tries to load a template which does not exist in this controller scope.'''
         

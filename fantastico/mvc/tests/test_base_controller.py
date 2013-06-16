@@ -41,7 +41,7 @@ class BaseControllerTests(FantasticoUnitTestsCase):
         class NewControllerTestingNested(BaseController):
             '''This is just a simple controller used for testing purposes.'''
             
-            @controller_decorators.Controller(url="/unit/tests/base/say-hello", method="GET")
+            @controller_decorators.Controller(url="/unit/tests/base/say-hello", method="GET", conn_manager=Mock())
             def say_hello(self, request):
                 tpl = self.load_template("/say_hello.html")
                 

@@ -16,7 +16,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.test_controller_decorator
 '''
-from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoControllerInvalidError, FantasticoError
+
+from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoControllerInvalidError
 from fantastico.mvc import controller_decorators
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
@@ -36,7 +37,7 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         '''We rebind original Controller decorator to its module.'''
         
         super(ControllerDecoratorTests, cls).setup_once()
-         
+
         controller_decorators.Controller = cls._old_controller_decorator
     
     def test_controller_registration_ok(self):
@@ -84,6 +85,8 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
     def test_controller_model_injection(self):
         '''This test case ensures models required by controllers are correctly injected.'''
         
+        conn_manager = Mock()
+        
         class FakeFacade(object):
             def __init__(self, model_cls, session):
                 self.model_cls = model_cls
@@ -92,7 +95,8 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         @controller_decorators.Controller(url="/simple/controller", method="GET",
             models={"Model1": "fantastico.mvc.tests.test_controller_decorator.Model1",
                     "Model2": "fantastico.mvc.tests.test_controller_decorator.Model2"},
-            model_facade=FakeFacade)
+            model_facade=FakeFacade,
+            conn_manager=conn_manager)
         def do_stuff(request):
             '''This method does nothing. We only check request model injection algorithm.'''
         
@@ -111,7 +115,8 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         '''This test case ensures a fantastico exception is raised when a model is not found.'''
         
         @controller_decorators.Controller(url="/simple/controller", method="GET",
-                    models={"Model1": "fantastico.mvc.tests.test_controller_decorator.ModelNotFound"})
+                    models={"Model1": "fantastico.mvc.tests.test_controller_decorator.ModelNotFound"},
+                    conn_manager=Mock())
         def do_stuff(request):
             pass
         
