@@ -27,7 +27,9 @@ import unittest
 
 class FantasticoBaseTestCase(unittest.TestCase):
     '''This is the base class that must be inherited by each specific test case: Unit tests / Integration tests'''
-    
+
+    FANTASTICO_CFG_OS_KEY = "FANTASTICO_ACTIVE_CONFIG"
+        
     def setUp(self):
         '''We make the convention that setup method will always invoke init method for each test case.'''
         
@@ -135,6 +137,12 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         '''Private property that holds the environments against which we run the integration tests.'''
         
         return self.__envs
+    
+    @property
+    def fantastico_cfg_os_key(self):
+        '''This property holds the name of os environment variable used for setting up active fantastico configuration.'''
+        
+        return self.FANTASTICO_CFG_OS_KEY    
     
     def setUp(self):
         self.__envs = [("fantastico.settings.BasicSettings", BasicSettings),
