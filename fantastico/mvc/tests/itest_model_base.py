@@ -18,6 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
+import uuid
 
 class BaseModelIntegration(FantasticoIntegrationTestCase):
     '''This class provides the test cases that ensures sql alchemy configuration works as expected.'''
@@ -35,9 +36,8 @@ class BaseModelIntegration(FantasticoIntegrationTestCase):
         mvc.init_dm_db_engine(db_config)
         
         self.assertIsNotNone(mvc.BASEMODEL)
-        self.assertIsNotNone(mvc.SESSION)
-        self.assertIsNotNone(mvc.ENGINE)
+        self.assertIsNotNone(mvc.CONN_MANAGER)
         
-        session = mvc.SESSION()
+        session = mvc.CONN_MANAGER.get_connection(uuid.uuid4())
         
         session.execute("SELECT 1")

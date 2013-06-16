@@ -37,7 +37,11 @@ class DbSessionManager(object):
             self.engine = engine 
         
     def __init__(self, db_config, echo=False, create_engine_fn=None, create_session_fn=None):
-        self._conn_props = self._build_conn_props(db_config)
+        try:
+            self._conn_props = self._build_conn_props(db_config)
+        except Exception as ex:
+            raise FantasticoError(ex)
+        
         self._echo = echo
         self._create_engine_fn = create_engine_fn
         self._create_session_fn = create_session_fn
