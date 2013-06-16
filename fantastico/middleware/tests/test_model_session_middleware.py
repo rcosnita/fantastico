@@ -20,8 +20,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico import mvc
 from fantastico.exceptions import FantasticoError
 from fantastico.middleware.model_session_middleware import ModelSessionMiddleware
+from fantastico.mvc import DbSessionManager
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
+import uuid
 
 class ModelSessionMiddlewareTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for db session manager.'''
@@ -33,8 +35,8 @@ class ModelSessionMiddlewareTests(FantasticoUnitTestsCase):
         self._environ = {}
         self._app = Mock(return_value=self._normal_response)
         self._middleware = ModelSessionMiddleware(self._app, self._settings_facade_cls)
-        mvc.ENGINE = None
-        mvc.SESSION = None
+
+        mvc.CONN_MANAGER = None
 
     def _get_db_config(self, key):
         '''This method is used to return a valid db mocked config.'''
@@ -61,18 +63,18 @@ class ModelSessionMiddlewareTests(FantasticoUnitTestsCase):
         session = Mock()
         create_session = Mock(return_value=session)
 
-        self.assertIsNone(mvc.ENGINE)
-        self.assertIsNone(mvc.SESSION)
+        self.assertIsNone(mvc.CONN_MANAGER)
                 
         response = self._middleware(self._environ, Mock(), create_engine=create_engine, 
                                     create_session=create_session)
         
         self.assertEqual(self._normal_response, response)
-        self.assertEqual(engine, mvc.ENGINE)
-        self.assertEqual(session, mvc.SESSION)
+        self.assertIsInstance(mvc.CONN_MANAGER, DbSessionManager)
 
     def test_init_session_scoped_cache(self):
         '''This test case ensures a session is cached correctly across multiple requests.'''
+        
+        request_id = 1
         
         self._settings_facade.get = self._get_db_config
         
@@ -82,38 +84,38 @@ class ModelSessionMiddlewareTests(FantasticoUnitTestsCase):
         session = Mock()
         create_session = Mock(return_value=session)
 
-        self.assertIsNone(mvc.ENGINE)
-        self.assertIsNone(mvc.SESSION)
+        self.assertIsNone(mvc.CONN_MANAGER)
                 
         response = self._middleware(self._environ, Mock(), create_engine=create_engine, 
                                     create_session=create_session)
         
         self.assertEqual(self._normal_response, response)
-        self.assertEqual(engine, mvc.ENGINE)
-        self.assertEqual(session, mvc.SESSION)
+        self.assertIsInstance(mvc.CONN_MANAGER, DbSessionManager)
+        self.assertEqual(session, mvc.CONN_MANAGER.get_connection(request_id))
         
         response = self._middleware(self._environ, Mock(), create_engine=create_engine, 
                             create_session=create_session)
 
         self.assertEqual(self._normal_response, response)
-        self.assertEqual(engine, mvc.ENGINE)
-        self.assertEqual(session, mvc.SESSION)
+        self.assertIsInstance(mvc.CONN_MANAGER, DbSessionManager)
+        self.assertEqual(session, mvc.CONN_MANAGER.get_connection(request_id))
     
     def test_session_init_exception_unhandled(self):
         '''This test case ensures unhandled exception raised during initialization are gracefully transformed
         to fantastico errors.'''
 
-        self.assertIsNone(mvc.ENGINE)
-        self.assertIsNone(mvc.SESSION)
+        self.assertIsNone(mvc.CONN_MANAGER)
 
         with self.assertRaises(FantasticoError):
             self._middleware(self._environ, Mock())
+        
+        self.assertIsNone(mvc.CONN_MANAGER)
         
         self._settings_facade.get = self._get_db_config
         create_session = Mock(side_effect=Exception("Unhandled exception"))
         
         with self.assertRaises(FantasticoError):
             self._middleware(self._environ, Mock(), create_engine=Mock(), create_session=create_session)
+            mvc.CONN_MANAGER.get_connection(uuid.uuid4())
         
-        self.assertIsNone(mvc.ENGINE)
-        self.assertIsNone(mvc.SESSION)
+        self.assertIsNotNone(mvc.CONN_MANAGER)

@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.middleware.model_session_middleware
 '''
+from fantastico.exceptions import FantasticoError
 from fantastico import mvc
 from fantastico.settings import SettingsFacade
 
@@ -37,5 +38,5 @@ class ModelSessionMiddleware(object):
         
         mvc.init_dm_db_engine(db_config, echo=db_config.get("show_sql", False),
                               create_engine_fn=create_engine, create_session_fn=create_session)
-                
+
         return self._app(environ, start_response)

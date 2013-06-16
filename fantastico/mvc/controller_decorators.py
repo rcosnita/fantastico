@@ -94,7 +94,7 @@ class Controller(object):
         
         return self._fn_handler
     
-    def __init__(self, url, method="GET", models=None, model_facade=ModelFacade):
+    def __init__(self, url, method="GET", models=None, model_facade=ModelFacade, conn_manager=None):
         self._url = url
         self._method = None
                 
@@ -110,6 +110,7 @@ class Controller(object):
             
         self._models = models
         self._model_facade = model_facade
+        self._conn_manager = conn_manager
         
         self._fn_handler = None
     
@@ -158,7 +159,8 @@ class Controller(object):
             except IndexError as ex:
                 raise FantasticoControllerInvalidError(ex)
             
-            self._inject_models(request, mvc.SESSION)
+            conn_manager = self._conn_manager or mvc.CONN_MANAGER
+            self._inject_models(request, conn_manager.get_connection(request.request_id))
             
             return orig_fn(*args, **kwargs)
         

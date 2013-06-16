@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from mock import Mock
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String
 from webob.response import Response
@@ -38,7 +39,7 @@ class File(BASEMODEL):
 class RoutesForControllerTesting(BaseController):
     '''This class defines two methods as Controllers.'''
     
-    @Controller(url="/say_hello", method="GET")
+    @Controller(url="/say_hello", method="GET", conn_manager=Mock())
     def say_hello(self, request):
         response = Response()
         response.text = "Hello world."
@@ -46,7 +47,8 @@ class RoutesForControllerTesting(BaseController):
         return response
     
     @Controller(url="/upload_file", method=["POST"], 
-                models={"File": "fantastico.mvc.tests.routes_for_testing.File"})
+                models={"File": "fantastico.mvc.tests.routes_for_testing.File"},
+                conn_manager=Mock())
     def upload_file(self, request):
         response = Response()
         response.text = "Hello world."
