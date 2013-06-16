@@ -94,7 +94,7 @@ class Controller(object):
         
         return self._fn_handler
     
-    def __init__(self, url, method="GET", models=None, model_facade=ModelFacade, conn_manager=None):
+    def __init__(self, url, method="GET", models=None, **kwargs):
         self._url = url
         self._method = None
                 
@@ -109,8 +109,8 @@ class Controller(object):
             models = {}
             
         self._models = models
-        self._model_facade = model_facade
-        self._conn_manager = conn_manager
+        self._model_facade = kwargs.get("model_facade", ModelFacade)
+        self._conn_manager = kwargs.get("conn_manager")
         
         self._fn_handler = None
     
