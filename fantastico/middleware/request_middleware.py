@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.middleware.request_response
 '''
+from fantastico import mvc
 from fantastico.locale.language import Language
 from fantastico.middleware.request_context import RequestContext
 from fantastico.settings import SettingsFacade
@@ -76,4 +77,8 @@ class RequestMiddleware(object):
         environ["fantastico.current_request_id"] = request.request_id
         environ["fantastico.request"] = request 
         
-        return self._app(environ, start_response)
+        try:
+            return self._app(environ, start_response)
+        finally:
+            if mvc.CONN_MANAGER:
+                mvc.CONN_MANAGER.close_connection(request.request_id)
