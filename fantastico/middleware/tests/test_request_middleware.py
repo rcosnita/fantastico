@@ -53,11 +53,14 @@ class RequestMiddlewareTests(FantasticoUnitTestsCase):
     def test_convert_request_ok(self):
         '''Test case that ensuring that request conversion works as expected.'''
                 
-        self._middleware(self._environ, self._start_response)
+        uuid_generator = lambda: 1
+        
+        self._middleware(self._environ, self._start_response, uuid_generator=uuid_generator)
         
         request = self._environ.get("fantastico.request")
         
         self.assertIsNotNone(request)
+        self.assertEqual(1, request.request_id)
         self.assertEqual("GET", request.method)
         self.assertEqual("http", request.scheme)
         self.assertEqual("", request.script_name)

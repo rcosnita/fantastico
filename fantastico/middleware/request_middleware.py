@@ -21,10 +21,12 @@ from fantastico.locale.language import Language
 from fantastico.middleware.request_context import RequestContext
 from fantastico.settings import SettingsFacade
 from webob.request import Request
+import uuid
 
 class RequestMiddleware(object):
     '''This class provides the middleware responsible for converting wsgi environ dictionary into a request. The result is saved
-    into current WSGI environ under key **fantastico.request**.'''
+    into current WSGI environ under key **fantastico.request**. In addition each new request receives an identifier. If subsequent
+    requests are triggered from that request then they will also receive the same request id.'''
     
     def __init__(self, app):
         self._app = app
@@ -62,10 +64,16 @@ class RequestMiddleware(object):
                 
         return Language(supported_languages[0])        
                 
-    def __call__(self, environ, start_response):
+    def __call__(self, environ, start_response, uuid_generator=uuid.uuid4):
         request = Request(environ)
         self._build_context(request)
         
+        request.request_id = environ.get("fantastico.current_request_id")
+        
+        if not request.request_id:
+            request.request_id = uuid_generator()
+            
+        environ["fantastico.current_request_id"] = request.request_id
         environ["fantastico.request"] = request 
         
         return self._app(environ, start_response)
