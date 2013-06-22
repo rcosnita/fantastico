@@ -83,7 +83,7 @@ class RequestMiddleware(object):
         request.redirect = self._redirect                                
             
         environ["fantastico.current_request_id"] = request.request_id
-        environ["fantastico.request"] = request        
+        environ["fantastico.request"] = request
         
         try:
             return self._app(environ, start_response)
