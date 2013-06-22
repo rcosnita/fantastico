@@ -36,9 +36,10 @@ class RedirectResponse(Response):
         @Controller(url="/redirect/example")
         def redirect_to_google(self, request):
             return request.redirect("http://www.google.ro/search", 
-                                    query_params=[("q", "where can I find a restaurant")])
+                                    query_params=[("q", "hello world")])
     
-    The above example will redirect client browser to `http://www.google.ro/search?q=where can I find a restaurant <http://www.google.ro/search?q=where can I find a restaurant>`_'''
+    The above example will redirect client browser to 
+    `http://www.google.ro/search?q=hello world <http://www.google.ro/search?q=hello world>`_'''
     
     def __init__(self, destination, query_params=None):
         if destination is None or len(destination.strip()) == 0:
