@@ -20,6 +20,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico import mvc
 from fantastico.locale.language import Language
 from fantastico.middleware.request_context import RequestContext
+from fantastico.routing_engine.custom_responses import RedirectResponse
 from fantastico.settings import SettingsFacade
 from webob.request import Request
 import uuid
@@ -74,8 +75,11 @@ class RequestMiddleware(object):
         if not request.request_id:
             request.request_id = uuid_generator()
             
+        request.redirect = lambda destination, query_params=None: RedirectResponse(destination=destination, 
+                                                                                   query_params=query_params)
+            
         environ["fantastico.current_request_id"] = request.request_id
-        environ["fantastico.request"] = request 
+        environ["fantastico.request"] = request        
         
         try:
             return self._app(environ, start_response)
