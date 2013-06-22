@@ -65,7 +65,12 @@ class RequestMiddleware(object):
                     return Language(lang_supported)
                 
         return Language(supported_languages[0])        
-                
+    
+    def _redirect(self, destination, query_params=None):
+        '''This method is used to build a redirect response base on the given arguments.'''
+        
+        return RedirectResponse(destination=destination, query_params=query_params)
+     
     def __call__(self, environ, start_response, uuid_generator=uuid.uuid4):
         request = Request(environ)
         self._build_context(request)
@@ -74,9 +79,8 @@ class RequestMiddleware(object):
         
         if not request.request_id:
             request.request_id = uuid_generator()
-            
-        request.redirect = lambda destination, query_params=None: RedirectResponse(destination=destination, 
-                                                                                   query_params=query_params)
+         
+        request.redirect = self._redirect                                
             
         environ["fantastico.current_request_id"] = request.request_id
         environ["fantastico.request"] = request        
