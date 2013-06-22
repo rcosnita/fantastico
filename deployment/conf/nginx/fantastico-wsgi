@@ -19,6 +19,7 @@ server {
 
 	# Make site accessible from http://{{vhost_name}}/
 	server_name {{vhost_name}};
+	server_name www.{{vhost_name}};
 
 	set $modules_holder {{modules_folder}};
 	
