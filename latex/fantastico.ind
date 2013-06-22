@@ -139,6 +139,7 @@
 
   \indexspace
   \bigletter R
+  \item RedirectResponse (class in fantastico.routing\_engine.custom\_responses), \hyperpage{14}
   \item ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{24}
   \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
   \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{13}

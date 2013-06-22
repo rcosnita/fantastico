@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.routing_engine.custom_responses</title>
+    
+    <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.1.2-b88 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.routing_engine.custom_responses</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.routing_engine.custom_responses</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoError</span>
+<span class="kn">from</span> <span class="nn">webob.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
+<div class="viewcode-block" id="RedirectResponse"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.routing_engine.custom_responses.RedirectResponse">[docs]</a><span class="k">class</span> <span class="nc">RedirectResponse</span><span class="p">(</span><span class="n">Response</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class encapsulates the logic for programatically redirecting client from a fantastico controller.</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">    </span>
+<span class="sd">        @Controller(url=&quot;/redirect/example&quot;)</span>
+<span class="sd">        def redirect_to_google(self, request):</span>
+<span class="sd">            return request.redirect(&quot;http://www.google.ro/&quot;)</span>
+<span class="sd">    </span>
+<span class="sd">    There are some special cases when you would like to pass some query parameters to redirect destination. This is also easily</span>
+<span class="sd">    achievable in Fantastico:</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">    </span>
+<span class="sd">        @Controller(url=&quot;/redirect/example&quot;)</span>
+<span class="sd">        def redirect_to_google(self, request):</span>
+<span class="sd">            return request.redirect(&quot;http://www.google.ro/search&quot;, </span>
+<span class="sd">                                    query_params=[(&quot;q&quot;, &quot;hello world&quot;)])</span>
+<span class="sd">    </span>
+<span class="sd">    The above example will redirect client browser to </span>
+<span class="sd">    `http://www.google.ro/search?q=hello world &lt;http://www.google.ro/search?q=hello world&gt;`_&#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">query_params</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">destination</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">destination</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoError</span><span class="p">(</span><span class="s">&quot;You can not build a redirect response without a valid destination.&quot;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_destination</span> <span class="o">=</span> <span class="n">destination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_query_params</span> <span class="o">=</span> <span class="n">query_params</span> <span class="ow">or</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_build_destination</span><span class="p">()</span>
+        
+        <span class="nb">super</span><span class="p">(</span><span class="n">RedirectResponse</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">301</span><span class="p">,</span> 
+                                               <span class="n">headerlist</span><span class="o">=</span><span class="p">[(</span><span class="s">&quot;Location&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_destination</span><span class="p">),</span>
+                                                           <span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s">&quot;text/html&quot;</span><span class="p">)],</span> 
+                                               <span class="n">content_type</span> <span class="o">=</span> <span class="s">&quot;text/html&quot;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_build_destination</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to append the given query params to the base destination.&#39;&#39;&#39;</span>
+        
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_params</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
+            <span class="k">return</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_destination</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">?</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_destination</span><span class="p">,</span> <span class="s">&quot;&amp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">params</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

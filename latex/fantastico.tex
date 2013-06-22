@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{June 16, 2013}
-\release{0.1.1-b87}
+\date{June 22, 2013}
+\release{0.1.2-b88}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -752,7 +752,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4ae4408\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x54a8a68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1079,6 +1079,38 @@ configuration and accessing attributes from it.
 \end{Verbatim}
 
 For more information about how to configure \textbf{Fantastico} please read {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
+
+
+\subsection{Redirect using request}
+\label{features/request_response:redirect-using-request}
+In Fantastico is fairly simply to redirect client to a given location.
+\index{RedirectResponse (class in fantastico.routing\_engine.custom\_responses)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/request_response:fantastico.routing_engine.custom_responses.RedirectResponse}\pysiglinewithargsret{\strong{class }\code{fantastico.routing\_engine.custom\_responses.}\bfcode{RedirectResponse}}{\emph{destination}, \emph{query\_params=None}}{}
+This class encapsulates the logic for programatically redirecting client from a fantastico controller.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/redirect/example}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf}{redirect\PYGZus{}to\PYGZus{}google}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{n}{request}\PYG{o}{.}\PYG{n}{redirect}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http://www.google.ro/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}
+
+There are some special cases when you would like to pass some query parameters to redirect destination. This is also easily
+achievable in Fantastico:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/redirect/example}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf}{redirect\PYGZus{}to\PYGZus{}google}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{return} \PYG{n}{request}\PYG{o}{.}\PYG{n}{redirect}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http://www.google.ro/search}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} 
+                            \PYG{n}{query\PYGZus{}params}\PYG{o}{=}\PYG{p}{[}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{q}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{hello world}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+\end{Verbatim}
+
+The above example will redirect client browser to 
+\href{http://www.google.ro/search?q=helloworld}{http://www.google.ro/search?q=hello world}
+
+\end{fulllineitems}
+
 
 
 \section{Routing engine}
@@ -1764,7 +1796,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1c4b408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2716408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2644,6 +2676,36 @@ Be aware that first you need an nginx configured and your project config file de
 
 \chapter{Changes}
 \label{changes:changes}\label{changes::doc}\begin{itemize}
+\item {} \begin{description}
+\item[{v0.2.0}] \leavevmode\begin{itemize}
+\item {} 
+Dynamic pages component for reading routes from database (useful in many web site scenarios).
+
+\item {} 
+Provide sample file for monit integration (keep alive checks).
+
+\item {} 
+How to configure an EC2 / Ubuntu OS production environment for hosting fantastico projects.
+
+\item {} 
+Inline component rendering
+
+\end{itemize}
+
+\end{description}
+
+\item {} \begin{description}
+\item[{v0.1.2}] \leavevmode\begin{itemize}
+\item {} 
+Nginx config file now also maps www.\textless{}vhost\_name\textgreater{}
+
+\item {} 
+Redirect support from controllers
+
+\end{itemize}
+
+\end{description}
+
 \item {} \begin{description}
 \item[{v0.1.1}] \leavevmode\begin{itemize}
 \item {} 

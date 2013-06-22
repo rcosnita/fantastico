@@ -50,6 +50,7 @@
 \indexentry{settings (fantastico.middleware.request\_context.RequestContext attribute)|hyperpage}{13}
 \indexentry{Language (class in fantastico.locale.language)|hyperpage}{14}
 \indexentry{code (fantastico.locale.language.Language attribute)|hyperpage}{14}
+\indexentry{RedirectResponse (class in fantastico.routing\_engine.custom\_responses)|hyperpage}{14}
 \indexentry{Router (class in fantastico.routing\_engine.router)|hyperpage}{15}
 \indexentry{get\_loaders() (fantastico.routing\_engine.router.Router method)|hyperpage}{15}
 \indexentry{handle\_route() (fantastico.routing\_engine.router.Router method)|hyperpage}{15}
