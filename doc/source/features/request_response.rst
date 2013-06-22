@@ -59,3 +59,11 @@ configuration and accessing attributes from it.
    print(installed_middleware)
 
 For more information about how to configure **Fantastico** please read :doc:`/get_started/settings`.
+
+Redirect using request
+----------------------
+
+In Fantastico is fairly simply to redirect client to a given location.
+
+.. autoclass:: fantastico.routing_engine.custom_responses.RedirectResponse
+   :members:   

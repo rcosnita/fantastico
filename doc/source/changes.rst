@@ -1,6 +1,16 @@
 Changes
 =======
 
+* v0.2.0
+   * Dynamic pages component for reading routes from database (useful in many web site scenarios).
+   * Provide sample file for monit integration (keep alive checks).
+   * How to configure an EC2 / Ubuntu OS production environment for hosting fantastico projects.
+   * Inline component rendering
+   
+* v0.1.2
+   * Nginx config file now also maps www.<vhost_name>
+   * Redirect support from controllers
+
 * v0.1.1
    * Favicon route handling.
    * Deployment scripts error handling and root folder execution (rather than execution only for deployment subfolder).
