@@ -23,6 +23,7 @@ from fantastico.settings import BasicSettings
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 import os
+from fantastico.routing_engine.custom_responses import RedirectResponse
 
 
 class RequestMiddlewareTests(FantasticoUnitTestsCase):
@@ -151,3 +152,13 @@ class RequestMiddlewareTests(FantasticoUnitTestsCase):
             self._middleware(self._environ, self._start_response)
         
         self.assertEqual("Connection closed.", str(cm.exception))
+    
+    def test_redirect_appended(self):
+        '''This test case ensures redirect method is correctly appended to the current request.'''
+        
+        self._middleware(self._environ, self._start_response)
+        
+        request = self._environ.get("fantastico.request")
+        
+        self.assertIsNotNone(request)
+        self.assertIsInstance(request.redirect("/simple/test"), RedirectResponse)

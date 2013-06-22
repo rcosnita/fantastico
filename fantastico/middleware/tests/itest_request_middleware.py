@@ -20,6 +20,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.middleware.request_middleware import RequestMiddleware
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
+from fantastico.routing_engine.custom_responses import RedirectResponse
 
 class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
     '''Test suite that ensures requqest middleware is working properly into it's native running environment (no mocked essential
@@ -65,5 +66,24 @@ class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
             self.assertEqual(settings_cls().supported_languages, request.context.settings.get("supported_languages"))
             
             self.assertEqual("en_us", request.context.language.code)
+        
+        self._run_test_all_envs(exec_test)
+    
+    def test_redirect_ok(self):
+        '''This test case ensures request redirection works as expected.'''
+        
+        def exec_test(env, settings_cls):
+            self._middleware(self._environ, Mock())
+            
+            request = self._environ.get("fantastico.request")
+            
+            self.assertIsNotNone(request)
+            
+            response = request.redirect("/test/url", [("p1", "hello"), ("p2", "world")])
+            
+            self.assertIsNotNone(response)
+            self.assertIsInstance(response, RedirectResponse)
+            self.assertEqual(301, response.status_code)
+            self.assertEqual("/test/url?p1=hello&p2=world", response.headers["Location"])
         
         self._run_test_all_envs(exec_test)

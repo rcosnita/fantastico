@@ -38,7 +38,7 @@ class RedirectResponse(Response):
             return request.redirect("http://www.google.ro/search", 
                                     query_params=[("q", "where can I find a restaurant")])
     
-    The above example will redirect client browser to http://wwww.google.ro/search?q=where can I find a restaurant'''
+    The above example will redirect client browser to `http://www.google.ro/search?q=where can I find a restaurant <http://www.google.ro/search?q=where can I find a restaurant>`_'''
     
     def __init__(self, destination, query_params=None):
         if destination is None or len(destination.strip()) == 0:
