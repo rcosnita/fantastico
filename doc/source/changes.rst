@@ -1,10 +1,5 @@
 Changes
 =======
-
-* v0.2.0
-   * Provide sample file for monit integration (keep alive checks).
-   * How to configure an EC2 / Ubuntu OS production environment for hosting fantastico projects.
-   * Inline component rendering in pages / template markup
    
 * v0.1.2
    * Nginx config file now also maps www.<vhost_name>
