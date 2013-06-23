@@ -9,7 +9,7 @@ Changes
 * v0.1.2
    * Nginx config file now also maps www.<vhost_name>
    * Redirect support from controllers
-   * Dynamic pages component for reading routes from database (useful in many web site scenarios).   
+   * Setup fantastico framework script does not override deployment files anymore       
 
 * v0.1.1
    * Favicon route handling.
