@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{June 22, 2013}
-\release{0.1.2-b89}
+\date{June 23, 2013}
+\release{0.1.2-b90}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -752,7 +752,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5320a68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5498a68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1796,7 +1796,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x258c408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2706408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2677,21 +2677,6 @@ Be aware that first you need an nginx configured and your project config file de
 \chapter{Changes}
 \label{changes:changes}\label{changes::doc}\begin{itemize}
 \item {} \begin{description}
-\item[{v0.2.0}] \leavevmode\begin{itemize}
-\item {} 
-Provide sample file for monit integration (keep alive checks).
-
-\item {} 
-How to configure an EC2 / Ubuntu OS production environment for hosting fantastico projects.
-
-\item {} 
-Inline component rendering in pages / template markup
-
-\end{itemize}
-
-\end{description}
-
-\item {} \begin{description}
 \item[{v0.1.2}] \leavevmode\begin{itemize}
 \item {} 
 Nginx config file now also maps www.\textless{}vhost\_name\textgreater{}
@@ -2700,7 +2685,7 @@ Nginx config file now also maps www.\textless{}vhost\_name\textgreater{}
 Redirect support from controllers
 
 \item {} 
-Dynamic pages component for reading routes from database (useful in many web site scenarios).
+Setup fantastico framework script does not override deployment files anymore
 
 \end{itemize}
 
