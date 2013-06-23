@@ -45,8 +45,7 @@ if [ ! -d deployment ]; then
 	mkdir deployment
 	cp -R pip-deps/scripts/fantastico/deployment/conf deployment/
 else
-	echo "Overwritting nginx vhost template file with the lastest version."
-	cp -f pip-deps/scripts/fantastico/deployment/conf/nginx/fantastico-wsgi deployment/conf/nginx/fantastico-wsgi
+	echo "Not overwritting deployment files."
 fi
 
 if [ ! -d $PROJECT_NAME ]; then
