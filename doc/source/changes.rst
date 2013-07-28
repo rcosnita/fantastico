@@ -1,6 +1,11 @@
 Changes
 =======
-   
+
+* v0.2.0
+   * Framework documentation is tracked using Google Analytics
+   * Component reusage is done using {% component %} tag.
+   * Dynamic menu pluggable component can be used out of the box.
+
 * v0.1.2
    * Nginx config file now also maps www.<vhost_name>
    * Redirect support from controllers
