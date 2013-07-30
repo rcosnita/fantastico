@@ -9,3 +9,4 @@ Fantastico features
    routing_engine
    mvc
    component_model
+   component_reusage
