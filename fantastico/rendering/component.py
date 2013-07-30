@@ -55,7 +55,7 @@ class Component(object):
     .. code-block:: html
     
         <!-- web service server side reusage -->
-        {% component url="/blog/articles/1", template="/show_blog_formatted.html" %}{% endcomponent %}
+        {% component url="/blog/articles/1", template="/show_blog_formatted.html", runtime="server" %}{% endcomponent %}
     
     .. code-block:: html
         
@@ -71,5 +71,12 @@ class Component(object):
     .. code-block:: html
     
         <!-- html server side reusage -->
-        {% component url="/blog/ui/articles/1" %}{% endcomponent %}
+        {% component url="/blog/ui/articles/1",runtime="server" %}{% endcomponent %}
+    
+    Runtime attribute is used for telling Fantastico if the rendering needs to take place on server side or on client. Currently,
+    only server side rendering is supported which actually means a page will be completed rendered on server and then the markup
+    is sent to the browser.
+    
+    In order to avoid reduce the required attributes for component tag, runtime attribute is optional with server as default
+    value.
     '''
