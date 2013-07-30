@@ -45,6 +45,7 @@
 \contentsline {subsection}{\numberline {3.5.1}Static folder}{26}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Sql folder}{26}{subsection.3.5.2}
 \contentsline {subsubsection}{Sql folder example}{26}{subsubsection*.108}
+\contentsline {section}{\numberline {3.6}Component reusage}{27}{section.3.6}
 \contentsline {chapter}{\numberline {4}How to articles}{29}{chapter.4}
 \contentsline {section}{\numberline {4.1}MVC How to}{29}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Code the model}{29}{subsection.4.1.1}
@@ -53,14 +54,14 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{30}{subsection.4.1.4}
 \contentsline {section}{\numberline {4.2}Deployment how to}{30}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{31}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{32}{subsubsection*.109}
+\contentsline {subsubsection}{Setup}{32}{subsubsection*.110}
 \contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{32}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{33}{subsubsection*.110}
-\contentsline {subsubsection}{Optimization}{33}{subsubsection*.111}
-\contentsline {subsubsection}{Setup with S3}{34}{subsubsection*.112}
+\contentsline {subsubsection}{Setup}{33}{subsubsection*.111}
+\contentsline {subsubsection}{Optimization}{33}{subsubsection*.112}
+\contentsline {subsubsection}{Setup with S3}{34}{subsubsection*.113}
 \contentsline {section}{\numberline {4.3}Static assets}{34}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{34}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{35}{subsubsection*.113}
+\contentsline {subsubsection}{Favicon}{35}{subsubsection*.114}
 \contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{35}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Creating a new project}{35}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Create first component}{35}{subsection.4.4.1}
@@ -69,4 +70,4 @@
 \contentsline {chapter}{\numberline {5}Changes}{37}{chapter.5}
 \contentsline {chapter}{\numberline {6}Build status}{39}{chapter.6}
 \contentsline {chapter}{\numberline {7}License}{41}{chapter.7}
-\contentsline {chapter}{Index}{43}{section*.114}
+\contentsline {chapter}{Index}{43}{section*.115}

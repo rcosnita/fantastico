@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{July 28, 2013}
-\release{0.2.0-b92}
+\date{July 30, 2013}
+\release{0.2.0-b93}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -752,7 +752,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x404ba68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4a9aa68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1796,7 +1796,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x12b8408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1ca6408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2122,6 +2122,81 @@ An example of such a script we use in integration tests can be found under: \tex
    \PYG{n}{Message} \PYG{n+nb}{TEXT}\PYG{p}{,}
    \PYG{k}{PRIMARY} \PYG{k}{KEY}\PYG{p}{(}\PYG{n}{id}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
 \end{Verbatim}
+
+
+\section{Component reusage}
+\label{features/component_reusage::doc}\label{features/component_reusage:component-reusage}\index{Component (class in fantastico.rendering.component)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component}\pysigline{\strong{class }\code{fantastico.rendering.component.}\bfcode{Component}}
+In fantastico, components are defined as a collection of classes and scripts grouped together as described in 
+{\hyperref[features/component_model::doc]{\emph{Component model}}}. Each fantastico component provides one or more public routes that can be accessed from
+a browser or from other components. This class provides the mechanism for internal component referencing.
+
+In order to gain a better understanding about internal / in process component referencing we assume \textbf{Blog} component 
+provides the following public routes:
+\begin{itemize}
+\item {} 
+\textbf{/blog/articles/\textless{}article\_id\textgreater{}} - Retrieves information about an article.
+
+\item {} 
+\textbf{/blog/ui/articles/\textless{}article\_id\textgreater{}} - Displays an article within a html container.
+
+\end{itemize}
+
+The first url is a simple json endpoint while the second url is a simple html dynamic page. When we want to reuse a
+datasource or an dynamic html page in fantastico is extremely easy to achieve. Lets first see possible responses from the
+above mentioned endpoints:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/* /blog/articles/\PYGZlt{}article\PYGZus{}id\PYGZgt{} response */}
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}title\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Simple blog article\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}content\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}This is a simple and easy to read blog article.\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}}\PYG{c}{ /blog/ui/articles/\PYGZlt{}article\PYGZus{}id\PYGZgt{} response}\PYG{c}{\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+
+\PYG{n+nt}{\PYGZlt{}div} \PYG{n+na}{class=}\PYG{l+s}{\PYGZdq{}blog\PYGZhy{}article\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+    \PYG{n+nt}{\PYGZlt{}p} \PYG{n+na}{class=}\PYG{l+s}{\PYGZdq{}title\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}Simple blog article\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+    
+    \PYG{n+nt}{\PYGZlt{}p} \PYG{n+na}{class=}\PYG{l+s}{\PYGZdq{}content\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}This is a simple and easy to read blog article.\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}/div\PYGZgt{}}
+\end{Verbatim}
+
+A very common scenario is to create multiple views for a given endpoint.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}}\PYG{c}{ web service server side reusage }\PYG{c}{\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYGZob{}\PYGZpc{} component url=\PYGZdq{}/blog/articles/1\PYGZdq{}, template=\PYGZdq{}/show\PYGZus{}blog\PYGZus{}formatted.html\PYGZdq{}, runtime=\PYGZdq{}server\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}}\PYG{c}{ show\PYGZus{}blog\PYGZus{}formatted.html }\PYG{c}{\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}p} \PYG{n+na}{class=}\PYG{l+s}{\PYGZdq{}blog\PYGZhy{}title\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}model.title\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}p} \PYG{n+na}{class=}\PYG{l+s}{\PYGZdq{}blog\PYGZhy{}content\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}model.content\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\end{Verbatim}
+
+As you can see, json response is plugged into a given template name. It is mandatory that the given template exists on the
+component root path.
+
+Also a very common scenario is to include an endpoint that renders partial html into a page:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}}\PYG{c}{ html server side reusage }\PYG{c}{\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYGZob{}\PYGZpc{} component url=\PYGZdq{}/blog/ui/articles/1\PYGZdq{},runtime=\PYGZdq{}server\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
+\end{Verbatim}
+
+Runtime attribute is used for telling Fantastico if the rendering needs to take place on server side or on client. Currently,
+only server side rendering is supported which actually means a page will be completed rendered on server and then the markup
+is sent to the browser.
+
+In order to avoid reduce the required attributes for component tag, runtime attribute is optional with server as default
+value.
+
+\end{fulllineitems}
+
 
 
 \chapter{How to articles}

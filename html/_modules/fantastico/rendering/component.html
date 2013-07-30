@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.rendering.component &mdash; fantastico 0.2.0-b93 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2.0-b93',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.2.0-b93 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.rendering.component</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+
+<span class="sd">.. py:module:: fantastico.rendering.component</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="Component"><a class="viewcode-back" href="../../../features/component_reusage.html#fantastico.rendering.component.Component">[docs]</a><span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;In fantastico, components are defined as a collection of classes and scripts grouped together as described in </span>
+<span class="sd">    :doc:`/features/component_model`. Each fantastico component provides one or more public routes that can be accessed from</span>
+<span class="sd">    a browser or from other components. This class provides the mechanism for internal component referencing.</span>
+<span class="sd">    </span>
+<span class="sd">    In order to gain a better understanding about internal / in process component referencing we assume **Blog** component </span>
+<span class="sd">    provides the following public routes:</span>
+<span class="sd">    </span>
+<span class="sd">        * **/blog/articles/&lt;article_id&gt;** - Retrieves information about an article.</span>
+<span class="sd">        * **/blog/ui/articles/&lt;article_id&gt;** - Displays an article within a html container.</span>
+<span class="sd">    </span>
+<span class="sd">    The first url is a simple json endpoint while the second url is a simple html dynamic page. When we want to reuse a</span>
+<span class="sd">    datasource or an dynamic html page in fantastico is extremely easy to achieve. Lets first see possible responses from the</span>
+<span class="sd">    above mentioned endpoints: </span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: javascript</span>
+<span class="sd">        </span>
+<span class="sd">        /* /blog/articles/&lt;article_id&gt; response */</span>
+<span class="sd">        {&quot;id&quot;: 1,</span>
+<span class="sd">         &quot;title&quot;: &quot;Simple blog article&quot;,</span>
+<span class="sd">         &quot;content&quot;: &quot;This is a simple and easy to read blog article.&quot;}</span>
+<span class="sd">         </span>
+<span class="sd">    .. code-block:: html</span>
+<span class="sd">    </span>
+<span class="sd">        &lt;!-- /blog/ui/articles/&lt;article_id&gt; response--&gt;</span>
+<span class="sd">        </span>
+<span class="sd">        &lt;div class=&quot;blog-article&quot;&gt;</span>
+<span class="sd">            &lt;p class=&quot;title&quot;&gt;Simple blog article&lt;/p&gt;</span>
+<span class="sd">            </span>
+<span class="sd">            &lt;p class=&quot;content&quot;&gt;This is a simple and easy to read blog article.&lt;/p&gt;</span>
+<span class="sd">        &lt;/div&gt;</span>
+<span class="sd">    </span>
+<span class="sd">    A very common scenario is to create multiple views for a given endpoint.</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: html</span>
+<span class="sd">    </span>
+<span class="sd">        &lt;!-- web service server side reusage --&gt;</span>
+<span class="sd">        {% component url=&quot;/blog/articles/1&quot;, template=&quot;/show_blog_formatted.html&quot;, runtime=&quot;server&quot; %}{% endcomponent %}</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: html</span>
+<span class="sd">        </span>
+<span class="sd">        &lt;!-- show_blog_formatted.html --&gt;</span>
+<span class="sd">        &lt;p class=&quot;blog-title&quot;&gt;{{model.title}}&lt;/p&gt;</span>
+<span class="sd">        &lt;p class=&quot;blog-content&quot;&gt;{{model.content}}&lt;/p&gt;</span>
+<span class="sd">        </span>
+<span class="sd">    As you can see, json response is plugged into a given template name. It is mandatory that the given template exists on the</span>
+<span class="sd">    component root path.</span>
+<span class="sd">    </span>
+<span class="sd">    Also a very common scenario is to include an endpoint that renders partial html into a page:</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: html</span>
+<span class="sd">    </span>
+<span class="sd">        &lt;!-- html server side reusage --&gt;</span>
+<span class="sd">        {% component url=&quot;/blog/ui/articles/1&quot;,runtime=&quot;server&quot; %}{% endcomponent %}</span>
+<span class="sd">    </span>
+<span class="sd">    Runtime attribute is used for telling Fantastico if the rendering needs to take place on server side or on client. Currently,</span>
+<span class="sd">    only server side rendering is supported which actually means a page will be completed rendered on server and then the markup</span>
+<span class="sd">    is sent to the browser.</span>
+<span class="sd">    </span>
+<span class="sd">    In order to avoid reduce the required attributes for component tag, runtime attribute is optional with server as default</span>
+<span class="sd">    value.</span>
+<span class="sd">    &#39;&#39;&#39;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

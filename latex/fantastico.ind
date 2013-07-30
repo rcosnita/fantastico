@@ -34,6 +34,7 @@
   \item code (fantastico.locale.language.Language attribute), \hyperpage{14}
   \item column (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{24}
   \item column (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{25}
+  \item Component (class in fantastico.rendering.component), \hyperpage{27}
   \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{18}
   \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{23}
   \item count\_records() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}

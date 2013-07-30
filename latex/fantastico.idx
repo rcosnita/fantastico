@@ -100,3 +100,4 @@
 \indexentry{get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{25}
 \indexentry{sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute)|hyperpage}{25}
 \indexentry{ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware)|hyperpage}{25}
+\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{27}
