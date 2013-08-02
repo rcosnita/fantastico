@@ -45,3 +45,6 @@ Exceptions hierarchy
 
 .. autoclass:: fantastico.exceptions.FantasticoDbNotFoundError
    :members:
+   
+.. autoclass:: fantastico.exceptions.FantasticoInsufficientArguments
+   :members:
