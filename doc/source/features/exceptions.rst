@@ -48,3 +48,6 @@ Exceptions hierarchy
    
 .. autoclass:: fantastico.exceptions.FantasticoInsufficientArguments
    :members:
+
+.. autoclass:: fantastico.exceptions.FantasticoUrlInvokerException
+   :members:

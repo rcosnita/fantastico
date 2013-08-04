@@ -94,3 +94,7 @@ class FantasticoDbNotFoundError(FantasticoError):
 class FantasticoInsufficientArguments(FantasticoError):
     '''This exception is usually thrown when a component extension received wrong number of arguments. See
     :py:class:`fantastico.rendering.component.Component`.'''
+
+class FantasticoUrlInvokerException(FantasticoError):
+    '''This exception is usually thrown when an internal url invoker fails. For instance, if a component reusage rendering
+    fails then this exception is raised.'''
