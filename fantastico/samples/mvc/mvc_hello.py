@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import ControllerProvider, Controller
 from webob.response import Response
+import json
 
 @ControllerProvider()
 class MvcHelloController(BaseController):
@@ -50,3 +51,11 @@ class MvcHelloController(BaseController):
         '''This method is used to showcase component reusage.'''
 
         return Response(self.load_template("/reuse_component.html", model_data={"url_ex": "/simple/url"}))
+
+    @Controller(url="/simple/url", method="GET")
+    def handle_simple_url(self, request):
+        '''This method returns a simple json object for testing purposes.'''
+
+        content = {"message": "Hello world", "inner_message": {"message": "inner_message"}}
+
+        return Response(body=json.dumps(content), content_type="application/json")

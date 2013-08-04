@@ -17,11 +17,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.rendering.component
 '''
+from fantastico.exceptions import FantasticoInsufficientArguments
+from fantastico.rendering.url_invoker import FantasticoUrlInternalInvoker
 from jinja2 import nodes
+from jinja2.exceptions import TemplateSyntaxError
 from jinja2.ext import Extension
 from jinja2.nodes import Const
-from jinja2.exceptions import TemplateSyntaxError
-from fantastico.exceptions import FantasticoInsufficientArguments
+from webob.request import Request
+import json
 
 class Component(Extension):
     '''In fantastico, components are defined as a collection of classes and scripts grouped together as described in
@@ -148,7 +151,17 @@ class Component(Extension):
         :type caller: macro
         :returns: The rendered component result.'''
 
-        return "Sugeo"
+        curr_request = self.environment.fantastico_request
+        request = Request.blank(url)
+
+        if template:
+            request.headers["Content-Type"] = "application/json"
+
+        url_invoker = FantasticoUrlInternalInvoker(curr_request.context.wsgi_app, request.environ)
+        response = url_invoker.invoke_url(url, request.headers)[0]
+
+        if template:
+            return self.environment.get_template(template).render({"model": json.loads(response.decode())})
 
     def _get_named_params(self, expressions):
         '''This method transform a list of expressions into a dictionary. It is mandatory that the given list has even number
@@ -188,4 +201,3 @@ class Component(Extension):
 
         if missing_parameters["url"]:
             raise FantasticoInsufficientArguments("Mandatory url parameter missing.")
-
