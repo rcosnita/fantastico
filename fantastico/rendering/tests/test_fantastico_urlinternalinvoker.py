@@ -40,6 +40,7 @@ class FantasticoUrlInternalInvokerTests(FantasticoUnitTestsCase):
         headers = [("HTTP_CONTENT_TYPE", "application/json")]
 
         app = self._get_mock_app(self._wsgi_environ, expected_response, expected_headers)
+
         invoker = FantasticoUrlInternalInvoker(app, self._wsgi_environ)
 
         response = invoker.invoke_url(url, headers)
@@ -48,16 +49,35 @@ class FantasticoUrlInternalInvokerTests(FantasticoUnitTestsCase):
         self.assertEquals(200, invoker.http_status)
         self.assertEquals(expected_headers, invoker.http_headers)
 
-    def test_invoke_url_exception(self):
+        return invoker
+
+    def test_invoke_url_exception(self, invoker=None):
         '''This test case ensures invoke url internal exceptions are converted to concrete exceptions.'''
 
         app = Mock(side_effect=Exception("Unexpected exception"))
-        invoker = FantasticoUrlInternalInvoker(app, self._wsgi_environ)
+
+        if not invoker:
+            invoker = FantasticoUrlInternalInvoker(app, self._wsgi_environ)
+
+        invoker._app = app
 
         with self.assertRaises(FantasticoUrlInvokerException) as ex_ctx:
             invoker.invoke_url("/simle/url", [])
 
         self.assertTrue(str(ex_ctx.exception).find("Unexpected exception") > -1)
+
+        return invoker
+
+    def test_invoke_url_reset_headersstatus(self):
+        '''This test case ensures subsequent invocation of urls using the same invoker instance reset headers and status
+        correctly, making each request independent.'''
+
+        invoker = self.test_invoke_url_ok()
+
+        self.test_invoke_url_exception(invoker)
+
+        self.assertIsNone(invoker.http_status)
+        self.assertEquals([], invoker.http_headers)
 
     def _get_mock_app(self, wsgi_environ, expected_response, expected_headers):
         '''This method builds a mock callable wsgi application that correctly invokes start_response callback. It controls

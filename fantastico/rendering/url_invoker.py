@@ -41,9 +41,11 @@ class FantasticoUrlInternalInvoker(UrlInvoker):
     to use this type of url invoker you need to provide the current uwsgi application as well as the wsgi environment under
     which the given url must be rendered.'''
 
+    _http_headers = None
+    _http_status = None
+
     def __init__(self, fantastico_app, environ):
-        self._http_headers = []
-        self._http_status = None
+        self._reset_internal_state()
 
         self._app = fantastico_app
         self._environ = environ
@@ -63,6 +65,9 @@ class FantasticoUrlInternalInvoker(UrlInvoker):
     def invoke_url(self, url, headers, method="GET"):
         '''This method correctly invokes an url from the current fantastico application.'''
 
+        self._http_headers = []
+        self._http_status = None
+
         try:
             response = self._app(self._environ, self._start_response)
         except Exception as ex:
@@ -76,3 +81,9 @@ class FantasticoUrlInternalInvoker(UrlInvoker):
 
         self._http_status = http_status
         self._http_headers = http_headers
+
+    def _reset_internal_state(self):
+        '''This method reset the internal state variables from the last invocation to default values.'''
+
+        self._http_headers = []
+        self._http_status = None
