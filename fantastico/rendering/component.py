@@ -188,3 +188,4 @@ class Component(Extension):
 
         if missing_parameters["url"]:
             raise FantasticoInsufficientArguments("Mandatory url parameter missing.")
+
