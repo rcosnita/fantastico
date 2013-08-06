@@ -20,6 +20,7 @@ from fantastico.exceptions import FantasticoInsufficientArguments
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from jinja2.exceptions import TemplateSyntaxError
 from mock import Mock
+import json
 
 class ComponentUnitTests(FantasticoUnitTestsCase):
     '''This class provides all test cases required to check correct behavior of component extension.'''
@@ -146,6 +147,49 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
 
         self.assertEqual(expected_lineno, block.call_block.lineno)
 
+    def test_render_with_template(self):
+        '''This test case ensures a template rendering is triggered with url response data when template argument is given.'''
+
+        from fantastico.rendering.component import Component
+
+        expected_url = "/simple/url"
+        expected_template = "/test.html"
+        expected_result = "works"
+        expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
+                                "HTTP_CONTENT_TYPE": "application/json"}
+
+        environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
+                                                                      expected_result)
+
+        component = Component(environment, url_invoker_cls)
+
+        result = component.render(expected_template, expected_url)
+
+        self.assertEquals(expected_result, result)
+        self.assertEquals("application/json", expected_environment["HTTP_CONTENT_TYPE"])
+
+    def test_render_without_template(self):
+        '''This test case ensure component reusage without template work as expected by delegating rendering
+        process to template /raw_dump.html.'''
+
+        from fantastico.rendering.component import Component
+
+        expected_url = "/simple/url"
+        expected_template = "/raw_dump.html"
+        expected_result = "works"
+        expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
+                                "HTTP_CONTENT_TYPE": "application/json"}
+
+        environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
+                                                                      expected_result)
+
+        component = Component(environment, url_invoker_cls)
+
+        result = component.render(url=expected_url)
+
+        self.assertEquals(expected_result, result)
+        self.assertEquals("application/json", expected_environment["HTTP_CONTENT_TYPE"])
+
     def _mock_parser_parse(self, mock_template, mock_url, mock_runtime, mock_lineno, mock_body):
         '''This method is used for mocking the parser object so that it returns the given values. Useful for generating
         multiple test scenarios for parse.
@@ -208,6 +252,41 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         parser.parse_statements = Mock(return_value=mock_body)
 
         return (environment, parser)
+
+    def _mock_render_dependencies(self, expected_template, expected_url, expected_environment, expected_output):
+        '''This method mocks all rendering dependencies and retrieves desired values.'''
+
+        url_invoker = Mock()
+
+        def invoke_url(url, headers):
+            self.assertEquals(expected_url, url)
+            self.assertEquals("Simple header", headers["Custom-Header"])
+
+            return [json.dumps({"message": "hello"}).encode()]
+
+        url_invoker.invoke_url = invoke_url
+
+        url_invoker_cls = Mock(return_value=url_invoker)
+
+        environment = Mock()
+        environment.fantastico_request = Mock(return_value=environment)
+        environment.fantastico_request.environ = expected_environment
+
+        def get_template(template):
+            self.assertEqual(expected_template, template)
+
+            return environment
+
+        environment.get_template = get_template
+
+        def render(model):
+            self.assertEquals(model, {"model": {"message": "hello"}})
+
+            return expected_output
+
+        environment.render = render
+
+        return (environment, url_invoker_cls)
 
 class CallBlockMock(object):
     '''This class provides a mock object which actually replaces nodes.CallBlock jinja implementation.'''

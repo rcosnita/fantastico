@@ -89,10 +89,19 @@ class Component(Extension):
     value.
     '''
 
+    COMP_ARG_TEMPLATE = "template"
+    COMP_TEMPLATE_DEFAULT = "/raw_dump.html"
+
+    COMP_ARG_URL = "url"
+    COMP_ARG_RUNTIME = "runtime"
+    COMP_RUNTIME_DEFAULT = "server"
+
     tags = set(["component"])
 
-    def __init__(self, environment):
+    def __init__(self, environment, url_invoker_cls=FantasticoUrlInternalInvoker):
         super(Component, self).__init__(environment)
+
+        self._url_invoker_cls = url_invoker_cls
 
     def parse(self, parser):
         '''This method is used to parse the component extension from template, identify named parameters and render it.
@@ -138,7 +147,7 @@ class Component(Extension):
                                [],
                                body).set_lineno(lineno)
 
-    def render(self, template, url, runtime, caller):
+    def render(self, template=COMP_TEMPLATE_DEFAULT, url=None, runtime="server", caller=lambda: ""):
         '''This method is used to render the specified url using the given parameters.
 
         :param template: The template we want to render into the result of the url.
@@ -152,16 +161,12 @@ class Component(Extension):
         :returns: The rendered component result.'''
 
         curr_request = self.environment.fantastico_request
-        request = Request.blank(url)
+        request = Request.blank(url, curr_request.environ)
 
-        if template:
-            request.headers["Content-Type"] = "application/json"
-
-        url_invoker = FantasticoUrlInternalInvoker(curr_request.context.wsgi_app, request.environ)
+        url_invoker = self._url_invoker_cls(curr_request.context.wsgi_app, request.environ)
         response = url_invoker.invoke_url(url, request.headers)[0]
 
-        if template:
-            return self.environment.get_template(template).render({"model": json.loads(response.decode())})
+        return self.environment.get_template(template).render({"model": json.loads(response.decode())})
 
     def _get_named_params(self, expressions):
         '''This method transform a list of expressions into a dictionary. It is mandatory that the given list has even number
@@ -172,9 +177,9 @@ class Component(Extension):
         :returns: A tuple (list of kwargs nodes, dict of missing_arguments).'''
 
         named_params = []
-        missing_params = {"template": True,
-                             "url": True,
-                             "runtime": True}
+        missing_params = {Component.COMP_ARG_TEMPLATE: True,
+                          Component.COMP_ARG_URL: True,
+                          Component.COMP_ARG_RUNTIME: True}
 
         last_lineno = -1
         expr_iterator = iter(expressions)
@@ -187,11 +192,13 @@ class Component(Extension):
             last_lineno = expr_value.lineno
             named_params.append(nodes.Keyword(expr_name.name, expr_value, lineno=last_lineno))
 
-        if missing_params["template"]:
-            named_params.insert(0, nodes.Keyword("template", Const("/raw_dump.html"), lineno=last_lineno))
+        if missing_params[Component.COMP_ARG_TEMPLATE]:
+            named_params.insert(0, nodes.Keyword(Component.COMP_ARG_TEMPLATE,
+                                                 Const(Component.COMP_TEMPLATE_DEFAULT), lineno=last_lineno))
 
-        if missing_params["runtime"]:
-            named_params.append(nodes.Keyword("runtime", Const("server"), lineno=last_lineno))
+        if missing_params[Component.COMP_ARG_RUNTIME]:
+            named_params.append(nodes.Keyword(Component.COMP_ARG_RUNTIME, Const(Component.COMP_RUNTIME_DEFAULT),
+                                              lineno=last_lineno))
 
         return named_params, missing_params
 
