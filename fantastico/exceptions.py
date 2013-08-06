@@ -91,10 +91,10 @@ class FantasticoDbNotFoundError(FantasticoError):
     '''This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is
     used see :py:class:`fantastico.mvc.model_facade.ModelFacade`.'''
 
-class FantasticoInsufficientArguments(FantasticoError):
+class FantasticoInsufficientArgumentsError(FantasticoError):
     '''This exception is usually thrown when a component extension received wrong number of arguments. See
     :py:class:`fantastico.rendering.component.Component`.'''
 
-class FantasticoUrlInvokerException(FantasticoError):
+class FantasticoUrlInvokerError(FantasticoError):
     '''This exception is usually thrown when an internal url invoker fails. For instance, if a component reusage rendering
     fails then this exception is raised.'''

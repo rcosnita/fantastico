@@ -16,9 +16,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.rendering.tests.test_component
 '''
-from fantastico.exceptions import FantasticoInsufficientArguments
+from fantastico.exceptions import FantasticoInsufficientArgumentsError, FantasticoTemplateNotFoundError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
-from jinja2.exceptions import TemplateSyntaxError
+from jinja2.exceptions import TemplateSyntaxError, TemplateNotFound
 from mock import Mock
 import json
 
@@ -114,7 +114,7 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
             {% component template="xxxx" %}{% endcomponent %}
         '''
 
-        with self.assertRaises(FantasticoInsufficientArguments):
+        with self.assertRaises(FantasticoInsufficientArgumentsError):
             self._test_scenario_component_parse(None, None, None, None,
                                                 None, None, None, None,
                                                 1)
@@ -189,6 +189,29 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
 
         self.assertEquals(expected_result, result)
         self.assertEquals("application/json", expected_environment["HTTP_CONTENT_TYPE"])
+
+    def test_render_notfound_template(self):
+        '''This test case covers the scenario where the requested template passed to component tag is not found.'''
+
+        from fantastico.rendering.component import Component
+
+        expected_url = "/simple/url"
+        expected_template = "/template.html"
+        expected_result = "works"
+        expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
+                                "HTTP_CONTENT_TYPE": "application/json"}
+
+        environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
+                                                                      expected_result)
+
+        environment.get_template = Mock(side_effect=TemplateNotFound("template does not exist."))
+
+        component = Component(environment, url_invoker_cls)
+
+        with self.assertRaises(FantasticoTemplateNotFoundError) as ctx:
+            component.render(expected_template, expected_url)
+
+        self.assertTrue(str(ctx.exception).find(expected_template) > -1)
 
     def _mock_parser_parse(self, mock_template, mock_url, mock_runtime, mock_lineno, mock_body):
         '''This method is used for mocking the parser object so that it returns the given values. Useful for generating
