@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.rendering.tests.test_component
 '''
-from fantastico.exceptions import FantasticoInsufficientArgumentsError, FantasticoTemplateNotFoundError
+from fantastico.exceptions import FantasticoInsufficientArgumentsError, FantasticoTemplateNotFoundError, FantasticoUrlInvokerError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from jinja2.exceptions import TemplateSyntaxError, TemplateNotFound
 from mock import Mock
@@ -212,6 +212,32 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
             component.render(expected_template, expected_url)
 
         self.assertTrue(str(ctx.exception).find(expected_template) > -1)
+
+    def test_render_urlinvoker_error(self):
+        '''This test case ensures a concrete fantastico exception is thrown during rendering if an exception occurs
+        within url invoker.'''
+
+        from fantastico.rendering.component import Component
+
+        expected_url = "/simple/url"
+        expected_template = "/template.html"
+        expected_result = "works"
+        expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
+                                "HTTP_CONTENT_TYPE": "application/json"}
+
+        url_invoker = Mock()
+        url_invoker.invoke_url = Mock(side_effect=FantasticoUrlInvokerError("Unexpected invoker exception"))
+
+        environment = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
+                                                                      expected_result)[0]
+
+        url_invoker_cls = Mock(return_value=url_invoker)
+        component = Component(environment, url_invoker_cls)
+
+        with self.assertRaises(FantasticoUrlInvokerError) as ctx:
+            component.render(expected_template, expected_url)
+
+        self.assertTrue(str(ctx.exception).find("Unexpected invoker exception") > -1)
 
     def _mock_parser_parse(self, mock_template, mock_url, mock_runtime, mock_lineno, mock_body):
         '''This method is used for mocking the parser object so that it returns the given values. Useful for generating

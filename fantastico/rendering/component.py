@@ -160,6 +160,7 @@ class Component(Extension):
         :type caller: macro
         :returns: The rendered component result.
         :raises fantastico.exceptions.FantasticoTemplateNotFoundError: Whenever we try to render a template which does not exist.
+        :raises fantastico.exceptions.FantasticoUrlInvokerError: Whenever an exception occurs invoking a url within the container.
         '''
 
         curr_request = self.environment.fantastico_request
