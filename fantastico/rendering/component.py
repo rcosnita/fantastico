@@ -17,10 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.rendering.component
 '''
-from fantastico.exceptions import FantasticoInsufficientArguments
+from fantastico.exceptions import FantasticoInsufficientArgumentsError, FantasticoTemplateNotFoundError
 from fantastico.rendering.url_invoker import FantasticoUrlInternalInvoker
 from jinja2 import nodes
-from jinja2.exceptions import TemplateSyntaxError
+from jinja2.exceptions import TemplateSyntaxError, TemplateNotFound
 from jinja2.ext import Extension
 from jinja2.nodes import Const
 from webob.request import Request
@@ -109,7 +109,7 @@ class Component(Extension):
         :param parser: The Jinja 2 expression parser.
         :type parser: Jinja 2 parser.
         :returns: A callblock able to render the component.
-        :raises FantasticoInsufficientArguments: when no / not enough arguments are provided to component.
+        :raises FantasticoInsufficientArgumentsError: when no / not enough arguments are provided to component.
         '''
 
         lineno = parser.stream.current.lineno
@@ -158,7 +158,9 @@ class Component(Extension):
         :type runtime: string
         :param caller: The caller macro that can retrieve the body of the tag when invoked.
         :type caller: macro
-        :returns: The rendered component result.'''
+        :returns: The rendered component result.
+        :raises fantastico.exceptions.FantasticoTemplateNotFoundError: Whenever we try to render a template which does not exist.
+        '''
 
         curr_request = self.environment.fantastico_request
         request = Request.blank(url, curr_request.environ)
@@ -166,7 +168,10 @@ class Component(Extension):
         url_invoker = self._url_invoker_cls(curr_request.context.wsgi_app, request.environ)
         response = url_invoker.invoke_url(url, request.headers)[0]
 
-        return self.environment.get_template(template).render({"model": json.loads(response.decode())})
+        try:
+            return self.environment.get_template(template).render({"model": json.loads(response.decode())})
+        except TemplateNotFound as ex:
+            raise FantasticoTemplateNotFoundError("Template %s does not exist." % template, ex)
 
     def _get_named_params(self, expressions):
         '''This method transform a list of expressions into a dictionary. It is mandatory that the given list has even number
@@ -207,4 +212,4 @@ class Component(Extension):
         True if they miss.'''
 
         if missing_parameters["url"]:
-            raise FantasticoInsufficientArguments("Mandatory url parameter missing.")
+            raise FantasticoInsufficientArgumentsError("Mandatory url parameter missing.")

@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.rendering.url_invoker
 '''
 
-from fantastico.exceptions import FantasticoUrlInvokerException
+from fantastico.exceptions import FantasticoUrlInvokerError
 import abc
 
 class UrlInvoker(object, metaclass=abc.ABCMeta):
@@ -71,7 +71,7 @@ class FantasticoUrlInternalInvoker(UrlInvoker):
         try:
             response = self._app(self._environ, self._start_response)
         except Exception as ex:
-            raise FantasticoUrlInvokerException(ex)
+            raise FantasticoUrlInvokerError(ex)
 
         return response
 

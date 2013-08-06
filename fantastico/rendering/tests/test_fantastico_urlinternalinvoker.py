@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.rendering.tests.test_fantastico_urlinternalinvoker
 '''
-from fantastico.exceptions import FantasticoUrlInvokerException
+from fantastico.exceptions import FantasticoUrlInvokerError
 from fantastico.rendering.url_invoker import FantasticoUrlInternalInvoker
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
@@ -61,7 +61,7 @@ class FantasticoUrlInternalInvokerTests(FantasticoUnitTestsCase):
 
         invoker._app = app
 
-        with self.assertRaises(FantasticoUrlInvokerException) as ex_ctx:
+        with self.assertRaises(FantasticoUrlInvokerError) as ex_ctx:
             invoker.invoke_url("/simle/url", [])
 
         self.assertTrue(str(ex_ctx.exception).find("Unexpected exception") > -1)
