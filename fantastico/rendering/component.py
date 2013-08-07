@@ -25,6 +25,7 @@ from jinja2.ext import Extension
 from jinja2.nodes import Const
 from webob.request import Request
 import json
+from fantastico.utils import instantiator
 
 class Component(Extension):
     '''In fantastico, components are defined as a collection of classes and scripts grouped together as described in
@@ -102,6 +103,7 @@ class Component(Extension):
         super(Component, self).__init__(environment)
 
         self._url_invoker_cls = url_invoker_cls
+        self._comp_search_path = instantiator.get_class_abslocation(Component)
 
     def parse(self, parser):
         '''This method is used to parse the component extension from template, identify named parameters and render it.
@@ -163,6 +165,13 @@ class Component(Extension):
         :raises fantastico.exceptions.FantasticoUrlInvokerError: Whenever an exception occurs invoking a url within the container.
         '''
 
+        remove_comp_filepath = False
+
+        if template == Component.COMP_TEMPLATE_DEFAULT:
+            self.environment.loader.searchpath.append("%s/views" % self._comp_search_path)
+
+            remove_comp_filepath = True
+
         curr_request = self.environment.fantastico_request
         request = Request.blank(url)
 
@@ -176,6 +185,9 @@ class Component(Extension):
             return self.environment.get_template(template).render({"model": json.loads(response.decode())})
         except TemplateNotFound as ex:
             raise FantasticoTemplateNotFoundError("Template %s does not exist." % template, ex)
+        finally:
+            if remove_comp_filepath:
+                self.environment.loader.searchpath.pop()
 
     def _get_named_params(self, expressions):
         '''This method transform a list of expressions into a dictionary. It is mandatory that the given list has even number

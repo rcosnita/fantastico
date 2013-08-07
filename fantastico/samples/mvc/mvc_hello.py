@@ -46,13 +46,13 @@ class MvcHelloController(BaseController):
 
         return response
 
-    @Controller(url="/mvc/reuse-component", method="GET")
+    @Controller(url="/mvc/reuse-component")
     def reuse_comonent(self, request):
         '''This method is used to showcase component reusage.'''
 
         return Response(self.load_template("/reuse_component.html", model_data={"url_ex": "/simple/url"}))
 
-    @Controller(url="/simple/url", method="GET")
+    @Controller(url="/simple/url")
     def handle_simple_url(self, request):
         '''This method returns a simple json object for testing purposes.'''
 
