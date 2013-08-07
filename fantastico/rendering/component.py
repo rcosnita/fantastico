@@ -170,7 +170,7 @@ class Component(Extension):
         request.cookies = curr_request.cookies
 
         url_invoker = self._url_invoker_cls(curr_request.context.wsgi_app, request.environ)
-        response = url_invoker.invoke_url(url, request.headers, request.cookies)[0]
+        response = url_invoker.invoke_url(url, request.headers)[0]
 
         try:
             return self.environment.get_template(template).render({"model": json.loads(response.decode())})
