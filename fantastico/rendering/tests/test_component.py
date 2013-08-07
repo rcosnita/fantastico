@@ -165,8 +165,8 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
 
         result = component.render(expected_template, expected_url)
 
-        self.assertEquals(expected_result, result)
-        self.assertEquals("application/json", expected_environment["HTTP_CONTENT_TYPE"])
+        self.assertEqual(expected_result, result)
+        self.assertEqual("application/json", expected_environment["HTTP_CONTENT_TYPE"])
 
     def test_render_without_template(self):
         '''This test case ensure component reusage without template work as expected by delegating rendering
@@ -187,8 +187,8 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
 
         result = component.render(url=expected_url)
 
-        self.assertEquals(expected_result, result)
-        self.assertEquals("application/json", expected_environment["HTTP_CONTENT_TYPE"])
+        self.assertEqual(expected_result, result)
+        self.assertEqual("application/json", expected_environment["HTTP_CONTENT_TYPE"])
 
     def test_render_notfound_template(self):
         '''This test case covers the scenario where the requested template passed to component tag is not found.'''
@@ -308,8 +308,8 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         url_invoker = Mock()
 
         def invoke_url(url, headers):
-            self.assertEquals(expected_url, url)
-            self.assertEquals("Simple header", headers["Custom-Header"])
+            self.assertEqual(expected_url, url)
+            self.assertEqual("Simple header", headers["Custom-Header"])
 
             return [json.dumps({"message": "hello"}).encode()]
 
@@ -331,7 +331,7 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         environment.get_template = get_template
 
         def render(model):
-            self.assertEquals(model, {"model": {"message": "hello"}})
+            self.assertEqual(model, {"model": {"message": "hello"}})
 
             return expected_output
 

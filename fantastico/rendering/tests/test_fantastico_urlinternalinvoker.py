@@ -45,9 +45,9 @@ class FantasticoUrlInternalInvokerTests(FantasticoUnitTestsCase):
 
         response = invoker.invoke_url(url, headers)
 
-        self.assertEquals(expected_response, response)
-        self.assertEquals(200, invoker.http_status)
-        self.assertEquals(expected_headers, invoker.http_headers)
+        self.assertEqual(expected_response, response)
+        self.assertEqual(200, invoker.http_status)
+        self.assertEqual(expected_headers, invoker.http_headers)
 
         return invoker
 
@@ -77,14 +77,14 @@ class FantasticoUrlInternalInvokerTests(FantasticoUnitTestsCase):
         self.test_invoke_url_exception(invoker)
 
         self.assertIsNone(invoker.http_status)
-        self.assertEquals([], invoker.http_headers)
+        self.assertEqual([], invoker.http_headers)
 
     def _get_mock_app(self, wsgi_environ, expected_response, expected_headers):
         '''This method builds a mock callable wsgi application that correctly invokes start_response callback. It controls
         the expected values that must be returned. In addition it ensures that correct environ is invoked.'''
 
         def callable_app(environ, start_response):
-            self.assertEquals(wsgi_environ, environ)
+            self.assertEqual(wsgi_environ, environ)
 
             start_response(200, expected_headers)
 
