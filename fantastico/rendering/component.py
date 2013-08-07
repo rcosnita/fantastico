@@ -164,10 +164,13 @@ class Component(Extension):
         '''
 
         curr_request = self.environment.fantastico_request
-        request = Request.blank(url, curr_request.environ)
+        request = Request.blank(url)
+
+        request.headers = curr_request.headers
+        request.cookies = curr_request.cookies
 
         url_invoker = self._url_invoker_cls(curr_request.context.wsgi_app, request.environ)
-        response = url_invoker.invoke_url(url, request.headers)[0]
+        response = url_invoker.invoke_url(url, request.headers, request.cookies)[0]
 
         try:
             return self.environment.get_template(template).render({"model": json.loads(response.decode())})

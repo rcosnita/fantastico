@@ -25,14 +25,16 @@ class UrlInvoker(object, metaclass=abc.ABCMeta):
     for providing the actual invoking mechanism for the protocol it provides support for.'''
 
     @abc.abstractmethod
-    def invoke_url(self, url, headers, method):
+    def invoke_url(self, url, headers, cookies, method):
         '''This generic method invoke an url for a specific list of headers and a given method.
 
         :param url: The url we want to render.
         :type url: string
-        :param headers: A list of headers that must be passed to the url.
-        :type headers: tuple
-        :param method: The method used for invoking the url. For an http invoker this is GET / POST / PUT / DELETE/ HEAD.
+        :param headers: A dictionary of headers that must be passed to the url.
+        :type headers: dict
+        :param cookies: The cookies used for invoking the url.
+        :type cookies: dict
+        :param method: The method used for invoking the url. For an http invoker this is GET (the only supported method for now).
         :type method: string
         :returns: The string containing the invoke result.'''
 
@@ -62,8 +64,10 @@ class FantasticoUrlInternalInvoker(UrlInvoker):
 
         return self._http_headers
 
-    def invoke_url(self, url, headers, method="GET"):
+    def invoke_url(self, url, headers, cookies=None, method="GET"):
         '''This method correctly invokes an url from the current fantastico application.'''
+
+        cookies = cookies or {}
 
         self._http_headers = []
         self._http_status = None
