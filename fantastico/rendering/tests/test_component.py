@@ -20,6 +20,7 @@ from fantastico.exceptions import FantasticoInsufficientArgumentsError, Fantasti
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from jinja2.exceptions import TemplateSyntaxError, TemplateNotFound
 from mock import Mock
+from webob.request import Request
 import json
 
 class ComponentUnitTests(FantasticoUnitTestsCase):
@@ -157,9 +158,10 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         expected_result = "works"
         expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
                                 "HTTP_CONTENT_TYPE": "application/json"}
+        expected_cookies = {}
 
         environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result)
+                                                                      expected_result, expected_cookies)
 
         component = Component(environment, url_invoker_cls)
 
@@ -179,9 +181,10 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         expected_result = "works"
         expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
                                 "HTTP_CONTENT_TYPE": "application/json"}
+        expected_cookies = {}
 
         environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result)
+                                                                      expected_result, expected_cookies)
 
         component = Component(environment, url_invoker_cls)
 
@@ -200,9 +203,10 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         expected_result = "works"
         expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
                                 "HTTP_CONTENT_TYPE": "application/json"}
+        expected_cookies = {}
 
         environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result)
+                                                                      expected_result, expected_cookies)
 
         environment.get_template = Mock(side_effect=TemplateNotFound("template does not exist."))
 
@@ -224,12 +228,13 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         expected_result = "works"
         expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
                                 "HTTP_CONTENT_TYPE": "application/json"}
+        expected_cookies = {}
 
         url_invoker = Mock()
         url_invoker.invoke_url = Mock(side_effect=FantasticoUrlInvokerError("Unexpected invoker exception"))
 
         environment = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result)[0]
+                                                                      expected_result, expected_cookies)[0]
 
         url_invoker_cls = Mock(return_value=url_invoker)
         component = Component(environment, url_invoker_cls)
@@ -302,14 +307,15 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
 
         return (environment, parser)
 
-    def _mock_render_dependencies(self, expected_template, expected_url, expected_environment, expected_output):
+    def _mock_render_dependencies(self, expected_template, expected_url, expected_environment, expected_output, expected_cookies):
         '''This method mocks all rendering dependencies and retrieves desired values.'''
 
         url_invoker = Mock()
 
-        def invoke_url(url, headers):
+        def invoke_url(url, headers, cookies):
             self.assertEquals(expected_url, url)
             self.assertEquals("Simple header", headers["Custom-Header"])
+            self.assertEquals(expected_cookies, cookies)
 
             return [json.dumps({"message": "hello"}).encode()]
 
@@ -319,7 +325,9 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
 
         environment = Mock()
         environment.fantastico_request = Mock(return_value=environment)
-        environment.fantastico_request.environ = expected_environment
+        environment.fantastico_request.environ = environment
+        environment.fantastico_request.headers = Request(expected_environment).headers
+        environment.fantastico_request.cookies = {}
 
         def get_template(template):
             self.assertEqual(expected_template, template)
