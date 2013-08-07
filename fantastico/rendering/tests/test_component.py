@@ -158,10 +158,8 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         expected_result = "works"
         expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
                                 "HTTP_CONTENT_TYPE": "application/json"}
-        expected_cookies = {}
-
         environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result, expected_cookies)
+                                                                      expected_result)
 
         component = Component(environment, url_invoker_cls)
 
@@ -181,10 +179,9 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         expected_result = "works"
         expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
                                 "HTTP_CONTENT_TYPE": "application/json"}
-        expected_cookies = {}
 
         environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result, expected_cookies)
+                                                                      expected_result,)
 
         component = Component(environment, url_invoker_cls)
 
@@ -203,10 +200,9 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         expected_result = "works"
         expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
                                 "HTTP_CONTENT_TYPE": "application/json"}
-        expected_cookies = {}
 
         environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result, expected_cookies)
+                                                                      expected_result)
 
         environment.get_template = Mock(side_effect=TemplateNotFound("template does not exist."))
 
@@ -228,13 +224,12 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         expected_result = "works"
         expected_environment = {"HTTP_CUSTOM_HEADER": "Simple header",
                                 "HTTP_CONTENT_TYPE": "application/json"}
-        expected_cookies = {}
 
         url_invoker = Mock()
         url_invoker.invoke_url = Mock(side_effect=FantasticoUrlInvokerError("Unexpected invoker exception"))
 
         environment = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result, expected_cookies)[0]
+                                                                      expected_result)[0]
 
         url_invoker_cls = Mock(return_value=url_invoker)
         component = Component(environment, url_invoker_cls)
@@ -307,15 +302,14 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
 
         return (environment, parser)
 
-    def _mock_render_dependencies(self, expected_template, expected_url, expected_environment, expected_output, expected_cookies):
+    def _mock_render_dependencies(self, expected_template, expected_url, expected_environment, expected_output):
         '''This method mocks all rendering dependencies and retrieves desired values.'''
 
         url_invoker = Mock()
 
-        def invoke_url(url, headers, cookies):
+        def invoke_url(url, headers):
             self.assertEquals(expected_url, url)
             self.assertEquals("Simple header", headers["Custom-Header"])
-            self.assertEquals(expected_cookies, cookies)
 
             return [json.dumps({"message": "hello"}).encode()]
 
