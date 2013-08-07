@@ -86,8 +86,7 @@ class Component(Extension):
     only server side rendering is supported which actually means a page will be completed rendered on server and then the markup
     is sent to the browser.
 
-    In order to avoid reduce the required attributes for component tag, runtime attribute is optional with server as default
-    value.
+    In order to reduce required attributes for component tag, runtime attribute is optional with server as default value.
     '''
 
     COMP_ARG_TEMPLATE = "template"
