@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{August 08, 2013}
-\release{0.2.0-b94}
+\release{0.2.0-b95}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -752,7 +752,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4588738\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x50697c0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1830,7 +1830,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x15e4408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x21df408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2088,7 +2088,7 @@ sql (sql scripts required to setup the component)
 \_\_init\_\_.py
 
 \item {} 
-{\color{red}\bfseries{}*}.py (controller module files)
+*.py (controller module files)
 
 \end{itemize}
 
@@ -2249,7 +2249,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2e0d848\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3a0e6b0\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2286,6 +2286,100 @@ The rendered component result.
 
 \end{fulllineitems}
 
+
+
+\section{Built in components}
+\label{features/components_builtin::doc}\label{features/components_builtin:built-in-components}
+Fantastico framework is really young and continuously improving. As of version \textbf{0.2.0} it is extremely easy to reuse components
+provided urls in other context. This feature opens the possibility to provide common day by day used components in
+new projects in order to accelerate development. In this document you can find a detailed list of built in components
+as well as sample of how to use them:
+
+
+\subsection{Dynamic menu}
+\label{features/components/dynamic_menu/dynamic_menu::doc}\label{features/components/dynamic_menu/dynamic_menu:dynamic-menu}
+Menus are a core part of every web site / application as well as mobile applications. More over, again and again
+developers will want a quick way to define menu items without actually redefining menu data structure again and again.
+This component which we generic named dynamic menu simply provides the controller and the model for easy development of menus.
+
+
+\subsubsection{Integration}
+\label{features/components/dynamic_menu/dynamic_menu:integration}
+In order to use dynamic menu component within your project follow the steps below:
+\begin{enumerate}
+\item {} 
+Create a symbolic link to your root component folder to dynamic\_menu.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+ln \PYGZhy{}s pip\PYGZhy{}deps/python\PYG{o}{[}version\PYG{o}{]}/site\PYGZhy{}packages/fantastico/contrib/dynamic\PYGZus{}menu .
+\end{Verbatim}
+
+\item {} 
+Create a template in one of your components in which you define the menu view:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}}\PYG{c}{ *sample\PYGZus{}menu.html* }\PYG{c}{\PYGZhy{}}\PYG{c}{ simple snippet for creating a left / right side dockable menu. }\PYG{c}{\PYGZhy{}\PYGZhy{}\PYGZgt{}}
+\PYGZob{}\PYGZpc{} for menu\PYGZus{}item in model.menu\PYGZus{}items \PYGZpc{}\PYGZcb{}
+   \PYG{n+nt}{\PYGZlt{}a} \PYG{n+na}{href=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}menu\PYGZus{}item.url\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+na}{title=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}menu\PYGZus{}item.title\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+na}{target=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}menu\PYGZus{}item.target\PYGZcb{}\PYGZcb{}\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}menu\PYGZus{}item.label\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/a\PYGZgt{}}\PYG{n+nt}{\PYGZlt{}br}\PYG{n+nt}{/\PYGZgt{}}
+\PYGZob{}\PYGZpc{} endfor \PYGZpc{}\PYGZcb{}
+\end{Verbatim}
+
+\item {} 
+In all views where you want to reuse the component you can paste the following snippet:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZob{}\PYGZpc{} component template=\PYGZdq{}sample\PYGZus{}menu.html\PYGZdq{}, url=\PYGZdq{}/dynamic\PYGZhy{}menu/menu/1\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
+\end{Verbatim}
+
+\item {} 
+Make sure you run \textbf{dynamic\_menu/sql/module\_setup.sql} against your configured database.
+
+\item {} 
+This script will create \textbf{Menus} and \textbf{MenuItems} tables into your database.Below you can find a sample script for creating a menu:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{Menus}\PYG{p}{(}\PYG{n}{name}\PYG{p}{)} \PYG{k}{VALUES}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}My First Menu\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{MenuItems}\PYG{p}{(}\PYG{n}{target}\PYG{p}{,} \PYG{n}{url}\PYG{p}{,} \PYG{n}{title}\PYG{p}{,} \PYG{n}{label}\PYG{p}{)}
+\PYG{k}{VALUES} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/homepage\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Home\PYGZsq{}}\PYG{p}{)}\PYG{p}{,}
+       \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/page2\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Page 2\PYGZsq{}}\PYG{p}{)}\PYG{p}{,}
+       \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/page3\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Page 3\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\end{enumerate}
+
+
+\subsubsection{Technical summary}
+\label{features/components/dynamic_menu/dynamic_menu:technical-summary}\index{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController}\pysigline{\strong{class }\code{fantastico.contrib.dynamic\_menu.menu\_controller.}\bfcode{DynamicMenuController}}
+This class provides the controller for dynamic menus. The following routes are automatically made available
+when dynamic menu component is deployed:
+\begin{quote}
+
+\textbf{/dynamic-menu/menu/\textless{}menu\_id\textgreater{}} -- This route loads menu items from database and retrieve them in json format.
+\end{quote}
+
+Below you can see a diagram describing relation model of the menu:
+
+\includegraphics{erd.png}
+
+\end{fulllineitems}
+
+
+
+\subsubsection{Current limitations}
+\label{features/components/dynamic_menu/dynamic_menu:current-limitations}
+Because \textbf{Fantastico} framework is developed using an Agile mindset, only the minimum valuable scope was delivered for
+\textbf{Dynamic Menu} component. This mean is not currently possible to:
+\begin{itemize}
+\item {} 
+Localize your menu items.
+
+\item {} 
+Display the menu items in the request language dynamically.
+
+\end{itemize}
 
 
 \chapter{How to articles}

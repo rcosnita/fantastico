@@ -175,6 +175,9 @@
     <item id="_modules_fantastico_server_tests_itest_dev_server.html"
           href="_modules/fantastico/server/tests/itest_dev_server.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_contrib_dynamic_menu_menu_controller.html"
+          href="_modules/fantastico/contrib/dynamic_menu/menu_controller.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_tests_base_case.html"
           href="_modules/fantastico/tests/base_case.html"
           media-type="application/xhtml+xml" />
@@ -193,6 +196,9 @@
     <item id="_images_low_usage_s3_aws.png"
           href="_images/low_usage_s3_aws.png"
           media-type="image/png" />
+    <item id="_images_erd.png"
+          href="_images/erd.png"
+          media-type="image/png" />
     <item id="_images_settings.png"
           href="_images/settings.png"
           media-type="image/png" />
@@ -208,6 +214,9 @@
     <item id="features_exceptions.html"
           href="features/exceptions.html"
           media-type="application/xhtml+xml" />
+    <item id="features_components_builtin.html"
+          href="features/components_builtin.html"
+          media-type="application/xhtml+xml" />
     <item id="features_features.html"
           href="features/features.html"
           media-type="application/xhtml+xml" />
@@ -222,6 +231,9 @@
           media-type="application/xhtml+xml" />
     <item id="features_routing_engine.html"
           href="features/routing_engine.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_components_dynamic_menu_dynamic_menu.html"
+          href="features/components/dynamic_menu/dynamic_menu.html"
           media-type="application/xhtml+xml" />
   </manifest>
   <spine toc="ncx">
@@ -239,6 +251,8 @@
     <itemref idref="features_mvc.html" />
     <itemref idref="features_component_model.html" />
     <itemref idref="features_component_reusage.html" />
+    <itemref idref="features_components_builtin.html" />
+    <itemref idref="features_components_dynamic_menu_dynamic_menu.html" />
     <itemref idref="how_to_how_to.html" />
     <itemref idref="how_to_mvc_how_to.html" />
     <itemref idref="how_to_deployment_how_to.html" />

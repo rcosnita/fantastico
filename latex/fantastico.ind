@@ -52,6 +52,8 @@
   \item display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method), 
 		\hyperpage{17}
   \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{17}
+  \item DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller), 
+		\hyperpage{29}
 
   \indexspace
   \bigletter F
