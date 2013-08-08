@@ -11,7 +11,7 @@ that will make your life a lot easier when organizing projects. A typical **comp
       - views (all views used by this component controllers')
       - sql (sql scripts required to setup the component)
       - __init__.py
-      - *.py (controller module files)
+      - \*.py (controller module files)
 
 You can usually structure your code as you want, but Fantastico default :doc:`/features/mvc` registrators are assuming
 component name is the parent folder of the controller module. This is why is best to follow the above mentioned structure.
