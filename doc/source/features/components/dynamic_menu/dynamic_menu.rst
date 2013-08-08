@@ -49,3 +49,12 @@ Technical summary
 
 .. autoclass:: fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController
    :members:
+   
+Current limitations
+-------------------
+
+Because **Fantastico** framework is developed using an Agile mindset, only the minimum valuable scope was delivered. This
+mean there is currently not possible to:
+
+   * Localize your menu items.
+   * Display the menu items in the request language dynamically.
