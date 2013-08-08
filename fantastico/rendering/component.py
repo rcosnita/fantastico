@@ -164,6 +164,12 @@ class Component(Extension):
         :raises fantastico.exceptions.FantasticoUrlInvokerError: Whenever an exception occurs invoking a url within the container.
         '''
 
+        # [rcosnita] do something with the inner body of the tag. Coming in a future version.
+        caller()
+
+        if runtime != "server":
+            return
+
         remove_comp_filepath = False
 
         if template == Component.COMP_TEMPLATE_DEFAULT:

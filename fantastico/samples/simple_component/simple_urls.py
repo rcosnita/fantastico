@@ -29,6 +29,8 @@ class SampleUrlsController(BaseController):
         '''This method showcase external component reusage with template overriding. Take a look at the template of this
         controller.'''
 
+        print(request.content_type)
+
         content = self.load_template("/foreign_component_reusage.html")
 
         return Response(content)
