@@ -61,7 +61,7 @@ class FantasticoApp(object):
         request = environ.get("fantastico.request")
 
         if hasattr(request, "context"):
-            request.context._wsgi_app = self
+            request.context.wsgi_app = self
 
         if not request:
             raise FantasticoNoRequestError()
