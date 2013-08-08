@@ -51,3 +51,9 @@ class RequestContext(object):
         '''Property that holds the WSGI application instance under which the request is handled.'''
 
         return self._wsgi_app
+
+    @wsgi_app.setter
+    def wsgi_app(self, value):
+        '''Setter property used to set wsgi application under which the current request is handled.'''
+
+        self._wsgi_app = value

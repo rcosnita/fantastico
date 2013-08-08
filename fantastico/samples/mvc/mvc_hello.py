@@ -50,11 +50,15 @@ class MvcHelloController(BaseController):
     def reuse_comonent(self, request):
         '''This method is used to showcase component reusage.'''
 
+        print(request.content_type)
+
         return Response(self.load_template("/reuse_component.html", model_data={"url_ex": "/simple/url"}))
 
     @Controller(url="/simple/url")
     def handle_simple_url(self, request):
         '''This method returns a simple json object for testing purposes.'''
+
+        print(request.content_type)
 
         content = {"message": "Hello world", "inner_message": {"message": "inner_message"}}
 
