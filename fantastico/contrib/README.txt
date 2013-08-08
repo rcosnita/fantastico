@@ -1,0 +1,2 @@
+This package contains various components which can be used out of the box in fantastico projects. They are commited together
+with the main code of Fantastico but can be easily plugged into new projects.
