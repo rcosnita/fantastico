@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -32,16 +32,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -50,31 +50,44 @@
 <span class="sd">&#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="RequestContext"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.middleware.request_context.RequestContext">[docs]</a><span class="k">class</span> <span class="nc">RequestContext</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This class holds various attributes useful giving a context to an http request. Among other things we need </span>
+    <span class="sd">&#39;&#39;&#39;This class holds various attributes useful giving a context to an http request. Among other things we need</span>
 <span class="sd">    to be able to access current language, current session and possible current user profile.&#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">language</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        :param language: The language associated with the current request.</span>
 <span class="sd">        :type language: fantastico.locale.language.Language</span>
 <span class="sd">        :param settings: The current settings facade that can be used to obtain items from framework configuration.</span>
-<span class="sd">        :type settings: fantastico.settings.SettingsFacade </span>
+<span class="sd">        :type settings: fantastico.settings.SettingsFacade</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span> <span class="o">=</span> <span class="n">settings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_language</span> <span class="o">=</span> <span class="n">language</span>
-        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wsgi_app</span> <span class="o">=</span> <span class="bp">None</span>
+
     <span class="nd">@property</span>
 <div class="viewcode-block" id="RequestContext.settings"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.middleware.request_context.RequestContext.settings">[docs]</a>    <span class="k">def</span> <span class="nf">settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Property that holds the current settings facade used for accessing fantastico configuration.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="RequestContext.language"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.middleware.request_context.RequestContext.language">[docs]</a>    <span class="k">def</span> <span class="nf">language</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Property that holds the current language that must be used during this request.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_language</span></div></div>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_language</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wsgi_app</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Property that holds the WSGI application instance under which the request is handled.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wsgi_app</span>
+
+    <span class="nd">@wsgi_app.setter</span>
+<div class="viewcode-block" id="RequestContext.wsgi_app"><a class="viewcode-back" href="../../../features/request_response.html#fantastico.middleware.request_context.RequestContext.wsgi_app">[docs]</a>    <span class="k">def</span> <span class="nf">wsgi_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Setter property used to set wsgi application under which the current request is handled.&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wsgi_app</span> <span class="o">=</span> <span class="n">value</span></div></div>
 </pre></div>
 
           </div>

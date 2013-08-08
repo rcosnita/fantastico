@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{July 30, 2013}
-\release{0.2.0-b93}
+\date{August 08, 2013}
+\release{0.2.0-b94}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -293,7 +293,7 @@ Below you can find technical information about settings.
 \begin{fulllineitems}
 \phantomsection\label{get_started/settings:fantastico.settings.BasicSettings}\pysigline{\strong{class }\code{fantastico.settings.}\bfcode{BasicSettings}}
 This is the core class that describes all available settings of fantastico framework. For convenience all options
-have default values that ensure minimum functionality of the framework. Below you can find an example of three possible 
+have default values that ensure minimum functionality of the framework. Below you can find an example of three possible
 configuration: Dev / Stage / Production.
 
 \includegraphics{settings.png}
@@ -368,7 +368,7 @@ Property that holds all supported languages by this fantastico instance.
 
 \begin{fulllineitems}
 \phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.templates_config}\pysigline{\bfcode{templates\_config}}
-This property holds configuration of templates rendering engine. For the moment this influence how 
+This property holds configuration of templates rendering engine. For the moment this influence how
 \href{http://jinja.pocoo.org/docs/}{Jinja2} acts.
 
 \end{fulllineitems}
@@ -752,7 +752,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4a9aa68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4588738\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -814,7 +814,7 @@ database.
 \includegraphics{exceptions.png}
 
 \textbf{FantasticoError} is the base of all exceptions raised within fantastico framework. It describe common attributes that
-each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception. 
+each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception.
 We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
 that at no moment errors will cause fantastico framework wsgi container to crash.
 
@@ -824,7 +824,7 @@ that at no moment errors will cause fantastico framework wsgi container to crash
 
 \begin{fulllineitems}
 \phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoControllerInvalidError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoControllerInvalidError}}
-This exception is raised whenever a method is decorated with 
+This exception is raised whenever a method is decorated with
 {\hyperref[features/mvc:fantastico.mvc.controller_decorators.Controller]{\code{fantastico.mvc.controller\_decorators.Controller}}} and the number of arguments is not correct. Usually
 developer forgot to add request as argument to the controller.
 
@@ -883,7 +883,7 @@ This exception is usually raised by routing engine when a requested url is not r
 
 \begin{fulllineitems}
 \phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNoRequestError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNoRequestError}}
-This exception is usually raised when some components try to use fantastico.request from WSGI environ before 
+This exception is usually raised when some components try to use fantastico.request from WSGI environ before
 {\hyperref[features/request_response:fantastico.middleware.request_middleware.RequestMiddleware]{\code{fantastico.middleware.request\_middleware.RequestMiddleware}}} was executed.
 
 \end{fulllineitems}
@@ -944,8 +944,26 @@ This exception is usually thrown when a database exception occurs. For one good 
 
 \begin{fulllineitems}
 \phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDbNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDbNotFoundError}}
-This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is 
+This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is
 used see {\hyperref[features/mvc:fantastico.mvc.model_facade.ModelFacade]{\code{fantastico.mvc.model\_facade.ModelFacade}}}.
+
+\end{fulllineitems}
+
+\index{FantasticoInsufficientArgumentsError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoInsufficientArgumentsError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoInsufficientArgumentsError}}
+This exception is usually thrown when a component extension received wrong number of arguments. See
+{\hyperref[features/component_reusage:fantastico.rendering.component.Component]{\code{fantastico.rendering.component.Component}}}.
+
+\end{fulllineitems}
+
+\index{FantasticoUrlInvokerError (class in fantastico.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoUrlInvokerError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoUrlInvokerError}}
+This exception is usually thrown when an internal url invoker fails. For instance, if a component reusage rendering
+fails then this exception is raised.
 
 \end{fulllineitems}
 
@@ -1015,7 +1033,7 @@ user (not yet supported)
 
 \begin{fulllineitems}
 \phantomsection\label{features/request_response:fantastico.middleware.request_context.RequestContext}\pysiglinewithargsret{\strong{class }\code{fantastico.middleware.request\_context.}\bfcode{RequestContext}}{\emph{settings}, \emph{language}}{}
-This class holds various attributes useful giving a context to an http request. Among other things we need 
+This class holds various attributes useful giving a context to an http request. Among other things we need
 to be able to access current language, current session and possible current user profile.
 \index{language (fantastico.middleware.request\_context.RequestContext attribute)}
 
@@ -1030,6 +1048,14 @@ Property that holds the current language that must be used during this request.
 \begin{fulllineitems}
 \phantomsection\label{features/request_response:fantastico.middleware.request_context.RequestContext.settings}\pysigline{\bfcode{settings}}
 Property that holds the current settings facade used for accessing fantastico configuration.
+
+\end{fulllineitems}
+
+\index{wsgi\_app (fantastico.middleware.request\_context.RequestContext attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/request_response:fantastico.middleware.request_context.RequestContext.wsgi_app}\pysigline{\bfcode{wsgi\_app}}
+Property that holds the WSGI application instance under which the request is handled.
 
 \end{fulllineitems}
 
@@ -1344,19 +1370,19 @@ must be executed when an http request to an url is made:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
-\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}        
-    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} 
+\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
                 \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.blog.Blog}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
     \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blogs}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
         \PYG{n}{Blog} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Blog}
-    
-        \PYG{n}{blogs} \PYG{o}{=} \PYG{n}{Blog}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} 
+
+        \PYG{n}{blogs} \PYG{o}{=} \PYG{n}{Blog}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,}
                                \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{,}
                                           \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
                                \PYG{n}{filter\PYGZus{}expr}\PYG{o}{=}\PYG{n}{ModelFilterAnd}\PYG{p}{(}
                                                \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}\PYG{p}{,}
                                                \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
-    
+
         \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{blogs}\PYG{p}{)}
 \end{Verbatim}
 
@@ -1783,8 +1809,16 @@ This property returns the currently scanned folder from where mvc routes are col
 
 \begin{fulllineitems}
 \phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.base\_controller.}\bfcode{BaseController}}{\emph{settings\_facade}}{}
-This class provides common methods useful for every concrete controller. Even if no type checking is done in 
+This class provides common methods useful for every concrete controller. Even if no type checking is done in
 Fantastico it is recommended that every controller implementation inherits this class.
+\index{curr\_request (fantastico.mvc.base\_controller.BaseController attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.curr_request}\pysigline{\bfcode{curr\_request}}
+This property returns the current http request being processed.
+
+\end{fulllineitems}
+
 \index{get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
@@ -1796,7 +1830,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1ca6408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x15e4408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2128,12 +2162,12 @@ An example of such a script we use in integration tests can be found under: \tex
 \label{features/component_reusage::doc}\label{features/component_reusage:component-reusage}\index{Component (class in fantastico.rendering.component)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component}\pysigline{\strong{class }\code{fantastico.rendering.component.}\bfcode{Component}}
-In fantastico, components are defined as a collection of classes and scripts grouped together as described in 
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component}\pysiglinewithargsret{\strong{class }\code{fantastico.rendering.component.}\bfcode{Component}}{\emph{environment}, \emph{url\_invoker\_cls=\textless{}class `fantastico.rendering.url\_invoker.FantasticoUrlInternalInvoker'\textgreater{}}}{}
+In fantastico, components are defined as a collection of classes and scripts grouped together as described in
 {\hyperref[features/component_model::doc]{\emph{Component model}}}. Each fantastico component provides one or more public routes that can be accessed from
 a browser or from other components. This class provides the mechanism for internal component referencing.
 
-In order to gain a better understanding about internal / in process component referencing we assume \textbf{Blog} component 
+In order to gain a better understanding about internal / in process component referencing we assume \textbf{Blog} component
 provides the following public routes:
 \begin{itemize}
 \item {} 
@@ -2160,7 +2194,7 @@ above mentioned endpoints:
 
 \PYG{n+nt}{\PYGZlt{}div} \PYG{n+na}{class=}\PYG{l+s}{\PYGZdq{}blog\PYGZhy{}article\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
     \PYG{n+nt}{\PYGZlt{}p} \PYG{n+na}{class=}\PYG{l+s}{\PYGZdq{}title\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}Simple blog article\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
-    
+
     \PYG{n+nt}{\PYGZlt{}p} \PYG{n+na}{class=}\PYG{l+s}{\PYGZdq{}content\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}This is a simple and easy to read blog article.\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
 \PYG{n+nt}{\PYGZlt{}/div\PYGZgt{}}
 \end{Verbatim}
@@ -2192,8 +2226,63 @@ Runtime attribute is used for telling Fantastico if the rendering needs to take 
 only server side rendering is supported which actually means a page will be completed rendered on server and then the markup
 is sent to the browser.
 
-In order to avoid reduce the required attributes for component tag, runtime attribute is optional with server as default
-value.
+In order to reduce required attributes for component tag, runtime attribute is optional with server as default value.
+\index{parse() (fantastico.rendering.component.Component method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.parse}\pysiglinewithargsret{\bfcode{parse}}{\emph{parser}}{}
+This method is used to parse the component extension from template, identify named parameters and render it.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{parser} (\emph{Jinja 2 parser.}) -- The Jinja 2 expression parser.
+
+\item[{Returns}] \leavevmode
+A callblock able to render the component.
+
+\item[{Raises FantasticoInsufficientArgumentsError}] \leavevmode
+when no / not enough arguments are provided to component.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{render() (fantastico.rendering.component.Component method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2e0d848\textgreater{}}}{}
+This method is used to render the specified url using the given parameters.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{template} (\emph{string}) -- The template we want to render into the result of the url.
+
+\item {} 
+\textbf{url} (\emph{string}) -- The url we want to invoke.
+
+\item {} 
+\textbf{runtime} (\emph{string}) -- The runtime we execute the rendering into. Only \textbf{server} is supported for now.
+
+\item {} 
+\textbf{caller} (\emph{macro}) -- The caller macro that can retrieve the body of the tag when invoked.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+The rendered component result.
+
+\item[{Raises}] \leavevmode\begin{itemize}
+\item {} 
+{\hyperref[features/exceptions:fantastico.exceptions.FantasticoTemplateNotFoundError]{\textbf{fantastico.exceptions.FantasticoTemplateNotFoundError}}} -- Whenever we try to render a template which does not exist.
+
+\item {} 
+{\hyperref[features/exceptions:fantastico.exceptions.FantasticoUrlInvokerError]{\textbf{fantastico.exceptions.FantasticoUrlInvokerError}}} -- Whenever an exception occurs invoking a url within the container.
+
+\end{itemize}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 

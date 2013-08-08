@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="exceptions.html" title="Exceptions hierarchy"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -79,7 +79,7 @@ request has a special attribute called context. Below you can find the attribute
 <dl class="class">
 <dt id="fantastico.middleware.request_context.RequestContext">
 <em class="property">class </em><tt class="descclassname">fantastico.middleware.request_context.</tt><tt class="descname">RequestContext</tt><big>(</big><em>settings</em>, <em>language</em><big>)</big><a class="reference internal" href="../_modules/fantastico/middleware/request_context.html#RequestContext"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>This class holds various attributes useful giving a context to an http request. Among other things we need 
+<dd><p>This class holds various attributes useful giving a context to an http request. Among other things we need
 to be able to access current language, current session and possible current user profile.</p>
 <dl class="attribute">
 <dt id="fantastico.middleware.request_context.RequestContext.language">
@@ -91,6 +91,12 @@ to be able to access current language, current session and possible current user
 <dt id="fantastico.middleware.request_context.RequestContext.settings">
 <tt class="descname">settings</tt><a class="reference internal" href="../_modules/fantastico/middleware/request_context.html#RequestContext.settings"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Property that holds the current settings facade used for accessing fantastico configuration.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.middleware.request_context.RequestContext.wsgi_app">
+<tt class="descname">wsgi_app</tt><a class="reference internal" href="../_modules/fantastico/middleware/request_context.html#RequestContext.wsgi_app"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Property that holds the WSGI application instance under which the request is handled.</p>
 </dd></dl>
 
 </dd></dl>

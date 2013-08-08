@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -32,16 +32,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -49,59 +49,60 @@
 <span class="sd">.. py:module:: fantastico.settings</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
 <span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoSettingNotFoundError</span>
+<span class="kn">from</span> <span class="nn">fantastico.rendering.component</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <div class="viewcode-block" id="BasicSettings"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings">[docs]</a><span class="k">class</span> <span class="nc">BasicSettings</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the core class that describes all available settings of fantastico framework. For convenience all options</span>
-<span class="sd">    have default values that ensure minimum functionality of the framework. Below you can find an example of three possible </span>
+<span class="sd">    have default values that ensure minimum functionality of the framework. Below you can find an example of three possible</span>
 <span class="sd">    configuration: Dev / Stage / Production.</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. image:: /images/core/settings.png</span>
-<span class="sd">    </span>
+
 <span class="sd">    As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values</span>
 <span class="sd">    for the attributes you want to overwrite.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-        
+
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.installed_middleware"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.installed_middleware">[docs]</a>    <span class="k">def</span> <span class="nf">installed_middleware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Property that holds all installed middlewares.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.middleware.request_middleware.RequestMiddleware&quot;</span><span class="p">,</span>
                 <span class="s">&quot;fantastico.middleware.model_session_middleware.ModelSessionMiddleware&quot;</span><span class="p">,</span>
                 <span class="s">&quot;fantastico.middleware.routing_middleware.RoutingMiddleware&quot;</span><span class="p">]</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.supported_languages"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.supported_languages">[docs]</a>    <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Property that holds all supported languages by this fantastico instance.&#39;&#39;&#39;</span> 
-        
+        <span class="sd">&#39;&#39;&#39;Property that holds all supported languages by this fantastico instance.&#39;&#39;&#39;</span>
+
         <span class="k">return</span> <span class="p">[</span><span class="s">&quot;en_us&quot;</span><span class="p">]</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.routes_loaders"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.routes_loaders">[docs]</a>    <span class="k">def</span> <span class="nf">routes_loaders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property holds all routes loaders available.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader&quot;</span><span class="p">,</span>
                 <span class="s">&quot;fantastico.mvc.controller_registrator.ControllerRouteLoader&quot;</span><span class="p">]</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.dev_server_port"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.dev_server_port">[docs]</a>    <span class="k">def</span> <span class="nf">dev_server_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property holds development server port. By default this is 12000.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="mi">12000</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.dev_server_host"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.dev_server_host">[docs]</a>    <span class="k">def</span> <span class="nf">dev_server_host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property holds development server hostname. By default this is localhost.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="s">&quot;localhost&quot;</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.templates_config"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.templates_config">[docs]</a>    <span class="k">def</span> <span class="nf">templates_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;This property holds configuration of templates rendering engine. For the moment this influence how </span>
+        <span class="sd">&#39;&#39;&#39;This property holds configuration of templates rendering engine. For the moment this influence how</span>
 <span class="sd">        `Jinja2 &lt;http://jinja.pocoo.org/docs/&gt;`_ acts.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="p">{</span><span class="s">&quot;block_start_string&quot;</span><span class="p">:</span> <span class="s">&quot;{%&quot;</span><span class="p">,</span>
                 <span class="s">&quot;block_end_string&quot;</span><span class="p">:</span> <span class="s">&quot;%}&quot;</span><span class="p">,</span>
                 <span class="s">&quot;variable_start_string&quot;</span><span class="p">:</span> <span class="s">&quot;{{&quot;</span><span class="p">,</span>
@@ -110,16 +111,17 @@
                 <span class="s">&quot;comment_end_string&quot;</span><span class="p">:</span> <span class="s">&quot;#}&quot;</span><span class="p">,</span>
                 <span class="s">&quot;trim_blocks&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
                 <span class="s">&quot;optimized&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-                <span class="s">&quot;auto_reload&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
-        </div>
+                <span class="s">&quot;auto_reload&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s">&quot;extensions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">Component</span><span class="p">]}</span>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.database_config"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.database_config">[docs]</a>    <span class="k">def</span> <span class="nf">database_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property holds the configuration of database. It is recommended to have all environment configured the same.</span>
 <span class="sd">        An exception can be done for host but the rest must remain the same. Below you can find an example of functional</span>
 <span class="sd">        configuration:</span>
-<span class="sd">        </span>
+
 <span class="sd">        .. code-block:: python</span>
-<span class="sd">        </span>
+
 <span class="sd">            config = {&quot;drivername&quot;: &quot;mysql+mysqlconnector&quot;,</span>
 <span class="sd">                        &quot;username&quot;: &quot;fantastico&quot;,</span>
 <span class="sd">                        &quot;password&quot;: &quot;12345&quot;,</span>
@@ -128,11 +130,11 @@
 <span class="sd">                        &quot;database&quot;: &quot;fantastico&quot;,</span>
 <span class="sd">                        &quot;additional_params&quot;: {&quot;charset&quot;: &quot;utf8&quot;},</span>
 <span class="sd">                        &quot;show_sql&quot;: True}</span>
-<span class="sd">                        </span>
+
 <span class="sd">        As you can see, in your configuration you can influence many attributes used when configuring the driver / database.</span>
 <span class="sd">        **show_sql** key tells orm engine from **Fantastico** to display all generated queries.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="p">{</span><span class="s">&quot;drivername&quot;</span><span class="p">:</span> <span class="s">&quot;mysql+mysqlconnector&quot;</span><span class="p">,</span>
                 <span class="s">&quot;username&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
                 <span class="s">&quot;password&quot;</span><span class="p">:</span> <span class="s">&quot;12345&quot;</span><span class="p">,</span>
@@ -141,78 +143,78 @@
                 <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
                 <span class="s">&quot;additional_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;charset&quot;</span><span class="p">:</span> <span class="s">&quot;utf8&quot;</span><span class="p">},</span>
                 <span class="s">&quot;show_sql&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
-        </div></div>
+</div></div>
 <span class="k">class</span> <span class="nc">AwsStageSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the configuration profile for Aws Stage environment integration.&#39;&#39;&#39;</span>
-    
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">database_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property is used to change the hostname used by Aws Stage environment for connecting to fantastico database.&#39;&#39;&#39;</span>
-        
+
         <span class="n">db_config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">AwsStageSettings</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">database_config</span>
-        
+
         <span class="n">db_config</span><span class="p">[</span><span class="s">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;fantastico.ccv3dqqpsvpf.eu-west-1.rds.amazonaws.com&quot;</span>
         <span class="n">db_config</span><span class="p">[</span><span class="s">&quot;show_sql&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
-        
+
         <span class="k">return</span> <span class="n">db_config</span>
-        
+
 <div class="viewcode-block" id="SettingsFacade"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade">[docs]</a><span class="k">class</span> <span class="nc">SettingsFacade</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;For using a specific fantastico configuration you need to do two simple steps:</span>
 
 <span class="sd">    * Set **FANTASTICO_ACTIVE_CONFIG** environment variable to the fully python qualified class name you want to use. E.g: :py:class:`fantastico.settings.BasicSettings`</span>
 <span class="sd">    * In your code, you can use the following snippet to access a specific setting:</span>
-<span class="sd">      </span>
+
 <span class="sd">      .. code-block:: python</span>
-<span class="sd">      </span>
+
 <span class="sd">         from fantastico.settings import SettingsFacade</span>
-<span class="sd">         </span>
+
 <span class="sd">         print(SettingsFacade().get(&quot;installed_middleware&quot;))</span>
-<span class="sd">                 </span>
+
 <span class="sd">    If no active configuration is set in the :py:class:`fantastico.settings.BasicSettings` will be used.&#39;&#39;&#39;</span>
-    
+
     <span class="n">__ENV_ACTIVE_CONFIG</span> <span class="o">=</span> <span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_environ</span> <span class="o">=</span> <span class="n">environ</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_environ</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_environ</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
-            
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">None</span>
-        
+
 <div class="viewcode-block" id="SettingsFacade.get"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Method used to retrieve a setting value.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :param name: Setting name.</span>
 <span class="sd">        :param type: string</span>
 <span class="sd">        :returns: The setting value.</span>
 <span class="sd">        :rtype: object&#39;&#39;&#39;</span>
-                
+
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
-            
+
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">FantasticoSettingNotFoundError</span><span class="p">(</span><span class="s">&quot;Attribute </span><span class="si">%s</span><span class="s"> could not be obtained: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">FantasticoSettingNotFoundError</span><span class="p">(</span><span class="s">&quot;Exception thrown for attribute </span><span class="si">%s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
-    </div>
+</div>
 <div class="viewcode-block" id="SettingsFacade.get_config"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade.get_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Method used to return the active configuration which is used by this facade.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :rtype: :py:class:`fantastico.settings.BasicSettings`</span>
 <span class="sd">        :returns: Active configuration currently used.&#39;&#39;&#39;</span>
-        
+
         <span class="n">active_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ENV_ACTIVE_CONFIG</span><span class="p">)</span> <span class="ow">or</span> <span class="s">&quot;fantastico.settings.BasicSettings&quot;</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="ow">or</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">instantiate_class</span><span class="p">(</span><span class="n">active_config</span><span class="p">)</span> 
-        
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span> <span class="ow">or</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">instantiate_class</span><span class="p">(</span><span class="n">active_config</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_config</span>
-    </div>
+</div>
 <div class="viewcode-block" id="SettingsFacade.get_root_folder"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.SettingsFacade.get_root_folder">[docs]</a>    <span class="k">def</span> <span class="nf">get_root_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Method used to return the root folder of the current fantastico project (detected starting from settings)</span>
 <span class="sd">        profile used.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">__class__</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div></div>
 </pre></div>
 

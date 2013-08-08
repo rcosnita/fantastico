@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.mvc.base_controller &mdash; fantastico 0.2.0-b93 documentation</title>
+    <title>fantastico.mvc.base_controller &mdash; fantastico 0.2.0-b94 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.2.0-b93',
+        VERSION:     '0.2.0-b94',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.2.0-b93 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.2.0-b94 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,16 +47,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -71,49 +71,66 @@
 <span class="kn">from</span> <span class="nn">jinja2.loaders</span> <span class="kn">import</span> <span class="n">FileSystemLoader</span>
 
 <div class="viewcode-block" id="BaseController"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController">[docs]</a><span class="k">class</span> <span class="nc">BaseController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This class provides common methods useful for every concrete controller. Even if no type checking is done in </span>
+    <span class="sd">&#39;&#39;&#39;This class provides common methods useful for every concrete controller. Even if no type checking is done in</span>
 <span class="sd">    Fantastico it is recommended that every controller implementation inherits this class.&#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_loader</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span> <span class="o">=</span> <span class="bp">None</span>
-    
+        <span class="bp">self</span><span class="o">.</span><span class="n">_curr_request</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">curr_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns the current http request being processed.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_curr_request</span>
+
+    <span class="nd">@curr_request.setter</span>
+<div class="viewcode-block" id="BaseController.curr_request"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController.curr_request">[docs]</a>    <span class="k">def</span> <span class="nf">curr_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">curr_request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method sets the current request being processed by this controller.&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_curr_request</span> <span class="o">=</span> <span class="n">curr_request</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span><span class="o">.</span><span class="n">fantastico_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_curr_request</span>
+</div>
     <span class="k">def</span> <span class="nf">__init_jinja_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method initialize the jinja context in order to make the controller able to render jinja2 files.&#39;&#39;&#39;</span>
-        
+
         <span class="n">views_folder</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;</span><span class="si">%s%s</span><span class="s">/views/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get_root_folder</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_component_folder</span><span class="p">()))</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_loader</span> <span class="o">=</span> <span class="n">FileSystemLoader</span><span class="p">(</span><span class="n">searchpath</span><span class="o">=</span><span class="n">views_folder</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">loader</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_tpl_loader</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;templates_config&quot;</span><span class="p">))</span>
-    
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span><span class="o">.</span><span class="n">fantastico_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_curr_request</span>
+
 <div class="viewcode-block" id="BaseController.get_component_folder"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController.get_component_folder">[docs]</a>    <span class="k">def</span> <span class="nf">get_component_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used to retrieve the component folder name under which this controller is defined.&#39;&#39;&#39;</span>
-        
+
         <span class="n">root_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get_root_folder</span><span class="p">()</span>
-        
+
         <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="n">root_folder</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    </div>
+</div>
 <div class="viewcode-block" id="BaseController.load_template"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController.load_template">[docs]</a>    <span class="k">def</span> <span class="nf">load_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tpl_name</span><span class="p">,</span> <span class="n">model_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">get_template</span><span class="o">=</span><span class="n">Environment</span><span class="o">.</span><span class="n">get_template</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is responsible for loading a template from disk and render it using the given model data.</span>
-<span class="sd">        </span>
+
 <span class="sd">        .. code-block:: python</span>
-<span class="sd">        </span>
+
 <span class="sd">            @ControllerProvider()</span>
 <span class="sd">            class TestController(BaseController):</span>
 <span class="sd">                @Controller(url=&quot;/simple/test/hello&quot;, method=&quot;GET&quot;)</span>
 <span class="sd">                def say_hello(self, request):</span>
 <span class="sd">                    return Response(self.load_template(&quot;/hello.html&quot;))</span>
-<span class="sd">                    </span>
+
 <span class="sd">        The above snippet will search for **hello.html** into component folder/views/.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__init_jinja_context</span><span class="p">()</span>
-        
+
         <span class="n">model_data</span> <span class="o">=</span> <span class="n">model_data</span> <span class="ow">or</span> <span class="p">{}</span>
-        
+
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">get_template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span><span class="p">,</span> <span class="n">tpl_name</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">model_data</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">TemplateNotFound</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
@@ -150,7 +167,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

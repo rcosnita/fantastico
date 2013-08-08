@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -62,19 +62,19 @@ want).</p>
 piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that
 must be executed when an http request to an url is made:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
-<span class="k">class</span> <span class="nc">BlogsController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>        
-    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> 
+<span class="k">class</span> <span class="nc">BlogsController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span>
                 <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Blog&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.blog.Blog&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">list_blogs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="n">Blog</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Blog</span>
-    
-        <span class="n">blogs</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+
+        <span class="n">blogs</span> <span class="o">=</span> <span class="n">Blog</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
                                <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">ModelSort</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">create_date</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span><span class="p">,</span>
                                           <span class="n">ModelSort</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">DESC</span><span class="p">)],</span>
                                <span class="n">filter_expr</span><span class="o">=</span><span class="n">ModelFilterAnd</span><span class="p">(</span>
                                                <span class="n">ModelFilter</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">GT</span><span class="p">),</span>
                                                <span class="n">ModelFilter</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">LT</span><span class="p">))))</span>
-    
+
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">blogs</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -437,8 +437,14 @@ it ignores tests subfolder as well as test_* / itest_* modules.</p>
 <dl class="class">
 <dt id="fantastico.mvc.base_controller.BaseController">
 <em class="property">class </em><tt class="descclassname">fantastico.mvc.base_controller.</tt><tt class="descname">BaseController</tt><big>(</big><em>settings_facade</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>This class provides common methods useful for every concrete controller. Even if no type checking is done in 
+<dd><p>This class provides common methods useful for every concrete controller. Even if no type checking is done in
 Fantastico it is recommended that every controller implementation inherits this class.</p>
+<dl class="attribute">
+<dt id="fantastico.mvc.base_controller.BaseController.curr_request">
+<tt class="descname">curr_request</tt><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.curr_request"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property returns the current http request being processed.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="fantastico.mvc.base_controller.BaseController.get_component_folder">
 <tt class="descname">get_component_folder</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.get_component_folder"><span class="viewcode-link">[source]</span></a></dt>
@@ -447,7 +453,7 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 <dl class="method">
 <dt id="fantastico.mvc.base_controller.BaseController.load_template">
-<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x1ca6408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a></dt>
+<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x15e4408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This method is responsible for loading a template from disk and render it using the given model data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">TestController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>

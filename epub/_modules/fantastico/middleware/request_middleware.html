@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -32,16 +32,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -60,62 +60,62 @@
     <span class="sd">&#39;&#39;&#39;This class provides the middleware responsible for converting wsgi environ dictionary into a request. The result is saved</span>
 <span class="sd">    into current WSGI environ under key **fantastico.request**. In addition each new request receives an identifier. If subsequent</span>
 <span class="sd">    requests are triggered from that request then they will also receive the same request id.&#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_app</span> <span class="o">=</span> <span class="n">app</span>
-        
+
     <span class="k">def</span> <span class="nf">_build_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Method used to build the context object starting for a request.&#39;&#39;&#39;</span>
-        
+
         <span class="n">client_langs</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">accept_language</span>
-        
+
         <span class="n">settings_facade</span> <span class="o">=</span> <span class="n">SettingsFacade</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
         <span class="n">supported_langs</span> <span class="o">=</span> <span class="n">settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;supported_languages&quot;</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">client_langs</span><span class="p">,</span> <span class="s">&quot;_parsed&quot;</span><span class="p">):</span>
             <span class="n">client_langs</span> <span class="o">=</span> <span class="n">client_langs</span><span class="o">.</span><span class="n">_parsed</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">client_langs</span> <span class="o">=</span> <span class="p">[]</span>
-         
+
         <span class="n">context</span> <span class="o">=</span> <span class="n">RequestContext</span><span class="p">(</span><span class="n">settings_facade</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_supported_lang</span><span class="p">(</span><span class="n">supported_langs</span><span class="p">,</span> <span class="n">client_langs</span><span class="p">))</span>
-        
+
         <span class="n">request</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
-        
+
     <span class="k">def</span> <span class="nf">_get_supported_lang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">supported_languages</span><span class="p">,</span> <span class="n">client_languages</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Method used to detect supported language by intersected the supported languages configured with the languages</span>
 <span class="sd">        requested by user.&#39;&#39;&#39;</span>
-        
+
         <span class="k">for</span> <span class="n">lang</span> <span class="ow">in</span> <span class="n">client_languages</span><span class="p">:</span>
             <span class="n">lang_code</span> <span class="o">=</span> <span class="n">lang</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot;_&quot;</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">lang_supported</span> <span class="ow">in</span> <span class="n">supported_languages</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">lang_code</span> <span class="o">==</span> <span class="n">lang_supported</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">Language</span><span class="p">(</span><span class="n">lang_code</span><span class="p">)</span>
-            
+
                 <span class="k">if</span><span class="p">(</span><span class="n">lang_supported</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">lang_code</span><span class="p">)):</span>
                     <span class="k">return</span> <span class="n">Language</span><span class="p">(</span><span class="n">lang_supported</span><span class="p">)</span>
-                
-        <span class="k">return</span> <span class="n">Language</span><span class="p">(</span><span class="n">supported_languages</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>        
-    
+
+        <span class="k">return</span> <span class="n">Language</span><span class="p">(</span><span class="n">supported_languages</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
     <span class="k">def</span> <span class="nf">_redirect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="p">,</span> <span class="n">query_params</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used to build a redirect response base on the given arguments.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="n">RedirectResponse</span><span class="p">(</span><span class="n">destination</span><span class="o">=</span><span class="n">destination</span><span class="p">,</span> <span class="n">query_params</span><span class="o">=</span><span class="n">query_params</span><span class="p">)</span>
-     
+
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">uuid_generator</span><span class="o">=</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">):</span>
         <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_build_context</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
-        
+
         <span class="n">request</span><span class="o">.</span><span class="n">request_id</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fantastico.current_request_id&quot;</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">request_id</span><span class="p">:</span>
             <span class="n">request</span><span class="o">.</span><span class="n">request_id</span> <span class="o">=</span> <span class="n">uuid_generator</span><span class="p">()</span>
-         
-        <span class="n">request</span><span class="o">.</span><span class="n">redirect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redirect</span>                                
-            
+
+        <span class="n">request</span><span class="o">.</span><span class="n">redirect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redirect</span>
+
         <span class="n">environ</span><span class="p">[</span><span class="s">&quot;fantastico.current_request_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">request_id</span>
         <span class="n">environ</span><span class="p">[</span><span class="s">&quot;fantastico.request&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span>
-        
+
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>

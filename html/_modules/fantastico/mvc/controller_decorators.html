@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.2.0-b93 documentation</title>
+    <title>fantastico.mvc.controller_decorators &mdash; fantastico 0.2.0-b94 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.2.0-b93',
+        VERSION:     '0.2.0-b94',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.2.0-b93 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.2.0-b94 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,16 +47,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -71,7 +71,7 @@
 
 <span class="k">class</span> <span class="nc">ModelsHolder</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class is used for holding all models injected into a controller.&#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method allows dictionary keys to be accessed as attributes.&#39;&#39;&#39;</span>
 
@@ -81,179 +81,182 @@
     <span class="sd">&#39;&#39;&#39;This class provides a decorator for magically registering methods as route handlers. This is an extremely important</span>
 <span class="sd">    piece of Fantastico framework because it simplifies the way you as developer can define mapping between a method that</span>
 <span class="sd">    must be executed when an http request to an url is made:</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. code-block:: python</span>
-<span class="sd">    </span>
+
 <span class="sd">        @ControllerProvider()</span>
-<span class="sd">        class BlogsController(BaseController):        </span>
-<span class="sd">            @Controller(url=&quot;/blogs/&quot;, method=&quot;GET&quot;, </span>
+<span class="sd">        class BlogsController(BaseController):</span>
+<span class="sd">            @Controller(url=&quot;/blogs/&quot;, method=&quot;GET&quot;,</span>
 <span class="sd">                        models={&quot;Blog&quot;: &quot;fantastico.plugins.blog.models.blog.Blog&quot;])</span>
 <span class="sd">            def list_blogs(self, request):</span>
 <span class="sd">                Blog = request.models.Blog</span>
-<span class="sd">            </span>
-<span class="sd">                blogs = Blog.get_records_paged(start_record=0, end_record=5, </span>
+
+<span class="sd">                blogs = Blog.get_records_paged(start_record=0, end_record=5,</span>
 <span class="sd">                                       sort_expr=[ModelSort(Blog.model_cls.create_date, ModelSort.ASC,</span>
 <span class="sd">                                                  ModelSort(Blog.model_cls.title, ModelSort.DESC)],</span>
 <span class="sd">                                       filter_expr=ModelFilterAnd(</span>
 <span class="sd">                                                       ModelFilter(Blog.model_cls.id, 1, ModelFilter.GT),</span>
 <span class="sd">                                                       ModelFilter(Blog.model_cls.id, 5, ModelFilter.LT))))</span>
-<span class="sd">            </span>
+
 <span class="sd">                return Response(blogs)</span>
-<span class="sd">            </span>
+
 <span class="sd">    The above code assume the following:</span>
-<span class="sd">    </span>
+
 <span class="sd">    #. As developer you created a model called blog (this is already mapped to some sort of storage).</span>
 <span class="sd">    #. Fantastico framework generate the facade automatically (and you never have to know anything about underlining repository).</span>
 <span class="sd">    #. Fantastico framework takes care of data conversion.</span>
 <span class="sd">    #. As developer you create the method that knows how to handle **/blog/** url.</span>
 <span class="sd">    #. Write your view.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Below you can find the design for MVC provided by **Fantastico** framework:</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. image:: /images/core/mvc.png&#39;&#39;&#39;</span>
-    
+
     <span class="n">_SUPPORTED_VERBS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;get&quot;</span><span class="p">,</span> <span class="s">&quot;head&quot;</span><span class="p">,</span> <span class="s">&quot;post&quot;</span><span class="p">,</span> <span class="s">&quot;put&quot;</span><span class="p">,</span> <span class="s">&quot;delete&quot;</span><span class="p">,</span> <span class="s">&quot;trace&quot;</span><span class="p">,</span> <span class="s">&quot;options&quot;</span><span class="p">,</span> <span class="s">&quot;connect&quot;</span><span class="p">,</span> <span class="s">&quot;patch&quot;</span><span class="p">]</span>
     <span class="n">_REGISTERED_ROUTES</span> <span class="o">=</span> <span class="p">{}</span>
-    
+
     <span class="nd">@property</span>
 <div class="viewcode-block" id="Controller.url"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.url">[docs]</a>    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property retrieves the url used when registering this controller.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="Controller.method"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.method">[docs]</a>    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property retrieves the method(s) for which this controller can be invoked. Most of the time only one value is</span>
 <span class="sd">        retrieved.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="Controller.models"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.models">[docs]</a>    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property retrieves all the models required by this controller in order to work correctly.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="Controller.fn_handler"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.fn_handler">[docs]</a>    <span class="k">def</span> <span class="nf">fn_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property retrieves the method which is executed by this controller.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span>
-    </div>
+</div>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="bp">None</span>
-                
+
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="p">[</span><span class="n">method</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="n">method</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_method_valid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="ow">not</span> <span class="n">models</span><span class="p">:</span>
             <span class="n">models</span> <span class="o">=</span> <span class="p">{}</span>
-            
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_models</span> <span class="o">=</span> <span class="n">models</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;model_facade&quot;</span><span class="p">,</span> <span class="n">ModelFacade</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_conn_manager</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;conn_manager&quot;</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span> <span class="o">=</span> <span class="bp">None</span>
-    
+
     <span class="k">def</span> <span class="nf">_is_method_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_methods</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method detects if the specified http method is valid or not.&#39;&#39;&#39;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">http_methods</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="n">http_methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">http_methods</span><span class="p">]</span>
-        
+
         <span class="k">for</span> <span class="n">http_method</span> <span class="ow">in</span> <span class="n">http_methods</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">http_method</span> <span class="ow">or</span> <span class="n">http_method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Controller</span><span class="o">.</span><span class="n">_SUPPORTED_VERBS</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">FantasticoControllerInvalidError</span><span class="p">(</span><span class="s">&quot;Http verb </span><span class="si">%s</span><span class="s"> not supported as controller method.&quot;</span> <span class="o">%</span> <span class="n">http_method</span><span class="p">)</span>
-    
+
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Controller.get_registered_routes"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_decorators.Controller.get_registered_routes">[docs]</a>    <span class="k">def</span> <span class="nf">get_registered_routes</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This class methods retrieve all registered routes through Controller decorator.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">_REGISTERED_ROUTES</span>
-    </div>
+</div>
     <span class="k">def</span> <span class="nf">_inject_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">session</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used to inject the models required by a controller into request. Model fully qualified</span>
 <span class="sd">        name is resolved to a class and appended to request.models attribute.&#39;&#39;&#39;</span>
-        
+
         <span class="n">models_to_inject</span> <span class="o">=</span> <span class="n">ModelsHolder</span><span class="p">()</span>
-        
+
         <span class="k">for</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
             <span class="n">model_cls</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">import_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="n">model_name</span><span class="p">])</span>
-            
+
             <span class="n">models_to_inject</span><span class="p">[</span><span class="n">model_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade</span><span class="p">(</span><span class="n">model_cls</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
-        
+
         <span class="n">request</span><span class="o">.</span><span class="n">models</span> <span class="o">=</span> <span class="n">models_to_inject</span>
-    
+
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orig_fn</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method takes care of registering the controller when the class is first loaded by python vm.&#39;&#39;&#39;</span>
-        
+
         <span class="k">def</span> <span class="nf">new_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;This method is the one that replaces the original decorated method.&#39;&#39;&#39;</span>
-            
+
             <span class="n">request</span> <span class="o">=</span> <span class="bp">None</span>
-            
+
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">request</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                
+
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">BaseController</span><span class="p">):</span>
+                    <span class="n">contr</span> <span class="o">=</span> <span class="n">request</span>
                     <span class="n">request</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+                    <span class="n">contr</span><span class="o">.</span><span class="n">curr_request</span> <span class="o">=</span> <span class="n">request</span>
             <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">FantasticoControllerInvalidError</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            
+
             <span class="n">conn_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn_manager</span> <span class="ow">or</span> <span class="n">mvc</span><span class="o">.</span><span class="n">CONN_MANAGER</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_inject_models</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">conn_manager</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">request_id</span><span class="p">))</span>
-            
+
             <span class="k">return</span> <span class="n">orig_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        
+
         <span class="n">new_handler</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__name__</span>
         <span class="n">new_handler</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__doc__</span>
         <span class="n">new_handler</span><span class="o">.</span><span class="n">__module</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__module__</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span> <span class="o">=</span> <span class="n">new_handler</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">get_registered_routes</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span>
-    </div>
+</div>
 <span class="k">class</span> <span class="nc">ControllerProvider</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This class marks a class as being a controller provider. It means that some of the methods from decorated class </span>
+    <span class="sd">&#39;&#39;&#39;This class marks a class as being a controller provider. It means that some of the methods from decorated class</span>
 <span class="sd">    provide routes that must be registered into routing engine.&#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="bp">None</span>
-        
+
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used to enrich all methods of the class with full_name attribute.&#39;&#39;&#39;</span>
-        
+
         <span class="k">def</span> <span class="nf">is_function</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;This function determines if the given obj argument is a function or not.&#39;&#39;&#39;</span>
-            
+
             <span class="k">return</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        
+
         <span class="k">for</span> <span class="n">meth_name</span><span class="p">,</span> <span class="n">meth_value</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">is_function</span><span class="p">):</span>
             <span class="n">full_name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">__module__</span><span class="p">,</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">)</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="n">meth_value</span><span class="p">,</span> <span class="s">&quot;full_name&quot;</span><span class="p">,</span> <span class="n">full_name</span><span class="p">)</span>
-                
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span> <span class="o">=</span> <span class="n">cls</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__doc__</span>
-        
+
         <span class="k">def</span> <span class="nf">instantiate</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;This method returns a new instance of the decorated class. It passes all arguments to the underlining class</span>
 <span class="sd">            __init__ method.&#39;&#39;&#39;</span>
-            
+
             <span class="n">instance</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            
+
             <span class="k">return</span> <span class="n">instance</span>
-        
+
         <span class="n">instantiate</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decorated_cls</span><span class="o">.</span><span class="n">__init__</span><span class="o">.</span><span class="n">__doc__</span>
-        
+
         <span class="k">return</span> <span class="n">instantiate</span>
 </pre></div>
 
@@ -285,7 +288,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

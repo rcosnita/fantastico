@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.exceptions &mdash; fantastico 0.2.0-b93 documentation</title>
+    <title>fantastico.exceptions &mdash; fantastico 0.2.0-b94 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.2.0-b93',
+        VERSION:     '0.2.0-b94',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.2.0-b93 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.2.0-b94 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,95 +47,103 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 
 <span class="sd">.. py:module:: fantastico.exceptions</span>
 
-<span class="sd">This package contains all core fantastico exceptions that are raised by different methods. </span>
+<span class="sd">This package contains all core fantastico exceptions that are raised by different methods.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="FantasticoError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;.. image:: /images/core/exceptions.png</span>
-<span class="sd">    </span>
+
 <span class="sd">    **FantasticoError** is the base of all exceptions raised within fantastico framework. It describe common attributes that</span>
-<span class="sd">    each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception. </span>
+<span class="sd">    each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception.</span>
 <span class="sd">    We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees</span>
 <span class="sd">    that at no moment errors will cause fantastico framework wsgi container to crash.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 </div>
 <div class="viewcode-block" id="FantasticoControllerInvalidError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoControllerInvalidError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoControllerInvalidError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This exception is raised whenever a method is decorated with </span>
+    <span class="sd">&#39;&#39;&#39;This exception is raised whenever a method is decorated with</span>
 <span class="sd">    :py:class:`fantastico.mvc.controller_decorators.Controller` and the number of arguments is not correct. Usually</span>
 <span class="sd">    developer forgot to add request as argument to the controller.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoClassNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoClassNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoClassNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.&#39;&#39;&#39;</span>
 </div>
 <div class="viewcode-block" id="FantasticoNotSupportedError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoNotSupportedError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoNotSupportedError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is raised whenever code tries to do an operation that is  not supported.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoSettingNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoSettingNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoSettingNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico</span>
 <span class="sd">    configuration.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoDuplicateRouteError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoDuplicateRouteError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoDuplicateRouteError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually raised by routing engine when it detects duplicate routes.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoNoRoutesError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoNoRoutesError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoNoRoutesError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually raised by routing engine when no loaders are configured or no routes are registered.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoRouteNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoRouteNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoRouteNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually raised by routing engine when a requested url is not registered.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoNoRequestError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoNoRequestError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoNoRequestError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This exception is usually raised when some components try to use fantastico.request from WSGI environ before </span>
+    <span class="sd">&#39;&#39;&#39;This exception is usually raised when some components try to use fantastico.request from WSGI environ before</span>
 <span class="sd">    :py:class:`fantastico.middleware.request_middleware.RequestMiddleware` was executed.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoContentTypeError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoContentTypeError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoContentTypeError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a mismatch between request accept and response content type. In</span>
 <span class="sd">    Fantastico we think it&#39;s mandatory to fulfill requests correctly and to take in consideration sent headers.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoHttpVerbNotSupported"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoHttpVerbNotSupported">[docs]</a><span class="k">class</span> <span class="nc">FantasticoHttpVerbNotSupported</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a route is accessed with an http verb which does not support.&#39;&#39;&#39;</span>
-    
+
     <span class="nd">@property</span>
 <div class="viewcode-block" id="FantasticoHttpVerbNotSupported.http_verb"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoHttpVerbNotSupported.http_verb">[docs]</a>    <span class="k">def</span> <span class="nf">http_verb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property returns the http verb that caused the problems.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_http_verb</span>
-    </div>
+</div>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_verb</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoHttpVerbNotSupported</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_http_verb</span> <span class="o">=</span> <span class="n">http_verb</span>
-        </div>
+</div>
 <div class="viewcode-block" id="FantasticoTemplateNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoTemplateNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoTemplateNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a controller tries to load a template which it does not found.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoIncompatibleClassError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoIncompatibleClassError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoIncompatibleClassError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually thrown when we want to decorate / inject / mixin a class into another class</span>
 <span class="sd">    that does not support it. For instance, we want to build a :py:class:`fantastico.mvc.model_facade.ModelFacade`</span>
 <span class="sd">    with a class that does not extend **BASEMODEL.**&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoDbError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoDbError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoDbError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a database exception occurs. For one good example where this is used see</span>
 <span class="sd">    :py:class:`fantastico.mvc.model_facade.ModelFacade`.&#39;&#39;&#39;</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoDbNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoDbNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoDbNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is </span>
-<span class="sd">    used see :py:class:`fantastico.mvc.model_facade.ModelFacade`.&#39;&#39;&#39;</span>    </div>
+    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is</span>
+<span class="sd">    used see :py:class:`fantastico.mvc.model_facade.ModelFacade`.&#39;&#39;&#39;</span>
+</div>
+<div class="viewcode-block" id="FantasticoInsufficientArgumentsError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoInsufficientArgumentsError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoInsufficientArgumentsError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a component extension received wrong number of arguments. See</span>
+<span class="sd">    :py:class:`fantastico.rendering.component.Component`.&#39;&#39;&#39;</span>
+</div>
+<div class="viewcode-block" id="FantasticoUrlInvokerError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoUrlInvokerError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoUrlInvokerError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This exception is usually thrown when an internal url invoker fails. For instance, if a component reusage rendering</span>
+<span class="sd">    fails then this exception is raised.&#39;&#39;&#39;</span></div>
 </pre></div>
 
           </div>
@@ -166,7 +174,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

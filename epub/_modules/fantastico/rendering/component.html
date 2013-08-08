@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -32,85 +32,239 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 
 <span class="sd">.. py:module:: fantastico.rendering.component</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoInsufficientArgumentsError</span><span class="p">,</span> <span class="n">FantasticoTemplateNotFoundError</span>
+<span class="kn">from</span> <span class="nn">fantastico.rendering.url_invoker</span> <span class="kn">import</span> <span class="n">FantasticoUrlInternalInvoker</span>
+<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="n">nodes</span>
+<span class="kn">from</span> <span class="nn">jinja2.exceptions</span> <span class="kn">import</span> <span class="n">TemplateSyntaxError</span><span class="p">,</span> <span class="n">TemplateNotFound</span>
+<span class="kn">from</span> <span class="nn">jinja2.ext</span> <span class="kn">import</span> <span class="n">Extension</span>
+<span class="kn">from</span> <span class="nn">jinja2.nodes</span> <span class="kn">import</span> <span class="n">Const</span>
+<span class="kn">from</span> <span class="nn">webob.request</span> <span class="kn">import</span> <span class="n">Request</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
 
-<div class="viewcode-block" id="Component"><a class="viewcode-back" href="../../../features/component_reusage.html#fantastico.rendering.component.Component">[docs]</a><span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;In fantastico, components are defined as a collection of classes and scripts grouped together as described in </span>
+<div class="viewcode-block" id="Component"><a class="viewcode-back" href="../../../features/component_reusage.html#fantastico.rendering.component.Component">[docs]</a><span class="k">class</span> <span class="nc">Component</span><span class="p">(</span><span class="n">Extension</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;In fantastico, components are defined as a collection of classes and scripts grouped together as described in</span>
 <span class="sd">    :doc:`/features/component_model`. Each fantastico component provides one or more public routes that can be accessed from</span>
 <span class="sd">    a browser or from other components. This class provides the mechanism for internal component referencing.</span>
-<span class="sd">    </span>
-<span class="sd">    In order to gain a better understanding about internal / in process component referencing we assume **Blog** component </span>
+
+<span class="sd">    In order to gain a better understanding about internal / in process component referencing we assume **Blog** component</span>
 <span class="sd">    provides the following public routes:</span>
-<span class="sd">    </span>
+
 <span class="sd">        * **/blog/articles/&lt;article_id&gt;** - Retrieves information about an article.</span>
 <span class="sd">        * **/blog/ui/articles/&lt;article_id&gt;** - Displays an article within a html container.</span>
-<span class="sd">    </span>
+
 <span class="sd">    The first url is a simple json endpoint while the second url is a simple html dynamic page. When we want to reuse a</span>
 <span class="sd">    datasource or an dynamic html page in fantastico is extremely easy to achieve. Lets first see possible responses from the</span>
-<span class="sd">    above mentioned endpoints: </span>
-<span class="sd">    </span>
+<span class="sd">    above mentioned endpoints:</span>
+
 <span class="sd">    .. code-block:: javascript</span>
-<span class="sd">        </span>
+
 <span class="sd">        /* /blog/articles/&lt;article_id&gt; response */</span>
 <span class="sd">        {&quot;id&quot;: 1,</span>
 <span class="sd">         &quot;title&quot;: &quot;Simple blog article&quot;,</span>
 <span class="sd">         &quot;content&quot;: &quot;This is a simple and easy to read blog article.&quot;}</span>
-<span class="sd">         </span>
+
 <span class="sd">    .. code-block:: html</span>
-<span class="sd">    </span>
+
 <span class="sd">        &lt;!-- /blog/ui/articles/&lt;article_id&gt; response--&gt;</span>
-<span class="sd">        </span>
+
 <span class="sd">        &lt;div class=&quot;blog-article&quot;&gt;</span>
 <span class="sd">            &lt;p class=&quot;title&quot;&gt;Simple blog article&lt;/p&gt;</span>
-<span class="sd">            </span>
+
 <span class="sd">            &lt;p class=&quot;content&quot;&gt;This is a simple and easy to read blog article.&lt;/p&gt;</span>
 <span class="sd">        &lt;/div&gt;</span>
-<span class="sd">    </span>
+
 <span class="sd">    A very common scenario is to create multiple views for a given endpoint.</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. code-block:: html</span>
-<span class="sd">    </span>
+
 <span class="sd">        &lt;!-- web service server side reusage --&gt;</span>
 <span class="sd">        {% component url=&quot;/blog/articles/1&quot;, template=&quot;/show_blog_formatted.html&quot;, runtime=&quot;server&quot; %}{% endcomponent %}</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. code-block:: html</span>
-<span class="sd">        </span>
+
 <span class="sd">        &lt;!-- show_blog_formatted.html --&gt;</span>
 <span class="sd">        &lt;p class=&quot;blog-title&quot;&gt;{{model.title}}&lt;/p&gt;</span>
 <span class="sd">        &lt;p class=&quot;blog-content&quot;&gt;{{model.content}}&lt;/p&gt;</span>
-<span class="sd">        </span>
+
 <span class="sd">    As you can see, json response is plugged into a given template name. It is mandatory that the given template exists on the</span>
 <span class="sd">    component root path.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Also a very common scenario is to include an endpoint that renders partial html into a page:</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. code-block:: html</span>
-<span class="sd">    </span>
+
 <span class="sd">        &lt;!-- html server side reusage --&gt;</span>
 <span class="sd">        {% component url=&quot;/blog/ui/articles/1&quot;,runtime=&quot;server&quot; %}{% endcomponent %}</span>
-<span class="sd">    </span>
+
 <span class="sd">    Runtime attribute is used for telling Fantastico if the rendering needs to take place on server side or on client. Currently,</span>
 <span class="sd">    only server side rendering is supported which actually means a page will be completed rendered on server and then the markup</span>
 <span class="sd">    is sent to the browser.</span>
-<span class="sd">    </span>
-<span class="sd">    In order to avoid reduce the required attributes for component tag, runtime attribute is optional with server as default</span>
-<span class="sd">    value.</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
+
+<span class="sd">    In order to reduce required attributes for component tag, runtime attribute is optional with server as default value.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">COMP_ARG_TEMPLATE</span> <span class="o">=</span> <span class="s">&quot;template&quot;</span>
+    <span class="n">COMP_TEMPLATE_DEFAULT</span> <span class="o">=</span> <span class="s">&quot;/raw_dump.html&quot;</span>
+
+    <span class="n">COMP_ARG_URL</span> <span class="o">=</span> <span class="s">&quot;url&quot;</span>
+    <span class="n">COMP_ARG_RUNTIME</span> <span class="o">=</span> <span class="s">&quot;runtime&quot;</span>
+    <span class="n">COMP_RUNTIME_DEFAULT</span> <span class="o">=</span> <span class="s">&quot;server&quot;</span>
+
+    <span class="n">tags</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s">&quot;component&quot;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">environment</span><span class="p">,</span> <span class="n">url_invoker_cls</span><span class="o">=</span><span class="n">FantasticoUrlInternalInvoker</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Component</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">environment</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url_invoker_cls</span> <span class="o">=</span> <span class="n">url_invoker_cls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_comp_search_path</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_class_abslocation</span><span class="p">(</span><span class="n">Component</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Component.parse"><a class="viewcode-back" href="../../../features/component_reusage.html#fantastico.rendering.component.Component.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to parse the component extension from template, identify named parameters and render it.</span>
+
+<span class="sd">        :param parser: The Jinja 2 expression parser.</span>
+<span class="sd">        :type parser: Jinja 2 parser.</span>
+<span class="sd">        :returns: A callblock able to render the component.</span>
+<span class="sd">        :raises FantasticoInsufficientArgumentsError: when no / not enough arguments are provided to component.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">lineno</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">lineno</span>
+
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">parser</span><span class="o">.</span><span class="n">parse_expression</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">skip_if</span><span class="p">(</span><span class="s">&quot;comma&quot;</span><span class="p">)</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">skip_if</span><span class="p">(</span><span class="s">&quot;assign&quot;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">expression</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_expression</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">TemplateSyntaxError</span><span class="p">:</span>
+                <span class="c"># occurs when some parameters are missing.</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">expression</span><span class="p">:</span>
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">named_params</span><span class="p">,</span> <span class="n">missing_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_named_params</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_missing_parameters</span><span class="p">(</span><span class="n">missing_params</span><span class="p">)</span>
+
+        <span class="n">method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_method</span><span class="p">(</span><span class="s">&quot;render&quot;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">named_params</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="n">lineno</span><span class="p">)</span>
+
+        <span class="n">body</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_statements</span><span class="p">([</span><span class="s">&#39;name:endcomponent&#39;</span><span class="p">],</span> <span class="n">drop_needle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">nodes</span><span class="o">.</span><span class="n">CallBlock</span><span class="p">(</span><span class="n">method</span><span class="p">,</span>
+                               <span class="p">[],</span>
+                               <span class="p">[],</span>
+                               <span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">set_lineno</span><span class="p">(</span><span class="n">lineno</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Component.render"><a class="viewcode-back" href="../../../features/component_reusage.html#fantastico.rendering.component.Component.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="n">COMP_TEMPLATE_DEFAULT</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="s">&quot;server&quot;</span><span class="p">,</span> <span class="n">caller</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to render the specified url using the given parameters.</span>
+
+<span class="sd">        :param template: The template we want to render into the result of the url.</span>
+<span class="sd">        :type template: string</span>
+<span class="sd">        :param url: The url we want to invoke.</span>
+<span class="sd">        :type url: string</span>
+<span class="sd">        :param runtime: The runtime we execute the rendering into. Only **server** is supported for now.</span>
+<span class="sd">        :type runtime: string</span>
+<span class="sd">        :param caller: The caller macro that can retrieve the body of the tag when invoked.</span>
+<span class="sd">        :type caller: macro</span>
+<span class="sd">        :returns: The rendered component result.</span>
+<span class="sd">        :raises fantastico.exceptions.FantasticoTemplateNotFoundError: Whenever we try to render a template which does not exist.</span>
+<span class="sd">        :raises fantastico.exceptions.FantasticoUrlInvokerError: Whenever an exception occurs invoking a url within the container.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c"># [rcosnita] do something with the inner body of the tag. Coming in a future version.</span>
+        <span class="n">caller</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">runtime</span> <span class="o">!=</span> <span class="s">&quot;server&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">remove_comp_filepath</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="n">template</span> <span class="o">==</span> <span class="n">Component</span><span class="o">.</span><span class="n">COMP_TEMPLATE_DEFAULT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">searchpath</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">/views&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comp_search_path</span><span class="p">)</span>
+
+            <span class="n">remove_comp_filepath</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="n">curr_request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">fantastico_request</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="o">.</span><span class="n">blank</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="n">request</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="n">curr_request</span><span class="o">.</span><span class="n">headers</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">cookies</span> <span class="o">=</span> <span class="n">curr_request</span><span class="o">.</span><span class="n">cookies</span>
+
+        <span class="n">url_invoker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url_invoker_cls</span><span class="p">(</span><span class="n">curr_request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">wsgi_app</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">url_invoker</span><span class="o">.</span><span class="n">invoke_url</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="n">template</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">({</span><span class="s">&quot;model&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">decode</span><span class="p">())})</span>
+        <span class="k">except</span> <span class="n">TemplateNotFound</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoTemplateNotFoundError</span><span class="p">(</span><span class="s">&quot;Template </span><span class="si">%s</span><span class="s"> does not exist.&quot;</span> <span class="o">%</span> <span class="n">template</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">remove_comp_filepath</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">searchpath</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</div>
+    <span class="k">def</span> <span class="nf">_get_named_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expressions</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method transform a list of expressions into a dictionary. It is mandatory that the given list has even number</span>
+<span class="sd">        of expressions otherwise an exception is raised.</span>
+
+<span class="sd">        :param expressions: A list of jinja2 expressions.</span>
+<span class="sd">        :type expressions: list</span>
+<span class="sd">        :returns: A tuple (list of kwargs nodes, dict of missing_arguments).&#39;&#39;&#39;</span>
+
+        <span class="n">named_params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">missing_params</span> <span class="o">=</span> <span class="p">{</span><span class="n">Component</span><span class="o">.</span><span class="n">COMP_ARG_TEMPLATE</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                          <span class="n">Component</span><span class="o">.</span><span class="n">COMP_ARG_URL</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                          <span class="n">Component</span><span class="o">.</span><span class="n">COMP_ARG_RUNTIME</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+
+        <span class="n">last_lineno</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">expr_iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">expressions</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">expr_name</span> <span class="ow">in</span> <span class="n">expr_iterator</span><span class="p">:</span>
+            <span class="n">expr_value</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">expr_iterator</span><span class="p">)</span>
+
+            <span class="n">missing_params</span><span class="p">[</span><span class="n">expr_name</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+
+            <span class="n">last_lineno</span> <span class="o">=</span> <span class="n">expr_value</span><span class="o">.</span><span class="n">lineno</span>
+            <span class="n">named_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">Keyword</span><span class="p">(</span><span class="n">expr_name</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">expr_value</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="n">last_lineno</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">missing_params</span><span class="p">[</span><span class="n">Component</span><span class="o">.</span><span class="n">COMP_ARG_TEMPLATE</span><span class="p">]:</span>
+            <span class="n">named_params</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nodes</span><span class="o">.</span><span class="n">Keyword</span><span class="p">(</span><span class="n">Component</span><span class="o">.</span><span class="n">COMP_ARG_TEMPLATE</span><span class="p">,</span>
+                                                 <span class="n">Const</span><span class="p">(</span><span class="n">Component</span><span class="o">.</span><span class="n">COMP_TEMPLATE_DEFAULT</span><span class="p">),</span> <span class="n">lineno</span><span class="o">=</span><span class="n">last_lineno</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">missing_params</span><span class="p">[</span><span class="n">Component</span><span class="o">.</span><span class="n">COMP_ARG_RUNTIME</span><span class="p">]:</span>
+            <span class="n">named_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">Keyword</span><span class="p">(</span><span class="n">Component</span><span class="o">.</span><span class="n">COMP_ARG_RUNTIME</span><span class="p">,</span> <span class="n">Const</span><span class="p">(</span><span class="n">Component</span><span class="o">.</span><span class="n">COMP_RUNTIME_DEFAULT</span><span class="p">),</span>
+                                              <span class="n">lineno</span><span class="o">=</span><span class="n">last_lineno</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">named_params</span><span class="p">,</span> <span class="n">missing_params</span>
+
+    <span class="k">def</span> <span class="nf">_validate_missing_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">missing_parameters</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method validates the dictionary containing all parameters of component marked with False if they are found and</span>
+<span class="sd">        True if they miss.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">missing_parameters</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">FantasticoInsufficientArgumentsError</span><span class="p">(</span><span class="s">&quot;Mandatory url parameter missing.&quot;</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

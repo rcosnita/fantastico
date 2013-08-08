@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="component_model.html" title="Component model"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.2.0-b93 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.2.0-b94 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -38,11 +38,11 @@
 <h1>Component reusage</h1>
 <dl class="class">
 <dt id="fantastico.rendering.component.Component">
-<em class="property">class </em><tt class="descclassname">fantastico.rendering.component.</tt><tt class="descname">Component</tt><a class="reference internal" href="../_modules/fantastico/rendering/component.html#Component"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>In fantastico, components are defined as a collection of classes and scripts grouped together as described in 
+<em class="property">class </em><tt class="descclassname">fantastico.rendering.component.</tt><tt class="descname">Component</tt><big>(</big><em>environment</em>, <em>url_invoker_cls=&lt;class 'fantastico.rendering.url_invoker.FantasticoUrlInternalInvoker'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/rendering/component.html#Component"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>In fantastico, components are defined as a collection of classes and scripts grouped together as described in
 <a class="reference internal" href="component_model.html"><em>Component model</em></a>. Each fantastico component provides one or more public routes that can be accessed from
 a browser or from other components. This class provides the mechanism for internal component referencing.</p>
-<p>In order to gain a better understanding about internal / in process component referencing we assume <strong>Blog</strong> component 
+<p>In order to gain a better understanding about internal / in process component referencing we assume <strong>Blog</strong> component
 provides the following public routes:</p>
 <blockquote>
 <div><ul class="simple">
@@ -63,7 +63,7 @@ above mentioned endpoints:</p>
 
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;blog-article&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;title&quot;</span><span class="nt">&gt;</span>Simple blog article<span class="nt">&lt;/p&gt;</span>
-    
+
     <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>This is a simple and easy to read blog article.<span class="nt">&lt;/p&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </pre></div>
@@ -88,8 +88,55 @@ component root path.</p>
 <p>Runtime attribute is used for telling Fantastico if the rendering needs to take place on server side or on client. Currently,
 only server side rendering is supported which actually means a page will be completed rendered on server and then the markup
 is sent to the browser.</p>
-<p>In order to avoid reduce the required attributes for component tag, runtime attribute is optional with server as default
-value.</p>
+<p>In order to reduce required attributes for component tag, runtime attribute is optional with server as default value.</p>
+<dl class="method">
+<dt id="fantastico.rendering.component.Component.parse">
+<tt class="descname">parse</tt><big>(</big><em>parser</em><big>)</big><a class="reference internal" href="../_modules/fantastico/rendering/component.html#Component.parse"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method is used to parse the component extension from template, identify named parameters and render it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parser</strong> (<em>Jinja 2 parser.</em>) &#8211; The Jinja 2 expression parser.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A callblock able to render the component.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Raises FantasticoInsufficientArgumentsError:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">when no / not enough arguments are provided to component.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.rendering.component.Component.render">
+<tt class="descname">render</tt><big>(</big><em>template='/raw_dump.html'</em>, <em>url=None</em>, <em>runtime='server'</em>, <em>caller=&lt;function &lt;lambda&gt; at 0x2e0d848&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/rendering/component.html#Component.render"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method is used to render the specified url using the given parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>template</strong> (<em>string</em>) &#8211; The template we want to render into the result of the url.</li>
+<li><strong>url</strong> (<em>string</em>) &#8211; The url we want to invoke.</li>
+<li><strong>runtime</strong> (<em>string</em>) &#8211; The runtime we execute the rendering into. Only <strong>server</strong> is supported for now.</li>
+<li><strong>caller</strong> (<em>macro</em>) &#8211; The caller macro that can retrieve the body of the tag when invoked.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The rendered component result.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="exceptions.html#fantastico.exceptions.FantasticoTemplateNotFoundError" title="fantastico.exceptions.FantasticoTemplateNotFoundError"><strong>fantastico.exceptions.FantasticoTemplateNotFoundError</strong></a> &#8211; Whenever we try to render a template which does not exist.</li>
+<li><a class="reference internal" href="exceptions.html#fantastico.exceptions.FantasticoUrlInvokerError" title="fantastico.exceptions.FantasticoUrlInvokerError"><strong>fantastico.exceptions.FantasticoUrlInvokerError</strong></a> &#8211; Whenever an exception occurs invoking a url within the container.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
