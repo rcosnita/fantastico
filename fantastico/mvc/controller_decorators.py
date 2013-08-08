@@ -183,7 +183,6 @@ class ControllerProvider(object):
 
     def __init__(self):
         self._decorated_cls = None
-        self.__doc__ = None
 
     def __call__(self, cls):
         '''This method is used to enrich all methods of the class with full_name attribute.'''
@@ -198,17 +197,18 @@ class ControllerProvider(object):
             setattr(meth_value, "full_name", full_name)
 
         self._decorated_cls = cls
-        self.__doc__ = cls.__doc__
 
         def instantiate(*args, **kwargs):
             '''This method returns a new instance of the decorated class. It passes all arguments to the underlining class
             __init__ method.'''
 
             instance = object.__new__(self._decorated_cls)
+
             self._decorated_cls.__init__(instance, *args, **kwargs)
 
             return instance
 
-        instantiate.__doc__ = self._decorated_cls.__init__.__doc__
+        instantiate.__name__ = cls.__name__
+        instantiate.__doc__ = cls.__doc__
 
         return instantiate

@@ -10,3 +10,4 @@ Fantastico features
    mvc
    component_model
    component_reusage
+   components_builtin
