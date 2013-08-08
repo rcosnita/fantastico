@@ -53,8 +53,8 @@ Technical summary
 Current limitations
 -------------------
 
-Because **Fantastico** framework is developed using an Agile mindset, only the minimum valuable scope was delivered. This
-mean there is currently not possible to:
+Because **Fantastico** framework is developed using an Agile mindset, only the minimum valuable scope was delivered for
+**Dynamic Menu** component. This mean is not currently possible to:
 
    * Localize your menu items.
    * Display the menu items in the request language dynamically.
