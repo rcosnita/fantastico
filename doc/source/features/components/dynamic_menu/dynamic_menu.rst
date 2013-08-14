@@ -39,9 +39,12 @@ In order to use dynamic menu component within your project follow the steps belo
 
       INSERT INTO menus(name) VALUES('My First Menu');
       INSERT INTO menu_items(target, url, title, label)
-      VALUES ('_blank', '/homepage', 'Simple and friendly description', 'Home'),
-             ('_blank', '/page2', 'Simple and friendly description', 'Page 2'),
-             ('_blank', '/page3', 'Simple and friendly description', 'Page 3');
+      VALUES ('_blank', '/homepage', 'Simple and friendly description', 'Home', <menu_id from previous step>),
+             ('_blank', '/page2', 'Simple and friendly description', 'Page 2', <menu_id from previous step>),
+             ('_blank', '/page3', 'Simple and friendly description', 'Page 3', <menu_id from previous step>);
+
+   By default, when this component is first setup into an application, the sample menu mentioned above is created in database. You
+   can test to see that dynamic menu works by accessing dev server url: http://localhost:12000/dynamic-menu/menus/1/items/.
 
 Current limitations
 -------------------
