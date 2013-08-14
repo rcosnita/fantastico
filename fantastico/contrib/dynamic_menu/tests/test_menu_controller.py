@@ -21,7 +21,6 @@ from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 import json
-from fantastico.contrib.dynamic_menu.models.menus import DynamicMenu, DynamicMenuItem
 from fantastico.contrib.dynamic_menu.menu_exceptions import FantasticoMenuNotFoundException
 
 class DynamicMenuControllerTests(FantasticoUnitTestsCase):
@@ -33,6 +32,8 @@ class DynamicMenuControllerTests(FantasticoUnitTestsCase):
         '''This method is invoked automatically in order to set common dependencies.'''
 
         from fantastico.contrib.dynamic_menu.menu_controller import DynamicMenuController
+
+        self.check_original_methods(DynamicMenuController)
 
         self._menu_contr = DynamicMenuController(Mock())
 
@@ -55,6 +56,8 @@ class DynamicMenuControllerTests(FantasticoUnitTestsCase):
 
     def test_menu_notfound(self):
         '''This test case ensures a concrete exception is thrown if the given menu identifier does not exist.'''
+
+        from fantastico.contrib.dynamic_menu.models.menus import DynamicMenu
 
         menu_id = 1500
         menus_facade = Mock()
@@ -95,6 +98,8 @@ class DynamicMenuControllerTests(FantasticoUnitTestsCase):
     def _mock_retrieve_items_request(self, menu_id, expected_items):
         '''This method is mocking all dependencies required in invoking retrieve_menu_items successfully. Mocks will return
         expected_items input'''
+
+        from fantastico.contrib.dynamic_menu.models.menus import DynamicMenuItem
 
         request = Mock()
         items_facade = Mock()
