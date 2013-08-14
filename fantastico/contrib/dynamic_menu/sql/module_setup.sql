@@ -35,3 +35,10 @@ CREATE TABLE menu_items(
 	PRIMARY KEY(id),
 	CONSTRAINT fk_menuitems_menu FOREIGN KEY(menu_id) REFERENCES menus(id)
 );
+
+INSERT INTO menus(id, name) VALUES(1, 'My First Menu');
+
+INSERT INTO menu_items(target, url, title, label, menu_id)
+VALUES ('_blank', '/homepage', 'Simple and friendly description', 'Home', 1),
+       ('_blank', '/page2', 'Simple and friendly description', 'Page 2', 1),
+       ('_blank', '/page3', 'Simple and friendly description', 'Page 3', 1);

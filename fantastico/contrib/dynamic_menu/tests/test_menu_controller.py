@@ -17,11 +17,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.dynamic_menu.tests.test_menu_controller
 '''
 
+from fantastico.contrib.dynamic_menu.menu_exceptions import FantasticoMenuNotFoundException
+from fantastico.contrib.dynamic_menu.models.menus import DynamicMenuItem, DynamicMenu
 from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 import json
-from fantastico.contrib.dynamic_menu.menu_exceptions import FantasticoMenuNotFoundException
 
 class DynamicMenuControllerTests(FantasticoUnitTestsCase):
     '''This class provides the test cases required for making sure dynamic menu offers specified functionality.'''
@@ -41,23 +42,24 @@ class DynamicMenuControllerTests(FantasticoUnitTestsCase):
         '''This test case ensures menu items are retrieved correctly for an existing menu identifier.'''
 
         menu_id = 1
+        mock_items = [DynamicMenuItem("self", "test url", "Simple title", "Simple label", menu_id),
+                      DynamicMenuItem("self", "test url 2", "Simple title 2", "Simple label 2", menu_id)]
         expected_items = [{"url": "test url", "target": "self", "title": "Simple title", "label": "Simple label"},
-                          {"url": "test url 2", "target": "self", "title 2": "Simple title 2", "label": "Simple label 2"}]
+                          {"url": "test url 2", "target": "self", "title": "Simple title 2", "label": "Simple label 2"}]
 
-        self._exec_retrieve_items_scenario(menu_id, expected_items, 2, expected_items)
+        self._exec_retrieve_items_scenario(menu_id, mock_items, 2, expected_items)
 
     def test_no_menu_items_available(self):
         '''This test case ensures a menu without menu items retrieves a valid JSON object.'''
 
         menu_id = 1
-        expected_items = None
+        mock_items = None
+        expected_items = []
 
-        self._exec_retrieve_items_scenario(menu_id, expected_items, 0, [])
+        self._exec_retrieve_items_scenario(menu_id, mock_items, 0, expected_items)
 
     def test_menu_notfound(self):
         '''This test case ensures a concrete exception is thrown if the given menu identifier does not exist.'''
-
-        from fantastico.contrib.dynamic_menu.models.menus import DynamicMenu
 
         menu_id = 1500
         menus_facade = Mock()
@@ -93,13 +95,16 @@ class DynamicMenuControllerTests(FantasticoUnitTestsCase):
 
         self.assertIsNotNone(items)
         self.assertEqual(len(items), expected_items_len)
-        self.assertEqual(items, expected_items)
+
+        for i, item in enumerate(expected_items):
+            self.assertEquals(items[i]["url"], item["url"])
+            self.assertEquals(items[i]["target"], item["target"])
+            self.assertEquals(items[i]["title"], item["title"])
+            self.assertEquals(items[i]["label"], item["label"])
 
     def _mock_retrieve_items_request(self, menu_id, expected_items):
         '''This method is mocking all dependencies required in invoking retrieve_menu_items successfully. Mocks will return
         expected_items input'''
-
-        from fantastico.contrib.dynamic_menu.models.menus import DynamicMenuItem
 
         request = Mock()
         items_facade = Mock()
