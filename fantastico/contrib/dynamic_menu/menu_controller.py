@@ -36,7 +36,7 @@ class DynamicMenuController(BaseController):
     .. image:: /images/components/dynamic_menu/erd.png
     '''
 
-    ITEMS_URL = "/dynamic-menu/menu/(?P<menu_id>\\d{1,})/$"
+    ITEMS_URL = "/dynamic-menu/menus/(?P<menu_id>\\d{1,})/items/$"
 
     @property
     def max_items(self):
@@ -70,7 +70,11 @@ class DynamicMenuController(BaseController):
 
         items = items_facade.get_records_paged(start_record=0, end_record=self.max_items,
                                                filter_expr=[ModelFilter(DynamicMenuItem.menu_id, menu_id, ModelFilter.EQ)])
+        items = [{"url": item.url,
+                  "target": item.target,
+                  "title": item.title,
+                  "label": item.label} for item in items or []]
 
-        body = json.dumps({"items": items or []})
+        body = json.dumps({"items": items})
 
         return Response(body, content_type="application/json")
