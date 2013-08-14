@@ -33,12 +33,12 @@ In order to use dynamic menu component within your project follow the steps belo
 
 #. Make sure you run **dynamic_menu/sql/module_setup.sql** against your configured database.
 
-#. This script will create **Menus** and **MenuItems** tables into your database.Below you can find a sample script for creating a menu:
+#. This script will create **menus** and **menu_items** tables into your database. Below you can find a sample script for creating a menu:
 
    .. code-block:: sql
 
-      INSERT INTO Menus(name) VALUES('My First Menu');
-      INSERT INTO MenuItems(target, url, title, label)
+      INSERT INTO menus(name) VALUES('My First Menu');
+      INSERT INTO menu_items(target, url, title, label)
       VALUES ('_blank', '/homepage', 'Simple and friendly description', 'Home'),
              ('_blank', '/page2', 'Simple and friendly description', 'Page 2'),
              ('_blank', '/page3', 'Simple and friendly description', 'Page 3');
