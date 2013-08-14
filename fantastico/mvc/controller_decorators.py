@@ -182,7 +182,7 @@ class ControllerProvider(object):
     provide routes that must be registered into routing engine.'''
 
     def __init__(self):
-        self._decorated_cls = None
+        pass
 
     def __call__(self, cls):
         '''This method is used to enrich all methods of the class with full_name attribute.'''
@@ -196,19 +196,4 @@ class ControllerProvider(object):
             full_name = "%s.%s.%s" % (cls.__module__, cls.__name__, meth_name)
             setattr(meth_value, "full_name", full_name)
 
-        self._decorated_cls = cls
-
-        def instantiate(*args, **kwargs):
-            '''This method returns a new instance of the decorated class. It passes all arguments to the underlining class
-            __init__ method.'''
-
-            instance = object.__new__(self._decorated_cls)
-
-            self._decorated_cls.__init__(instance, *args, **kwargs)
-
-            return instance
-
-        instantiate.__name__ = cls.__name__
-        instantiate.__doc__ = cls.__doc__
-
-        return instantiate
+        return cls
