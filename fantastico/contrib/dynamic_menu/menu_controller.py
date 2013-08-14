@@ -16,17 +16,61 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.contrib.dynamic_menu.menu_controller
 '''
+from fantastico.contrib.dynamic_menu.menu_exceptions import FantasticoMenuNotFoundException
+from fantastico.contrib.dynamic_menu.models.menus import DynamicMenuItem, DynamicMenu
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import ControllerProvider
+from fantastico.mvc.controller_decorators import ControllerProvider, Controller
+from fantastico.mvc.models.model_filter import ModelFilter
+from webob.response import Response
+import json
 
 @ControllerProvider()
 class DynamicMenuController(BaseController):
     '''This class provides the controller for dynamic menus. The following routes are automatically made available
     when dynamic menu component is deployed:
 
-        **/dynamic-menu/menu/<menu_id>** -- This route loads menu items from database and retrieve them in json format.
+        **/dynamic-menu/menu/<menu_id>/items** -- This route loads menu items from database and retrieve them in json format.
 
     Below you can see a diagram describing relation model of the menu:
 
     .. image:: /images/components/dynamic_menu/erd.png
     '''
+
+    ITEMS_URL = "/dynamic-menu/menu/(?P<menu_id>\\d{1,})/$"
+
+    @property
+    def max_items(self):
+        '''This property retrieves the maximum number of items allowed for a menu.'''
+
+        return 100
+
+    @Controller(url=ITEMS_URL, method="GET",
+                models={"Menus": "fantastico.contrib.dynamic_menu.models.menus.DynamicMenu",
+                        "Items": "fantastico.contrib.dynamic_menu.models.menus.DynamicMenuItem"})
+    def retrieve_menu_items(self, request, menu_id):
+        '''This method is used to retrieve all items associated with a specified menu.
+
+        :param request: Http request being processed.
+        :type request: HTTP request
+        :param menu_id: Menu unique identifier we want to retrieve information for.
+        :type menu_id: int
+        :returns: A JSON array containing all available menu items.
+        :raises fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException:
+            Whenever the requested menu does not exist.
+        '''
+
+        menu_id = int(menu_id)
+
+        menus_facade = request.models.Menus
+
+        if not menus_facade.find_by_pk({DynamicMenu.id: menu_id}):
+            raise FantasticoMenuNotFoundException("Menu %s does not exist." % menu_id)
+
+        items_facade = request.models.Items
+
+        items = items_facade.get_records_paged(start_record=0, end_record=self.max_items,
+                                               filter_expr=[ModelFilter(DynamicMenuItem.menu_id, menu_id, ModelFilter.EQ)])
+
+        body = json.dumps({"items": items or []})
+
+        return Response(body, content_type="application/json")
