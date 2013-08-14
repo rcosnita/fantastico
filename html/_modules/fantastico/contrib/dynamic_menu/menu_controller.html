@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.contrib.dynamic_menu.menu_controller &mdash; fantastico 0.2.0-b95 documentation</title>
+    <title>fantastico.contrib.dynamic_menu.menu_controller &mdash; fantastico 0.2.0-b96 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.2.0-b95',
+        VERSION:     '0.2.0-b96',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.2.0-b95 documentation" href="../../../../index.html" />
+    <link rel="top" title="fantastico 0.2.0-b96 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -62,20 +62,64 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.contrib.dynamic_menu.menu_controller</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.contrib.dynamic_menu.menu_exceptions</span> <span class="kn">import</span> <span class="n">FantasticoMenuNotFoundException</span>
+<span class="kn">from</span> <span class="nn">fantastico.contrib.dynamic_menu.models.menus</span> <span class="kn">import</span> <span class="n">DynamicMenuItem</span><span class="p">,</span> <span class="n">DynamicMenu</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
-<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span><span class="p">,</span> <span class="n">Controller</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter</span> <span class="kn">import</span> <span class="n">ModelFilter</span>
+<span class="kn">from</span> <span class="nn">webob.response</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
 <span class="nd">@ControllerProvider</span><span class="p">()</span>
 <div class="viewcode-block" id="DynamicMenuController"><a class="viewcode-back" href="../../../../features/components/dynamic_menu/dynamic_menu.html#fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController">[docs]</a><span class="k">class</span> <span class="nc">DynamicMenuController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the controller for dynamic menus. The following routes are automatically made available</span>
 <span class="sd">    when dynamic menu component is deployed:</span>
 
-<span class="sd">        **/dynamic-menu/menu/&lt;menu_id&gt;** -- This route loads menu items from database and retrieve them in json format.</span>
+<span class="sd">        **/dynamic-menu/menu/&lt;menu_id&gt;/items** -- This route loads menu items from database and retrieve them in json format.</span>
 
 <span class="sd">    Below you can see a diagram describing relation model of the menu:</span>
 
 <span class="sd">    .. image:: /images/components/dynamic_menu/erd.png</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">ITEMS_URL</span> <span class="o">=</span> <span class="s">&quot;/dynamic-menu/menu/(?P&lt;menu_id&gt;</span><span class="se">\\</span><span class="s">d{1,})/$&quot;</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DynamicMenuController.max_items"><a class="viewcode-back" href="../../../../features/components/dynamic_menu/dynamic_menu.html#fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController.max_items">[docs]</a>    <span class="k">def</span> <span class="nf">max_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property retrieves the maximum number of items allowed for a menu.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="mi">100</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">ITEMS_URL</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span>
+                <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Menus&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.contrib.dynamic_menu.models.menus.DynamicMenu&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;Items&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.contrib.dynamic_menu.models.menus.DynamicMenuItem&quot;</span><span class="p">})</span>
+<div class="viewcode-block" id="DynamicMenuController.retrieve_menu_items"><a class="viewcode-back" href="../../../../features/components/dynamic_menu/dynamic_menu.html#fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController.retrieve_menu_items">[docs]</a>    <span class="k">def</span> <span class="nf">retrieve_menu_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">menu_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to retrieve all items associated with a specified menu.</span>
+
+<span class="sd">        :param request: Http request being processed.</span>
+<span class="sd">        :type request: HTTP request</span>
+<span class="sd">        :param menu_id: Menu unique identifier we want to retrieve information for.</span>
+<span class="sd">        :type menu_id: int</span>
+<span class="sd">        :returns: A JSON array containing all available menu items.</span>
+<span class="sd">        :raises fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException:</span>
+<span class="sd">            Whenever the requested menu does not exist.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">menu_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">menu_id</span><span class="p">)</span>
+
+        <span class="n">menus_facade</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Menus</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">menus_facade</span><span class="o">.</span><span class="n">find_by_pk</span><span class="p">({</span><span class="n">DynamicMenu</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">menu_id</span><span class="p">}):</span>
+            <span class="k">raise</span> <span class="n">FantasticoMenuNotFoundException</span><span class="p">(</span><span class="s">&quot;Menu </span><span class="si">%s</span><span class="s"> does not exist.&quot;</span> <span class="o">%</span> <span class="n">menu_id</span><span class="p">)</span>
+
+        <span class="n">items_facade</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Items</span>
+
+        <span class="n">items</span> <span class="o">=</span> <span class="n">items_facade</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_items</span><span class="p">,</span>
+                                               <span class="n">filter_expr</span><span class="o">=</span><span class="p">[</span><span class="n">ModelFilter</span><span class="p">(</span><span class="n">DynamicMenuItem</span><span class="o">.</span><span class="n">menu_id</span><span class="p">,</span> <span class="n">menu_id</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">EQ</span><span class="p">)])</span>
+
+        <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;items&quot;</span><span class="p">:</span> <span class="n">items</span> <span class="ow">or</span> <span class="p">[]})</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -106,7 +150,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

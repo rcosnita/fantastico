@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>MVC How to &mdash; fantastico 0.2.0-b95 documentation</title>
+    <title>MVC How to &mdash; fantastico 0.2.0-b96 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2.0-b95',
+        VERSION:     '0.2.0-b96',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.2.0-b95 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.2.0-b96 documentation" href="../index.html" />
     <link rel="up" title="How to articles" href="how_to.html" />
     <link rel="next" title="Deployment how to" href="deployment_how_to.html" />
     <link rel="prev" title="How to articles" href="how_to.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="how_to.html" title="How to articles"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="how_to.html" accesskey="U">How to articles</a> &raquo;</li> 
       </ul>
     </div>  
@@ -90,12 +90,12 @@ If you follow this step by step guide in the end you will have a running blog wh
 <blockquote>
 <div><div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">BlogsController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
-    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/1/posts/&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/blogs/(?P&lt;blog_id&gt;</span><span class="se">\\</span><span class="s">d{1,})/posts/$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span>
                 <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Post&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.plugins.blog.models.posts.Post&quot;</span><span class="p">])</span>
-    <span class="k">def</span> <span class="nf">list_blog_posts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">list_blog_posts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">blog_id</span><span class="p">):</span>
         <span class="n">Post</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Post</span>
 
-        <span class="n">blog_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">blog_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">blog_id</span><span class="p">)</span>
 
         <span class="n">posts</span> <span class="o">=</span> <span class="n">Post</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
                                <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">ModelSort</span><span class="p">(</span><span class="n">Post</span><span class="o">.</span><span class="n">model_cls</span><span class="o">.</span><span class="n">created_date</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span><span class="p">),</span>
@@ -207,7 +207,7 @@ If you follow this step by step guide in the end you will have a running blog wh
         <li class="right" >
           <a href="how_to.html" title="How to articles"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="how_to.html" >How to articles</a> &raquo;</li> 
       </ul>
     </div>

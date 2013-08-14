@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -32,16 +32,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -53,6 +53,7 @@
 <span class="kn">from</span> <span class="nn">fantastico.mvc</span> <span class="kn">import</span> <span class="n">controller_decorators</span>
 <span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span><span class="p">,</span> <span class="n">SettingsFacade</span><span class="p">,</span> <span class="n">AwsStageSettings</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 
@@ -60,167 +61,181 @@
     <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each specific test case: Unit tests / Integration tests&#39;&#39;&#39;</span>
 
     <span class="n">FANTASTICO_CFG_OS_KEY</span> <span class="o">=</span> <span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span>
-        
+
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;We make the convention that setup method will always invoke init method for each test case.&#39;&#39;&#39;</span>
-        
+
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;init&quot;</span><span class="p">):</span>
             <span class="n">init</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;init&quot;</span><span class="p">)</span>
             <span class="n">init</span><span class="p">()</span>
-            
+
     <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;We make the convention that teardown method will always invoke cleanup method for each test case.&#39;&#39;&#39;</span>
-        
+
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;cleanup&quot;</span><span class="p">):</span>
             <span class="n">cleanup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&quot;cleanup&quot;</span><span class="p">)</span>
             <span class="n">cleanup</span><span class="p">()</span>
-    
+
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;We make the convention that setUpClass method will always invoke setup_once method for each test case class.&#39;&#39;&#39;</span>
-        
+
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;setup_once&quot;</span><span class="p">):</span>
             <span class="n">setup_once</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;setup_once&quot;</span><span class="p">)</span>
             <span class="n">setup_once</span><span class="p">()</span>
-        
-                    
+
+
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">tearDownClass</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;We make the convention that tearDownClass method will always invoke cleanup_once method for each test case class.&#39;&#39;&#39;</span> 
-        
+        <span class="sd">&#39;&#39;&#39;We make the convention that tearDownClass method will always invoke cleanup_once method for each test case class.&#39;&#39;&#39;</span>
+
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;cleanup_once&quot;</span><span class="p">):</span>
             <span class="n">cleanup</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="s">&quot;cleanup_once&quot;</span><span class="p">)</span>
             <span class="n">cleanup</span><span class="p">()</span>
 
 <span class="k">class</span> <span class="nc">FakeControllerDecorator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is a simple mock that can be used to replace Controller decorator.&#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">pass</span>
-    
+
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orig_fn</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">fn_replace</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">orig_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        
+
         <span class="k">return</span> <span class="n">fn_replace</span>
 
 
 <div class="viewcode-block" id="FantasticoUnitTestsCase"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase">[docs]</a><span class="k">class</span> <span class="nc">FantasticoUnitTestsCase</span><span class="p">(</span><span class="n">FantasticoBaseTestCase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each unit test written for fantastico.</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. code-block:: python</span>
-<span class="sd">    </span>
+
 <span class="sd">        class SimpleUnitTest(FantasticoUnitTestsCase):</span>
 <span class="sd">            def init(self):</span>
 <span class="sd">                self._msg = &quot;Hello world&quot;</span>
-<span class="sd">                </span>
+
 <span class="sd">            def test_simple_flow_ok(self):</span>
 <span class="sd">                self.assertEqual(&quot;Hello world&quot;, self._msg)&#39;&#39;&#39;</span>
-    
+
 <div class="viewcode-block" id="FantasticoUnitTestsCase._get_root_folder"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase._get_root_folder">[docs]</a>    <span class="k">def</span> <span class="nf">_get_root_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method determines the root folder under which core is executed.&#39;&#39;&#39;</span>
 
         <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    </div>
+</div>
 <div class="viewcode-block" id="FantasticoUnitTestsCase._get_class_root_folder"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase._get_class_root_folder">[docs]</a>    <span class="k">def</span> <span class="nf">_get_class_root_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This methods determines the root folder under which the test is executed.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    </div>
+</div>
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="FantasticoUnitTestsCase.setup_once"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase.setup_once">[docs]</a>    <span class="k">def</span> <span class="nf">setup_once</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is overriden in order to correctly mock some dependencies:</span>
-<span class="sd">        </span>
+
 <span class="sd">        * :py:class:`fantastico.mvc.controller_decorators.Controller`</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        
+
         <span class="n">cls</span><span class="o">.</span><span class="n">_old_controller_decorator</span> <span class="o">=</span> <span class="n">controller_decorators</span><span class="o">.</span><span class="n">Controller</span>
         <span class="n">controller_decorators</span><span class="o">.</span><span class="n">Controller</span> <span class="o">=</span> <span class="n">FakeControllerDecorator</span>
-    </div>
+</div>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">cleanup_once</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>        
+    <span class="k">def</span> <span class="nf">cleanup_once</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="n">controller_decorators</span><span class="o">.</span><span class="n">Controller</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_old_controller_decorator</span>
-    </div>
+
+<div class="viewcode-block" id="FantasticoUnitTestsCase.check_original_methods"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoUnitTestsCase.check_original_methods">[docs]</a>    <span class="k">def</span> <span class="nf">check_original_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_obj</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method ensures that for a given class only original non decorated methods will be invoked. Extremely useful</span>
+<span class="sd">        when you want to make sure @Controller decorator does not break your tests. It is strongly recommended to invoke</span>
+<span class="sd">        this method on all classes which might contain @Controller decorator. It ease your when committing on CI environment.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">controller_decorators</span><span class="o">.</span><span class="n">Controller</span> <span class="o">!=</span> <span class="n">FakeControllerDecorator</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">meth_name</span><span class="p">,</span> <span class="n">meth_value</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">cls_obj</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">meth_value</span><span class="p">,</span> <span class="s">&quot;orig_fn&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">cls_obj</span><span class="p">,</span> <span class="n">meth_name</span><span class="p">,</span> <span class="n">meth_value</span><span class="o">.</span><span class="n">orig_fn</span><span class="p">)</span>
+</div></div>
 <div class="viewcode-block" id="FantasticoIntegrationTestCase"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase">[docs]</a><span class="k">class</span> <span class="nc">FantasticoIntegrationTestCase</span><span class="p">(</span><span class="n">FantasticoBaseTestCase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the base class that must be inherited by each integration test written for fantastico.</span>
 
 <span class="sd">    .. code-block:: python</span>
-<span class="sd">    </span>
+
 <span class="sd">        class SimpleIntegration(FantasticoIntegrationTestCase):</span>
 <span class="sd">            def init(self):</span>
 <span class="sd">                self.simple_class = {}</span>
-<span class="sd">            </span>
+
 <span class="sd">            def cleanup(self):</span>
 <span class="sd">                self.simple_class = None</span>
-<span class="sd">            </span>
+
 <span class="sd">            def test_simple_ok(self):</span>
 <span class="sd">                def do_stuff(env, env_cls):</span>
 <span class="sd">                    self.assertEqual(simple_class[env], env_cls)</span>
-<span class="sd">                    </span>
+
 <span class="sd">                self._run_test_all_envs(do_stuff)</span>
-<span class="sd">                </span>
+
 <span class="sd">    If you used this class you don&#39;t have to mind about restoring call methods from each middleware once they are wrapped</span>
 <span class="sd">    by fantastico app. This is a must because otherwise you will crash other tests.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    
+
     <span class="nd">@property</span>
 <div class="viewcode-block" id="FantasticoIntegrationTestCase._envs"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase._envs">[docs]</a>    <span class="k">def</span> <span class="nf">_envs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Private property that holds the environments against which we run the integration tests.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__envs</span>
-    </div>
+</div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="FantasticoIntegrationTestCase.fantastico_cfg_os_key"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase.fantastico_cfg_os_key">[docs]</a>    <span class="k">def</span> <span class="nf">fantastico_cfg_os_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property holds the name of os environment variable used for setting up active fantastico configuration.&#39;&#39;&#39;</span>
-        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">FANTASTICO_CFG_OS_KEY</span>    
-    </div>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">FANTASTICO_CFG_OS_KEY</span>
+</div>
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__envs</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&quot;fantastico.settings.BasicSettings&quot;</span><span class="p">,</span> <span class="n">BasicSettings</span><span class="p">),</span>
                        <span class="p">(</span><span class="s">&quot;fantastico.settings.AwsStageSettings&quot;</span><span class="p">,</span> <span class="n">AwsStageSettings</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__old_middlewares_call</span> <span class="o">=</span> <span class="p">[]</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_call_methods</span><span class="p">(</span><span class="n">SettingsFacade</span><span class="p">()</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">installed_middleware</span><span class="p">)</span>
-        
+
         <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoIntegrationTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
-        
+
     <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_restore_call_methods</span><span class="p">()</span>
-        
+
         <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoIntegrationTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">tearDown</span><span class="p">()</span>
-    
+
 <div class="viewcode-block" id="FantasticoIntegrationTestCase._save_call_methods"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase._save_call_methods">[docs]</a>    <span class="k">def</span> <span class="nf">_save_call_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">middlewares</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method save all call methods for each listed middleware so that later on they can be restored.&#39;&#39;&#39;</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">__old_middlewares_call</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">FantasticoApp</span><span class="p">,</span> <span class="n">FantasticoApp</span><span class="o">.</span><span class="n">__call__</span><span class="p">))</span>
-        
+
         <span class="k">for</span> <span class="n">middleware_cls</span> <span class="ow">in</span> <span class="n">middlewares</span><span class="p">:</span>
             <span class="n">middleware_cls</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">import_class</span><span class="p">(</span><span class="n">middleware_cls</span><span class="p">)</span>
-            
+
             <span class="bp">self</span><span class="o">.</span><span class="n">__old_middlewares_call</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">middleware_cls</span><span class="p">,</span> <span class="n">middleware_cls</span><span class="o">.</span><span class="n">__call__</span><span class="p">))</span>
-                    </div>
+</div>
 <div class="viewcode-block" id="FantasticoIntegrationTestCase._restore_call_methods"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase._restore_call_methods">[docs]</a>    <span class="k">def</span> <span class="nf">_restore_call_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method restore original call methods to all affected middlewares.&#39;&#39;&#39;</span>
-        
+
         <span class="k">for</span> <span class="n">middleware</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__old_middlewares_call</span><span class="p">:</span>
             <span class="n">middleware</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__call__</span> <span class="o">=</span> <span class="n">middleware</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            </div>
+</div>
 <div class="viewcode-block" id="FantasticoIntegrationTestCase._run_test_all_envs"><a class="viewcode-back" href="../../../get_started/contribute.html#fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs">[docs]</a>    <span class="k">def</span> <span class="nf">_run_test_all_envs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callable_obj</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used to execute a callable block of code on all environments. This is extremely useful for</span>
-<span class="sd">        avoid boiler plate code duplication and executing test logic against all environments.        </span>
+<span class="sd">        avoid boiler plate code duplication and executing test logic against all environments.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        
+
         <span class="n">old_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">)</span>
-        
-        <span class="k">for</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_envs</span><span class="p">:</span>            
-            <span class="k">try</span><span class="p">:</span>                
+
+        <span class="k">for</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_envs</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">env</span>
-                
+
                 <span class="n">callable_obj</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">)</span>
             <span class="k">finally</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">old_env</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="n">old_env</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-                    
+
                 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_env</span></div></div>
 </pre></div>
 

@@ -14,9 +14,9 @@
 \contentsline {section}{\numberline {2.3}Contribute}{6}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Code contribution}{6}{subsection.2.3.1}
 \contentsline {subsubsection}{Writing unit tests}{6}{subsubsection*.15}
-\contentsline {subsubsection}{Writing integration tests}{7}{subsubsection*.20}
+\contentsline {subsubsection}{Writing integration tests}{7}{subsubsection*.21}
 \contentsline {section}{\numberline {2.4}Development mode}{8}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Hot deploy}{8}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.1}Hot deploy}{9}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}API}{9}{subsection.2.4.2}
 \contentsline {subsection}{\numberline {2.4.3}Database config}{9}{subsection.2.4.3}
 \contentsline {chapter}{\numberline {3}Fantastico features}{11}{chapter.3}
@@ -39,40 +39,40 @@
 \contentsline {subsection}{\numberline {3.4.3}Model}{19}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}View}{23}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}Controller}{23}{subsection.3.4.5}
-\contentsline {subsubsection}{Available filters}{24}{subsubsection*.92}
-\contentsline {subsection}{\numberline {3.4.6}Database session management}{25}{subsection.3.4.6}
+\contentsline {subsubsection}{Available filters}{24}{subsubsection*.93}
+\contentsline {subsection}{\numberline {3.4.6}Database session management}{26}{subsection.3.4.6}
 \contentsline {section}{\numberline {3.5}Component model}{26}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Static folder}{26}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Sql folder}{26}{subsection.3.5.2}
-\contentsline {subsubsection}{Sql folder example}{26}{subsubsection*.112}
-\contentsline {section}{\numberline {3.6}Component reusage}{27}{section.3.6}
-\contentsline {section}{\numberline {3.7}Built in components}{28}{section.3.7}
+\contentsline {subsection}{\numberline {3.5.1}Static folder}{27}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Sql folder}{27}{subsection.3.5.2}
+\contentsline {subsubsection}{Sql folder example}{27}{subsubsection*.116}
+\contentsline {section}{\numberline {3.6}Component reusage}{28}{section.3.6}
+\contentsline {section}{\numberline {3.7}Built in components}{29}{section.3.7}
 \contentsline {subsection}{\numberline {3.7.1}Dynamic menu}{29}{subsection.3.7.1}
-\contentsline {subsubsection}{Integration}{29}{subsubsection*.116}
-\contentsline {subsubsection}{Technical summary}{29}{subsubsection*.117}
-\contentsline {subsubsection}{Current limitations}{30}{subsubsection*.119}
-\contentsline {chapter}{\numberline {4}How to articles}{31}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{31}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{31}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{31}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{32}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{32}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Deployment how to}{32}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{33}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{34}{subsubsection*.120}
-\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{34}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{35}{subsubsection*.121}
-\contentsline {subsubsection}{Optimization}{35}{subsubsection*.122}
-\contentsline {subsubsection}{Setup with S3}{36}{subsubsection*.123}
-\contentsline {section}{\numberline {4.3}Static assets}{36}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{36}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{37}{subsubsection*.124}
-\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{37}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Creating a new project}{37}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Create first component}{37}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{38}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{38}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Changes}{39}{chapter.5}
-\contentsline {chapter}{\numberline {6}Build status}{41}{chapter.6}
-\contentsline {chapter}{\numberline {7}License}{43}{chapter.7}
-\contentsline {chapter}{Index}{45}{section*.125}
+\contentsline {subsubsection}{Integration}{29}{subsubsection*.120}
+\contentsline {subsubsection}{Current limitations}{30}{subsubsection*.121}
+\contentsline {subsubsection}{Technical summary}{30}{subsubsection*.122}
+\contentsline {chapter}{\numberline {4}How to articles}{33}{chapter.4}
+\contentsline {section}{\numberline {4.1}MVC How to}{33}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Code the model}{33}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Code the controller}{33}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Code the view}{34}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Test your application}{34}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Deployment how to}{34}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{35}{subsection.4.2.1}
+\contentsline {subsubsection}{Setup}{36}{subsubsection*.127}
+\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{36}{subsection.4.2.2}
+\contentsline {subsubsection}{Setup}{37}{subsubsection*.128}
+\contentsline {subsubsection}{Optimization}{37}{subsubsection*.129}
+\contentsline {subsubsection}{Setup with S3}{38}{subsubsection*.130}
+\contentsline {section}{\numberline {4.3}Static assets}{38}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{38}{subsection.4.3.1}
+\contentsline {subsubsection}{Favicon}{39}{subsubsection*.131}
+\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{39}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Creating a new project}{39}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Create first component}{39}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{40}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{40}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Changes}{41}{chapter.5}
+\contentsline {chapter}{\numberline {6}Build status}{43}{chapter.6}
+\contentsline {chapter}{\numberline {7}License}{45}{chapter.7}
+\contentsline {chapter}{Index}{47}{section*.132}

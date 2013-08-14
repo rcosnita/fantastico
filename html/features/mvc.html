@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Model View Controller &mdash; fantastico 0.2.0-b95 documentation</title>
+    <title>Model View Controller &mdash; fantastico 0.2.0-b96 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2.0-b95',
+        VERSION:     '0.2.0-b96',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.2.0-b95 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.2.0-b96 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="Component model" href="component_model.html" />
     <link rel="prev" title="Routing engine" href="routing_engine.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -181,7 +181,7 @@ filter expressions specified (if any).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter_expr</strong> (<em>list</em>) &#8211; A list of <tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter.ModelFilterAbstract</span></tt> which are applied in order.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter_expr</strong> (<em>list</em>) &#8211; A list of <a class="reference internal" href="#fantastico.mvc.models.model_filter.ModelFilterAbstract" title="fantastico.mvc.models.model_filter.ModelFilterAbstract"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter.ModelFilterAbstract</span></tt></a> which are applied in order.</td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="exceptions.html#fantastico.exceptions.FantasticoDbError" title="fantastico.exceptions.FantasticoDbError">fantastico.exceptions.FantasticoDbError</a>:</th></tr>
 <tr class="field-even field"><td>&nbsp;</td><td class="field-body">This exception is raised whenever an exception occurs in retrieving
@@ -298,7 +298,7 @@ is rollback automatically so that other consumers can still work as expected.</t
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start_record</strong> (<em>int</em>) &#8211; A zero indexed integer that specifies the first record number.</li>
 <li><strong>end_record</strong> (<em>int</em>) &#8211; A zero indexed integer that specifies the last record number.</li>
-<li><strong>filter_expr</strong> (<em>list</em>) &#8211; A list of <tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter.ModelFilterAbstract</span></tt> which are applied in order.</li>
+<li><strong>filter_expr</strong> (<em>list</em>) &#8211; A list of <a class="reference internal" href="#fantastico.mvc.models.model_filter.ModelFilterAbstract" title="fantastico.mvc.models.model_filter.ModelFilterAbstract"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter.ModelFilterAbstract</span></tt></a> which are applied in order.</li>
 <li><strong>sort_expr</strong> (<em>list</em>) &#8211; A list of <a class="reference internal" href="#fantastico.mvc.models.model_sort.ModelSort" title="fantastico.mvc.models.model_sort.ModelSort"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_sort.ModelSort</span></tt></a> which are applied in order.</li>
 </ul>
 </td>
@@ -470,7 +470,7 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 <dl class="method">
 <dt id="fantastico.mvc.base_controller.BaseController.load_template">
-<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x21df408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.base_controller.BaseController.load_template" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x1e70408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.base_controller.BaseController.load_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is responsible for loading a template from disk and render it using the given model data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">TestController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
@@ -486,6 +486,36 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 <div class="section" id="available-filters">
 <h3>Available filters<a class="headerlink" href="#available-filters" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="fantastico.mvc.models.model_filter.ModelFilterAbstract">
+<em class="property">class </em><tt class="descclassname">fantastico.mvc.models.model_filter.</tt><tt class="descname">ModelFilterAbstract</tt><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter.html#ModelFilterAbstract"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.models.model_filter.ModelFilterAbstract" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the base class that defines the contract a model filter must follow. A model filter is a class that decouples
+sqlalchemy framework from Fantastico MVC. This is required because in the future we might want to change the ORM that
+powers Fantastico without breaking all existing code.</p>
+<img alt="../_images/mvc_filters.png" src="../_images/mvc_filters.png" />
+<p>For seeing how to implement filters (probably you won&#8217;t need to do this) see some existing filters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#fantastico.mvc.models.model_filter.ModelFilter" title="fantastico.mvc.models.model_filter.ModelFilter"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter.ModelFilter</span></tt></a></li>
+<li><a class="reference internal" href="#fantastico.mvc.models.model_filter_compound.ModelFilterCompound" title="fantastico.mvc.models.model_filter_compound.ModelFilterCompound"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter_compound.ModelFilterCompound</span></tt></a></li>
+<li><a class="reference internal" href="#fantastico.mvc.models.model_filter_compound.ModelFilterAnd" title="fantastico.mvc.models.model_filter_compound.ModelFilterAnd"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter_compound.ModelFilterAnd</span></tt></a></li>
+<li><a class="reference internal" href="#fantastico.mvc.models.model_filter_compound.ModelFilterOr" title="fantastico.mvc.models.model_filter_compound.ModelFilterOr"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.models.model_filter_compound.ModelFilterOr</span></tt></a></li>
+</ul>
+</div></blockquote>
+<dl class="method">
+<dt id="fantastico.mvc.models.model_filter.ModelFilterAbstract.build">
+<tt class="descname">build</tt><big>(</big><em>query</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter.html#ModelFilterAbstract.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.models.model_filter.ModelFilterAbstract.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used for appending the current filter to the query using sqlalchemy specific language.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.mvc.models.model_filter.ModelFilterAbstract.get_expression">
+<tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter.html#ModelFilterAbstract.get_expression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.models.model_filter.ModelFilterAbstract.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used for retrieving native sqlalchemy expression held by this filter.</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="fantastico.mvc.models.model_filter_compound.ModelFilterCompound">
 <em class="property">class </em><tt class="descclassname">fantastico.mvc.models.model_filter_compound.</tt><tt class="descname">ModelFilterCompound</tt><big>(</big><em>operation</em>, <em>*args</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter_compound.html#ModelFilterCompound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.models.model_filter_compound.ModelFilterCompound" title="Permalink to this definition">¶</a></dt>
@@ -705,7 +735,7 @@ profile. You can read more on <a class="reference internal" href="../get_started
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

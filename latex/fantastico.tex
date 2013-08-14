@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{August 08, 2013}
-\release{0.2.0-b95}
+\date{August 14, 2013}
+\release{0.2.0-b96}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -544,7 +544,7 @@ This is the base class that must be inherited by each unit test written for fant
 \PYG{k}{class} \PYG{n+nc}{SimpleUnitTest}\PYG{p}{(}\PYG{n}{FantasticoUnitTestsCase}\PYG{p}{)}\PYG{p}{:}
     \PYG{k}{def} \PYG{n+nf}{init}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}msg} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world}\PYG{l+s}{\PYGZdq{}}
-        
+
     \PYG{k}{def} \PYG{n+nf}{test\PYGZus{}simple\PYGZus{}flow\PYGZus{}ok}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}msg}\PYG{p}{)}
 \end{Verbatim}
@@ -561,6 +561,16 @@ This methods determines the root folder under which the test is executed.
 \begin{fulllineitems}
 \phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoUnitTestsCase._get_root_folder}\pysiglinewithargsret{\bfcode{\_get\_root\_folder}}{}{}
 This method determines the root folder under which core is executed.
+
+\end{fulllineitems}
+
+\index{check\_original\_methods() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/contribute:fantastico.tests.base_case.FantasticoUnitTestsCase.check_original_methods}\pysiglinewithargsret{\bfcode{check\_original\_methods}}{\emph{cls\_obj}}{}
+This method ensures that for a given class only original non decorated methods will be invoked. Extremely useful
+when you want to make sure @Controller decorator does not break your tests. It is strongly recommended to invoke
+this method on all classes which might contain @Controller decorator. It ease your when committing on CI environment.
 
 \end{fulllineitems}
 
@@ -595,14 +605,14 @@ This is the base class that must be inherited by each integration test written f
 \PYG{k}{class} \PYG{n+nc}{SimpleIntegration}\PYG{p}{(}\PYG{n}{FantasticoIntegrationTestCase}\PYG{p}{)}\PYG{p}{:}
     \PYG{k}{def} \PYG{n+nf}{init}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{simple\PYGZus{}class} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}
-    
+
     \PYG{k}{def} \PYG{n+nf}{cleanup}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{simple\PYGZus{}class} \PYG{o}{=} \PYG{n+nb+bp}{None}
-    
+
     \PYG{k}{def} \PYG{n+nf}{test\PYGZus{}simple\PYGZus{}ok}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{k}{def} \PYG{n+nf}{do\PYGZus{}stuff}\PYG{p}{(}\PYG{n}{env}\PYG{p}{,} \PYG{n}{env\PYGZus{}cls}\PYG{p}{)}\PYG{p}{:}
             \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{n}{simple\PYGZus{}class}\PYG{p}{[}\PYG{n}{env}\PYG{p}{]}\PYG{p}{,} \PYG{n}{env\PYGZus{}cls}\PYG{p}{)}
-            
+
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}run\PYGZus{}test\PYGZus{}all\PYGZus{}envs}\PYG{p}{(}\PYG{n}{do\PYGZus{}stuff}\PYG{p}{)}
 \end{Verbatim}
 
@@ -752,7 +762,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x50697c0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4ef37c0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1502,7 +1512,7 @@ filter expressions specified (if any).
 \end{Verbatim}
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode
-\textbf{filter\_expr} (\emph{list}) -- A list of \code{fantastico.mvc.models.model\_filter.ModelFilterAbstract} which are applied in order.
+\textbf{filter\_expr} (\emph{list}) -- A list of {\hyperref[features/mvc:fantastico.mvc.models.model_filter.ModelFilterAbstract]{\code{fantastico.mvc.models.model\_filter.ModelFilterAbstract}}} which are applied in order.
 
 \item[{Raises {\hyperref[features/exceptions:fantastico.exceptions.FantasticoDbError]{fantastico.exceptions.FantasticoDbError}}}] \leavevmode
 This exception is raised whenever an exception occurs in retrieving
@@ -1625,7 +1635,7 @@ This method retrieves all records matching the given filters sorted by the given
 \textbf{end\_record} (\emph{int}) -- A zero indexed integer that specifies the last record number.
 
 \item {} 
-\textbf{filter\_expr} (\emph{list}) -- A list of \code{fantastico.mvc.models.model\_filter.ModelFilterAbstract} which are applied in order.
+\textbf{filter\_expr} (\emph{list}) -- A list of {\hyperref[features/mvc:fantastico.mvc.models.model_filter.ModelFilterAbstract]{\code{fantastico.mvc.models.model\_filter.ModelFilterAbstract}}} which are applied in order.
 
 \item {} 
 \textbf{sort\_expr} (\emph{list}) -- A list of {\hyperref[features/mvc:fantastico.mvc.models.model_sort.ModelSort]{\code{fantastico.mvc.models.model\_sort.ModelSort}}} which are applied in order.
@@ -1830,7 +1840,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x21df408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1e70408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -1851,7 +1861,51 @@ The above snippet will search for \textbf{hello.html} into component folder/view
 
 
 \subsubsection{Available filters}
-\label{features/mvc:available-filters}\index{ModelFilterCompound (class in fantastico.mvc.models.model\_filter\_compound)}
+\label{features/mvc:available-filters}\index{ModelFilterAbstract (class in fantastico.mvc.models.model\_filter)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilterAbstract}\pysigline{\strong{class }\code{fantastico.mvc.models.model\_filter.}\bfcode{ModelFilterAbstract}}
+This is the base class that defines the contract a model filter must follow. A model filter is a class that decouples
+sqlalchemy framework from Fantastico MVC. This is required because in the future we might want to change the ORM that
+powers Fantastico without breaking all existing code.
+
+\includegraphics{mvc_filters.png}
+
+For seeing how to implement filters (probably you won't need to do this) see some existing filters:
+\begin{itemize}
+\item {} 
+{\hyperref[features/mvc:fantastico.mvc.models.model_filter.ModelFilter]{\code{fantastico.mvc.models.model\_filter.ModelFilter}}}
+
+\item {} 
+{\hyperref[features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterCompound]{\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound}}}
+
+\item {} 
+{\hyperref[features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterAnd]{\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterAnd}}}
+
+\item {} 
+{\hyperref[features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterOr]{\code{fantastico.mvc.models.model\_filter\_compound.ModelFilterOr}}}
+
+\end{itemize}
+\index{build() (fantastico.mvc.models.model\_filter.ModelFilterAbstract method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilterAbstract.build}\pysiglinewithargsret{\bfcode{build}}{\emph{query}}{}
+This method is used for appending the current filter to the query using sqlalchemy specific language.
+
+\end{fulllineitems}
+
+\index{get\_expression() (fantastico.mvc.models.model\_filter.ModelFilterAbstract method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter.ModelFilterAbstract.get_expression}\pysiglinewithargsret{\bfcode{get\_expression}}{}{}
+This method is used for retrieving native sqlalchemy expression held by this filter.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{ModelFilterCompound (class in fantastico.mvc.models.model\_filter\_compound)}
 
 \begin{fulllineitems}
 \phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterCompound}\pysiglinewithargsret{\strong{class }\code{fantastico.mvc.models.model\_filter\_compound.}\bfcode{ModelFilterCompound}}{\emph{operation}, \emph{*args}}{}
@@ -2249,7 +2303,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3a0e6b0\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x369f6b0\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2348,26 +2402,6 @@ This script will create \textbf{Menus} and \textbf{MenuItems} tables into your d
 \end{enumerate}
 
 
-\subsubsection{Technical summary}
-\label{features/components/dynamic_menu/dynamic_menu:technical-summary}\index{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)}
-
-\begin{fulllineitems}
-\phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController}\pysigline{\strong{class }\code{fantastico.contrib.dynamic\_menu.menu\_controller.}\bfcode{DynamicMenuController}}
-This class provides the controller for dynamic menus. The following routes are automatically made available
-when dynamic menu component is deployed:
-\begin{quote}
-
-\textbf{/dynamic-menu/menu/\textless{}menu\_id\textgreater{}} -- This route loads menu items from database and retrieve them in json format.
-\end{quote}
-
-Below you can see a diagram describing relation model of the menu:
-
-\includegraphics{erd.png}
-
-\end{fulllineitems}
-
-
-
 \subsubsection{Current limitations}
 \label{features/components/dynamic_menu/dynamic_menu:current-limitations}
 Because \textbf{Fantastico} framework is developed using an Agile mindset, only the minimum valuable scope was delivered for
@@ -2379,7 +2413,72 @@ Localize your menu items.
 \item {} 
 Display the menu items in the request language dynamically.
 
+\item {} 
+Only first 100 menu items can be currently retrieved.
+
 \end{itemize}
+
+
+\subsubsection{Technical summary}
+\label{features/components/dynamic_menu/dynamic_menu:technical-summary}\index{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.dynamic\_menu.menu\_controller.}\bfcode{DynamicMenuController}}{\emph{settings\_facade}}{}
+This class provides the controller for dynamic menus. The following routes are automatically made available
+when dynamic menu component is deployed:
+\begin{quote}
+
+\textbf{/dynamic-menu/menu/\textless{}menu\_id\textgreater{}/items} -- This route loads menu items from database and retrieve them in json format.
+\end{quote}
+
+Below you can see a diagram describing relation model of the menu:
+
+\includegraphics{erd.png}
+\index{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController.max_items}\pysigline{\bfcode{max\_items}}
+This property retrieves the maximum number of items allowed for a menu.
+
+\end{fulllineitems}
+
+\index{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController.retrieve_menu_items}\pysiglinewithargsret{\bfcode{retrieve\_menu\_items}}{\emph{*args}, \emph{**kwargs}}{}
+This method is used to retrieve all items associated with a specified menu.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{request} (\emph{HTTP request}) -- Http request being processed.
+
+\item {} 
+\textbf{menu\_id} (\emph{int}) -- Menu unique identifier we want to retrieve information for.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+A JSON array containing all available menu items.
+
+\item[{Raises {\hyperref[features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException]{fantastico.contrib.dynamic\_menu.menu\_exceptions.FantasticoMenuNotFoundException}}}] \leavevmode
+Whenever the requested menu does not exist.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException}\pysigline{\strong{class }\code{fantastico.contrib.dynamic\_menu.menu\_exceptions.}\bfcode{FantasticoMenuNotFoundException}}
+This class defines a concrete fantastico menu not found exception raised whenever someone tries to access an inexistent
+menu attributes.
+
+\end{fulllineitems}
+
 
 
 \chapter{How to articles}
@@ -2435,12 +2534,12 @@ Create a new module called \textbf{blog\_controller} and paste the following cod
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/1/posts/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/(?P\PYGZlt{}blog\PYGZus{}id\PYGZgt{}}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s}{d\PYGZob{}1,\PYGZcb{})/posts/\PYGZdl{}}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
                 \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.posts.Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
-    \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blog\PYGZus{}posts}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blog\PYGZus{}posts}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{)}\PYG{p}{:}
         \PYG{n}{Post} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Post}
 
-        \PYG{n}{blog\PYGZus{}id} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{request}\PYG{o}{.}\PYG{n}{params}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+        \PYG{n}{blog\PYGZus{}id} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{blog\PYGZus{}id}\PYG{p}{)}
 
         \PYG{n}{posts} \PYG{o}{=} \PYG{n}{Post}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{,}
                                \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{created\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{)}\PYG{p}{,}

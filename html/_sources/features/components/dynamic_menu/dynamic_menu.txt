@@ -43,13 +43,6 @@ In order to use dynamic menu component within your project follow the steps belo
              ('_blank', '/page2', 'Simple and friendly description', 'Page 2'),
              ('_blank', '/page3', 'Simple and friendly description', 'Page 3');
 
-
-Technical summary
------------------
-
-.. autoclass:: fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController
-   :members:
-   
 Current limitations
 -------------------
 
@@ -58,3 +51,13 @@ Because **Fantastico** framework is developed using an Agile mindset, only the m
 
    * Localize your menu items.
    * Display the menu items in the request language dynamically.
+   * Only first 100 menu items can be currently retrieved.
+
+Technical summary
+-----------------
+
+.. autoclass:: fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController
+   :members:
+
+.. autoclass:: fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException
+   :members:

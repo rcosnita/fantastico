@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.mvc.models.model_filter &mdash; fantastico 0.2.0-b95 documentation</title>
+    <title>fantastico.mvc.models.model_filter &mdash; fantastico 0.2.0-b96 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.2.0-b95',
+        VERSION:     '0.2.0-b96',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.2.0-b95 documentation" href="../../../../index.html" />
+    <link rel="top" title="fantastico 0.2.0-b96 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -65,7 +65,7 @@
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">ABCMeta</span>
 <span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoNotSupportedError</span>
 
-<span class="k">class</span> <span class="nc">ModelFilterAbstract</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+<div class="viewcode-block" id="ModelFilterAbstract"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter.ModelFilterAbstract">[docs]</a><span class="k">class</span> <span class="nc">ModelFilterAbstract</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This is the base class that defines the contract a model filter must follow. A model filter is a class that decouples</span>
 <span class="sd">    sqlalchemy framework from Fantastico MVC. This is required because in the future we might want to change the ORM that</span>
 <span class="sd">    powers Fantastico without breaking all existing code.</span>
@@ -81,13 +81,13 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+<div class="viewcode-block" id="ModelFilterAbstract.build"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter.ModelFilterAbstract.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used for appending the current filter to the query using sqlalchemy specific language.&#39;&#39;&#39;</span>
-    
+    </div>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">get_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ModelFilterAbstract.get_expression"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter.ModelFilterAbstract.get_expression">[docs]</a>    <span class="k">def</span> <span class="nf">get_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used for retrieving native sqlalchemy expression held by this filter.&#39;&#39;&#39;</span>
-
+</div></div>
 <div class="viewcode-block" id="ModelFilter"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter.ModelFilter">[docs]</a><span class="k">class</span> <span class="nc">ModelFilter</span><span class="p">(</span><span class="n">ModelFilterAbstract</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides a model filter wrapper used to dynamically transform an operation to sql alchemy filter</span>
 <span class="sd">    statements. You can see below how to use it:</span>
@@ -220,7 +220,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

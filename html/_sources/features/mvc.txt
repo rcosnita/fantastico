@@ -28,7 +28,7 @@ want).
     :members:
     
 If you want to find more details and use cases for controller read :ref:`core-controller-section` section.
-        
+
 Model
 -----
 
@@ -65,7 +65,7 @@ If you are using the **Fantastico MVC** support you don't need to manually creat
 View
 ----
 
-A view can be a simple html plain file or html + jinja2 enriched support. You can read more about **Jinja2** 
+A view can be a simple html plain file or html + jinja2 enriched support. You can read more about **Jinja2**
 `here <http://jinja.pocoo.org/docs/>`_. Usually, if you need some logical block statements in your view (if, for, ...)
 it is easier to use jinja 2 template engine. The good news is that you can easily embed jinja 2 markup in your views
 and it will be rendered automatically.
@@ -81,14 +81,14 @@ that needs to be rendered. In some cases you don't really need view in order to 
     * A REST Web service.
     * A RSS feed provider.
     * A file download service
-    
+
 Though writing REST services does not require a view, you can load external text templates that might be useful for assembling the
 response:
 
     * An invoice generator service
     * An xml file that must be filled with product data
     * A `vCard <http://en.wikipedia.org/wiki/VCard>`_. export service.
-    
+
 If you want to read a small tutorial and to start coding very fast on Fantastico MVC read :doc:`/how_to/mvc_how_to`. Controller
 API is documented :py:class:`fantastico.mvc.controller_decorator.Controller`.
 
@@ -100,6 +100,9 @@ API is documented :py:class:`fantastico.mvc.controller_decorator.Controller`.
 
 Available filters
 ~~~~~~~~~~~~~~~~~
+
+.. autoclass:: fantastico.mvc.models.model_filter.ModelFilterAbstract
+   :members:
 
 .. autoclass:: fantastico.mvc.models.model_filter_compound.ModelFilterCompound
     :members:

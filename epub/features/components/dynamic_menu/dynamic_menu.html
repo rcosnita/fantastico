@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../components_builtin.html" title="Built in components"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b95 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
           <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../../components_builtin.html" accesskey="U">Built in components</a> &raquo;</li> 
       </ul>
@@ -75,20 +75,6 @@ This component which we generic named dynamic menu simply provides the controlle
 </li>
 </ol>
 </div>
-<div class="section" id="technical-summary">
-<h2>Technical summary</h2>
-<dl class="class">
-<dt id="fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController">
-<em class="property">class </em><tt class="descclassname">fantastico.contrib.dynamic_menu.menu_controller.</tt><tt class="descname">DynamicMenuController</tt><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_menu/menu_controller.html#DynamicMenuController"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>This class provides the controller for dynamic menus. The following routes are automatically made available
-when dynamic menu component is deployed:</p>
-<blockquote>
-<div><strong>/dynamic-menu/menu/&lt;menu_id&gt;</strong> &#8211; This route loads menu items from database and retrieve them in json format.</div></blockquote>
-<p>Below you can see a diagram describing relation model of the menu:</p>
-<img alt="../../../_images/erd.png" src="../../../_images/erd.png" />
-</dd></dl>
-
-</div>
 <div class="section" id="current-limitations">
 <h2>Current limitations</h2>
 <p>Because <strong>Fantastico</strong> framework is developed using an Agile mindset, only the minimum valuable scope was delivered for
@@ -97,8 +83,61 @@ when dynamic menu component is deployed:</p>
 <div><ul class="simple">
 <li>Localize your menu items.</li>
 <li>Display the menu items in the request language dynamically.</li>
+<li>Only first 100 menu items can be currently retrieved.</li>
 </ul>
 </div></blockquote>
+</div>
+<div class="section" id="technical-summary">
+<h2>Technical summary</h2>
+<dl class="class">
+<dt id="fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController">
+<em class="property">class </em><tt class="descclassname">fantastico.contrib.dynamic_menu.menu_controller.</tt><tt class="descname">DynamicMenuController</tt><big>(</big><em>settings_facade</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_menu/menu_controller.html#DynamicMenuController"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the controller for dynamic menus. The following routes are automatically made available
+when dynamic menu component is deployed:</p>
+<blockquote>
+<div><strong>/dynamic-menu/menu/&lt;menu_id&gt;/items</strong> &#8211; This route loads menu items from database and retrieve them in json format.</div></blockquote>
+<p>Below you can see a diagram describing relation model of the menu:</p>
+<img alt="../../../_images/erd.png" src="../../../_images/erd.png" />
+<dl class="attribute">
+<dt id="fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController.max_items">
+<tt class="descname">max_items</tt><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_menu/menu_controller.html#DynamicMenuController.max_items"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property retrieves the maximum number of items allowed for a menu.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController.retrieve_menu_items">
+<tt class="descname">retrieve_menu_items</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_menu/menu_controller.html#DynamicMenuController.retrieve_menu_items"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method is used to retrieve all items associated with a specified menu.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request</strong> (<em>HTTP request</em>) &#8211; Http request being processed.</li>
+<li><strong>menu_id</strong> (<em>int</em>) &#8211; Menu unique identifier we want to retrieve information for.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A JSON array containing all available menu items.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="#fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException" title="fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException">fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException</a>:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first last">Whenever the requested menu does not exist.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException">
+<em class="property">class </em><tt class="descclassname">fantastico.contrib.dynamic_menu.menu_exceptions.</tt><tt class="descname">FantasticoMenuNotFoundException</tt><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_menu/menu_exceptions.html#FantasticoMenuNotFoundException"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class defines a concrete fantastico menu not found exception raised whenever someone tries to access an inexistent
+menu attributes.</p>
+</dd></dl>
+
 </div>
 </div>
 
