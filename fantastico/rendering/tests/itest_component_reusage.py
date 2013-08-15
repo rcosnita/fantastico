@@ -18,7 +18,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.server.tests.itest_dev_server import DevServerIntegration
 from urllib.request import Request
-import json
 import urllib
 
 class ComponentReusageIntegration(DevServerIntegration):
@@ -36,7 +35,7 @@ class ComponentReusageIntegration(DevServerIntegration):
 
         endpoint = "/mvc/reuse-component"
 
-        def invoke_url_with_component(server):
+        def retrieve_menu_items(server):
             request = Request(self._get_server_base_url(server, endpoint))
 
             self._response = urllib.request.urlopen(request)
@@ -51,14 +50,14 @@ class ComponentReusageIntegration(DevServerIntegration):
             self.assertTrue(body.find("'inner_message': {'message': 'inner_message'}") > -1)
             self.assertTrue(body.find("'message': 'Hello world'") > -1)
 
-        self._run_test_against_dev_server(invoke_url_with_component, assert_ok)
+        self._run_test_against_dev_server(retrieve_menu_items, assert_ok)
 
     def test_component_remote_model_local_view_rendering(self):
         '''This test case covers the scenario where a remote model is plugged into a local view.'''
 
         endpoint = "/simple-component/foreign-component-reusage"
 
-        def invoke_url_with_component(server):
+        def retrieve_menu_items(server):
             request = Request(self._get_server_base_url(server, endpoint))
 
             self._response = urllib.request.urlopen(request)
@@ -72,4 +71,4 @@ class ComponentReusageIntegration(DevServerIntegration):
 
             self.assertTrue(body.find("Hello inner_message") > -1)
 
-        self._run_test_against_dev_server(invoke_url_with_component, assert_ok)
+        self._run_test_against_dev_server(retrieve_menu_items, assert_ok)
