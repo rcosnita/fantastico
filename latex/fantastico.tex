@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{August 14, 2013}
-\release{0.2.0-b96}
+\date{August 19, 2013}
+\release{0.2.0-b97}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -675,18 +675,18 @@ This class provides the foundation for writing integration tests that do http re
 
     \PYG{k}{def} \PYG{n+nf}{test\PYGZus{}server\PYGZus{}runs\PYGZus{}ok}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{k}{def} \PYG{n+nf}{request\PYGZus{}logic}\PYG{p}{(}\PYG{n}{server}\PYG{p}{)}\PYG{p}{:}
-            \PYG{n}{request} \PYG{o}{=} \PYG{n}{Request}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}get\PYGZus{}server\PYGZus{}base\PYGZus{}url}\PYG{p}{(}\PYG{n}{server}\PYG{p}{,} \PYG{n}{DummyRouteLoader}\PYG{o}{.}\PYG{n}{DUMMY\PYGZus{}ROUTE}\PYG{p}{)}\PYG{p}{)} 
+            \PYG{n}{request} \PYG{o}{=} \PYG{n}{Request}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}get\PYGZus{}server\PYGZus{}base\PYGZus{}url}\PYG{p}{(}\PYG{n}{server}\PYG{p}{,} \PYG{n}{DummyRouteLoader}\PYG{o}{.}\PYG{n}{DUMMY\PYGZus{}ROUTE}\PYG{p}{)}\PYG{p}{)}
             \PYG{k}{with} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertRaises}\PYG{p}{(}\PYG{n}{HTTPError}\PYG{p}{)} \PYG{k}{as} \PYG{n}{cm}\PYG{p}{:}
                 \PYG{n}{urllib}\PYG{o}{.}\PYG{n}{request}\PYG{o}{.}\PYG{n}{urlopen}\PYG{p}{(}\PYG{n}{request}\PYG{p}{)}
-                
+
             \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}exception} \PYG{o}{=} \PYG{n}{cm}\PYG{o}{.}\PYG{n}{exception}
-            
+
         \PYG{k}{def} \PYG{n+nf}{assert\PYGZus{}logic}\PYG{p}{(}\PYG{n}{server}\PYG{p}{)}\PYG{p}{:}
             \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{l+m+mi}{400}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}exception}\PYG{o}{.}\PYG{n}{code}\PYG{p}{)}
-            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world.}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}exception}\PYG{o}{.}\PYG{n}{read}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{decode}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}                    
-            
+            \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{assertEqual}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world.}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}exception}\PYG{o}{.}\PYG{n}{read}\PYG{p}{(}\PYG{p}{)}\PYG{o}{.}\PYG{n}{decode}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}
+
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}run\PYGZus{}test\PYGZus{}all\PYGZus{}envs}\PYG{p}{(}\PYG{k}{lambda} \PYG{n}{env}\PYG{p}{,} \PYG{n}{settings\PYGZus{}cls}\PYG{p}{:} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{\PYGZus{}run\PYGZus{}test\PYGZus{}against\PYGZus{}dev\PYGZus{}server}\PYG{p}{(}\PYG{n}{request\PYGZus{}logic}\PYG{p}{,} \PYG{n}{assert\PYGZus{}logic}\PYG{p}{)}\PYG{p}{)}
-        
+
         \PYG{c}{\PYGZsh{} you can also pass only request logic without assert logic}
         \PYG{c}{\PYGZsh{} self.\PYGZus{}run\PYGZus{}test\PYGZus{}all\PYGZus{}envs(lambda env, settings\PYGZus{}cls: self.\PYGZus{}run\PYGZus{}test\PYGZus{}against\PYGZus{}dev\PYGZus{}server(request\PYGZus{}logic))}
 \end{Verbatim}
@@ -715,7 +715,7 @@ This method returns the absolute url for a given relative url (route).
 \begin{fulllineitems}
 \phantomsection\label{get_started/contribute:fantastico.server.tests.itest_dev_server.DevServerIntegration._run_test_against_dev_server}\pysiglinewithargsret{\bfcode{\_run\_test\_against\_dev\_server}}{\emph{request\_logic}, \emph{assert\_logic=None}}{}
 This method provides a template for writing integration tests that requires a development server being active.
-It accepts a request logic (code that actually do the http request) and an assert logic for making sure 
+It accepts a request logic (code that actually do the http request) and an assert logic for making sure
 code is correct.
 
 \end{fulllineitems}
@@ -762,7 +762,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4ef37c0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x56c8a68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1840,7 +1840,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1e70408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2646408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2108,7 +2108,7 @@ active session ready to be used:
 
 \begin{fulllineitems}
 \phantomsection\label{features/mvc:fantastico.middleware.model_session_middleware.ModelSessionMiddleware}\pysiglinewithargsret{\strong{class }\code{fantastico.middleware.model\_session\_middleware.}\bfcode{ModelSessionMiddleware}}{\emph{app}, \emph{settings\_facade=\textless{}class `fantastico.settings.SettingsFacade'\textgreater{}}}{}
-This class is responsible for managing database connections across requests. It also takes care of 
+This class is responsible for managing database connections across requests. It also takes care of
 connection data pools. By default, the middleware is automatically configured to open a connection. If
 you don't need mvc (really improbable but still) you simply need to change your project active settings
 profile. You can read more on {\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}}
@@ -2303,7 +2303,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x369f6b0\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3eb66b0\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2389,15 +2389,18 @@ In all views where you want to reuse the component you can paste the following s
 Make sure you run \textbf{dynamic\_menu/sql/module\_setup.sql} against your configured database.
 
 \item {} 
-This script will create \textbf{Menus} and \textbf{MenuItems} tables into your database.Below you can find a sample script for creating a menu:
+This script will create \textbf{menus} and \textbf{menu\_items} tables into your database. Below you can find a sample script for creating a menu:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{Menus}\PYG{p}{(}\PYG{n}{name}\PYG{p}{)} \PYG{k}{VALUES}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}My First Menu\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
-\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{MenuItems}\PYG{p}{(}\PYG{n}{target}\PYG{p}{,} \PYG{n}{url}\PYG{p}{,} \PYG{n}{title}\PYG{p}{,} \PYG{n}{label}\PYG{p}{)}
-\PYG{k}{VALUES} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/homepage\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Home\PYGZsq{}}\PYG{p}{)}\PYG{p}{,}
-       \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/page2\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Page 2\PYGZsq{}}\PYG{p}{)}\PYG{p}{,}
-       \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/page3\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Page 3\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{menus}\PYG{p}{(}\PYG{n}{name}\PYG{p}{)} \PYG{k}{VALUES}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}My First Menu\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{menu\PYGZus{}items}\PYG{p}{(}\PYG{n}{target}\PYG{p}{,} \PYG{n}{url}\PYG{p}{,} \PYG{n}{title}\PYG{p}{,} \PYG{n}{label}\PYG{p}{)}
+\PYG{k}{VALUES} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/homepage\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Home\PYGZsq{}}\PYG{p}{,} \PYG{o}{\PYGZlt{}}\PYG{n}{menu\PYGZus{}id} \PYG{k}{from} \PYG{n}{previous} \PYG{n}{step}\PYG{o}{\PYGZgt{}}\PYG{p}{)}\PYG{p}{,}
+       \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/page2\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Page 2\PYGZsq{}}\PYG{p}{,} \PYG{o}{\PYGZlt{}}\PYG{n}{menu\PYGZus{}id} \PYG{k}{from} \PYG{n}{previous} \PYG{n}{step}\PYG{o}{\PYGZgt{}}\PYG{p}{)}\PYG{p}{,}
+       \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}blank\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/page3\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Simple and friendly description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Page 3\PYGZsq{}}\PYG{p}{,} \PYG{o}{\PYGZlt{}}\PYG{n}{menu\PYGZus{}id} \PYG{k}{from} \PYG{n}{previous} \PYG{n}{step}\PYG{o}{\PYGZgt{}}\PYG{p}{)}\PYG{p}{;}
 \end{Verbatim}
+
+By default, when this component is first setup into an application, the sample menu mentioned above is created in database. You
+can test to see that dynamic menu works by accessing dev server url: \href{http://localhost:12000/dynamic-menu/menus/1/items/}{http://localhost:12000/dynamic-menu/menus/1/items/}.
 
 \end{enumerate}
 
@@ -3043,6 +3046,12 @@ Component reusage is done using \{\% component \%\} tag.
 
 \item {} 
 Dynamic menu pluggable component can be used out of the box.
+
+\item {} 
+MVC documentation improvements.
+
+\item {} 
+Fix a bug in DB session management cache when configuration was changed at runtime.
 
 \end{itemize}
 

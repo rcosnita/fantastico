@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b97 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -48,7 +48,6 @@
 
 <span class="sd">.. py:module:: fantastico.tests.base_case</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">middleware</span>
 <span class="kn">from</span> <span class="nn">fantastico.middleware.fantastico_app</span> <span class="kn">import</span> <span class="n">FantasticoApp</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc</span> <span class="kn">import</span> <span class="n">controller_decorators</span>
 <span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span><span class="p">,</span> <span class="n">SettingsFacade</span><span class="p">,</span> <span class="n">AwsStageSettings</span>
@@ -225,7 +224,7 @@
 <span class="sd">        avoid boiler plate code duplication and executing test logic against all environments.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
-        <span class="n">old_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">)</span>
+        <span class="n">old_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;FANTASTICO_ACTIVE_CONFIG&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s">&#39;fantastico.settings.BasicSettings&#39;</span>
 
         <span class="k">for</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_envs</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>

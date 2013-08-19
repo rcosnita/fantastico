@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b97 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -32,16 +32,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -54,40 +54,40 @@
 <div class="viewcode-block" id="DevServer"><a class="viewcode-back" href="../../../get_started/dev_mode.html#fantastico.server.dev_server.DevServer">[docs]</a><span class="k">class</span> <span class="nc">DevServer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides a very simple wsgi http server that embeds Fantastico framework into it. As developer you can use</span>
 <span class="sd">    it to simply test your new components.&#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade</span><span class="p">()</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="bp">None</span>
-    
+
     <span class="nd">@property</span>
 <div class="viewcode-block" id="DevServer.started"><a class="viewcode-back" href="../../../get_started/dev_mode.html#fantastico.server.dev_server.DevServer.started">[docs]</a>    <span class="k">def</span> <span class="nf">started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Property used to tell if development server is started or not.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
-    </div>
+</div>
 <div class="viewcode-block" id="DevServer.start"><a class="viewcode-back" href="../../../get_started/dev_mode.html#fantastico.server.dev_server.DevServer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_server</span><span class="o">=</span><span class="n">make_server</span><span class="p">,</span> <span class="n">app</span><span class="o">=</span><span class="n">FantasticoApp</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method starts a WSGI development server. All attributes like port, hostname and protocol are read from</span>
 <span class="sd">        configuration file.&#39;&#39;&#39;</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;dev_server_port&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;dev_server_host&quot;</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span> <span class="o">=</span> <span class="n">build_server</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="n">app</span><span class="p">())</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
-        </div>
+</div>
 <div class="viewcode-block" id="DevServer.stop"><a class="viewcode-back" href="../../../get_started/dev_mode.html#fantastico.server.dev_server.DevServer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method stops the current running server (if any available).&#39;&#39;&#39;</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
             <span class="k">finally</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_httpd</span> <span class="o">=</span> <span class="bp">None</span>
-        </div></div>
+</div></div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">SERVER</span> <span class="o">=</span> <span class="n">DevServer</span><span class="p">()</span>
     <span class="n">SERVER</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>

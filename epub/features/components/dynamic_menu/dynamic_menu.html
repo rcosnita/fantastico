@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../components_builtin.html" title="Built in components"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.2.0-b97 documentation</a> &raquo;</li>
           <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../../components_builtin.html" accesskey="U">Built in components</a> &raquo;</li> 
       </ul>
@@ -64,14 +64,16 @@ This component which we generic named dynamic menu simply provides the controlle
 </li>
 <li><p class="first">Make sure you run <strong>dynamic_menu/sql/module_setup.sql</strong> against your configured database.</p>
 </li>
-<li><p class="first">This script will create <strong>Menus</strong> and <strong>MenuItems</strong> tables into your database.Below you can find a sample script for creating a menu:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">Menus</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">&#39;My First Menu&#39;</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">MenuItems</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-<span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;_blank&#39;</span><span class="p">,</span> <span class="s1">&#39;/homepage&#39;</span><span class="p">,</span> <span class="s1">&#39;Simple and friendly description&#39;</span><span class="p">,</span> <span class="s1">&#39;Home&#39;</span><span class="p">),</span>
-       <span class="p">(</span><span class="s1">&#39;_blank&#39;</span><span class="p">,</span> <span class="s1">&#39;/page2&#39;</span><span class="p">,</span> <span class="s1">&#39;Simple and friendly description&#39;</span><span class="p">,</span> <span class="s1">&#39;Page 2&#39;</span><span class="p">),</span>
-       <span class="p">(</span><span class="s1">&#39;_blank&#39;</span><span class="p">,</span> <span class="s1">&#39;/page3&#39;</span><span class="p">,</span> <span class="s1">&#39;Simple and friendly description&#39;</span><span class="p">,</span> <span class="s1">&#39;Page 3&#39;</span><span class="p">);</span>
+<li><p class="first">This script will create <strong>menus</strong> and <strong>menu_items</strong> tables into your database. Below you can find a sample script for creating a menu:</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">menus</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">VALUES</span><span class="p">(</span><span class="s1">&#39;My First Menu&#39;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">menu_items</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;_blank&#39;</span><span class="p">,</span> <span class="s1">&#39;/homepage&#39;</span><span class="p">,</span> <span class="s1">&#39;Simple and friendly description&#39;</span><span class="p">,</span> <span class="s1">&#39;Home&#39;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">menu_id</span> <span class="k">from</span> <span class="n">previous</span> <span class="n">step</span><span class="o">&gt;</span><span class="p">),</span>
+       <span class="p">(</span><span class="s1">&#39;_blank&#39;</span><span class="p">,</span> <span class="s1">&#39;/page2&#39;</span><span class="p">,</span> <span class="s1">&#39;Simple and friendly description&#39;</span><span class="p">,</span> <span class="s1">&#39;Page 2&#39;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">menu_id</span> <span class="k">from</span> <span class="n">previous</span> <span class="n">step</span><span class="o">&gt;</span><span class="p">),</span>
+       <span class="p">(</span><span class="s1">&#39;_blank&#39;</span><span class="p">,</span> <span class="s1">&#39;/page3&#39;</span><span class="p">,</span> <span class="s1">&#39;Simple and friendly description&#39;</span><span class="p">,</span> <span class="s1">&#39;Page 3&#39;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">menu_id</span> <span class="k">from</span> <span class="n">previous</span> <span class="n">step</span><span class="o">&gt;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>By default, when this component is first setup into an application, the sample menu mentioned above is created in database. You
+can test to see that dynamic menu works by accessing dev server url: <a class="reference external" href="http://localhost:12000/dynamic-menu/menus/1/items/">http://localhost:12000/dynamic-menu/menus/1/items/</a>.</p>
 </li>
 </ol>
 </div>

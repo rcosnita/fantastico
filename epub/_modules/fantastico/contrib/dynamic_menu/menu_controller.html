@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.2.0-b97 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -67,7 +67,7 @@
 <span class="sd">    .. image:: /images/components/dynamic_menu/erd.png</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">ITEMS_URL</span> <span class="o">=</span> <span class="s">&quot;/dynamic-menu/menu/(?P&lt;menu_id&gt;</span><span class="se">\\</span><span class="s">d{1,})/$&quot;</span>
+    <span class="n">ITEMS_URL</span> <span class="o">=</span> <span class="s">&quot;/dynamic-menu/menus/(?P&lt;menu_id&gt;</span><span class="se">\\</span><span class="s">d{1,})/items/$&quot;</span>
 
     <span class="nd">@property</span>
 <div class="viewcode-block" id="DynamicMenuController.max_items"><a class="viewcode-back" href="../../../../features/components/dynamic_menu/dynamic_menu.html#fantastico.contrib.dynamic_menu.menu_controller.DynamicMenuController.max_items">[docs]</a>    <span class="k">def</span> <span class="nf">max_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -101,8 +101,12 @@
 
         <span class="n">items</span> <span class="o">=</span> <span class="n">items_facade</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_items</span><span class="p">,</span>
                                                <span class="n">filter_expr</span><span class="o">=</span><span class="p">[</span><span class="n">ModelFilter</span><span class="p">(</span><span class="n">DynamicMenuItem</span><span class="o">.</span><span class="n">menu_id</span><span class="p">,</span> <span class="n">menu_id</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">EQ</span><span class="p">)])</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                  <span class="s">&quot;target&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+                  <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+                  <span class="s">&quot;label&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">label</span><span class="p">}</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span> <span class="ow">or</span> <span class="p">[]]</span>
 
-        <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;items&quot;</span><span class="p">:</span> <span class="n">items</span> <span class="ow">or</span> <span class="p">[]})</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&quot;items&quot;</span><span class="p">:</span> <span class="n">items</span><span class="p">})</span>
 
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span></div></div>
 </pre></div>

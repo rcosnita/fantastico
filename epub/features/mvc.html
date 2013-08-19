@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.2.0-b97 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -453,7 +453,7 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 <dl class="method">
 <dt id="fantastico.mvc.base_controller.BaseController.load_template">
-<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x1e70408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a></dt>
+<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x2646408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This method is responsible for loading a template from disk and render it using the given model data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">TestController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
@@ -647,7 +647,7 @@ active session ready to be used:</p>
 <dl class="class">
 <dt id="fantastico.middleware.model_session_middleware.ModelSessionMiddleware">
 <em class="property">class </em><tt class="descclassname">fantastico.middleware.model_session_middleware.</tt><tt class="descname">ModelSessionMiddleware</tt><big>(</big><em>app</em>, <em>settings_facade=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/middleware/model_session_middleware.html#ModelSessionMiddleware"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>This class is responsible for managing database connections across requests. It also takes care of 
+<dd><p>This class is responsible for managing database connections across requests. It also takes care of
 connection data pools. By default, the middleware is automatically configured to open a connection. If
 you don&#8217;t need mvc (really improbable but still) you simply need to change your project active settings
 profile. You can read more on <a class="reference internal" href="../get_started/settings.html#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a></p>

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  14 AUG 2013 23:25
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  19 AUG 2013 06:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 759--759
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 765--765
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x4ef37c0>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x56c8a68>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -1225,22 +1225,22 @@ r/m/n/10 )
  []
 
 [27] [28] [29]
-Overfull \hbox (65.96382pt too wide) in paragraph at lines 2426--2426
+Overfull \hbox (65.96382pt too wide) in paragraph at lines 2429--2429
 []\T1/ptm/m/it/10 settings_facade\T1/pcr/m/n/10 ) 
  []
 
-<erd.png, id=533, 572.89032pt x 109.1578pt>
+<erd.png, id=534, 572.89032pt x 109.1578pt>
 File: erd.png Graphic file (type png)
  <use erd.png>
-Package pdftex.def Info: erd.png used on input line 2436.
+Package pdftex.def Info: erd.png used on input line 2439.
 (pdftex.def)             Requested size: 572.88892pt x 109.15753pt.
 File: erd.png Graphic file (type png)
  <use erd.png>
-Package pdftex.def Info: erd.png used on input line 2436.
+Package pdftex.def Info: erd.png used on input line 2439.
 (pdftex.def)             Requested size: 444.75497pt x 84.74466pt.
 
 [30 <./erd.png>]
-Overfull \hbox (25.68097pt too wide) in paragraph at lines 2463--2465
+Overfull \hbox (25.68097pt too wide) in paragraph at lines 2466--2468
 []
  []
 
@@ -1248,37 +1248,37 @@ Overfull \hbox (25.68097pt too wide) in paragraph at lines 2463--2465
 
 ]
 Chapter 4.
-[33] <low_usage_all_in_one.png, id=570, 382.9565pt x 379.97629pt>
+[33] <low_usage_all_in_one.png, id=571, 382.9565pt x 379.97629pt>
 File: low_usage_all_in_one.png Graphic file (type png)
 
 <use low_usage_all_in_one.png>
-Package pdftex.def Info: low_usage_all_in_one.png used on input line 2611.
+Package pdftex.def Info: low_usage_all_in_one.png used on input line 2614.
 (pdftex.def)             Requested size: 382.95555pt x 379.97534pt.
 File: low_usage_all_in_one.png Graphic file (type png)
  <use low_usage_all_in_one.png>
-Package pdftex.def Info: low_usage_all_in_one.png used on input line 2611.
+Package pdftex.def Info: low_usage_all_in_one.png used on input line 2614.
 (pdftex.def)             Requested size: 382.95555pt x 379.97534pt.
- [34] [35 <./low_usage_all_in_one.png>] <low_usage_aws.png, id=587, 571.45453pt
+ [34] [35 <./low_usage_all_in_one.png>] <low_usage_aws.png, id=588, 571.45453pt
  x 300.25577pt>
 File: low_usage_aws.png Graphic file (type png)
 
 <use low_usage_aws.png>
-Package pdftex.def Info: low_usage_aws.png used on input line 2699.
+Package pdftex.def Info: low_usage_aws.png used on input line 2702.
 (pdftex.def)             Requested size: 571.45313pt x 300.25502pt.
 File: low_usage_aws.png Graphic file (type png)
  <use low_usage_aws.png>
-Package pdftex.def Info: low_usage_aws.png used on input line 2699.
+Package pdftex.def Info: low_usage_aws.png used on input line 2702.
 (pdftex.def)             Requested size: 469.755pt x 246.82523pt.
  [36 <./low_usage_aws.png>]
-<low_usage_s3_aws.png, id=609, 592.31598pt x 303.23598pt>
+<low_usage_s3_aws.png, id=610, 592.31598pt x 303.23598pt>
 File: low_usage_s3_aws.png Graphic file (type png)
 
 <use low_usage_s3_aws.png>
-Package pdftex.def Info: low_usage_s3_aws.png used on input line 2779.
+Package pdftex.def Info: low_usage_s3_aws.png used on input line 2782.
 (pdftex.def)             Requested size: 592.31453pt x 303.23523pt.
 File: low_usage_s3_aws.png Graphic file (type png)
  <use low_usage_s3_aws.png>
-Package pdftex.def Info: low_usage_s3_aws.png used on input line 2779.
+Package pdftex.def Info: low_usage_s3_aws.png used on input line 2782.
 (pdftex.def)             Requested size: 469.755pt x 240.48845pt.
  [37 <./low_usage_s3_aws.png>] [38] [39] [40]
 Chapter 5.
@@ -1909,15 +1909,15 @@ xt
  []
 
 [49])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3166.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3166.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3175.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3175.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3166.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3166.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3175.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3175.
 
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
 (rerunfilecheck)             Checksum: 15AE2975463B13D3B76F7FF05AE143DB;1477.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3166.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3175.
  ) 
 Here is how much of TeX's memory you used:
  9535 strings out of 493485
@@ -1936,10 +1936,10 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (53 pages, 456933 bytes).
+Output written on fantastico.pdf (53 pages, 457008 bytes).
 PDF statistics:
- 973 PDF objects out of 1000 (max. 8388607)
- 885 compressed objects within 9 object streams
+ 974 PDF objects out of 1000 (max. 8388607)
+ 886 compressed objects within 9 object streams
  366 named destinations out of 1000 (max. 500000)
  271 words of extra memory for PDF output out of 10000 (max. 10000000)
 

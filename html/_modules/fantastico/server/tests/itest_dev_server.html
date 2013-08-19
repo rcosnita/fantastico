@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.server.tests.itest_dev_server &mdash; fantastico 0.2.0-b96 documentation</title>
+    <title>fantastico.server.tests.itest_dev_server &mdash; fantastico 0.2.0-b97 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.2.0-b96',
+        VERSION:     '0.2.0-b97',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.2.0-b96 documentation" href="../../../../index.html" />
+    <link rel="top" title="fantastico 0.2.0-b97 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.2.0-b97 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,16 +47,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -69,79 +69,79 @@
 
 <div class="viewcode-block" id="DevServerIntegration"><a class="viewcode-back" href="../../../../get_started/contribute.html#fantastico.server.tests.itest_dev_server.DevServerIntegration">[docs]</a><span class="k">class</span> <span class="nc">DevServerIntegration</span><span class="p">(</span><span class="n">FantasticoIntegrationTestCase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the foundation for writing integration tests that do http requests against a fantastico server.</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. code-block:: python</span>
-<span class="sd">    </span>
+
 <span class="sd">        class DummyLoaderIntegration(DevServerIntegration):</span>
 <span class="sd">            def init(self):</span>
 <span class="sd">                self._exception = None</span>
-<span class="sd">        </span>
+
 <span class="sd">            def test_server_runs_ok(self):</span>
 <span class="sd">                def request_logic(server):</span>
-<span class="sd">                    request = Request(self._get_server_base_url(server, DummyRouteLoader.DUMMY_ROUTE)) </span>
+<span class="sd">                    request = Request(self._get_server_base_url(server, DummyRouteLoader.DUMMY_ROUTE))</span>
 <span class="sd">                    with self.assertRaises(HTTPError) as cm:</span>
 <span class="sd">                        urllib.request.urlopen(request)</span>
-<span class="sd">                        </span>
+
 <span class="sd">                    self._exception = cm.exception</span>
-<span class="sd">                    </span>
+
 <span class="sd">                def assert_logic(server):</span>
 <span class="sd">                    self.assertEqual(400, self._exception.code)</span>
-<span class="sd">                    self.assertEqual(&quot;Hello world.&quot;, self._exception.read().decode())                    </span>
-<span class="sd">                    </span>
+<span class="sd">                    self.assertEqual(&quot;Hello world.&quot;, self._exception.read().decode())</span>
+
 <span class="sd">                self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic, assert_logic))</span>
-<span class="sd">                </span>
+
 <span class="sd">                # you can also pass only request logic without assert logic</span>
 <span class="sd">                # self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))</span>
-<span class="sd">            </span>
+
 <span class="sd">    As you can see from above listed code, when you write a new integration test against Fantastico server you only need</span>
 <span class="sd">    to provide the request logic and assert logic functions. Request logic is executed while the server is up and running.</span>
 <span class="sd">    Assert logic is executed after the server has stopped.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    
+
 <div class="viewcode-block" id="DevServerIntegration._run_test_against_dev_server"><a class="viewcode-back" href="../../../../get_started/contribute.html#fantastico.server.tests.itest_dev_server.DevServerIntegration._run_test_against_dev_server">[docs]</a>    <span class="k">def</span> <span class="nf">_run_test_against_dev_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request_logic</span><span class="p">,</span> <span class="n">assert_logic</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method provides a template for writing integration tests that requires a development server being active.</span>
-<span class="sd">        It accepts a request logic (code that actually do the http request) and an assert logic for making sure </span>
-<span class="sd">        code is correct.&#39;&#39;&#39;</span> 
+<span class="sd">        It accepts a request logic (code that actually do the http request) and an assert logic for making sure</span>
+<span class="sd">        code is correct.&#39;&#39;&#39;</span>
 
         <span class="n">server</span> <span class="o">=</span> <span class="n">DevServer</span><span class="p">()</span>
-        
+
         <span class="k">def</span> <span class="nf">start_server</span><span class="p">():</span>
             <span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-            
+
         <span class="k">def</span> <span class="nf">stop_server</span><span class="p">():</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">while</span> <span class="ow">not</span> <span class="n">server</span><span class="o">.</span><span class="n">started</span><span class="p">:</span>
                     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
-                
+
                 <span class="n">request_logic</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
-                
-                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">started</span><span class="p">)</span>                
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">started</span><span class="p">)</span>
             <span class="k">finally</span><span class="p">:</span>
                 <span class="n">server</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-        
+
         <span class="n">thread_start</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">start_server</span><span class="p">)</span>
         <span class="n">thread_start</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        
+
         <span class="n">thread_stop</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">stop_server</span><span class="p">)</span>
         <span class="n">thread_stop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-                
+
         <span class="n">thread_stop</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-        
+
         <span class="k">if</span> <span class="n">assert_logic</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">assert_logic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_server_started</span>
-            
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_server_started</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
         <span class="n">assert_logic</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
-    </div>
+</div>
 <div class="viewcode-block" id="DevServerIntegration._check_server_started"><a class="viewcode-back" href="../../../../get_started/contribute.html#fantastico.server.tests.itest_dev_server.DevServerIntegration._check_server_started">[docs]</a>    <span class="k">def</span> <span class="nf">_check_server_started</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method holds the sanity checks to ensure a server is started correctly.&#39;&#39;&#39;</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">12000</span><span class="p">,</span> <span class="n">server</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="n">server</span><span class="o">.</span><span class="n">hostname</span><span class="p">)</span>
-    </div>
+</div>
 <div class="viewcode-block" id="DevServerIntegration._get_server_base_url"><a class="viewcode-back" href="../../../../get_started/contribute.html#fantastico.server.tests.itest_dev_server.DevServerIntegration._get_server_base_url">[docs]</a>    <span class="k">def</span> <span class="nf">_get_server_base_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">route</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method returns the absolute url for a given relative url (route).&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="s">&quot;http://localhost:12000</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">route</span></div></div>
 </pre></div>
 
@@ -173,7 +173,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.2.0-b96 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.2.0-b97 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
