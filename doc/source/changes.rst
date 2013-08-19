@@ -6,6 +6,7 @@ Changes
    * Component reusage is done using {% component %} tag.
    * Dynamic menu pluggable component can be used out of the box.
    * MVC documentation improvements.
+   * Fix a bug in DB session management cache when configuration was changed at runtime.
 
 * v0.1.2
    * Nginx config file now also maps www.<vhost_name>

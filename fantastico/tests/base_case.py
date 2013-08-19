@@ -17,7 +17,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.tests.base_case
 '''
-from fantastico import middleware
 from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.mvc import controller_decorators
 from fantastico.settings import BasicSettings, SettingsFacade, AwsStageSettings
