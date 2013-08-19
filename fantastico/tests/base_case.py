@@ -194,7 +194,7 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         avoid boiler plate code duplication and executing test logic against all environments.
         '''
 
-        old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
+        old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG") or 'fantastico.settings.BasicSettings'
 
         for env, settings_cls in self._envs:
             try:
