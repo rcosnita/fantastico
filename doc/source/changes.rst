@@ -1,6 +1,9 @@
 Changes
 =======
 
+* v0.2.2
+   * Update dynamic menu activation documentation.
+
 * v0.2.1
    * Fix packaging of pypi package. Now it is usable and contains rendering package as well as contrib package.
 
