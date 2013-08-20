@@ -29,7 +29,7 @@ class DynamicMenuController(BaseController):
     '''This class provides the controller for dynamic menus. The following routes are automatically made available
     when dynamic menu component is deployed:
 
-        **/dynamic-menu/menu/<menu_id>/items** -- This route loads menu items from database and retrieve them in json format.
+        **/dynamic-menu/menus/<menu_id>/items/** -- This route loads menu items from database and retrieve them in json format.
 
     Below you can see a diagram describing relation model of the menu:
 
