@@ -10,11 +10,15 @@ Integration
 
 In order to use dynamic menu component within your project follow the steps below:
 
-#. Create a symbolic link to your root component folder to dynamic_menu.
+#. Create a symbolic link under your root components folder to dynamic_menu.
 
    .. code-block:: bash
 
-      ln -s pip-deps/python[version]/site-packages/fantastico/contrib/dynamic_menu .
+      mkdir <components root>/dynamic_menu
+      cd <components root>/dynamic_menu
+      ln -s ../../pip-deps/lib/python[version]/site-packages/fantastico/contrib/dynamic_menu/sql .
+      ln -s ../../pip-deps/lib/python[version]/site-packages/fantastico/contrib/dynamic_menu/tests .
+      ln -s ../../pip-deps/lib/python[version]/site-packages/fantastico/contrib/dynamic_menu/*.py .
 
 #. Create a template in one of your components in which you define the menu view:
 
