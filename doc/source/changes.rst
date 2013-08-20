@@ -1,6 +1,9 @@
 Changes
 =======
 
+* v0.2.1
+   * Fix packaging of pypi package. Now it is usable and contains rendering package as well as contrib package.
+
 * v0.2.0
    * Framework documentation is tracked using Google Analytics
    * Component reusage is done using {% component %} tag.
