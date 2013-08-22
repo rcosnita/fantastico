@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{August 20, 2013}
-\release{0.2.1-b98}
+\date{August 22, 2013}
+\release{0.3.0-b99}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -762,7 +762,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x46909e0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x49068d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1840,7 +1840,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x167b408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x18f2408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2303,7 +2303,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2eae6b0\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x312a848\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2362,10 +2362,14 @@ This component which we generic named dynamic menu simply provides the controlle
 In order to use dynamic menu component within your project follow the steps below:
 \begin{enumerate}
 \item {} 
-Create a symbolic link to your root component folder to dynamic\_menu.
+Create a symbolic link under your root components folder to dynamic\_menu.
 
 \begin{Verbatim}[commandchars=\\\{\}]
-ln \PYGZhy{}s pip\PYGZhy{}deps/python\PYG{o}{[}version\PYG{o}{]}/site\PYGZhy{}packages/fantastico/contrib/dynamic\PYGZus{}menu .
+mkdir \PYGZlt{}components root\PYGZgt{}/dynamic\PYGZus{}menu
+\PYG{n+nb}{cd} \PYGZlt{}components root\PYGZgt{}/dynamic\PYGZus{}menu
+ln \PYGZhy{}s ../../pip\PYGZhy{}deps/lib/python\PYG{o}{[}version\PYG{o}{]}/site\PYGZhy{}packages/fantastico/contrib/dynamic\PYGZus{}menu/sql .
+ln \PYGZhy{}s ../../pip\PYGZhy{}deps/lib/python\PYG{o}{[}version\PYG{o}{]}/site\PYGZhy{}packages/fantastico/contrib/dynamic\PYGZus{}menu/tests .
+ln \PYGZhy{}s ../../pip\PYGZhy{}deps/lib/python\PYG{o}{[}version\PYG{o}{]}/site\PYGZhy{}packages/fantastico/contrib/dynamic\PYGZus{}menu/*.py .
 \end{Verbatim}
 
 \item {} 
@@ -2373,7 +2377,7 @@ Create a template in one of your components in which you define the menu view:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{c}{\PYGZlt{}!\PYGZhy{}\PYGZhy{}}\PYG{c}{ *sample\PYGZus{}menu.html* }\PYG{c}{\PYGZhy{}}\PYG{c}{ simple snippet for creating a left / right side dockable menu. }\PYG{c}{\PYGZhy{}\PYGZhy{}\PYGZgt{}}
-\PYGZob{}\PYGZpc{} for menu\PYGZus{}item in model.menu\PYGZus{}items \PYGZpc{}\PYGZcb{}
+\PYGZob{}\PYGZpc{} for menu\PYGZus{}item in model[\PYGZdq{}items\PYGZdq{}] \PYGZpc{}\PYGZcb{}
    \PYG{n+nt}{\PYGZlt{}a} \PYG{n+na}{href=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}menu\PYGZus{}item.url\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+na}{title=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}menu\PYGZus{}item.title\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+na}{target=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}menu\PYGZus{}item.target\PYGZcb{}\PYGZcb{}\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}menu\PYGZus{}item.label\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/a\PYGZgt{}}\PYG{n+nt}{\PYGZlt{}br}\PYG{n+nt}{/\PYGZgt{}}
 \PYGZob{}\PYGZpc{} endfor \PYGZpc{}\PYGZcb{}
 \end{Verbatim}
@@ -2382,7 +2386,7 @@ Create a template in one of your components in which you define the menu view:
 In all views where you want to reuse the component you can paste the following snippet:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYGZob{}\PYGZpc{} component template=\PYGZdq{}sample\PYGZus{}menu.html\PYGZdq{}, url=\PYGZdq{}/dynamic\PYGZhy{}menu/menu/1\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
+\PYGZob{}\PYGZpc{} component template=\PYGZdq{}sample\PYGZus{}menu.html\PYGZdq{}, url=\PYGZdq{}/dynamic\PYGZhy{}menu/menus/1/items/\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
 \end{Verbatim}
 
 \item {} 
@@ -2431,7 +2435,7 @@ This class provides the controller for dynamic menus. The following routes are a
 when dynamic menu component is deployed:
 \begin{quote}
 
-\textbf{/dynamic-menu/menu/\textless{}menu\_id\textgreater{}/items} -- This route loads menu items from database and retrieve them in json format.
+\textbf{/dynamic-menu/menus/\textless{}menu\_id\textgreater{}/items/} -- This route loads menu items from database and retrieve them in json format.
 \end{quote}
 
 Below you can see a diagram describing relation model of the menu:
@@ -3036,6 +3040,15 @@ Be aware that first you need an nginx configured and your project config file de
 
 \chapter{Changes}
 \label{changes:changes}\label{changes::doc}\begin{itemize}
+\item {} \begin{description}
+\item[{v0.2.2}] \leavevmode\begin{itemize}
+\item {} 
+Update dynamic menu activation documentation.
+
+\end{itemize}
+
+\end{description}
+
 \item {} \begin{description}
 \item[{v0.2.1}] \leavevmode\begin{itemize}
 \item {} 

@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../../components_builtin.html" title="Built in components"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">fantastico 0.2.1-b98 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.3.0-b99 documentation</a> &raquo;</li>
           <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../../components_builtin.html" accesskey="U">Built in components</a> &raquo;</li> 
       </ul>
@@ -44,21 +44,25 @@ This component which we generic named dynamic menu simply provides the controlle
 <h2>Integration</h2>
 <p>In order to use dynamic menu component within your project follow the steps below:</p>
 <ol class="arabic">
-<li><p class="first">Create a symbolic link to your root component folder to dynamic_menu.</p>
-<div class="highlight-bash"><div class="highlight"><pre>ln -s pip-deps/python<span class="o">[</span>version<span class="o">]</span>/site-packages/fantastico/contrib/dynamic_menu .
+<li><p class="first">Create a symbolic link under your root components folder to dynamic_menu.</p>
+<div class="highlight-bash"><div class="highlight"><pre>mkdir &lt;components root&gt;/dynamic_menu
+<span class="nb">cd</span> &lt;components root&gt;/dynamic_menu
+ln -s ../../pip-deps/lib/python<span class="o">[</span>version<span class="o">]</span>/site-packages/fantastico/contrib/dynamic_menu/sql .
+ln -s ../../pip-deps/lib/python<span class="o">[</span>version<span class="o">]</span>/site-packages/fantastico/contrib/dynamic_menu/tests .
+ln -s ../../pip-deps/lib/python<span class="o">[</span>version<span class="o">]</span>/site-packages/fantastico/contrib/dynamic_menu/*.py .
 </pre></div>
 </div>
 </li>
 <li><p class="first">Create a template in one of your components in which you define the menu view:</p>
 <div class="highlight-html"><div class="highlight"><pre><span class="c">&lt;!-- *sample_menu.html* - simple snippet for creating a left / right side dockable menu. --&gt;</span>
-{% for menu_item in model.menu_items %}
+{% for menu_item in model[&quot;items&quot;] %}
    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;{{menu_item.url}}&quot;</span> <span class="na">title=</span><span class="s">&quot;{{menu_item.title}}&quot;</span> <span class="na">target=</span><span class="s">&quot;{{menu_item.target}}&quot;</span><span class="nt">&gt;</span>{{menu_item.label}}<span class="nt">&lt;/a&gt;&lt;br/&gt;</span>
 {% endfor %}
 </pre></div>
 </div>
 </li>
 <li><p class="first">In all views where you want to reuse the component you can paste the following snippet:</p>
-<div class="highlight-html"><div class="highlight"><pre>{% component template=&quot;sample_menu.html&quot;, url=&quot;/dynamic-menu/menu/1&quot; %}{% endcomponent %}
+<div class="highlight-html"><div class="highlight"><pre>{% component template=&quot;sample_menu.html&quot;, url=&quot;/dynamic-menu/menus/1/items/&quot; %}{% endcomponent %}
 </pre></div>
 </div>
 </li>
@@ -97,7 +101,7 @@ can test to see that dynamic menu works by accessing dev server url: <a class="r
 <dd><p>This class provides the controller for dynamic menus. The following routes are automatically made available
 when dynamic menu component is deployed:</p>
 <blockquote>
-<div><strong>/dynamic-menu/menu/&lt;menu_id&gt;/items</strong> &#8211; This route loads menu items from database and retrieve them in json format.</div></blockquote>
+<div><strong>/dynamic-menu/menus/&lt;menu_id&gt;/items/</strong> &#8211; This route loads menu items from database and retrieve them in json format.</div></blockquote>
 <p>Below you can see a diagram describing relation model of the menu:</p>
 <img alt="../../../_images/erd.png" src="../../../_images/erd.png" />
 <dl class="attribute">
