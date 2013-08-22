@@ -25,7 +25,7 @@ In order to use dynamic menu component within your project follow the steps belo
    .. code-block:: html
 
       <!-- *sample_menu.html* - simple snippet for creating a left / right side dockable menu. -->
-      {% for menu_item in model.menu_items %}
+      {% for menu_item in model["items"] %}
          <a href="{{menu_item.url}}" title="{{menu_item.title}}" target="{{menu_item.target}}">{{menu_item.label}}</a><br/>
       {% endfor %}
 
@@ -33,7 +33,7 @@ In order to use dynamic menu component within your project follow the steps belo
 
    .. code-block:: html
 
-      {% component template="sample_menu.html", url="/dynamic-menu/menu/1" %}{% endcomponent %}
+      {% component template="sample_menu.html", url="/dynamic-menu/menus/1/items/" %}{% endcomponent %}
 
 #. Make sure you run **dynamic_menu/sql/module_setup.sql** against your configured database.
 
