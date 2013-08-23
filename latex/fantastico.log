@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  22 AUG 2013 20:01
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  23 AUG 2013 21:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 759--759
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 765--765
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x49068d0>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x5b3a8d0>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -1909,20 +1909,20 @@ xt
  []
 
 [49])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3197.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3197.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3206.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3206.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3197.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3197.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3206.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3206.
 
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
 (rerunfilecheck)             Checksum: 15AE2975463B13D3B76F7FF05AE143DB;1477.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3197.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3206.
  ) 
 Here is how much of TeX's memory you used:
  9535 strings out of 493485
  140472 string characters out of 3143526
- 234560 words of memory out of 3000000
+ 234561 words of memory out of 3000000
  12218 multiletter control sequences out of 15000+200000
  61581 words of font info for 70 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
@@ -1936,7 +1936,7 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (53 pages, 457548 bytes).
+Output written on fantastico.pdf (53 pages, 456298 bytes).
 PDF statistics:
  974 PDF objects out of 1000 (max. 8388607)
  886 compressed objects within 9 object streams
