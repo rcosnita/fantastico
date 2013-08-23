@@ -29,6 +29,8 @@ class DbSessionManager(object):
     is based on a request id. This means once a request is done, it receives a request identifier which remains constant
     for the whole request.'''
 
+    ENGINE = None
+
     class ConnectionData(object):
         '''This class is responsible for description the connection data descriptor.'''
 
@@ -62,24 +64,31 @@ class DbSessionManager(object):
         return conn_props
 
     def get_connection(self, request_id):
-        '''This method is responsible for retrieving a connection for the given connection.'''
+        '''This method is responsible for retrieving an active session for the given request.'''
 
         conn = self._cached_conns.get(request_id)
+        session = None
 
         if conn:
             return conn.session
 
         try:
             conn_data = URL(**self._conn_props)
-            engine = self._create_engine_fn(conn_data, echo=self._echo)
-            session = self._create_session_fn(sessionmaker(bind=engine))
 
-            conn = DbSessionManager.ConnectionData(session, engine)
+            if not DbSessionManager.ENGINE:
+                DbSessionManager.ENGINE = self._create_engine_fn(conn_data, echo=self._echo)
+
+            session = self._create_session_fn(sessionmaker(bind=DbSessionManager.ENGINE))
+
+            conn = DbSessionManager.ConnectionData(session, DbSessionManager.ENGINE)
 
             self._cached_conns[request_id] = conn
 
             return session
         except Exception as ex:
+            if session:
+                session.remove()
+
             raise FantasticoError(ex)
 
     def close_connection(self, request_id):
@@ -92,7 +101,7 @@ class DbSessionManager(object):
         if not conn:
             return
 
-        conn.session.close()
+        conn.session.remove()
 
         del self._cached_conns[request_id]
 

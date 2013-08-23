@@ -3,6 +3,9 @@ Changes
 
 * v0.2.2
    * Update dynamic menu activation documentation.
+   * Fix a serious bug in engine management and too many sql connections opened.
+   * Fix a bug in db session close when an unexpected error occurs when opening the connection.
+   * Add extensive unit tests for db session management.
 
 * v0.2.1
    * Fix packaging of pypi package. Now it is usable and contains rendering package as well as contrib package.
