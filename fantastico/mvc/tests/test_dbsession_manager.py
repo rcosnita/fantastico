@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.tests.test_dbsession_manager
 '''
-from fantastico.exceptions import FantasticoError
+from fantastico.exceptions import FantasticoDbError
 from fantastico.mvc import DbSessionManager
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
@@ -60,6 +60,16 @@ class DbSessionManagerTests(FantasticoUnitTestsCase):
 
         DbSessionManager.ConnectionData = self._old_conn_data
 
+    def test_wrong_dbconfig(self):
+        '''This test case ensures an exception is raised whenever dbconfig is incomplete or empty.'''
+
+        db_config = {}
+
+        with self.assertRaises(FantasticoDbError):
+            DbSessionManager(db_config,
+                             create_engine_fn=self._create_engine_fn,
+                             create_session_fn=self._create_session_fn)
+
     def test_get_connection_ok(self):
         '''This test case ensure get connection is retrieved and cached accordingly.'''
 
@@ -88,7 +98,7 @@ class DbSessionManagerTests(FantasticoUnitTestsCase):
 
         request_id = 1
 
-        with self.assertRaises(FantasticoError) as ex:
+        with self.assertRaises(FantasticoDbError) as ex:
             self._db_manager.get_connection(request_id)
 
         self.assertTrue(str(ex).find("Unexpected error"))

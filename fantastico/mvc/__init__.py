@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 '''
 
-from fantastico.exceptions import FantasticoError
+from fantastico.exceptions import FantasticoDbError
 from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.declarative import declarative_base
@@ -42,7 +42,7 @@ class DbSessionManager(object):
         try:
             self._conn_props = self._build_conn_props(db_config)
         except Exception as ex:
-            raise FantasticoError(ex)
+            raise FantasticoDbError(ex)
 
         self._echo = echo
         self._create_engine_fn = create_engine_fn
@@ -89,7 +89,7 @@ class DbSessionManager(object):
             if session:
                 session.remove()
 
-            raise FantasticoError(ex)
+            raise FantasticoDbError(ex)
 
     def close_connection(self, request_id):
         '''This method is used to close the active session for a given request. It is recommended to invoke this only
