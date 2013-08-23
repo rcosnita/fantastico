@@ -92,9 +92,9 @@ class DbSessionManager(object):
             raise FantasticoError(ex)
 
     def close_connection(self, request_id):
-        '''This method is used to close the connection for a given request. It is recommended to invoke this only once per request
-        cycle. Fantastico framework does this automatically at the end of each request cycle so you don't have to call this
-        manually.'''
+        '''This method is used to close the active session for a given request. It is recommended to invoke this only
+        once per request cycle. Fantastico framework does this automatically at the end of each request cycle so you don't have
+        to call this manually.'''
 
         conn = self._cached_conns.get(request_id)
 
