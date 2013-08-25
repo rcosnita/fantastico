@@ -53,3 +53,12 @@ Technical summary
 
 .. autoclass:: fantastico.sdk.sdk_core.SdkCommandArgument
    :members:
+
+.. autoclass:: fantastico.sdk.sdk_core.SdkCommand
+   :members:
+
+.. autoclass:: fantastico.sdk.sdk_exceptions.FantasticoSdkError
+   :members:
+
+.. autoclass:: fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError
+   :members:
