@@ -17,6 +17,38 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.sdk.sdk_core
 '''
 
-class FantasticoSdk(object):
+class SdkCore(object):
     '''This class provides the core functionality of Fantastico Software Development Kit. It
-    wires all available commands together and handles requests accordingly.'''
+    wires all available commands together and handles requests accordingly.
+    To better understand how sdk is designed see the following class diagram:
+
+    .. image:: /images/sdk/design.png
+
+    As you can see in above diagram, sdk core is just the main entry point of Fantastico Software Development Kit. It wires
+    all available sdk commands together and it adds support for uniformly executes them and pass them arguments..'''
+
+class SdkCommandArgument(object):
+    '''This class describe the attributes supported by a command argument.'''
+
+    @property
+    def name(self):
+        '''This read only property holds the argument name.'''
+
+        return self._name
+
+    @property
+    def type(self):
+        '''This read only property holds the argument type.'''
+
+        return self._type
+
+    @property
+    def help(self):
+        '''This read only property holds the argument help message.'''
+
+        return self._help
+
+    def __init__(self, arg_name, arg_type, arg_help):
+        self._name = arg_name
+        self._type = arg_type
+        self._help = arg_help

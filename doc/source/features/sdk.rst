@@ -48,5 +48,8 @@ Supported commands
 Technical summary
 -----------------
 
-.. autoclass:: fantastico.sdk.sdk_core.FantasticoSdk
+.. autoclass:: fantastico.sdk.sdk_core.SdkCore
+   :members:
+
+.. autoclass:: fantastico.sdk.sdk_core.SdkCommandArgument
    :members:
