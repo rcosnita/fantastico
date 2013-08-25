@@ -26,16 +26,21 @@ class SdkCommandArgumentTests(FantasticoUnitTestsCase):
         '''This test case instantiate a command argument and ensures all attributes are correctly set. Moreover it ensures
         command argument attributes are readonly.'''
 
-        expected_name = "Test argument"
+        expected_short_name = "t"
+        expected_name = "test_argument"
         expected_type = int
         expected_help = "Simple help message"
 
-        arg = SdkCommandArgument(arg_name=expected_name, arg_type=expected_type, arg_help=expected_help)
+        arg = SdkCommandArgument(arg_short_name=expected_short_name,
+                                 arg_name=expected_name,
+                                 arg_type=expected_type,
+                                 arg_help=expected_help)
 
+        self.assertEqual(expected_short_name, arg.short_name)
         self.assertEqual(expected_name, arg.name)
         self.assertEqual(expected_type, arg.type)
         self.assertEqual(expected_help, arg.help)
 
-        for attr_name in ["name", "type", "help"]:
+        for attr_name in ["short_name", "name", "type", "help"]:
             with self.assertRaises(AttributeError):
                 setattr(arg, attr_name, "Simple test")
