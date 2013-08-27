@@ -62,3 +62,7 @@ Technical summary
 
 .. autoclass:: fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError
    :members:
+
+.. autoclass:: fantastico.sdk.sdk_exceptions.FantasticoSdkCommandNotFoundError
+   :members:
+   
