@@ -67,13 +67,64 @@ class SdkCommandArgument(object):
         self._type = arg_type
         self._help = arg_help
 
+class SdkCommandsRegistry(object):
+    '''This class holds all registered commands available to use in the sdk. It is important to understand that commands and
+    subcommands are registered by name and must be unique. This is because, by design, each command can easily become a
+    subcommand for another command. It facilitates very flexible extension of sdk and reusage of existing commands.'''
+
+    COMMANDS = {}
+
+    @staticmethod
+    def add_command(cmd_name, cmd_cls):
+        '''This method registers a new command using the given name.
+
+        :param cmd_name: Command name used to uniquely identify the command.
+        :type cmd_name: str
+        :param cmd_class: A subclass of sdk command.
+        :type cmd_class: :py:class:`fantastico.sdk.sdk_core.SdkCommand`
+        :raise fantastico.sdk.sdk_exceptions.FantasticoSdkError: If the given name is not unique or cmd class is wrong.
+        '''
+
+        if not cmd_name or not cmd_name.strip():
+            raise FantasticoSdkCommandError("No command name given for class %s." % cmd_cls)
+
+        existing_cmd = SdkCommandsRegistry.COMMANDS.get(cmd_name)
+
+        if existing_cmd:
+            raise FantasticoSdkCommandError("Command %s already registered by class %s." % (cmd_name, existing_cmd))
+
+        if not issubclass(cmd_cls, SdkCommand):
+            raise FantasticoSdkCommandError("Command %s does not inherit fantastico.sdk.sdk_core.SdkCommand." % existing_cmd)
+
+        SdkCommandsRegistry.COMMANDS[cmd_name] = cmd_cls
+
+    @staticmethod
+    def get_command(cmd_name, cmd_args):
+        '''This method retrieve a concrete sdk command by name with the give args passed.
+
+        :param cmd_name: The registered command name we want to instantiate.
+        :type cmd_name: str
+        :param cmd_args: a list of arguments received from command line.
+        :type cmd_args: list
+        :returns: Command instance.
+        :rtype: :py:class:`fantastico.sdk.sdk_core.SdkCommand`
+        :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandNotFoundError: if command is not registered.
+        '''
+
+        cmd = SdkCommandsRegistry.COMMANDS.get(cmd_name)
+
+        if not cmd:
+            raise FantasticoSdkCommandNotFoundError("Command %s is not registered into sdk." % cmd_name)
+
+        return cmd(cmd_args, SdkCommandsRegistry())
+
 class SdkCommand(object, metaclass=ABCMeta):
     '''This class provides the contract which must be provided by each concrete command. A command of sdk is just and extension
     which can provide custom actions being executed by Fantastico in a uniform manner.
 
     Below you can find a simple example of how to implement a concrete command:
 
-    .. code-block:: python
+    .. code - block:: python
 
         class SdkCommandSayHello(SdkCommand):
             \'\'\'This class provides an extremely simple command which greets the user.\'\'\'
@@ -150,7 +201,7 @@ class SdkCommand(object, metaclass=ABCMeta):
 
         if self._arguments.subcommand:
             try:
-                return self._cmd_factory.get_command(self._argv[0]).exec_command(*args, **kwargs)
+                return self._cmd_factory.get_command(self._argv[0], self._argv[0:]).exec_command(*args, **kwargs)
             except Exception as ex:
                 raise FantasticoSdkCommandNotFoundError(ex)
 
