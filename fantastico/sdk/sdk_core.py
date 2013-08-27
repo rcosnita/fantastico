@@ -143,7 +143,10 @@ class SdkCommand(object, metaclass=ABCMeta):
 
     def exec_command(self, *args, **kwargs):
         '''This method provides a template for executing the current command if subcommands are present. Internally it invokes
-        overriden exec method.'''
+        overriden exec method.
+
+        :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: if an exception occurs while executing the command.
+        :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandNotFoundError: if a subcommand does not exist.'''
 
         if self._arguments.subcommand:
             try:
