@@ -51,6 +51,9 @@ Technical summary
 .. autoclass:: fantastico.sdk.sdk_core.SdkCore
    :members:
 
+.. autoclass:: fantastico.sdk.sdk_core.SdkCommandsRegistry
+   :members:
+
 .. autoclass:: fantastico.sdk.sdk_core.SdkCommandArgument
    :members:
 
