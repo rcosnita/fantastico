@@ -68,7 +68,7 @@ class SdkCommandTests(FantasticoUnitTestsCase):
 
         self._exec_ok_scenario(args, expected_msg, cmd_factory)
 
-        cmd_factory.get_command.assert_called_with("greet")
+        cmd_factory.get_command.assert_called_with("greet", args[1:])
 
     def test_subcommand_sayhello_cmdnotfound(self):
         '''This test case ensures not found subcommands are signaled through a concrete exception.'''
