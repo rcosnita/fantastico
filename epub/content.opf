@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-08-23</dc:date>
+    <dc:date>2013-08-27</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -169,6 +169,12 @@
     <item id="_modules_fantastico_routing_engine_custom_responses.html"
           href="_modules/fantastico/routing_engine/custom_responses.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_sdk_sdk_exceptions.html"
+          href="_modules/fantastico/sdk/sdk_exceptions.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_sdk_sdk_core.html"
+          href="_modules/fantastico/sdk/sdk_core.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_server_dev_server.html"
           href="_modules/fantastico/server/dev_server.html"
           media-type="application/xhtml+xml" />
@@ -193,6 +199,9 @@
     <item id="_images_exceptions.png"
           href="_images/exceptions.png"
           media-type="image/png" />
+    <item id="_images_exceptions1.png"
+          href="_images/exceptions1.png"
+          media-type="image/png" />
     <item id="_images_low_usage_aws.png"
           href="_images/low_usage_aws.png"
           media-type="image/png" />
@@ -207,6 +216,9 @@
           media-type="image/png" />
     <item id="_images_routing_engine.png"
           href="_images/routing_engine.png"
+          media-type="image/png" />
+    <item id="_images_design.png"
+          href="_images/design.png"
           media-type="image/png" />
     <item id="_images_mvc_filters.png"
           href="_images/mvc_filters.png"
@@ -238,8 +250,14 @@
     <item id="features_routing_engine.html"
           href="features/routing_engine.html"
           media-type="application/xhtml+xml" />
+    <item id="features_sdk.html"
+          href="features/sdk.html"
+          media-type="application/xhtml+xml" />
     <item id="features_components_dynamic_menu_dynamic_menu.html"
           href="features/components/dynamic_menu/dynamic_menu.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_sdk_command_help.html"
+          href="features/sdk/command_help.html"
           media-type="application/xhtml+xml" />
   </manifest>
   <spine toc="ncx">
@@ -255,6 +273,8 @@
     <itemref idref="features_request_response.html" />
     <itemref idref="features_routing_engine.html" />
     <itemref idref="features_mvc.html" />
+    <itemref idref="features_sdk.html" />
+    <itemref idref="features_sdk_command_help.html" />
     <itemref idref="features_component_model.html" />
     <itemref idref="features_component_reusage.html" />
     <itemref idref="features_components_builtin.html" />

@@ -108,10 +108,28 @@
 \indexentry{get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{26}
 \indexentry{sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute)|hyperpage}{26}
 \indexentry{ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware)|hyperpage}{26}
-\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{28}
-\indexentry{parse() (fantastico.rendering.component.Component method)|hyperpage}{28}
-\indexentry{render() (fantastico.rendering.component.Component method)|hyperpage}{29}
-\indexentry{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)|hyperpage}{30}
-\indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{30}
-\indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{30}
-\indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{31}
+\indexentry{SdkCore (class in fantastico.sdk.sdk\_core)|hyperpage}{27}
+\indexentry{SdkCommandsRegistry (class in fantastico.sdk.sdk\_core)|hyperpage}{28}
+\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{28}
+\indexentry{get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{28}
+\indexentry{SdkCommandArgument (class in fantastico.sdk.sdk\_core)|hyperpage}{28}
+\indexentry{help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{28}
+\indexentry{name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{28}
+\indexentry{short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{28}
+\indexentry{type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{28}
+\indexentry{SdkCommand (class in fantastico.sdk.sdk\_core)|hyperpage}{28}
+\indexentry{exec() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{29}
+\indexentry{exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{29}
+\indexentry{get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{29}
+\indexentry{get\_help() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{29}
+\indexentry{get\_name() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{29}
+\indexentry{FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{29}
+\indexentry{FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{29}
+\indexentry{FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{29}
+\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{31}
+\indexentry{parse() (fantastico.rendering.component.Component method)|hyperpage}{32}
+\indexentry{render() (fantastico.rendering.component.Component method)|hyperpage}{32}
+\indexentry{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)|hyperpage}{34}
+\indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{34}
+\indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{34}
+\indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{34}

@@ -41,38 +41,44 @@
 \contentsline {subsection}{\numberline {3.4.5}Controller}{23}{subsection.3.4.5}
 \contentsline {subsubsection}{Available filters}{24}{subsubsection*.93}
 \contentsline {subsection}{\numberline {3.4.6}Database session management}{26}{subsection.3.4.6}
-\contentsline {section}{\numberline {3.5}Component model}{26}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Static folder}{27}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Sql folder}{27}{subsection.3.5.2}
-\contentsline {subsubsection}{Sql folder example}{27}{subsubsection*.116}
-\contentsline {section}{\numberline {3.6}Component reusage}{28}{section.3.6}
-\contentsline {section}{\numberline {3.7}Built in components}{29}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}Dynamic menu}{29}{subsection.3.7.1}
-\contentsline {subsubsection}{Integration}{29}{subsubsection*.120}
-\contentsline {subsubsection}{Current limitations}{30}{subsubsection*.121}
-\contentsline {subsubsection}{Technical summary}{30}{subsubsection*.122}
-\contentsline {chapter}{\numberline {4}How to articles}{33}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{33}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{33}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{33}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{34}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{34}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Deployment how to}{34}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{35}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{36}{subsubsection*.127}
-\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{36}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{37}{subsubsection*.128}
-\contentsline {subsubsection}{Optimization}{37}{subsubsection*.129}
-\contentsline {subsubsection}{Setup with S3}{38}{subsubsection*.130}
-\contentsline {section}{\numberline {4.3}Static assets}{38}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{38}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{39}{subsubsection*.131}
-\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{39}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Creating a new project}{39}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Create first component}{39}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{40}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{40}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Changes}{41}{chapter.5}
-\contentsline {chapter}{\numberline {6}Build status}{43}{chapter.6}
-\contentsline {chapter}{\numberline {7}License}{45}{chapter.7}
-\contentsline {chapter}{Index}{47}{section*.132}
+\contentsline {section}{\numberline {3.5}Fantastico sdk}{26}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Intro}{26}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Usage}{27}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Supported commands}{27}{subsection.3.5.3}
+\contentsline {subsubsection}{Help command}{27}{subsubsection*.116}
+\contentsline {subsection}{\numberline {3.5.4}Technical summary}{27}{subsection.3.5.4}
+\contentsline {section}{\numberline {3.6}Component model}{30}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Static folder}{30}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Sql folder}{30}{subsection.3.6.2}
+\contentsline {subsubsection}{Sql folder example}{30}{subsubsection*.135}
+\contentsline {section}{\numberline {3.7}Component reusage}{31}{section.3.7}
+\contentsline {section}{\numberline {3.8}Built in components}{32}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}Dynamic menu}{33}{subsection.3.8.1}
+\contentsline {subsubsection}{Integration}{33}{subsubsection*.139}
+\contentsline {subsubsection}{Current limitations}{33}{subsubsection*.140}
+\contentsline {subsubsection}{Technical summary}{34}{subsubsection*.141}
+\contentsline {chapter}{\numberline {4}How to articles}{35}{chapter.4}
+\contentsline {section}{\numberline {4.1}MVC How to}{35}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Code the model}{35}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Code the controller}{35}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Code the view}{36}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Test your application}{36}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Deployment how to}{36}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{37}{subsection.4.2.1}
+\contentsline {subsubsection}{Setup}{38}{subsubsection*.146}
+\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{38}{subsection.4.2.2}
+\contentsline {subsubsection}{Setup}{39}{subsubsection*.147}
+\contentsline {subsubsection}{Optimization}{39}{subsubsection*.148}
+\contentsline {subsubsection}{Setup with S3}{40}{subsubsection*.149}
+\contentsline {section}{\numberline {4.3}Static assets}{40}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{40}{subsection.4.3.1}
+\contentsline {subsubsection}{Favicon}{41}{subsubsection*.150}
+\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{41}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Creating a new project}{41}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Create first component}{41}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{42}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{42}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Changes}{43}{chapter.5}
+\contentsline {chapter}{\numberline {6}Build status}{45}{chapter.6}
+\contentsline {chapter}{\numberline {7}License}{47}{chapter.7}
+\contentsline {chapter}{Index}{49}{section*.151}
