@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from abc import ABCMeta, abstractmethod
 from argparse import Namespace
-from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError
+from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
 import argparse
 
 class SdkCore(object):
@@ -87,7 +87,9 @@ class SdkCommand(object, metaclass=ABCMeta):
                 return "This is a very simple greeting command supported by fantastico."
 
             def get_arguments(self):
-                return [SdkCommandArgument("-m", "--message", int, "Message used to greet the user.")]
+                return [SdkCommandArgument("-m", "--message", int, "Message used to greet the user."),
+                        SdkCommandArgument(SdkCommandSayHello.CMD_NAME, SdkCommandSayHello.CMD_NAME, SdkCommandSayHello,
+                                           "Recursive subcommand sample."]
 
             def exec(self):
                 print(self._arguments.message)
@@ -101,8 +103,13 @@ class SdkCommand(object, metaclass=ABCMeta):
     name. This happens because all arguments passed after a command name belongs only to that command.
     '''
 
-    def __init__(self, argv):
-        ''':throws fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: If the list of arguments is not valid.'''
+    def __init__(self, argv, cmd_factory):
+        '''
+            :param argv: A list of arguments received from command line.
+            :type argv: list
+            :param cmd_factory: The factory currently used to instantiate commands by name.
+            :type cmd_factory: :py:class:`fantastico.sdk.sdk_core.FantasticoCommandRegistry`
+            :throws fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: If the list of arguments is not valid.'''
 
         if not argv:
             raise FantasticoSdkCommandError("You must provide arguments for sdk command %s" % self.get_name())
@@ -111,6 +118,7 @@ class SdkCommand(object, metaclass=ABCMeta):
             raise FantasticoSdkCommandError("Command %s is not equal with the current command %s" % \
                                             (argv[0], self.get_name()))
 
+        self._cmd_factory = cmd_factory
         self._argv = argv[1:]
         self._arguments = None
         self._args_namespace = None
@@ -133,6 +141,18 @@ class SdkCommand(object, metaclass=ABCMeta):
 
         :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: if an exception occurs while executing the command.'''
 
+    def exec_command(self, *args, **kwargs):
+        '''This method provides a template for executing the current command if subcommands are present. Internally it invokes
+        overriden exec method.'''
+
+        if self._arguments.subcommand:
+            try:
+                return self._cmd_factory.get_command(self._argv[0]).exec_command(*args, **kwargs)
+            except Exception as ex:
+                raise FantasticoSdkCommandNotFoundError(ex)
+
+        return self.exec(*args, **kwargs)
+
     def _build_arguments(self):
         '''This method is invoked automatically by getattribute when _arguments attribute is first accessed. It builds the
         _arguments object which holds all attributes value passed from command line.'''
@@ -142,7 +162,12 @@ class SdkCommand(object, metaclass=ABCMeta):
         supported_args = self.get_arguments()
 
         for cmd_arg in supported_args:
-            args_parser.add_argument(cmd_arg.short_name, cmd_arg.name, type=cmd_arg.type, help=cmd_arg.help)
+            if issubclass(cmd_arg.type, SdkCommand):
+                args_parser.add_argument("subcommand", metavar="N", type=str, help=cmd_arg.help, default=None, nargs="?")
+
+        for cmd_arg in supported_args:
+            if not issubclass(cmd_arg.type, SdkCommand):
+                args_parser.add_argument(cmd_arg.short_name, cmd_arg.name, type=cmd_arg.type, help=cmd_arg.help)
 
         args_parser.parse_args(self._argv, self._args_namespace)
 
