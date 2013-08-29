@@ -48,7 +48,7 @@ Supported commands
 Technical summary
 -----------------
 
-.. autoclass:: fantastico.sdk.sdk_core.SdkCore
+.. autoclass:: fantastico.sdk.fantastico.SdkCore
    :members:
 
 .. autoclass:: fantastico.sdk.sdk_core.SdkCommandsRegistry

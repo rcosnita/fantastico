@@ -14,31 +14,15 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.sdk.sdk_decorators
 '''
-from fantastico.sdk.sdk_core import SdkCommandsRegistry
 
-class SdkCommand(object):
-    '''This decorator describe the sdk commands metadata:
+from fantastico.sdk.fantastico import SdkCore
+import sys
 
-    #. name
-    #. target (which is the main purpose of the command. E.g: fantastico - this mean command is designed to work as a subcommand for fantastico cmd).
+if __name__ == "__main__":
+    argv = sys.argv
 
-    It is used in conjunction with :py:class:`fantastico.sdk.sdk_core.SdkCommand`. Each sdk command decorated with this
-    decorator automatically receives **get_name** and **get_target** methods.'''
+    argv[0] = SdkCore.get_name()
 
-    def __init__(self, name, help, target=None):
-        self._name = name
-        self._target = target
-        self._help = help
-
-    def __call__(self, cls):
-        '''This method simply adds get_name method to the command class.'''
-
-        cls.get_name = lambda ctx = None: self._name
-        cls.get_help = lambda ctx = None: self._help
-        cls.get_target = lambda ctx = None: self._target
-
-        SdkCommandsRegistry.add_command(self._name, cls)
-
-        return cls
+    cmd = SdkCore(argv)
+    cmd.exec_command()
