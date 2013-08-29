@@ -126,13 +126,13 @@ class SdkCommand(object, metaclass=ABCMeta):
 
     .. code - block:: python
 
+        from fantastico.sdk import sdk_decorators
+
+        @sdk_decorators.SdkCommand(name="greet")
         class SdkCommandSayHello(SdkCommand):
             \'\'\'This class provides an extremely simple command which greets the user.\'\'\'
 
             CMD_NAME = "greet"
-
-            def get_name(self):
-                return SdkCommandSayHello.CMD_NAME
 
             def get_help(self):
                 return "This is a very simple greeting command supported by fantastico."
@@ -173,10 +173,6 @@ class SdkCommand(object, metaclass=ABCMeta):
         self._argv = argv[1:]
         self._arguments = None
         self._args_namespace = None
-
-    @abstractmethod
-    def get_name(self):
-        '''This method must be overriden by each concrete command and must return the command friendly name.'''
 
     @abstractmethod
     def get_help(self):
