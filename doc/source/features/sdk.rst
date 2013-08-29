@@ -32,10 +32,10 @@ Similar to other linux command lines you can obtain help hierarchical:
 .. code-block:: bash
 
    # Show help screen for fantastico <command>
-   fantastico <command> --help
+   fantastico.py <command> --help
 
    # Show help screen for fantastico <command> <subcommand>
-   fantastico <command> <subcommand> --help
+   fantastico.py <command> <subcommand> --help
    
 Supported commands
 ------------------
