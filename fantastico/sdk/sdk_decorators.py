@@ -21,7 +21,8 @@ class SdkCommand(object):
     '''This decorator describe the sdk commands metadata:
 
     #. name
-    #. target (which is the main purpose of the command)
+    #. target (which is the main purpose of the command. E.g: fantastico - this mean command is designed to work as a subcommand
+    for fantastico cmd).
 
     It is used in conjunction with :py:class:`fantastico.sdk.sdk_core.SdkCommand`. Each sdk command decorated with this
     decorator automatically receives **get_name** and **get_target** methods.'''
