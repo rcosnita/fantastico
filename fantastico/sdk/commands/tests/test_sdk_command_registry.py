@@ -34,6 +34,9 @@ class SdkCommandsRegistryTests(FantasticoUnitTestsCase):
         self._cmd_registry = SdkCommandsRegistry
         self._cmd_registry.COMMANDS.clear()
 
+    def cleanup(self):
+        self._cmd_registry.COMMANDS.clear()
+
     def test_command_registration_ok(self):
         '''This test case ensures commands are registered correctly.'''
 

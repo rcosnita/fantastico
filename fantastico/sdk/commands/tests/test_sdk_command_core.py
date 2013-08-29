@@ -17,104 +17,33 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.sdk.tests.test_sdk_command_core
 '''
 
-from fantastico.sdk import sdk_decorators
-from fantastico.sdk.sdk_core import SdkCommand, SdkCommandArgument
-from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
+from fantastico.sdk.sdk_core import SdkCommandsRegistry
 from fantastico.tests.base_case import FantasticoUnitTestsCase
-from mock import Mock
 
-class SdkCommandTests(FantasticoUnitTestsCase):
-    '''This class provides test cases for ensuring sdk command behaves as expected. The logic of this test suite is fairly simple:
+class SdkCommandCoreTests(FantasticoUnitTestsCase):
+    '''This class provides the unit tests for sdk command core. It covers autodiscovery of submodules.'''
 
-        # It provides the command described into :py:class:`fantastico.sdk.sdk_core.SdkCommand`.
-        # It ensures each single method work as expected when executed.'''
+    def init(self):
+        '''This method is invoked automatically for preparing dependencies.'''
 
-    def test_cmd_short_exec_ok(self):
-        '''This test case ensures normal flow execution of the command works as expected for short arguments.'''
+        SdkCommandsRegistry.COMMANDS.clear()
 
-        expected_msg = "Message used to greet the user."
+    def cleanup(self):
+        '''This method is invoked automatically for cleaning dependencies.'''
 
-        args = [SdkCommandSayHello.CMD_NAME, "-m", expected_msg]
+        SdkCommandsRegistry.COMMANDS.clear()
 
-        self._exec_ok_scenario(args, expected_msg)
+    def test_core_command_ok(self):
+        '''This test case ensures fantastico sdk main command works as expected.'''
 
-    def test_cmd_long_exec_ok(self):
-        '''This test case ensures normal flow execution of the command works as expected for long arguments.'''
+        from fantastico.sdk.fantastico import SdkCore
 
-        expected_msg = "Message used to greet the user."
+        argv = ["fantastico", "test_cmd", "-h"]
 
-        args = [SdkCommandSayHello.CMD_NAME, "--message", expected_msg]
+        cmd = SdkCore(argv, SdkCommandsRegistry, ["tests", "commands_for_bdd_test"])
 
-        self._exec_ok_scenario(args, expected_msg)
+        SdkCommandsRegistry.add_command("fantastico", SdkCore)
+        SdkCommandsRegistry.add_command("test_cmd", SdkCore)
 
-    def test_instantiation_fails_command_name_incompatible(self):
-        '''This test case ensures the command instantiation fails if the first argument is not the command name.'''
-
-        with self.assertRaises(FantasticoSdkCommandError):
-            SdkCommandSayHello(["bla bla bla"], None)
-
-    def test_instantiation_fails_no_args(self):
-        '''This test case ensures command can not be instantiated when no arguments are given.'''
-
-        for args in [None, []]:
-            with self.assertRaises(FantasticoSdkCommandError):
-                SdkCommandSayHello(args, None)
-
-    def test_subcommand_sayhello_ok(self):
-        '''This test case ensures subcommands execution works as expected.'''
-
-        expected_msg = "Message used to greet the user."
-        args = ["greet", "greet", "-m", expected_msg]
-        cmd_factory = Mock()
-        cmd_factory.get_command = Mock(return_value=SdkCommandSayHello(args[1:], None))
-
-        self._exec_ok_scenario(args, expected_msg, cmd_factory)
-
-        cmd_factory.get_command.assert_called_with("greet", args[1:])
-
-    def test_subcommand_sayhello_cmdnotfound(self):
-        '''This test case ensures not found subcommands are signaled through a concrete exception.'''
-
-        expected_err_msg = "Command not found"
-        expected_msg = "Message used to greet the user."
-        args = ["greet", "greet", "-m", expected_msg]
-        cmd_factory = Mock()
-        cmd_factory.get_command = Mock(side_effect=Exception(expected_err_msg))
-
-        with self.assertRaises(FantasticoSdkCommandNotFoundError) as ctx:
-            self._exec_ok_scenario(args, expected_msg, cmd_factory)
-
-        self.assertEqual(expected_err_msg, str(ctx.exception))
-
-    def _exec_ok_scenario(self, args, expected_msg, cmd_factory=None):
-        '''This test case provides the template for checking correct behavior of exec method.'''
-
-        mock_print = Mock(return_value=None)
-
-        cmd = SdkCommandSayHello(args, cmd_factory)
-
-        self.assertEqual("greet", cmd.get_name())
-        self.assertEqual("example", cmd.get_target())
-
-        cmd.exec_command(mock_print)
-
-        mock_print.assert_called_with(expected_msg)
-
-@sdk_decorators.SdkCommand(name="greet", target="example")
-class SdkCommandSayHello(SdkCommand):
-    '''This class provides an extremely simple command which greets the user.'''
-
-    CMD_NAME = "greet"
-
-    def get_help(self):
-        return "This is a very simple greeting command supported by fantastico."
-
-    def get_arguments(self):
-        return [SdkCommandArgument("-m", "--message", str, "Message used to greet the user."),
-                SdkCommandArgument(arg_short_name=SdkCommandSayHello.CMD_NAME,
-                                   arg_name=SdkCommandSayHello.CMD_NAME,
-                                   arg_type=SdkCommandSayHello,
-                                   arg_help="Subcommand greet recursive execution.")]
-
-    def exec(self, print_fn=print):
-        print_fn(self._arguments.message)
+        self.assertEqual("fantastico", cmd.get_name())
+        self.assertIsNotNone(SdkCommandsRegistry.get_command("fantastico", argv))
