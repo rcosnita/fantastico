@@ -16,6 +16,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.sdk.tests.test_sdk_command_core
 '''
+
+from fantastico.sdk import sdk_decorators
 from fantastico.sdk.sdk_core import SdkCommand, SdkCommandArgument
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
@@ -90,17 +92,19 @@ class SdkCommandTests(FantasticoUnitTestsCase):
         mock_print = Mock(return_value=None)
 
         cmd = SdkCommandSayHello(args, cmd_factory)
+
+        self.assertEqual("greet", cmd.get_name())
+        self.assertEqual("example", cmd.get_target())
+
         cmd.exec_command(mock_print)
 
         mock_print.assert_called_with(expected_msg)
 
+@sdk_decorators.SdkCommand(name="greet", target="example")
 class SdkCommandSayHello(SdkCommand):
     '''This class provides an extremely simple command which greets the user.'''
 
     CMD_NAME = "greet"
-
-    def get_name(self):
-        return SdkCommandSayHello.CMD_NAME
 
     def get_help(self):
         return "This is a very simple greeting command supported by fantastico."
