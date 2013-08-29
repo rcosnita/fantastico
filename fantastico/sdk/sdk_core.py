@@ -21,16 +21,6 @@ from argparse import Namespace
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
 import argparse
 
-class SdkCore(object):
-    '''This class provides the core functionality of Fantastico Software Development Kit. It
-    wires all available commands together and handles requests accordingly.
-    To better understand how sdk is designed see the following class diagram:
-
-    .. image:: /images/sdk/design.png
-
-    As you can see in above diagram, sdk core is just the main entry point of Fantastico Software Development Kit. It wires
-    all available sdk commands together and it adds support for uniformly executes them and pass them arguments..'''
-
 class SdkCommandArgument(object):
     '''This class describe the attributes supported by a command argument. For a simple example of how arguments are used
     read :py:class:`fantastico.sdk.sdk_core.SdkCommand`'''
@@ -128,14 +118,11 @@ class SdkCommand(object, metaclass=ABCMeta):
 
         from fantastico.sdk import sdk_decorators
 
-        @sdk_decorators.SdkCommand(name="greet")
+        @sdk_decorators.SdkCommand(name="greet", cmd_help="This is a very simple greeting command supported by fantastico.")
         class SdkCommandSayHello(SdkCommand):
             \'\'\'This class provides an extremely simple command which greets the user.\'\'\'
 
             CMD_NAME = "greet"
-
-            def get_help(self):
-                return "This is a very simple greeting command supported by fantastico."
 
             def get_arguments(self):
                 return [SdkCommandArgument("-m", "--message", int, "Message used to greet the user."),
@@ -175,10 +162,6 @@ class SdkCommand(object, metaclass=ABCMeta):
         self._args_namespace = None
 
     @abstractmethod
-    def get_help(self):
-        '''This method must be overriden by each concrete command and must return the command friendly help message.'''
-
-    @abstractmethod
     def get_arguments(self):
         '''This method must be overriden by each concrete command and must return the command supported arguments.'''
 
@@ -213,7 +196,7 @@ class SdkCommand(object, metaclass=ABCMeta):
 
         for cmd_arg in supported_args:
             if issubclass(cmd_arg.type, SdkCommand):
-                args_parser.add_argument("subcommand", metavar="N", type=str, help=cmd_arg.help, default=None, nargs="?")
+                args_parser.add_argument("subcommand", metavar=cmd_arg.name, type=str, help=cmd_arg.help, default=None, nargs="?")
 
         for cmd_arg in supported_args:
             if not issubclass(cmd_arg.type, SdkCommand):
