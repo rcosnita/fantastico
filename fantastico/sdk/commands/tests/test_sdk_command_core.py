@@ -18,13 +18,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.sdk.sdk_core import SdkCommandsRegistry
+from fantastico.sdk.fantastico import SdkCore
+from fantastico.sdk.commands.tests.commands_for_bdd_test import MockCmdTest
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 
 class SdkCommandCoreTests(FantasticoUnitTestsCase):
     '''This class provides the unit tests for sdk command core. It covers autodiscovery of submodules.'''
 
     def init(self):
-        '''This method is invoked automatically for preparing dependencies.'''
+        '''This method is invoked automatically for cleaning existing commands.'''
 
         SdkCommandsRegistry.COMMANDS.clear()
 
@@ -36,14 +38,12 @@ class SdkCommandCoreTests(FantasticoUnitTestsCase):
     def test_core_command_ok(self):
         '''This test case ensures fantastico sdk main command works as expected.'''
 
-        from fantastico.sdk.fantastico import SdkCore
+        argv = ["fantastico", "test_cmd"]
 
-        argv = ["fantastico", "test_cmd", "-h"]
+        SdkCommandsRegistry.COMMANDS["fantastico"] = SdkCore
+        SdkCommandsRegistry.COMMANDS["test_cmd"] = MockCmdTest
 
-        cmd = SdkCore(argv, SdkCommandsRegistry, ["tests", "commands_for_bdd_test"])
+        cmd_test = SdkCore(argv, supported_prefixes=["not supported ----"])
 
-        SdkCommandsRegistry.add_command("fantastico", SdkCore)
-        SdkCommandsRegistry.add_command("test_cmd", SdkCore)
-
-        self.assertEqual("fantastico", cmd.get_name())
-        self.assertIsNotNone(SdkCommandsRegistry.get_command("fantastico", argv))
+        self.assertIsNotNone(cmd_test)
+        cmd_test.exec_command()

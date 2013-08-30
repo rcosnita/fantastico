@@ -1,4 +1,3 @@
-#!pip-deps/bin/python3
 '''
 Copyright 2013 Cosnita Radu Viorel
 
@@ -15,17 +14,19 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
+.. py:module:: fantastico.sdk.commands.command_version
 '''
 
-from fantastico.sdk.fantastico import SdkCore
-import sys
-from fantastico.sdk.sdk_core import SdkCommandsRegistry
+from fantastico.sdk import sdk_decorators
+from fantastico.sdk.sdk_core import SdkCommand
 
-if __name__ == "__main__":
-    argv = sys.argv
+@sdk_decorators.SdkCommand(name="version", target="fantastico",
+                           help="Displays fantastico sdk installed version.")
+class SdkCommandVersion(SdkCommand):
+    '''This class provides the command for finding out installed version of Fantastico SDK.'''
 
-    cmd_name = SdkCore.get_name()
-    argv[0] = cmd_name
+    def get_arguments(self):
+        return []
 
-    cmd = SdkCommandsRegistry.get_command(cmd_name, argv)
-    cmd.exec_command()
+    def exec(self):
+        print("0.3.0")
