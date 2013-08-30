@@ -190,6 +190,7 @@ class SdkCommand(object, metaclass=ABCMeta):
         '''This method is invoked automatically by getattribute when _arguments attribute is first accessed. It builds the
         _arguments object which holds all attributes value passed from command line.'''
 
+        subcommand_added = False
         args_parser = argparse.ArgumentParser()
 
         supported_args = self.get_arguments()
@@ -197,12 +198,16 @@ class SdkCommand(object, metaclass=ABCMeta):
         for cmd_arg in supported_args:
             if issubclass(cmd_arg.type, SdkCommand):
                 args_parser.add_argument("subcommand", metavar=cmd_arg.name, type=str, help=cmd_arg.help, default=None, nargs="?")
+                subcommand_added = True
 
         for cmd_arg in supported_args:
             if not issubclass(cmd_arg.type, SdkCommand):
                 args_parser.add_argument(cmd_arg.short_name, cmd_arg.name, type=cmd_arg.type, help=cmd_arg.help)
 
         args_parser.parse_args(self._argv, self._args_namespace)
+
+        if not subcommand_added:
+            self._args_namespace.subcommand = None
 
     def __getattribute__(self, attr_name):
         '''This method is invoked dynamically by python when trying to access object attributes. For SdkCommand it lazy build the
