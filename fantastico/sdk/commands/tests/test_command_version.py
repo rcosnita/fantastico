@@ -14,28 +14,28 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.sdk.commands.command_version
+.. py:module:: fantastico.sdk.commands.tests.test_command_version
 '''
+from fantastico.sdk.commands.command_version import SdkCommandVersion
+from fantastico.tests.base_case import FantasticoUnitTestsCase
+from mock import Mock
 
-import fantastico
-from fantastico.sdk import sdk_decorators
-from fantastico.sdk.sdk_core import SdkCommand
+class SdkCommandVersionTests(FantasticoUnitTestsCase):
+    '''This class provides the test cases for ensuring sdk version command works as expected.'''
 
-@sdk_decorators.SdkCommand(name="version", target="fantastico",
-                           help="Displays fantastico sdk installed version.")
-class SdkCommandVersion(SdkCommand):
-    '''This class provides the command for finding out installed version of Fantastico SDK. The value is defined in code
-    in fantastico root module. It does not accept any arguments beside **--help**.'''
+    def test_version_ok(self):
+        '''This test case ensures correct version is retrieved by the command.'''
 
-    def __init__(self, argv, cmd_factory, version_reader=fantastico):
-        super(SdkCommandVersion, self).__init__(argv, cmd_factory)
+        expected_version = "0.99"
 
-        self._version = version_reader.__version__
+        argv = ["version"]
+        version_reader = Mock()
+        version_reader.__version__ = expected_version
 
-    def get_arguments(self):
-        return []
+        cmd = SdkCommandVersion(argv, Mock(), version_reader)
 
-    def exec(self, print_fn=print):
-        '''This method prints the current fantastico framework version.'''
+        mock_print = Mock()
 
-        print_fn(self._version)
+        cmd.exec(mock_print)
+
+        mock_print.assert_called_with(expected_version)
