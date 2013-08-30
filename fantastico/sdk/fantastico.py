@@ -20,7 +20,6 @@ from fantastico.sdk import sdk_decorators
 from fantastico.sdk.sdk_core import SdkCommand, SdkCommandsRegistry, SdkCommandArgument
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
-import sys
 
 @sdk_decorators.SdkCommand(
             name="fantastico",
