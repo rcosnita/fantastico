@@ -14,22 +14,33 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.sdk.commands.tests.itest_command_fantastico
+.. py:module:: fantastico.sdk.commands.tests.itest_command_integration_base
 '''
-from fantastico.sdk.fantastico import SdkCore, main
-from fantastico.sdk.commands.tests.itest_command_integration_base import CommandBaseIntegration
 
-class SdkCommandFantasticoIntegration(CommandBaseIntegration):
-    '''This test case ensure fantastico sdk command is correctly integrated and functional.'''
+from fantastico.tests.base_case import FantasticoIntegrationTestCase
+from mock import Mock
+import io
+import sys
 
-    def test_fantastico_help_ok(self):
-        '''This test case ensures help option works as expected.'''
+class CommandBaseIntegration(FantasticoIntegrationTestCase):
+    '''This class provides the raw frame for easily writing integration tests for fantastico sdk commands.'''
 
-        argv = [SdkCore.get_name(), "--help"]
+    _stdout = None
+    _old_stdout = None
+    _old_exit = None
 
-        main(argv)
+    def init(self):
+        '''This method ensures standard output stream is replaced with a controllable one.'''
 
-        help_str = self._stdout.getvalue()
+        _old_exit = sys.exit
+        sys.exit = Mock()
 
-        self.assertTrue(help_str.startswith("usage: %s" % SdkCore.get_help()))
-        self.assertTrue(help_str.find("[version]") > -1)
+        self._old_stdout = sys.stdout
+        sys.stdout = self._stdout = io.StringIO()
+
+    def clean(self):
+        '''This method ensures standard output stream is restored after each test case.'''
+
+        sys.exit = self._old_exit
+        sys.stdout = self._old_stdout
+        self._stdout.close()
