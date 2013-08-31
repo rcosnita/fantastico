@@ -22,6 +22,8 @@ from fantastico.sdk.sdk_core import SdkCommand, SdkCommandArgument
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
+import io
+import sys
 
 class SdkCommandTests(FantasticoUnitTestsCase):
     '''This class provides test cases for ensuring sdk command behaves as expected. The logic of this test suite is fairly simple:
@@ -85,6 +87,25 @@ class SdkCommandTests(FantasticoUnitTestsCase):
             self._exec_ok_scenario(args, expected_msg, cmd_factory)
 
         self.assertEqual(expected_err_msg, str(ctx.exception))
+
+    def test_info_works_ok(self):
+        '''This test case ensure info option for a given command works as expected.'''
+
+        old_stdout = sys.stdout
+        sys.stdout = io.StringIO()
+
+        try:
+            cmd = SdkCommandSayHello(["greet", "--info"], None)
+
+            cmd.exec_command()
+
+            help_str = sys.stdout.getvalue()
+
+            self.assertTrue(help_str.startswith("usage: %s" % SdkCommandSayHello.get_help()))
+        finally:
+            sys.stdout.close()
+            sys.stdout = old_stdout
+
 
     def _exec_ok_scenario(self, args, expected_msg, cmd_factory=None):
         '''This test case provides the template for checking correct behavior of exec method.'''

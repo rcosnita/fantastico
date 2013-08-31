@@ -17,15 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 '''
 
-from fantastico.sdk.fantastico import SdkCore
+from fantastico.sdk.fantastico import main
 import sys
-from fantastico.sdk.sdk_core import SdkCommandsRegistry
 
 if __name__ == "__main__":
     argv = sys.argv
 
-    cmd_name = SdkCore.get_name()
-    argv[0] = cmd_name
-
-    cmd = SdkCommandsRegistry.get_command(cmd_name, argv)
-    cmd.exec_command()
+    main(argv)

@@ -69,7 +69,7 @@ class SdkCore(SdkCommand):
         '''This methods looks into the registry of available commands and obtain only those with target = 'fantastico'.'''
 
         for cmd in SdkCommandsRegistry.COMMANDS.values():
-            if cmd.get_target() != self.get_name():
+            if cmd.get_target() != self.get_name() or cmd.get_name() == self.get_name():
                 continue
 
             self._core_args.append(SdkCommandArgument(cmd.get_name(), cmd.get_name(), cmd, cmd.get_help()))
@@ -83,3 +83,12 @@ class SdkCore(SdkCommand):
         '''This method does nothing because fantastico is designed to accept only registered subcommands.'''
 
         pass
+
+def main(argv):
+    '''This method is used to trigger fantastico command line sdk.'''
+
+    cmd_name = SdkCore.get_name()
+    argv[0] = cmd_name
+
+    cmd = SdkCommandsRegistry.get_command(cmd_name, argv)
+    cmd.exec_command()
