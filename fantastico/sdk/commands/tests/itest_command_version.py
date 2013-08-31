@@ -17,35 +17,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.sdk.commands.tests.itest_command_version
 '''
 
+from fantastico.sdk.commands.tests.itest_command_integration_base import CommandBaseIntegration
 from fantastico.sdk.fantastico import SdkCore, main
-from fantastico.tests.base_case import FantasticoIntegrationTestCase
-from mock import Mock
 import fantastico
-import io
-import sys
 
-class SdkCommandVersionIntegration(FantasticoIntegrationTestCase):
+
+class SdkCommandVersionIntegration(CommandBaseIntegration):
     '''This class provides the integration scenarios for sdk command **version**.'''
-
-    _stdout = None
-    _old_stdout = None
-    _old_exit = None
-
-    def init(self):
-        '''This method ensures standard output stream is replaced with a controllable one.'''
-
-        _old_exit = sys.exit
-        sys.exit = Mock()
-
-        self._old_stdout = sys.stdout
-        sys.stdout = self._stdout = io.StringIO()
-
-    def clean(self):
-        '''This method ensures standard output stream is restored after each test case.'''
-
-        sys.exit = self._old_exit
-        sys.stdout = self._old_stdout
-        self._stdout.close()
 
     def test_version_ok(self):
         '''This test case check version command integration into sdk.'''
