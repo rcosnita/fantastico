@@ -17,9 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.sdk.commands.command_version
 '''
 
-import fantastico
 from fantastico.sdk import sdk_decorators
 from fantastico.sdk.sdk_core import SdkCommand
+import fantastico
+import sys
 
 @sdk_decorators.SdkCommand(name="version", target="fantastico",
                            help="Displays fantastico sdk installed version.")

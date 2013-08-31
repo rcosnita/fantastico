@@ -20,6 +20,7 @@ from abc import ABCMeta, abstractmethod
 from argparse import Namespace
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
 import argparse
+import sys
 
 class SdkCommandArgument(object):
     '''This class describe the attributes supported by a command argument. For a simple example of how arguments are used
@@ -159,6 +160,7 @@ class SdkCommand(object, metaclass=ABCMeta):
         self._cmd_factory = cmd_factory
         self._argv = argv[1:]
         self._arguments = None
+        self._args_parser = None
         self._args_namespace = None
 
     @abstractmethod
@@ -178,6 +180,16 @@ class SdkCommand(object, metaclass=ABCMeta):
         :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: if an exception occurs while executing the command.
         :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandNotFoundError: if a subcommand does not exist.'''
 
+        self._arguments.subcommand = None
+
+        if len(self._argv) and self._argv[0] in ["-i", "--info"]:
+            self._args_parser.print_help()
+
+            return
+
+        if len(self._argv) > 0 and not self._argv[0].startswith("-"):
+            self._arguments.subcommand = getattr(self._arguments, self._argv[0])
+
         if self._arguments.subcommand:
             try:
                 return self._cmd_factory.get_command(self._argv[0], self._argv[0:]).exec_command(*args, **kwargs)
@@ -190,24 +202,22 @@ class SdkCommand(object, metaclass=ABCMeta):
         '''This method is invoked automatically by getattribute when _arguments attribute is first accessed. It builds the
         _arguments object which holds all attributes value passed from command line.'''
 
-        subcommand_added = False
-        args_parser = argparse.ArgumentParser()
+        self._args_parser = args_parser = argparse.ArgumentParser(self.get_help())
 
         supported_args = self.get_arguments()
 
         for cmd_arg in supported_args:
             if issubclass(cmd_arg.type, SdkCommand):
-                args_parser.add_argument("subcommand", metavar=cmd_arg.name, type=str, help=cmd_arg.help, default=None, nargs="?")
-                subcommand_added = True
+                args_parser.add_argument(cmd_arg.name, metavar=cmd_arg.name, type=str,
+                                         help=cmd_arg.help, default=None, nargs="?")
 
         for cmd_arg in supported_args:
             if not issubclass(cmd_arg.type, SdkCommand):
                 args_parser.add_argument(cmd_arg.short_name, cmd_arg.name, type=cmd_arg.type, help=cmd_arg.help)
 
-        args_parser.parse_args(self._argv, self._args_namespace)
+        args_parser.add_argument("-i", "--info", action='store_true', help="Obtain additional information for a given command.")
 
-        if not subcommand_added:
-            self._args_namespace.subcommand = None
+        args_parser.parse_args(self._argv, self._args_namespace)
 
     def __getattribute__(self, attr_name):
         '''This method is invoked dynamically by python when trying to access object attributes. For SdkCommand it lazy build the
