@@ -26,7 +26,7 @@ In this section you can samples of how to use the sdk and how to make it availab
 
    fantastico --help
 
-When you invoke fantastico sdk with **--help** argument it will list all available command as well as their supported options.
+When you invoke fantastico sdk with **--help** argument it will list all available commands.
 Similar to other linux command lines you can obtain help hierarchical:
 
 .. code-block:: bash
@@ -35,7 +35,7 @@ Similar to other linux command lines you can obtain help hierarchical:
    fantastico.py <command> --help
 
    # Show help screen for fantastico <command> <subcommand>
-   fantastico.py <command> <subcommand> --help
+   fantastico.py <command> <subcommand> --info
    
 Supported commands
 ------------------

@@ -20,7 +20,6 @@ from abc import ABCMeta, abstractmethod
 from argparse import Namespace
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
 import argparse
-import sys
 
 class SdkCommandArgument(object):
     '''This class describe the attributes supported by a command argument. For a simple example of how arguments are used
