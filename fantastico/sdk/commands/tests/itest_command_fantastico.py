@@ -14,18 +14,15 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.sdk.commands.tests.itest_command_version
+.. py:module:: fantastico.sdk.commands.tests.itest_command_fantastico
 '''
-
 from fantastico.sdk.fantastico import SdkCore, main
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
-import fantastico
 import io
-import sys
 
-class SdkCommandVersionIntegration(FantasticoIntegrationTestCase):
-    '''This class provides the integration scenarios for sdk command **version**.'''
+class SdkCommandFantasticoIntegration(FantasticoIntegrationTestCase):
+    '''This test case ensure fantastico sdk command is correctly integrated and functional.'''
 
     _stdout = None
     _old_stdout = None
@@ -47,26 +44,14 @@ class SdkCommandVersionIntegration(FantasticoIntegrationTestCase):
         sys.stdout = self._old_stdout
         self._stdout.close()
 
-    def test_version_ok(self):
-        '''This test case check version command integration into sdk.'''
+    def test_fantastico_help_ok(self):
+        '''This test case ensures help option works as expected.'''
 
-        argv = [SdkCore.get_name(), "version"]
-
-        main(argv)
-
-        version = self._stdout.getvalue()
-
-        self.assertTrue(version.startswith(fantastico.__version__))
-
-    def test_version_help_ok(self):
-        '''This test case check version command help screen is correctly generated.'''
-
-        from fantastico.sdk.commands.command_version import SdkCommandVersion
-
-        argv = [SdkCore.get_name(), "version", "--info"]
+        argv = [SdkCore.get_name(), "--help"]
 
         main(argv)
 
         help_str = self._stdout.getvalue()
 
-        self.assertTrue(help_str.startswith("usage: %s" % SdkCommandVersion.get_help()))
+        self.assertTrue(help_str.startswith("usage: %s" % SdkCore.get_help()))
+        self.assertTrue(help_str.find("[version]") > -1)

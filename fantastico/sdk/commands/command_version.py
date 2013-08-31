@@ -20,13 +20,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.sdk import sdk_decorators
 from fantastico.sdk.sdk_core import SdkCommand
 import fantastico
-import sys
 
 @sdk_decorators.SdkCommand(name="version", target="fantastico",
                            help="Displays fantastico sdk installed version.")
 class SdkCommandVersion(SdkCommand):
-    '''This class provides the command for finding out installed version of Fantastico SDK. The value is defined in code
-    in fantastico root module. It does not accept any arguments beside **--help**.'''
+    '''This class provides the command for finding out installed version of Fantastico SDK. The value is defined in fantastico
+    root module code.
+
+    .. code-block:: python
+
+        # display additional information for version command
+        fantastico version --info
+
+        # display help information for version command in sdk context
+        fantastico version --help
+
+        # display the current sdk version
+        fantastico version
+    '''
 
     def __init__(self, argv, cmd_factory, version_reader=fantastico):
         super(SdkCommandVersion, self).__init__(argv, cmd_factory)
