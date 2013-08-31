@@ -20,8 +20,6 @@ from fantastico.mvc.controller_decorators import Controller
 from fantastico.routing_engine.routing_loaders import RouteLoader
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
-import importlib
-import os
 
 class ControllerRouteLoader(RouteLoader):
     '''This class provides a route loader that is capable of scanning the disk and registering only the routes that

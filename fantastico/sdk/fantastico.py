@@ -25,7 +25,7 @@ from fantastico.utils import instantiator
 
 @sdk_decorators.SdkCommand(
             name="fantastico",
-            help="Fantastico Software Development Kit command line. Please use subcommands --help for more information.")
+            help="Fantastico Software Development Kit command line. Please use [subcommands] --info for more information.")
 class SdkCore(SdkCommand):
     '''This class provides the core functionality of Fantastico Software Development Kit. It
     wires all available commands together and handles requests accordingly.
@@ -51,6 +51,8 @@ class SdkCore(SdkCommand):
         '''This methods loads all available subcommands from sdk and build _arguments supported by fantastico sdk directly.'''
 
         def is_file_supported(filename):
+            '''This method decides if a filename is supported as possible subcommand provider module or not.'''
+
             for prefix in supported_prefixes:
                 if filename.startswith(prefix):
                     return True
