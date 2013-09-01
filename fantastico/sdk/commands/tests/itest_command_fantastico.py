@@ -27,7 +27,8 @@ class SdkCommandFantasticoIntegration(CommandBaseIntegration):
 
         argv = [SdkCore.get_name(), "--help"]
 
-        main(argv)
+        with self.assertRaises(SystemExit):
+            main(argv)
 
         help_str = self._stdout.getvalue()
 
