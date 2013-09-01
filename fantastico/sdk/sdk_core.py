@@ -186,8 +186,7 @@ class SdkCommand(object, metaclass=ABCMeta):
 
             return
 
-        if len(self._argv) > 0 and not self._argv[0].startswith("-"):
-            self._arguments.subcommand = getattr(self._arguments, self._argv[0])
+        self._arguments.subcommand = self._get_subcommand()
 
         if self._arguments.subcommand:
             try:
@@ -196,6 +195,12 @@ class SdkCommand(object, metaclass=ABCMeta):
                 raise FantasticoSdkCommandNotFoundError(ex)
 
         return self.exec(*args, **kwargs)
+
+    def _get_subcommand(self):
+        '''This method returns the subcommand given to current command.'''
+
+        if len(self._argv) > 0 and not self._argv[0].startswith("-"):
+            return self._argv[0]
 
     def _build_arguments(self):
         '''This method is invoked automatically by getattribute when _arguments attribute is first accessed. It builds the
