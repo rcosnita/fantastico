@@ -10,6 +10,9 @@ Integration
 
 In order to use dynamic menu component within your project follow the steps below:
 
+Component files activation deprecated
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 #. Create a symbolic link under your root components folder to dynamic_menu.
 
    .. code-block:: bash
@@ -19,6 +22,16 @@ In order to use dynamic menu component within your project follow the steps belo
       ln -s ../../pip-deps/lib/python[version]/site-packages/fantastico/contrib/dynamic_menu/sql .
       ln -s ../../pip-deps/lib/python[version]/site-packages/fantastico/contrib/dynamic_menu/tests .
       ln -s ../../pip-deps/lib/python[version]/site-packages/fantastico/contrib/dynamic_menu/*.py .
+
+Component files activation (SDK)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   fantastico activate-extension dynamic_menu
+
+Component sample + db data
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Create a template in one of your components in which you define the menu view:
 
