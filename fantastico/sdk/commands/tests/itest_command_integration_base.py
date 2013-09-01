@@ -18,7 +18,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
-from mock import Mock
 import io
 import sys
 
@@ -27,13 +26,11 @@ class CommandBaseIntegration(FantasticoIntegrationTestCase):
 
     _stdout = None
     _old_stdout = None
-    _old_exit = None
 
     def init(self):
         '''This method ensures standard output stream is replaced with a controllable one.'''
 
         _old_exit = sys.exit
-        sys.exit = Mock()
 
         self._old_stdout = sys.stdout
         sys.stdout = self._stdout = io.StringIO()
@@ -41,6 +38,5 @@ class CommandBaseIntegration(FantasticoIntegrationTestCase):
     def clean(self):
         '''This method ensures standard output stream is restored after each test case.'''
 
-        sys.exit = self._old_exit
         sys.stdout = self._old_stdout
         self._stdout.close()
