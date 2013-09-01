@@ -90,7 +90,7 @@ def get_path_to_module_fqdn(abspath, settings_facade):
 
     return "%s" % module_name[:module_name.rfind(".")]
 
-def scan_folder_by_criteria(folder, file_matcher, action):
+def scan_folder_by_criteria(folder, file_matcher, action, os_lib=os):
     '''This method provides the algorithm for scanning a given location and executing an action for each file.
 
     .. code-block:: python
@@ -102,9 +102,12 @@ def scan_folder_by_criteria(folder, file_matcher, action):
     As you can see in the above example, for using this method you have to define a matcher which is executed against each
     filename found in the given folder as well as an action executed for each matched file.'''
 
-    for filename in os.listdir(folder):
+    for filename in os_lib.listdir(folder):
         if not file_matcher(folder, filename):
             continue
+
+        if folder[-1] != "/":
+            folder += "/"
 
         abspath = "%s%s" % (folder, filename)
 
@@ -127,3 +130,10 @@ def import_modules_from_folder(folder, file_matcher, settings_facade):
             importlib.import_module(module_name)
 
     scan_folder_by_criteria(folder, file_matcher, import_modules)
+
+def get_package_abslocation(package):
+    '''This method obtains the absolute package location on disk from a given python package.'''
+
+    pkg_location = package.__file__
+
+    return pkg_location[:pkg_location.rfind("/") + 1]
