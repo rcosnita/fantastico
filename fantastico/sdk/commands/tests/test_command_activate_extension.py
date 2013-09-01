@@ -83,6 +83,7 @@ class SdkCommandActivateExtensionTests(FantasticoUnitTestsCase):
         comp_structure = ["__init__.py", "sql", "models", "dynamic_menus.py"]
 
         linking_trace = {}
+        remove_trace = []
 
         def list_comp(dirname):
             '''This method mocks listdir method from os library.'''
@@ -95,12 +96,29 @@ class SdkCommandActivateExtensionTests(FantasticoUnitTestsCase):
 
             holder[src] = dest
 
+        def file_exists(filename):
+            if filename == comp_root_folder:
+                return False
+
+            return True
+
+        def remove(filename, remove_trace=remove_trace):
+            remove_trace.append(filename)
+
+        self._mocked_os.path.exists = file_exists
+        self._mocked_os.remove = remove
+        self._mocked_os.mkdir = Mock()
         self._mocked_os.listdir = list_comp
         self._mocked_os.symlink = symlink
 
         cmd_activate = SdkCommandActivateExtension(argv, cmd_factory=None)
 
         cmd_activate.exec_command(os_lib=self._mocked_os)
+
+        self._assert_ok_scenario_results(comp_structure, expected_comp_path, linking_trace, remove_trace, comp_root)
+
+    def _assert_ok_scenario_results(self, comp_structure, expected_comp_path, linking_trace, remove_trace, comp_root):
+        '''This method asserts the result of ok scenario.'''
 
         for expected_file in comp_structure:
             src = "%s/%s" % (expected_comp_path, expected_file)
@@ -113,3 +131,6 @@ class SdkCommandActivateExtensionTests(FantasticoUnitTestsCase):
             dest = "%s/%s" % (comp_root, expected_file)
 
             self.assertEqual(linking_trace[src], dest)
+            self.assertTrue(dest in remove_trace)
+
+        self._mocked_os.mkdir.assert_called_with(comp_root)

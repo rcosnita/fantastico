@@ -69,16 +69,27 @@ class SdkCommandActivateExtension(SdkCommand):
 
         file_matcher = lambda abspath, filename: True
         root_folder = instantiator.get_component_path_data(SettingsFacade().get_config().__class__)[1]
+        comp_root_folder = contrib_path.replace(contrib_path, "%s%s/%s" % (root_folder, self._arguments.comp_root, comp_name))
 
-        def link_files(abspath, filename):
-            '''This method links the file from the given abspath under component path.'''
+        if os_lib.path.exists(comp_root_folder):
+            os_lib.mkdir(comp_root_folder)
 
-            if filename == "models":
-                return
+        instantiator.scan_folder_by_criteria(
+                            comp_path, file_matcher,
+                            action=lambda abspath, filename: \
+                                self._link_files(abspath, filename, contrib_path, root_folder, os_lib),
+                            os_lib=os_lib)
 
-            src = abspath
-            dest = src.replace(contrib_path, "%s%s/" % (root_folder, self._arguments.comp_root))
+    def _link_files(self, abspath, filename, contrib_path, root_folder, os_lib=os):
+        '''This method holds the logic for linking a given comp repository absolute path to local repository.'''
 
-            os_lib.symlink(src, dest)
+        if filename == "models":
+            return
 
-        instantiator.scan_folder_by_criteria(comp_path, file_matcher, link_files, os_lib=os_lib)
+        src = abspath
+        dest = src.replace(contrib_path, "%s%s/" % (root_folder, self._arguments.comp_root))
+
+        if os_lib.path.exists(dest):
+            os_lib.remove(dest)
+
+        os_lib.symlink(src, dest)
