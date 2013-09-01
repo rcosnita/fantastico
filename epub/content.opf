@@ -181,6 +181,9 @@
     <item id="_modules_fantastico_sdk_sdk_decorators.html"
           href="_modules/fantastico/sdk/sdk_decorators.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_sdk_commands_command_activate_extension.html"
+          href="_modules/fantastico/sdk/commands/command_activate_extension.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_sdk_commands_command_version.html"
           href="_modules/fantastico/sdk/commands/command_version.html"
           media-type="application/xhtml+xml" />
@@ -265,6 +268,9 @@
     <item id="features_components_dynamic_menu_dynamic_menu.html"
           href="features/components/dynamic_menu/dynamic_menu.html"
           media-type="application/xhtml+xml" />
+    <item id="features_sdk_command_activate_extension.html"
+          href="features/sdk/command_activate_extension.html"
+          media-type="application/xhtml+xml" />
     <item id="features_sdk_command_version.html"
           href="features/sdk/command_version.html"
           media-type="application/xhtml+xml" />
@@ -283,6 +289,7 @@
     <itemref idref="features_routing_engine.html" />
     <itemref idref="features_mvc.html" />
     <itemref idref="features_sdk.html" />
+    <itemref idref="features_sdk_command_activate_extension.html" />
     <itemref idref="features_sdk_command_version.html" />
     <itemref idref="features_component_model.html" />
     <itemref idref="features_component_reusage.html" />

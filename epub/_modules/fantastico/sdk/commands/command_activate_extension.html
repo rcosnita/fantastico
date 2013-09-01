@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.sdk.commands.command_activate_extension</title>
+    
+    <link rel="stylesheet" href="../../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../../index.html">fantastico 0.3.0-b103 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.sdk.commands.command_activate_extension</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.sdk.commands.command_activate_extension</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">contrib</span>
+<span class="kn">from</span> <span class="nn">fantastico.sdk</span> <span class="kn">import</span> <span class="n">sdk_decorators</span>
+<span class="kn">from</span> <span class="nn">fantastico.sdk.sdk_core</span> <span class="kn">import</span> <span class="n">SdkCommand</span><span class="p">,</span> <span class="n">SdkCommandArgument</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">fantastico.sdk.sdk_exceptions</span> <span class="kn">import</span> <span class="n">FantasticoSdkCommandNotFoundError</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
+
+<span class="n">CMD_HELP</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> \
+        <span class="p">(</span><span class="s">&quot;Activates a local extension provided by fantastico. Currently it supports only local components found into&quot;</span><span class="p">,</span>
+         <span class="s">&quot;fantastico.contrib package.&quot;</span><span class="p">)</span>
+
+<span class="nd">@sdk_decorators.SdkCommand</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s">&quot;activate-extension&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">CMD_HELP</span><span class="p">,</span>
+        <span class="n">target</span><span class="o">=</span><span class="s">&quot;fantastico&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="SdkCommandActivateExtension"><a class="viewcode-back" href="../../../../features/sdk/command_activate_extension.html#fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension">[docs]</a><span class="k">class</span> <span class="nc">SdkCommandActivateExtension</span><span class="p">(</span><span class="n">SdkCommand</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the functionality for activating off the shelf fantastico extensions. As developer, it is extremely</span>
+<span class="sd">    easy to integrate provided functionality into fantastico. For now, it supports only local extensions provided into</span>
+<span class="sd">    fantastico.contrib package. In the future, we plan to support activation of remote components into projects.</span>
+
+<span class="sd">    .. code-block:: bash</span>
+
+<span class="sd">        # replace &lt;project_root_path&gt; with your fantastico project location.</span>
+<span class="sd">        cd &lt;project_root_path&gt;</span>
+
+<span class="sd">        # replace &lt;component_root_path&gt; with your actual folder.</span>
+<span class="sd">        fantastico activate-extension --name dynamic_menu --comp-root &lt;component_root_path&gt;&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="SdkCommandActivateExtension.get_arguments"><a class="viewcode-back" href="../../../../features/sdk/command_activate_extension.html#fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension.get_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">get_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns support arguments of activate-extension command.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">SdkCommandArgument</span><span class="p">(</span><span class="n">arg_short_name</span><span class="o">=</span><span class="s">&quot;-n&quot;</span><span class="p">,</span>
+                                   <span class="n">arg_name</span><span class="o">=</span><span class="s">&quot;--name&quot;</span><span class="p">,</span>
+                                   <span class="n">arg_type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                                   <span class="n">arg_help</span><span class="o">=</span><span class="s">&quot;Holds the name of extension we want to activate.&quot;</span><span class="p">),</span>
+                <span class="n">SdkCommandArgument</span><span class="p">(</span><span class="n">arg_short_name</span><span class="o">=</span><span class="s">&quot;-p&quot;</span><span class="p">,</span>
+                                   <span class="n">arg_name</span><span class="o">=</span><span class="s">&quot;--comp-root&quot;</span><span class="p">,</span>
+                                   <span class="n">arg_type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                                   <span class="n">arg_help</span><span class="o">=</span><span class="s">&quot;Holds the name of the folder where project components are placed.&quot;</span><span class="p">)]</span>
+</div>
+<div class="viewcode-block" id="SdkCommandActivateExtension.exec"><a class="viewcode-back" href="../../../../features/sdk/command_activate_extension.html#fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension.exec">[docs]</a>    <span class="k">def</span> <span class="nf">exec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">os_lib</span><span class="o">=</span><span class="n">os</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is executed to activate the given extension name.&#39;&#39;&#39;</span>
+
+        <span class="n">comp_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">contrib_path</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_package_abslocation</span><span class="p">(</span><span class="n">contrib</span><span class="p">)</span>
+        <span class="n">comp_path</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">contrib_path</span><span class="p">,</span> <span class="n">comp_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os_lib</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">comp_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FantasticoSdkCommandNotFoundError</span><span class="p">(</span><span class="s">&quot;Extension </span><span class="si">%s</span><span class="s"> does not exist.&quot;</span> <span class="o">%</span> <span class="n">comp_name</span><span class="p">)</span>
+
+        <span class="n">file_matcher</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="bp">True</span>
+        <span class="n">root_folder</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="n">SettingsFacade</span><span class="p">()</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">__class__</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">comp_root_folder</span> <span class="o">=</span> <span class="n">contrib_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">contrib_path</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">/</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">comp_root</span><span class="p">,</span> <span class="n">comp_name</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">os_lib</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">comp_root_folder</span><span class="p">):</span>
+            <span class="n">os_lib</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">comp_root_folder</span><span class="p">)</span>
+
+        <span class="n">instantiator</span><span class="o">.</span><span class="n">scan_folder_by_criteria</span><span class="p">(</span>
+                            <span class="n">comp_path</span><span class="p">,</span> <span class="n">file_matcher</span><span class="p">,</span>
+                            <span class="n">action</span><span class="o">=</span><span class="k">lambda</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> \
+                                <span class="bp">self</span><span class="o">.</span><span class="n">_link_files</span><span class="p">(</span><span class="n">abspath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">contrib_path</span><span class="p">,</span> <span class="n">root_folder</span><span class="p">,</span> <span class="n">os_lib</span><span class="p">),</span>
+                            <span class="n">os_lib</span><span class="o">=</span><span class="n">os_lib</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_link_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">contrib_path</span><span class="p">,</span> <span class="n">root_folder</span><span class="p">,</span> <span class="n">os_lib</span><span class="o">=</span><span class="n">os</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method holds the logic for linking a given comp repository absolute path to local repository.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="s">&quot;models&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">src</span> <span class="o">=</span> <span class="n">abspath</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">contrib_path</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">comp_root</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">os_lib</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
+            <span class="n">os_lib</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+
+        <span class="n">os_lib</span><span class="o">.</span><span class="n">symlink</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -45,18 +45,22 @@
 \contentsline {subsection}{\numberline {3.5.1}Intro}{26}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Usage}{27}{subsection.3.5.2}
 \contentsline {subsection}{\numberline {3.5.3}Supported commands}{27}{subsection.3.5.3}
-\contentsline {subsubsection}{Version command}{27}{subsubsection*.116}
-\contentsline {subsection}{\numberline {3.5.4}Technical summary}{27}{subsection.3.5.4}
-\contentsline {section}{\numberline {3.6}Component model}{30}{section.3.6}
+\contentsline {subsubsection}{Activate extension command}{27}{subsubsection*.116}
+\contentsline {subsubsection}{Version command}{27}{subsubsection*.120}
+\contentsline {subsection}{\numberline {3.5.4}Technical summary}{28}{subsection.3.5.4}
+\contentsline {section}{\numberline {3.6}Component model}{31}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Static folder}{31}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}Sql folder}{31}{subsection.3.6.2}
-\contentsline {subsubsection}{Sql folder example}{31}{subsubsection*.138}
-\contentsline {section}{\numberline {3.7}Component reusage}{31}{section.3.7}
+\contentsline {subsubsection}{Sql folder example}{31}{subsubsection*.142}
+\contentsline {section}{\numberline {3.7}Component reusage}{32}{section.3.7}
 \contentsline {section}{\numberline {3.8}Built in components}{33}{section.3.8}
-\contentsline {subsection}{\numberline {3.8.1}Dynamic menu}{33}{subsection.3.8.1}
-\contentsline {subsubsection}{Integration}{33}{subsubsection*.142}
-\contentsline {subsubsection}{Current limitations}{34}{subsubsection*.143}
-\contentsline {subsubsection}{Technical summary}{34}{subsubsection*.144}
+\contentsline {subsection}{\numberline {3.8.1}Dynamic menu}{34}{subsection.3.8.1}
+\contentsline {subsubsection}{Integration}{34}{subsubsection*.146}
+\contentsline {paragraph}{Component files activation deprecated}{34}{paragraph*.147}
+\contentsline {paragraph}{Component files activation (SDK)}{34}{paragraph*.148}
+\contentsline {paragraph}{Component sample + db data}{34}{paragraph*.149}
+\contentsline {subsubsection}{Current limitations}{35}{subsubsection*.150}
+\contentsline {subsubsection}{Technical summary}{35}{subsubsection*.151}
 \contentsline {chapter}{\numberline {4}How to articles}{37}{chapter.4}
 \contentsline {section}{\numberline {4.1}MVC How to}{37}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Code the model}{37}{subsection.4.1.1}
@@ -65,14 +69,14 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{38}{subsection.4.1.4}
 \contentsline {section}{\numberline {4.2}Deployment how to}{38}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{39}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{40}{subsubsection*.149}
+\contentsline {subsubsection}{Setup}{40}{subsubsection*.156}
 \contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{40}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{41}{subsubsection*.150}
-\contentsline {subsubsection}{Optimization}{41}{subsubsection*.151}
-\contentsline {subsubsection}{Setup with S3}{42}{subsubsection*.152}
+\contentsline {subsubsection}{Setup}{41}{subsubsection*.157}
+\contentsline {subsubsection}{Optimization}{41}{subsubsection*.158}
+\contentsline {subsubsection}{Setup with S3}{42}{subsubsection*.159}
 \contentsline {section}{\numberline {4.3}Static assets}{42}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{42}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{43}{subsubsection*.153}
+\contentsline {subsubsection}{Favicon}{43}{subsubsection*.160}
 \contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{43}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Creating a new project}{43}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Create first component}{43}{subsection.4.4.1}
@@ -81,4 +85,4 @@
 \contentsline {chapter}{\numberline {5}Changes}{45}{chapter.5}
 \contentsline {chapter}{\numberline {6}Build status}{47}{chapter.6}
 \contentsline {chapter}{\numberline {7}License}{49}{chapter.7}
-\contentsline {chapter}{Index}{51}{section*.154}
+\contentsline {chapter}{Index}{51}{section*.161}

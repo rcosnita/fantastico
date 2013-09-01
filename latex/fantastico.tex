@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{September 01, 2013}
-\release{0.3.0-b102}
+\release{0.3.0-b103}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -762,7 +762,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x63492f8\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x483e160\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1840,7 +1840,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x301a408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1b18408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2167,6 +2167,47 @@ fantastico.py \PYGZlt{}\PYG{n+nb}{command}\PYGZgt{} \PYGZlt{}subcommand\PYGZgt{}
 
 \subsection{Supported commands}
 \label{features/sdk:supported-commands}
+
+\subsubsection{Activate extension command}
+\label{features/sdk/command_activate_extension::doc}\label{features/sdk/command_activate_extension:activate-extension-command}
+This Fantastico command helps developers integrate existing components into their project very easy. One use case is to activate
+in your projects contrib components (e.g: {\hyperref[features/components/dynamic_menu/dynamic_menu::doc]{\emph{Dynamic menu}}}). It
+is strongly recommended to use this sdk command because it works on every support operating system.
+\index{SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_activate_extension:fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.commands.command\_activate\_extension.}\bfcode{SdkCommandActivateExtension}}{\emph{argv}, \emph{cmd\_factory}}{}
+This class provides the functionality for activating off the shelf fantastico extensions. As developer, it is extremely
+easy to integrate provided functionality into fantastico. For now, it supports only local extensions provided into
+fantastico.contrib package. In the future, we plan to support activation of remote components into projects.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZsh{} replace \PYGZlt{}project\PYGZus{}root\PYGZus{}path\PYGZgt{} with your fantastico project location.}
+\PYG{n+nb}{cd} \PYGZlt{}project\PYGZus{}root\PYGZus{}path\PYGZgt{}
+
+\PYG{c}{\PYGZsh{} replace \PYGZlt{}component\PYGZus{}root\PYGZus{}path\PYGZgt{} with your actual folder.}
+fantastico activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name dynamic\PYGZus{}menu \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}component\PYGZus{}root\PYGZus{}path\PYGZgt{}
+\end{Verbatim}
+\index{exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_activate_extension:fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}}{}
+This method is executed to activate the given extension name.
+
+\end{fulllineitems}
+
+\index{get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_activate_extension:fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension.get_arguments}\pysiglinewithargsret{\bfcode{get\_arguments}}{}{}
+This method returns support arguments of activate-extension command.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
 
 \subsubsection{Version command}
 \label{features/sdk/command_version::doc}\label{features/sdk/command_version:version-command}
@@ -2628,7 +2669,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x4858ea8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x335e6b0\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2685,7 +2726,10 @@ This component which we generic named dynamic menu simply provides the controlle
 \subsubsection{Integration}
 \label{features/components/dynamic_menu/dynamic_menu:integration}
 In order to use dynamic menu component within your project follow the steps below:
-\begin{enumerate}
+
+
+\paragraph{Component files activation deprecated}
+\label{features/components/dynamic_menu/dynamic_menu:component-files-activation-deprecated}\begin{enumerate}
 \item {} 
 Create a symbolic link under your root components folder to dynamic\_menu.
 
@@ -2697,6 +2741,18 @@ ln \PYGZhy{}s ../../pip\PYGZhy{}deps/lib/python\PYG{o}{[}version\PYG{o}{]}/site\
 ln \PYGZhy{}s ../../pip\PYGZhy{}deps/lib/python\PYG{o}{[}version\PYG{o}{]}/site\PYGZhy{}packages/fantastico/contrib/dynamic\PYGZus{}menu/*.py .
 \end{Verbatim}
 
+\end{enumerate}
+
+
+\paragraph{Component files activation (SDK)}
+\label{features/components/dynamic_menu/dynamic_menu:component-files-activation-sdk}
+\begin{Verbatim}[commandchars=\\\{\}]
+fantastico activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name dynamic\PYGZus{}menu
+\end{Verbatim}
+
+
+\paragraph{Component sample + db data}
+\label{features/components/dynamic_menu/dynamic_menu:component-sample-db-data}\begin{enumerate}
 \item {} 
 Create a template in one of your components in which you define the menu view:
 

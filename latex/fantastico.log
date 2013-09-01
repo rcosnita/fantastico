@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  1 SEP 2013 07:22
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  1 SEP 2013 10:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 759--759
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 765--765
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x63492f8>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x483e160>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -1203,142 +1203,160 @@ Overfull \hbox (125.2931pt too wide) in paragraph at lines 2110--2110
  []
 
 [26]
-Underfull \hbox (badness 10000) in paragraph at lines 2177--2177
+Overfull \hbox (72.20447pt too wide) in paragraph at lines 2179--2179
 []\T1/ptm/m/it/10 argv\T1/ptm/m/n/10 ,
  []
 
 
-Overfull \hbox (16.64389pt too wide) in paragraph at lines 2177--2177
+Overfull \hbox (107.73412pt too wide) in paragraph at lines 2179--2179
+\T1/ptm/m/it/10 cmd_factory\T1/pcr/m/n/10 ) 
+ []
+
+
+Overfull \hbox (3.77077pt too wide) in paragraph at lines 2194--2194
+[]\T1/ptm/m/it/10 os_lib=<module `os' from `/mnt/jenkins_ebs/continous_integrat
+ion/fantastico_doc_workspace/pip-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2218--2218
+[]\T1/ptm/m/it/10 argv\T1/ptm/m/n/10 ,
+ []
+
+
+Overfull \hbox (16.64389pt too wide) in paragraph at lines 2218--2218
 \T1/ptm/m/it/10 sion_reader=<module
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2177--2177
+Underfull \hbox (badness 10000) in paragraph at lines 2218--2218
 \T1/ptm/m/it/10 `fan-tas-tico' from
  []
 
 
-Overfull \hbox (302.67026pt too wide) in paragraph at lines 2177--2177
+Overfull \hbox (302.67026pt too wide) in paragraph at lines 2218--2218
 \T1/ptm/m/it/10 `/mnt/jenkins_ebs/continous_integration/fantastico_doc_workspac
 e/fantastico/__init__.py'>\T1/pcr/m/n/10 ) 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2208--2208
+[27]
+Underfull \hbox (badness 10000) in paragraph at lines 2249--2249
 []\T1/ptm/m/it/10 argv\T1/ptm/m/n/10 , \T1/ptm/m/it/10 cmd_factory=<class `fan-
 tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2208--2208
+Underfull \hbox (badness 10000) in paragraph at lines 2249--2249
 \T1/ptm/m/it/10 tico.sdk.sdk_core.SdkCommandsRegistry'>\T1/ptm/m/n/10 , \T1/ptm
 /m/it/10 sup-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2208--2208
+Underfull \hbox (badness 10000) in paragraph at lines 2249--2249
 \T1/ptm/m/it/10 ported_prefixes=None\T1/ptm/m/n/10 , \T1/ptm/m/it/10 set-tings_
 facade_cls=<class
  []
 
-<design.png, id=511, 973.03732pt x 530.4767pt>
+<design.png, id=526, 973.03732pt x 530.4767pt>
 File: design.png Graphic file (type png)
  <use design.png>
-Package pdftex.def Info: design.png used on input line 2213.
+Package pdftex.def Info: design.png used on input line 2254.
 (pdftex.def)             Requested size: 973.03494pt x 530.4754pt.
 File: design.png Graphic file (type png)
 
 <use design.png>
-Package pdftex.def Info: design.png used on input line 2213.
+Package pdftex.def Info: design.png used on input line 2254.
 (pdftex.def)             Requested size: 444.75497pt x 242.46811pt.
- [27] [28 <./design.png>] [29]
-<exceptions1.png, id=560, 490.98897pt x 211.59464pt>
+ [28 <./design.png>] [29]
+<exceptions1.png, id=561, 490.98897pt x 211.59464pt>
 File: exceptions1.png Graphic file (type png)
  <use exceptions1.png>
-Package pdftex.def Info: exceptions1.png used on input line 2423.
+Package pdftex.def Info: exceptions1.png used on input line 2464.
 (pdftex.def)             Requested size: 490.98776pt x 211.59412pt.
 File: exceptions1.png Graphic file (type png)
 
 <use exceptions1.png>
-Package pdftex.def Info: exceptions1.png used on input line 2423.
+Package pdftex.def Info: exceptions1.png used on input line 2464.
 (pdftex.def)             Requested size: 444.75497pt x 191.67644pt.
  [30 <./exceptions1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 2508--2509
+Underfull \hbox (badness 10000) in paragraph at lines 2549--2550
 []\T1/ptm/m/n/10 An ex-am-ple of such a script we use in in-te-gra-tion tests c
 an be found un-der: \T1/ptm/b/n/10 /<fan-tas-
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2544--2544
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 2585--2585
 []\T1/ptm/m/it/10 environment\T1/ptm/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2544--2544
+Underfull \hbox (badness 10000) in paragraph at lines 2585--2585
 \T1/ptm/m/it/10 url_invoker_cls=<class `fan-tas-
  []
 
 
-Overfull \hbox (64.47205pt too wide) in paragraph at lines 2544--2544
+Overfull \hbox (64.47205pt too wide) in paragraph at lines 2585--2585
 \T1/ptm/m/it/10 tico.rendering.url_invoker.FantasticoUrlInternalInvoker'>\T1/pc
 r/m/n/10 ) 
  []
 
-[31] [32] [33]
-Overfull \hbox (65.96382pt too wide) in paragraph at lines 2758--2758
+[32] [33]
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 2731.
+ [34]
+Overfull \hbox (65.96382pt too wide) in paragraph at lines 2814--2814
 []\T1/ptm/m/it/10 settings_facade\T1/pcr/m/n/10 ) 
  []
 
-<erd.png, id=595, 572.89032pt x 109.1578pt>
+<erd.png, id=611, 572.89032pt x 109.1578pt>
 File: erd.png Graphic file (type png)
  <use erd.png>
-Package pdftex.def Info: erd.png used on input line 2768.
+Package pdftex.def Info: erd.png used on input line 2824.
 (pdftex.def)             Requested size: 572.88892pt x 109.15753pt.
 File: erd.png Graphic file (type png)
  <use erd.png>
-Package pdftex.def Info: erd.png used on input line 2768.
+Package pdftex.def Info: erd.png used on input line 2824.
 (pdftex.def)             Requested size: 444.75497pt x 84.74466pt.
 
-[34 <./erd.png>]
-Overfull \hbox (25.68097pt too wide) in paragraph at lines 2795--2797
+Overfull \hbox (25.68097pt too wide) in paragraph at lines 2851--2853
 []
  []
 
-[35] [36
+[35 <./erd.png>] [36
 
 ]
 Chapter 4.
-[37] <low_usage_all_in_one.png, id=632, 382.9565pt x 379.97629pt>
+[37] <low_usage_all_in_one.png, id=640, 382.9565pt x 379.97629pt>
 File: low_usage_all_in_one.png Graphic file (type png)
 
 <use low_usage_all_in_one.png>
-Package pdftex.def Info: low_usage_all_in_one.png used on input line 2943.
+Package pdftex.def Info: low_usage_all_in_one.png used on input line 2999.
 (pdftex.def)             Requested size: 382.95555pt x 379.97534pt.
 File: low_usage_all_in_one.png Graphic file (type png)
  <use low_usage_all_in_one.png>
-Package pdftex.def Info: low_usage_all_in_one.png used on input line 2943.
+Package pdftex.def Info: low_usage_all_in_one.png used on input line 2999.
 (pdftex.def)             Requested size: 382.95555pt x 379.97534pt.
- [38] [39 <./low_usage_all_in_one.png>] <low_usage_aws.png, id=650, 571.45453pt
+ [38] [39 <./low_usage_all_in_one.png>] <low_usage_aws.png, id=658, 571.45453pt
  x 300.25577pt>
 File: low_usage_aws.png Graphic file (type png)
 
 <use low_usage_aws.png>
-Package pdftex.def Info: low_usage_aws.png used on input line 3031.
+Package pdftex.def Info: low_usage_aws.png used on input line 3087.
 (pdftex.def)             Requested size: 571.45313pt x 300.25502pt.
 File: low_usage_aws.png Graphic file (type png)
  <use low_usage_aws.png>
-Package pdftex.def Info: low_usage_aws.png used on input line 3031.
+Package pdftex.def Info: low_usage_aws.png used on input line 3087.
 (pdftex.def)             Requested size: 469.755pt x 246.82523pt.
  [40 <./low_usage_aws.png>]
-<low_usage_s3_aws.png, id=672, 592.31598pt x 303.23598pt>
+<low_usage_s3_aws.png, id=680, 592.31598pt x 303.23598pt>
 File: low_usage_s3_aws.png Graphic file (type png)
 
 <use low_usage_s3_aws.png>
-Package pdftex.def Info: low_usage_s3_aws.png used on input line 3111.
+Package pdftex.def Info: low_usage_s3_aws.png used on input line 3167.
 (pdftex.def)             Requested size: 592.31453pt x 303.23523pt.
 File: low_usage_s3_aws.png Graphic file (type png)
  <use low_usage_s3_aws.png>
-Package pdftex.def Info: low_usage_s3_aws.png used on input line 3111.
+Package pdftex.def Info: low_usage_s3_aws.png used on input line 3167.
 (pdftex.def)             Requested size: 469.755pt x 240.48845pt.
  [41 <./low_usage_s3_aws.png>] [42] [43] [44]
 Chapter 5.
@@ -1561,475 +1579,502 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--64
  []
 
 
-Overfull \hbox (67.5399pt too wide) in paragraph at lines 67--68
+Overfull \hbox (154.85864pt too wide) in paragraph at lines 67--69
+[]\T1/ptm/m/n/10 exec() (fan-tas-tico.sdk.commands.command_activate_extension.S
+dkCommandActivateExtension
+ []
+
+
+Overfull \hbox (67.5399pt too wide) in paragraph at lines 69--70
 []\T1/ptm/m/n/10 exec() (fan-tas-tico.sdk.commands.command_version.SdkCommandVe
 rsion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--76
+Underfull \hbox (badness 10000) in paragraph at lines 76--78
 []\T1/ptm/m/n/10 fantastico_cfg_os_key (fan-tas-
  []
 
 
-Overfull \hbox (11.02968pt too wide) in paragraph at lines 74--76
+Overfull \hbox (11.02968pt too wide) in paragraph at lines 76--78
 \T1/ptm/m/n/10 tico.tests.base_case.FantasticoIntegrationTestCase
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 76--77
+Underfull \hbox (badness 10000) in paragraph at lines 78--79
 []\T1/ptm/m/n/10 FantasticoClassNotFoundError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
 []\T1/ptm/m/n/10 FantasticoContentTypeError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--79
+Underfull \hbox (badness 10000) in paragraph at lines 80--81
 []\T1/ptm/m/n/10 FantasticoControllerInvalidError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 80--81
+Underfull \hbox (badness 10000) in paragraph at lines 82--83
 []\T1/ptm/m/n/10 FantasticoDbNotFoundError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 81--82
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
 []\T1/ptm/m/n/10 FantasticoDuplicateRouteError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--84
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
 []\T1/ptm/m/n/10 FantasticoHttpVerbNotSupported (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 84--85
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
 []\T1/ptm/m/n/10 FantasticoIncompatibleClassError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
 []\T1/ptm/m/n/10 FantasticoIntegrationTestCase (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 8094) in paragraph at lines 87--89
+Underfull \hbox (badness 8094) in paragraph at lines 89--91
 []\T1/ptm/m/n/10 FantasticoMenuNotFoundException (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--89
+Underfull \hbox (badness 10000) in paragraph at lines 89--91
 \T1/ptm/m/n/10 tico.contrib.dynamic_menu.menu_exceptions),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 89--90
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
 []\T1/ptm/m/n/10 FantasticoNoRequestError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 []\T1/ptm/m/n/10 FantasticoNotSupportedError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
+Underfull \hbox (badness 10000) in paragraph at lines 94--95
 []\T1/ptm/m/n/10 FantasticoRouteNotFoundError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 95--96
 []\T1/ptm/m/n/10 FantasticoSdkCommandError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 95--96
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
 []\T1/ptm/m/n/10 FantasticoSdkError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 96--97
+Underfull \hbox (badness 10000) in paragraph at lines 98--99
 []\T1/ptm/m/n/10 FantasticoSettingNotFoundError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 97--98
+Underfull \hbox (badness 10000) in paragraph at lines 99--100
 []\T1/ptm/m/n/10 FantasticoTemplateNotFoundError (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 98--99
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
 []\T1/ptm/m/n/10 FantasticoUnitTestsCase (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 99--100
+Underfull \hbox (badness 10000) in paragraph at lines 101--102
 []\T1/ptm/m/n/10 FantasticoUrlInvokerError (class in fan-tas-
  []
 
 
-Overfull \hbox (1.3405pt too wide) in paragraph at lines 100--101
+Overfull \hbox (1.3405pt too wide) in paragraph at lines 102--103
 []\T1/ptm/m/n/10 find_by_pk() (fan-tas-tico.mvc.model_facade.ModelFacade
  []
 
 
-Overfull \hbox (8.8098pt too wide) in paragraph at lines 101--102
+Overfull \hbox (8.8098pt too wide) in paragraph at lines 103--104
 []\T1/ptm/m/n/10 fn_handler (fan-tas-tico.mvc.controller_decorators.Controller
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 106--107
+Underfull \hbox (badness 10000) in paragraph at lines 108--110
+[]\T1/ptm/m/n/10 get_arguments() (fan-tas-
+ []
+
+
+Overfull \hbox (141.1691pt too wide) in paragraph at lines 108--110
+\T1/ptm/m/n/10 tico.sdk.commands.command_activate_extension.SdkCommandActivateE
+xtension
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
 []\T1/ptm/m/n/10 get_arguments() (fan-tas-tico.sdk.fantastico.SdkCore
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 108--109
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
 []\T1/ptm/m/n/10 get_command() (fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 108--109
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
 \T1/ptm/m/n/10 tico.sdk.sdk_core.SdkCommandsRegistry
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--111
+Underfull \hbox (badness 10000) in paragraph at lines 113--115
 []\T1/ptm/m/n/10 get_component_folder() (fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--111
+Underfull \hbox (badness 10000) in paragraph at lines 113--115
 \T1/ptm/m/n/10 tico.mvc.base_controller.BaseController
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--113
+Underfull \hbox (badness 10000) in paragraph at lines 116--117
 []\T1/ptm/m/n/10 get_expression() (fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--113
+Underfull \hbox (badness 10000) in paragraph at lines 116--117
 \T1/ptm/m/n/10 tico.mvc.models.model_filter.ModelFilter
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--115
+Underfull \hbox (badness 10000) in paragraph at lines 117--119
 []\T1/ptm/m/n/10 get_expression() (fan-tas-
  []
 
 
-Overfull \hbox (11.22981pt too wide) in paragraph at lines 113--115
+Overfull \hbox (11.22981pt too wide) in paragraph at lines 117--119
 \T1/ptm/m/n/10 tico.mvc.models.model_filter.ModelFilterAbstract
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 115--117
+Underfull \hbox (badness 10000) in paragraph at lines 119--121
 []\T1/ptm/m/n/10 get_expression() (fan-tas-
  []
 
 
-Overfull \hbox (69.5699pt too wide) in paragraph at lines 115--117
+Overfull \hbox (69.5699pt too wide) in paragraph at lines 119--121
 \T1/ptm/m/n/10 tico.mvc.models.model_filter_compound.ModelFilterCompound
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 117--118
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
 []\T1/ptm/m/n/10 get_expression() (fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 117--118
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
 \T1/ptm/m/n/10 tico.mvc.models.model_sort.ModelSort
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
-[]\T1/ptm/m/n/10 get_loaders() (fan-tas-tico.routing_engine.router.Router
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
-[]\T1/ptm/m/n/10 get_records_paged() (fan-tas-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 120--122
-[]\T1/ptm/m/n/10 get_registered_routes() (fan-tas-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 120--122
-\T1/ptm/m/n/10 tico.mvc.controller_decorators.Controller
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 122--123
+[]\T1/ptm/m/n/10 get_loaders() (fan-tas-tico.routing_engine.router.Router
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--124
+[]\T1/ptm/m/n/10 get_records_paged() (fan-tas-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
+[]\T1/ptm/m/n/10 get_registered_routes() (fan-tas-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 124--126
+\T1/ptm/m/n/10 tico.mvc.controller_decorators.Controller
+ []
+
+[52]
+Underfull \hbox (badness 10000) in paragraph at lines 126--127
 []\T1/ptm/m/n/10 get_root_folder() (fan-tas-tico.settings.SettingsFacade
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--125
+Underfull \hbox (badness 10000) in paragraph at lines 127--129
 []\T1/ptm/m/n/10 get_supported_operations() (fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--125
+Underfull \hbox (badness 10000) in paragraph at lines 127--129
 \T1/ptm/m/n/10 tico.mvc.models.model_filter.ModelFilter
  []
 
-[52]
-Underfull \hbox (badness 10000) in paragraph at lines 125--127
+
+Underfull \hbox (badness 10000) in paragraph at lines 129--131
 []\T1/ptm/m/n/10 get_supported_sort_dirs() (fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--127
+Underfull \hbox (badness 10000) in paragraph at lines 129--131
 \T1/ptm/m/n/10 tico.mvc.models.model_sort.ModelSort
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 130--131
+Underfull \hbox (badness 10000) in paragraph at lines 134--135
 []\T1/ptm/m/n/10 handle_route() (fan-tas-tico.routing_engine.router.Router
  []
 
 
-Overfull \hbox (33.65985pt too wide) in paragraph at lines 132--133
+Overfull \hbox (33.65985pt too wide) in paragraph at lines 136--137
 []\T1/ptm/m/n/10 http_verb (fan-tas-tico.exceptions.FantasticoHttpVerbNotSuppor
 ted
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--137
+Underfull \hbox (badness 10000) in paragraph at lines 140--141
 []\T1/ptm/m/n/10 installed_middleware (fan-tas-tico.settings.BasicSettings
  []
 
 
-Overfull \hbox (31.49971pt too wide) in paragraph at lines 141--142
+Overfull \hbox (31.49971pt too wide) in paragraph at lines 145--146
 []\T1/ptm/m/n/10 language (fan-tas-tico.middleware.request_context.RequestConte
 xt
  []
 
 
-Overfull \hbox (69.76909pt too wide) in paragraph at lines 142--144
+Overfull \hbox (69.76909pt too wide) in paragraph at lines 146--148
 []\T1/ptm/m/n/10 load_routes() (fan-tas-tico.mvc.controller_registrator.Control
 lerRouteLoader
  []
 
 
-Overfull \hbox (50.47972pt too wide) in paragraph at lines 144--146
+Overfull \hbox (50.47972pt too wide) in paragraph at lines 148--150
 []\T1/ptm/m/n/10 load_routes() (fan-tas-tico.routing_engine.routing_loaders.Rou
 teLoader
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 146--147
+Underfull \hbox (badness 10000) in paragraph at lines 150--151
 []\T1/ptm/m/n/10 load_template() (fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 146--147
+Underfull \hbox (badness 10000) in paragraph at lines 150--151
 \T1/ptm/m/n/10 tico.mvc.base_controller.BaseController
  []
 
 
-Overfull \hbox (124.25874pt too wide) in paragraph at lines 150--152
+Overfull \hbox (124.25874pt too wide) in paragraph at lines 154--156
 []\T1/ptm/m/n/10 max_items (fan-tas-tico.contrib.dynamic_menu.menu_controller.D
 ynamicMenuController
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 153--154
+Underfull \hbox (badness 10000) in paragraph at lines 157--158
 []\T1/ptm/m/n/10 model_cls (fan-tas-tico.mvc.model_facade.ModelFacade
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 155--156
+Underfull \hbox (badness 10000) in paragraph at lines 159--160
 []\T1/ptm/m/n/10 ModelFilter (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
+Underfull \hbox (badness 10000) in paragraph at lines 160--161
 []\T1/ptm/m/n/10 ModelFilterAbstract (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--158
+Underfull \hbox (badness 10000) in paragraph at lines 161--162
 []\T1/ptm/m/n/10 ModelFilterAnd (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--158
+Underfull \hbox (badness 10000) in paragraph at lines 161--162
 \T1/ptm/m/n/10 tico.mvc.models.model_filter_compound),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 158--160
+Underfull \hbox (badness 10000) in paragraph at lines 162--164
 []\T1/ptm/m/n/10 ModelFilterCompound (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 158--160
+Underfull \hbox (badness 10000) in paragraph at lines 162--164
 \T1/ptm/m/n/10 tico.mvc.models.model_filter_compound),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
+Underfull \hbox (badness 10000) in paragraph at lines 164--165
 []\T1/ptm/m/n/10 ModelFilterOr (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
+Underfull \hbox (badness 10000) in paragraph at lines 164--165
 \T1/ptm/m/n/10 tico.mvc.models.model_filter_compound),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--164
+Underfull \hbox (badness 10000) in paragraph at lines 166--168
 []\T1/ptm/m/n/10 ModelSessionMiddleware (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--164
+Underfull \hbox (badness 10000) in paragraph at lines 166--168
 \T1/ptm/m/n/10 tico.middleware.model_session_middleware),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 168--169
+Underfull \hbox (badness 10000) in paragraph at lines 172--173
 []\T1/ptm/m/n/10 name (fan-tas-tico.sdk.sdk_core.SdkCommandArgument
  []
 
 
-Overfull \hbox (2.1902pt too wide) in paragraph at lines 169--170
+Overfull \hbox (2.1902pt too wide) in paragraph at lines 173--174
 []\T1/ptm/m/n/10 new_model() (fan-tas-tico.mvc.model_facade.ModelFacade
  []
 
 
-Overfull \hbox (4.12956pt too wide) in paragraph at lines 173--174
+Overfull \hbox (4.12956pt too wide) in paragraph at lines 177--178
 []\T1/ptm/m/n/10 operation (fan-tas-tico.mvc.models.model_filter.ModelFilter
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 177--178
+Underfull \hbox (badness 10000) in paragraph at lines 181--182
 []\T1/ptm/m/n/10 parse() (fan-tas-tico.rendering.component.Component
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 181--182
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 []\T1/ptm/m/n/10 RedirectResponse (class in fan-tas-
  []
 
 
-Overfull \hbox (3.86957pt too wide) in paragraph at lines 182--183
+Overfull \hbox (3.86957pt too wide) in paragraph at lines 186--187
 []\T1/ptm/m/n/10 ref_value (fan-tas-tico.mvc.models.model_filter.ModelFilter
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 184--185
+Underfull \hbox (badness 10000) in paragraph at lines 188--189
 []\T1/ptm/m/n/10 render() (fan-tas-tico.rendering.component.Component
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 185--186
+Underfull \hbox (badness 10000) in paragraph at lines 189--190
 []\T1/ptm/m/n/10 RequestContext (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 186--187
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
 []\T1/ptm/m/n/10 RequestMiddleware (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 187--189
+Underfull \hbox (badness 10000) in paragraph at lines 191--193
 []\T1/ptm/m/n/10 retrieve_menu_items() (fan-tas-
  []
 
 
-Overfull \hbox (91.35979pt too wide) in paragraph at lines 187--189
+Overfull \hbox (91.35979pt too wide) in paragraph at lines 191--193
 \T1/ptm/m/n/10 tico.contrib.dynamic_menu.menu_controller.DynamicMenuController
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--190
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
 []\T1/ptm/m/n/10 RouteLoader (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
+Underfull \hbox (badness 10000) in paragraph at lines 195--196
 []\T1/ptm/m/n/10 routes_loaders (fan-tas-tico.settings.BasicSettings at-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 192--193
+Underfull \hbox (badness 10000) in paragraph at lines 196--197
 []\T1/ptm/m/n/10 RoutingMiddleware (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 196--198
+Underfull \hbox (badness 10000) in paragraph at lines 200--202
 []\T1/ptm/m/n/10 scanned_folder (fan-tas-
  []
 
 
-Overfull \hbox (27.44005pt too wide) in paragraph at lines 196--198
+Overfull \hbox (27.44005pt too wide) in paragraph at lines 200--202
 \T1/ptm/m/n/10 tico.mvc.controller_registrator.ControllerRouteLoader
  []
 
+[53]
+Underfull \hbox (badness 10000) in paragraph at lines 204--206
+[]\T1/ptm/m/n/10 SdkCommandActivateExtension (class in fan-tas-
+ []
 
-Underfull \hbox (badness 10000) in paragraph at lines 200--201
+
+Overfull \hbox (13.8904pt too wide) in paragraph at lines 204--206
+\T1/ptm/m/n/10 tico.sdk.commands.command_activate_extension),
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--207
 []\T1/ptm/m/n/10 SdkCommandArgument (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 201--202
+Underfull \hbox (badness 10000) in paragraph at lines 207--208
 []\T1/ptm/m/n/10 SdkCommandsRegistry (class in fan-tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--203
+Underfull \hbox (badness 10000) in paragraph at lines 208--209
 []\T1/ptm/m/n/10 SdkCommandVersion (class in fan-tas-
  []
 
-[53]
-Overfull \hbox (25.9594pt too wide) in paragraph at lines 204--205
+
+Overfull \hbox (25.9594pt too wide) in paragraph at lines 210--211
 []\T1/ptm/m/n/10 settings (fan-tas-tico.middleware.request_context.RequestConte
 xt
  []
 
 
-Overfull \hbox (29.62889pt too wide) in paragraph at lines 206--208
+Overfull \hbox (29.62889pt too wide) in paragraph at lines 212--214
 []\T1/ptm/m/n/10 setup_once() (fan-tas-tico.tests.base_case.FantasticoUnitTests
 Case
  []
 
 
-Overfull \hbox (15.88028pt too wide) in paragraph at lines 208--209
+Overfull \hbox (15.88028pt too wide) in paragraph at lines 214--215
 []\T1/ptm/m/n/10 short_name (fan-tas-tico.sdk.sdk_core.SdkCommandArgument
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 []\T1/ptm/m/n/10 sort_dir (fan-tas-tico.mvc.models.model_sort.ModelSort
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--214
+Underfull \hbox (badness 10000) in paragraph at lines 219--220
 []\T1/ptm/m/n/10 supported_languages (fan-tas-tico.settings.BasicSettings
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
 []\T1/ptm/m/n/10 templates_config (fan-tas-tico.settings.BasicSettings
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 222--223
+Underfull \hbox (badness 10000) in paragraph at lines 228--229
 []\T1/ptm/m/n/10 update() (fan-tas-tico.mvc.model_facade.ModelFacade
  []
 
 
-Overfull \hbox (33.72969pt too wide) in paragraph at lines 227--228
+Overfull \hbox (33.72969pt too wide) in paragraph at lines 233--234
 []\T1/ptm/m/n/10 wsgi_app (fan-tas-tico.middleware.request_context.RequestConte
 xt
  []
@@ -2037,22 +2082,22 @@ xt
 [54
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3531.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3531.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3587.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3587.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3531.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3531.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3587.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3587.
 
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
-(rerunfilecheck)             Checksum: A79A229190DE3889E93A6B9545627C17;1527.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3531.
+(rerunfilecheck)             Checksum: DF769AD5EE0E6F92856766ABABC41774;1527.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3587.
  ) 
 Here is how much of TeX's memory you used:
- 9609 strings out of 493485
- 142614 string characters out of 3143526
- 235948 words of memory out of 3000000
- 12256 multiletter control sequences out of 15000+200000
- 61581 words of font info for 70 fonts, out of 3000000 for 9000
+ 9635 strings out of 493485
+ 143591 string characters out of 3143526
+ 236480 words of memory out of 3000000
+ 12272 multiletter control sequences out of 15000+200000
+ 66047 words of font info for 73 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
  36i,12n,45p,1744b,633s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
@@ -2064,10 +2109,10 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (58 pages, 510907 bytes).
+Output written on fantastico.pdf (58 pages, 512256 bytes).
 PDF statistics:
- 1068 PDF objects out of 1200 (max. 8388607)
- 972 compressed objects within 10 object streams
- 400 named destinations out of 1000 (max. 500000)
+ 1080 PDF objects out of 1200 (max. 8388607)
+ 984 compressed objects within 10 object streams
+ 407 named destinations out of 1000 (max. 500000)
  289 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Dynamic menu &mdash; fantastico 0.3.0-b102 documentation</title>
+    <title>Dynamic menu &mdash; fantastico 0.3.0-b103 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.3.0-b102',
+        VERSION:     '0.3.0-b103',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.3.0-b102 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.3.0-b103 documentation" href="../../../index.html" />
     <link rel="up" title="Built in components" href="../../components_builtin.html" />
     <link rel="next" title="How to articles" href="../../../how_to/how_to.html" />
     <link rel="prev" title="Built in components" href="../../components_builtin.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="../../components_builtin.html" title="Built in components"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">fantastico 0.3.0-b102 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.3.0-b103 documentation</a> &raquo;</li>
           <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../../components_builtin.html" accesskey="U">Built in components</a> &raquo;</li> 
       </ul>
@@ -60,6 +60,8 @@ This component which we generic named dynamic menu simply provides the controlle
 <div class="section" id="integration">
 <h2>Integration<a class="headerlink" href="#integration" title="Permalink to this headline">¶</a></h2>
 <p>In order to use dynamic menu component within your project follow the steps below:</p>
+<div class="section" id="component-files-activation-deprecated">
+<h3>Component files activation deprecated<a class="headerlink" href="#component-files-activation-deprecated" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
 <li><p class="first">Create a symbolic link under your root components folder to dynamic_menu.</p>
 <div class="highlight-bash"><div class="highlight"><pre>mkdir &lt;components root&gt;/dynamic_menu
@@ -70,6 +72,17 @@ ln -s ../../pip-deps/lib/python<span class="o">[</span>version<span class="o">]<
 </pre></div>
 </div>
 </li>
+</ol>
+</div>
+<div class="section" id="component-files-activation-sdk">
+<h3>Component files activation (SDK)<a class="headerlink" href="#component-files-activation-sdk" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre>fantastico activate-extension --name dynamic_menu
+</pre></div>
+</div>
+</div>
+<div class="section" id="component-sample-db-data">
+<h3>Component sample + db data<a class="headerlink" href="#component-sample-db-data" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
 <li><p class="first">Create a template in one of your components in which you define the menu view:</p>
 <div class="highlight-html"><div class="highlight"><pre><span class="c">&lt;!-- *sample_menu.html* - simple snippet for creating a left / right side dockable menu. --&gt;</span>
 {% for menu_item in model[&quot;items&quot;] %}
@@ -97,6 +110,7 @@ ln -s ../../pip-deps/lib/python<span class="o">[</span>version<span class="o">]<
 can test to see that dynamic menu works by accessing dev server url: <a class="reference external" href="http://localhost:12000/dynamic-menu/menus/1/items/">http://localhost:12000/dynamic-menu/menus/1/items/</a>.</p>
 </li>
 </ol>
+</div>
 </div>
 <div class="section" id="current-limitations">
 <h2>Current limitations<a class="headerlink" href="#current-limitations" title="Permalink to this headline">¶</a></h2>
@@ -173,7 +187,12 @@ menu attributes.</p>
   <h3><a href="../../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Dynamic menu</a><ul>
-<li><a class="reference internal" href="#integration">Integration</a></li>
+<li><a class="reference internal" href="#integration">Integration</a><ul>
+<li><a class="reference internal" href="#component-files-activation-deprecated">Component files activation deprecated</a></li>
+<li><a class="reference internal" href="#component-files-activation-sdk">Component files activation (SDK)</a></li>
+<li><a class="reference internal" href="#component-sample-db-data">Component sample + db data</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#current-limitations">Current limitations</a></li>
 <li><a class="reference internal" href="#technical-summary">Technical summary</a></li>
 </ul>
@@ -220,7 +239,7 @@ menu attributes.</p>
         <li class="right" >
           <a href="../../components_builtin.html" title="Built in components"
              >previous</a> |</li>
-        <li><a href="../../../index.html">fantastico 0.3.0-b102 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.3.0-b103 documentation</a> &raquo;</li>
           <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../../components_builtin.html" >Built in components</a> &raquo;</li> 
       </ul>
