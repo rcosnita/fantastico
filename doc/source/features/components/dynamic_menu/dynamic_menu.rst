@@ -28,7 +28,7 @@ Component files activation (SDK)
 
 .. code-block:: bash
 
-   fantastico activate-extension dynamic_menu
+   fantastico activate-extension --name dynamic_menu
 
 Component sample + db data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
