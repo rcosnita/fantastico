@@ -24,13 +24,13 @@ import os
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandNotFoundError
 from fantastico.settings import SettingsFacade
 
-cmd_help = "%s %s" % \
+CMD_HELP = "%s %s" % \
         ("Activates a local extension provided by fantastico. Currently it supports only local components found into",
          "fantastico.contrib package.")
 
 @sdk_decorators.SdkCommand(
         name="activate-extension",
-        help=cmd_help,
+        help=CMD_HELP,
         target="fantastico")
 class SdkCommandActivateExtension(SdkCommand):
     '''This class provides the functionality for activating off the shelf fantastico extensions. As developer, it is extremely
