@@ -41,44 +41,44 @@
 \contentsline {subsection}{\numberline {3.4.5}Controller}{23}{subsection.3.4.5}
 \contentsline {subsubsection}{Available filters}{24}{subsubsection*.93}
 \contentsline {subsection}{\numberline {3.4.6}Database session management}{26}{subsection.3.4.6}
-\contentsline {section}{\numberline {3.5}Fantastico sdk}{26}{section.3.5}
+\contentsline {section}{\numberline {3.5}SDK}{26}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Intro}{26}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Usage}{27}{subsection.3.5.2}
 \contentsline {subsection}{\numberline {3.5.3}Supported commands}{27}{subsection.3.5.3}
-\contentsline {subsubsection}{Help command}{27}{subsubsection*.116}
+\contentsline {subsubsection}{Version command}{27}{subsubsection*.116}
 \contentsline {subsection}{\numberline {3.5.4}Technical summary}{27}{subsection.3.5.4}
 \contentsline {section}{\numberline {3.6}Component model}{30}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Static folder}{30}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Sql folder}{30}{subsection.3.6.2}
-\contentsline {subsubsection}{Sql folder example}{30}{subsubsection*.135}
+\contentsline {subsection}{\numberline {3.6.1}Static folder}{31}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Sql folder}{31}{subsection.3.6.2}
+\contentsline {subsubsection}{Sql folder example}{31}{subsubsection*.138}
 \contentsline {section}{\numberline {3.7}Component reusage}{31}{section.3.7}
-\contentsline {section}{\numberline {3.8}Built in components}{32}{section.3.8}
+\contentsline {section}{\numberline {3.8}Built in components}{33}{section.3.8}
 \contentsline {subsection}{\numberline {3.8.1}Dynamic menu}{33}{subsection.3.8.1}
-\contentsline {subsubsection}{Integration}{33}{subsubsection*.139}
-\contentsline {subsubsection}{Current limitations}{33}{subsubsection*.140}
-\contentsline {subsubsection}{Technical summary}{34}{subsubsection*.141}
-\contentsline {chapter}{\numberline {4}How to articles}{35}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{35}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{35}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{35}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{36}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{36}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Deployment how to}{36}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{37}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{38}{subsubsection*.146}
-\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{38}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{39}{subsubsection*.147}
-\contentsline {subsubsection}{Optimization}{39}{subsubsection*.148}
-\contentsline {subsubsection}{Setup with S3}{40}{subsubsection*.149}
-\contentsline {section}{\numberline {4.3}Static assets}{40}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{40}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{41}{subsubsection*.150}
-\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{41}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Creating a new project}{41}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Create first component}{41}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{42}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{42}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Changes}{43}{chapter.5}
-\contentsline {chapter}{\numberline {6}Build status}{45}{chapter.6}
-\contentsline {chapter}{\numberline {7}License}{47}{chapter.7}
-\contentsline {chapter}{Index}{49}{section*.151}
+\contentsline {subsubsection}{Integration}{33}{subsubsection*.142}
+\contentsline {subsubsection}{Current limitations}{34}{subsubsection*.143}
+\contentsline {subsubsection}{Technical summary}{34}{subsubsection*.144}
+\contentsline {chapter}{\numberline {4}How to articles}{37}{chapter.4}
+\contentsline {section}{\numberline {4.1}MVC How to}{37}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Code the model}{37}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Code the controller}{37}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Code the view}{38}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Test your application}{38}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Deployment how to}{38}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{39}{subsection.4.2.1}
+\contentsline {subsubsection}{Setup}{40}{subsubsection*.149}
+\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{40}{subsection.4.2.2}
+\contentsline {subsubsection}{Setup}{41}{subsubsection*.150}
+\contentsline {subsubsection}{Optimization}{41}{subsubsection*.151}
+\contentsline {subsubsection}{Setup with S3}{42}{subsubsection*.152}
+\contentsline {section}{\numberline {4.3}Static assets}{42}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{42}{subsection.4.3.1}
+\contentsline {subsubsection}{Favicon}{43}{subsubsection*.153}
+\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{43}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Creating a new project}{43}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Create first component}{43}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{44}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{44}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Changes}{45}{chapter.5}
+\contentsline {chapter}{\numberline {6}Build status}{47}{chapter.6}
+\contentsline {chapter}{\numberline {7}License}{49}{chapter.7}
+\contentsline {chapter}{Index}{51}{section*.154}

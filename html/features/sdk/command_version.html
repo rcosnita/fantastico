@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Help command &mdash; fantastico 0.3.0-b101 documentation</title>
+    <title>Version command &mdash; fantastico 0.3.0-b102 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.3.0-b101',
+        VERSION:     '0.3.0-b102',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.3.0-b101 documentation" href="../../index.html" />
-    <link rel="up" title="Fantastico sdk" href="../sdk.html" />
+    <link rel="top" title="fantastico 0.3.0-b102 documentation" href="../../index.html" />
+    <link rel="up" title="SDK" href="../sdk.html" />
     <link rel="next" title="Component model" href="../component_model.html" />
-    <link rel="prev" title="Fantastico sdk" href="../sdk.html" /> 
+    <link rel="prev" title="SDK" href="../sdk.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,11 +39,11 @@
           <a href="../component_model.html" title="Component model"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../sdk.html" title="Fantastico sdk"
+          <a href="../sdk.html" title="SDK"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.3.0-b101 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.3.0-b102 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
-          <li><a href="../sdk.html" accesskey="U">Fantastico sdk</a> &raquo;</li> 
+          <li><a href="../sdk.html" accesskey="U">SDK</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -52,10 +52,32 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="help-command">
-<h1>Help command<a class="headerlink" href="#help-command" title="Permalink to this headline">¶</a></h1>
-<p>This command is providing generated help screens based on commands / subcommands implementation. It is similar to any other
-linux command line <strong>&#8211;help</strong> option. For more technical details, read <a class="reference external" href="http://docs.python.org/3/library/argparse.html#module-argparse">http://docs.python.org/3/library/argparse.html#module-argparse</a>.</p>
+  <div class="section" id="version-command">
+<h1>Version command<a class="headerlink" href="#version-command" title="Permalink to this headline">¶</a></h1>
+<p>This command tells you what is the current installed version of <strong>Fantastico SDK</strong>.</p>
+<dl class="class">
+<dt id="fantastico.sdk.commands.command_version.SdkCommandVersion">
+<em class="property">class </em><tt class="descclassname">fantastico.sdk.commands.command_version.</tt><tt class="descname">SdkCommandVersion</tt><big>(</big><em>argv</em>, <em>cmd_factory</em>, <em>version_reader=&lt;module 'fantastico' from '/mnt/jenkins_ebs/continous_integration/fantastico_doc_workspace/fantastico/__init__.py'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_version.html#SdkCommandVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.sdk.commands.command_version.SdkCommandVersion" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the command for finding out installed version of Fantastico SDK. The value is defined in fantastico
+root module code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># display additional information for version command</span>
+<span class="n">fantastico</span> <span class="n">version</span> <span class="o">--</span><span class="n">info</span>
+
+<span class="c"># display help information for version command in sdk context</span>
+<span class="n">fantastico</span> <span class="n">version</span> <span class="o">--</span><span class="n">help</span>
+
+<span class="c"># display the current sdk version</span>
+<span class="n">fantastico</span> <span class="n">version</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fantastico.sdk.commands.command_version.SdkCommandVersion.exec">
+<tt class="descname">exec</tt><big>(</big><em>print_fn=&lt;built-in function print&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_version.html#SdkCommandVersion.exec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.sdk.commands.command_version.SdkCommandVersion.exec" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method prints the current fantastico framework version.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -66,13 +88,13 @@ linux command line <strong>&#8211;help</strong> option. For more technical detai
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="../sdk.html"
-                        title="previous chapter">Fantastico sdk</a></p>
+                        title="previous chapter">SDK</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../component_model.html"
                         title="next chapter">Component model</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/features/sdk/command_help.txt"
+    <li><a href="../../_sources/features/sdk/command_version.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -102,11 +124,11 @@ linux command line <strong>&#8211;help</strong> option. For more technical detai
           <a href="../component_model.html" title="Component model"
              >next</a> |</li>
         <li class="right" >
-          <a href="../sdk.html" title="Fantastico sdk"
+          <a href="../sdk.html" title="SDK"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.3.0-b101 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.3.0-b102 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
-          <li><a href="../sdk.html" >Fantastico sdk</a> &raquo;</li> 
+          <li><a href="../sdk.html" >SDK</a> &raquo;</li> 
       </ul>
     </div>
 

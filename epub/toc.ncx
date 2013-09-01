@@ -311,12 +311,12 @@
       </navPoint>
       <navPoint id="navPoint40" playOrder="40">
         <navLabel>
-          <text>Fantastico sdk</text>
+          <text>SDK</text>
         </navLabel>
         <content src="features/sdk.html" />
         <navPoint id="navPoint40" playOrder="40">
           <navLabel>
-            <text>Fantastico sdk</text>
+            <text>SDK</text>
           </navLabel>
           <content src="features/sdk.html" />
         </navPoint>

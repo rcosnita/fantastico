@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.sdk.fantastico &mdash; fantastico 0.3.0-b102 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3.0-b102',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.3.0-b102 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.3.0-b102 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.sdk.fantastico</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python3</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.sdk.fantastico</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.sdk</span> <span class="kn">import</span> <span class="n">sdk_decorators</span>
+<span class="kn">from</span> <span class="nn">fantastico.sdk.sdk_core</span> <span class="kn">import</span> <span class="n">SdkCommand</span><span class="p">,</span> <span class="n">SdkCommandsRegistry</span><span class="p">,</span> <span class="n">SdkCommandArgument</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+
+<span class="nd">@sdk_decorators.SdkCommand</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
+            <span class="n">help</span><span class="o">=</span><span class="s">&quot;Fantastico Software Development Kit command line. Please use [subcommands] --info for more information.&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="SdkCore"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.fantastico.SdkCore">[docs]</a><span class="k">class</span> <span class="nc">SdkCore</span><span class="p">(</span><span class="n">SdkCommand</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the core functionality of Fantastico Software Development Kit. It</span>
+<span class="sd">    wires all available commands together and handles requests accordingly.</span>
+<span class="sd">    To better understand how sdk is designed see the following class diagram:</span>
+
+<span class="sd">    .. image:: /images/sdk/design.png</span>
+
+<span class="sd">    As you can see in above diagram, sdk core is just the main entry point of Fantastico Software Development Kit. It wires</span>
+<span class="sd">    all available sdk commands together and it adds support for uniformly executes them and pass them arguments..&#39;&#39;&#39;</span>
+
+    <span class="n">_COMMANDS_FOLDER</span> <span class="o">=</span> <span class="s">&quot;commands&quot;</span>
+    <span class="n">_COMMANDS_PREFIX</span> <span class="o">=</span> <span class="s">&quot;command_&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argv</span><span class="p">,</span> <span class="n">cmd_factory</span><span class="o">=</span><span class="n">SdkCommandsRegistry</span><span class="p">,</span> <span class="n">supported_prefixes</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">settings_facade_cls</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SdkCore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span> <span class="n">cmd_factory</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade_cls</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_core_args</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_subcommands</span><span class="p">(</span><span class="n">supported_prefixes</span> <span class="ow">or</span> <span class="p">[</span><span class="n">SdkCore</span><span class="o">.</span><span class="n">_COMMANDS_PREFIX</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_register_subcommands</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">supported_prefixes</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This methods loads all available subcommands from sdk and build _arguments supported by fantastico sdk directly.&#39;&#39;&#39;</span>
+
+        <span class="k">def</span> <span class="nf">is_file_supported</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;This method decides if a filename is supported as possible subcommand provider module or not.&#39;&#39;&#39;</span>
+
+            <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">supported_prefixes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="bp">True</span>
+
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="n">local_folder</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">instantiator</span><span class="o">.</span><span class="n">get_class_abslocation</span><span class="p">(</span><span class="n">SdkCore</span><span class="p">),</span> <span class="n">SdkCore</span><span class="o">.</span><span class="n">_COMMANDS_FOLDER</span><span class="p">)</span>
+
+        <span class="n">instantiator</span><span class="o">.</span><span class="n">import_modules_from_folder</span><span class="p">(</span><span class="n">local_folder</span><span class="p">,</span>
+                                                <span class="k">lambda</span> <span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">is_file_supported</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_root_subcommands</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_register_root_subcommands</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This methods looks into the registry of available commands and obtain only those with target = &#39;fantastico&#39;.&#39;&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="n">SdkCommandsRegistry</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get_target</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="ow">or</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_name</span><span class="p">():</span>
+                <span class="k">continue</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_core_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SdkCommandArgument</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">cmd</span><span class="o">.</span><span class="n">get_help</span><span class="p">()))</span>
+
+<div class="viewcode-block" id="SdkCore.get_arguments"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.fantastico.SdkCore.get_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">get_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property retrieves support fantastico arguments.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_core_args</span>
+</div>
+<div class="viewcode-block" id="SdkCore.exec"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.fantastico.SdkCore.exec">[docs]</a>    <span class="k">def</span> <span class="nf">exec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method does nothing because fantastico is designed to accept only registered subcommands.&#39;&#39;&#39;</span>
+
+        <span class="k">pass</span>
+</div></div>
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This method is used to trigger fantastico command line sdk.&#39;&#39;&#39;</span>
+
+    <span class="n">cmd_name</span> <span class="o">=</span> <span class="n">SdkCore</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+    <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmd_name</span>
+
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">SdkCommandsRegistry</span><span class="o">.</span><span class="n">get_command</span><span class="p">(</span><span class="n">cmd_name</span><span class="p">,</span> <span class="n">argv</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="o">.</span><span class="n">exec_command</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">fantastico 0.3.0-b102 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

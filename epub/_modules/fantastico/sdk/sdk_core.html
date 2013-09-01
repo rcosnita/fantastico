@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.3.0-b101 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.3.0-b102 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -52,16 +52,6 @@
 <span class="kn">from</span> <span class="nn">fantastico.sdk.sdk_exceptions</span> <span class="kn">import</span> <span class="n">FantasticoSdkCommandError</span><span class="p">,</span> <span class="n">FantasticoSdkCommandNotFoundError</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 
-<div class="viewcode-block" id="SdkCore"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.sdk_core.SdkCore">[docs]</a><span class="k">class</span> <span class="nc">SdkCore</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This class provides the core functionality of Fantastico Software Development Kit. It</span>
-<span class="sd">    wires all available commands together and handles requests accordingly.</span>
-<span class="sd">    To better understand how sdk is designed see the following class diagram:</span>
-
-<span class="sd">    .. image:: /images/sdk/design.png</span>
-
-<span class="sd">    As you can see in above diagram, sdk core is just the main entry point of Fantastico Software Development Kit. It wires</span>
-<span class="sd">    all available sdk commands together and it adds support for uniformly executes them and pass them arguments..&#39;&#39;&#39;</span>
-</div>
 <div class="viewcode-block" id="SdkCommandArgument"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.sdk_core.SdkCommandArgument">[docs]</a><span class="k">class</span> <span class="nc">SdkCommandArgument</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class describe the attributes supported by a command argument. For a simple example of how arguments are used</span>
 <span class="sd">    read :py:class:`fantastico.sdk.sdk_core.SdkCommand`&#39;&#39;&#39;</span>
@@ -157,16 +147,13 @@
 
 <span class="sd">    .. code - block:: python</span>
 
+<span class="sd">        from fantastico.sdk import sdk_decorators</span>
+
+<span class="sd">        @sdk_decorators.SdkCommand(name=&quot;greet&quot;, cmd_help=&quot;This is a very simple greeting command supported by fantastico.&quot;)</span>
 <span class="sd">        class SdkCommandSayHello(SdkCommand):</span>
 <span class="sd">            \&#39;\&#39;\&#39;This class provides an extremely simple command which greets the user.\&#39;\&#39;\&#39;</span>
 
 <span class="sd">            CMD_NAME = &quot;greet&quot;</span>
-
-<span class="sd">            def get_name(self):</span>
-<span class="sd">                return SdkCommandSayHello.CMD_NAME</span>
-
-<span class="sd">            def get_help(self):</span>
-<span class="sd">                return &quot;This is a very simple greeting command supported by fantastico.&quot;</span>
 
 <span class="sd">            def get_arguments(self):</span>
 <span class="sd">                return [SdkCommandArgument(&quot;-m&quot;, &quot;--message&quot;, int, &quot;Message used to greet the user.&quot;),</span>
@@ -203,16 +190,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_factory</span> <span class="o">=</span> <span class="n">cmd_factory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_argv</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_args_parser</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_args_namespace</span> <span class="o">=</span> <span class="bp">None</span>
 
-    <span class="nd">@abstractmethod</span>
-<div class="viewcode-block" id="SdkCommand.get_name"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.sdk_core.SdkCommand.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;This method must be overriden by each concrete command and must return the command friendly name.&#39;&#39;&#39;</span>
-</div>
-    <span class="nd">@abstractmethod</span>
-<div class="viewcode-block" id="SdkCommand.get_help"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.sdk_core.SdkCommand.get_help">[docs]</a>    <span class="k">def</span> <span class="nf">get_help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;This method must be overriden by each concrete command and must return the command friendly help message.&#39;&#39;&#39;</span>
-</div>
     <span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="SdkCommand.get_arguments"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.sdk_core.SdkCommand.get_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">get_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method must be overriden by each concrete command and must return the command supported arguments.&#39;&#39;&#39;</span>
@@ -230,6 +210,16 @@
 <span class="sd">        :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: if an exception occurs while executing the command.</span>
 <span class="sd">        :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandNotFoundError: if a subcommand does not exist.&#39;&#39;&#39;</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_argv</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;-i&quot;</span><span class="p">,</span> <span class="s">&quot;--info&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_args_parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">()</span>
+
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">subcommand</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmd_factory</span><span class="o">.</span><span class="n">get_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_argv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argv</span><span class="p">[</span><span class="mi">0</span><span class="p">:])</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -242,17 +232,20 @@
         <span class="sd">&#39;&#39;&#39;This method is invoked automatically by getattribute when _arguments attribute is first accessed. It builds the</span>
 <span class="sd">        _arguments object which holds all attributes value passed from command line.&#39;&#39;&#39;</span>
 
-        <span class="n">args_parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_args_parser</span> <span class="o">=</span> <span class="n">args_parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_help</span><span class="p">())</span>
 
         <span class="n">supported_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_arguments</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">cmd_arg</span> <span class="ow">in</span> <span class="n">supported_args</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">SdkCommand</span><span class="p">):</span>
-                <span class="n">args_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;subcommand&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;N&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">help</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;?&quot;</span><span class="p">)</span>
+                <span class="n">args_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                                         <span class="n">help</span><span class="o">=</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">help</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;?&quot;</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">cmd_arg</span> <span class="ow">in</span> <span class="n">supported_args</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">SdkCommand</span><span class="p">):</span>
                 <span class="n">args_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">short_name</span><span class="p">,</span> <span class="n">cmd_arg</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="n">cmd_arg</span><span class="o">.</span><span class="n">help</span><span class="p">)</span>
+
+        <span class="n">args_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-i&quot;</span><span class="p">,</span> <span class="s">&quot;--info&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Obtain additional information for a given command.&quot;</span><span class="p">)</span>
 
         <span class="n">args_parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_argv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args_namespace</span><span class="p">)</span>
 

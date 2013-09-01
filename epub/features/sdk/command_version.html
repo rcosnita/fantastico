@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Version command</title>
+    
+    <link rel="stylesheet" href="../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../component_model.html" title="Component model"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../sdk.html" title="SDK"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.3.0-b102 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../sdk.html" accesskey="U">SDK</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="version-command">
+<h1>Version command</h1>
+<p>This command tells you what is the current installed version of <strong>Fantastico SDK</strong>.</p>
+<dl class="class">
+<dt id="fantastico.sdk.commands.command_version.SdkCommandVersion">
+<em class="property">class </em><tt class="descclassname">fantastico.sdk.commands.command_version.</tt><tt class="descname">SdkCommandVersion</tt><big>(</big><em>argv</em>, <em>cmd_factory</em>, <em>version_reader=&lt;module 'fantastico' from '/mnt/jenkins_ebs/continous_integration/fantastico_doc_workspace/fantastico/__init__.py'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_version.html#SdkCommandVersion"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the command for finding out installed version of Fantastico SDK. The value is defined in fantastico
+root module code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># display additional information for version command</span>
+<span class="n">fantastico</span> <span class="n">version</span> <span class="o">--</span><span class="n">info</span>
+
+<span class="c"># display help information for version command in sdk context</span>
+<span class="n">fantastico</span> <span class="n">version</span> <span class="o">--</span><span class="n">help</span>
+
+<span class="c"># display the current sdk version</span>
+<span class="n">fantastico</span> <span class="n">version</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fantastico.sdk.commands.command_version.SdkCommandVersion.exec">
+<tt class="descname">exec</tt><big>(</big><em>print_fn=&lt;built-in function print&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_version.html#SdkCommandVersion.exec"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method prints the current fantastico framework version.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
