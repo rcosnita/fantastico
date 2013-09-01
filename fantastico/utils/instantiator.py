@@ -114,6 +114,8 @@ def import_modules_from_folder(folder, file_matcher, settings_facade):
     '''This is a helper method used to register all python modules recursively using a given settings facade instance.'''
 
     def import_modules(abspath, filename):
+        '''This is the method executed automatically for importing all modules from a given filename.'''
+
         if os.path.isdir(abspath):
             import_modules_from_folder(abspath + "/", file_matcher, settings_facade)
         else:
