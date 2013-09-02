@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  2 SEP 2013 06:39
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  2 SEP 2013 06:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 759--759
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 765--765
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x54fb2f8>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x4ce72f8>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -1151,13 +1151,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1802--1804
 ugh
  []
 
-[23]
-Underfull \hbox (badness 10000) in paragraph at lines 1843--1843
-[]\T1/ptm/m/it/10 tpl_name\T1/ptm/m/n/10 , \T1/ptm/m/it/10 model_data=None\T1/p
-tm/m/n/10 , \T1/ptm/m/it/10 get_template=<function get_template at
- []
-
-<mvc_filters.png, id=468, 646.0938pt x 203.0787pt>
+[23] <mvc_filters.png, id=468, 646.0938pt x 203.0787pt>
 File: mvc_filters.png Graphic file (type png)
  <use mvc_filters.png>
 Package pdftex.def Info: mvc_filters.png used on input line 1872.
@@ -2109,7 +2103,7 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (58 pages, 512575 bytes).
+Output written on fantastico.pdf (58 pages, 512822 bytes).
 PDF statistics:
  1080 PDF objects out of 1200 (max. 8388607)
  984 compressed objects within 10 object streams
