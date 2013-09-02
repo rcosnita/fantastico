@@ -179,13 +179,6 @@ class SdkCommand(object, metaclass=ABCMeta):
         :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: if an exception occurs while executing the command.
         :raise fantastico.sdk.sdk_exceptions.FantasticoSdkCommandNotFoundError: if a subcommand does not exist.'''
 
-        self._arguments.subcommand = None
-
-        if len(self._argv) and self._argv[0] in ["-i", "--info"]:
-            self._args_parser.print_help()
-
-            return
-
         self._arguments.subcommand = self._get_subcommand()
 
         if self._arguments.subcommand:
@@ -219,9 +212,10 @@ class SdkCommand(object, metaclass=ABCMeta):
             if not issubclass(cmd_arg.type, SdkCommand):
                 args_parser.add_argument(cmd_arg.short_name, cmd_arg.name, type=cmd_arg.type, help=cmd_arg.help)
 
-        args_parser.add_argument("-i", "--info", action='store_true', help="Obtain additional information for a given command.")
-
-        args_parser.parse_args(self._argv, self._args_namespace)
+        if self._get_subcommand():
+            args_parser.parse_args([self._argv[0]], self._args_namespace)
+        else:
+            args_parser.parse_args(self._argv, self._args_namespace)
 
     def __getattribute__(self, attr_name):
         '''This method is invoked dynamically by python when trying to access object attributes. For SdkCommand it lazy build the

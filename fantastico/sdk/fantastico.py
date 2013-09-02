@@ -25,7 +25,7 @@ from fantastico.utils import instantiator
 
 @sdk_decorators.SdkCommand(
             name="fantastico",
-            help="Fantastico Software Development Kit command line. Please use [subcommands] --info for more information.")
+            help="Fantastico Software Development Kit command line. Please use [subcommands] --help for more information.")
 class SdkCore(SdkCommand):
     '''This class provides the core functionality of Fantastico Software Development Kit. It
     wires all available commands together and handles requests accordingly.
