@@ -29,9 +29,6 @@ class SdkCommandVersion(SdkCommand):
 
     .. code-block:: python
 
-        # display additional information for version command
-        fantastico version --info
-
         # display help information for version command in sdk context
         fantastico version --help
 
