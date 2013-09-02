@@ -30,10 +30,10 @@ class SdkCommandVersion(SdkCommand):
     .. code-block:: python
 
         # display help information for version command in sdk context
-        fantastico version --help
+        fsdk version --help
 
         # display the current sdk version
-        fantastico version
+        fsdk version
     '''
 
     def __init__(self, argv, cmd_factory, version_reader=fantastico):

@@ -71,7 +71,7 @@ setup(name="fantastico",
                   + list_folder_recursive("doc/fantastico", "doc/build")
                   + list_folder_recursive("scripts/fantastico/deployment", "deployment")
                   + list_folder_recursive("scripts/fantastico/project_template", "project_template"),
-      scripts=["fantastico_setup_project.sh", "fantastico.py"],
+      scripts=["fantastico_setup_project.sh", "fsdk"],
       classifiers=["Development Status :: 4 - Beta",
                    "Environment :: Web Environment",
                    "Intended Audience :: Developers",
