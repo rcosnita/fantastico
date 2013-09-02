@@ -71,7 +71,7 @@ class SdkCommandActivateExtension(SdkCommand):
         root_folder = instantiator.get_component_path_data(SettingsFacade().get_config().__class__)[1]
         comp_root_folder = contrib_path.replace(contrib_path, "%s%s/%s" % (root_folder, self._arguments.comp_root, comp_name))
 
-        if os_lib.path.exists(comp_root_folder):
+        if not os_lib.path.exists(comp_root_folder):
             os_lib.mkdir(comp_root_folder)
 
         instantiator.scan_folder_by_criteria(
