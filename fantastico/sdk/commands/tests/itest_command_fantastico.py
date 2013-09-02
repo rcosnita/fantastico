@@ -25,12 +25,10 @@ class SdkCommandFantasticoIntegration(CommandBaseIntegration):
     def test_fantastico_help_ok(self):
         '''This test case ensures help option works as expected.'''
 
-        argv = [SdkCore.get_name(), "--help"]
+        def assert_action(help_str):
+            self.assertTrue(help_str.startswith("usage: %s" % SdkCore.get_help()))
+            self.assertTrue(help_str.find("[version]") > -1)
 
-        with self.assertRaises(SystemExit):
-            main(argv)
+        argv = [SdkCore.get_name()]
 
-        help_str = self._stdout.getvalue()
-
-        self.assertTrue(help_str.startswith("usage: %s" % SdkCore.get_help()))
-        self.assertTrue(help_str.find("[version]") > -1)
+        self._exec_command_help_scenario(argv, assert_action)

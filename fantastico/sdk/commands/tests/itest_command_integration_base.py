@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.sdk.commands.tests.itest_command_integration_base
 '''
 
+from fantastico.sdk.fantastico import main
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 import io
 import sys
@@ -30,8 +31,6 @@ class CommandBaseIntegration(FantasticoIntegrationTestCase):
     def init(self):
         '''This method ensures standard output stream is replaced with a controllable one.'''
 
-        _old_exit = sys.exit
-
         self._old_stdout = sys.stdout
         sys.stdout = self._stdout = io.StringIO()
 
@@ -40,3 +39,27 @@ class CommandBaseIntegration(FantasticoIntegrationTestCase):
 
         sys.stdout = self._old_stdout
         self._stdout.close()
+
+    def _exec_command_help_scenario(self, argv, assert_action):
+        '''This method defines a template for testing subcommands --help option. Once the subcommand is executed, the help
+        string is captured and passed to assert action.
+
+        .. code-block:: python
+
+            class SampleSubcommandTest(CommandBaseIntegration):
+                def test_sample_help(self):
+                    def assert_action(help_str):
+                        self.help_str.startswith("usage: %s" % SampleSubcommand.get_help())
+
+                    self._exec_command_help_scenario(["fantastico", "sample"]'''
+
+        if argv[-1] != "--help" or "-h":
+            argv.append("--help")
+
+        with self.assertRaises(SystemExit):
+            main(argv)
+
+        help_str = self._stdout.getvalue()
+
+        assert_action(help_str)
+
