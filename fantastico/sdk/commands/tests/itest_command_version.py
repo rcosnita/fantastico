@@ -21,7 +21,6 @@ from fantastico.sdk.commands.tests.itest_command_integration_base import Command
 from fantastico.sdk.fantastico import SdkCore, main
 import fantastico
 
-
 class SdkCommandVersionIntegration(CommandBaseIntegration):
     '''This class provides the integration scenarios for sdk command **version**.'''
 
@@ -41,10 +40,7 @@ class SdkCommandVersionIntegration(CommandBaseIntegration):
 
         from fantastico.sdk.commands.command_version import SdkCommandVersion
 
-        argv = [SdkCore.get_name(), "version", "--info"]
+        argv = [SdkCore.get_name(), "version"]
 
-        main(argv)
-
-        help_str = self._stdout.getvalue()
-
-        self.assertTrue(help_str.startswith("usage: %s" % SdkCommandVersion.get_help()))
+        self._exec_command_help_scenario(argv, lambda help_str: \
+                                                self.assertTrue(help_str.startswith("usage: %s" % SdkCommandVersion.get_help())))

@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.sdk.commands.tests.itest_command_activate_extension
 '''
-from fantastico.sdk.fantastico import main
+from fantastico.sdk.fantastico import main, SdkCore
 from fantastico.sdk.commands.tests.itest_command_integration_base import CommandBaseIntegration
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
@@ -49,6 +49,20 @@ class SdkCommandActivateExtensionIntegration(CommandBaseIntegration):
         self.assertTrue(os.path.exists("%s/tests" % comp_path))
         self.assertTrue(os.path.exists("%s/sql" % comp_path))
         self.assertTrue(os.path.exists("%s/menu_controller.py" % comp_path))
-        self.assertTrue(os.path.exists("%s/menu_exceptios.py" % comp_path))
+        self.assertTrue(os.path.exists("%s/menu_exceptions.py" % comp_path))
         self.assertTrue(os.path.exists("%s/__init__.py" % comp_path))
         self.assertFalse(os.path.exists("%s/models" % comp_path))
+
+    def test_activate_help(self):
+        '''This test case ensures help works as expected for activate-extension.'''
+
+        from fantastico.sdk.commands.command_activate_extension import SdkCommandActivateExtension
+
+        def assert_action(help_str):
+            self.assertTrue(help_str.startswith("usage: %s" % SdkCommandActivateExtension.get_help()))
+            self.assertTrue(help_str.find("-n NAME, --name NAME") > -1)
+            self.assertTrue(help_str.find("-p COMP_ROOT, --comp-root COMP_ROOT") > -1)
+
+        argv = [SdkCore.get_name(), "activate-extension"]
+
+        self._exec_command_help_scenario(argv, assert_action)
