@@ -117,7 +117,7 @@
 \indexentry{exec() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{28}
 \indexentry{get\_arguments() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{28}
 \indexentry{SdkCommandsRegistry (class in fantastico.sdk.sdk\_core)|hyperpage}{28}
-\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{29}
+\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{28}
 \indexentry{get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{29}
 \indexentry{SdkCommandArgument (class in fantastico.sdk.sdk\_core)|hyperpage}{29}
 \indexentry{help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{29}

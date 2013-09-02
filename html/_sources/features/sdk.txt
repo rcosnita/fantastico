@@ -9,7 +9,7 @@ Intro
 
 Fantastico sdk was developed with the following requirements in my mind:
 
-   * Allow developers to manage Fantastico projesc easily (using a single uniform command line). This is similar to many other frameworks (e.g **android sdk**).
+   * Allow developers to manage Fantastico projects easily (using a single uniform command line). This is similar to many other frameworks (e.g **android sdk**).
    * Allow easily extension of sdk through plugins (e.g: activate off the shelf components into my project).
    * Create a uniform way to provide feedback to developers (prompt user for data, show help messages, support parameters).
    * Make the sdk compliant with linux way of developing command lines.
@@ -17,7 +17,7 @@ Fantastico sdk was developed with the following requirements in my mind:
 Usage
 -----
 
-In this section you can samples of how to use the sdk and how to make it available in older projects.
+In this section you can find samples of how to use the sdk and how to make it available in older projects.
 
 .. code-block:: bash
 
@@ -31,11 +31,8 @@ Similar to other linux command lines you can obtain help hierarchical:
 
 .. code-block:: bash
 
-   # Show help screen for fantastico <command>
-   fantastico.py <command> --help
-
-   # Show help screen for fantastico <command> <subcommand>
-   fantastico.py <command> <subcommand> --info
+      # Show help screen for fantastico <command>
+      fantastico.py <command> --help
    
 Supported commands
 ------------------
