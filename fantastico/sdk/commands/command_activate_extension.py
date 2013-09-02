@@ -43,7 +43,7 @@ class SdkCommandActivateExtension(SdkCommand):
         cd <project_root_path>
 
         # replace <component_root_path> with your actual folder.
-        fantastico activate-extension --name dynamic_menu --comp-root <component_root_path>'''
+        fsdk activate-extension --name dynamic_menu --comp-root <component_root_path>'''
 
     def get_arguments(self):
         '''This method returns support arguments of activate-extension command.'''
@@ -69,7 +69,7 @@ class SdkCommandActivateExtension(SdkCommand):
 
         file_matcher = lambda abspath, filename: True
         root_folder = instantiator.get_component_path_data(SettingsFacade().get_config().__class__)[1]
-        comp_root_folder = contrib_path.replace(contrib_path, "%s%s/%s" % (root_folder, self._arguments.comp_root, comp_name))
+        comp_root_folder = "%s%s/%s" % (root_folder, self._arguments.comp_root, comp_name)
 
         if not os_lib.path.exists(comp_root_folder):
             os_lib.mkdir(comp_root_folder)
@@ -87,7 +87,7 @@ class SdkCommandActivateExtension(SdkCommand):
             return
 
         src = abspath
-        dest = src.replace(contrib_path, "%s%s/" % (root_folder, self._arguments.comp_root))
+        dest = "%s%s/%s" % (root_folder, self._arguments.comp_root, src.replace(contrib_path, ""))
 
         if os_lib.path.exists(dest):
             os_lib.remove(dest)

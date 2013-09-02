@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico import contrib
 from fantastico.sdk.commands.command_activate_extension import SdkCommandActivateExtension
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandNotFoundError
+from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from fantastico.utils import instantiator
 from mock import Mock
@@ -76,8 +77,8 @@ class SdkCommandActivateExtensionTests(FantasticoUnitTestsCase):
     def _mock_activate_ok_scenario(self, comp_name, comp_root_folder, argv):
         '''This method mocks the success scenario for activate extension.'''
 
-        comp_root = os.path.abspath("%s../%s/%s" % (instantiator.get_package_abslocation(contrib),
-                                                    comp_root_folder.replace("fantastico/", ""), comp_name))
+        root_folder = instantiator.get_component_path_data(SettingsFacade().get_config().__class__)[1]
+        comp_root = "%s%s/%s" % (root_folder, comp_root_folder, comp_name)
         expected_comp_path = "%s%s" % (instantiator.get_package_abslocation(contrib), comp_name)
 
         comp_structure = ["__init__.py", "sql", "models", "dynamic_menus.py"]

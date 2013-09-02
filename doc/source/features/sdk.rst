@@ -24,7 +24,7 @@ In this section you can find samples of how to use the sdk and how to make it av
    # For versions prior to **0.3.0**
    pip install fantastico -U
 
-   fantastico --help
+   fsdk --help
 
 When you invoke fantastico sdk with **--help** argument it will list all available commands.
 Similar to other linux command lines you can obtain help hierarchical:
@@ -32,8 +32,11 @@ Similar to other linux command lines you can obtain help hierarchical:
 .. code-block:: bash
 
       # Show help screen for fantastico <command>
-      fantastico.py <command> --help
-   
+      fsdk <command> --help
+
+In order for Fantastico SDK to work correctly make sure your project is on the **PYTHONPATH**. If **PYTHONPATH** is not set
+correctly you will not be able to use some sdk extensions.
+
 Supported commands
 ------------------
 
