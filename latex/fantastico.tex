@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{September 02, 2013}
-\release{0.3.0-b104}
+\release{0.3.0-b105}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -762,7 +762,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5a831e8\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x54fb2f8\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1840,7 +1840,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2bf5408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2205408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2150,7 +2150,7 @@ In this section you can find samples of how to use the sdk and how to make it av
 \PYG{c}{\PYGZsh{} For versions prior to **0.3.0**}
 pip install fantastico \PYGZhy{}U
 
-fantastico \PYGZhy{}\PYGZhy{}help
+fsdk \PYGZhy{}\PYGZhy{}help
 \end{Verbatim}
 
 When you invoke fantastico sdk with \textbf{--help} argument it will list all available commands.
@@ -2158,8 +2158,11 @@ Similar to other linux command lines you can obtain help hierarchical:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{c}{\PYGZsh{} Show help screen for fantastico \PYGZlt{}command\PYGZgt{}}
-fantastico.py \PYGZlt{}\PYG{n+nb}{command}\PYGZgt{} \PYGZhy{}\PYGZhy{}help
+fsdk \PYGZlt{}\PYG{n+nb}{command}\PYGZgt{} \PYGZhy{}\PYGZhy{}help
 \end{Verbatim}
+
+In order for Fantastico SDK to work correctly make sure your project is on the \textbf{PYTHONPATH}. If \textbf{PYTHONPATH} is not set
+correctly you will not be able to use some sdk extensions.
 
 
 \subsection{Supported commands}
@@ -2183,7 +2186,7 @@ fantastico.contrib package. In the future, we plan to support activation of remo
 \PYG{n+nb}{cd} \PYGZlt{}project\PYGZus{}root\PYGZus{}path\PYGZgt{}
 
 \PYG{c}{\PYGZsh{} replace \PYGZlt{}component\PYGZus{}root\PYGZus{}path\PYGZgt{} with your actual folder.}
-fantastico activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name dynamic\PYGZus{}menu \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}component\PYGZus{}root\PYGZus{}path\PYGZgt{}
+fsdk activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name dynamic\PYGZus{}menu \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}component\PYGZus{}root\PYGZus{}path\PYGZgt{}
 \end{Verbatim}
 \index{exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)}
 
@@ -2218,10 +2221,10 @@ root module code.
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{c}{\PYGZsh{} display help information for version command in sdk context}
-\PYG{n}{fantastico} \PYG{n}{version} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{help}
+\PYG{n}{fsdk} \PYG{n}{version} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{help}
 
 \PYG{c}{\PYGZsh{} display the current sdk version}
-\PYG{n}{fantastico} \PYG{n}{version}
+\PYG{n}{fsdk} \PYG{n}{version}
 \end{Verbatim}
 \index{exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)}
 
@@ -2663,7 +2666,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x44396b0\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3a520d8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -3415,6 +3418,21 @@ Be aware that first you need an nginx configured and your project config file de
 
 \chapter{Changes}
 \label{changes:changes}\label{changes::doc}\begin{itemize}
+\item {} \begin{description}
+\item[{v0.3.0}] \leavevmode\begin{itemize}
+\item {} 
+Fantastico SDK core is available.
+
+\item {} 
+Fantastico SDK activate-extension command is available.
+
+\item {} 
+Samples of how to activate extensions for an existing project are provided.
+
+\end{itemize}
+
+\end{description}
+
 \item {} \begin{description}
 \item[{v0.2.2}] \leavevmode\begin{itemize}
 \item {} 

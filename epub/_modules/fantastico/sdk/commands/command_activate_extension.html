@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.3.0-b104 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.3.0-b105 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -74,7 +74,7 @@
 <span class="sd">        cd &lt;project_root_path&gt;</span>
 
 <span class="sd">        # replace &lt;component_root_path&gt; with your actual folder.</span>
-<span class="sd">        fantastico activate-extension --name dynamic_menu --comp-root &lt;component_root_path&gt;&#39;&#39;&#39;</span>
+<span class="sd">        fsdk activate-extension --name dynamic_menu --comp-root &lt;component_root_path&gt;&#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="SdkCommandActivateExtension.get_arguments"><a class="viewcode-back" href="../../../../features/sdk/command_activate_extension.html#fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension.get_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">get_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method returns support arguments of activate-extension command.&#39;&#39;&#39;</span>
@@ -100,7 +100,7 @@
 
         <span class="n">file_matcher</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="bp">True</span>
         <span class="n">root_folder</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="n">SettingsFacade</span><span class="p">()</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">__class__</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">comp_root_folder</span> <span class="o">=</span> <span class="n">contrib_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">contrib_path</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">/</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">comp_root</span><span class="p">,</span> <span class="n">comp_name</span><span class="p">))</span>
+        <span class="n">comp_root_folder</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">/</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">comp_root</span><span class="p">,</span> <span class="n">comp_name</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os_lib</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">comp_root_folder</span><span class="p">):</span>
             <span class="n">os_lib</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">comp_root_folder</span><span class="p">)</span>
@@ -118,7 +118,7 @@
             <span class="k">return</span>
 
         <span class="n">src</span> <span class="o">=</span> <span class="n">abspath</span>
-        <span class="n">dest</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">contrib_path</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">comp_root</span><span class="p">))</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s%s</span><span class="s">/</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">comp_root</span><span class="p">,</span> <span class="n">src</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">contrib_path</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">os_lib</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
             <span class="n">os_lib</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>

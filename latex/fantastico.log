@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  2 SEP 2013 05:45
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  2 SEP 2013 06:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 759--759
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 765--765
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x5a831e8>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x54fb2f8>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -1203,56 +1203,56 @@ Overfull \hbox (125.2931pt too wide) in paragraph at lines 2110--2110
  []
 
 [26]
-Overfull \hbox (72.20447pt too wide) in paragraph at lines 2176--2176
+Overfull \hbox (72.20447pt too wide) in paragraph at lines 2179--2179
 []\T1/ptm/m/it/10 argv\T1/ptm/m/n/10 ,
  []
 
 
-Overfull \hbox (107.73412pt too wide) in paragraph at lines 2176--2176
+Overfull \hbox (107.73412pt too wide) in paragraph at lines 2179--2179
 \T1/ptm/m/it/10 cmd_factory\T1/pcr/m/n/10 ) 
  []
 
 
-Overfull \hbox (3.77077pt too wide) in paragraph at lines 2191--2191
+Overfull \hbox (3.77077pt too wide) in paragraph at lines 2194--2194
 []\T1/ptm/m/it/10 os_lib=<module `os' from `/mnt/jenkins_ebs/continous_integrat
 ion/fantastico_doc_workspace/pip-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2215--2215
+Underfull \hbox (badness 10000) in paragraph at lines 2218--2218
 []\T1/ptm/m/it/10 argv\T1/ptm/m/n/10 ,
  []
 
 
-Overfull \hbox (16.64389pt too wide) in paragraph at lines 2215--2215
+Overfull \hbox (16.64389pt too wide) in paragraph at lines 2218--2218
 \T1/ptm/m/it/10 sion_reader=<module
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2215--2215
+Underfull \hbox (badness 10000) in paragraph at lines 2218--2218
 \T1/ptm/m/it/10 `fan-tas-tico' from
  []
 
 
-Overfull \hbox (302.67026pt too wide) in paragraph at lines 2215--2215
+Overfull \hbox (302.67026pt too wide) in paragraph at lines 2218--2218
 \T1/ptm/m/it/10 `/mnt/jenkins_ebs/continous_integration/fantastico_doc_workspac
 e/fantastico/__init__.py'>\T1/pcr/m/n/10 ) 
  []
 
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 2243--2243
+Underfull \hbox (badness 10000) in paragraph at lines 2246--2246
 []\T1/ptm/m/it/10 argv\T1/ptm/m/n/10 , \T1/ptm/m/it/10 cmd_factory=<class `fan-
 tas-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2243--2243
+Underfull \hbox (badness 10000) in paragraph at lines 2246--2246
 \T1/ptm/m/it/10 tico.sdk.sdk_core.SdkCommandsRegistry'>\T1/ptm/m/n/10 , \T1/ptm
 /m/it/10 sup-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2243--2243
+Underfull \hbox (badness 10000) in paragraph at lines 2246--2246
 \T1/ptm/m/it/10 ported_prefixes=None\T1/ptm/m/n/10 , \T1/ptm/m/it/10 set-tings_
 facade_cls=<class
  []
@@ -1260,65 +1260,65 @@ facade_cls=<class
 <design.png, id=526, 973.03732pt x 530.4767pt>
 File: design.png Graphic file (type png)
  <use design.png>
-Package pdftex.def Info: design.png used on input line 2248.
+Package pdftex.def Info: design.png used on input line 2251.
 (pdftex.def)             Requested size: 973.03494pt x 530.4754pt.
 File: design.png Graphic file (type png)
 
 <use design.png>
-Package pdftex.def Info: design.png used on input line 2248.
+Package pdftex.def Info: design.png used on input line 2251.
 (pdftex.def)             Requested size: 444.75497pt x 242.46811pt.
  [28 <./design.png>] [29]
 <exceptions1.png, id=561, 490.98897pt x 211.59464pt>
 File: exceptions1.png Graphic file (type png)
  <use exceptions1.png>
-Package pdftex.def Info: exceptions1.png used on input line 2458.
+Package pdftex.def Info: exceptions1.png used on input line 2461.
 (pdftex.def)             Requested size: 490.98776pt x 211.59412pt.
 File: exceptions1.png Graphic file (type png)
 
 <use exceptions1.png>
-Package pdftex.def Info: exceptions1.png used on input line 2458.
+Package pdftex.def Info: exceptions1.png used on input line 2461.
 (pdftex.def)             Requested size: 444.75497pt x 191.67644pt.
  [30 <./exceptions1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 2543--2544
+Underfull \hbox (badness 10000) in paragraph at lines 2546--2547
 []\T1/ptm/m/n/10 An ex-am-ple of such a script we use in in-te-gra-tion tests c
 an be found un-der: \T1/ptm/b/n/10 /<fan-tas-
  []
 
 [31]
-Underfull \hbox (badness 10000) in paragraph at lines 2579--2579
+Underfull \hbox (badness 10000) in paragraph at lines 2582--2582
 []\T1/ptm/m/it/10 environment\T1/ptm/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2579--2579
+Underfull \hbox (badness 10000) in paragraph at lines 2582--2582
 \T1/ptm/m/it/10 url_invoker_cls=<class `fan-tas-
  []
 
 
-Overfull \hbox (64.47205pt too wide) in paragraph at lines 2579--2579
+Overfull \hbox (64.47205pt too wide) in paragraph at lines 2582--2582
 \T1/ptm/m/it/10 tico.rendering.url_invoker.FantasticoUrlInternalInvoker'>\T1/pc
 r/m/n/10 ) 
  []
 
 [32] [33]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 2725.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 2728.
  [34]
-Overfull \hbox (65.96382pt too wide) in paragraph at lines 2808--2808
+Overfull \hbox (65.96382pt too wide) in paragraph at lines 2811--2811
 []\T1/ptm/m/it/10 settings_facade\T1/pcr/m/n/10 ) 
  []
 
 <erd.png, id=611, 572.89032pt x 109.1578pt>
 File: erd.png Graphic file (type png)
  <use erd.png>
-Package pdftex.def Info: erd.png used on input line 2818.
+Package pdftex.def Info: erd.png used on input line 2821.
 (pdftex.def)             Requested size: 572.88892pt x 109.15753pt.
 File: erd.png Graphic file (type png)
  <use erd.png>
-Package pdftex.def Info: erd.png used on input line 2818.
+Package pdftex.def Info: erd.png used on input line 2821.
 (pdftex.def)             Requested size: 444.75497pt x 84.74466pt.
 
-Overfull \hbox (25.68097pt too wide) in paragraph at lines 2845--2847
+Overfull \hbox (25.68097pt too wide) in paragraph at lines 2848--2850
 []
  []
 
@@ -1330,33 +1330,33 @@ Chapter 4.
 File: low_usage_all_in_one.png Graphic file (type png)
 
 <use low_usage_all_in_one.png>
-Package pdftex.def Info: low_usage_all_in_one.png used on input line 2993.
+Package pdftex.def Info: low_usage_all_in_one.png used on input line 2996.
 (pdftex.def)             Requested size: 382.95555pt x 379.97534pt.
 File: low_usage_all_in_one.png Graphic file (type png)
  <use low_usage_all_in_one.png>
-Package pdftex.def Info: low_usage_all_in_one.png used on input line 2993.
+Package pdftex.def Info: low_usage_all_in_one.png used on input line 2996.
 (pdftex.def)             Requested size: 382.95555pt x 379.97534pt.
  [38] [39 <./low_usage_all_in_one.png>] <low_usage_aws.png, id=658, 571.45453pt
  x 300.25577pt>
 File: low_usage_aws.png Graphic file (type png)
 
 <use low_usage_aws.png>
-Package pdftex.def Info: low_usage_aws.png used on input line 3081.
+Package pdftex.def Info: low_usage_aws.png used on input line 3084.
 (pdftex.def)             Requested size: 571.45313pt x 300.25502pt.
 File: low_usage_aws.png Graphic file (type png)
  <use low_usage_aws.png>
-Package pdftex.def Info: low_usage_aws.png used on input line 3081.
+Package pdftex.def Info: low_usage_aws.png used on input line 3084.
 (pdftex.def)             Requested size: 469.755pt x 246.82523pt.
  [40 <./low_usage_aws.png>]
 <low_usage_s3_aws.png, id=680, 592.31598pt x 303.23598pt>
 File: low_usage_s3_aws.png Graphic file (type png)
 
 <use low_usage_s3_aws.png>
-Package pdftex.def Info: low_usage_s3_aws.png used on input line 3161.
+Package pdftex.def Info: low_usage_s3_aws.png used on input line 3164.
 (pdftex.def)             Requested size: 592.31453pt x 303.23523pt.
 File: low_usage_s3_aws.png Graphic file (type png)
  <use low_usage_s3_aws.png>
-Package pdftex.def Info: low_usage_s3_aws.png used on input line 3161.
+Package pdftex.def Info: low_usage_s3_aws.png used on input line 3164.
 (pdftex.def)             Requested size: 469.755pt x 240.48845pt.
  [41 <./low_usage_s3_aws.png>] [42] [43] [44]
 Chapter 5.
@@ -2082,15 +2082,15 @@ xt
 [54
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3581.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3581.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3599.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3599.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3581.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3581.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3599.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3599.
 
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
 (rerunfilecheck)             Checksum: DF769AD5EE0E6F92856766ABABC41774;1527.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3581.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3599.
  ) 
 Here is how much of TeX's memory you used:
  9635 strings out of 493485
@@ -2109,7 +2109,7 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (58 pages, 512500 bytes).
+Output written on fantastico.pdf (58 pages, 512575 bytes).
 PDF statistics:
  1080 PDF objects out of 1200 (max. 8388607)
  984 compressed objects within 10 object streams
