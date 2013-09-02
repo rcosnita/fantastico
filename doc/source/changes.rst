@@ -1,6 +1,11 @@
 Changes
 =======
 
+* v0.3.0
+   * Fantastico SDK core is available.
+   * Fantastico SDK activate-extension command is available.
+   * Samples of how to activate extensions for an existing project are provided.
+
 * v0.2.2
    * Update dynamic menu activation documentation.
    * Fix a serious bug in engine management and too many sql connections opened.
