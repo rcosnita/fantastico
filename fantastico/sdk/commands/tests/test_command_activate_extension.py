@@ -97,7 +97,7 @@ class SdkCommandActivateExtensionTests(FantasticoUnitTestsCase):
             holder[src] = dest
 
         def file_exists(filename):
-            if filename == comp_root_folder:
+            if filename == comp_root:
                 return False
 
             return True

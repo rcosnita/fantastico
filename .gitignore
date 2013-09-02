@@ -45,3 +45,4 @@ __pycache__
 
 # virtual environment dependencies
 pip-deps
+tmp_modules
