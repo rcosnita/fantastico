@@ -1,7 +1,7 @@
 Component model
 ===============
 
-In Fantastico there is no enforced component model for your code but there are a set of recommendations 
+In Fantastico there is no enforced component model for your code but there are a set of recommendations
 that will make your life a lot easier when organizing projects. A typical **component** structure looks like:
 
 - <your project folder>
@@ -15,7 +15,7 @@ that will make your life a lot easier when organizing projects. A typical **comp
 
 You can usually structure your code as you want, but Fantastico default :doc:`/features/mvc` registrators are assuming
 component name is the parent folder of the controller module. This is why is best to follow the above mentioned structure.
-None of the above folders are mandatory which gives you, developer, plenty of flexibility but also responsibility. For 
+None of the above folders are mandatory which gives you, developer, plenty of flexibility but also responsibility. For
 more information about **models**, **views** and **controllers** read :doc:`/how_to/mvc_how_to` section.
 
 Static folder
@@ -31,6 +31,8 @@ Sql folder is used to hold all sql scripts required for a component to work corr
 process we scan all available sql folders and execute **module_setup.sql** scripts. By default, we want to give
 developers the chance to provide a setup script for each component in order to easily install the component database
 dependencies.
+
+For easily synchronization of sql scripts with a **Fantastico** project database read :doc:`/features/sdk/command_syncdb`
 
 Sql folder example
 ~~~~~~~~~~~~~~~~~~
