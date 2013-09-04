@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.3.0-b106 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -48,26 +48,36 @@
 <span class="sd">.. py:module:: fantastico.sdk.sdk_decorators</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">fantastico.sdk.sdk_core</span> <span class="kn">import</span> <span class="n">SdkCommandsRegistry</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
 
 <div class="viewcode-block" id="SdkCommand"><a class="viewcode-back" href="../../../features/sdk.html#fantastico.sdk.sdk_decorators.SdkCommand">[docs]</a><span class="k">class</span> <span class="nc">SdkCommand</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This decorator describe the sdk commands metadata:</span>
 
 <span class="sd">    #. name</span>
 <span class="sd">    #. target (which is the main purpose of the command. E.g: fantastico - this mean command is designed to work as a subcommand for fantastico cmd).</span>
+<span class="sd">    #. help (which describes what this method does). It will automatically contain a link to official fantastico documentation of the command.</span>
 
 <span class="sd">    It is used in conjunction with :py:class:`fantastico.sdk.sdk_core.SdkCommand`. Each sdk command decorated with this</span>
 <span class="sd">    decorator automatically receives **get_name** and **get_target** methods.&#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">help</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">help</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">settings_facade_cls</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_help</span> <span class="o">=</span> <span class="n">help</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade_cls</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_help</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the friendly help message describing the method.&#39;&#39;&#39;</span>
+
+        <span class="n">doc_link</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">features/sdk/command_</span><span class="si">%s</span><span class="s">.html&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;doc_base&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot;_&quot;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">...  See: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_help</span><span class="p">,</span> <span class="n">doc_link</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method simply adds get_name method to the command class.&#39;&#39;&#39;</span>
 
         <span class="n">cls</span><span class="o">.</span><span class="n">get_name</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ctx</span> <span class="o">=</span> <span class="bp">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">get_help</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ctx</span> <span class="o">=</span> <span class="bp">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_help</span>
+        <span class="n">cls</span><span class="o">.</span><span class="n">get_help</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_help</span>
         <span class="n">cls</span><span class="o">.</span><span class="n">get_target</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ctx</span> <span class="o">=</span> <span class="bp">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target</span>
 
         <span class="n">SdkCommandsRegistry</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>

@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="sdk/command_version.html" title="Version command"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.3.0-b106 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -75,6 +75,7 @@ in <a class="reference internal" href="../how_to/static_assets.html"><em>Static 
 process we scan all available sql folders and execute <strong>module_setup.sql</strong> scripts. By default, we want to give
 developers the chance to provide a setup script for each component in order to easily install the component database
 dependencies.</p>
+<p>For easily synchronization of sql scripts with a <strong>Fantastico</strong> project database read <a class="reference internal" href="sdk/command_syncdb.html"><em>Syncdb command</em></a></p>
 <div class="section" id="sql-folder-example">
 <h3>Sql folder example</h3>
 <p>Assume you want to create a blog module that requires a storage for <strong>Authors</strong> and <strong>Posts</strong>. module_setup.sql script
@@ -109,6 +110,31 @@ created they should not be altered anymore by this script.</p>
    <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">(</span><span class="n">id</span><span class="p">));</span>
 </pre></div>
 </div>
+<p>Once the component is activated (<a class="reference internal" href="sdk/command_activate_extension.html"><em>Activate extension command</em></a>) and structure is synchronize data must be
+created into the new tables. You can find such a script example below. It is up to you where you place <strong>sql/create_data.sql</strong>.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="o">##############################################################################################################################</span>
+<span class="o">#</span> <span class="n">Copyright</span> <span class="mi">2013</span> <span class="n">Cosnita</span> <span class="n">Radu</span> <span class="n">Viorel</span>
+<span class="o">#</span>
+<span class="o">#</span> <span class="n">Permission</span> <span class="k">is</span> <span class="n">hereby</span> <span class="k">granted</span><span class="p">,</span> <span class="k">free</span> <span class="k">of</span> <span class="n">charge</span><span class="p">,</span> <span class="k">to</span> <span class="k">any</span> <span class="n">person</span> <span class="n">obtaining</span> <span class="n">a</span> <span class="k">copy</span> <span class="k">of</span> <span class="n">this</span> <span class="n">software</span> <span class="k">and</span> <span class="n">associated</span>
+<span class="o">#</span> <span class="n">documentation</span> <span class="n">files</span> <span class="p">(</span><span class="n">the</span> <span class="ss">&quot;Software&quot;</span><span class="p">),</span> <span class="k">to</span> <span class="n">deal</span> <span class="k">in</span> <span class="n">the</span> <span class="n">Software</span> <span class="k">without</span> <span class="n">restriction</span><span class="p">,</span> <span class="k">including</span> <span class="k">without</span> <span class="n">limitation</span>
+<span class="o">#</span> <span class="n">the</span> <span class="n">rights</span> <span class="k">to</span> <span class="n">use</span><span class="p">,</span> <span class="k">copy</span><span class="p">,</span> <span class="k">modify</span><span class="p">,</span> <span class="n">merge</span><span class="p">,</span> <span class="n">publish</span><span class="p">,</span> <span class="n">distribute</span><span class="p">,</span> <span class="n">sublicense</span><span class="p">,</span> <span class="k">and</span><span class="o">/</span><span class="k">or</span> <span class="n">sell</span> <span class="n">copies</span> <span class="k">of</span> <span class="n">the</span> <span class="n">Software</span><span class="p">,</span>
+<span class="o">#</span> <span class="k">and</span> <span class="k">to</span> <span class="n">permit</span> <span class="n">persons</span> <span class="k">to</span> <span class="n">whom</span> <span class="n">the</span> <span class="n">Software</span> <span class="k">is</span> <span class="n">furnished</span> <span class="k">to</span> <span class="k">do</span> <span class="n">so</span><span class="p">,</span> <span class="n">subject</span> <span class="k">to</span> <span class="n">the</span> <span class="n">following</span> <span class="n">conditions</span><span class="p">:</span>
+<span class="o">#</span>
+<span class="o">#</span> <span class="n">The</span> <span class="n">above</span> <span class="n">copyright</span> <span class="n">notice</span> <span class="k">and</span> <span class="n">this</span> <span class="n">permission</span> <span class="n">notice</span> <span class="n">shall</span> <span class="n">be</span> <span class="n">included</span> <span class="k">in</span> <span class="k">all</span> <span class="n">copies</span> <span class="k">or</span> <span class="n">substantial</span> <span class="n">portions</span> <span class="k">of</span> <span class="n">the</span> <span class="n">Software</span><span class="p">.</span>
+<span class="o">#</span>
+<span class="o">#</span> <span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="k">IS</span> <span class="n">PROVIDED</span> <span class="ss">&quot;AS IS&quot;</span><span class="p">,</span> <span class="k">WITHOUT</span> <span class="n">WARRANTY</span> <span class="k">OF</span> <span class="k">ANY</span> <span class="n">KIND</span><span class="p">,</span> <span class="n">EXPRESS</span> <span class="k">OR</span> <span class="n">IMPLIED</span><span class="p">,</span> <span class="k">INCLUDING</span> <span class="n">BUT</span> <span class="k">NOT</span> <span class="n">LIMITED</span> <span class="k">TO</span> <span class="n">THE</span>
+<span class="o">#</span> <span class="n">WARRANTIES</span> <span class="k">OF</span> <span class="n">MERCHANTABILITY</span><span class="p">,</span> <span class="n">FITNESS</span> <span class="k">FOR</span> <span class="n">A</span> <span class="n">PARTICULAR</span> <span class="n">PURPOSE</span> <span class="k">AND</span> <span class="n">NONINFRINGEMENT</span><span class="p">.</span> <span class="k">IN</span> <span class="k">NO</span> <span class="n">EVENT</span> <span class="n">SHALL</span> <span class="n">THE</span> <span class="n">AUTHORS</span> <span class="k">OR</span>
+<span class="o">#</span> <span class="n">COPYRIGHT</span> <span class="n">HOLDERS</span> <span class="n">BE</span> <span class="n">LIABLE</span> <span class="k">FOR</span> <span class="k">ANY</span> <span class="n">CLAIM</span><span class="p">,</span> <span class="n">DAMAGES</span> <span class="k">OR</span> <span class="n">OTHER</span> <span class="n">LIABILITY</span><span class="p">,</span> <span class="n">WHETHER</span> <span class="k">IN</span> <span class="n">AN</span> <span class="n">ACTION</span> <span class="k">OF</span> <span class="n">CONTRACT</span><span class="p">,</span> <span class="n">TORT</span> <span class="k">OR</span> <span class="n">OTHERWISE</span><span class="p">,</span>
+<span class="o">#</span> <span class="n">ARISING</span> <span class="k">FROM</span><span class="p">,</span> <span class="k">OUT</span> <span class="k">OF</span> <span class="k">OR</span> <span class="k">IN</span> <span class="k">CONNECTION</span> <span class="k">WITH</span> <span class="n">THE</span> <span class="n">SOFTWARE</span> <span class="k">OR</span> <span class="n">THE</span> <span class="n">USE</span> <span class="k">OR</span> <span class="n">OTHER</span> <span class="n">DEALINGS</span> <span class="k">IN</span> <span class="n">THE</span> <span class="n">SOFTWARE</span><span class="p">.</span>
+<span class="o">##############################################################################################################################</span>
+
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">mvc_friendly_messages</span><span class="p">;</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">mvc_friendly_messages</span><span class="p">(</span><span class="n">Message</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Hello world!!!!&#39;</span><span class="p">),</span>
+       <span class="p">(</span><span class="s1">&#39;Greetings from Australia!!!!&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Both scripts are autodected and run by sdk <a class="reference internal" href="sdk/command_syncdb.html"><em>Syncdb command</em></a>.</p>
 </div>
 </div>
 </div>

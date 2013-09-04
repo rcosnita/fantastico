@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 02, 2013}
-\release{0.3.0-b106}
+\date{September 04, 2013}
+\release{0.4.0-b107}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -337,6 +337,14 @@ This property holds development server hostname. By default this is localhost.
 \begin{fulllineitems}
 \phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.dev_server_port}\pysigline{\bfcode{dev\_server\_port}}
 This property holds development server port. By default this is 12000.
+
+\end{fulllineitems}
+
+\index{doc\_base (fantastico.settings.BasicSettings attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.doc_base}\pysigline{\bfcode{doc\_base}}
+This property defines public location of \textbf{Fantastico} documentation.
 
 \end{fulllineitems}
 
@@ -762,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4ce72f8\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5be9628\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1840,7 +1848,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x19ef408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2945408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2204,6 +2212,57 @@ This method returns support arguments of activate-extension command.
 
 \end{fulllineitems}
 
+\index{get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_activate_extension:fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{\emph{ctx=None}}{}
+This method returns the friendly help message describing the method.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\subsubsection{Fantastico command}
+\label{features/sdk/command_fantastico:fantastico-command}\label{features/sdk/command_fantastico::doc}
+{\hyperref[features/sdk::doc]{\emph{SDK}}}
+
+
+\subsubsection{Syncdb command}
+\label{features/sdk/command_syncdb::doc}\label{features/sdk/command_syncdb:syncdb-command}
+Syncdb command is used to keep \textbf{Fantastico} projects databases updated. It is extremely easy to use it and in addition works
+on every operating system. In order to familiarize with components model read {\hyperref[features/component_model::doc]{\emph{Component model}}}.
+\index{SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.commands.command\_syncdb.}\bfcode{SdkCommandSyncDb}}{\emph{argv}, \emph{cmd\_factory}}{}
+This class provides the algorithm for synchronizing \textbf{Fantastico} projects database scripts with the current configured
+database connection. Below you can find the order in which scripts are executed:
+\begin{enumerate}
+\item {} 
+Scan and execute all activated extensions sql/module\_setup.sql scripts.
+
+\item {} 
+Scan and execute all activated extensions for sql/create\_data.sql scripts.
+
+\end{enumerate}
+
+\textbf{syncdb} command first required database structure for all modules and the it populates them with necessary data. It is
+important to understand that rollback procedures are not currently in place and there is no way to guarantee data integrity.
+All components providers are responsible for writing module\_setup in such a way that in case of error data is left in a
+consistent state.
+
+For possible examples of how to structure a component read {\hyperref[features/component_model::doc]{\emph{Component model}}}
+\index{get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{\emph{ctx=None}}{}
+This method returns the friendly help message describing the method.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -2231,6 +2290,14 @@ root module code.
 \begin{fulllineitems}
 \phantomsection\label{features/sdk/command_version:fantastico.sdk.commands.command_version.SdkCommandVersion.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{print\_fn=\textless{}built-in function print\textgreater{}}}{}
 This method prints the current fantastico framework version.
+
+\end{fulllineitems}
+
+\index{get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_version:fantastico.sdk.commands.command_version.SdkCommandVersion.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{\emph{ctx=None}}{}
+This method returns the friendly help message describing the method.
 
 \end{fulllineitems}
 
@@ -2265,6 +2332,14 @@ This method does nothing because fantastico is designed to accept only registere
 \begin{fulllineitems}
 \phantomsection\label{features/sdk:fantastico.sdk.fantastico.SdkCore.get_arguments}\pysiglinewithargsret{\bfcode{get\_arguments}}{}{}
 This property retrieves support fantastico arguments.
+
+\end{fulllineitems}
+
+\index{get\_help() (fantastico.sdk.fantastico.SdkCore method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk:fantastico.sdk.fantastico.SdkCore.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{\emph{ctx=None}}{}
+This method returns the friendly help message describing the method.
 
 \end{fulllineitems}
 
@@ -2435,7 +2510,7 @@ This method must be overriden by each concrete command and must return the comma
 \index{SdkCommand (class in fantastico.sdk.sdk\_decorators)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk:fantastico.sdk.sdk_decorators.SdkCommand}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.sdk\_decorators.}\bfcode{SdkCommand}}{\emph{name}, \emph{help}, \emph{target=None}}{}
+\phantomsection\label{features/sdk:fantastico.sdk.sdk_decorators.SdkCommand}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.sdk\_decorators.}\bfcode{SdkCommand}}{\emph{name}, \emph{help}, \emph{target=None}, \emph{settings\_facade\_cls=\textless{}class `fantastico.settings.SettingsFacade'\textgreater{}}}{}
 This decorator describe the sdk commands metadata:
 \begin{enumerate}
 \item {} 
@@ -2443,6 +2518,9 @@ name
 
 \item {} 
 target (which is the main purpose of the command. E.g: fantastico - this mean command is designed to work as a subcommand for fantastico cmd).
+
+\item {} 
+help (which describes what this method does). It will automatically contain a link to official fantastico documentation of the command.
 
 \end{enumerate}
 
@@ -2536,6 +2614,8 @@ process we scan all available sql folders and execute \textbf{module\_setup.sql}
 developers the chance to provide a setup script for each component in order to easily install the component database
 dependencies.
 
+For easily synchronization of sql scripts with a \textbf{Fantastico} project database read {\hyperref[features/sdk/command_syncdb::doc]{\emph{Syncdb command}}}
+
 
 \subsubsection{Sql folder example}
 \label{features/component_model:sql-folder-example}
@@ -2573,6 +2653,34 @@ An example of such a script we use in integration tests can be found under: \tex
    \PYG{n}{Message} \PYG{n+nb}{TEXT}\PYG{p}{,}
    \PYG{k}{PRIMARY} \PYG{k}{KEY}\PYG{p}{(}\PYG{n}{id}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
 \end{Verbatim}
+
+Once the component is activated ({\hyperref[features/sdk/command_activate_extension::doc]{\emph{Activate extension command}}}) and structure is synchronize data must be
+created into the new tables. You can find such a script example below. It is up to you where you place \textbf{sql/create\_data.sql}.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{Copyright} \PYG{l+m+mi}{2013} \PYG{n}{Cosnita} \PYG{n}{Radu} \PYG{n}{Viorel}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{Permission} \PYG{k}{is} \PYG{n}{hereby} \PYG{k}{granted}\PYG{p}{,} \PYG{k}{free} \PYG{k}{of} \PYG{n}{charge}\PYG{p}{,} \PYG{k}{to} \PYG{k}{any} \PYG{n}{person} \PYG{n}{obtaining} \PYG{n}{a} \PYG{k}{copy} \PYG{k}{of} \PYG{n}{this} \PYG{n}{software} \PYG{k}{and} \PYG{n}{associated}
+\PYG{o}{\PYGZsh{}} \PYG{n}{documentation} \PYG{n}{files} \PYG{p}{(}\PYG{n}{the} \PYG{l+s+ss}{\PYGZdq{}Software\PYGZdq{}}\PYG{p}{)}\PYG{p}{,} \PYG{k}{to} \PYG{n}{deal} \PYG{k}{in} \PYG{n}{the} \PYG{n}{Software} \PYG{k}{without} \PYG{n}{restriction}\PYG{p}{,} \PYG{k}{including} \PYG{k}{without} \PYG{n}{limitation}
+\PYG{o}{\PYGZsh{}} \PYG{n}{the} \PYG{n}{rights} \PYG{k}{to} \PYG{n}{use}\PYG{p}{,} \PYG{k}{copy}\PYG{p}{,} \PYG{k}{modify}\PYG{p}{,} \PYG{n}{merge}\PYG{p}{,} \PYG{n}{publish}\PYG{p}{,} \PYG{n}{distribute}\PYG{p}{,} \PYG{n}{sublicense}\PYG{p}{,} \PYG{k}{and}\PYG{o}{/}\PYG{k}{or} \PYG{n}{sell} \PYG{n}{copies} \PYG{k}{of} \PYG{n}{the} \PYG{n}{Software}\PYG{p}{,}
+\PYG{o}{\PYGZsh{}} \PYG{k}{and} \PYG{k}{to} \PYG{n}{permit} \PYG{n}{persons} \PYG{k}{to} \PYG{n}{whom} \PYG{n}{the} \PYG{n}{Software} \PYG{k}{is} \PYG{n}{furnished} \PYG{k}{to} \PYG{k}{do} \PYG{n}{so}\PYG{p}{,} \PYG{n}{subject} \PYG{k}{to} \PYG{n}{the} \PYG{n}{following} \PYG{n}{conditions}\PYG{p}{:}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{The} \PYG{n}{above} \PYG{n}{copyright} \PYG{n}{notice} \PYG{k}{and} \PYG{n}{this} \PYG{n}{permission} \PYG{n}{notice} \PYG{n}{shall} \PYG{n}{be} \PYG{n}{included} \PYG{k}{in} \PYG{k}{all} \PYG{n}{copies} \PYG{k}{or} \PYG{n}{substantial} \PYG{n}{portions} \PYG{k}{of} \PYG{n}{the} \PYG{n}{Software}\PYG{p}{.}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{THE} \PYG{n}{SOFTWARE} \PYG{k}{IS} \PYG{n}{PROVIDED} \PYG{l+s+ss}{\PYGZdq{}AS IS\PYGZdq{}}\PYG{p}{,} \PYG{k}{WITHOUT} \PYG{n}{WARRANTY} \PYG{k}{OF} \PYG{k}{ANY} \PYG{n}{KIND}\PYG{p}{,} \PYG{n}{EXPRESS} \PYG{k}{OR} \PYG{n}{IMPLIED}\PYG{p}{,} \PYG{k}{INCLUDING} \PYG{n}{BUT} \PYG{k}{NOT} \PYG{n}{LIMITED} \PYG{k}{TO} \PYG{n}{THE}
+\PYG{o}{\PYGZsh{}} \PYG{n}{WARRANTIES} \PYG{k}{OF} \PYG{n}{MERCHANTABILITY}\PYG{p}{,} \PYG{n}{FITNESS} \PYG{k}{FOR} \PYG{n}{A} \PYG{n}{PARTICULAR} \PYG{n}{PURPOSE} \PYG{k}{AND} \PYG{n}{NONINFRINGEMENT}\PYG{p}{.} \PYG{k}{IN} \PYG{k}{NO} \PYG{n}{EVENT} \PYG{n}{SHALL} \PYG{n}{THE} \PYG{n}{AUTHORS} \PYG{k}{OR}
+\PYG{o}{\PYGZsh{}} \PYG{n}{COPYRIGHT} \PYG{n}{HOLDERS} \PYG{n}{BE} \PYG{n}{LIABLE} \PYG{k}{FOR} \PYG{k}{ANY} \PYG{n}{CLAIM}\PYG{p}{,} \PYG{n}{DAMAGES} \PYG{k}{OR} \PYG{n}{OTHER} \PYG{n}{LIABILITY}\PYG{p}{,} \PYG{n}{WHETHER} \PYG{k}{IN} \PYG{n}{AN} \PYG{n}{ACTION} \PYG{k}{OF} \PYG{n}{CONTRACT}\PYG{p}{,} \PYG{n}{TORT} \PYG{k}{OR} \PYG{n}{OTHERWISE}\PYG{p}{,}
+\PYG{o}{\PYGZsh{}} \PYG{n}{ARISING} \PYG{k}{FROM}\PYG{p}{,} \PYG{k}{OUT} \PYG{k}{OF} \PYG{k}{OR} \PYG{k}{IN} \PYG{k}{CONNECTION} \PYG{k}{WITH} \PYG{n}{THE} \PYG{n}{SOFTWARE} \PYG{k}{OR} \PYG{n}{THE} \PYG{n}{USE} \PYG{k}{OR} \PYG{n}{OTHER} \PYG{n}{DEALINGS} \PYG{k}{IN} \PYG{n}{THE} \PYG{n}{SOFTWARE}\PYG{p}{.}
+\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}
+
+\PYG{k}{DELETE} \PYG{k}{FROM} \PYG{n}{mvc\PYGZus{}friendly\PYGZus{}messages}\PYG{p}{;}
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{mvc\PYGZus{}friendly\PYGZus{}messages}\PYG{p}{(}\PYG{n}{Message}\PYG{p}{)}
+\PYG{k}{VALUES} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Hello world!!!!\PYGZsq{}}\PYG{p}{)}\PYG{p}{,}
+       \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Greetings from Australia!!!!\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+Both scripts are autodected and run by sdk {\hyperref[features/sdk/command_syncdb::doc]{\emph{Syncdb command}}}.
 
 
 \section{Component reusage}
@@ -2666,7 +2774,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x323c0d8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x41a71e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -3418,6 +3526,27 @@ Be aware that first you need an nginx configured and your project config file de
 
 \chapter{Changes}
 \label{changes:changes}\label{changes::doc}\begin{itemize}
+\item {} \begin{description}
+\item[{v0.4.0 (Work in progress)}] \leavevmode\begin{itemize}
+\item {} 
+Fantastico SDK commands display official link to command documentation.
+
+\item {} 
+Fantastico SDK syncdb command.
+
+\item {} 
+Standard detection of database tables module setup / data insert created.
+
+\item {} 
+Multiple tracking codes extension integrated into fantastico contrib.
+
+\item {} 
+Dynamic pages extension integrated into fantastico contrib.
+
+\end{itemize}
+
+\end{description}
+
 \item {} \begin{description}
 \item[{v0.3.0}] \leavevmode\begin{itemize}
 \item {} 

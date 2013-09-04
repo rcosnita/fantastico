@@ -2,6 +2,7 @@
 \indexentry{database\_config (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{dev\_server\_host (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{dev\_server\_port (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
+\indexentry{doc\_base (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{installed\_middleware (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{routes\_loaders (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{supported\_languages (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
@@ -10,7 +11,7 @@
 \indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
 \indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
 \indexentry{get\_root\_folder() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
-\indexentry{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)|hyperpage}{6}
+\indexentry{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)|hyperpage}{7}
 \indexentry{\_get\_class\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
 \indexentry{\_get\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
 \indexentry{check\_original\_methods() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
@@ -19,8 +20,8 @@
 \indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{7}
 \indexentry{\_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
 \indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
-\indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{7}
-\indexentry{fantastico\_cfg\_os\_key (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{7}
+\indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
+\indexentry{fantastico\_cfg\_os\_key (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{8}
 \indexentry{DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server)|hyperpage}{8}
 \indexentry{\_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
 \indexentry{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
@@ -111,31 +112,36 @@
 \indexentry{SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension)|hyperpage}{27}
 \indexentry{exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{27}
 \indexentry{get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{27}
-\indexentry{SdkCommandVersion (class in fantastico.sdk.commands.command\_version)|hyperpage}{27}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{27}
+\indexentry{SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb)|hyperpage}{28}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{28}
+\indexentry{SdkCommandVersion (class in fantastico.sdk.commands.command\_version)|hyperpage}{28}
 \indexentry{exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{28}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{28}
 \indexentry{SdkCore (class in fantastico.sdk.fantastico)|hyperpage}{28}
-\indexentry{exec() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{28}
-\indexentry{get\_arguments() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{28}
-\indexentry{SdkCommandsRegistry (class in fantastico.sdk.sdk\_core)|hyperpage}{28}
-\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{28}
+\indexentry{exec() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{29}
+\indexentry{get\_arguments() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{29}
+\indexentry{get\_help() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{29}
+\indexentry{SdkCommandsRegistry (class in fantastico.sdk.sdk\_core)|hyperpage}{29}
+\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{29}
 \indexentry{get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{29}
-\indexentry{SdkCommandArgument (class in fantastico.sdk.sdk\_core)|hyperpage}{29}
-\indexentry{help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{29}
-\indexentry{name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{29}
-\indexentry{short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{29}
-\indexentry{type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{29}
-\indexentry{SdkCommand (class in fantastico.sdk.sdk\_core)|hyperpage}{29}
-\indexentry{exec() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{29}
+\indexentry{SdkCommandArgument (class in fantastico.sdk.sdk\_core)|hyperpage}{30}
+\indexentry{help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{30}
+\indexentry{name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{30}
+\indexentry{short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{30}
+\indexentry{type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{30}
+\indexentry{SdkCommand (class in fantastico.sdk.sdk\_core)|hyperpage}{30}
+\indexentry{exec() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{30}
 \indexentry{exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{30}
 \indexentry{get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{30}
 \indexentry{SdkCommand (class in fantastico.sdk.sdk\_decorators)|hyperpage}{30}
-\indexentry{FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{30}
-\indexentry{FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{30}
-\indexentry{FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{30}
-\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{32}
-\indexentry{parse() (fantastico.rendering.component.Component method)|hyperpage}{33}
-\indexentry{render() (fantastico.rendering.component.Component method)|hyperpage}{33}
-\indexentry{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)|hyperpage}{35}
-\indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{35}
-\indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{35}
-\indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{35}
+\indexentry{FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{31}
+\indexentry{FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{31}
+\indexentry{FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{31}
+\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{33}
+\indexentry{parse() (fantastico.rendering.component.Component method)|hyperpage}{34}
+\indexentry{render() (fantastico.rendering.component.Component method)|hyperpage}{34}
+\indexentry{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)|hyperpage}{36}
+\indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{36}
+\indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{36}
+\indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{36}

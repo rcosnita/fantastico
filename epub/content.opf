@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-09-02</dc:date>
+    <dc:date>2013-09-04</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -184,6 +184,9 @@
     <item id="_modules_fantastico_sdk_commands_command_activate_extension.html"
           href="_modules/fantastico/sdk/commands/command_activate_extension.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_sdk_commands_command_syncdb.html"
+          href="_modules/fantastico/sdk/commands/command_syncdb.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_sdk_commands_command_version.html"
           href="_modules/fantastico/sdk/commands/command_version.html"
           media-type="application/xhtml+xml" />
@@ -268,8 +271,14 @@
     <item id="features_components_dynamic_menu_dynamic_menu.html"
           href="features/components/dynamic_menu/dynamic_menu.html"
           media-type="application/xhtml+xml" />
+    <item id="features_sdk_command_fantastico.html"
+          href="features/sdk/command_fantastico.html"
+          media-type="application/xhtml+xml" />
     <item id="features_sdk_command_activate_extension.html"
           href="features/sdk/command_activate_extension.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_sdk_command_syncdb.html"
+          href="features/sdk/command_syncdb.html"
           media-type="application/xhtml+xml" />
     <item id="features_sdk_command_version.html"
           href="features/sdk/command_version.html"
@@ -290,6 +299,8 @@
     <itemref idref="features_mvc.html" />
     <itemref idref="features_sdk.html" />
     <itemref idref="features_sdk_command_activate_extension.html" />
+    <itemref idref="features_sdk_command_fantastico.html" />
+    <itemref idref="features_sdk_command_syncdb.html" />
     <itemref idref="features_sdk_command_version.html" />
     <itemref idref="features_component_model.html" />
     <itemref idref="features_component_reusage.html" />

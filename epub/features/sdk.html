@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="mvc.html" title="Model View Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.3.0-b106 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -73,6 +73,8 @@ correctly you will not be able to use some sdk extensions.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sdk/command_activate_extension.html">Activate extension command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/command_fantastico.html">Fantastico command</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/command_syncdb.html">Syncdb command</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sdk/command_version.html">Version command</a></li>
 </ul>
 </div>
@@ -98,6 +100,12 @@ all available sdk commands together and it adds support for uniformly executes t
 <dt id="fantastico.sdk.fantastico.SdkCore.get_arguments">
 <tt class="descname">get_arguments</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/sdk/fantastico.html#SdkCore.get_arguments"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This property retrieves support fantastico arguments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.sdk.fantastico.SdkCore.get_help">
+<tt class="descname">get_help</tt><big>(</big><em>ctx=None</em><big>)</big></dt>
+<dd><p>This method returns the friendly help message describing the method.</p>
 </dd></dl>
 
 </dd></dl>
@@ -247,11 +255,12 @@ overriden exec method.</p>
 
 <dl class="class">
 <dt id="fantastico.sdk.sdk_decorators.SdkCommand">
-<em class="property">class </em><tt class="descclassname">fantastico.sdk.sdk_decorators.</tt><tt class="descname">SdkCommand</tt><big>(</big><em>name</em>, <em>help</em>, <em>target=None</em><big>)</big><a class="reference internal" href="../_modules/fantastico/sdk/sdk_decorators.html#SdkCommand"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.sdk.sdk_decorators.</tt><tt class="descname">SdkCommand</tt><big>(</big><em>name</em>, <em>help</em>, <em>target=None</em>, <em>settings_facade_cls=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/sdk/sdk_decorators.html#SdkCommand"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This decorator describe the sdk commands metadata:</p>
 <ol class="arabic simple">
 <li>name</li>
 <li>target (which is the main purpose of the command. E.g: fantastico - this mean command is designed to work as a subcommand for fantastico cmd).</li>
+<li>help (which describes what this method does). It will automatically contain a link to official fantastico documentation of the command.</li>
 </ol>
 <p>It is used in conjunction with <a class="reference internal" href="#fantastico.sdk.sdk_core.SdkCommand" title="fantastico.sdk.sdk_core.SdkCommand"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.sdk.sdk_core.SdkCommand</span></tt></a>. Each sdk command decorated with this
 decorator automatically receives <strong>get_name</strong> and <strong>get_target</strong> methods.</p>

@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Syncdb command &mdash; fantastico 0.4.0-b107 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.4.0-b107',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.4.0-b107 documentation" href="../../index.html" />
+    <link rel="up" title="SDK" href="../sdk.html" />
+    <link rel="next" title="Version command" href="command_version.html" />
+    <link rel="prev" title="Fantastico command" href="command_fantastico.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="command_version.html" title="Version command"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="command_fantastico.html" title="Fantastico command"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../sdk.html" accesskey="U">SDK</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="syncdb-command">
+<h1>Syncdb command<a class="headerlink" href="#syncdb-command" title="Permalink to this headline">¶</a></h1>
+<p>Syncdb command is used to keep <strong>Fantastico</strong> projects databases updated. It is extremely easy to use it and in addition works
+on every operating system. In order to familiarize with components model read <a class="reference internal" href="../component_model.html"><em>Component model</em></a>.</p>
+<dl class="class">
+<dt id="fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb">
+<em class="property">class </em><tt class="descclassname">fantastico.sdk.commands.command_syncdb.</tt><tt class="descname">SdkCommandSyncDb</tt><big>(</big><em>argv</em>, <em>cmd_factory</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_syncdb.html#SdkCommandSyncDb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the algorithm for synchronizing <strong>Fantastico</strong> projects database scripts with the current configured
+database connection. Below you can find the order in which scripts are executed:</p>
+<ol class="arabic simple">
+<li>Scan and execute all activated extensions sql/module_setup.sql scripts.</li>
+<li>Scan and execute all activated extensions for sql/create_data.sql scripts.</li>
+</ol>
+<p><strong>syncdb</strong> command first required database structure for all modules and the it populates them with necessary data. It is
+important to understand that rollback procedures are not currently in place and there is no way to guarantee data integrity.
+All components providers are responsible for writing module_setup in such a way that in case of error data is left in a
+consistent state.</p>
+<p>For possible examples of how to structure a component read <a class="reference internal" href="../component_model.html"><em>Component model</em></a></p>
+<dl class="method">
+<dt id="fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_help">
+<tt class="descname">get_help</tt><big>(</big><em>ctx=None</em><big>)</big><a class="headerlink" href="#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_help" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the friendly help message describing the method.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command_fantastico.html"
+                        title="previous chapter">Fantastico command</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command_version.html"
+                        title="next chapter">Version command</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/features/sdk/command_syncdb.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="command_version.html" title="Version command"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="command_fantastico.html" title="Fantastico command"
+             >previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../sdk.html" >SDK</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
