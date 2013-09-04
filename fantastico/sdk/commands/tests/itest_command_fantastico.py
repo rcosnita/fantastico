@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.sdk.commands.tests.itest_command_fantastico
 '''
-from fantastico.sdk.fantastico import SdkCore, main
+from fantastico.sdk.fantastico import SdkCore
 from fantastico.sdk.commands.tests.itest_command_integration_base import CommandBaseIntegration
 
 class SdkCommandFantasticoIntegration(CommandBaseIntegration):
