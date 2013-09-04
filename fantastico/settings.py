@@ -113,6 +113,12 @@ class BasicSettings(object):
                 "additional_params": {"charset": "utf8"},
                 "show_sql": True}
 
+    @property
+    def doc_base(self):
+        '''This property defines public location of **Fantastico** documentation.'''
+
+        return "http://rcosnita.github.io/fantastico/html/"
+
 class AwsStageSettings(BasicSettings):
     '''This class provides the configuration profile for Aws Stage environment integration.'''
 

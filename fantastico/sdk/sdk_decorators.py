@@ -17,26 +17,36 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.sdk.sdk_decorators
 '''
 from fantastico.sdk.sdk_core import SdkCommandsRegistry
+from fantastico.settings import SettingsFacade
 
 class SdkCommand(object):
     '''This decorator describe the sdk commands metadata:
 
     #. name
     #. target (which is the main purpose of the command. E.g: fantastico - this mean command is designed to work as a subcommand for fantastico cmd).
+    #. help (which describes what this method does). It will automatically contain a link to official fantastico documentation of the command.
 
     It is used in conjunction with :py:class:`fantastico.sdk.sdk_core.SdkCommand`. Each sdk command decorated with this
     decorator automatically receives **get_name** and **get_target** methods.'''
 
-    def __init__(self, name, help, target=None):
+    def __init__(self, name, help, target=None, settings_facade_cls=SettingsFacade):
         self._name = name
         self._target = target
         self._help = help
+        self._settings_facade = settings_facade_cls()
+
+    def _get_help(self, ctx=None):
+        '''This method returns the friendly help message describing the method.'''
+
+        doc_link = "%sfeatures/sdk/command_%s.html" % (self._settings_facade.get("doc_base"), self._name.replace("-", "_"))
+
+        return "%s...  See: %s" % (self._help, doc_link)
 
     def __call__(self, cls):
         '''This method simply adds get_name method to the command class.'''
 
         cls.get_name = lambda ctx = None: self._name
-        cls.get_help = lambda ctx = None: self._help
+        cls.get_help = self._get_help
         cls.get_target = lambda ctx = None: self._target
 
         SdkCommandsRegistry.add_command(self._name, cls)
