@@ -22,8 +22,6 @@ from fantastico.sdk.sdk_core import SdkCommand, SdkCommandArgument
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
-import io
-import sys
 
 class SdkCommandTests(FantasticoUnitTestsCase):
     '''This class provides test cases for ensuring sdk command behaves as expected. The logic of this test suite is fairly simple:
@@ -88,6 +86,19 @@ class SdkCommandTests(FantasticoUnitTestsCase):
 
         self.assertEqual(expected_err_msg, str(ctx.exception))
 
+    def test_subcommand_gethelp_with_doclink(self):
+        '''This test case ensures help message also include a link to official documentation.'''
+
+        args = ["greet"]
+        expected_doc_link = "See: https://rcosnita.github.io/fantastico/html/features/sdk/command_greet.html"
+
+        cmd = SdkCommandSayHello(args, cmd_factory=Mock())
+
+        help_msg = cmd.get_help()
+
+        self.assertTrue(help_msg.startswith("This is a very simple greeting command supported by fantastico."))
+        self.assertGreater(help_msg.find(expected_doc_link), -1)
+
     def _exec_ok_scenario(self, args, expected_msg, cmd_factory=None):
         '''This test case provides the template for checking correct behavior of exec method.'''
 
@@ -102,9 +113,16 @@ class SdkCommandTests(FantasticoUnitTestsCase):
 
         mock_print.assert_called_with(expected_msg)
 
+class SettingsFacadeMock():
+    '''A very simple mock object which simulates settings facade. It only supports doc base property.'''
+
+    def get(self, name):
+        return "https://rcosnita.github.io/fantastico/html/"
+
 @sdk_decorators.SdkCommand(name="greet",
                            help="This is a very simple greeting command supported by fantastico.",
-                           target="example")
+                           target="example",
+                           settings_facade_cls=SettingsFacadeMock)
 class SdkCommandSayHello(SdkCommand):
     '''This class provides an extremely simple command which greets the user.'''
 

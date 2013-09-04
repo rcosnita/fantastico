@@ -65,4 +65,4 @@ class SdkCommandActivateExtensionIntegration(CommandBaseIntegration):
 
         argv = [SdkCore.get_name(), "activate-extension"]
 
-        self._exec_command_help_scenario(argv, assert_action)
+        self._exec_command_help_scenario(argv, assert_action, "activate-extension")

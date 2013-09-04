@@ -42,5 +42,7 @@ class SdkCommandVersionIntegration(CommandBaseIntegration):
 
         argv = [SdkCore.get_name(), "version"]
 
-        self._exec_command_help_scenario(argv, lambda help_str: \
-                                                self.assertTrue(help_str.startswith("usage: %s" % SdkCommandVersion.get_help())))
+        assert_action = lambda help_str: \
+                                self.assertTrue(help_str.startswith("usage: %s" % SdkCommandVersion.get_help()))
+
+        self._exec_command_help_scenario(argv, assert_action, "version")
