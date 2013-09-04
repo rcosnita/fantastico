@@ -18,6 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.sdk.fantastico import main
+from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 import io
 import sys
@@ -40,7 +41,7 @@ class CommandBaseIntegration(FantasticoIntegrationTestCase):
         sys.stdout = self._old_stdout
         self._stdout.close()
 
-    def _exec_command_help_scenario(self, argv, assert_action):
+    def _exec_command_help_scenario(self, argv, assert_action, cmd_name):
         '''This method defines a template for testing subcommands --help option. Once the subcommand is executed, the help
         string is captured and passed to assert action.
 
@@ -51,7 +52,7 @@ class CommandBaseIntegration(FantasticoIntegrationTestCase):
                     def assert_action(help_str):
                         self.help_str.startswith("usage: %s" % SampleSubcommand.get_help())
 
-                    self._exec_command_help_scenario(["fantastico", "sample"]'''
+                    self._exec_command_help_scenario(["fantastico", "sample"], "sample")'''
 
         if argv[-1] != "--help" or "-h":
             argv.append("--help")
@@ -62,4 +63,7 @@ class CommandBaseIntegration(FantasticoIntegrationTestCase):
         help_str = self._stdout.getvalue()
 
         assert_action(help_str)
+
+        expected_doc_link = "See: %sfeatures/sdk/command_%s.html" % (SettingsFacade().get("doc_base"), cmd_name.replace("-", "_"))
+        self.assertGreater(help_str.find(expected_doc_link), -1)
 

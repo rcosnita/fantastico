@@ -2,6 +2,7 @@ Changes
 =======
 
 * v0.4.0 (Work in progress)
+   * Fantastico SDK commands display official link to command documentation.
    * Fantastico SDK syncdb command.
    * Standard detection of database tables module setup / data insert created.
    * Multiple tracking codes extension integrated into fantastico contrib.

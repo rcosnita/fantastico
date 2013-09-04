@@ -31,4 +31,4 @@ class SdkCommandFantasticoIntegration(CommandBaseIntegration):
 
         argv = [SdkCore.get_name()]
 
-        self._exec_command_help_scenario(argv, assert_action)
+        self._exec_command_help_scenario(argv, assert_action, "fantastico")
