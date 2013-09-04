@@ -71,3 +71,31 @@ An example of such a script we use in integration tests can be found under: **/<
       Id INT AUTO_INCREMENT,
       Message TEXT,
       PRIMARY KEY(id));
+
+Once the component is activated (:doc:`/features/sdk/command_activate_extension`) and structure is synchronize data must be
+created into the new tables. You can find such a script example below. It is up to you where you place **sql/create_data.sql**.
+
+.. code-block:: sql
+
+   ##############################################################################################################################
+   # Copyright 2013 Cosnita Radu Viorel
+   #
+   # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
+   # documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
+   # the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
+   # and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+   #
+   # The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+   #
+   # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
+   # WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
+   # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+   # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+   ##############################################################################################################################
+
+   DELETE FROM mvc_friendly_messages;
+   INSERT INTO mvc_friendly_messages(Message)
+   VALUES ('Hello world!!!!'),
+          ('Greetings from Australia!!!!');
+          
+Both scripts are autodected and run by sdk :doc:`/features/sdk/command_syncdb`.
