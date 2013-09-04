@@ -23,7 +23,7 @@ from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from fantastico.utils import instantiator
 from mock import Mock
-import os
+
 
 class SdkCommandActivateExtensionTests(FantasticoUnitTestsCase):
     '''This class provides the test cases required to make sure activate-extension command works as expected.'''
