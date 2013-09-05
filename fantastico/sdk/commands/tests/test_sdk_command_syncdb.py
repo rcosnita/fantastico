@@ -41,16 +41,11 @@ class SdkCommandSyncDbTests(FantasticoUnitTestsCase):
 
         self._test_syncdb_ok_scenario(args, db_command, comp_root)
 
+    def test_syncdb_unexpected_code(self):
+        '''This test case covers scenario where one script execution is failing.'''
 
-    def _test_syncdb_ok_scenario(self, args, db_command, comp_root):
-        '''This method provides a template for syncdb success scenario.'''
-
-        folders_visited = []
-        files_visited = []
-        cmd_executed = []
-
-        main_folders = ["sql", "test_script.sql"]
-        sql_content = ["module_setup.sql", "create_data.sql"]
+    def _mock_list_dir(self, folders_visited, main_folders, sql_content):
+        '''This method return a mocked listdir function.'''
 
         def list_dirs(filename):
             folders_visited.append(filename)
@@ -61,11 +56,32 @@ class SdkCommandSyncDbTests(FantasticoUnitTestsCase):
             if filename == "samples/sql":
                 return sql_content
 
+        return list_dirs
+
+    def _mock_isdir(self, files_visited):
+        '''This method return a mocked isdir function.'''
+
         def isdir(folder):
             if folder in ["samples/sql", "samples"]:
                 return True
 
             files_visited.append(folder)
+
+        return isdir
+
+    def _test_syncdb_ok_scenario(self, args, db_command, comp_root, listdir=None, isdir=None):
+        '''This method provides a template for syncdb success scenario.'''
+
+        folders_visited = []
+        files_visited = []
+
+        main_folders = ["sql", "test_script.sql"]
+        sql_content = ["module_setup.sql", "create_data.sql"]
+
+        listdir = listdir or self._mock_list_dir(folders_visited, main_folders, sql_content)
+        isdir = isdir or self._mock_isdir(files_visited)
+
+        cmd_executed = []
 
         def call_cmd(cmd):
             cmd_executed.append(cmd)
@@ -85,7 +101,7 @@ class SdkCommandSyncDbTests(FantasticoUnitTestsCase):
 
         mock_os = Mock()
 
-        mock_os.listdir = list_dirs
+        mock_os.listdir = listdir
         mock_os.path = Mock(return_value=mock_os)
         mock_os.path.isdir = isdir
 
