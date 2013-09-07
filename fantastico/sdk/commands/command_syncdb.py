@@ -79,15 +79,21 @@ class SdkCommandSyncDb(SdkCommand):
                     "script": filename}
         cmd_args.update(db_config)
 
-        cmd = ["%(cmd_name)s --user %(username)s --password %(password)s -h %(host)s --database %(database)s",
-               " --port %(port)s < %(script)s"]
-        cmd = "".join(cmd) % cmd_args
+        cmd = ["%(cmd_name)s --user=%(username)s --password=%(password)s -h %(host)s --database=%(database)s",
+               " --port=%(port)s"]
+
+        cmd_str = "".join(cmd) % cmd_args
+        cmd = cmd_str.split(" ")
+        cmd.append("-e")
+        cmd.append("source %s" % filename)
+
+        cmd_str += " -e source %s" % filename
 
         try:
             retcode = call_cmd(cmd)
 
             if retcode != 0:
-                raise FantasticoSdkCommandError("Command %s execution failed. Error code: %s" % (cmd, retcode))
+                raise FantasticoSdkCommandError("Command %s execution failed. Error code: %s" % (cmd_str, retcode))
         except Exception as ex:
             raise FantasticoSdkCommandError(ex)
 
