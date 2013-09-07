@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{September 07, 2013}
-\release{0.4.0-b109}
+\release{0.4.0-b110}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4d34628\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x502d8d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1848,7 +1848,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1a3d408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1cb7408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2265,7 +2265,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x1f0d2f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x21872f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -2810,7 +2810,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x329f1e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x35181e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -2888,7 +2888,7 @@ ln \PYGZhy{}s ../../pip\PYGZhy{}deps/lib/python\PYG{o}{[}version\PYG{o}{]}/site\
 \paragraph{Component files activation (SDK)}
 \label{features/components/dynamic_menu/dynamic_menu:component-files-activation-sdk}
 \begin{Verbatim}[commandchars=\\\{\}]
-fantastico activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name dynamic\PYGZus{}menu
+fsdk activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name dynamic\PYGZus{}menu \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}comp root\PYGZgt{}
 \end{Verbatim}
 
 
@@ -3005,6 +3005,124 @@ Whenever the requested menu does not exist.
 \phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException}\pysigline{\strong{class }\code{fantastico.contrib.dynamic\_menu.menu\_exceptions.}\bfcode{FantasticoMenuNotFoundException}}
 This class defines a concrete fantastico menu not found exception raised whenever someone tries to access an inexistent
 menu attributes.
+
+\end{fulllineitems}
+
+
+
+\subsection{Tracking codes}
+\label{features/components/tracking_codes/tracking_codes:tracking-codes}\label{features/components/tracking_codes/tracking_codes::doc}
+Every web application usually requires support for tracking visitors behavior. Most of the solutions can be easily integrated
+into a website by adding a small javascript snippet into every page you want to track. Below you can find some popular tracking
+solutions (free or commercial).
+
+
+\subsubsection{Analytic solutions}
+\label{features/components/tracking_codes/tracking_codes:analytic-solutions}
+At the moment of writting this article, there are plenty of options available for web developers to track their
+website performance:
+\begin{enumerate}
+\item {} 
+\href{https://www.google.com/analytics/}{Google analytics} (probably the most popular solution).
+
+\item {} 
+\href{https://www.reinvigorate.net/}{Reinvigorate}.
+
+\item {} 
+\href{https://www.kissmetrics.com/}{KISSmetrics}.
+
+\item {} 
+\href{http://foxmetrics.com/}{FoxMetrics}.
+
+\item {} 
+\href{http://haveamint.com/}{Mint}.
+
+\item {} 
+\href{http://www.openwebanalytics.com/}{Open Web Analytics}.
+
+\item {} 
+\href{http://clicky.com/}{Clicky}.
+
+\item {} 
+\href{https://mixpanel.com/}{Mixpanel}.
+
+\item {} 
+\href{https://chartbeat.com/}{Chartbeat}.
+
+\item {} 
+\href{http://www.adobe.com/solutions/digital-analytics.html}{Adobe Web Analytics}.
+
+\item {} 
+\href{https://chartbeat.com/}{Chartbeat}.
+
+\item {} 
+\href{http://www.inspectlet.com/}{Inspectlet}.
+
+\end{enumerate}
+
+Of course there are many other solutions available out there. For more information about the above mentioned solution I recommend
+you read the excellent \href{http://www.onextrapixel.com/2013/07/16/ten-best-alternatives-to-google-analytics/}{article}
+posted by Aidan Huang.
+
+
+\subsubsection{Integration}
+\label{features/components/tracking_codes/tracking_codes:integration}
+Follow the steps from this section in order to enable tracking in \textbf{Fantastico} projects:
+\begin{enumerate}
+\item {} 
+Activate tracking extension:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name tracking\PYGZus{}codes \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}comp\PYGZus{}root\PYGZgt{}
+\end{Verbatim}
+
+\item {} 
+Add your tracking codes into database (easiest way is through {\hyperref[features/sdk/command_syncdb::doc]{\emph{Syncdb command}}})
+
+\item {} 
+Create a sql script similar to the one below and place it under \textbf{\textless{}comp\_root\textgreater{}/sql/create\_data.sql}:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{tracking\PYGZus{}codes}\PYG{p}{(}\PYG{n}{provider}\PYG{p}{,} \PYG{n}{snippet}\PYG{p}{)}
+\PYG{k}{VALUES} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Google Analytics\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}
+\PYG{l+s+s1}{   \PYGZlt{}script type=\PYGZdq{}text/javascript\PYGZdq{}\PYGZgt{}}
+\PYG{l+s+s1}{        var \PYGZus{}gaq = \PYGZus{}gaq \textbar{}\textbar{} [];}
+\PYG{l+s+s1}{        \PYGZus{}gaq.push([\PYGZdq{}\PYGZus{}setAccount\PYGZdq{}, \PYGZdq{}UA\PYGZhy{}XXXXX\PYGZhy{}X\PYGZdq{}]);}
+\PYG{l+s+s1}{        \PYGZus{}gaq.push([\PYGZdq{}\PYGZus{}trackPageview\PYGZdq{}]);}
+
+\PYG{l+s+s1}{        (function() \PYGZob{}}
+\PYG{l+s+s1}{          var ga = document.createElement(\PYGZdq{}script\PYGZdq{}); ga.type = \PYGZdq{}text/javascript\PYGZdq{}; ga.async = true;}
+\PYG{l+s+s1}{          ga.src = (\PYGZdq{}https:\PYGZdq{} == document.location.protocol ? \PYGZdq{}https://ssl\PYGZdq{} : \PYGZdq{}http://www\PYGZdq{}) + \PYGZdq{}.google\PYGZhy{}analytics.com/ga.js\PYGZdq{};}
+\PYG{l+s+s1}{          var s = document.getElementsByTagName(\PYGZdq{}script\PYGZdq{})[0]; s.parentNode.insertBefore(ga, s);}
+\PYG{l+s+s1}{        \PYGZcb{})();}
+\PYG{l+s+s1}{   \PYGZlt{}/script\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\item {} 
+Update your project database
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk syncdb \PYGZhy{}\PYGZhy{}db\PYGZhy{}command /usr/bin/mysql \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}comp\PYGZus{}root\PYGZgt{}
+\end{Verbatim}
+
+\item {} 
+Use tracking codes in your pages:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZob{}\PYGZpc{} component url=\PYGZdq{}/tracking\PYGZhy{}codes/codes/\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
+\end{Verbatim}
+
+\end{enumerate}
+
+Tracking component is rendering all available codes from the database.
+
+
+\subsubsection{Technical summary}
+\label{features/components/tracking_codes/tracking_codes:technical-summary}\index{TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/tracking_codes/tracking_codes:fantastico.contrib.tracking_codes.tracking_controller.TrackingController}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.tracking\_codes.tracking\_controller.}\bfcode{TrackingController}}{\emph{settings\_facade}}{}
+Work in progress.
 
 \end{fulllineitems}
 

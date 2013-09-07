@@ -10,3 +10,4 @@ as well as sample of how to use them:
    :maxdepth: 2
 
    components/dynamic_menu/dynamic_menu
+   components/tracking_codes/tracking_codes

@@ -147,3 +147,4 @@
 \indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{37}
 \indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{37}
 \indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{37}
+\indexentry{TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller)|hyperpage}{38}

@@ -233,6 +233,8 @@
   \indexspace
   \bigletter T
   \item templates\_config (fantastico.settings.BasicSettings attribute), \hyperpage{5}
+  \item TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller), 
+		\hyperpage{38}
   \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{30}
 
   \indexspace

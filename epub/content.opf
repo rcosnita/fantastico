@@ -202,6 +202,9 @@
     <item id="_modules_fantastico_contrib_dynamic_menu_menu_exceptions.html"
           href="_modules/fantastico/contrib/dynamic_menu/menu_exceptions.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_contrib_tracking_codes_tracking_controller.html"
+          href="_modules/fantastico/contrib/tracking_codes/tracking_controller.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_tests_base_case.html"
           href="_modules/fantastico/tests/base_case.html"
           media-type="application/xhtml+xml" />
@@ -271,6 +274,9 @@
     <item id="features_components_dynamic_menu_dynamic_menu.html"
           href="features/components/dynamic_menu/dynamic_menu.html"
           media-type="application/xhtml+xml" />
+    <item id="features_components_tracking_codes_tracking_codes.html"
+          href="features/components/tracking_codes/tracking_codes.html"
+          media-type="application/xhtml+xml" />
     <item id="features_sdk_command_fantastico.html"
           href="features/sdk/command_fantastico.html"
           media-type="application/xhtml+xml" />
@@ -306,6 +312,7 @@
     <itemref idref="features_component_reusage.html" />
     <itemref idref="features_components_builtin.html" />
     <itemref idref="features_components_dynamic_menu_dynamic_menu.html" />
+    <itemref idref="features_components_tracking_codes_tracking_codes.html" />
     <itemref idref="how_to_how_to.html" />
     <itemref idref="how_to_mvc_how_to.html" />
     <itemref idref="how_to_deployment_how_to.html" />

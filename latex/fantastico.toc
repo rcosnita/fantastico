@@ -63,6 +63,10 @@
 \contentsline {paragraph}{Component sample + db data}{36}{paragraph*.159}
 \contentsline {subsubsection}{Current limitations}{36}{subsubsection*.160}
 \contentsline {subsubsection}{Technical summary}{36}{subsubsection*.161}
+\contentsline {subsection}{\numberline {3.8.2}Tracking codes}{37}{subsection.3.8.2}
+\contentsline {subsubsection}{Analytic solutions}{37}{subsubsection*.166}
+\contentsline {subsubsection}{Integration}{38}{subsubsection*.167}
+\contentsline {subsubsection}{Technical summary}{38}{subsubsection*.168}
 \contentsline {chapter}{\numberline {4}How to articles}{39}{chapter.4}
 \contentsline {section}{\numberline {4.1}MVC How to}{39}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Code the model}{39}{subsection.4.1.1}
@@ -71,14 +75,14 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{40}{subsection.4.1.4}
 \contentsline {section}{\numberline {4.2}Deployment how to}{40}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{41}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{42}{subsubsection*.166}
+\contentsline {subsubsection}{Setup}{42}{subsubsection*.170}
 \contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{42}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{43}{subsubsection*.167}
-\contentsline {subsubsection}{Optimization}{43}{subsubsection*.168}
-\contentsline {subsubsection}{Setup with S3}{44}{subsubsection*.169}
+\contentsline {subsubsection}{Setup}{43}{subsubsection*.171}
+\contentsline {subsubsection}{Optimization}{43}{subsubsection*.172}
+\contentsline {subsubsection}{Setup with S3}{44}{subsubsection*.173}
 \contentsline {section}{\numberline {4.3}Static assets}{44}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{44}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{45}{subsubsection*.170}
+\contentsline {subsubsection}{Favicon}{45}{subsubsection*.174}
 \contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{45}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Creating a new project}{45}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Create first component}{45}{subsection.4.4.1}
@@ -87,4 +91,4 @@
 \contentsline {chapter}{\numberline {5}Changes}{47}{chapter.5}
 \contentsline {chapter}{\numberline {6}Build status}{49}{chapter.6}
 \contentsline {chapter}{\numberline {7}License}{51}{chapter.7}
-\contentsline {chapter}{Index}{53}{section*.171}
+\contentsline {chapter}{Index}{53}{section*.175}

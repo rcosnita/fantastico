@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tracking codes &mdash; fantastico 0.4.0-b110 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4.0-b110',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.4.0-b110 documentation" href="../../../index.html" />
+    <link rel="up" title="Built in components" href="../../components_builtin.html" />
+    <link rel="next" title="How to articles" href="../../../how_to/how_to.html" />
+    <link rel="prev" title="Dynamic menu" href="../dynamic_menu/dynamic_menu.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../how_to/how_to.html" title="How to articles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../dynamic_menu/dynamic_menu.html" title="Dynamic menu"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">fantastico 0.4.0-b110 documentation</a> &raquo;</li>
+          <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../../components_builtin.html" accesskey="U">Built in components</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tracking-codes">
+<h1>Tracking codes<a class="headerlink" href="#tracking-codes" title="Permalink to this headline">¶</a></h1>
+<p>Every web application usually requires support for tracking visitors behavior. Most of the solutions can be easily integrated
+into a website by adding a small javascript snippet into every page you want to track. Below you can find some popular tracking
+solutions (free or commercial).</p>
+<div class="section" id="analytic-solutions">
+<h2>Analytic solutions<a class="headerlink" href="#analytic-solutions" title="Permalink to this headline">¶</a></h2>
+<p>At the moment of writting this article, there are plenty of options available for web developers to track their
+website performance:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><a class="reference external" href="https://www.google.com/analytics/">Google analytics</a> (probably the most popular solution).</li>
+<li><a class="reference external" href="https://www.reinvigorate.net/">Reinvigorate</a>.</li>
+<li><a class="reference external" href="https://www.kissmetrics.com/">KISSmetrics</a>.</li>
+<li><a class="reference external" href="http://foxmetrics.com/">FoxMetrics</a>.</li>
+<li><a class="reference external" href="http://haveamint.com/">Mint</a>.</li>
+<li><a class="reference external" href="http://www.openwebanalytics.com/">Open Web Analytics</a>.</li>
+<li><a class="reference external" href="http://clicky.com/">Clicky</a>.</li>
+<li><a class="reference external" href="https://mixpanel.com/">Mixpanel</a>.</li>
+<li><a class="reference external" href="https://chartbeat.com/">Chartbeat</a>.</li>
+<li><a class="reference external" href="http://www.adobe.com/solutions/digital-analytics.html">Adobe Web Analytics</a>.</li>
+<li><a class="reference external" href="https://chartbeat.com/">Chartbeat</a>.</li>
+<li><a class="reference external" href="http://www.inspectlet.com/">Inspectlet</a>.</li>
+</ol>
+</div></blockquote>
+<p>Of course there are many other solutions available out there. For more information about the above mentioned solution I recommend
+you read the excellent <a class="reference external" href="http://www.onextrapixel.com/2013/07/16/ten-best-alternatives-to-google-analytics/">article</a>
+posted by Aidan Huang.</p>
+</div>
+<div class="section" id="integration">
+<h2>Integration<a class="headerlink" href="#integration" title="Permalink to this headline">¶</a></h2>
+<p>Follow the steps from this section in order to enable tracking in <strong>Fantastico</strong> projects:</p>
+<ol class="arabic">
+<li><p class="first">Activate tracking extension:</p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk activate-extension --name tracking_codes --comp-root &lt;comp_root&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add your tracking codes into database (easiest way is through <a class="reference internal" href="../../sdk/command_syncdb.html"><em>Syncdb command</em></a>)</p>
+</li>
+<li><p class="first">Create a sql script similar to the one below and place it under <strong>&lt;comp_root&gt;/sql/create_data.sql</strong>:</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tracking_codes</span><span class="p">(</span><span class="n">provider</span><span class="p">,</span> <span class="n">snippet</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Google Analytics&#39;</span><span class="p">,</span> <span class="s1">&#39;</span>
+<span class="s1">   &lt;script type=&quot;text/javascript&quot;&gt;</span>
+<span class="s1">        var _gaq = _gaq || [];</span>
+<span class="s1">        _gaq.push([&quot;_setAccount&quot;, &quot;UA-XXXXX-X&quot;]);</span>
+<span class="s1">        _gaq.push([&quot;_trackPageview&quot;]);</span>
+
+<span class="s1">        (function() {</span>
+<span class="s1">          var ga = document.createElement(&quot;script&quot;); ga.type = &quot;text/javascript&quot;; ga.async = true;</span>
+<span class="s1">          ga.src = (&quot;https:&quot; == document.location.protocol ? &quot;https://ssl&quot; : &quot;http://www&quot;) + &quot;.google-analytics.com/ga.js&quot;;</span>
+<span class="s1">          var s = document.getElementsByTagName(&quot;script&quot;)[0]; s.parentNode.insertBefore(ga, s);</span>
+<span class="s1">        })();</span>
+<span class="s1">   &lt;/script&gt;&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Update your project database</p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk syncdb --db-command /usr/bin/mysql --comp-root &lt;comp_root&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Use tracking codes in your pages:</p>
+<div class="highlight-html"><div class="highlight"><pre>{% component url=&quot;/tracking-codes/codes/&quot; %}{% endcomponent %}
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Tracking component is rendering all available codes from the database.</p>
+</div>
+<div class="section" id="technical-summary">
+<h2>Technical summary<a class="headerlink" href="#technical-summary" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fantastico.contrib.tracking_codes.tracking_controller.TrackingController">
+<em class="property">class </em><tt class="descclassname">fantastico.contrib.tracking_codes.tracking_controller.</tt><tt class="descname">TrackingController</tt><big>(</big><em>settings_facade</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/tracking_codes/tracking_controller.html#TrackingController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.contrib.tracking_codes.tracking_controller.TrackingController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Work in progress.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tracking codes</a><ul>
+<li><a class="reference internal" href="#analytic-solutions">Analytic solutions</a></li>
+<li><a class="reference internal" href="#integration">Integration</a></li>
+<li><a class="reference internal" href="#technical-summary">Technical summary</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../dynamic_menu/dynamic_menu.html"
+                        title="previous chapter">Dynamic menu</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../../how_to/how_to.html"
+                        title="next chapter">How to articles</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../../_sources/features/components/tracking_codes/tracking_codes.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../how_to/how_to.html" title="How to articles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../dynamic_menu/dynamic_menu.html" title="Dynamic menu"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">fantastico 0.4.0-b110 documentation</a> &raquo;</li>
+          <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../../components_builtin.html" >Built in components</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
