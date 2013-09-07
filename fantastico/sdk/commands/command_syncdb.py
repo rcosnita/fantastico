@@ -47,6 +47,9 @@ class SdkCommandSyncDb(SdkCommand):
     .. code-block:: bash
 
         fsdk syncdb --db-command /usr/bin/mysql --comp-root samples
+
+    It is important to understand that this command will synchronize all module_setup / create_data sql scripts for current active
+    settings. Read more about configuring fantastico on :doc:`/get_started/settings`.
     '''
 
     def __init__(self, args, cmd_factory, settings_facade_cls=SettingsFacade):
