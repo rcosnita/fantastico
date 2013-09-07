@@ -22,6 +22,7 @@ from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
 from subprocess import call
 import os
+from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError
 
 CMD_NAME = "syncdb"
 
@@ -74,16 +75,21 @@ class SdkCommandSyncDb(SdkCommand):
         db_command = self._arguments.db_command
         db_config = self._settings_facade.get("database_config")
 
-        cmd = "%(cmd_name)s --user %(username)s --password %(password)s -h %(host)s --database %(database)s --port %(port)s < %(script)s" % \
-                {"cmd_name": db_command,
-                 "username": db_config["username"],
-                 "password": db_config["password"],
-                 "host": db_config["host"],
-                 "port": db_config["port"],
-                 "database": db_config["database"],
-                 "script": filename}
+        cmd_args = {"cmd_name": db_command,
+                    "script": filename}
+        cmd_args.update(db_config)
 
-        call_cmd(cmd)
+        cmd = ["%(cmd_name)s --user %(username)s --password %(password)s -h %(host)s --database %(database)s",
+               " --port %(port)s < %(script)s"]
+        cmd = "".join(cmd) % cmd_args
+
+        try:
+            retcode = call_cmd(cmd)
+
+            if retcode != 0:
+                raise FantasticoSdkCommandError("Command %s execution failed. Error code: %s" % (cmd, retcode))
+        except Exception as ex:
+            raise FantasticoSdkCommandError(ex)
 
     def _execute_scripts(self, scripts, call_cmd):
         '''This method iterate over cached scripts and execute them using mysql command.'''
@@ -95,7 +101,10 @@ class SdkCommandSyncDb(SdkCommand):
             self._execute_script(create_data, call_cmd)
 
     def exec(self, os_lib=os, call_cmd=call):
-        '''This method executes module_setup.sql and create_data.sql scripts.'''
+        '''This method executes module_setup.sql and create_data.sql scripts.
+
+        :raises fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: When scripts execution fails unexpectedly.
+        '''
 
         comp_folder = self._arguments.comp_root
 
