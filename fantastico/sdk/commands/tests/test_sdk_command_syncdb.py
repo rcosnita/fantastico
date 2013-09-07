@@ -107,7 +107,9 @@ class SdkCommandSyncDbTests(FantasticoUnitTestsCase):
     def _mock_callcmd(self, cmd, cmd_executed):
         '''This method mocks shell command invocation. It appends all executed commands to a given array.'''
 
-        cmd_executed.append(cmd)
+        self.assertIsInstance(cmd, list)
+
+        cmd_executed.append(" ".join(cmd))
 
         return 0
 
@@ -152,8 +154,8 @@ class SdkCommandSyncDbTests(FantasticoUnitTestsCase):
         self.assertTrue("%s/sql/module_setup.sql" % comp_root in files_visited)
         self.assertTrue("%s/sql/create_data.sql" % comp_root in files_visited)
 
-        expected_cmds = ["%s --user test_user --password 12345 -h localhost --database testdb --port 3306 < samples/sql/module_setup.sql" % db_command,
-                         "%s --user test_user --password 12345 -h localhost --database testdb --port 3306 < samples/sql/create_data.sql" % db_command]
+        expected_cmds = ["%s --user=test_user --password=12345 -h localhost --database=testdb --port=3306 -e source samples/sql/module_setup.sql" % db_command,
+                         "%s --user=test_user --password=12345 -h localhost --database=testdb --port=3306 -e source samples/sql/create_data.sql" % db_command]
 
         for cmd in expected_cmds:
             self.assertTrue(cmd in cmd_executed)
