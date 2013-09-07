@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 04, 2013}
-\release{0.4.0-b107}
+\date{September 07, 2013}
+\release{0.4.0-b109}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5be9628\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4d34628\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1243,7 +1243,7 @@ for implementing its own business logic for loading routes.
 \PYG{k}{class} \PYG{n+nc}{DummyRouteLoader}\PYG{p}{(}\PYG{n}{RouteLoader}\PYG{p}{)}\PYG{p}{:}
     \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{settings\PYGZus{}facade}\PYG{p}{)}\PYG{p}{:}
         \PYG{n}{self\PYGZus{}settings\PYGZus{}facade} \PYG{o}{=} \PYG{n}{settings\PYGZus{}facade}
-        
+
     \PYG{k}{def} \PYG{n+nf}{load\PYGZus{}routes}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
         \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/index.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{method}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}text}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
                                 \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http\PYGZus{}verbs}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
@@ -1848,7 +1848,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2945408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1a3d408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2215,7 +2215,7 @@ This method returns support arguments of activate-extension command.
 \index{get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_activate_extension:fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{\emph{ctx=None}}{}
+\phantomsection\label{features/sdk/command_activate_extension:fantastico.sdk.commands.command_activate_extension.SdkCommandActivateExtension.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{}{}
 This method returns the friendly help message describing the method.
 
 \end{fulllineitems}
@@ -2237,7 +2237,7 @@ on every operating system. In order to familiarize with components model read {\
 \index{SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.commands.command\_syncdb.}\bfcode{SdkCommandSyncDb}}{\emph{argv}, \emph{cmd\_factory}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.commands.command\_syncdb.}\bfcode{SdkCommandSyncDb}}{\emph{args}, \emph{cmd\_factory}, \emph{settings\_facade\_cls=\textless{}class `fantastico.settings.SettingsFacade'\textgreater{}}}{}
 This class provides the algorithm for synchronizing \textbf{Fantastico} projects database scripts with the current configured
 database connection. Below you can find the order in which scripts are executed:
 \begin{enumerate}
@@ -2255,10 +2255,46 @@ All components providers are responsible for writing module\_setup in such a way
 consistent state.
 
 For possible examples of how to structure a component read {\hyperref[features/component_model::doc]{\emph{Component model}}}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk syncdb \PYGZhy{}\PYGZhy{}db\PYGZhy{}command /usr/bin/mysql \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root samples
+\end{Verbatim}
+
+It is important to understand that this command will synchronize all module\_setup / create\_data sql scripts for current active
+settings. Read more about configuring fantastico on {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
+\index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x1f0d2f8\textgreater{}}}{}
+This method executes module\_setup.sql and create\_data.sql scripts.
+\begin{quote}\begin{description}
+\item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
+When scripts execution fails unexpectedly.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_arguments}\pysiglinewithargsret{\bfcode{get\_arguments}}{}{}
+This method returns support arguments for \textbf{syncdb}:
+\begin{enumerate}
+\item {} 
+-d --db-command path to mysql command.
+
+\item {} 
+-p --comp-root component root folder.
+
+\end{enumerate}
+
+\end{fulllineitems}
+
 \index{get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{\emph{ctx=None}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{}{}
 This method returns the friendly help message describing the method.
 
 \end{fulllineitems}
@@ -2296,7 +2332,7 @@ This method prints the current fantastico framework version.
 \index{get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_version:fantastico.sdk.commands.command_version.SdkCommandVersion.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{\emph{ctx=None}}{}
+\phantomsection\label{features/sdk/command_version:fantastico.sdk.commands.command_version.SdkCommandVersion.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{}{}
 This method returns the friendly help message describing the method.
 
 \end{fulllineitems}
@@ -2338,7 +2374,7 @@ This property retrieves support fantastico arguments.
 \index{get\_help() (fantastico.sdk.fantastico.SdkCore method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk:fantastico.sdk.fantastico.SdkCore.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{\emph{ctx=None}}{}
+\phantomsection\label{features/sdk:fantastico.sdk.fantastico.SdkCore.get_help}\pysiglinewithargsret{\bfcode{get\_help}}{}{}
 This method returns the friendly help message describing the method.
 
 \end{fulllineitems}
@@ -2774,7 +2810,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x41a71e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x329f1e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

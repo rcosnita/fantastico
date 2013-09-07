@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.sdk.commands.command_syncdb &mdash; fantastico 0.4.0-b107 documentation</title>
+    <title>fantastico.sdk.commands.command_syncdb &mdash; fantastico 0.4.0-b109 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.4.0-b107',
+        VERSION:     '0.4.0-b109',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.4.0-b107 documentation" href="../../../../index.html" />
+    <link rel="top" title="fantastico 0.4.0-b109 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.4.0-b109 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -62,8 +62,13 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.sdk.commands.command_syncdb</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">from</span> <span class="nn">fantastico.sdk.sdk_core</span> <span class="kn">import</span> <span class="n">SdkCommand</span>
 <span class="kn">from</span> <span class="nn">fantastico.sdk</span> <span class="kn">import</span> <span class="n">sdk_decorators</span>
+<span class="kn">from</span> <span class="nn">fantastico.sdk.sdk_core</span> <span class="kn">import</span> <span class="n">SdkCommand</span><span class="p">,</span> <span class="n">SdkCommandArgument</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">fantastico.sdk.sdk_exceptions</span> <span class="kn">import</span> <span class="n">FantasticoSdkCommandError</span>
 
 <span class="n">CMD_NAME</span> <span class="o">=</span> <span class="s">&quot;syncdb&quot;</span>
 
@@ -84,7 +89,102 @@
 <span class="sd">    consistent state.</span>
 
 <span class="sd">    For possible examples of how to structure a component read :doc:`/features/component_model`</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
+
+<span class="sd">    .. code-block:: bash</span>
+
+<span class="sd">        fsdk syncdb --db-command /usr/bin/mysql --comp-root samples</span>
+
+<span class="sd">    It is important to understand that this command will synchronize all module_setup / create_data sql scripts for current active</span>
+<span class="sd">    settings. Read more about configuring fantastico on :doc:`/get_started/settings`.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">cmd_factory</span><span class="p">,</span> <span class="n">settings_facade_cls</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SdkCommandSyncDb</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">cmd_factory</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span> <span class="o">=</span> <span class="n">settings_facade_cls</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SdkCommandSyncDb.get_arguments"><a class="viewcode-back" href="../../../../features/sdk/command_syncdb.html#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">get_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns support arguments for **syncdb**:</span>
+
+<span class="sd">        #. -d --db-command path to mysql command.</span>
+<span class="sd">        #. -p --comp-root component root folder.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">SdkCommandArgument</span><span class="p">(</span><span class="s">&quot;-d&quot;</span><span class="p">,</span> <span class="s">&quot;--db-command&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s">&quot;Holds the location of sql command line. E.g: /usr/bin/mysql&quot;</span><span class="p">),</span>
+                <span class="n">SdkCommandArgument</span><span class="p">(</span><span class="s">&quot;-p&quot;</span><span class="p">,</span> <span class="s">&quot;--comp-root&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="s">&quot;Holds the name of the folder where project components are placed.&quot;</span><span class="p">)]</span>
+</div>
+    <span class="k">def</span> <span class="nf">_is_file_supported</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method detects if the given filename is supported (module_setup.sql, create_data.sql).&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">_execute_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">call_cmd</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method execute a given file using the sql command line.&#39;&#39;&#39;</span>
+
+        <span class="n">db_command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">db_command</span>
+        <span class="n">db_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;database_config&quot;</span><span class="p">)</span>
+
+        <span class="n">cmd_args</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;cmd_name&quot;</span><span class="p">:</span> <span class="n">db_command</span><span class="p">,</span>
+                    <span class="s">&quot;script&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">}</span>
+        <span class="n">cmd_args</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">db_config</span><span class="p">)</span>
+
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%(cmd_name)s</span><span class="s"> --user=</span><span class="si">%(username)s</span><span class="s"> --password=</span><span class="si">%(password)s</span><span class="s"> -h </span><span class="si">%(host)s</span><span class="s"> --database=</span><span class="si">%(database)s</span><span class="s">&quot;</span><span class="p">,</span>
+               <span class="s">&quot; --port=</span><span class="si">%(port)s</span><span class="s">&quot;</span><span class="p">]</span>
+
+        <span class="n">cmd_str</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">%</span> <span class="n">cmd_args</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;-e&quot;</span><span class="p">)</span>
+        <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;source </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+
+        <span class="n">cmd_str</span> <span class="o">+=</span> <span class="s">&quot; -e source </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">retcode</span> <span class="o">=</span> <span class="n">call_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">retcode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">FantasticoSdkCommandError</span><span class="p">(</span><span class="s">&quot;Command </span><span class="si">%s</span><span class="s"> execution failed. Error code: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cmd_str</span><span class="p">,</span> <span class="n">retcode</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoSdkCommandError</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_execute_scripts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scripts</span><span class="p">,</span> <span class="n">call_cmd</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method iterate over cached scripts and execute them using mysql command.&#39;&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">mod_setup</span> <span class="ow">in</span> <span class="n">scripts</span><span class="p">[</span><span class="s">&quot;module_setup.sql&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_execute_script</span><span class="p">(</span><span class="n">mod_setup</span><span class="p">,</span> <span class="n">call_cmd</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">create_data</span> <span class="ow">in</span> <span class="n">scripts</span><span class="p">[</span><span class="s">&quot;create_data.sql&quot;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_execute_script</span><span class="p">(</span><span class="n">create_data</span><span class="p">,</span> <span class="n">call_cmd</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SdkCommandSyncDb.exec"><a class="viewcode-back" href="../../../../features/sdk/command_syncdb.html#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec">[docs]</a>    <span class="k">def</span> <span class="nf">exec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">os_lib</span><span class="o">=</span><span class="n">os</span><span class="p">,</span> <span class="n">call_cmd</span><span class="o">=</span><span class="n">call</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method executes module_setup.sql and create_data.sql scripts.</span>
+
+<span class="sd">        :raises fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError: When scripts execution fails unexpectedly.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">comp_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">comp_root</span>
+
+        <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;module_setup.sql&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                 <span class="s">&quot;create_data.sql&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+
+        <span class="n">scan_folder</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">folder</span><span class="p">:</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">scan_folder_by_criteria</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span>
+                                             <span class="n">file_matcher</span><span class="o">=</span><span class="k">lambda</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_file_supported</span><span class="p">(),</span>
+                                             <span class="n">action</span><span class="o">=</span><span class="n">store_file</span><span class="p">,</span>
+                                             <span class="n">os_lib</span><span class="o">=</span><span class="n">os_lib</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">store_file</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+            <span class="sd">&#39;&#39;&#39;This method stores all module_setup.sql and create_data.sql into a dictionary for future execution.&#39;&#39;&#39;</span>
+
+            <span class="k">if</span> <span class="n">os_lib</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">location</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">scan_folder</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">filename</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;module_setup.sql&quot;</span><span class="p">,</span> <span class="s">&quot;create_data.sql&quot;</span><span class="p">]:</span>
+                <span class="k">return</span>
+
+            <span class="n">files</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+
+        <span class="n">scan_folder</span><span class="p">(</span><span class="n">comp_folder</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_execute_scripts</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">call_cmd</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -115,7 +215,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.4.0-b109 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

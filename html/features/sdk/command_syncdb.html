@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Syncdb command &mdash; fantastico 0.4.0-b107 documentation</title>
+    <title>Syncdb command &mdash; fantastico 0.4.0-b109 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.4.0-b107',
+        VERSION:     '0.4.0-b109',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.4.0-b107 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.4.0-b109 documentation" href="../../index.html" />
     <link rel="up" title="SDK" href="../sdk.html" />
     <link rel="next" title="Version command" href="command_version.html" />
     <link rel="prev" title="Fantastico command" href="command_fantastico.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="command_fantastico.html" title="Fantastico command"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.4.0-b109 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../sdk.html" accesskey="U">SDK</a> &raquo;</li> 
       </ul>
@@ -58,7 +58,7 @@
 on every operating system. In order to familiarize with components model read <a class="reference internal" href="../component_model.html"><em>Component model</em></a>.</p>
 <dl class="class">
 <dt id="fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb">
-<em class="property">class </em><tt class="descclassname">fantastico.sdk.commands.command_syncdb.</tt><tt class="descname">SdkCommandSyncDb</tt><big>(</big><em>argv</em>, <em>cmd_factory</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_syncdb.html#SdkCommandSyncDb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.sdk.commands.command_syncdb.</tt><tt class="descname">SdkCommandSyncDb</tt><big>(</big><em>args</em>, <em>cmd_factory</em>, <em>settings_facade_cls=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_syncdb.html#SdkCommandSyncDb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the algorithm for synchronizing <strong>Fantastico</strong> projects database scripts with the current configured
 database connection. Below you can find the order in which scripts are executed:</p>
 <ol class="arabic simple">
@@ -70,9 +70,39 @@ important to understand that rollback procedures are not currently in place and 
 All components providers are responsible for writing module_setup in such a way that in case of error data is left in a
 consistent state.</p>
 <p>For possible examples of how to structure a component read <a class="reference internal" href="../component_model.html"><em>Component model</em></a></p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk syncdb --db-command /usr/bin/mysql --comp-root samples
+</pre></div>
+</div>
+<p>It is important to understand that this command will synchronize all module_setup / create_data sql scripts for current active
+settings. Read more about configuring fantastico on <a class="reference internal" href="../../get_started/settings.html"><em>Fantastico settings</em></a>.</p>
+<dl class="method">
+<dt id="fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec">
+<tt class="descname">exec</tt><big>(</big><em>os_lib=&lt;module 'os' from '/mnt/jenkins_ebs/continous_integration/fantastico_doc_workspace/pip-deps/lib/python3.2/os.py'&gt;</em>, <em>call_cmd=&lt;function call at 0x1f0d2f8&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_syncdb.html#SdkCommandSyncDb.exec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method executes module_setup.sql and create_data.sql scripts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="../sdk.html#fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError" title="fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError">fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError</a>:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">When scripts execution fails unexpectedly.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_arguments">
+<tt class="descname">get_arguments</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/fantastico/sdk/commands/command_syncdb.html#SdkCommandSyncDb.get_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns support arguments for <strong>syncdb</strong>:</p>
+<ol class="arabic simple">
+<li>-d &#8211;db-command path to mysql command.</li>
+<li>-p &#8211;comp-root component root folder.</li>
+</ol>
+</dd></dl>
+
 <dl class="method">
 <dt id="fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_help">
-<tt class="descname">get_help</tt><big>(</big><em>ctx=None</em><big>)</big><a class="headerlink" href="#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_help" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get_help</tt><big>(</big><big>)</big><a class="headerlink" href="#fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.get_help" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the friendly help message describing the method.</p>
 </dd></dl>
 
@@ -126,7 +156,7 @@ consistent state.</p>
         <li class="right" >
           <a href="command_fantastico.html" title="Fantastico command"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.4.0-b107 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.4.0-b109 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../sdk.html" >SDK</a> &raquo;</li> 
       </ul>
