@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.sdk.sdk_core
 '''
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod # pylint: disable=W0611
 from argparse import Namespace
 from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError, FantasticoSdkCommandNotFoundError
 import argparse

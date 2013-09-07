@@ -35,7 +35,7 @@ class SdkCommand(object):
         self._help = help
         self._settings_facade = settings_facade_cls()
 
-    def _get_help(self, *args):
+    def _get_help(self):
         '''This method returns the friendly help message describing the method.'''
 
         doc_link = "%sfeatures/sdk/command_%s.html" % (self._settings_facade.get("doc_base"), self._name.replace("-", "_"))

@@ -67,7 +67,7 @@ class SdkCommandSyncDb(SdkCommand):
         return [SdkCommandArgument("-d", "--db-command", str, "Holds the location of sql command line. E.g: /usr/bin/mysql"),
                 SdkCommandArgument("-p", "--comp-root", str, "Holds the name of the folder where project components are placed.")]
 
-    def _is_file_supported(self, filename):
+    def _is_file_supported(self):
         '''This method detects if the given filename is supported (module_setup.sql, create_data.sql).'''
 
         return True
@@ -121,7 +121,7 @@ class SdkCommandSyncDb(SdkCommand):
                  "create_data.sql": []}
 
         scan_folder = lambda folder: instantiator.scan_folder_by_criteria(folder,
-                                             file_matcher=lambda abspath, filename: self._is_file_supported(filename),
+                                             file_matcher=lambda abspath, filename: self._is_file_supported(),
                                              action=store_file,
                                              os_lib=os_lib)
 
