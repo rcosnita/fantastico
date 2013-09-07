@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from fantastico.sdk.commands.command_syncdb import SdkCommandSyncDb
+from fantastico.sdk.sdk_exceptions import FantasticoSdkCommandError
 
 class SdkCommandSyncDbTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for checking that syncdb command works as expected.'''
@@ -42,7 +43,41 @@ class SdkCommandSyncDbTests(FantasticoUnitTestsCase):
         self._test_syncdb_ok_scenario(args, db_command, comp_root)
 
     def test_syncdb_unexpected_code(self):
-        '''This test case covers scenario where one script execution is failing.'''
+        '''This test case covers scenario where one script execution is failing (exit code <> 0).'''
+
+        db_command = "/usr/bin/mysql"
+        comp_root = "samples"
+        args = ["syncdb", "-d", db_command, "-p", comp_root]
+
+        call_cmd = Mock(return_value= -5)
+
+        with self.assertRaises(FantasticoSdkCommandError):
+            self._test_syncdb_ok_scenario(args, db_command, comp_root, call_cmd=call_cmd)
+
+    def test_syncdb_unexpected_oserror(self):
+        '''This test case cover scenario where an os error is raised when invoking a command.'''
+
+        self._test_syncdb_errors_scenario(OSError, "Unexpected exception")
+
+    def test_syncdb_unexpected_exception(self):
+        '''This test case cover scenario where an exception is raised when invoking a command.'''
+
+        self._test_syncdb_errors_scenario(Exception, "Unexpected exception")
+
+    def _test_syncdb_errors_scenario(self, err_cls, err_msg):
+        '''This method defines a reusable test scenario for syncdb command which covers unexpected errors.'''
+
+        db_command = "/usr/bin/mysql"
+        comp_root = "samples"
+        args = ["syncdb", "-d", db_command, "-p", comp_root]
+
+        call_cmd = Mock(side_effect=err_cls(err_msg))
+
+        with self.assertRaises(FantasticoSdkCommandError) as ctx:
+            self._test_syncdb_ok_scenario(args, db_command, comp_root, call_cmd=call_cmd)
+
+        self.assertEqual(str(ctx.exception), err_msg)
+
 
     def _mock_list_dir(self, folders_visited, main_folders, sql_content):
         '''This method return a mocked listdir function.'''
@@ -69,22 +104,26 @@ class SdkCommandSyncDbTests(FantasticoUnitTestsCase):
 
         return isdir
 
-    def _test_syncdb_ok_scenario(self, args, db_command, comp_root, listdir=None, isdir=None):
+    def _mock_callcmd(self, cmd, cmd_executed):
+        '''This method mocks shell command invocation. It appends all executed commands to a given array.'''
+
+        cmd_executed.append(cmd)
+
+        return 0
+
+    def _test_syncdb_ok_scenario(self, args, db_command, comp_root, listdir=None, isdir=None, call_cmd=None):
         '''This method provides a template for syncdb success scenario.'''
 
         folders_visited = []
         files_visited = []
+        cmd_executed = []
 
         main_folders = ["sql", "test_script.sql"]
         sql_content = ["module_setup.sql", "create_data.sql"]
 
         listdir = listdir or self._mock_list_dir(folders_visited, main_folders, sql_content)
         isdir = isdir or self._mock_isdir(files_visited)
-
-        cmd_executed = []
-
-        def call_cmd(cmd):
-            cmd_executed.append(cmd)
+        call_cmd = call_cmd or (lambda cmd: self._mock_callcmd(cmd, cmd_executed))
 
         def get(name):
             self.assertEqual(name, "database_config")
