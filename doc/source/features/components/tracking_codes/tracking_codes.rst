@@ -71,7 +71,8 @@ Follow the steps from this section in order to enable tracking in **Fantastico**
 
       {% component url="/tracking-codes/ui/codes/" %}{% endcomponent %}
 
-Tracking component is rendering all available codes from the database.
+Tracking component is rendering all available codes from the database. In order to check all available tracking codes configured
+in a **Fantastico** project visit http://localhost:12000/tracking-codes/ui/codes/. Once the page is loaded see page source.
 
 Current limitations
 -------------------
