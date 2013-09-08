@@ -49,7 +49,6 @@ class TrackingController(BaseController):
                   "provider": code.provider,
                   "script": code.script} for code in codes]
 
-        response = Response(json.dumps(codes))
-        response.headers["Content-Type"] = "application/json"
+        response = Response(json.dumps(codes), content_type="application/json")
 
         return response
