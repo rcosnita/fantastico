@@ -48,6 +48,27 @@ class TrackingControllerIntegration(DevServerIntegration):
 
         self._test_tracking_codes_ok_scenario(endpoint)
 
+    def test_tracking_codes_ui_ok(self):
+        '''This test case ensures tracking codes ui component renders correctly.'''
+
+        endpoint = "/tracking-codes/ui/codes"
+
+        def retrieve_ui(server):
+            request = Request(self._get_server_base_url(server, endpoint))
+
+            self._response = urllib.request.urlopen(request)
+
+        def assert_logic(server):
+            self.assertIsNotNone(self._response)
+            self.assertEqual(200, self._response.getcode())
+            self.assertEqual("text/html; charset=UTF-8", self._response.info()["Content-Type"])
+
+            body = self._response.read().decode()
+
+            self.assertEqual("<script>test snippet</script>\n", body);
+
+        self._run_test_against_dev_server(retrieve_ui, assert_logic)
+
     def _test_tracking_codes_ok_scenario(self, endpoint):
         '''This method provides a template scenario for tracking codes retrieval.'''
 
