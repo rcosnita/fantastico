@@ -90,7 +90,7 @@ class SdkCommandSyncDb(SdkCommand):
         cmd.append("-e")
         cmd.append("source %s" % filename)
 
-        cmd_str += " -e source %s" % filename
+        cmd_str += " -e \"source %s\"" % filename
 
         try:
             retcode = call_cmd(cmd)
