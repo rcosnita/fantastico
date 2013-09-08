@@ -52,6 +52,8 @@ setup(name="fantastico",
                 "fantastico.contrib",
                 "fantastico.contrib.dynamic_menu", "fantastico.contrib.dynamic_menu.models",
                 "fantastico.contrib.dynamic_menu.tests",
+                "fantastico.contrib.tracking_codes", "fantastico.contrib.tracking_codes.tests",
+                "fantastico.contrib.tracking_codes.models",
                 "fantastico.deployment", "fantastico.deployment.tests", "fantastico.locale",
                 "fantastico.middleware", "fantastico.middleware.tests",
                 "fantastico.mvc", "fantastico.mvc.models", "fantastico.mvc.models.tests",
@@ -65,7 +67,8 @@ setup(name="fantastico",
                 "fantastico.tests", "fantastico.utils"],
       package_data={"fantastico.rendering": ["views/*.html"],
                     "fantastico.samples.mvc": ["sql/*.sql", "static/*", "views/*.html"],
-                    "fantastico.contrib.dynamic_menu": ["sql/*.sql", "static/*", "views/*.html"]},
+                    "fantastico.contrib.dynamic_menu": ["sql/*.sql", "static/*", "views/*.html"],
+                    "fantastico.contrib.tracking_codes": ["sql/*.sql", "views/*.html"]},
       data_files=[("scripts/fantastico", ["run_dev_server.sh", "run_prod_server.sh"])]
                   + list_folder_recursive("scripts/fantastico/virtual_env", "virtual_env")
                   + list_folder_recursive("doc/fantastico", "doc/build")
