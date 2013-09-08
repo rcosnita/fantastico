@@ -45,7 +45,7 @@ Follow the steps from this section in order to enable tracking in **Fantastico**
 
    .. code-block:: sql
 
-      INSERT INTO tracking_codes(provider, snippet)
+      INSERT INTO tracking_codes(provider, script)
       VALUES ('Google Analytics', '
          <script type="text/javascript">
               var _gaq = _gaq || [];

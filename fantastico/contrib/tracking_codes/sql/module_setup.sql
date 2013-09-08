@@ -15,30 +15,15 @@
 ##############################################################################################################################
 
 ##############################################################################################################################
-# This script creates menus and menu_items tables required to support dynamic menus component. For more information, read
+# This script creates tracking_codes tables required to support tracking-codes component. For more information, read
 # official Fantastico documentation.
 ##############################################################################################################################
 
-CREATE TABLE menus(
-	id INTEGER AUTO_INCREMENT,
-	name VARCHAR(150),
-	PRIMARY KEY(id)
+DROP TABLE IF EXISTS tracking_codes;
+CREATE TABLE tracking_codes(
+	id INT NOT NULL AUTO_INCREMENT,
+	provider VARCHAR(50) NOT NULL,
+	script TEXT NOT NULL,
+	PRIMARY KEY (id),
+	CONSTRAINT unq_tracking_codes_provider UNIQUE(provider)
 );
-
-CREATE TABLE menu_items(
-	id INTEGER AUTO_INCREMENT,
-	target VARCHAR(50) NOT NULL DEFAULT '_blank',
-	url VARCHAR(255) NOT NULL,
-	title VARCHAR(255) NOT NULL,
-	label VARCHAR(255) NOT NULL,
-	menu_id INTEGER NOT NULL,
-	PRIMARY KEY(id),
-	CONSTRAINT fk_menuitems_menu FOREIGN KEY(menu_id) REFERENCES menus(id)
-);
-
-INSERT INTO menus(id, name) VALUES(1, 'My First Menu');
-
-INSERT INTO menu_items(target, url, title, label, menu_id)
-VALUES ('_blank', '/homepage', 'Simple and friendly description', 'Home', 1),
-       ('_blank', '/page2', 'Simple and friendly description', 'Page 2', 1),
-       ('_blank', '/page3', 'Simple and friendly description', 'Page 3', 1);
