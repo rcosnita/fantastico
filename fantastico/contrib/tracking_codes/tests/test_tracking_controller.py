@@ -55,6 +55,38 @@ class TrackingControllerTest(FantasticoUnitTestsCase):
 
         self._test_list_codes_scenario_ok(fake_codes, expected_codes)
 
+    def test_list_codes_ui_ok(self):
+        '''This test case ensures tracking codes ui controller work as expected.'''
+
+        from fantastico.contrib.tracking_codes.tracking_controller import TrackingController
+
+        expected_tpl = "<script>test code</script>"
+
+        settings_facade = Mock()
+        request = Mock()
+
+        controller = TrackingController(settings_facade)
+
+        def load_template(tpl_name, model_data=None, get_template=None):
+            '''This method mocks load_template method from controller.'''
+
+            self.assertIsNone(model_data)
+            self.assertIsNone(get_template)
+            self.assertEqual("/list_tracking_codes.html", tpl_name)
+
+            return expected_tpl
+
+        controller.load_template = load_template
+
+        response = controller.list_codes_ui(request)
+
+        self.assertIsNotNone(controller)
+        self.assertIsInstance(response, Response)
+
+        self.assertEqual("text/html; charset=UTF-8", response.headers["Content-Type"])
+        self.assertIsNotNone(response.body)
+        self.assertEqual(expected_tpl, response.body.decode())
+
     def _test_list_codes_scenario_ok(self, fake_codes, expected_codes):
         '''This method provides a template for executing list codes success scenario.'''
 
