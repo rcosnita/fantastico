@@ -40,9 +40,9 @@ class TrackingController(BaseController):
         :returns: JSON list of available tracking codes. Can be empty if no tracking codes are defined.
         '''
 
-        TrackingCode = request.models.TrackingCode
+        codes_facade = request.models.TrackingCode
 
-        codes = TrackingCode.get_records_paged(start_record=0, end_record=TrackingController.MAX_RECORDS)
+        codes = codes_facade.get_records_paged(start_record=0, end_record=TrackingController.MAX_RECORDS)
         codes = [{"id": code.id,
                   "provider": code.provider,
                   "script": code.script} for code in codes]

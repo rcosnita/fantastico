@@ -14,7 +14,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.contrib.tracking_codes.models.test_codes
+.. py:module:: fantastico.contrib.tracking_codes.models.tests.test_codes
 '''
 from fantastico.contrib.tracking_codes.models.codes import TrackingCode
 from fantastico.tests.base_case import FantasticoUnitTestsCase
@@ -23,6 +23,8 @@ class TrackingCodesTest(FantasticoUnitTestsCase):
     '''This class provides the test cases for ensuring that TrackingCode model works as expected.'''
 
     def test_built_ok(self):
+        '''This test case ensures tracking code model is built correctly.'''
+
         provider = "Google Analytics"
         script = "Simple script"
 
