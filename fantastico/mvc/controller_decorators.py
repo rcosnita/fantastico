@@ -52,6 +52,8 @@ class Controller(object):
                                                        ModelFilter(Blog.model_cls.id, 1, ModelFilter.GT),
                                                        ModelFilter(Blog.model_cls.id, 5, ModelFilter.LT))))
 
+                # convert blogs to desired format. E.g: json.
+
                 return Response(blogs)
 
     The above code assume the following:
