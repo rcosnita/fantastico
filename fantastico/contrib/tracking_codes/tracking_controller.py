@@ -17,8 +17,37 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.tracking_codes.tracking_controller
 '''
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import ControllerProvider
+from fantastico.mvc.controller_decorators import ControllerProvider, Controller
+from webob.response import Response
+import json
 
 @ControllerProvider()
 class TrackingController(BaseController):
-    '''Work in progress.'''
+    '''.. image:: /images/components/tracking_codes/erd.png
+
+    This class provides the tracking operations supported by **TrackingCodes** component.
+    '''
+
+    MAX_RECORDS = 50
+
+    @Controller(url="^/tracking-codes/codes(/)?$",
+                models={"TrackingCode": "fantastico.contrib.tracking_codes.models.codes.TrackingCode"})
+    def list_codes(self, request):
+        '''This method provides tracking codes listing logic. It list all available tracking codes from database.
+
+        :param request: The current http request being processed. Read :doc:`/features/request_response` for more information.
+        :type request: :py:class:`webob.request.Request`
+        :returns: JSON list of available tracking codes. Can be empty if no tracking codes are defined.
+        '''
+
+        TrackingCode = request.models.TrackingCode
+
+        codes = TrackingCode.get_records_paged(start_record=0, end_record=TrackingController.MAX_RECORDS)
+        codes = [{"id": code.id,
+                  "provider": code.provider,
+                  "script": code.script} for code in codes]
+
+        response = Response(json.dumps(codes))
+        response.headers["Content-Type"] = "application/json"
+
+        return response

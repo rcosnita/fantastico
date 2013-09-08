@@ -73,8 +73,18 @@ Follow the steps from this section in order to enable tracking in **Fantastico**
 
 Tracking component is rendering all available codes from the database.
 
+Current limitations
+-------------------
+
+In the first version of this component (part of **Fantastico 0.4**) there are some known limitations:
+
+   * No API provided for Create / Update / Delete operations.
+
 Technical summary
 -----------------
 
 .. autoclass:: fantastico.contrib.tracking_codes.tracking_controller.TrackingController
+   :members:
+
+.. autoclass:: fantastico.contrib.tracking_codes.models.codes.TrackingCode
    :members:
