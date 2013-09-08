@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 07, 2013}
-\release{0.4.0-b110}
+\date{September 08, 2013}
+\release{0.4.0-b111}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x502d8d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5900628\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1401,6 +1401,8 @@ must be executed when an http request to an url is made:
                                                \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{GT}\PYG{p}{)}\PYG{p}{,}
                                                \PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{id}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{LT}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}
 
+        \PYG{c}{\PYGZsh{} convert blogs to desired format. E.g: json.}
+
         \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{blogs}\PYG{p}{)}
 \end{Verbatim}
 
@@ -1848,7 +1850,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1cb7408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x25ab408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2265,7 +2267,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x21872f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2a7b2f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -2810,7 +2812,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x35181e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3e0c1e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -3083,7 +3085,7 @@ Add your tracking codes into database (easiest way is through {\hyperref[feature
 Create a sql script similar to the one below and place it under \textbf{\textless{}comp\_root\textgreater{}/sql/create\_data.sql}:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{tracking\PYGZus{}codes}\PYG{p}{(}\PYG{n}{provider}\PYG{p}{,} \PYG{n}{snippet}\PYG{p}{)}
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{tracking\PYGZus{}codes}\PYG{p}{(}\PYG{n}{provider}\PYG{p}{,} \PYG{n}{script}\PYG{p}{)}
 \PYG{k}{VALUES} \PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Google Analytics\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}
 \PYG{l+s+s1}{   \PYGZlt{}script type=\PYGZdq{}text/javascript\PYGZdq{}\PYGZgt{}}
 \PYG{l+s+s1}{        var \PYGZus{}gaq = \PYGZus{}gaq \textbar{}\textbar{} [];}
@@ -3109,20 +3111,66 @@ fsdk syncdb \PYGZhy{}\PYGZhy{}db\PYGZhy{}command /usr/bin/mysql \PYGZhy{}\PYGZhy
 Use tracking codes in your pages:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYGZob{}\PYGZpc{} component url=\PYGZdq{}/tracking\PYGZhy{}codes/codes/\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
+\PYGZob{}\PYGZpc{} component url=\PYGZdq{}/tracking\PYGZhy{}codes/ui/codes/\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
 \end{Verbatim}
 
 \end{enumerate}
 
-Tracking component is rendering all available codes from the database.
+Tracking component is rendering all available codes from the database. In order to check all available tracking codes configured
+in a \textbf{Fantastico} project visit \href{http://localhost:12000/tracking-codes/ui/codes/}{http://localhost:12000/tracking-codes/ui/codes/}. Once the page is loaded see page source.
+
+
+\subsubsection{Current limitations}
+\label{features/components/tracking_codes/tracking_codes:current-limitations}
+In the first version of this component (part of \textbf{Fantastico 0.4}) there are some known limitations:
+\begin{itemize}
+\item {} 
+No API provided for Create / Update / Delete operations.
+
+\end{itemize}
 
 
 \subsubsection{Technical summary}
 \label{features/components/tracking_codes/tracking_codes:technical-summary}\index{TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/components/tracking_codes/tracking_codes:fantastico.contrib.tracking_codes.tracking_controller.TrackingController}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.tracking\_codes.tracking\_controller.}\bfcode{TrackingController}}{\emph{settings\_facade}}{}
-Work in progress.
+\phantomsection\label{features/components/tracking_codes/tracking_codes:fantastico.contrib.tracking_codes.tracking_controller.TrackingController}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.tracking\_codes.tracking\_controller.}\bfcode{TrackingController}}{\emph{settings\_facade}}{}~
+\includegraphics{erd1.png}
+
+This class provides the tracking operations supported by \textbf{TrackingCodes} component.
+\index{list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/tracking_codes/tracking_codes:fantastico.contrib.tracking_codes.tracking_controller.TrackingController.list_codes}\pysiglinewithargsret{\bfcode{list\_codes}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides tracking codes listing logic. It list all available tracking codes from database.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{request} (\code{webob.request.Request}) -- The current http request being processed. Read {\hyperref[features/request_response::doc]{\emph{Request lifecycle}}} for more information.
+
+\item[{Returns}] \leavevmode
+JSON list of available tracking codes. Can be empty if no tracking codes are defined.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/tracking_codes/tracking_codes:fantastico.contrib.tracking_codes.tracking_controller.TrackingController.list_codes_ui}\pysiglinewithargsret{\bfcode{list\_codes\_ui}}{\emph{*args}, \emph{**kwargs}}{}
+This method renders all available tracking codes.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/tracking_codes/tracking_codes:fantastico.contrib.tracking_codes.models.codes.TrackingCode}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.tracking\_codes.models.codes.}\bfcode{TrackingCode}}{\emph{provider}, \emph{script}}{}
+This class provides the model for tracking codes. It maps \textbf{tracking\_codes} table to an object. In order to use this model
+please read {\hyperref[features/mvc::doc]{\emph{Model View Controller}}}.
 
 \end{fulllineitems}
 

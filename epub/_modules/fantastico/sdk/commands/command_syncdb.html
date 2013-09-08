@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.4.0-b110 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.4.0-b111 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -121,7 +121,7 @@
         <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;-e&quot;</span><span class="p">)</span>
         <span class="n">cmd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;source </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
 
-        <span class="n">cmd_str</span> <span class="o">+=</span> <span class="s">&quot; -e source </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">filename</span>
+        <span class="n">cmd_str</span> <span class="o">+=</span> <span class="s">&quot; -e </span><span class="se">\&quot;</span><span class="s">source </span><span class="si">%s</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">filename</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">retcode</span> <span class="o">=</span> <span class="n">call_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>

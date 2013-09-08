@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tracking codes &mdash; fantastico 0.4.0-b110 documentation</title>
+    <title>Tracking codes &mdash; fantastico 0.4.0-b111 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.4.0-b110',
+        VERSION:     '0.4.0-b111',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.4.0-b110 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.4.0-b111 documentation" href="../../../index.html" />
     <link rel="up" title="Built in components" href="../../components_builtin.html" />
     <link rel="next" title="How to articles" href="../../../how_to/how_to.html" />
     <link rel="prev" title="Dynamic menu" href="../dynamic_menu/dynamic_menu.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="../dynamic_menu/dynamic_menu.html" title="Dynamic menu"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">fantastico 0.4.0-b110 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.4.0-b111 documentation</a> &raquo;</li>
           <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../../components_builtin.html" accesskey="U">Built in components</a> &raquo;</li> 
       </ul>
@@ -93,7 +93,7 @@ posted by Aidan Huang.</p>
 <li><p class="first">Add your tracking codes into database (easiest way is through <a class="reference internal" href="../../sdk/command_syncdb.html"><em>Syncdb command</em></a>)</p>
 </li>
 <li><p class="first">Create a sql script similar to the one below and place it under <strong>&lt;comp_root&gt;/sql/create_data.sql</strong>:</p>
-<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tracking_codes</span><span class="p">(</span><span class="n">provider</span><span class="p">,</span> <span class="n">snippet</span><span class="p">)</span>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tracking_codes</span><span class="p">(</span><span class="n">provider</span><span class="p">,</span> <span class="n">script</span><span class="p">)</span>
 <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Google Analytics&#39;</span><span class="p">,</span> <span class="s1">&#39;</span>
 <span class="s1">   &lt;script type=&quot;text/javascript&quot;&gt;</span>
 <span class="s1">        var _gaq = _gaq || [];</span>
@@ -115,19 +115,59 @@ posted by Aidan Huang.</p>
 </div>
 </li>
 <li><p class="first">Use tracking codes in your pages:</p>
-<div class="highlight-html"><div class="highlight"><pre>{% component url=&quot;/tracking-codes/codes/&quot; %}{% endcomponent %}
+<div class="highlight-html"><div class="highlight"><pre>{% component url=&quot;/tracking-codes/ui/codes/&quot; %}{% endcomponent %}
 </pre></div>
 </div>
 </li>
 </ol>
-<p>Tracking component is rendering all available codes from the database.</p>
+<p>Tracking component is rendering all available codes from the database. In order to check all available tracking codes configured
+in a <strong>Fantastico</strong> project visit <a class="reference external" href="http://localhost:12000/tracking-codes/ui/codes/">http://localhost:12000/tracking-codes/ui/codes/</a>. Once the page is loaded see page source.</p>
+</div>
+<div class="section" id="current-limitations">
+<h2>Current limitations<a class="headerlink" href="#current-limitations" title="Permalink to this headline">¶</a></h2>
+<p>In the first version of this component (part of <strong>Fantastico 0.4</strong>) there are some known limitations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>No API provided for Create / Update / Delete operations.</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="technical-summary">
 <h2>Technical summary<a class="headerlink" href="#technical-summary" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fantastico.contrib.tracking_codes.tracking_controller.TrackingController">
 <em class="property">class </em><tt class="descclassname">fantastico.contrib.tracking_codes.tracking_controller.</tt><tt class="descname">TrackingController</tt><big>(</big><em>settings_facade</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/tracking_codes/tracking_controller.html#TrackingController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.contrib.tracking_codes.tracking_controller.TrackingController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Work in progress.</p>
+<dd><img alt="../../../_images/erd1.png" src="../../../_images/erd1.png" />
+<p>This class provides the tracking operations supported by <strong>TrackingCodes</strong> component.</p>
+<dl class="method">
+<dt id="fantastico.contrib.tracking_codes.tracking_controller.TrackingController.list_codes">
+<tt class="descname">list_codes</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/tracking_codes/tracking_controller.html#TrackingController.list_codes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.contrib.tracking_codes.tracking_controller.TrackingController.list_codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method provides tracking codes listing logic. It list all available tracking codes from database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>request</strong> (<tt class="xref py py-class docutils literal"><span class="pre">webob.request.Request</span></tt>) &#8211; The current http request being processed. Read <a class="reference internal" href="../../request_response.html"><em>Request lifecycle</em></a> for more information.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">JSON list of available tracking codes. Can be empty if no tracking codes are defined.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.contrib.tracking_codes.tracking_controller.TrackingController.list_codes_ui">
+<tt class="descname">list_codes_ui</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/tracking_codes/tracking_controller.html#TrackingController.list_codes_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.contrib.tracking_codes.tracking_controller.TrackingController.list_codes_ui" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method renders all available tracking codes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.contrib.tracking_codes.models.codes.TrackingCode">
+<em class="property">class </em><tt class="descclassname">fantastico.contrib.tracking_codes.models.codes.</tt><tt class="descname">TrackingCode</tt><big>(</big><em>provider</em>, <em>script</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/tracking_codes/models/codes.html#TrackingCode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.contrib.tracking_codes.models.codes.TrackingCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the model for tracking codes. It maps <strong>tracking_codes</strong> table to an object. In order to use this model
+please read <a class="reference internal" href="../../mvc.html"><em>Model View Controller</em></a>.</p>
 </dd></dl>
 
 </div>
@@ -144,6 +184,7 @@ posted by Aidan Huang.</p>
 <li><a class="reference internal" href="#">Tracking codes</a><ul>
 <li><a class="reference internal" href="#analytic-solutions">Analytic solutions</a></li>
 <li><a class="reference internal" href="#integration">Integration</a></li>
+<li><a class="reference internal" href="#current-limitations">Current limitations</a></li>
 <li><a class="reference internal" href="#technical-summary">Technical summary</a></li>
 </ul>
 </li>
@@ -189,7 +230,7 @@ posted by Aidan Huang.</p>
         <li class="right" >
           <a href="../dynamic_menu/dynamic_menu.html" title="Dynamic menu"
              >previous</a> |</li>
-        <li><a href="../../../index.html">fantastico 0.4.0-b110 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.4.0-b111 documentation</a> &raquo;</li>
           <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../../components_builtin.html" >Built in components</a> &raquo;</li> 
       </ul>

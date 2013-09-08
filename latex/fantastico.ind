@@ -154,6 +154,10 @@
   \bigletter L
   \item Language (class in fantastico.locale.language), \hyperpage{14}
   \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{13}
+  \item list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
+		\hyperpage{39}
+  \item list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
+		\hyperpage{39}
   \item load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method), 
 		\hyperpage{23}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
@@ -233,8 +237,9 @@
   \indexspace
   \bigletter T
   \item templates\_config (fantastico.settings.BasicSettings attribute), \hyperpage{5}
+  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{39}
   \item TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller), 
-		\hyperpage{38}
+		\hyperpage{39}
   \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{30}
 
   \indexspace

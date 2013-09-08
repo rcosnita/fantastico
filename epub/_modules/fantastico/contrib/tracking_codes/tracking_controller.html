@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.4.0-b110 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.4.0-b111 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -47,12 +47,48 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.contrib.tracking_codes.tracking_controller</span>
 <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">webob.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
-<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span><span class="p">,</span> <span class="n">Controller</span>
 
 <span class="nd">@ControllerProvider</span><span class="p">()</span>
 <div class="viewcode-block" id="TrackingController"><a class="viewcode-back" href="../../../../features/components/tracking_codes/tracking_codes.html#fantastico.contrib.tracking_codes.tracking_controller.TrackingController">[docs]</a><span class="k">class</span> <span class="nc">TrackingController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Work in progress.&#39;&#39;&#39;</span></div>
+    <span class="sd">&#39;&#39;&#39;.. image:: /images/components/tracking_codes/erd.png</span>
+
+<span class="sd">    This class provides the tracking operations supported by **TrackingCodes** component.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">MAX_RECORDS</span> <span class="o">=</span> <span class="mi">50</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;^/tracking-codes/codes(/)?$&quot;</span><span class="p">,</span>
+                <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;TrackingCode&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.contrib.tracking_codes.models.codes.TrackingCode&quot;</span><span class="p">})</span>
+<div class="viewcode-block" id="TrackingController.list_codes"><a class="viewcode-back" href="../../../../features/components/tracking_codes/tracking_codes.html#fantastico.contrib.tracking_codes.tracking_controller.TrackingController.list_codes">[docs]</a>    <span class="k">def</span> <span class="nf">list_codes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides tracking codes listing logic. It list all available tracking codes from database.</span>
+
+<span class="sd">        :param request: The current http request being processed. Read :doc:`/features/request_response` for more information.</span>
+<span class="sd">        :type request: :py:class:`webob.request.Request`</span>
+<span class="sd">        :returns: JSON list of available tracking codes. Can be empty if no tracking codes are defined.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">codes_facade</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">TrackingCode</span>
+
+        <span class="n">codes</span> <span class="o">=</span> <span class="n">codes_facade</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="n">TrackingController</span><span class="o">.</span><span class="n">MAX_RECORDS</span><span class="p">)</span>
+        <span class="n">codes</span> <span class="o">=</span> <span class="p">[{</span><span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="n">code</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                  <span class="s">&quot;provider&quot;</span><span class="p">:</span> <span class="n">code</span><span class="o">.</span><span class="n">provider</span><span class="p">,</span>
+                  <span class="s">&quot;script&quot;</span><span class="p">:</span> <span class="n">code</span><span class="o">.</span><span class="n">script</span><span class="p">}</span> <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">codes</span><span class="p">]</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">codes</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;^/tracking-codes/ui/codes(/)?$&quot;</span><span class="p">)</span> <span class="c">#pylint: disable=W0613</span>
+<div class="viewcode-block" id="TrackingController.list_codes_ui"><a class="viewcode-back" href="../../../../features/components/tracking_codes/tracking_codes.html#fantastico.contrib.tracking_codes.tracking_controller.TrackingController.list_codes_ui">[docs]</a>    <span class="k">def</span> <span class="nf">list_codes_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method renders all available tracking codes.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">load_template</span><span class="p">(</span><span class="s">&quot;/list_tracking_codes.html&quot;</span><span class="p">))</span></div></div>
 </pre></div>
 
           </div>
