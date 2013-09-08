@@ -81,7 +81,7 @@ class TrackingControllerTest(FantasticoUnitTestsCase):
 
         self.assertIsInstance(codes_response, Response)
         self.assertIsNotNone(codes_response.body)
-        self.assertEqual("application/json", codes_response.headers["Content-Type"])
+        self.assertEqual("application/json; charset=UTF-8", codes_response.headers["Content-Type"])
 
         codes = json.loads(codes_response.body.decode())
         self.assertEqual(expected_codes, codes)
