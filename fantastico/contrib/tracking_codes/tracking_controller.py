@@ -16,10 +16,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.contrib.tracking_codes.tracking_controller
 '''
+
+import json
+from webob.response import Response
+
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import ControllerProvider, Controller
-from webob.response import Response
-import json
 
 @ControllerProvider()
 class TrackingController(BaseController):
