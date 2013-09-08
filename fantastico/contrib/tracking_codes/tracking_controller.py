@@ -52,3 +52,9 @@ class TrackingController(BaseController):
         response = Response(json.dumps(codes), content_type="application/json")
 
         return response
+
+    @Controller(url="^/tracking-codes/ui/codes(/)?$") #pylint: disable=W0613
+    def list_codes_ui(self, request):
+        '''This method renders all available tracking codes.'''
+
+        return Response(self.load_template("/list_tracking_codes.html"))
