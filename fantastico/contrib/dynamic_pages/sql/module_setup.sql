@@ -15,33 +15,34 @@
 ##############################################################################################################################
 
 ##############################################################################################################################
-# This script creates menus and menu_items tables required to support dynamic menus component. For more information, read
-# official Fantastico documentation.
+#
+# This script is used to create dynamic pages required tables.
+#
 ##############################################################################################################################
 
-DROP TABLE IF EXISTS menu_items;
-DROP TABLE IF EXISTS menus;
+DROP TABLE IF EXISTS page_models;
+DROP TABLE IF EXISTS pages;
 
-CREATE TABLE menus(
-	id INTEGER AUTO_INCREMENT,
-	name VARCHAR(150),
-	PRIMARY KEY(id)
+CREATE TABLE pages(
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+	url VARCHAR(100) NOT NULL,
+	template VARCHAR(100) NOT NULL,
+	keywords VARCHAR(200) NOT NULL,
+	description VARCHAR(300) NOT NULL,
+	title VARCHAR(100) NOT NULL,
+	language VARCHAR(5) NOT NULL DEFAULT 'en',
+	PRIMARY KEY (Id),
+	CONSTRAINT unq_pages_url UNIQUE(url)
 );
 
-CREATE TABLE menu_items(
-	id INTEGER AUTO_INCREMENT,
-	target VARCHAR(50) NOT NULL DEFAULT '_blank',
-	url VARCHAR(255) NOT NULL,
-	title VARCHAR(255) NOT NULL,
-	label VARCHAR(255) NOT NULL,
-	menu_id INTEGER NOT NULL,
-	PRIMARY KEY(id),
-	CONSTRAINT fk_menuitems_menu FOREIGN KEY(menu_id) REFERENCES menus(id)
-);
-
-INSERT INTO menus(id, name) VALUES(1, 'My First Menu');
-
-INSERT INTO menu_items(target, url, title, label, menu_id)
-VALUES ('_blank', '/homepage', 'Simple and friendly description', 'Home', 1),
-       ('_blank', '/page2', 'Simple and friendly description', 'Page 2', 1),
-       ('_blank', '/page3', 'Simple and friendly description', 'Page 3', 1);
+CREATE TABLE page_models(
+	entry_id INT NOT NULL AUTO_INCREMENT,
+	page_id INT NOT NULL,
+	name VARCHAR(100) NOT NULL,
+	value TEXT NOT NULL,
+	selected BOOLEAN NOT NULL DEFAULT False,
+	target VARCHAR(100),
+	additional_data TEXT,
+	PRIMARY KEY (entry_id, page_id),
+	CONSTRAINT fk_pagemodels_page FOREIGN KEY (page_id) REFERENCES pages(id));
