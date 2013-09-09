@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dynamic pages</title>
+    
+    <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../tracking_codes/tracking_codes.html" title="Tracking codes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../dynamic_menu/dynamic_menu.html" title="Dynamic menu"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">fantastico 0.4.0-b112 documentation</a> &raquo;</li>
+          <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../../components_builtin.html" accesskey="U">Built in components</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="dynamic-pages">
+<h1>Dynamic pages</h1>
+<p>Most of the time, when a developer create a new web site or web application he follows the steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Create a set of templates (can be delegated to a web designer)</li>
+<li>Create a new API or create a proxy API.</li>
+<li>Create pages over the templates.</li>
+</ol>
+</div></blockquote>
+<p>Many web sites / applications have a minimal set of master templates and all web pages follow those templates. This kind of
+approach keeps site consistency and decouple layouts from actual content. In <strong>Fantastico</strong>, it is extremely easy to work in this
+manner thanks to <strong>Dynamic pages</strong> extension.</p>
+<p>Dynamic pages divides pages into two main parts:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Page meta information (title, keywords, description, language)</li>
+<li>Page model / content (markup, text keys or any other kind of information).</li>
+</ol>
+</div></blockquote>
+<p>Using dynamic pages you can easily add new web pages to your project without writing a single line of server side code.</p>
+<div class="section" id="integration">
+<h2>Integration</h2>
+<ol class="arabic">
+<li><p class="first">Activate <strong>Dynamic pages</strong> extension.</p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk activate-extension --name dynamic_menu --comp-root &lt;comp_root&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add new dynamic pages to your project using <strong>&lt;comp_root&gt;/sql/create_data.sql</strong>.</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">pages</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="k">template</span><span class="p">,</span> <span class="n">keywords</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="k">language</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;/en/home&#39;</span><span class="p">,</span> <span class="s1">&#39;/en/home&#39;</span><span class="p">,</span> <span class="s1">&#39;/frontend/views/master.html&#39;</span><span class="p">,</span> <span class="s1">&#39;keyword 1, ...&#39;</span><span class="p">,</span> <span class="s1">&#39;Home page&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;en-US&#39;</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">page_models</span><span class="p">(</span><span class="n">page_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;article_left&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;p class=&quot;hello_world&quot;&gt;Hello world.&lt;/p&gt;&#39;</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">page_models</span><span class="p">(</span><span class="n">page_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;article_right&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;p class=&quot;hello_world_right&quot;&gt;Hello world right.&lt;/p&gt;&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create <strong>master.html</strong> template file under <strong>&lt;comp_root&gt;/frontend/views/</strong>.</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;{{page.language}}&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html;charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;{{page.keywords}}&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;{{page.description}}&quot;</span> <span class="nt">/&gt;</span>
+
+      <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/frontend/static/css/bootstrap-responsive.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/frontend/static/css/forhidraulic.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;title&gt;</span>{{page.title}}<span class="nt">&lt;/title&gt;</span>
+   <span class="nt">&lt;/head&gt;</span>
+
+   <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>{{page.article_left.value}}<span class="nt">&lt;/h1&gt;</span>
+
+      <span class="nt">&lt;h2&gt;</span>{{page.article_right.value}}<span class="nt">&lt;/h1&gt;</span>
+   <span class="nt">&lt;/body&gt;</span>
+ <span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="current-limitations">
+<h2>Current limitations</h2>
+<p>In the first version of this component (part of <strong>Fantastico 0.4</strong>) there are some known limitations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Create / Delete / Update / Bulk listing API are not provided. You can do this through create_data.sql script.</li>
+<li>There is no way to rewrite dynamic pages url so that they do not contain <em>/dynamic</em> prefix.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="technical-summary">
+<h2>Technical summary</h2>
+<dl class="class">
+<dt id="fantastico.contrib.dynamic_pages.pages_router.PagesRouter">
+<em class="property">class </em><tt class="descclassname">fantastico.contrib.dynamic_pages.pages_router.</tt><tt class="descname">PagesRouter</tt><big>(</big><em>settings_facade</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_pages/pages_router.html#PagesRouter"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the API for managing dynamic pages. In addition, it creates the special route <strong>/dynamic/&lt;page_url&gt;</strong>
+used to access pages stored in the database. From dynamic pages module perspective, a web page is nothing more than a relation
+between <a class="reference internal" href="#fantastico.contrib.dynamic_pages.models.pages.DynamicPage" title="fantastico.contrib.dynamic_pages.models.pages.DynamicPage"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.contrib.dynamic_pages.models.pages.DynamicPage</span></tt></a> and
+<tt class="xref py py-class docutils literal"><span class="pre">fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel</span></tt>.</p>
+<img alt="../../../_images/erd1.png" src="../../../_images/erd1.png" />
+<p>A typical template for dynamic pages might look like:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;{{page.language}}&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html;charset=UTF-8&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;{{page.keywords}}&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;{{page.description}}&quot;</span> <span class="nt">/&gt;</span>
+
+      <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/frontend/static/css/bootstrap-responsive.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/frontend/static/css/forhidraulic.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;title&gt;</span>{{page.title}}<span class="nt">&lt;/title&gt;</span>
+   <span class="nt">&lt;/head&gt;</span>
+
+   <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>{{page.article_left.value}}<span class="nt">&lt;/h1&gt;</span>
+
+      <span class="nt">&lt;h2&gt;</span>{{page.article_right.value}}<span class="nt">&lt;/h1&gt;</span>
+   <span class="nt">&lt;/body&gt;</span>
+ <span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.contrib.dynamic_pages.models.pages.DynamicPage">
+<em class="property">class </em><tt class="descclassname">fantastico.contrib.dynamic_pages.models.pages.</tt><tt class="descname">DynamicPage</tt><big>(</big><em>name=None</em>, <em>url=None</em>, <em>template=None</em>, <em>keywords=None</em>, <em>description=None</em>, <em>title=None</em>, <em>language='en'</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_pages/models/pages.html#DynamicPage"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This model holds meta information about dynamic pages. Below you can find all meta information for a dynamic page:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>id (unique identifier for a dynamic page)</li>
+<li>name</li>
+<li>url</li>
+<li>template</li>
+<li>keywords</li>
+<li>description</li>
+<li>language</li>
+</ol>
+</div></blockquote>
+<p>In a template used for rendering dynamic pages, you can easily access page meta information:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;p&gt;</span>Id: {{page.id}}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>Name: {{page.name}}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>Url: {{page.url}}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>Template: {{page.template}}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>Keywords: {{page.keywords}}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>Description: {{page.description}}<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>Language: {{page.language}}<span class="nt">&lt;/p&gt;</span>
+</pre></div>
+</div>
+<p>Usually it does not make sense to display dynamic page unique identifier but you can do it if necessary.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

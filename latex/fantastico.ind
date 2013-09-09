@@ -62,6 +62,7 @@
   \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{17}
   \item DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller), 
 		\hyperpage{36}
+  \item DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{39}
 
   \indexspace
   \bigletter E
@@ -155,9 +156,9 @@
   \item Language (class in fantastico.locale.language), \hyperpage{14}
   \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{13}
   \item list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{39}
+		\hyperpage{41}
   \item list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{39}
+		\hyperpage{41}
   \item load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method), 
 		\hyperpage{23}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
@@ -193,6 +194,7 @@
 
   \indexspace
   \bigletter P
+  \item PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router), \hyperpage{38}
   \item parse() (fantastico.rendering.component.Component method), \hyperpage{34}
 
   \indexspace
@@ -237,9 +239,9 @@
   \indexspace
   \bigletter T
   \item templates\_config (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{39}
+  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{41}
   \item TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller), 
-		\hyperpage{39}
+		\hyperpage{41}
   \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{30}
 
   \indexspace

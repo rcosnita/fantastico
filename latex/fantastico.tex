@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 08, 2013}
-\release{0.4.0-b111}
+\date{September 09, 2013}
+\release{0.4.0-b112}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5900628\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5b2d0d8\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1850,7 +1850,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x25ab408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2821408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2267,7 +2267,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2a7b2f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2cf12f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -2812,7 +2812,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3e0c1e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x40821e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -3012,6 +3012,189 @@ menu attributes.
 
 
 
+\subsection{Dynamic pages}
+\label{features/components/dynamic_pages/dynamic_pages:dynamic-pages}\label{features/components/dynamic_pages/dynamic_pages::doc}
+Most of the time, when a developer create a new web site or web application he follows the steps:
+\begin{enumerate}
+\item {} 
+Create a set of templates (can be delegated to a web designer)
+
+\item {} 
+Create a new API or create a proxy API.
+
+\item {} 
+Create pages over the templates.
+
+\end{enumerate}
+
+Many web sites / applications have a minimal set of master templates and all web pages follow those templates. This kind of
+approach keeps site consistency and decouple layouts from actual content. In \textbf{Fantastico}, it is extremely easy to work in this
+manner thanks to \textbf{Dynamic pages} extension.
+
+Dynamic pages divides pages into two main parts:
+\begin{enumerate}
+\item {} 
+Page meta information (title, keywords, description, language)
+
+\item {} 
+Page model / content (markup, text keys or any other kind of information).
+
+\end{enumerate}
+
+Using dynamic pages you can easily add new web pages to your project without writing a single line of server side code.
+
+
+\subsubsection{Integration}
+\label{features/components/dynamic_pages/dynamic_pages:integration}\begin{enumerate}
+\item {} 
+Activate \textbf{Dynamic pages} extension.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name dynamic\PYGZus{}menu \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}comp\PYGZus{}root\PYGZgt{}
+\end{Verbatim}
+
+\item {} 
+Add new dynamic pages to your project using \textbf{\textless{}comp\_root\textgreater{}/sql/create\_data.sql}.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{pages}\PYG{p}{(}\PYG{n}{id}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{url}\PYG{p}{,} \PYG{k}{template}\PYG{p}{,} \PYG{n}{keywords}\PYG{p}{,} \PYG{n}{description}\PYG{p}{,} \PYG{n}{title}\PYG{p}{,} \PYG{k}{language}\PYG{p}{)}
+\PYG{k}{VALUES}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/en/home\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/en/home\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}/frontend/views/master.html\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}keyword 1, ...\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Home page\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}description\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}en\PYGZhy{}US\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{page\PYGZus{}models}\PYG{p}{(}\PYG{n}{page\PYGZus{}id}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}
+\PYG{k}{VALUES}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}article\PYGZus{}left\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}p class=\PYGZdq{}hello\PYGZus{}world\PYGZdq{}\PYGZgt{}Hello world.\PYGZlt{}/p\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{page\PYGZus{}models}\PYG{p}{(}\PYG{n}{page\PYGZus{}id}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}
+\PYG{k}{VALUES}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}article\PYGZus{}right\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}p class=\PYGZdq{}hello\PYGZus{}world\PYGZus{}right\PYGZdq{}\PYGZgt{}Hello world right.\PYGZlt{}/p\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\item {} 
+Create \textbf{master.html} template file under \textbf{\textless{}comp\_root\textgreater{}/frontend/views/}.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZlt{}!DOCTYPE html\PYGZgt{}}
+
+\PYG{n+nt}{\PYGZlt{}html} \PYG{n+na}{lang=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}page.language\PYGZcb{}\PYGZcb{}\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+   \PYG{n+nt}{\PYGZlt{}head}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{http\PYGZhy{}equiv=}\PYG{l+s}{\PYGZdq{}Content\PYGZhy{}type\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}text/html;charset=UTF\PYGZhy{}8\PYGZdq{}} \PYG{n+nt}{/\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}viewport\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}width=device\PYGZhy{}width, initial\PYGZhy{}scale=1.0\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}keywords\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}page.keywords\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+nt}{/\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}description\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}page.description\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+nt}{/\PYGZgt{}}
+
+      \PYG{n+nt}{\PYGZlt{}link} \PYG{n+na}{href=}\PYG{l+s}{\PYGZdq{}/frontend/static/css/bootstrap\PYGZhy{}responsive.css\PYGZdq{}} \PYG{n+na}{rel=}\PYG{l+s}{\PYGZdq{}stylesheet\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}link} \PYG{n+na}{href=}\PYG{l+s}{\PYGZdq{}/frontend/static/css/forhidraulic.css\PYGZdq{}} \PYG{n+na}{rel=}\PYG{l+s}{\PYGZdq{}stylesheet\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}title}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.title\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/title\PYGZgt{}}
+   \PYG{n+nt}{\PYGZlt{}/head\PYGZgt{}}
+
+   \PYG{n+nt}{\PYGZlt{}body}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}h1}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.article\PYGZus{}left.value\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/h1\PYGZgt{}}
+
+      \PYG{n+nt}{\PYGZlt{}h2}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.article\PYGZus{}right.value\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/h1\PYGZgt{}}
+   \PYG{n+nt}{\PYGZlt{}/body\PYGZgt{}}
+ \PYG{n+nt}{\PYGZlt{}/html\PYGZgt{}}
+\end{Verbatim}
+
+\end{enumerate}
+
+
+\subsubsection{Current limitations}
+\label{features/components/dynamic_pages/dynamic_pages:current-limitations}
+In the first version of this component (part of \textbf{Fantastico 0.4}) there are some known limitations:
+\begin{itemize}
+\item {} 
+Create / Delete / Update / Bulk listing API are not provided. You can do this through create\_data.sql script.
+
+\item {} 
+There is no way to rewrite dynamic pages url so that they do not contain \emph{/dynamic} prefix.
+
+\end{itemize}
+
+
+\subsubsection{Technical summary}
+\label{features/components/dynamic_pages/dynamic_pages:technical-summary}\index{PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_pages/dynamic_pages:fantastico.contrib.dynamic_pages.pages_router.PagesRouter}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.dynamic\_pages.pages\_router.}\bfcode{PagesRouter}}{\emph{settings\_facade}}{}
+This class provides the API for managing dynamic pages. In addition, it creates the special route \textbf{/dynamic/\textless{}page\_url\textgreater{}}
+used to access pages stored in the database. From dynamic pages module perspective, a web page is nothing more than a relation
+between {\hyperref[features/components/dynamic_pages/dynamic_pages:fantastico.contrib.dynamic_pages.models.pages.DynamicPage]{\code{fantastico.contrib.dynamic\_pages.models.pages.DynamicPage}}} and
+\code{fantastico.contrib.dynamic\_pages.models.pages.DynamicPageModel}.
+
+\includegraphics{erd1.png}
+
+A typical template for dynamic pages might look like:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZlt{}!DOCTYPE html\PYGZgt{}}
+
+\PYG{n+nt}{\PYGZlt{}html} \PYG{n+na}{lang=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}page.language\PYGZcb{}\PYGZcb{}\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+   \PYG{n+nt}{\PYGZlt{}head}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{http\PYGZhy{}equiv=}\PYG{l+s}{\PYGZdq{}Content\PYGZhy{}type\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}text/html;charset=UTF\PYGZhy{}8\PYGZdq{}} \PYG{n+nt}{/\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}viewport\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}width=device\PYGZhy{}width, initial\PYGZhy{}scale=1.0\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}keywords\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}page.keywords\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+nt}{/\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}description\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}page.description\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+nt}{/\PYGZgt{}}
+
+      \PYG{n+nt}{\PYGZlt{}link} \PYG{n+na}{href=}\PYG{l+s}{\PYGZdq{}/frontend/static/css/bootstrap\PYGZhy{}responsive.css\PYGZdq{}} \PYG{n+na}{rel=}\PYG{l+s}{\PYGZdq{}stylesheet\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}link} \PYG{n+na}{href=}\PYG{l+s}{\PYGZdq{}/frontend/static/css/forhidraulic.css\PYGZdq{}} \PYG{n+na}{rel=}\PYG{l+s}{\PYGZdq{}stylesheet\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}title}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.title\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/title\PYGZgt{}}
+   \PYG{n+nt}{\PYGZlt{}/head\PYGZgt{}}
+
+   \PYG{n+nt}{\PYGZlt{}body}\PYG{n+nt}{\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}h1}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.article\PYGZus{}left.value\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/h1\PYGZgt{}}
+
+      \PYG{n+nt}{\PYGZlt{}h2}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.article\PYGZus{}right.value\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/h1\PYGZgt{}}
+   \PYG{n+nt}{\PYGZlt{}/body\PYGZgt{}}
+ \PYG{n+nt}{\PYGZlt{}/html\PYGZgt{}}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_pages/dynamic_pages:fantastico.contrib.dynamic_pages.models.pages.DynamicPage}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.dynamic\_pages.models.pages.}\bfcode{DynamicPage}}{\emph{name=None}, \emph{url=None}, \emph{template=None}, \emph{keywords=None}, \emph{description=None}, \emph{title=None}, \emph{language='en'}}{}
+This model holds meta information about dynamic pages. Below you can find all meta information for a dynamic page:
+\begin{enumerate}
+\item {} 
+id (unique identifier for a dynamic page)
+
+\item {} 
+name
+
+\item {} 
+url
+
+\item {} 
+template
+
+\item {} 
+keywords
+
+\item {} 
+description
+
+\item {} 
+language
+
+\end{enumerate}
+
+In a template used for rendering dynamic pages, you can easily access page meta information:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nt}{\PYGZlt{}p}\PYG{n+nt}{\PYGZgt{}}Id: \PYGZob{}\PYGZob{}page.id\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}p}\PYG{n+nt}{\PYGZgt{}}Name: \PYGZob{}\PYGZob{}page.name\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}p}\PYG{n+nt}{\PYGZgt{}}Url: \PYGZob{}\PYGZob{}page.url\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}p}\PYG{n+nt}{\PYGZgt{}}Template: \PYGZob{}\PYGZob{}page.template\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}p}\PYG{n+nt}{\PYGZgt{}}Keywords: \PYGZob{}\PYGZob{}page.keywords\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}p}\PYG{n+nt}{\PYGZgt{}}Description: \PYGZob{}\PYGZob{}page.description\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}p}\PYG{n+nt}{\PYGZgt{}}Language: \PYGZob{}\PYGZob{}page.language\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/p\PYGZgt{}}
+\end{Verbatim}
+
+Usually it does not make sense to display dynamic page unique identifier but you can do it if necessary.
+
+\end{fulllineitems}
+
+
+
 \subsection{Tracking codes}
 \label{features/components/tracking_codes/tracking_codes:tracking-codes}\label{features/components/tracking_codes/tracking_codes::doc}
 Every web application usually requires support for tracking visitors behavior. Most of the solutions can be easily integrated
@@ -3135,7 +3318,7 @@ No API provided for Create / Update / Delete operations.
 
 \begin{fulllineitems}
 \phantomsection\label{features/components/tracking_codes/tracking_codes:fantastico.contrib.tracking_codes.tracking_controller.TrackingController}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.tracking\_codes.tracking\_controller.}\bfcode{TrackingController}}{\emph{settings\_facade}}{}~
-\includegraphics{erd1.png}
+\includegraphics{erd2.png}
 
 This class provides the tracking operations supported by \textbf{TrackingCodes} component.
 \index{list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)}

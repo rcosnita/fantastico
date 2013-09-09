@@ -63,33 +63,37 @@
 \contentsline {paragraph}{Component sample + db data}{36}{paragraph*.159}
 \contentsline {subsubsection}{Current limitations}{36}{subsubsection*.160}
 \contentsline {subsubsection}{Technical summary}{36}{subsubsection*.161}
-\contentsline {subsection}{\numberline {3.8.2}Tracking codes}{37}{subsection.3.8.2}
-\contentsline {subsubsection}{Analytic solutions}{37}{subsubsection*.166}
-\contentsline {subsubsection}{Integration}{38}{subsubsection*.167}
-\contentsline {subsubsection}{Current limitations}{38}{subsubsection*.168}
-\contentsline {subsubsection}{Technical summary}{39}{subsubsection*.169}
-\contentsline {chapter}{\numberline {4}How to articles}{41}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{41}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{41}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{41}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{42}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{42}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Deployment how to}{42}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{43}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{44}{subsubsection*.174}
-\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{44}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{45}{subsubsection*.175}
-\contentsline {subsubsection}{Optimization}{45}{subsubsection*.176}
-\contentsline {subsubsection}{Setup with S3}{46}{subsubsection*.177}
-\contentsline {section}{\numberline {4.3}Static assets}{46}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{46}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{47}{subsubsection*.178}
-\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{47}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Creating a new project}{47}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Create first component}{47}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{48}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{48}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Changes}{49}{chapter.5}
-\contentsline {chapter}{\numberline {6}Build status}{51}{chapter.6}
-\contentsline {chapter}{\numberline {7}License}{53}{chapter.7}
-\contentsline {chapter}{Index}{55}{section*.179}
+\contentsline {subsection}{\numberline {3.8.2}Dynamic pages}{37}{subsection.3.8.2}
+\contentsline {subsubsection}{Integration}{37}{subsubsection*.166}
+\contentsline {subsubsection}{Current limitations}{38}{subsubsection*.167}
+\contentsline {subsubsection}{Technical summary}{38}{subsubsection*.168}
+\contentsline {subsection}{\numberline {3.8.3}Tracking codes}{40}{subsection.3.8.3}
+\contentsline {subsubsection}{Analytic solutions}{40}{subsubsection*.171}
+\contentsline {subsubsection}{Integration}{40}{subsubsection*.172}
+\contentsline {subsubsection}{Current limitations}{41}{subsubsection*.173}
+\contentsline {subsubsection}{Technical summary}{41}{subsubsection*.174}
+\contentsline {chapter}{\numberline {4}How to articles}{43}{chapter.4}
+\contentsline {section}{\numberline {4.1}MVC How to}{43}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Code the model}{43}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Code the controller}{43}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Code the view}{44}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Test your application}{44}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Deployment how to}{44}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{45}{subsection.4.2.1}
+\contentsline {subsubsection}{Setup}{46}{subsubsection*.179}
+\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{46}{subsection.4.2.2}
+\contentsline {subsubsection}{Setup}{47}{subsubsection*.180}
+\contentsline {subsubsection}{Optimization}{47}{subsubsection*.181}
+\contentsline {subsubsection}{Setup with S3}{48}{subsubsection*.182}
+\contentsline {section}{\numberline {4.3}Static assets}{48}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{48}{subsection.4.3.1}
+\contentsline {subsubsection}{Favicon}{49}{subsubsection*.183}
+\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{49}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Creating a new project}{49}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Create first component}{49}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{50}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{50}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Changes}{51}{chapter.5}
+\contentsline {chapter}{\numberline {6}Build status}{53}{chapter.6}
+\contentsline {chapter}{\numberline {7}License}{55}{chapter.7}
+\contentsline {chapter}{Index}{57}{section*.184}
