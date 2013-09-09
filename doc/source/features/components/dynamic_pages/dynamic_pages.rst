@@ -32,7 +32,7 @@ Integration
    .. code-block:: sql
 
       INSERT INTO pages(id, name, url, template, keywords, description, title, language)
-      VALUES(1, '/en/home', '/en/home', '/frontend/views/master.html', 'keyword 1, ...', 'description', 'en-US');
+      VALUES(1, '/en/home', '/en/home', '/frontend/views/master.html', 'keyword 1, ...', 'Home page', 'description', 'en-US');
 
       INSERT INTO page_models(page_id, name, value)
       VALUES(1, 'article_left', '<p class="hello_world">Hello world.</p>');
