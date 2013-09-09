@@ -78,3 +78,6 @@ Technical summary
 
 .. autoclass:: fantastico.contrib.dynamic_pages.pages_router.PagesRouter
    :members:
+
+.. autoclass:: fantastico.contrib.dynamic_pages.models.pages.DynamicPage
+   :members:
