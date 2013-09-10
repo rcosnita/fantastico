@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.mvc import BASEMODEL
 from sqlalchemy.schema import Column
-from sqlalchemy.types import Integer, String
+from sqlalchemy.types import Integer, String, Text, Boolean
 
 class DynamicPage(BASEMODEL):
     '''This model holds meta information about dynamic pages. Below you can find all meta information for a dynamic page:
@@ -66,3 +66,18 @@ class DynamicPage(BASEMODEL):
         self.description = description
         self.title = title
         self.language = language
+
+class DynamicPageModel(BASEMODEL):
+    '''This class defines how page models looks like. A page model defines the actual content for en existing page.'''
+
+    __tablename__ = "page_models"
+
+    entry_id = Column("entry_id", Integer, primary_key=True, autoincrement=True)
+    page_id = Column("page_id", Integer)
+    name = Column("name", String(100))
+    value = Column("value", Text)
+
+    def __init__(self, page_id=None, name=None, value=None):
+        self.page_id = page_id
+        self.name = name
+        self.value = value
