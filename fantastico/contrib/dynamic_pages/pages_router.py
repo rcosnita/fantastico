@@ -62,8 +62,8 @@ class PagesRouter(BaseController):
     MAX_PAGE_ATTRS = 100
 
     @Controller(url="/dynamic/(?P<page_url>.*)$", method="GET",
-                models={"DynamicPage": "forhidraulic.dynamic_pages.models.pages.DynamicPage",
-                        "DynamicPageModel": "forhidraulic.dynamic_pages.models.pages.DynamicPageModel"})
+                models={"DynamicPage": "fantastico.contrib.dynamic_pages.models.pages.DynamicPage",
+                        "DynamicPageModel": "fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel"})
     def serve_dynamic_page(self, request, page_url, os_provider=os):
         '''This method is used to route all /dynamic/... requests to database pages. It renders the configured template into
         database binded to :py:class:`fantastico.contrib.models.pages.DynamicPageModel` values.'''

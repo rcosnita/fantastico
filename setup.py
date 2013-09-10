@@ -70,7 +70,7 @@ setup(name="fantastico",
       package_data={"fantastico.rendering": ["views/*.html"],
                     "fantastico.samples.mvc": ["sql/*.sql", "static/*", "views/*.html"],
                     "fantastico.contrib.dynamic_menu": ["sql/*.sql", "static/*", "views/*.html"],
-                    "fantastico.contrib.dynamic_pages": ["sql/*.sql"],
+                    "fantastico.contrib.dynamic_pages": ["sql/*.sql", "views/*.html"],
                     "fantastico.contrib.tracking_codes": ["sql/*.sql", "views/*.html"]},
       data_files=[("scripts/fantastico", ["run_dev_server.sh", "run_prod_server.sh"])]
                   + list_folder_recursive("scripts/fantastico/virtual_env", "virtual_env")
