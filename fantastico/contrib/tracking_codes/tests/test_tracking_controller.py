@@ -33,7 +33,6 @@ class TrackingControllerTest(FantasticoUnitTestsCase):
 
         self.check_original_methods(TrackingController)
 
-
     def test_list_codes_ok(self):
         '''This test case ensures tracking codes are retrieved correctly.'''
 
