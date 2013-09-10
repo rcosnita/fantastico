@@ -11,12 +11,13 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 Versions
 --------
 
-* v0.4.0
+* v0.4.0 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
    * Fantastico SDK commands display official link to command documentation.
    * Fantastico SDK syncdb command.
    * Standard detection of database tables module setup / data insert created.
    * Multiple tracking codes extension integrated into fantastico contrib.
    * Dynamic pages extension integrated into fantastico contrib.
+   * Direct feedback channel integrated into documentation (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 
 * v0.3.0
    * Fantastico SDK core is available.
