@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 09, 2013}
-\release{0.4.0-b112}
+\date{September 10, 2013}
+\release{0.4.0-b113}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5b2d0d8\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4659b78\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1850,7 +1850,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2821408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x128f408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2267,7 +2267,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2cf12f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x175f2f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -2812,7 +2812,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x40821e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2af01e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -3068,6 +3068,13 @@ Add new dynamic pages to your project using \textbf{\textless{}comp\_root\textgr
 \end{Verbatim}
 
 \item {} 
+Update your project database
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk syncdb \PYGZhy{}\PYGZhy{}db\PYGZhy{}command /usr/bin/mysql \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}comp\PYGZus{}root\PYGZgt{}
+\end{Verbatim}
+
+\item {} 
 Create \textbf{master.html} template file under \textbf{\textless{}comp\_root\textgreater{}/frontend/views/}.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -3080,20 +3087,21 @@ Create \textbf{master.html} template file under \textbf{\textless{}comp\_root\te
       \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}keywords\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}page.keywords\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+nt}{/\PYGZgt{}}
       \PYG{n+nt}{\PYGZlt{}meta} \PYG{n+na}{name=}\PYG{l+s}{\PYGZdq{}description\PYGZdq{}} \PYG{n+na}{content=}\PYG{l+s}{\PYGZdq{}\PYGZob{}\PYGZob{}page.description\PYGZcb{}\PYGZcb{}\PYGZdq{}} \PYG{n+nt}{/\PYGZgt{}}
 
-      \PYG{n+nt}{\PYGZlt{}link} \PYG{n+na}{href=}\PYG{l+s}{\PYGZdq{}/frontend/static/css/bootstrap\PYGZhy{}responsive.css\PYGZdq{}} \PYG{n+na}{rel=}\PYG{l+s}{\PYGZdq{}stylesheet\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
-      \PYG{n+nt}{\PYGZlt{}link} \PYG{n+na}{href=}\PYG{l+s}{\PYGZdq{}/frontend/static/css/forhidraulic.css\PYGZdq{}} \PYG{n+na}{rel=}\PYG{l+s}{\PYGZdq{}stylesheet\PYGZdq{}}\PYG{n+nt}{\PYGZgt{}}
       \PYG{n+nt}{\PYGZlt{}title}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.title\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/title\PYGZgt{}}
    \PYG{n+nt}{\PYGZlt{}/head\PYGZgt{}}
 
    \PYG{n+nt}{\PYGZlt{}body}\PYG{n+nt}{\PYGZgt{}}
       \PYG{n+nt}{\PYGZlt{}h1}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.article\PYGZus{}left.value\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/h1\PYGZgt{}}
 
-      \PYG{n+nt}{\PYGZlt{}h2}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.article\PYGZus{}right.value\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/h1\PYGZgt{}}
+      \PYG{n+nt}{\PYGZlt{}h2}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}page.article\PYGZus{}right.value\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/h2\PYGZgt{}}
    \PYG{n+nt}{\PYGZlt{}/body\PYGZgt{}}
  \PYG{n+nt}{\PYGZlt{}/html\PYGZgt{}}
 \end{Verbatim}
 
 \end{enumerate}
+
+After you integrated \textbf{dynamic pages} extension into your project you can access
+\href{http://localhost:12000/dynamic/test/default/page}{http://localhost:12000/dynamic/test/default/page} from a browser. You should see a very simple dynamic page rendered.
 
 
 \subsubsection{Current limitations}
@@ -3117,7 +3125,7 @@ There is no way to rewrite dynamic pages url so that they do not contain \emph{/
 This class provides the API for managing dynamic pages. In addition, it creates the special route \textbf{/dynamic/\textless{}page\_url\textgreater{}}
 used to access pages stored in the database. From dynamic pages module perspective, a web page is nothing more than a relation
 between {\hyperref[features/components/dynamic_pages/dynamic_pages:fantastico.contrib.dynamic_pages.models.pages.DynamicPage]{\code{fantastico.contrib.dynamic\_pages.models.pages.DynamicPage}}} and
-\code{fantastico.contrib.dynamic\_pages.models.pages.DynamicPageModel}.
+{\hyperref[features/components/dynamic_pages/dynamic_pages:fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel]{\code{fantastico.contrib.dynamic\_pages.models.pages.DynamicPageModel}}}.
 
 \includegraphics{erd1.png}
 
@@ -3145,6 +3153,15 @@ A typical template for dynamic pages might look like:
    \PYG{n+nt}{\PYGZlt{}/body\PYGZgt{}}
  \PYG{n+nt}{\PYGZlt{}/html\PYGZgt{}}
 \end{Verbatim}
+\index{serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_pages/dynamic_pages:fantastico.contrib.dynamic_pages.pages_router.PagesRouter.serve_dynamic_page}\pysiglinewithargsret{\bfcode{serve\_dynamic\_page}}{\emph{*args}, \emph{**kwargs}}{}
+This method is used to route all /dynamic/... requests to database pages. It renders the configured template into
+database binded to \code{fantastico.contrib.models.pages.DynamicPageModel} values.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
@@ -3190,6 +3207,14 @@ In a template used for rendering dynamic pages, you can easily access page meta 
 \end{Verbatim}
 
 Usually it does not make sense to display dynamic page unique identifier but you can do it if necessary.
+
+\end{fulllineitems}
+
+\index{DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/dynamic_pages/dynamic_pages:fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.dynamic\_pages.models.pages.}\bfcode{DynamicPageModel}}{\emph{page\_id=None}, \emph{name=None}, \emph{value=None}}{}
+This class defines how page models looks like. A page model defines the actual content for en existing page.
 
 \end{fulllineitems}
 

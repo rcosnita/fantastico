@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.contrib.dynamic_pages.pages_router &mdash; fantastico 0.4.0-b112 documentation</title>
+    <title>fantastico.contrib.dynamic_pages.pages_router &mdash; fantastico 0.4.0-b113 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.4.0-b112',
+        VERSION:     '0.4.0-b113',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.4.0-b112 documentation" href="../../../../index.html" />
+    <link rel="top" title="fantastico 0.4.0-b113 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.4.0-b112 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.4.0-b113 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -62,8 +62,13 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.contrib.dynamic_pages.pages_router</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.contrib.dynamic_pages.models.pages</span> <span class="kn">import</span> <span class="n">DynamicPage</span><span class="p">,</span> <span class="n">DynamicPageModel</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoTemplateNotFoundError</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
-<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span><span class="p">,</span> <span class="n">Controller</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter</span> <span class="kn">import</span> <span class="n">ModelFilter</span>
+<span class="kn">from</span> <span class="nn">webob.response</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="nd">@ControllerProvider</span><span class="p">()</span>
 <div class="viewcode-block" id="PagesRouter"><a class="viewcode-back" href="../../../../features/components/dynamic_pages/dynamic_pages.html#fantastico.contrib.dynamic_pages.pages_router.PagesRouter">[docs]</a><span class="k">class</span> <span class="nc">PagesRouter</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
@@ -98,7 +103,60 @@
 <span class="sd">            &lt;h2&gt;{{page.article_right.value}}&lt;/h1&gt;</span>
 <span class="sd">         &lt;/body&gt;</span>
 <span class="sd">       &lt;/html&gt;</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">MAX_PAGE_ATTRS</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/dynamic/(?P&lt;page_url&gt;.*)$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span>
+                <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;DynamicPage&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.contrib.dynamic_pages.models.pages.DynamicPage&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;DynamicPageModel&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel&quot;</span><span class="p">})</span>
+<div class="viewcode-block" id="PagesRouter.serve_dynamic_page"><a class="viewcode-back" href="../../../../features/components/dynamic_pages/dynamic_pages.html#fantastico.contrib.dynamic_pages.pages_router.PagesRouter.serve_dynamic_page">[docs]</a>    <span class="k">def</span> <span class="nf">serve_dynamic_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">page_url</span><span class="p">,</span> <span class="n">os_provider</span><span class="o">=</span><span class="n">os</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to route all /dynamic/... requests to database pages. It renders the configured template into</span>
+<span class="sd">        database binded to :py:class:`fantastico.contrib.models.pages.DynamicPageModel` values.&#39;&#39;&#39;</span>
+
+        <span class="n">page_facade</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">DynamicPage</span>
+        <span class="n">page_attr_facade</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">DynamicPageModel</span>
+
+        <span class="n">page_url</span> <span class="o">=</span> <span class="s">&quot;/</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">page_url</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">page_facade</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="p">(</span><span class="n">DynamicPage</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">page_url</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="o">.</span><span class="n">EQ</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">page</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">msg_not_found</span> <span class="o">=</span> <span class="s">&quot;Page </span><span class="si">%s</span><span class="s"> does not exist.&quot;</span> <span class="o">%</span> <span class="n">page_url</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">msg_not_found</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+
+        <span class="n">page</span> <span class="o">=</span> <span class="n">page</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">page_attrs</span> <span class="o">=</span> <span class="n">page_attr_facade</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_PAGE_ATTRS</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="p">(</span><span class="n">DynamicPageModel</span><span class="o">.</span><span class="n">page_id</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                                                                                            <span class="n">ModelFilter</span><span class="o">.</span><span class="n">EQ</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_page</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">page_attrs</span><span class="p">,</span> <span class="n">os_provider</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_load_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">page_attrs</span><span class="p">,</span> <span class="n">os_provider</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method loads page content based on the given page entity and given page attributes.&#39;&#39;&#39;</span>
+
+        <span class="n">page_model</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">page_attrs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">attr</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">page_model</span><span class="p">[</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;value&quot;</span><span class="p">:</span> <span class="n">attr</span><span class="o">.</span><span class="n">value</span><span class="p">}</span>
+
+        <span class="n">page_model</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+                           <span class="s">&quot;keywords&quot;</span><span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">keywords</span><span class="p">,</span>
+                           <span class="s">&quot;description&quot;</span><span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">description</span><span class="p">,</span>
+                           <span class="s">&quot;language&quot;</span><span class="p">:</span> <span class="n">page</span><span class="o">.</span><span class="n">language</span><span class="p">})</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c"># this fails first time because all components can see only own templates.</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_template</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">template</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;page&quot;</span><span class="p">:</span> <span class="n">page_model</span><span class="p">})</span>
+        <span class="k">except</span> <span class="n">FantasticoTemplateNotFoundError</span><span class="p">:</span>
+            <span class="n">parent_path</span> <span class="o">=</span> <span class="n">os_provider</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">../../&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_loader</span><span class="o">.</span><span class="n">searchpath</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_loader</span><span class="o">.</span><span class="n">searchpath</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent_path</span><span class="p">)</span>
+
+            <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_template</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">template</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;page&quot;</span><span class="p">:</span> <span class="n">page_model</span><span class="p">})</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;text/html&quot;</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -129,7 +187,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.4.0-b112 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.4.0-b113 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

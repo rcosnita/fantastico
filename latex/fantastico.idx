@@ -148,8 +148,10 @@
 \indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{37}
 \indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{37}
 \indexentry{PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router)|hyperpage}{38}
+\indexentry{serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method)|hyperpage}{39}
 \indexentry{DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{39}
+\indexentry{DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{40}
 \indexentry{TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller)|hyperpage}{41}
 \indexentry{list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{41}
-\indexentry{list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{41}
-\indexentry{TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes)|hyperpage}{41}
+\indexentry{list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{42}
+\indexentry{TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes)|hyperpage}{42}

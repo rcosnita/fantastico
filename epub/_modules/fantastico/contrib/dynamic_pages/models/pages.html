@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../../index.html">fantastico 0.4.0-b112 documentation</a> &raquo;</li>
+        <li><a href="../../../../../index.html">fantastico 0.4.0-b113 documentation</a> &raquo;</li>
           <li><a href="../../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -49,7 +49,7 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc</span> <span class="kn">import</span> <span class="n">BASEMODEL</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.schema</span> <span class="kn">import</span> <span class="n">Column</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Boolean</span>
 
 <div class="viewcode-block" id="DynamicPage"><a class="viewcode-back" href="../../../../../features/components/dynamic_pages/dynamic_pages.html#fantastico.contrib.dynamic_pages.models.pages.DynamicPage">[docs]</a><span class="k">class</span> <span class="nc">DynamicPage</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This model holds meta information about dynamic pages. Below you can find all meta information for a dynamic page:</span>
@@ -96,7 +96,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span> <span class="o">=</span> <span class="n">keywords</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">title</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">language</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">language</span> <span class="o">=</span> <span class="n">language</span>
+</div>
+<div class="viewcode-block" id="DynamicPageModel"><a class="viewcode-back" href="../../../../../features/components/dynamic_pages/dynamic_pages.html#fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel">[docs]</a><span class="k">class</span> <span class="nc">DynamicPageModel</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class defines how page models looks like. A page model defines the actual content for en existing page.&#39;&#39;&#39;</span>
+
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;page_models&quot;</span>
+
+    <span class="n">entry_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;entry_id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">page_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;page_id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">page_id</span> <span class="o">=</span> <span class="n">page_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span></div>
 </pre></div>
 
           </div>

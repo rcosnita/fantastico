@@ -63,6 +63,7 @@
   \item DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller), 
 		\hyperpage{36}
   \item DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{39}
+  \item DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{40}
 
   \indexspace
   \bigletter E
@@ -158,7 +159,7 @@
   \item list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
 		\hyperpage{41}
   \item list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{41}
+		\hyperpage{42}
   \item load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method), 
 		\hyperpage{23}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
@@ -225,6 +226,8 @@
   \item SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb), \hyperpage{28}
   \item SdkCommandVersion (class in fantastico.sdk.commands.command\_version), \hyperpage{28}
   \item SdkCore (class in fantastico.sdk.fantastico), \hyperpage{29}
+  \item serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method), 
+		\hyperpage{39}
   \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{13}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method), 
@@ -239,7 +242,7 @@
   \indexspace
   \bigletter T
   \item templates\_config (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{41}
+  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{42}
   \item TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller), 
 		\hyperpage{41}
   \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{30}

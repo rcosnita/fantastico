@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../dynamic_menu/dynamic_menu.html" title="Dynamic menu"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">fantastico 0.4.0-b112 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.4.0-b113 documentation</a> &raquo;</li>
           <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../../components_builtin.html" accesskey="U">Built in components</a> &raquo;</li> 
       </ul>
@@ -76,6 +76,11 @@ manner thanks to <strong>Dynamic pages</strong> extension.</p>
 </pre></div>
 </div>
 </li>
+<li><p class="first">Update your project database</p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk syncdb --db-command /usr/bin/mysql --comp-root &lt;comp_root&gt;
+</pre></div>
+</div>
+</li>
 <li><p class="first">Create <strong>master.html</strong> template file under <strong>&lt;comp_root&gt;/frontend/views/</strong>.</p>
 <div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
 
@@ -86,21 +91,21 @@ manner thanks to <strong>Dynamic pages</strong> extension.</p>
       <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content=</span><span class="s">&quot;{{page.keywords}}&quot;</span> <span class="nt">/&gt;</span>
       <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span> <span class="na">content=</span><span class="s">&quot;{{page.description}}&quot;</span> <span class="nt">/&gt;</span>
 
-      <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/frontend/static/css/bootstrap-responsive.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
-      <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/frontend/static/css/forhidraulic.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span><span class="nt">&gt;</span>
       <span class="nt">&lt;title&gt;</span>{{page.title}}<span class="nt">&lt;/title&gt;</span>
    <span class="nt">&lt;/head&gt;</span>
 
    <span class="nt">&lt;body&gt;</span>
       <span class="nt">&lt;h1&gt;</span>{{page.article_left.value}}<span class="nt">&lt;/h1&gt;</span>
 
-      <span class="nt">&lt;h2&gt;</span>{{page.article_right.value}}<span class="nt">&lt;/h1&gt;</span>
+      <span class="nt">&lt;h2&gt;</span>{{page.article_right.value}}<span class="nt">&lt;/h2&gt;</span>
    <span class="nt">&lt;/body&gt;</span>
  <span class="nt">&lt;/html&gt;</span>
 </pre></div>
 </div>
 </li>
 </ol>
+<p>After you integrated <strong>dynamic pages</strong> extension into your project you can access
+<a class="reference external" href="http://localhost:12000/dynamic/test/default/page">http://localhost:12000/dynamic/test/default/page</a> from a browser. You should see a very simple dynamic page rendered.</p>
 </div>
 <div class="section" id="current-limitations">
 <h2>Current limitations</h2>
@@ -120,7 +125,7 @@ manner thanks to <strong>Dynamic pages</strong> extension.</p>
 <dd><p>This class provides the API for managing dynamic pages. In addition, it creates the special route <strong>/dynamic/&lt;page_url&gt;</strong>
 used to access pages stored in the database. From dynamic pages module perspective, a web page is nothing more than a relation
 between <a class="reference internal" href="#fantastico.contrib.dynamic_pages.models.pages.DynamicPage" title="fantastico.contrib.dynamic_pages.models.pages.DynamicPage"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.contrib.dynamic_pages.models.pages.DynamicPage</span></tt></a> and
-<tt class="xref py py-class docutils literal"><span class="pre">fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel</span></tt>.</p>
+<a class="reference internal" href="#fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel" title="fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel</span></tt></a>.</p>
 <img alt="../../../_images/erd1.png" src="../../../_images/erd1.png" />
 <p>A typical template for dynamic pages might look like:</p>
 <div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
@@ -145,6 +150,13 @@ between <a class="reference internal" href="#fantastico.contrib.dynamic_pages.mo
  <span class="nt">&lt;/html&gt;</span>
 </pre></div>
 </div>
+<dl class="method">
+<dt id="fantastico.contrib.dynamic_pages.pages_router.PagesRouter.serve_dynamic_page">
+<tt class="descname">serve_dynamic_page</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_pages/pages_router.html#PagesRouter.serve_dynamic_page"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method is used to route all /dynamic/... requests to database pages. It renders the configured template into
+database binded to <tt class="xref py py-class docutils literal"><span class="pre">fantastico.contrib.models.pages.DynamicPageModel</span></tt> values.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -173,6 +185,12 @@ between <a class="reference internal" href="#fantastico.contrib.dynamic_pages.mo
 </pre></div>
 </div>
 <p>Usually it does not make sense to display dynamic page unique identifier but you can do it if necessary.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel">
+<em class="property">class </em><tt class="descclassname">fantastico.contrib.dynamic_pages.models.pages.</tt><tt class="descname">DynamicPageModel</tt><big>(</big><em>page_id=None</em>, <em>name=None</em>, <em>value=None</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/dynamic_pages/models/pages.html#DynamicPageModel"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class defines how page models looks like. A page model defines the actual content for en existing page.</p>
 </dd></dl>
 
 </div>

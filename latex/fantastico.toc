@@ -68,10 +68,10 @@
 \contentsline {subsubsection}{Current limitations}{38}{subsubsection*.167}
 \contentsline {subsubsection}{Technical summary}{38}{subsubsection*.168}
 \contentsline {subsection}{\numberline {3.8.3}Tracking codes}{40}{subsection.3.8.3}
-\contentsline {subsubsection}{Analytic solutions}{40}{subsubsection*.171}
-\contentsline {subsubsection}{Integration}{40}{subsubsection*.172}
-\contentsline {subsubsection}{Current limitations}{41}{subsubsection*.173}
-\contentsline {subsubsection}{Technical summary}{41}{subsubsection*.174}
+\contentsline {subsubsection}{Analytic solutions}{40}{subsubsection*.173}
+\contentsline {subsubsection}{Integration}{41}{subsubsection*.174}
+\contentsline {subsubsection}{Current limitations}{41}{subsubsection*.175}
+\contentsline {subsubsection}{Technical summary}{41}{subsubsection*.176}
 \contentsline {chapter}{\numberline {4}How to articles}{43}{chapter.4}
 \contentsline {section}{\numberline {4.1}MVC How to}{43}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Code the model}{43}{subsection.4.1.1}
@@ -80,14 +80,14 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{44}{subsection.4.1.4}
 \contentsline {section}{\numberline {4.2}Deployment how to}{44}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{45}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{46}{subsubsection*.179}
+\contentsline {subsubsection}{Setup}{46}{subsubsection*.181}
 \contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{46}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{47}{subsubsection*.180}
-\contentsline {subsubsection}{Optimization}{47}{subsubsection*.181}
-\contentsline {subsubsection}{Setup with S3}{48}{subsubsection*.182}
+\contentsline {subsubsection}{Setup}{47}{subsubsection*.182}
+\contentsline {subsubsection}{Optimization}{47}{subsubsection*.183}
+\contentsline {subsubsection}{Setup with S3}{48}{subsubsection*.184}
 \contentsline {section}{\numberline {4.3}Static assets}{48}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{48}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{49}{subsubsection*.183}
+\contentsline {subsubsection}{Favicon}{49}{subsubsection*.185}
 \contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{49}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Creating a new project}{49}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Create first component}{49}{subsection.4.4.1}
@@ -96,4 +96,4 @@
 \contentsline {chapter}{\numberline {5}Changes}{51}{chapter.5}
 \contentsline {chapter}{\numberline {6}Build status}{53}{chapter.6}
 \contentsline {chapter}{\numberline {7}License}{55}{chapter.7}
-\contentsline {chapter}{Index}{57}{section*.184}
+\contentsline {chapter}{Index}{57}{section*.186}

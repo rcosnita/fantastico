@@ -40,6 +40,12 @@ Integration
       INSERT INTO page_models(page_id, name, value)
       VALUES(1, 'article_right', '<p class="hello_world_right">Hello world right.</p>');
 
+#. Update your project database
+
+   .. code-block:: bash
+
+      fsdk syncdb --db-command /usr/bin/mysql --comp-root <comp_root>
+
 #. Create **master.html** template file under **<comp_root>/frontend/views/**.
 
    .. code-block:: html
@@ -53,17 +59,18 @@ Integration
             <meta name="keywords" content="{{page.keywords}}" />
             <meta name="description" content="{{page.description}}" />
 
-            <link href="/frontend/static/css/bootstrap-responsive.css" rel="stylesheet">
-            <link href="/frontend/static/css/forhidraulic.css" rel="stylesheet">
             <title>{{page.title}}</title>
          </head>
 
          <body>
             <h1>{{page.article_left.value}}</h1>
 
-            <h2>{{page.article_right.value}}</h1>
+            <h2>{{page.article_right.value}}</h2>
          </body>
        </html>
+
+After you integrated **dynamic pages** extension into your project you can access
+http://localhost:12000/dynamic/test/default/page from a browser. You should see a very simple dynamic page rendered.
 
 Current limitations
 -------------------
@@ -80,4 +87,7 @@ Technical summary
    :members:
 
 .. autoclass:: fantastico.contrib.dynamic_pages.models.pages.DynamicPage
+   :members:
+
+.. autoclass:: fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel
    :members:
