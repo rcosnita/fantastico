@@ -59,17 +59,18 @@ Integration
             <meta name="keywords" content="{{page.keywords}}" />
             <meta name="description" content="{{page.description}}" />
 
-            <link href="/frontend/static/css/bootstrap-responsive.css" rel="stylesheet">
-            <link href="/frontend/static/css/forhidraulic.css" rel="stylesheet">
             <title>{{page.title}}</title>
          </head>
 
          <body>
             <h1>{{page.article_left.value}}</h1>
 
-            <h2>{{page.article_right.value}}</h1>
+            <h2>{{page.article_right.value}}</h2>
          </body>
        </html>
+
+After you integrated **dynamic pages** extension into your project you can access
+http://localhost:12000/dynamic/test/default/page from a browser. You should see a very simple dynamic page rendered.
 
 Current limitations
 -------------------
