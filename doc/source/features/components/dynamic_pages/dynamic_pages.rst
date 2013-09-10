@@ -25,7 +25,7 @@ Integration
 
    .. code-block:: bash
 
-      fsdk activate-extension --name dynamic_menu --comp-root <comp_root>
+      fsdk activate-extension --name dynamic_pages --comp-root <comp_root>
 
 #. Add new dynamic pages to your project using **<comp_root>/sql/create_data.sql**.
 
