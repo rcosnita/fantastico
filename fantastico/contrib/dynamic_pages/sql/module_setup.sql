@@ -41,8 +41,5 @@ CREATE TABLE page_models(
 	page_id INT NOT NULL,
 	name VARCHAR(100) NOT NULL,
 	value TEXT NOT NULL,
-	selected BOOLEAN NOT NULL DEFAULT False,
-	target VARCHAR(100),
-	additional_data TEXT,
 	PRIMARY KEY (entry_id, page_id),
 	CONSTRAINT fk_pagemodels_page FOREIGN KEY (page_id) REFERENCES pages(id));
