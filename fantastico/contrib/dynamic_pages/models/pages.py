@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.mvc import BASEMODEL
 from sqlalchemy.schema import Column
-from sqlalchemy.types import Integer, String, Text, Boolean
+from sqlalchemy.types import Integer, String, Text
 
 class DynamicPage(BASEMODEL):
     '''This model holds meta information about dynamic pages. Below you can find all meta information for a dynamic page:
