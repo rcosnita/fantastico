@@ -94,6 +94,9 @@
 \contentsline {subsection}{\numberline {4.4.2}Customize dev server}{50}{subsection.4.4.2}
 \contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{50}{subsection.4.4.3}
 \contentsline {chapter}{\numberline {5}Changes}{51}{chapter.5}
-\contentsline {chapter}{\numberline {6}Build status}{53}{chapter.6}
-\contentsline {chapter}{\numberline {7}License}{55}{chapter.7}
-\contentsline {chapter}{Index}{57}{section*.186}
+\contentsline {section}{\numberline {5.1}Feedback}{51}{section.5.1}
+\contentsline {section}{\numberline {5.2}Versions}{51}{section.5.2}
+\contentsline {chapter}{\numberline {6}Provide feedback}{53}{chapter.6}
+\contentsline {chapter}{\numberline {7}Build status}{55}{chapter.7}
+\contentsline {chapter}{\numberline {8}License}{57}{chapter.8}
+\contentsline {chapter}{Index}{59}{section*.186}

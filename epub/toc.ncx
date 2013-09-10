@@ -537,6 +537,24 @@
         <text>Changes</text>
       </navLabel>
       <content src="changes.html" />
+      <navPoint id="navPoint69" playOrder="69">
+        <navLabel>
+          <text>Changes</text>
+        </navLabel>
+        <content src="changes.html" />
+      </navPoint>
+      <navPoint id="navPoint70" playOrder="70">
+        <navLabel>
+          <text>Feedback</text>
+        </navLabel>
+        <content src="changes.html#feedback" />
+      </navPoint>
+      <navPoint id="navPoint71" playOrder="71">
+        <navLabel>
+          <text>Versions</text>
+        </navLabel>
+        <content src="changes.html#versions" />
+      </navPoint>
     </navPoint>
   </navMap>
 </ncx>
