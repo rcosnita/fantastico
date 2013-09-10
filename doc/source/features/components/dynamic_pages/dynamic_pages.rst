@@ -40,6 +40,12 @@ Integration
       INSERT INTO page_models(page_id, name, value)
       VALUES(1, 'article_right', '<p class="hello_world_right">Hello world right.</p>');
 
+#. Update your project database
+
+   .. code-block:: bash
+
+      fsdk syncdb --db-command /usr/bin/mysql --comp-root <comp_root>
+
 #. Create **master.html** template file under **<comp_root>/frontend/views/**.
 
    .. code-block:: html
