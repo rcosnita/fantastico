@@ -87,3 +87,6 @@ Technical summary
 
 .. autoclass:: fantastico.contrib.dynamic_pages.models.pages.DynamicPage
    :members:
+
+.. autoclass:: fantastico.contrib.dynamic_pages.models.pages.DynamicPageModel
+   :members:
