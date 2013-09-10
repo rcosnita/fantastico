@@ -43,3 +43,13 @@ CREATE TABLE page_models(
 	value TEXT NOT NULL,
 	PRIMARY KEY (entry_id, page_id),
 	CONSTRAINT fk_pagemodels_page FOREIGN KEY (page_id) REFERENCES pages(id));
+
+########## Insert a sample page also used for integration tests
+INSERT INTO pages(id, name, url, template, keywords, description, title, language)
+VALUES(1, '/test/default/page', '/test/default/page', '/dynamic_pages/views/sample_template.html', 'keyword1', 'description', 'title', 'ro-RO');
+
+INSERT INTO page_models(page_id, name, value)
+VALUES(1, 'article_title', 'article title');
+
+INSERT INTO page_models(page_id, name, value)
+VALUES(1, 'article_content', 'article content');
