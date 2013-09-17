@@ -11,6 +11,10 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 Versions
 --------
 
+* v0.4.1 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
+   * Fix a bug into analytics component sample data insert.
+   * Fix a bug into component rendering for no json responses coming for given url.
+
 * v0.4.0 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
    * Fantastico SDK commands display official link to command documentation.
    * Fantastico SDK syncdb command.
