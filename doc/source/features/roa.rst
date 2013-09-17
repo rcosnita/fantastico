@@ -55,7 +55,7 @@ A more convenient way for this problem is to provide some additional information
 
 .. code-block:: python
 
-   @Resource(name="app-setting", url="/api/app-settings")
+   @Resource(name="app-setting", url="/app-settings")
    class AppSetting(BASEMODEL):
       id = Column("id", Integer, primary_key=True, autoincrement=True)
       name = Column("name", String(50), unique=True, nullable=False)
@@ -67,10 +67,10 @@ A more convenient way for this problem is to provide some additional information
 
 Once the model is decorated, I expect to have a fully functional API which I can easily invoke through HTTP calls:
 
-   * GET - /api/app-settings - list all application settings (supports filtering, ordering and pagination)
-   * POST /api/app-settings - create a new app setting.
-   * PUT /api/app-settings/:id - update an existing application setting.
-   * DELETE /api/app-settings/:id - delete an existing application setting.
+   * GET - /api/app-settings/latest - list all application settings (supports filtering, ordering and pagination)
+   * POST /api/app-settings/latest - create a new app setting.
+   * PUT /api/app-settings/latest/:id - update an existing application setting.
+   * DELETE /api/app-settings/latest/:id - delete an existing application setting.
 
 Versioning
 ----------
@@ -79,7 +79,7 @@ It is always a good practice to support API versioning. Going a step further wit
 
 .. code-block:: python
 
-   @Resource(name="app-setting", url="/api/app-settings", version=1.0)
+   @Resource(name="app-setting", url="/app-settings", version=1.0)
    class AppSetting(BASEMODEL):
       id = Column("id", Integer, primary_key=True, autoincrement=True)
       name = Column("name", String(50), unique=True, nullable=False)
@@ -89,7 +89,7 @@ It is always a good practice to support API versioning. Going a step further wit
          self.name = name
          self.value = value
    
-   @Resource(name="app-setting", url="/api/app-settings", version=2.0)
+   @Resource(name="app-setting", url="/app-settings", version=2.0)
    class AppSettingV2(BASEMODEL):
       id = Column("id", Integer, primary_key=True, autoincrement=True)
       name = Column("name", String(80), unique=True, nullable=False)
