@@ -27,3 +27,6 @@ CREATE TABLE tracking_codes(
 	PRIMARY KEY (id),
 	CONSTRAINT unq_tracking_codes_provider UNIQUE(provider)
 );
+
+INSERT INTO tracking_codes(provider, script)
+VALUES ('Google Analytics', '<script>test snippet</script>');
