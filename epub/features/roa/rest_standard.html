@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>REST API standard</title>
+    
+    <link rel="stylesheet" href="../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../index.html">fantastico 0.5.0-b116 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="rest-api-standard">
+<h1>REST API standard</h1>
+<p>In this document you can find the standard behavior imposed for Resource generated apis (<a class="reference internal" href="../roa.html"><em>ROA (Resource Oriented Architecture)</em></a>). For better
+understanding how APIs will behave let&#8217;s assume we have the following resource defined:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AppSettingV2</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+   <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<div class="section" id="resource-collection">
+<h2>Resource collection</h2>
+<p>Each resource will have an API entry point which lists all available resources of same type (e.g <strong>AppSettingV2</strong>).
+This entry point supports the following additional operations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Pagination of resources.</li>
+<li>Sorting of resources.</li>
+<li>Filtering of resources.</li>
+</ul>
+</div></blockquote>
+<p>The main entry point for <strong>AppSettingV2</strong> collection of resources is <strong>/api/app-settings/2.0</strong>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="41%" />
+<col width="49%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>HTTP Verb</strong></td>
+<td><strong>URL</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>GET</td>
+<td>/api/app-settings/2.0?offset=0&amp;limit=100</td>
+<td>Get the first 100 settings.</td>
+</tr>
+<tr class="row-odd"><td>GET</td>
+<td>/api/app-settings/2.0?order=[{name: desc}, {value: asc}]</td>
+<td>Order settings by name (descending) and values (ascending).</td>
+</tr>
+<tr class="row-even"><td>GET</td>
+<td>/api/app-settings/2.0?filter=&lt;complex filter&gt;</td>
+<td>Read filtering section for understanding how you can define filters.</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>/api/app-settings/2.0</td>
+<td>Create a new custom setting</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="pagination">
+<h3>Pagination</h3>
+<p>When requesting a given resource collection a subset of this collection will be retrived.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>offset</strong> - defines which is the start record of the API.</li>
+<li><strong>limit</strong> - defines the maximum number of items I want to retrieve.</li>
+</ul>
+</div></blockquote>
+<p>A possible result for <strong>AppSettingV2</strong> collection retrieval looks like:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;items&quot;</span><span class="o">:</span>
+      <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;default_locale&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;en_US&quot;</span><span class="p">},</span>
+       <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;vat&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mf">0.19</span><span class="p">}],</span>
+   <span class="s2">&quot;totalItems&quot;</span><span class="o">:</span> <span class="mi">1000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sorting">
+<h3>Sorting</h3>
+<p>When requesting a given resource collection sorted you can specify the sorting criteria:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>order</strong> - a JSON list containing dictionary where each dictionary key is the field used for sorting and each dictionary value is sorting direction.</li>
+<li>If you don&#8217;t specify the order items will be retrieved in the order in which they are stored (consider this random order).</li>
+<li>Order list is evaluated from left to right with left most element having the highest priority.</li>
+</ul>
+</div></blockquote>
+<p>A possible result for <strong>AppSettingV2</strong> collection retrieval looks like:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;items&quot;</span><span class="o">:</span>
+      <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;vat&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mf">0.19</span><span class="p">},</span>
+       <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;default_locale&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;en_US&quot;</span><span class="p">}],</span>
+   <span class="s2">&quot;totalItems&quot;</span><span class="o">:</span> <span class="mi">1000</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="filtering">
+<h3>Filtering</h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

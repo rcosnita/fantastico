@@ -280,6 +280,9 @@
     <item id="features_component_reusage.html"
           href="features/component_reusage.html"
           media-type="application/xhtml+xml" />
+    <item id="features_roa.html"
+          href="features/roa.html"
+          media-type="application/xhtml+xml" />
     <item id="features_routing_engine.html"
           href="features/routing_engine.html"
           media-type="application/xhtml+xml" />
@@ -294,6 +297,9 @@
           media-type="application/xhtml+xml" />
     <item id="features_components_tracking_codes_tracking_codes.html"
           href="features/components/tracking_codes/tracking_codes.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_roa_rest_standard.html"
+          href="features/roa/rest_standard.html"
           media-type="application/xhtml+xml" />
     <item id="features_sdk_command_fantastico.html"
           href="features/sdk/command_fantastico.html"
@@ -321,6 +327,7 @@
     <itemref idref="features_request_response.html" />
     <itemref idref="features_routing_engine.html" />
     <itemref idref="features_mvc.html" />
+    <itemref idref="features_roa.html" />
     <itemref idref="features_sdk.html" />
     <itemref idref="features_sdk_command_activate_extension.html" />
     <itemref idref="features_sdk_command_fantastico.html" />

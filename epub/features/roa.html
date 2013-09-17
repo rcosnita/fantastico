@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ROA (Resource Oriented Architecture)</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sdk.html" title="SDK"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mvc.html" title="Model View Controller"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.5.0-b116 documentation</a> &raquo;</li>
+          <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="roa-resource-oriented-architecture">
+<h1>ROA (Resource Oriented Architecture)</h1>
+<p>Resource Oriented Architecture (REST) is incredible popular nowadays for the following reasons:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Increased scalability into applications.</li>
+<li>Easily integration between systems.</li>
+<li>Intuitive modelling of business problems.</li>
+<li>Stateful imperative programming pains removed.</li>
+</ul>
+</div></blockquote>
+<p>You can find many information about advantages of REST and why it is recommended to use such an architecure. For further reading
+you can visit <a class="reference external" href="http://en.wikipedia.org/wiki/Representational_state_transfer">http://en.wikipedia.org/wiki/Representational_state_transfer</a>.</p>
+<p>In Fantastisco framework we firmly encourage REST approach into projects. We even go a step further in this direction, by
+standardising REST APIs and providing REST APIs generator over implemented models.</p>
+<div class="section" id="simple-use-cases">
+<h2>Simple use cases</h2>
+</div>
+<div class="section" id="application-settings-stored-in-database">
+<h2>Application settings stored in database</h2>
+<p>Imagine you have a model called <strong>AppSetting</strong> meant to define how custom settings attriutes which influence your application.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">AppSetting</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+   <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>In a standard <strong>MVC</strong> (Model View Controller) web application once you have defined the above mentioned fantastico model you would
+have to do the following: (for providing minimal CRUD)</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Create a <a class="reference internal" href="mvc.html#fantastico.mvc.controller_decorators.Controller" title="fantastico.mvc.controller_decorators.Controller"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.controller_decorators.Controller</span></tt></a></li>
+<li>Implement listing of custom settings
+#. Support pagination.
+#. Support filtering.
+#. Support ordering.</li>
+<li>Implement individual custom setting retrieval (by id).</li>
+<li>Implement Create custom setting.</li>
+<li>Implement Update custom setting.</li>
+<li>Implement Delete custom setting.</li>
+<li>For each operation implemented provide validation logic.</li>
+<li>For each operation implemented provide error handling logic.</li>
+</ol>
+</div></blockquote>
+<p>This is an extremely repetitive task and involves quite a lot of boiler plate. In addition no standard is imposed for how
+pagination, sorting and filtering work.</p>
+<p>A more convenient way for this problem is to provide some additional information about the model:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AppSetting</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+   <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>Once the model is decorated, I expect to have a fully functional API which I can easily invoke through HTTP calls:</p>
+<blockquote>
+<div><ul class="simple">
+<li>GET - /api/app-settings/latest - list all application settings (supports filtering, ordering and pagination)</li>
+<li>POST /api/app-settings/latest - create a new app setting.</li>
+<li>PUT /api/app-settings/latest/:id - update an existing application setting.</li>
+<li>DELETE /api/app-settings/latest/:id - delete an existing application setting.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="versioning">
+<h2>Versioning</h2>
+<p>It is always a good practice to support API versioning. Going a step further with AppSetting resource:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AppSetting</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+   <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AppSettingV2</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+   <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>The above example will actually provide the following endpoints which can be easily accessible:</p>
+<blockquote>
+<div><ul class="simple">
+<li>/api/app-settings/1.0</li>
+<li>/api/app-settings/2.0</li>
+<li>/api/app-settings/latest (which at this moment points to the most recent version of the api)</li>
+</ul>
+</div></blockquote>
+<p>If we want to retrieve all application settings using version 1.0 we open a browser and point it to <strong>/api/app-settings/1.0</strong>. For
+avoiding multiple APIs chaos we strongly encourage to use the latest available API.</p>
+</div>
+<div class="section" id="advantages">
+<h2>Advantages</h2>
+<blockquote>
+<div><ul class="simple">
+<li>Extremely fast development of uniform APIs which behave predictable.</li>
+<li>Extremely easy to enforce exception handling logic.</li>
+<li>Extremely easy to enforce security for APIs.</li>
+<li>Extremely easy to keep APIs in sync with resource changes.</li>
+<li>DRY (don&#8217;t repeat yourself).</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="fantastico-roa-apis-standard">
+<h2>Fantastico ROA APIs standard</h2>
+<p>Please read <a class="reference internal" href="roa/rest_standard.html"><em>REST API standard</em></a> for understanding how the generated API will behave and which are the routes
+provided out of the box.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
