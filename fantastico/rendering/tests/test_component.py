@@ -181,7 +181,7 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
                                 "HTTP_CONTENT_TYPE": "application/json"}
 
         environment, url_invoker_cls = self._mock_render_dependencies(expected_template, expected_url, expected_environment,
-                                                                      expected_result,)
+                                                                      expected_result, json_output=False)
 
         component = Component(environment, url_invoker_cls)
 
@@ -302,7 +302,8 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
 
         return (environment, parser)
 
-    def _mock_render_dependencies(self, expected_template, expected_url, expected_environment, expected_output):
+    def _mock_render_dependencies(self, expected_template, expected_url, expected_environment, expected_output,
+                                  json_output=True):
         '''This method mocks all rendering dependencies and retrieves desired values.'''
 
         url_invoker = Mock()
@@ -311,7 +312,10 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
             self.assertEqual(expected_url, url)
             self.assertEqual("Simple header", headers["Custom-Header"])
 
-            return [json.dumps({"message": "hello"}).encode()]
+            if json_output:
+                return [json.dumps({"message": expected_output}).encode()]
+
+            return [expected_output.encode()]
 
         url_invoker.invoke_url = invoke_url
 
@@ -331,7 +335,10 @@ class ComponentUnitTests(FantasticoUnitTestsCase):
         environment.get_template = get_template
 
         def render(model):
-            self.assertEqual(model, {"model": {"message": "hello"}})
+            if json_output:
+                self.assertEqual(model, {"model": {"message": expected_output}})
+            else:
+                self.assertEqual(model, {"model": expected_output})
 
             return expected_output
 

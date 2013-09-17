@@ -187,7 +187,14 @@ class Component(Extension):
         response = url_invoker.invoke_url(url, request.headers)[0]
 
         try:
-            return self.environment.get_template(template).render({"model": json.loads(response.decode())})
+            json_response = None
+
+            try:
+                json_response = json.loads(response.decode())
+            except ValueError as ex:
+                json_response = response.decode()
+
+            return self.environment.get_template(template).render({"model": json_response})
         except TemplateNotFound as ex:
             raise FantasticoTemplateNotFoundError("Template %s does not exist." % template, ex)
         finally:
