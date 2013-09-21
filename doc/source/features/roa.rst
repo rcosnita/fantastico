@@ -67,10 +67,10 @@ A more convenient way for this problem is to provide some additional information
 
 Once the model is decorated, I expect to have a fully functional API which I can easily invoke through HTTP calls:
 
-   * GET - /api/app-settings/latest - list all application settings (supports filtering, ordering and pagination)
-   * POST /api/app-settings/latest - create a new app setting.
-   * PUT /api/app-settings/latest/:id - update an existing application setting.
-   * DELETE /api/app-settings/latest/:id - delete an existing application setting.
+   * GET    - /api/latest/app-settings - list all application settings (supports filtering, ordering and pagination)
+   * POST   - /api/latest/app-settings - create a new app setting.
+   * PUT    - /api/latest/app-settings/:id - update an existing application setting.
+   * DELETE - /api/latest/app-settings/:id - delete an existing application setting.
 
 Versioning
 ----------
@@ -101,11 +101,11 @@ It is always a good practice to support API versioning. Going a step further wit
 
 The above example will actually provide the following endpoints which can be easily accessible:
 
-   * /api/app-settings/1.0
-   * /api/app-settings/2.0
-   * /api/app-settings/latest (which at this moment points to the most recent version of the api)
+   * /api/1.0/app-settings
+   * /api/2.0/app-settings
+   * /api/latest/app-settings (which at this moment points to the most recent version of the api)
 
-If we want to retrieve all application settings using version 1.0 we open a browser and point it to **/api/app-settings/1.0**. For
+If we want to retrieve all application settings using version 1.0 we open a browser and point it to **/api/1.0/app-settings**. For
 avoiding multiple APIs chaos we strongly encourage to use the latest available API.
 
 Advantages

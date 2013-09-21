@@ -29,25 +29,25 @@ This entry point supports the following additional operations:
 
 The main entry point for **AppSettingV2** collection of resources is **/api/app-settings/2.0**.
 
-+---------------+----------------------------------------------------------+----------------------------------------------------------------------+
-| **HTTP Verb** | **URL**                                                  | **Description**                                                      |
-+---------------+----------------------------------------------------------+----------------------------------------------------------------------+
-| GET           | /api/app-settings/2.0?offset=0&limit=100                 | Get the first 100 settings.                                          |
-+---------------+----------------------------------------------------------+----------------------------------------------------------------------+
-| GET           | /api/app-settings/2.0?order=[{name: desc}, {value: asc}] | Order settings by name (descending) and values (ascending).          |
-+---------------+----------------------------------------------------------+----------------------------------------------------------------------+
-| GET           | /api/app-settings/2.0?filter=<complex filter>            | Read filtering section for understanding how you can define filters. |
-+---------------+----------------------------------------------------------+----------------------------------------------------------------------+
-| POST          | /api/app-settings/2.0                                    | Create a new custom setting                                          |
-+---------------+----------------------------------------------------------+----------------------------------------------------------------------+
++---------------+----------------------------------------------------------+-------------------------------------------------------------+
+| **HTTP Verb** | **URL**                                                  | **Description**                                             |
++---------------+----------------------------------------------------------+-------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?offset=0&limit=100                 | Get the first 100 settings.                                 |
++---------------+----------------------------------------------------------+-------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?order=[{name: desc}, {value: asc}] | Order settings by name (descending) and values (ascending). |
++---------------+----------------------------------------------------------+-------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=<complex filter>            | See :ref:`roa-filtering`.                                   |
++---------------+----------------------------------------------------------+-------------------------------------------------------------+
+| POST          | /api/2.0/app-settings                                    | Create a new custom setting                                 |
++---------------+----------------------------------------------------------+-------------------------------------------------------------+
 
 Pagination
 ~~~~~~~~~~
 
 When requesting a given resource collection a subset of this collection will be retrived.
 
-   * **offset** - defines which is the start record of the API.
-   * **limit** - defines the maximum number of items I want to retrieve.
+   * **offset** - defines which is the start record of the API. (Default value is 0)
+   * **limit** - defines the maximum number of items I want to retrieve. (Default value is 10)
 
 A possible result for **AppSettingV2** collection retrieval looks like:
 
@@ -80,5 +80,34 @@ A possible result for **AppSettingV2** collection retrieval looks like:
       "totalItems": 1000
    }
 
+.. _roa-filtering:
+
 Filtering
 ~~~~~~~~~
+
+In fantastico, APIs filtering is done by following a very simple Resource Query Language (RQL):
+
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| **HTTP Verb** | **URL**                                                               | **Description**                                                          |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=eq(name, "vat")                          | Get all settings named **vat**.                                          |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=like(name, "%vat%")                      | Get all settings which name contains **vat**.                            |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=gt(value, 0.19)                          | Get all settings which have value greater than **0.19**.                 |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=ge(value, 0.19)                          | Get all settings which have value greater / equals than / with **0.19**. |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=lt(value, 0.19)                          | Get all settings which have value less than **0.19**.                    |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=le(value, 0.19)                          | Get all settings which have value less / equals than / with **0.19**.    |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=in(name, ["vat", "default_locale"])      | Get all settings which name is **vat** or **default_locale**.            |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?filter=and(eq(name, "vat"), eq(value, "en_US")) | Get all settings which name is **vat** and value is **en_US**.           |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+| GET           | /api/2.0/app-settings?&filter=or(eq(name, "vat"), eq(value, "en_US")) | Get all settings which name is **vat** or value is **en_US**.            |
++---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
+
+You can see in the above example that the query language supported by Fantastico APIs facilitate very complex filtering on resources. It is always
+recommended to send pagination parameters in order to limit the number of resources retrieved from each API.
