@@ -3,8 +3,8 @@ ROA (Resource Oriented Architecture)
 
 Resource Oriented Architecture (REST) is incredible popular nowadays for the following reasons:
 
-   * Increased scalability into applications.
-   * Easily integration between systems.
+   * Increased scalability of applications.
+   * Easy integration of systems.
    * Intuitive modelling of business problems.
    * Stateful imperative programming pains removed.
 
@@ -20,7 +20,7 @@ Simple use cases
 Application settings stored in database
 ---------------------------------------
 
-Imagine you have a model called **AppSetting** meant to define how custom settings attriutes which influence your application.
+Imagine you have a model called **AppSetting** meant to define custom settings attributes which influence your application.
 
 .. code-block:: python
 
@@ -33,14 +33,16 @@ Imagine you have a model called **AppSetting** meant to define how custom settin
          self.name = name
          self.value = value
 
-In a standard **MVC** (Model View Controller) web application once you have defined the above mentioned fantastico model you would
+In a standard **MVC** (:doc:`/features/mvc`) web application once you have defined the above mentioned fantastico model you would
 have to do the following: (for providing minimal CRUD)
 
    #. Create a :py:class:`fantastico.mvc.controller_decorators.Controller`
    #. Implement listing of custom settings
+
       #. Support pagination.
       #. Support filtering.
       #. Support ordering.
+
    #. Implement individual custom setting retrieval (by id).
    #. Implement Create custom setting.
    #. Implement Update custom setting.
