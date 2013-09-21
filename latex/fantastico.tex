@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 17, 2013}
-\release{0.5.0-b116}
+\date{September 21, 2013}
+\release{0.5.0-b117}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5901a68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5ecfc00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1850,7 +1850,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x24f0408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2b77408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2132,10 +2132,10 @@ profile. You can read more on {\hyperref[get_started/settings:fantastico.setting
 Resource Oriented Architecture (REST) is incredible popular nowadays for the following reasons:
 \begin{itemize}
 \item {} 
-Increased scalability into applications.
+Increased scalability of applications.
 
 \item {} 
-Easily integration between systems.
+Easy integration of systems.
 
 \item {} 
 Intuitive modelling of business problems.
@@ -2157,7 +2157,7 @@ standardising REST APIs and providing REST APIs generator over implemented model
 
 \subsection{Application settings stored in database}
 \label{features/roa:application-settings-stored-in-database}
-Imagine you have a model called \textbf{AppSetting} meant to define how custom settings attriutes which influence your application.
+Imagine you have a model called \textbf{AppSetting} meant to define custom settings attributes which influence your application.
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{AppSetting}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
@@ -2170,7 +2170,7 @@ Imagine you have a model called \textbf{AppSetting} meant to define how custom s
       \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
 \end{Verbatim}
 
-In a standard \textbf{MVC} (Model View Controller) web application once you have defined the above mentioned fantastico model you would
+In a standard \textbf{MVC} ({\hyperref[features/mvc::doc]{\emph{Model View Controller}}}) web application once you have defined the above mentioned fantastico model you would
 have to do the following: (for providing minimal CRUD)
 \begin{enumerate}
 \item {} 
@@ -2178,9 +2178,17 @@ Create a {\hyperref[features/mvc:fantastico.mvc.controller_decorators.Controller
 
 \item {} 
 Implement listing of custom settings
-\#. Support pagination.
-\#. Support filtering.
-\#. Support ordering.
+\begin{enumerate}
+\item {} 
+Support pagination.
+
+\item {} 
+Support filtering.
+
+\item {} 
+Support ordering.
+
+\end{enumerate}
 
 \item {} 
 Implement individual custom setting retrieval (by id).
@@ -2222,16 +2230,16 @@ A more convenient way for this problem is to provide some additional information
 Once the model is decorated, I expect to have a fully functional API which I can easily invoke through HTTP calls:
 \begin{itemize}
 \item {} 
-GET - /api/app-settings/latest - list all application settings (supports filtering, ordering and pagination)
+GET    - /api/latest/app-settings - list all application settings (supports filtering, ordering and pagination)
 
 \item {} 
-POST /api/app-settings/latest - create a new app setting.
+POST   - /api/latest/app-settings - create a new app setting.
 
 \item {} 
-PUT /api/app-settings/latest/:id - update an existing application setting.
+PUT    - /api/latest/app-settings/:id - update an existing application setting.
 
 \item {} 
-DELETE /api/app-settings/latest/:id - delete an existing application setting.
+DELETE - /api/latest/app-settings/:id - delete an existing application setting.
 
 \end{itemize}
 
@@ -2265,17 +2273,17 @@ It is always a good practice to support API versioning. Going a step further wit
 The above example will actually provide the following endpoints which can be easily accessible:
 \begin{itemize}
 \item {} 
-/api/app-settings/1.0
+/api/1.0/app-settings
 
 \item {} 
-/api/app-settings/2.0
+/api/2.0/app-settings
 
 \item {} 
-/api/app-settings/latest (which at this moment points to the most recent version of the api)
+/api/latest/app-settings (which at this moment points to the most recent version of the api)
 
 \end{itemize}
 
-If we want to retrieve all application settings using version 1.0 we open a browser and point it to \textbf{/api/app-settings/1.0}. For
+If we want to retrieve all application settings using version 1.0 we open a browser and point it to \textbf{/api/1.0/app-settings}. For
 avoiding multiple APIs chaos we strongly encourage to use the latest available API.
 
 
@@ -2301,8 +2309,242 @@ DRY (don't repeat yourself).
 
 \subsection{Fantastico ROA APIs standard}
 \label{features/roa:fantastico-roa-apis-standard}
-Please read \code{/features/roa/rest\_standard} for understanding how the generated API will behave and which are the routes
+Please read {\hyperref[features/roa/rest_standard::doc]{\emph{REST API standard}}} for understanding how the generated API will behave and which are the routes
 provided out of the box.
+
+
+\section{REST API standard}
+\label{features/roa/rest_standard:rest-api-standard}\label{features/roa/rest_standard::doc}
+In this document you can find the standard behavior imposed for Resource generated apis ({\hyperref[features/roa::doc]{\emph{ROA (Resource Oriented Architecture)}}}). For better
+understanding how APIs will behave let's assume we have the following resource defined:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{2.0}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{AppSettingV2}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+   \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+   \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+\end{Verbatim}
+
+
+\subsection{Resource collection}
+\label{features/roa/rest_standard:resource-collection}
+Each resource will have an API entry point which lists all available resources of same type (e.g \textbf{AppSettingV2}).
+This entry point supports the following additional operations:
+\begin{itemize}
+\item {} 
+Pagination of resources.
+
+\item {} 
+Sorting of resources.
+
+\item {} 
+Filtering of resources.
+
+\end{itemize}
+
+The main entry point for \textbf{AppSettingV2} collection of resources is \textbf{/api/2.0/app-settings}.
+
+\begin{tabulary}{\linewidth}{|L|L|L|}
+\hline
+
+\textbf{HTTP Verb}
+ & 
+\textbf{URL}
+ & 
+\textbf{Description}
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?offset=0\&limit=100
+ & 
+Get the first 100 settings.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?order={[}desc(name), asc(value){]}
+ & 
+Order settings by name (descending) and value (ascending).
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=\textless{}complex filter\textgreater{}
+ & 
+See {\hyperref[features/roa/rest_standard:roa-filtering]{\emph{Filtering}}}.
+\\\hline
+
+POST
+ & 
+/api/2.0/app-settings
+ & 
+Create a new custom setting
+\\\hline
+\end{tabulary}
+
+
+
+\subsubsection{Pagination}
+\label{features/roa/rest_standard:pagination}
+When requesting a given resource collection a subset of this collection will be retrived.
+\begin{itemize}
+\item {} 
+\textbf{offset} - defines which is the start record of the API. (Default value is 0)
+
+\item {} 
+\textbf{limit} - defines the maximum number of items I want to retrieve. (Default value is 10)
+
+\end{itemize}
+
+A possible result for \textbf{AppSettingV2} collection retrieval looks like:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+   \PYG{l+s+s2}{\PYGZdq{}items\PYGZdq{}}\PYG{o}{:}
+      \PYG{p}{[}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}name\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}default\PYGZus{}locale\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}value\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}en\PYGZus{}US\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+       \PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}name\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}vat\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}value\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mf}{0.19}\PYG{p}{\PYGZcb{}}\PYG{p}{]}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}totalItems\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1000}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+
+\subsubsection{Sorting}
+\label{features/roa/rest_standard:sorting}
+When requesting a given resource collection sorted you can specify the sorting criteria:
+\begin{itemize}
+\item {} 
+\textbf{order} - a JSON list containing asc / desc function calls. This list is evaluated from left to right with left most element having the highest priority.
+
+\item {} 
+\textbf{asc} - is a function with one or more arguments which tells API an ascending order by given attributes.
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// retrieve all application settings ordered in ascending order of name and value}
+\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/2.0/app\PYGZhy{}settings?order=[asc(name, value)]\PYGZdq{}}\PYG{p}{;}
+\end{Verbatim}
+\end{quote}
+
+\item {} 
+\textbf{desc} - is a function with one or more arguments which tells API a descending order by given attributes.
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// retrieve all application settings ordered in descending order of name and value.}
+\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/2.0/app\PYGZhy{}settings?order=[desc(name, value)]\PYGZdq{}}\PYG{p}{;}
+\end{Verbatim}
+\end{quote}
+
+\item {} 
+\textbf{complex ordering} - you can easily specify different ordering criterias by resource attributes.
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// retrieve all application settings ordered in descending order of name and ascending order of value.}
+\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/2.0/app\PYGZhy{}settings?order=[desc(name), asc(value)]\PYGZdq{}}\PYG{p}{;}
+\end{Verbatim}
+\end{quote}
+
+\end{itemize}
+
+A possible result for \textbf{AppSettingV2} collection retrieval (\textbf{/api/2.0/app-settings?order={[}desc(name){]}}) looks like:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+   \PYG{l+s+s2}{\PYGZdq{}items\PYGZdq{}}\PYG{o}{:}
+      \PYG{p}{[}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{2}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}name\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}vat\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}value\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mf}{0.19}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+       \PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}name\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}default\PYGZus{}locale\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}value\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}en\PYGZus{}US\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{]}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}totalItems\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1000}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+
+\subsubsection{Filtering}
+\label{features/roa/rest_standard:roa-filtering}\label{features/roa/rest_standard:filtering}
+In fantastico, APIs filtering is done by following a very simple Resource Query Language (RQL):
+
+\begin{tabulary}{\linewidth}{|L|L|L|}
+\hline
+
+\textbf{HTTP Verb}
+ & 
+\textbf{URL}
+ & 
+\textbf{Description}
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=eq(name, ``vat'')
+ & 
+Get all settings named \textbf{vat}.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=like(name, ``\%vat\%'')
+ & 
+Get all settings which name contains \textbf{vat}.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=gt(value, 0.19)
+ & 
+Get all settings which have value greater than \textbf{0.19}.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=ge(value, 0.19)
+ & 
+Get all settings which have value greater / equals than / with \textbf{0.19}.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=lt(value, 0.19)
+ & 
+Get all settings which have value less than \textbf{0.19}.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=le(value, 0.19)
+ & 
+Get all settings which have value less / equals than / with \textbf{0.19}.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=in(name, {[}''vat'', ``default\_locale''{]})
+ & 
+Get all settings which name is \textbf{vat} or \textbf{default\_locale}.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?filter=and(eq(name, ``vat''), eq(value, ``en\_US''))
+ & 
+Get all settings which name is \textbf{vat} and value is \textbf{en\_US}.
+\\\hline
+
+GET
+ & 
+/api/2.0/app-settings?\&filter=or(eq(name, ``vat''), eq(value, ``en\_US''))
+ & 
+Get all settings which name is \textbf{vat} or value is \textbf{en\_US}.
+\\\hline
+\end{tabulary}
+
+
+You can see in the above example that the query language supported by Fantastico APIs facilitate very complex filtering on resources.
 
 
 \section{SDK}
@@ -2445,7 +2687,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x29c02f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x30472f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -2990,7 +3232,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3d561e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x43dd1e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

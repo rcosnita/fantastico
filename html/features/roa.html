@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ROA (Resource Oriented Architecture) &mdash; fantastico 0.5.0-b116 documentation</title>
+    <title>ROA (Resource Oriented Architecture) &mdash; fantastico 0.5.0-b117 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.0-b116',
+        VERSION:     '0.5.0-b117',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b116 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b117 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
-    <link rel="next" title="SDK" href="sdk.html" />
+    <link rel="next" title="REST API standard" href="roa/rest_standard.html" />
     <link rel="prev" title="Model View Controller" href="mvc.html" /> 
   </head>
   <body>
@@ -36,12 +36,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="sdk.html" title="SDK"
+          <a href="roa/rest_standard.html" title="REST API standard"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="mvc.html" title="Model View Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b116 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b117 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -56,8 +56,8 @@
 <p>Resource Oriented Architecture (REST) is incredible popular nowadays for the following reasons:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Increased scalability into applications.</li>
-<li>Easily integration between systems.</li>
+<li>Increased scalability of applications.</li>
+<li>Easy integration of systems.</li>
 <li>Intuitive modelling of business problems.</li>
 <li>Stateful imperative programming pains removed.</li>
 </ul>
@@ -71,7 +71,7 @@ standardising REST APIs and providing REST APIs generator over implemented model
 </div>
 <div class="section" id="application-settings-stored-in-database">
 <h2>Application settings stored in database<a class="headerlink" href="#application-settings-stored-in-database" title="Permalink to this headline">¶</a></h2>
-<p>Imagine you have a model called <strong>AppSetting</strong> meant to define how custom settings attriutes which influence your application.</p>
+<p>Imagine you have a model called <strong>AppSetting</strong> meant to define custom settings attributes which influence your application.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">AppSetting</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
@@ -82,15 +82,17 @@ standardising REST APIs and providing REST APIs generator over implemented model
       <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 </pre></div>
 </div>
-<p>In a standard <strong>MVC</strong> (Model View Controller) web application once you have defined the above mentioned fantastico model you would
+<p>In a standard <strong>MVC</strong> (<a class="reference internal" href="mvc.html"><em>Model View Controller</em></a>) web application once you have defined the above mentioned fantastico model you would
 have to do the following: (for providing minimal CRUD)</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li>Create a <a class="reference internal" href="mvc.html#fantastico.mvc.controller_decorators.Controller" title="fantastico.mvc.controller_decorators.Controller"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.controller_decorators.Controller</span></tt></a></li>
-<li>Implement listing of custom settings
-#. Support pagination.
-#. Support filtering.
-#. Support ordering.</li>
+<li>Implement listing of custom settings<ol class="arabic">
+<li>Support pagination.</li>
+<li>Support filtering.</li>
+<li>Support ordering.</li>
+</ol>
+</li>
 <li>Implement individual custom setting retrieval (by id).</li>
 <li>Implement Create custom setting.</li>
 <li>Implement Update custom setting.</li>
@@ -116,10 +118,10 @@ pagination, sorting and filtering work.</p>
 <p>Once the model is decorated, I expect to have a fully functional API which I can easily invoke through HTTP calls:</p>
 <blockquote>
 <div><ul class="simple">
-<li>GET - /api/app-settings/latest - list all application settings (supports filtering, ordering and pagination)</li>
-<li>POST /api/app-settings/latest - create a new app setting.</li>
-<li>PUT /api/app-settings/latest/:id - update an existing application setting.</li>
-<li>DELETE /api/app-settings/latest/:id - delete an existing application setting.</li>
+<li>GET    - /api/latest/app-settings - list all application settings (supports filtering, ordering and pagination)</li>
+<li>POST   - /api/latest/app-settings - create a new app setting.</li>
+<li>PUT    - /api/latest/app-settings/:id - update an existing application setting.</li>
+<li>DELETE - /api/latest/app-settings/:id - delete an existing application setting.</li>
 </ul>
 </div></blockquote>
 </div>
@@ -150,12 +152,12 @@ pagination, sorting and filtering work.</p>
 <p>The above example will actually provide the following endpoints which can be easily accessible:</p>
 <blockquote>
 <div><ul class="simple">
-<li>/api/app-settings/1.0</li>
-<li>/api/app-settings/2.0</li>
-<li>/api/app-settings/latest (which at this moment points to the most recent version of the api)</li>
+<li>/api/1.0/app-settings</li>
+<li>/api/2.0/app-settings</li>
+<li>/api/latest/app-settings (which at this moment points to the most recent version of the api)</li>
 </ul>
 </div></blockquote>
-<p>If we want to retrieve all application settings using version 1.0 we open a browser and point it to <strong>/api/app-settings/1.0</strong>. For
+<p>If we want to retrieve all application settings using version 1.0 we open a browser and point it to <strong>/api/1.0/app-settings</strong>. For
 avoiding multiple APIs chaos we strongly encourage to use the latest available API.</p>
 </div>
 <div class="section" id="advantages">
@@ -199,8 +201,8 @@ provided out of the box.</p>
   <p class="topless"><a href="mvc.html"
                         title="previous chapter">Model View Controller</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="sdk.html"
-                        title="next chapter">SDK</a></p>
+  <p class="topless"><a href="roa/rest_standard.html"
+                        title="next chapter">REST API standard</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/features/roa.txt"
@@ -230,12 +232,12 @@ provided out of the box.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="sdk.html" title="SDK"
+          <a href="roa/rest_standard.html" title="REST API standard"
              >next</a> |</li>
         <li class="right" >
           <a href="mvc.html" title="Model View Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b116 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b117 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
