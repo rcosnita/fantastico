@@ -151,6 +151,15 @@ are only invoked for **Create** and **Update**:
    * POST   - /api/latest/app-settings - create a new app setting. (validate method will be invoked).
    * PUT    - /api/latest/app-settings/:id - update an existing app setting. (validate method will be invoked).
 
+We are aware that there are some common validation cases which can be reused:
+
+   #. Email validation
+   #. Phone number validation
+   #. Credit Card number validation
+
+All common validation cases  are provided out of the box as methods part of ResourceValidator class. You can easily use them into
+your resource validator.
+
 Advantages
 ----------
 
