@@ -110,6 +110,47 @@ The above example will actually provide the following endpoints which can be eas
 If we want to retrieve all application settings using version 1.0 we open a browser and point it to **/api/1.0/app-settings**. For
 avoiding multiple APIs chaos we strongly encourage to use the latest available API.
 
+Validation
+----------
+
+Each resource requires validation for create / update operations. Validation is harder to be achieved through code introspection
+so in Fantastico for each defined resource you can define a validator which will be invoked automatically.
+
+.. code-block:: python
+
+   class AppSettingValidator(ResourceValidator):
+      def validate(self, resource):
+         errors = []
+         
+         if resource.name == "unsupported":
+            errors.append("Invalid setting name: %s" % resource.name)
+         
+         if len(resource.value) == 0:
+            errors.append("Setting %s value can not be empty. %s" % resource.name)
+         
+         if len(errors) == 0:
+            return
+         
+         raise FantasticoResourceError(errors)
+
+.. code-block:: python
+
+   @Resource(name="app-setting", url="/app-settings", version=2.0, validator=AppSettingValidator)
+   class AppSettingV2(BASEMODEL):
+      id = Column("id", Integer, primary_key=True, autoincrement=True)
+      name = Column("name", String(80), unique=True, nullable=False)
+      value = Column("value", Text, nullable=False)
+      
+      def __init__(self, name, value):
+         self.name = name
+         self.value = value
+
+If no validator is provided no validation is done on the given resource. Also, it is important to always remember that validators
+are only invoked for **Create** and **Update**:
+
+   * POST   - /api/latest/app-settings - create a new app setting. (validate method will be invoked).
+   * PUT    - /api/latest/app-settings/:id - update an existing app setting. (validate method will be invoked).
+
 Advantages
 ----------
 
