@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ROA (Resource Oriented Architecture) &mdash; fantastico 0.5.0-b117 documentation</title>
+    <title>ROA (Resource Oriented Architecture) &mdash; fantastico 0.5.0-b118 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.0-b117',
+        VERSION:     '0.5.0-b118',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b117 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b118 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="REST API standard" href="roa/rest_standard.html" />
     <link rel="prev" title="Model View Controller" href="mvc.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="mvc.html" title="Model View Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b117 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b118 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -160,6 +160,46 @@ pagination, sorting and filtering work.</p>
 <p>If we want to retrieve all application settings using version 1.0 we open a browser and point it to <strong>/api/1.0/app-settings</strong>. For
 avoiding multiple APIs chaos we strongly encourage to use the latest available API.</p>
 </div>
+<div class="section" id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h2>
+<p>Each resource requires validation for create / update operations. Validation is harder to be achieved through code introspection
+so in Fantastico for each defined resource you can define a validator which will be invoked automatically.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">AppSettingValidator</span><span class="p">(</span><span class="n">ResourceValidator</span><span class="p">):</span>
+   <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+      <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+
+      <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;unsupported&quot;</span><span class="p">:</span>
+         <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Invalid setting name: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+         <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Setting </span><span class="si">%s</span><span class="s"> value can not be empty. </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+         <span class="k">return</span>
+
+      <span class="k">raise</span> <span class="n">FantasticoResourceError</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">AppSettingValidator</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AppSettingV2</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+   <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>If no validator is provided no validation is done on the given resource. Also, it is important to always remember that validators
+are only invoked for <strong>Create</strong> and <strong>Update</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>POST   - /api/latest/app-settings - create a new app setting. (validate method will be invoked).</li>
+<li>PUT    - /api/latest/app-settings/:id - update an existing app setting. (validate method will be invoked).</li>
+</ul>
+</div></blockquote>
+</div>
 <div class="section" id="advantages">
 <h2>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline">¶</a></h2>
 <blockquote>
@@ -191,6 +231,7 @@ provided out of the box.</p>
 <li><a class="reference internal" href="#simple-use-cases">Simple use cases</a></li>
 <li><a class="reference internal" href="#application-settings-stored-in-database">Application settings stored in database</a></li>
 <li><a class="reference internal" href="#versioning">Versioning</a></li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
 <li><a class="reference internal" href="#advantages">Advantages</a></li>
 <li><a class="reference internal" href="#fantastico-roa-apis-standard">Fantastico ROA APIs standard</a></li>
 </ul>
@@ -237,7 +278,7 @@ provided out of the box.</p>
         <li class="right" >
           <a href="mvc.html" title="Model View Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b117 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b118 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
