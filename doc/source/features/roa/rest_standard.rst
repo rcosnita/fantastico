@@ -139,10 +139,26 @@ A collection is composed of multiple items (same resource type). You can used in
 +---------------+-------------------------+-------------------------------------------------------------+
 | **HTTP Verb** | **URL**                 | **Description**                                             |
 +---------------+-------------------------+-------------------------------------------------------------+
+| POST          | /api/2.0/app-settings   | Create a new application setting.                           |
++---------------+-------------------------+-------------------------------------------------------------+
 | PUT           | /api/2.0/app-settings/1 | Update application setting uniquely identified by **id** 1. |
 +---------------+-------------------------+-------------------------------------------------------------+
 | DELETE        | /api/2.0/app-settings/1 | Delete application setting uniquely identified by **id** 1. |
 +---------------+-------------------------+-------------------------------------------------------------+
+
+Create a new item
+~~~~~~~~~~~~~~~~~
+
+In order to create a new resource (e.g application setting resource) you must use the collection entry point and do a
+POST request:
+
+.. code-block:: html
+
+   POST /api/2.0/app-settings
+   Content-Type: application/json
+   Content-Length: 49
+   
+   {"name": "default_user_locale", "value": "en_US"}
 
 Update an existing item
 ~~~~~~~~~~~~~~~~~~~~~~~
