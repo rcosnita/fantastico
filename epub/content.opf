@@ -301,6 +301,9 @@
     <item id="features_roa_rest_standard.html"
           href="features/roa/rest_standard.html"
           media-type="application/xhtml+xml" />
+    <item id="features_roa_rest_responses.html"
+          href="features/roa/rest_responses.html"
+          media-type="application/xhtml+xml" />
     <item id="features_sdk_command_fantastico.html"
           href="features/sdk/command_fantastico.html"
           media-type="application/xhtml+xml" />
@@ -329,6 +332,7 @@
     <itemref idref="features_mvc.html" />
     <itemref idref="features_roa.html" />
     <itemref idref="features_roa_rest_standard.html" />
+    <itemref idref="features_roa_rest_responses.html" />
     <itemref idref="features_sdk.html" />
     <itemref idref="features_sdk_command_activate_extension.html" />
     <itemref idref="features_sdk_command_fantastico.html" />

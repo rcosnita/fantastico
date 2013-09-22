@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{September 22, 2013}
-\release{0.5.0-b119}
+\release{0.5.0-b120}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5b688d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x597ca68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1850,7 +1850,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2652408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x25a7408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2465,7 +2465,7 @@ Retrieving information about an individual item.
 
 \end{itemize}
 
-We do not support update / create of multiple resources in one single request.
+We do not support update / create of multiple resources using one single request.
 
 
 \subsection{Advantages}
@@ -2488,13 +2488,7 @@ DRY (don't repeat yourself).
 \end{itemize}
 
 
-\subsection{APIs standard}
-\label{features/roa:apis-standard}
-Please read {\hyperref[features/roa/rest_standard::doc]{\emph{REST API standard}}} for understanding how the generated API will behave and which are the routes
-provided out of the box.
-
-
-\section{REST API standard}
+\subsubsection{REST API standard}
 \label{features/roa/rest_standard:rest-api-standard}\label{features/roa/rest_standard::doc}
 In this document you can find the standard behavior imposed for Resource generated apis ({\hyperref[features/roa::doc]{\emph{ROA (Resource Oriented Architecture)}}}). For better
 understanding how APIs will behave let's assume we have the following resource defined:
@@ -2512,7 +2506,7 @@ understanding how APIs will behave let's assume we have the following resource d
 \end{Verbatim}
 
 
-\subsection{Resource collection}
+\paragraph{Resource collection}
 \label{features/roa/rest_standard:resource-collection}
 Each resource will have an API entry point which lists all available resources of same type (e.g \textbf{AppSettingV2}).
 This entry point supports the following additional operations:
@@ -2571,7 +2565,7 @@ Create a new custom setting
 
 
 
-\subsubsection{Pagination}
+\subparagraph{Pagination}
 \label{features/roa/rest_standard:pagination}
 When requesting a given resource collection a subset of this collection will be retrived.
 \begin{itemize}
@@ -2595,7 +2589,7 @@ A possible result for \textbf{AppSettingV2} collection retrieval looks like:
 \end{Verbatim}
 
 
-\subsubsection{Sorting}
+\subparagraph{Sorting}
 \label{features/roa/rest_standard:sorting}
 When requesting a given resource collection sorted you can specify the sorting criteria:
 \begin{itemize}
@@ -2646,7 +2640,7 @@ A possible result for \textbf{AppSettingV2} collection retrieval (\textbf{/api/2
 \end{Verbatim}
 
 
-\subsubsection{Filtering}
+\subparagraph{Filtering}
 \label{features/roa/rest_standard:roa-filtering}\label{features/roa/rest_standard:filtering}
 In fantastico, APIs filtering is done by following a very simple Resource Query Language (RQL):
 
@@ -2726,6 +2720,266 @@ Get all settings which name is \textbf{vat} or value is \textbf{en\_US}.
 
 
 You can see in the above example that the query language supported by Fantastico APIs facilitate very complex filtering on resources.
+
+
+\paragraph{Resource item}
+\label{features/roa/rest_standard:resource-item}
+A collection is composed of multiple items (same resource type). You can used individual item endpoints in order to:
+\begin{enumerate}
+\item {} 
+Update an existing item.
+
+\item {} 
+Delete an existing item.
+
+\end{enumerate}
+
+\begin{tabulary}{\linewidth}{|L|L|L|}
+\hline
+
+\textbf{HTTP Verb}
+ & 
+\textbf{URL}
+ & 
+\textbf{Description}
+\\\hline
+
+POST
+ & 
+/api/2.0/app-settings
+ & 
+Create a new application setting.
+\\\hline
+
+PUT
+ & 
+/api/2.0/app-settings/1
+ & 
+Update application setting uniquely identified by \textbf{id} 1.
+\\\hline
+
+DELETE
+ & 
+/api/2.0/app-settings/1
+ & 
+Delete application setting uniquely identified by \textbf{id} 1.
+\\\hline
+\end{tabulary}
+
+
+
+\subparagraph{Create a new item}
+\label{features/roa/rest_standard:create-a-new-item}
+In order to create a new resource (e.g application setting resource) you must use the collection entry point and do a
+POST request:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+POST /api/2.0/app\PYGZhy{}settings
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 49
+
+\PYGZob{}\PYGZdq{}name\PYGZdq{}: \PYGZdq{}default\PYGZus{}user\PYGZus{}locale\PYGZdq{}, \PYGZdq{}value\PYGZdq{}: \PYGZdq{}en\PYGZus{}US\PYGZdq{}\PYGZcb{}
+\end{Verbatim}
+
+
+\subparagraph{Update an existing item}
+\label{features/roa/rest_standard:update-an-existing-item}
+In order to update an default\_locale application setting resource you must do the following request:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+PUT /api/2.0/app\PYGZhy{}settings/1
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 44
+
+\PYGZob{}\PYGZdq{}name\PYGZdq{}: \PYGZdq{}default\PYGZus{}locale\PYGZdq{}, \PYGZdq{}value\PYGZdq{}: \PYGZdq{}ro\PYGZus{}RO\PYGZdq{}\PYGZcb{}
+\end{Verbatim}
+
+Of course partial requests are also supported:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+PUT /api/2.0/app\PYGZhy{}settings/1
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 18
+
+\PYGZob{}\PYGZdq{}value\PYGZdq{}: \PYGZdq{}ro\PYGZus{}RO\PYGZdq{}\PYGZcb{}
+\end{Verbatim}
+
+It is recommended to send the minimum amount of data to the API in order to optimize your application.
+
+
+\subparagraph{Delete an existing item}
+\label{features/roa/rest_standard:delete-an-existing-item}
+Delete requests are pretty simple as they do not have any body in the response.
+
+
+\subsubsection{REST Responses}
+\label{features/roa/rest_responses::doc}\label{features/roa/rest_responses:rest-responses}
+When working with resources API it is important to understand what responses might be returned in order to correctly consume
+them into your clients. In this document you can find success / exception responses coming from APIs.
+
+
+\paragraph{Common responses}
+\label{features/roa/rest_responses:common-responses}
+For each call there are some common responses that might be returned by APIs:
+
+
+\subparagraph{Internal Server Error}
+\label{features/roa/rest_responses:internal-server-error}
+When working in distributed environments there are unexpected situations occuring (server failing, dns failing, and so on). In
+all this cases a 500 HTTP Status code will be returned and an html generated page will be sent in the body of the error. Do
+not make assumptions about the format of this response as it might change in the future.
+
+
+\subparagraph{Concrete errors}
+\label{features/roa/rest_responses:concrete-errors}
+In Fantastico generated APIs, concrete errors follows a given format:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+   \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}code\PYGZdq{}}\PYG{o}{:} \PYG{o}{\PYGZlt{}}\PYG{n+nx}{a} \PYG{n+nx}{numeric} \PYG{n+nx}{error} \PYG{n+nx}{code} \PYG{n+nx}{used} \PYG{k}{for} \PYG{n+nx}{uniquely} \PYG{n+nx}{identifying} \PYG{n+nx}{the} \PYG{n+nx}{situation}\PYG{o}{\PYGZgt{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}description\PYGZdq{}}\PYG{o}{:} \PYG{o}{\PYGZlt{}}\PYG{n+nx}{a} \PYG{n+nx}{user} \PYG{n+nx}{friendly} \PYG{n+nx}{message} \PYG{k}{in} \PYG{n+nx}{English} \PYG{n+nx}{describing} \PYG{n+nx}{the} \PYG{n+nx}{error}\PYG{o}{\PYGZgt{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}details\PYGZdq{}}\PYG{o}{:} \PYG{o}{\PYGZlt{}}\PYG{n+nx}{an} \PYG{n+nx}{http} \PYG{n+nx}{link} \PYG{n+nx}{where} \PYG{n+nx}{you} \PYG{n+nx}{can} \PYG{n+nx}{find} \PYG{n+nx}{more} \PYG{n+nx}{details} \PYG{n+nx}{about} \PYG{n+nx}{the} \PYG{n+nx}{error} \PYG{n+nx}{which} \PYG{n+nx}{occured}\PYG{o}{\PYGZgt{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+\end{quote}
+
+
+\paragraph{Resource Item}
+\label{features/roa/rest_responses:resource-item}
+
+\subparagraph{Retrieve resource item}
+\label{features/roa/rest_responses:retrieve-resource-item}
+When retrieving a resource from a collection (\textbf{GET /api/2.0/app-settings/1}) the following responses might be returned:
+\begin{itemize}
+\item {} 
+200 OK
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+200 OK
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 53
+
+\PYGZob{}\PYGZdq{}id\PYGZdq{}: 1, \PYGZdq{}name\PYGZdq{}: \PYGZdq{}default\PYGZus{}locale\PYGZdq{}, \PYGZdq{}value\PYGZdq{}: \PYGZdq{}en\PYGZus{}US\PYGZdq{}\PYGZcb{}
+\end{Verbatim}
+\end{quote}
+
+\item {} 
+404 Not Found
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+404 Not Found
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 160
+
+\PYGZob{}\PYGZdq{}error\PYGZus{}code\PYGZdq{}: 10001, \PYGZdq{}error\PYGZus{}description\PYGZdq{}: \PYGZdq{}Resource 1 does not exist.\PYGZdq{}, \PYGZdq{}error\PYGZus{}details\PYGZdq{}: \PYGZdq{}https://rcosnita.github.com/fantastico/html/features/roa/1000x.html\PYGZdq{}\PYGZcb{}
+\end{Verbatim}
+\end{quote}
+
+\end{itemize}
+
+
+\subparagraph{Create a new resource item}
+\label{features/roa/rest_responses:create-a-new-resource-item}
+When creating a resource into a collection (\textbf{POST /api/2.0/app-settings}) the following responses might be returned:
+\begin{itemize}
+\item {} 
+201 Created
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+201 Created
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 0
+Location: /api/2.0/app\PYGZhy{}settings/123
+\end{Verbatim}
+
+If you want to fetch the newly created resource just follow the location header.
+\end{quote}
+
+\item {} 
+400 Bad Request
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+400 Bad Request
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 173
+
+\PYGZob{}\PYGZdq{}error\PYGZus{}code\PYGZdq{}: 10010, \PYGZdq{}error\PYGZus{}description\PYGZdq{}: \PYGZdq{}Resource 1 requires field (name\textbar{}value).\PYGZdq{}, \PYGZdq{}error\PYGZus{}details\PYGZdq{}: \PYGZdq{}https://rcosnita.github.com/fantastico/html/features/roa/1000x.html\PYGZdq{}\PYGZcb{}
+\end{Verbatim}
+\end{quote}
+
+\end{itemize}
+
+
+\paragraph{Update an existing resource}
+\label{features/roa/rest_responses:update-an-existing-resource}
+When updating an existing resource (\textbf{PUT /api/2.0/app-settings}) the following responses might be returned:
+\begin{itemize}
+\item {} 
+204 No Content
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+204 No Content
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 0
+\end{Verbatim}
+\end{quote}
+
+\item {} 
+400 Bad Request
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+400 Bad Request
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 173
+
+\PYGZob{}\PYGZdq{}error\PYGZus{}code\PYGZdq{}: 10010, \PYGZdq{}error\PYGZus{}description\PYGZdq{}: \PYGZdq{}Resource 1 requires field (name\textbar{}value).\PYGZdq{}, \PYGZdq{}error\PYGZus{}details\PYGZdq{}: \PYGZdq{}https://rcosnita.github.com/fantastico/html/features/roa/1000x.html\PYGZdq{}\PYGZcb{}
+\end{Verbatim}
+\end{quote}
+
+\end{itemize}
+
+
+\subparagraph{Delete an existing resource}
+\label{features/roa/rest_responses:delete-an-existing-resource}
+When deleting an existing resource (\textbf{DELETE /api/2.0/app-settings}) the following responses might be returned:
+\begin{itemize}
+\item {} 
+204 No Content
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+204 No Content
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 0
+\end{Verbatim}
+\end{quote}
+
+\item {} 
+400 Bad Request
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+400 Bad Request
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length:
+
+\PYGZob{}\PYGZdq{}error\PYGZus{}code\PYGZdq{}: 10020, \PYGZdq{}error\PYGZus{}description\PYGZdq{}: \PYGZdq{}Resource 1 is still in use.\PYGZdq{}, \PYGZdq{}error\PYGZus{}details\PYGZdq{}: \PYGZdq{}https://rcosnita.github.com/fantastico/html/features/roa/1000x.html\PYGZdq{}\PYGZcb{}
+\end{Verbatim}
+\end{quote}
+
+\end{itemize}
+
+
+\subparagraph{Bulk creation of items}
+\label{features/roa/rest_responses:bulk-creation-of-items}
+Fantastico APIs do not support bulk creation of items. We do not intend to add this kind of capability.
 
 
 \section{SDK}
@@ -2868,7 +3122,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2b222f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2a772f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -3413,7 +3667,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3eb81e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3e0d1e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

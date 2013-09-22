@@ -20,13 +20,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../sdk.html" title="SDK"
+          <a href="rest_responses.html" title="REST Responses"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../roa.html" title="ROA (Resource Oriented Architecture)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b119 documentation</a> &raquo;</li>
-          <li><a href="../features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
+        <li><a href="../../index.html">fantastico 0.5.0-b120 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../roa.html" accesskey="U">ROA (Resource Oriented Architecture)</a> &raquo;</li> 
       </ul>
     </div>
 
@@ -205,6 +206,77 @@ This entry point supports the following additional operations:</p>
 </tbody>
 </table>
 <p>You can see in the above example that the query language supported by Fantastico APIs facilitate very complex filtering on resources.</p>
+</div>
+</div>
+<div class="section" id="resource-item">
+<h2>Resource item</h2>
+<p>A collection is composed of multiple items (same resource type). You can used individual item endpoints in order to:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Update an existing item.</li>
+<li>Delete an existing item.</li>
+</ol>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="25%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>HTTP Verb</strong></td>
+<td><strong>URL</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>POST</td>
+<td>/api/2.0/app-settings</td>
+<td>Create a new application setting.</td>
+</tr>
+<tr class="row-odd"><td>PUT</td>
+<td>/api/2.0/app-settings/1</td>
+<td>Update application setting uniquely identified by <strong>id</strong> 1.</td>
+</tr>
+<tr class="row-even"><td>DELETE</td>
+<td>/api/2.0/app-settings/1</td>
+<td>Delete application setting uniquely identified by <strong>id</strong> 1.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="create-a-new-item">
+<h3>Create a new item</h3>
+<p>In order to create a new resource (e.g application setting resource) you must use the collection entry point and do a
+POST request:</p>
+<div class="highlight-html"><div class="highlight"><pre>POST /api/2.0/app-settings
+Content-Type: application/json
+Content-Length: 49
+
+{&quot;name&quot;: &quot;default_user_locale&quot;, &quot;value&quot;: &quot;en_US&quot;}
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-an-existing-item">
+<h3>Update an existing item</h3>
+<p>In order to update an default_locale application setting resource you must do the following request:</p>
+<div class="highlight-html"><div class="highlight"><pre>PUT /api/2.0/app-settings/1
+Content-Type: application/json
+Content-Length: 44
+
+{&quot;name&quot;: &quot;default_locale&quot;, &quot;value&quot;: &quot;ro_RO&quot;}
+</pre></div>
+</div>
+<p>Of course partial requests are also supported:</p>
+<div class="highlight-html"><div class="highlight"><pre>PUT /api/2.0/app-settings/1
+Content-Type: application/json
+Content-Length: 18
+
+{&quot;value&quot;: &quot;ro_RO&quot;}
+</pre></div>
+</div>
+<p>It is recommended to send the minimum amount of data to the API in order to optimize your application.</p>
+</div>
+<div class="section" id="delete-an-existing-item">
+<h3>Delete an existing item</h3>
+<p>Delete requests are pretty simple as they do not have any body in the response.</p>
 </div>
 </div>
 </div>

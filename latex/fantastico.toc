@@ -49,68 +49,81 @@
 \contentsline {subsection}{\numberline {3.5.5}Partial object representation}{29}{subsection.3.5.5}
 \contentsline {subsection}{\numberline {3.5.6}Resource composed attributes}{30}{subsection.3.5.6}
 \contentsline {subsection}{\numberline {3.5.7}Advantages}{31}{subsection.3.5.7}
-\contentsline {subsection}{\numberline {3.5.8}APIs standard}{31}{subsection.3.5.8}
-\contentsline {section}{\numberline {3.6}REST API standard}{31}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Resource collection}{31}{subsection.3.6.1}
-\contentsline {subsubsection}{Pagination}{32}{subsubsection*.117}
-\contentsline {subsubsection}{Sorting}{32}{subsubsection*.118}
-\contentsline {subsubsection}{Filtering}{32}{subsubsection*.119}
-\contentsline {section}{\numberline {3.7}SDK}{33}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}Intro}{33}{subsection.3.7.1}
-\contentsline {subsection}{\numberline {3.7.2}Usage}{33}{subsection.3.7.2}
-\contentsline {subsection}{\numberline {3.7.3}Supported commands}{34}{subsection.3.7.3}
-\contentsline {subsubsection}{Activate extension command}{34}{subsubsection*.120}
-\contentsline {subsubsection}{Fantastico command}{34}{subsubsection*.125}
-\contentsline {subsubsection}{Syncdb command}{34}{subsubsection*.126}
-\contentsline {subsubsection}{Version command}{35}{subsubsection*.131}
-\contentsline {subsection}{\numberline {3.7.4}Technical summary}{36}{subsection.3.7.4}
-\contentsline {section}{\numberline {3.8}Component model}{38}{section.3.8}
-\contentsline {subsection}{\numberline {3.8.1}Static folder}{39}{subsection.3.8.1}
-\contentsline {subsection}{\numberline {3.8.2}Sql folder}{39}{subsection.3.8.2}
-\contentsline {subsubsection}{Sql folder example}{39}{subsubsection*.155}
-\contentsline {section}{\numberline {3.9}Component reusage}{40}{section.3.9}
-\contentsline {section}{\numberline {3.10}Built in components}{42}{section.3.10}
-\contentsline {subsection}{\numberline {3.10.1}Dynamic menu}{42}{subsection.3.10.1}
-\contentsline {subsubsection}{Integration}{42}{subsubsection*.159}
-\contentsline {paragraph}{Component files activation deprecated}{42}{paragraph*.160}
-\contentsline {paragraph}{Component files activation (SDK)}{42}{paragraph*.161}
-\contentsline {paragraph}{Component sample + db data}{42}{paragraph*.162}
-\contentsline {subsubsection}{Current limitations}{43}{subsubsection*.163}
-\contentsline {subsubsection}{Technical summary}{43}{subsubsection*.164}
-\contentsline {subsection}{\numberline {3.10.2}Dynamic pages}{44}{subsection.3.10.2}
-\contentsline {subsubsection}{Integration}{44}{subsubsection*.169}
-\contentsline {subsubsection}{Current limitations}{45}{subsubsection*.170}
-\contentsline {subsubsection}{Technical summary}{45}{subsubsection*.171}
-\contentsline {subsection}{\numberline {3.10.3}Tracking codes}{47}{subsection.3.10.3}
-\contentsline {subsubsection}{Analytic solutions}{47}{subsubsection*.176}
-\contentsline {subsubsection}{Integration}{47}{subsubsection*.177}
-\contentsline {subsubsection}{Current limitations}{48}{subsubsection*.178}
-\contentsline {subsubsection}{Technical summary}{48}{subsubsection*.179}
-\contentsline {chapter}{\numberline {4}How to articles}{49}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{49}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{49}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{49}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{50}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{50}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Deployment how to}{50}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{51}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{52}{subsubsection*.184}
-\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{52}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{53}{subsubsection*.185}
-\contentsline {subsubsection}{Optimization}{53}{subsubsection*.186}
-\contentsline {subsubsection}{Setup with S3}{54}{subsubsection*.187}
-\contentsline {section}{\numberline {4.3}Static assets}{54}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{54}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{55}{subsubsection*.188}
-\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{55}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Creating a new project}{55}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Create first component}{55}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{56}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{56}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Changes}{57}{chapter.5}
-\contentsline {section}{\numberline {5.1}Feedback}{57}{section.5.1}
-\contentsline {section}{\numberline {5.2}Versions}{57}{section.5.2}
-\contentsline {chapter}{\numberline {6}Provide feedback}{59}{chapter.6}
-\contentsline {chapter}{\numberline {7}Build status}{61}{chapter.7}
-\contentsline {chapter}{\numberline {8}License}{63}{chapter.8}
-\contentsline {chapter}{Index}{65}{section*.189}
+\contentsline {subsubsection}{REST API standard}{31}{subsubsection*.117}
+\contentsline {paragraph}{Resource collection}{31}{paragraph*.118}
+\contentsline {subparagraph}{Pagination}{31}{subparagraph*.119}
+\contentsline {subparagraph}{Sorting}{32}{subparagraph*.120}
+\contentsline {subparagraph}{Filtering}{32}{subparagraph*.121}
+\contentsline {paragraph}{Resource item}{33}{paragraph*.122}
+\contentsline {subparagraph}{Create a new item}{33}{subparagraph*.123}
+\contentsline {subparagraph}{Update an existing item}{33}{subparagraph*.124}
+\contentsline {subparagraph}{Delete an existing item}{33}{subparagraph*.125}
+\contentsline {subsubsection}{REST Responses}{33}{subsubsection*.126}
+\contentsline {paragraph}{Common responses}{33}{paragraph*.127}
+\contentsline {subparagraph}{Internal Server Error}{34}{subparagraph*.128}
+\contentsline {subparagraph}{Concrete errors}{34}{subparagraph*.129}
+\contentsline {paragraph}{Resource Item}{34}{paragraph*.130}
+\contentsline {subparagraph}{Retrieve resource item}{34}{subparagraph*.131}
+\contentsline {subparagraph}{Create a new resource item}{34}{subparagraph*.132}
+\contentsline {paragraph}{Update an existing resource}{35}{paragraph*.133}
+\contentsline {subparagraph}{Delete an existing resource}{35}{subparagraph*.134}
+\contentsline {subparagraph}{Bulk creation of items}{35}{subparagraph*.135}
+\contentsline {section}{\numberline {3.6}SDK}{35}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Intro}{35}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}Usage}{36}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}Supported commands}{36}{subsection.3.6.3}
+\contentsline {subsubsection}{Activate extension command}{36}{subsubsection*.136}
+\contentsline {subsubsection}{Fantastico command}{36}{subsubsection*.141}
+\contentsline {subsubsection}{Syncdb command}{37}{subsubsection*.142}
+\contentsline {subsubsection}{Version command}{37}{subsubsection*.147}
+\contentsline {subsection}{\numberline {3.6.4}Technical summary}{38}{subsection.3.6.4}
+\contentsline {section}{\numberline {3.7}Component model}{41}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Static folder}{41}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}Sql folder}{41}{subsection.3.7.2}
+\contentsline {subsubsection}{Sql folder example}{41}{subsubsection*.171}
+\contentsline {section}{\numberline {3.8}Component reusage}{43}{section.3.8}
+\contentsline {section}{\numberline {3.9}Built in components}{44}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}Dynamic menu}{44}{subsection.3.9.1}
+\contentsline {subsubsection}{Integration}{44}{subsubsection*.175}
+\contentsline {paragraph}{Component files activation deprecated}{44}{paragraph*.176}
+\contentsline {paragraph}{Component files activation (SDK)}{45}{paragraph*.177}
+\contentsline {paragraph}{Component sample + db data}{45}{paragraph*.178}
+\contentsline {subsubsection}{Current limitations}{45}{subsubsection*.179}
+\contentsline {subsubsection}{Technical summary}{45}{subsubsection*.180}
+\contentsline {subsection}{\numberline {3.9.2}Dynamic pages}{46}{subsection.3.9.2}
+\contentsline {subsubsection}{Integration}{46}{subsubsection*.185}
+\contentsline {subsubsection}{Current limitations}{47}{subsubsection*.186}
+\contentsline {subsubsection}{Technical summary}{47}{subsubsection*.187}
+\contentsline {subsection}{\numberline {3.9.3}Tracking codes}{49}{subsection.3.9.3}
+\contentsline {subsubsection}{Analytic solutions}{49}{subsubsection*.192}
+\contentsline {subsubsection}{Integration}{50}{subsubsection*.193}
+\contentsline {subsubsection}{Current limitations}{50}{subsubsection*.194}
+\contentsline {subsubsection}{Technical summary}{50}{subsubsection*.195}
+\contentsline {chapter}{\numberline {4}How to articles}{53}{chapter.4}
+\contentsline {section}{\numberline {4.1}MVC How to}{53}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Code the model}{53}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Code the controller}{53}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Code the view}{54}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Test your application}{54}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Deployment how to}{54}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{55}{subsection.4.2.1}
+\contentsline {subsubsection}{Setup}{56}{subsubsection*.200}
+\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{56}{subsection.4.2.2}
+\contentsline {subsubsection}{Setup}{57}{subsubsection*.201}
+\contentsline {subsubsection}{Optimization}{57}{subsubsection*.202}
+\contentsline {subsubsection}{Setup with S3}{58}{subsubsection*.203}
+\contentsline {section}{\numberline {4.3}Static assets}{58}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{58}{subsection.4.3.1}
+\contentsline {subsubsection}{Favicon}{59}{subsubsection*.204}
+\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{59}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Creating a new project}{59}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Create first component}{59}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{60}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{60}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Changes}{61}{chapter.5}
+\contentsline {section}{\numberline {5.1}Feedback}{61}{section.5.1}
+\contentsline {section}{\numberline {5.2}Versions}{61}{section.5.2}
+\contentsline {chapter}{\numberline {6}Provide feedback}{63}{chapter.6}
+\contentsline {chapter}{\numberline {7}Build status}{65}{chapter.7}
+\contentsline {chapter}{\numberline {8}License}{67}{chapter.8}
+\contentsline {chapter}{Index}{69}{section*.205}

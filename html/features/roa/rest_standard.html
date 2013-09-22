@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>REST API standard &mdash; fantastico 0.5.0-b119 documentation</title>
+    <title>REST API standard &mdash; fantastico 0.5.0-b120 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.0-b119',
+        VERSION:     '0.5.0-b120',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b119 documentation" href="../../index.html" />
-    <link rel="up" title="Fantastico features" href="../features.html" />
-    <link rel="next" title="SDK" href="../sdk.html" />
+    <link rel="top" title="fantastico 0.5.0-b120 documentation" href="../../index.html" />
+    <link rel="up" title="ROA (Resource Oriented Architecture)" href="../roa.html" />
+    <link rel="next" title="REST Responses" href="rest_responses.html" />
     <link rel="prev" title="ROA (Resource Oriented Architecture)" href="../roa.html" /> 
   </head>
   <body>
@@ -36,13 +36,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../sdk.html" title="SDK"
+          <a href="rest_responses.html" title="REST Responses"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../roa.html" title="ROA (Resource Oriented Architecture)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b119 documentation</a> &raquo;</li>
-          <li><a href="../features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
+        <li><a href="../../index.html">fantastico 0.5.0-b120 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../roa.html" accesskey="U">ROA (Resource Oriented Architecture)</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -224,6 +225,77 @@ This entry point supports the following additional operations:</p>
 <p>You can see in the above example that the query language supported by Fantastico APIs facilitate very complex filtering on resources.</p>
 </div>
 </div>
+<div class="section" id="resource-item">
+<h2>Resource item<a class="headerlink" href="#resource-item" title="Permalink to this headline">¶</a></h2>
+<p>A collection is composed of multiple items (same resource type). You can used individual item endpoints in order to:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Update an existing item.</li>
+<li>Delete an existing item.</li>
+</ol>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="25%" />
+<col width="60%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>HTTP Verb</strong></td>
+<td><strong>URL</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>POST</td>
+<td>/api/2.0/app-settings</td>
+<td>Create a new application setting.</td>
+</tr>
+<tr class="row-odd"><td>PUT</td>
+<td>/api/2.0/app-settings/1</td>
+<td>Update application setting uniquely identified by <strong>id</strong> 1.</td>
+</tr>
+<tr class="row-even"><td>DELETE</td>
+<td>/api/2.0/app-settings/1</td>
+<td>Delete application setting uniquely identified by <strong>id</strong> 1.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="create-a-new-item">
+<h3>Create a new item<a class="headerlink" href="#create-a-new-item" title="Permalink to this headline">¶</a></h3>
+<p>In order to create a new resource (e.g application setting resource) you must use the collection entry point and do a
+POST request:</p>
+<div class="highlight-html"><div class="highlight"><pre>POST /api/2.0/app-settings
+Content-Type: application/json
+Content-Length: 49
+
+{&quot;name&quot;: &quot;default_user_locale&quot;, &quot;value&quot;: &quot;en_US&quot;}
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-an-existing-item">
+<h3>Update an existing item<a class="headerlink" href="#update-an-existing-item" title="Permalink to this headline">¶</a></h3>
+<p>In order to update an default_locale application setting resource you must do the following request:</p>
+<div class="highlight-html"><div class="highlight"><pre>PUT /api/2.0/app-settings/1
+Content-Type: application/json
+Content-Length: 44
+
+{&quot;name&quot;: &quot;default_locale&quot;, &quot;value&quot;: &quot;ro_RO&quot;}
+</pre></div>
+</div>
+<p>Of course partial requests are also supported:</p>
+<div class="highlight-html"><div class="highlight"><pre>PUT /api/2.0/app-settings/1
+Content-Type: application/json
+Content-Length: 18
+
+{&quot;value&quot;: &quot;ro_RO&quot;}
+</pre></div>
+</div>
+<p>It is recommended to send the minimum amount of data to the API in order to optimize your application.</p>
+</div>
+<div class="section" id="delete-an-existing-item">
+<h3>Delete an existing item<a class="headerlink" href="#delete-an-existing-item" title="Permalink to this headline">¶</a></h3>
+<p>Delete requests are pretty simple as they do not have any body in the response.</p>
+</div>
+</div>
 </div>
 
 
@@ -241,6 +313,12 @@ This entry point supports the following additional operations:</p>
 <li><a class="reference internal" href="#filtering">Filtering</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#resource-item">Resource item</a><ul>
+<li><a class="reference internal" href="#create-a-new-item">Create a new item</a></li>
+<li><a class="reference internal" href="#update-an-existing-item">Update an existing item</a></li>
+<li><a class="reference internal" href="#delete-an-existing-item">Delete an existing item</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -249,8 +327,8 @@ This entry point supports the following additional operations:</p>
   <p class="topless"><a href="../roa.html"
                         title="previous chapter">ROA (Resource Oriented Architecture)</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../sdk.html"
-                        title="next chapter">SDK</a></p>
+  <p class="topless"><a href="rest_responses.html"
+                        title="next chapter">REST Responses</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/features/roa/rest_standard.txt"
@@ -280,13 +358,14 @@ This entry point supports the following additional operations:</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../sdk.html" title="SDK"
+          <a href="rest_responses.html" title="REST Responses"
              >next</a> |</li>
         <li class="right" >
           <a href="../roa.html" title="ROA (Resource Oriented Architecture)"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b119 documentation</a> &raquo;</li>
-          <li><a href="../features.html" >Fantastico features</a> &raquo;</li> 
+        <li><a href="../../index.html">fantastico 0.5.0-b120 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../roa.html" >ROA (Resource Oriented Architecture)</a> &raquo;</li> 
       </ul>
     </div>
 
