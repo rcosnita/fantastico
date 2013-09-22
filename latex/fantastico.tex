@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 21, 2013}
-\release{0.5.0-b118}
+\date{September 22, 2013}
+\release{0.5.0-b119}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5e59c00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5b688d0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1850,7 +1850,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2a56408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2652408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2152,8 +2152,8 @@ In Fantastisco framework we firmly encourage REST approach into projects. We eve
 standardising REST APIs and providing REST APIs generator over implemented models.
 
 
-\subsection{Simple use cases}
-\label{features/roa:simple-use-cases}
+\subsection{Examples}
+\label{features/roa:examples}
 
 \subsection{Application settings stored in database}
 \label{features/roa:application-settings-stored-in-database}
@@ -2332,6 +2332,141 @@ PUT    - /api/latest/app-settings/:id - update an existing app setting. (validat
 
 \end{itemize}
 
+We are aware that there are some common validation cases which can be reused:
+\begin{enumerate}
+\item {} 
+Email validation
+
+\item {} 
+Phone number validation
+
+\item {} 
+Credit Card number validation
+
+\end{enumerate}
+
+All common validation cases  are provided out of the box as methods part of ResourceValidator class. You can easily use them into
+your resource validator.
+
+
+\subsection{Partial object representation}
+\label{features/roa:partial-object-representation}
+There are cases when a resource contains many fields but you actually need only a few of them:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/addresses}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{Address}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+   \PYG{n}{line1} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line1}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+   \PYG{n}{line2} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line2}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{line3} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line3}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{line4} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line4}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{line5} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line5}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{line6} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line6}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{city} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{city}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{country} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{country}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{zip\PYGZus{}code} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{zip\PYGZus{}code}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{)}\PYG{p}{)}
+
+   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{line1}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line2}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line3}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line4}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line5}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line6}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,}
+               \PYG{n}{city}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{country}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{zip\PYGZus{}code}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{)}\PYG{p}{:}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line1} \PYG{o}{=} \PYG{n}{line1}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line2} \PYG{o}{=} \PYG{n}{line2}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line3} \PYG{o}{=} \PYG{n}{line3}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line4} \PYG{o}{=} \PYG{n}{line4}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line5} \PYG{o}{=} \PYG{n}{line5}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line6} \PYG{o}{=} \PYG{n}{line6}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{city} \PYG{o}{=} \PYG{n}{city}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{country} \PYG{o}{=} \PYG{n}{country}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zip\PYGZus{}code} \PYG{o}{=} \PYG{n}{zip\PYGZus{}code}
+\end{Verbatim}
+
+When working with the Address resource there will be cases when we do not need all fields to be transferred to client. For this,
+partial representation is supported out of the box into Fantastico:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// retrieve only city,zip\PYGZus{}code and line1 of a given address}
+\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/1.0/addresses/1?fields=city,zip\PYGZus{}code,line1\PYGZdq{}}\PYG{p}{;}
+\end{Verbatim}
+
+A possible response for this request might be:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+    \PYG{n+nx}{city}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Bucharest\PYGZdq{}}\PYG{p}{,}
+    \PYG{n+nx}{zip\PYGZus{}code}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}B00001\PYGZdq{}}\PYG{p}{,}
+    \PYG{n+nx}{line1}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}First line of this wonderful address\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+\textbf{fields} Query parameter is optional. If you omit this query parameter all fields are retrieved in the response. \textbf{fields}
+query parameter makes sense for:
+\begin{enumerate}
+\item {} 
+Listing a collection
+
+\item {} 
+Retrieving information about an individual item.
+
+\end{enumerate}
+
+All other operations simply ignore \textbf{fields}.
+
+
+\subsection{Resource composed attributes}
+\label{features/roa:resource-composed-attributes}
+There are resources which have attributes which points to another resource:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{person}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/persons}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{,}
+          \PYG{n}{subresources}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
+                        \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mail\PYGZus{}address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mail\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
+                        \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address:}\PYG{l+s}{\PYGZdq{}} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{Person}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+   \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{bill\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{bill\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{bill\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+   \PYG{n}{ship\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{ship\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{ship\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+   \PYG{n}{mail\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+   \PYG{n}{ship\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{mail\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+\end{Verbatim}
+
+The above definition shows you how to mark the subresources of \textbf{person} resource. By default they will not be retrieved in
+requests. Only subresource identifier keys pointing from \textbf{person} to various \textbf{address} objects are retrieved. If you want
+to obtain details about a specific address (e.g bill\_address) you can use example below:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{var} \PYG{n}{url} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/api/1.0/persons/1?fields=first\PYGZus{}name, last\PYGZus{}name, bill\PYGZus{}address(line1, city, zip\PYGZus{}code)}\PYG{l+s}{\PYGZdq{}}
+\end{Verbatim}
+
+The above example url might return:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+   \PYG{l+s+s2}{\PYGZdq{}first\PYGZus{}name\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}John\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}last\PYGZus{}name\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Doe\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}bill\PYGZus{}address\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}
+      \PYG{l+s+s2}{\PYGZdq{}line1\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}First line of this wonderful address\PYGZdq{}}\PYG{p}{,}
+      \PYG{l+s+s2}{\PYGZdq{}city\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Bucharest\PYGZdq{}}\PYG{p}{,}
+      \PYG{l+s+s2}{\PYGZdq{}zip\PYGZus{}code\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}B00001\PYGZdq{}}
+   \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+Composed attributes usage is limited to below mentioned operations:
+\begin{itemize}
+\item {} 
+Listing collections.
+
+\item {} 
+Retrieving information about an individual item.
+
+\end{itemize}
+
+We do not support update / create of multiple resources in one single request.
+
 
 \subsection{Advantages}
 \label{features/roa:advantages}\begin{itemize}
@@ -2353,8 +2488,8 @@ DRY (don't repeat yourself).
 \end{itemize}
 
 
-\subsection{Fantastico ROA APIs standard}
-\label{features/roa:fantastico-roa-apis-standard}
+\subsection{APIs standard}
+\label{features/roa:apis-standard}
 Please read {\hyperref[features/roa/rest_standard::doc]{\emph{REST API standard}}} for understanding how the generated API will behave and which are the routes
 provided out of the box.
 
@@ -2733,7 +2868,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2f262f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2b222f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -3278,7 +3413,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x42bc1e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3eb81e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

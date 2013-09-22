@@ -22,7 +22,7 @@
 
   \indexspace
   \bigletter A
-  \item add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{34}
+  \item add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{36}
 
   \indexspace
   \bigletter B
@@ -41,7 +41,7 @@
   \item code (fantastico.locale.language.Language attribute), \hyperpage{14}
   \item column (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{25}
   \item column (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{26}
-  \item Component (class in fantastico.rendering.component), \hyperpage{38}
+  \item Component (class in fantastico.rendering.component), \hyperpage{40}
   \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{18}
   \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{23}
   \item count\_records() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
@@ -61,19 +61,19 @@
   \item doc\_base (fantastico.settings.BasicSettings attribute), \hyperpage{5}
   \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{17}
   \item DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller), 
-		\hyperpage{41}
-  \item DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{44}
-  \item DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{44}
+		\hyperpage{43}
+  \item DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{46}
+  \item DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{46}
 
   \indexspace
   \bigletter E
   \item exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{32}
-  \item exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), \hyperpage{33}
-  \item exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), \hyperpage{33}
-  \item exec() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{34}
-  \item exec() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{35}
-  \item exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{35}
+		\hyperpage{34}
+  \item exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), \hyperpage{35}
+  \item exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), \hyperpage{35}
+  \item exec() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{36}
+  \item exec() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{37}
+  \item exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{37}
 
   \indexspace
   \bigletter F
@@ -91,14 +91,14 @@
   \item FantasticoInsufficientArgumentsError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{7}
   \item FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions), 
-		\hyperpage{42}
+		\hyperpage{44}
   \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoNotSupportedError (class in fantastico.exceptions), \hyperpage{11}
   \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{36}
-  \item FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{36}
-  \item FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{36}
+  \item FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{38}
+  \item FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{38}
+  \item FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{38}
   \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{11}
   \item FantasticoTemplateNotFoundError (class in fantastico.exceptions), \hyperpage{12}
   \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{7}
@@ -110,12 +110,12 @@
   \bigletter G
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
   \item get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{32}
+		\hyperpage{34}
   \item get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
-		\hyperpage{33}
-  \item get\_arguments() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{34}
-  \item get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{36}
-  \item get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{35}
+		\hyperpage{35}
+  \item get\_arguments() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{36}
+  \item get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{38}
+  \item get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{37}
   \item get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method), 
 		\hyperpage{23}
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{6}
@@ -126,12 +126,12 @@
 		\hyperpage{24}
   \item get\_expression() (fantastico.mvc.models.model\_sort.ModelSort method), \hyperpage{26}
   \item get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{32}
+		\hyperpage{34}
   \item get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
-		\hyperpage{33}
+		\hyperpage{35}
   \item get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), 
-		\hyperpage{33}
-  \item get\_help() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{34}
+		\hyperpage{35}
+  \item get\_help() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{36}
   \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
   \item get\_records\_paged() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{21}
   \item get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method), 
@@ -145,7 +145,7 @@
   \indexspace
   \bigletter H
   \item handle\_route() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
-  \item help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{35}
+  \item help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{37}
   \item http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute), \hyperpage{12}
 
   \indexspace
@@ -157,9 +157,9 @@
   \item Language (class in fantastico.locale.language), \hyperpage{14}
   \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{13}
   \item list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{46}
+		\hyperpage{48}
   \item list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{46}
+		\hyperpage{48}
   \item load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method), 
 		\hyperpage{23}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
@@ -169,7 +169,7 @@
   \indexspace
   \bigletter M
   \item max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute), 
-		\hyperpage{41}
+		\hyperpage{43}
   \item method (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
   \item model\_cls (fantastico.mvc.model\_facade.ModelFacade attribute), \hyperpage{22}
   \item ModelFacade (class in fantastico.mvc.model\_facade), \hyperpage{20}
@@ -186,7 +186,7 @@
 
   \indexspace
   \bigletter N
-  \item name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{35}
+  \item name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{37}
   \item new\_model() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{22}
 
   \indexspace
@@ -195,19 +195,19 @@
 
   \indexspace
   \bigletter P
-  \item PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router), \hyperpage{43}
-  \item parse() (fantastico.rendering.component.Component method), \hyperpage{39}
+  \item PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router), \hyperpage{45}
+  \item parse() (fantastico.rendering.component.Component method), \hyperpage{41}
 
   \indexspace
   \bigletter R
   \item RedirectResponse (class in fantastico.routing\_engine.custom\_responses), \hyperpage{14}
   \item ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{25}
   \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
-  \item render() (fantastico.rendering.component.Component method), \hyperpage{39}
+  \item render() (fantastico.rendering.component.Component method), \hyperpage{41}
   \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{13}
   \item RequestMiddleware (class in fantastico.middleware.request\_middleware), \hyperpage{13}
   \item retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method), 
-		\hyperpage{41}
+		\hyperpage{43}
   \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{16}
   \item Router (class in fantastico.routing\_engine.router), \hyperpage{15}
   \item routes\_loaders (fantastico.settings.BasicSettings attribute), \hyperpage{5}
@@ -217,22 +217,22 @@
   \bigletter S
   \item scanned\_folder (fantastico.mvc.controller\_registrator.ControllerRouteLoader attribute), 
 		\hyperpage{23}
-  \item SdkCommand (class in fantastico.sdk.sdk\_core), \hyperpage{35}
-  \item SdkCommand (class in fantastico.sdk.sdk\_decorators), \hyperpage{36}
+  \item SdkCommand (class in fantastico.sdk.sdk\_core), \hyperpage{37}
+  \item SdkCommand (class in fantastico.sdk.sdk\_decorators), \hyperpage{38}
   \item SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension), 
-		\hyperpage{32}
-  \item SdkCommandArgument (class in fantastico.sdk.sdk\_core), \hyperpage{35}
-  \item SdkCommandsRegistry (class in fantastico.sdk.sdk\_core), \hyperpage{34}
-  \item SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb), \hyperpage{32}
-  \item SdkCommandVersion (class in fantastico.sdk.commands.command\_version), \hyperpage{33}
-  \item SdkCore (class in fantastico.sdk.fantastico), \hyperpage{34}
+		\hyperpage{34}
+  \item SdkCommandArgument (class in fantastico.sdk.sdk\_core), \hyperpage{37}
+  \item SdkCommandsRegistry (class in fantastico.sdk.sdk\_core), \hyperpage{36}
+  \item SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb), \hyperpage{34}
+  \item SdkCommandVersion (class in fantastico.sdk.commands.command\_version), \hyperpage{35}
+  \item SdkCore (class in fantastico.sdk.fantastico), \hyperpage{36}
   \item serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method), 
-		\hyperpage{44}
+		\hyperpage{46}
   \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{13}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method), 
 		\hyperpage{7}
-  \item short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{35}
+  \item short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{37}
   \item sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{26}
   \item start() (fantastico.server.dev\_server.DevServer method), \hyperpage{9}
   \item started (fantastico.server.dev\_server.DevServer attribute), \hyperpage{9}
@@ -242,10 +242,10 @@
   \indexspace
   \bigletter T
   \item templates\_config (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{46}
+  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{48}
   \item TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller), 
-		\hyperpage{46}
-  \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{35}
+		\hyperpage{48}
+  \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{37}
 
   \indexspace
   \bigletter U

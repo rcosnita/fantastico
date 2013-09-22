@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ROA (Resource Oriented Architecture) &mdash; fantastico 0.5.0-b118 documentation</title>
+    <title>ROA (Resource Oriented Architecture) &mdash; fantastico 0.5.0-b119 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.0-b118',
+        VERSION:     '0.5.0-b119',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b118 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b119 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="REST API standard" href="roa/rest_standard.html" />
     <link rel="prev" title="Model View Controller" href="mvc.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="mvc.html" title="Model View Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b118 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b119 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -66,8 +66,8 @@
 you can visit <a class="reference external" href="http://en.wikipedia.org/wiki/Representational_state_transfer">http://en.wikipedia.org/wiki/Representational_state_transfer</a>.</p>
 <p>In Fantastisco framework we firmly encourage REST approach into projects. We even go a step further in this direction, by
 standardising REST APIs and providing REST APIs generator over implemented models.</p>
-<div class="section" id="simple-use-cases">
-<h2>Simple use cases<a class="headerlink" href="#simple-use-cases" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="application-settings-stored-in-database">
 <h2>Application settings stored in database<a class="headerlink" href="#application-settings-stored-in-database" title="Permalink to this headline">¶</a></h2>
@@ -199,6 +199,115 @@ are only invoked for <strong>Create</strong> and <strong>Update</strong>:</p>
 <li>PUT    - /api/latest/app-settings/:id - update an existing app setting. (validate method will be invoked).</li>
 </ul>
 </div></blockquote>
+<p>We are aware that there are some common validation cases which can be reused:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Email validation</li>
+<li>Phone number validation</li>
+<li>Credit Card number validation</li>
+</ol>
+</div></blockquote>
+<p>All common validation cases  are provided out of the box as methods part of ResourceValidator class. You can easily use them into
+your resource validator.</p>
+</div>
+<div class="section" id="partial-object-representation">
+<h2>Partial object representation<a class="headerlink" href="#partial-object-representation" title="Permalink to this headline">¶</a></h2>
+<p>There are cases when a resource contains many fields but you actually need only a few of them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;address&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/addresses&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">line1</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;line1&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+   <span class="n">line2</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;line2&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+   <span class="n">line3</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;line3&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+   <span class="n">line4</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;line4&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+   <span class="n">line5</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;line5&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+   <span class="n">line6</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;line6&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">200</span><span class="p">))</span>
+   <span class="n">city</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;city&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+   <span class="n">country</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;country&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+   <span class="n">zip_code</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;zip_code&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line1</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">line2</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">line3</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">line4</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">line5</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">line6</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+               <span class="n">city</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">zip_code</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">line1</span> <span class="o">=</span> <span class="n">line1</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">line2</span> <span class="o">=</span> <span class="n">line2</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">line3</span> <span class="o">=</span> <span class="n">line3</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">line4</span> <span class="o">=</span> <span class="n">line4</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">line5</span> <span class="o">=</span> <span class="n">line5</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">line6</span> <span class="o">=</span> <span class="n">line6</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">city</span> <span class="o">=</span> <span class="n">city</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">country</span> <span class="o">=</span> <span class="n">country</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">zip_code</span> <span class="o">=</span> <span class="n">zip_code</span>
+</pre></div>
+</div>
+<p>When working with the Address resource there will be cases when we do not need all fields to be transferred to client. For this,
+partial representation is supported out of the box into Fantastico:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// retrieve only city,zip_code and line1 of a given address</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;/api/1.0/addresses/1?fields=city,zip_code,line1&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A possible response for this request might be:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nx">city</span><span class="o">:</span> <span class="s2">&quot;Bucharest&quot;</span><span class="p">,</span>
+    <span class="nx">zip_code</span><span class="o">:</span> <span class="s2">&quot;B00001&quot;</span><span class="p">,</span>
+    <span class="nx">line1</span><span class="o">:</span> <span class="s2">&quot;First line of this wonderful address&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>fields</strong> Query parameter is optional. If you omit this query parameter all fields are retrieved in the response. <strong>fields</strong>
+query parameter makes sense for:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Listing a collection</li>
+<li>Retrieving information about an individual item.</li>
+</ol>
+</div></blockquote>
+<p>All other operations simply ignore <strong>fields</strong>.</p>
+</div>
+<div class="section" id="resource-composed-attributes">
+<h2>Resource composed attributes<a class="headerlink" href="#resource-composed-attributes" title="Permalink to this headline">¶</a></h2>
+<p>There are resources which have attributes which points to another resource:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;person&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/persons&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+          <span class="n">subresources</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;bill_address&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;bill_address_id&quot;</span><span class="p">],</span>
+                        <span class="s">&quot;mail_address&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;mail_address_id&quot;</span><span class="p">],</span>
+                        <span class="s">&quot;ship_address:&quot;</span> <span class="p">[</span><span class="s">&quot;ship_address_id&quot;</span><span class="p">])</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">first_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;first_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+   <span class="n">last_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;last_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+   <span class="n">bill_address_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;bill_address_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&quot;addresses.id&quot;</span><span class="p">))</span>
+   <span class="n">bill_address</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">primaryjoin</span><span class="o">=</span><span class="n">bill_address_id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+   <span class="n">ship_address_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;ship_address_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&quot;addresses.id&quot;</span><span class="p">))</span>
+   <span class="n">ship_address</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">primaryjoin</span><span class="o">=</span><span class="n">ship_address_id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+   <span class="n">mail_address_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;ship_address_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&quot;addresses.id&quot;</span><span class="p">))</span>
+   <span class="n">ship_address</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">primaryjoin</span><span class="o">=</span><span class="n">mail_address_id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above definition shows you how to mark the subresources of <strong>person</strong> resource. By default they will not be retrieved in
+requests. Only subresource identifier keys pointing from <strong>person</strong> to various <strong>address</strong> objects are retrieved. If you want
+to obtain details about a specific address (e.g bill_address) you can use example below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">var</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;/api/1.0/persons/1?fields=first_name, last_name, bill_address(line1, city, zip_code)&quot;</span>
+</pre></div>
+</div>
+<p>The above example url might return:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;first_name&quot;</span><span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;last_name&quot;</span><span class="o">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;bill_address&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;line1&quot;</span><span class="o">:</span> <span class="s2">&quot;First line of this wonderful address&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;city&quot;</span><span class="o">:</span> <span class="s2">&quot;Bucharest&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;zip_code&quot;</span><span class="o">:</span> <span class="s2">&quot;B00001&quot;</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Composed attributes usage is limited to below mentioned operations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Listing collections.</li>
+<li>Retrieving information about an individual item.</li>
+</ul>
+</div></blockquote>
+<p>We do not support update / create of multiple resources in one single request.</p>
 </div>
 <div class="section" id="advantages">
 <h2>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline">¶</a></h2>
@@ -212,8 +321,8 @@ are only invoked for <strong>Create</strong> and <strong>Update</strong>:</p>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="fantastico-roa-apis-standard">
-<h2>Fantastico ROA APIs standard<a class="headerlink" href="#fantastico-roa-apis-standard" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="apis-standard">
+<h2>APIs standard<a class="headerlink" href="#apis-standard" title="Permalink to this headline">¶</a></h2>
 <p>Please read <a class="reference internal" href="roa/rest_standard.html"><em>REST API standard</em></a> for understanding how the generated API will behave and which are the routes
 provided out of the box.</p>
 </div>
@@ -228,12 +337,14 @@ provided out of the box.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">ROA (Resource Oriented Architecture)</a><ul>
-<li><a class="reference internal" href="#simple-use-cases">Simple use cases</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
 <li><a class="reference internal" href="#application-settings-stored-in-database">Application settings stored in database</a></li>
 <li><a class="reference internal" href="#versioning">Versioning</a></li>
 <li><a class="reference internal" href="#validation">Validation</a></li>
+<li><a class="reference internal" href="#partial-object-representation">Partial object representation</a></li>
+<li><a class="reference internal" href="#resource-composed-attributes">Resource composed attributes</a></li>
 <li><a class="reference internal" href="#advantages">Advantages</a></li>
-<li><a class="reference internal" href="#fantastico-roa-apis-standard">Fantastico ROA APIs standard</a></li>
+<li><a class="reference internal" href="#apis-standard">APIs standard</a></li>
 </ul>
 </li>
 </ul>
@@ -278,7 +389,7 @@ provided out of the box.</p>
         <li class="right" >
           <a href="mvc.html" title="Model View Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b118 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b119 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
