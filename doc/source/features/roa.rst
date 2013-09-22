@@ -267,7 +267,7 @@ Composed attributes usage is limited to below mentioned operations:
    * Listing collections.
    * Retrieving information about an individual item.
 
-We do not support update / create of multiple resources in one single request.
+We do not support update / create of multiple resources using one single request.
 
 Advantages
 ----------
@@ -279,7 +279,7 @@ Advantages
    * DRY (don't repeat yourself).
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    
    roa/rest_standard
-   roa/rest_exception_handling
+   roa/rest_responses
