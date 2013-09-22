@@ -9,7 +9,6 @@ Fantastico features
    routing_engine
    mvc
    roa
-   roa/rest_standard
    sdk
    component_model
    component_reusage

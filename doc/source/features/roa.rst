@@ -278,8 +278,8 @@ Advantages
    * Extremely easy to keep APIs in sync with resource changes.
    * DRY (don't repeat yourself).
 
-APIs standard
--------------
-
-Please read :doc:`/features/roa/rest_standard` for understanding how the generated API will behave and which are the routes
-provided out of the box.
+.. toctree::
+   :maxdepth: 2
+   
+   roa/rest_standard
+   roa/rest_exception_handling
