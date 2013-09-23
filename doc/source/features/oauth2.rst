@@ -32,4 +32,7 @@ you can find some particularities of Fantastico implementation:
 .. toctree::
    :maxdepth: 3
    
-   oauth2/simple_api_example.rst
+   oauth2/simple_api_example
+   oauth2/tokens_format
+   oauth2/tokens_storage
+   oauth2/error_responses
