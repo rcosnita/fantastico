@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OAUTH2 &mdash; fantastico 0.5.0-b121 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5.0-b121',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.0-b121 documentation" href="../index.html" />
+    <link rel="up" title="Fantastico features" href="features.html" />
+    <link rel="next" title="Example (Simple Menu API)" href="oauth2/simple_api_example.html" />
+    <link rel="prev" title="REST Responses" href="roa/rest_responses.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="oauth2/simple_api_example.html" title="Example (Simple Menu API)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="roa/rest_responses.html" title="REST Responses"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.5.0-b121 documentation</a> &raquo;</li>
+          <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="oauth2">
+<h1>OAUTH2<a class="headerlink" href="#oauth2" title="Permalink to this headline">¶</a></h1>
+<p>In Fantastico, a very modern authorization framework (<strong>OAUTH2</strong>) was choosen for guaranteeing:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Easy security for REST APIs.</li>
+<li>Easy integration of 3rd party applications.</li>
+<li>Easy integration of various Identity Providers.</li>
+</ol>
+</div></blockquote>
+<p>OAUTH2 specification contains many scenarios for its usage and provide various flows:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Authorizaton code grant.</li>
+<li>Implicit grant.</li>
+<li>Resource owner password credentials grant.</li>
+<li>Client credentials grant.</li>
+</ol>
+</div></blockquote>
+<p>In order to understand all this flows you can read the official <a class="reference external" href="http://tools.ietf.org/pdf/rfc6749.pdf">OAUTH2</a>
+documentation.</p>
+<div class="section" id="fantastico-security">
+<h2>Fantastico security<a class="headerlink" href="#fantastico-security" title="Permalink to this headline">¶</a></h2>
+<p>In order to keep things as simple as possible, in Fantastico we currently support only <strong>authorization code grant</strong>. Moreover,
+you can find some particularities of Fantastico implementation:</p>
+<blockquote>
+<div><ul class="simple">
+<li>We only support <strong>Authorization code grant</strong> (for all use cases where protected resources are involved).</li>
+<li>We only support <strong>Resource owner password credentials grant</strong> for Anonymous access to resources.</li>
+<li>For ease of tokens introspection, we use JWT as bearer tokens</li>
+<li>We fully support scopes</li>
+<li>We support state parameter for avoiding Cross Site Request Forgery</li>
+</ul>
+</div></blockquote>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="oauth2/simple_api_example.html">Example (Simple Menu API)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#terminology">Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#display-all-menus">Display all menus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#create-a-new-menu">Create a new menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#update-an-existing-menu">Update an existing menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#delete-an-existing-menu">Delete an existing menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#cautions">Cautions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="oauth2/tokens_format.html">OAUTH2 Fantastico Tokens</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_format.html#authorization-code-structure">Authorization code structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_format.html#access-token-structure">Access token structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_format.html#obtaining-access-tokens">Obtaining access tokens</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="oauth2/tokens_storage.html">OAUTH2 Fantastico Tokens Storage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_storage.html#relational-storage">Relational storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="oauth2/tokens_storage.html#clients-registration">Clients registration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_storage.html#considerations">Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="oauth2/error_responses.html">OAUTH2 Fantastico Error Responses</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OAUTH2</a><ul>
+<li><a class="reference internal" href="#fantastico-security">Fantastico security</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="roa/rest_responses.html"
+                        title="previous chapter">REST Responses</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="oauth2/simple_api_example.html"
+                        title="next chapter">Example (Simple Menu API)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/features/oauth2.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="oauth2/simple_api_example.html" title="Example (Simple Menu API)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="roa/rest_responses.html" title="REST Responses"
+             >previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.5.0-b121 documentation</a> &raquo;</li>
+          <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

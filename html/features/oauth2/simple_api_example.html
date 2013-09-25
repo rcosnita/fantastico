@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Example (Simple Menu API) &mdash; fantastico 0.5.0-b121 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5.0-b121',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.0-b121 documentation" href="../../index.html" />
+    <link rel="up" title="OAUTH2" href="../oauth2.html" />
+    <link rel="next" title="OAUTH2 Fantastico Tokens" href="tokens_format.html" />
+    <link rel="prev" title="OAUTH2" href="../oauth2.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tokens_format.html" title="OAUTH2 Fantastico Tokens"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../oauth2.html" title="OAUTH2"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b121 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="example-simple-menu-api">
+<h1>Example (Simple Menu API)<a class="headerlink" href="#example-simple-menu-api" title="Permalink to this headline">¶</a></h1>
+<p>Lets consider a virtual resource called SimpleMenu which has the following API:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="28%" />
+<col width="28%" />
+<col width="27%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>HTTP Verb</strong></td>
+<td><strong>URL</strong></td>
+<td><strong>Description</strong></td>
+<td><strong>Required permissions</strong></td>
+</tr>
+<tr class="row-even"><td>GET</td>
+<td>/api/1.0/simple-menus</td>
+<td>Retrieve all menus.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>POST</td>
+<td>/api/1.0/simple-menus</td>
+<td>Create a new system menu.</td>
+<td>simple_menus.create</td>
+</tr>
+<tr class="row-even"><td>PUT</td>
+<td>/api/1.0/simple-menus/:id</td>
+<td>Update an existing menu.</td>
+<td>simple_menus.update</td>
+</tr>
+<tr class="row-odd"><td>DELETE</td>
+<td>/api/1.0/simple-menus/:id</td>
+<td>Delete an existing menu.</td>
+<td>simple_menus.delete</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="terminology">
+<h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
+<p>In OAUTH, we always talk about three concepts:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Resource (Image, Melody, Menu).</li>
+<li>Resource Owner (an Identity Provider which can authenticatate the entities owning resources).</li>
+<li>Client (an application which wants access to resources owned by Resources owner in order to provide useful features).</li>
+</ol>
+</div></blockquote>
+<p>In the above example, Simple Menu is a resource owned by a system (global resource). Resource owners are all persons who
+are granted at least one scope required by the resource:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Everyone has anonymous access to the menu</li>
+<li>Everyone granted <strong>simple_menus.create</strong>,**simple_menus.update** or <strong>simple_menus.delete</strong> permissions is Resource Owner.</li>
+</ul>
+</div></blockquote>
+<p>It is important to understand that permissions are called <strong>scopes</strong> in OAUTH2 specification.</p>
+</div>
+<div class="section" id="display-all-menus">
+<h2>Display all menus<a class="headerlink" href="#display-all-menus" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/simple_menu_read.png" src="../../_images/simple_menu_read.png" />
+<p>As you can see in the above example, each <strong>Fantastico</strong> project will benefit from an <strong>Anonymous</strong> user. This user is considered
+the <strong>Resource owner</strong> for all public accessible resources. This mean, that each visitor of a Fantastico application will not
+be forced to authenticate when it is not necessary (<strong>e.g display website menubar</strong>).</p>
+</div>
+<div class="section" id="create-a-new-menu">
+<span id="oauth-create-new-menu"></span><h2>Create a new menu<a class="headerlink" href="#create-a-new-menu" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/simple_menu_create.png" src="../../_images/simple_menu_create.png" />
+<p>The above diagram specifies only the standard steps from OAUTH2 specification. In reality, when authorize endpoint is reached
+<strong>End user</strong> browser is redirected to a login screen. Once logged in, <strong>End user</strong> browser is redirected back to <strong>/authorize</strong>
+url from where he is granted an authorization code.</p>
+<p>Once the user is granted an authorization code, he will exchange the authorization code for an access_token. With the newly
+obtained access token he can easily create a new simple menu.</p>
+</div>
+<div class="section" id="update-an-existing-menu">
+<h2>Update an existing menu<a class="headerlink" href="#update-an-existing-menu" title="Permalink to this headline">¶</a></h2>
+<p>It is similar to <a class="reference internal" href="#oauth-create-new-menu"><em>Create a new menu</em></a> with the only difference that the final API called is
+<strong>PUT /api/1.0/simple-menus/:id</strong>.</p>
+</div>
+<div class="section" id="delete-an-existing-menu">
+<h2>Delete an existing menu<a class="headerlink" href="#delete-an-existing-menu" title="Permalink to this headline">¶</a></h2>
+<p>It is similar to <a class="reference internal" href="#oauth-create-new-menu"><em>Create a new menu</em></a> with the only difference that the final API called is
+<strong>DELETE /api/1.0/simple-menus/:id</strong>.</p>
+</div>
+<div class="section" id="cautions">
+<h2>Cautions<a class="headerlink" href="#cautions" title="Permalink to this headline">¶</a></h2>
+<p>You must understand the following steps are one time:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Authenticate user</li>
+<li>Obtain authorization code</li>
+<li>Obtain access token</li>
+</ol>
+</div></blockquote>
+<p>Once the token expires, the flow will start again from step <strong>1.1</strong>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Example (Simple Menu API)</a><ul>
+<li><a class="reference internal" href="#terminology">Terminology</a></li>
+<li><a class="reference internal" href="#display-all-menus">Display all menus</a></li>
+<li><a class="reference internal" href="#create-a-new-menu">Create a new menu</a></li>
+<li><a class="reference internal" href="#update-an-existing-menu">Update an existing menu</a></li>
+<li><a class="reference internal" href="#delete-an-existing-menu">Delete an existing menu</a></li>
+<li><a class="reference internal" href="#cautions">Cautions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../oauth2.html"
+                        title="previous chapter">OAUTH2</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tokens_format.html"
+                        title="next chapter">OAUTH2 Fantastico Tokens</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/features/oauth2/simple_api_example.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tokens_format.html" title="OAUTH2 Fantastico Tokens"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../oauth2.html" title="OAUTH2"
+             >previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b121 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../oauth2.html" >OAUTH2</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
