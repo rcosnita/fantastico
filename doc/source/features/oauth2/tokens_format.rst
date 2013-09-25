@@ -17,7 +17,6 @@ Authorization codes are opaque values for humans with the following structure (e
          "scopes": ["simple_menus.create", "simple_menus.update", "simple_menus.delete"],
          "userid": "john.doe@gmail.com",
          "state": "unique generated value",
-         "idp": "fantastico",
          "creation_time": "1380137542",
          "expiration_time": "1380137651"
       }
@@ -41,10 +40,6 @@ Each authorization code from Fantastico OAUTH2 implementation contains the follo
       * A key uniquely generated and hard to guess.
       * It is used to protect against **Cross Site Request Forgery (CSRF)**.
 
-   #. idp
-
-      * The idp which authenticated the user.
-
    #. creation_time
 
       * The timestamp when this token was generated.
@@ -67,7 +62,6 @@ Access token structure
          "first_name": "John",
          "last_name": "Doe"
       },
-      "idp": "fantastico",
       "state": "unique generated value",
       "creation_time": "1380137651",
       "expiration_time": "1380163800",
@@ -100,10 +94,6 @@ Each access token from Fantastico OAUTH2 implementation contains the following f
    #. user last name
 
       * Might be used in certain secure components.
-
-   #. idp
-
-      * Holds the idp identifier which authenticated the user.
 
    #. state
 
