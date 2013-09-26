@@ -37,3 +37,4 @@ you can find some particularities of Fantastico implementation:
    oauth2/tokens_storage
    oauth2/error_responses
    oauth2/compatible_idp
+   oauth2/roa_security
