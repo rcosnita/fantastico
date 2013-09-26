@@ -107,7 +107,7 @@ In order to obtain an access token which can be used for calling **Fantastico** 
 
       .. code-block:: html
 
-          GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz&redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb HTTP/1.1
+          GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz&redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb&scopes=simple_menus.create%20simple_menus.update%20simple_menus.delete HTTP/1.1
           Host: oauth2.fantasticoproject.com
 
    #. client.fantasticoproject.com/cb?code=<unique one time only code>&state=<unique generated state>
