@@ -13,19 +13,14 @@ Authorization codes are opaque values for humans with the following structure (e
    .. code-block:: javascript
 
       {
-         "client_id": "s6BhdRkqt3",
          "scopes": ["simple_menus.create", "simple_menus.update", "simple_menus.delete"],
-         "userid": "john.doe@gmail.com",
+         "userid": 1,
          "state": "unique generated value",
          "creation_time": "1380137542",
          "expiration_time": "1380137651"
       }
 
 Each authorization code from Fantastico OAUTH2 implementation contains the following fields:
-
-  #. client_id
-
-      * The client unique identifier for which authorization code was requested.
 
    #. scopes
 
@@ -54,7 +49,6 @@ Access token structure
 .. code-block:: javascript
 
    {
-      "client_id": "s6BhdRkqt3", 
       "scopes": ["simple_menus.create", "simple_menus.update", "simple_menus.delete"],
       "user": {
          "id": 1,
@@ -70,10 +64,6 @@ Access token structure
 
 
 Each access token from Fantastico OAUTH2 implementation contains the following fields:
-
-   #. client_id
-
-      * The client unique identifier for which token was requested.
 
    #. scopes
 
@@ -117,7 +107,7 @@ In order to obtain an access token which can be used for calling **Fantastico** 
 
       .. code-block:: html
 
-          GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz&redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb HTTP/1.1
+          GET /authorize?response_type=code&client_id=s6BhdRkqt3&state=xyz&redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb&scopes=simple_menus.create%20simple_menus.update%20simple_menus.delete HTTP/1.1
           Host: oauth2.fantasticoproject.com
 
    #. client.fantasticoproject.com/cb?code=<unique one time only code>&state=<unique generated state>

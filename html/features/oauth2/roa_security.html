@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ROA OAUTH2 Security &mdash; fantastico 0.5.0-b122 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5.0-b122',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.0-b122 documentation" href="../../index.html" />
+    <link rel="up" title="OAUTH2" href="../oauth2.html" />
+    <link rel="next" title="SDK" href="../sdk.html" />
+    <link rel="prev" title="OAUTH2 Fantastico IDP" href="compatible_idp.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../sdk.html" title="SDK"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="compatible_idp.html" title="OAUTH2 Fantastico IDP"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b122 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="roa-oauth2-security">
+<h1>ROA OAUTH2 Security<a class="headerlink" href="#roa-oauth2-security" title="Permalink to this headline">¶</a></h1>
+<p>In this document we continue the discussion about Resource Oriented Architecture encouraged by Fantastico. Here you can
+find how to secure your resources.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="nd">@RequiredScopes</span><span class="p">(</span><span class="n">create</span><span class="o">=</span><span class="s">&quot;app_setting.create&quot;</span><span class="p">,</span>
+                <span class="n">read</span><span class="o">=</span><span class="s">&quot;app_setting.read&quot;</span><span class="p">,</span>
+                <span class="n">update</span><span class="o">=</span><span class="s">&quot;app_setting.update&quot;</span><span class="p">,</span>
+                <span class="n">delete</span><span class="o">=</span><span class="s">&quot;app_setting.delete&quot;</span><span class="p">})</span>
+<span class="k">class</span> <span class="nc">AppSetting</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+   <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>This is an extremely convenient way to secure a resource. In addition, each argument from <strong>&#64;Resource</strong> constructor is optional.
+For instance, if read is not given any scope then everyone can read <strong>AppSetting</strong> resources.</p>
+<p>Fantastico will autodiscover endpoints / resources which require scopes and preauthorize every call to them.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="compatible_idp.html"
+                        title="previous chapter">OAUTH2 Fantastico IDP</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../sdk.html"
+                        title="next chapter">SDK</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/features/oauth2/roa_security.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../sdk.html" title="SDK"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="compatible_idp.html" title="OAUTH2 Fantastico IDP"
+             >previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b122 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../oauth2.html" >OAUTH2</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

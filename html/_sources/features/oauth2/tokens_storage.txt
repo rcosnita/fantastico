@@ -1,7 +1,7 @@
 OAUTH2 Fantastico Tokens Storage
 ================================
 
-For OAUTH2, we need a Relational storage.
+For OAUTH2, we need a Relational storage as well as a NoSQL.
 
 Relational storage
 ------------------
@@ -47,10 +47,17 @@ Clients registration
 
 Clients registration in **Fantastico** is done manually by inserting new records into **clients** table.
 
-Considerations
---------------
+NoSQL
+-----
 
-At the moment all generated tokens are transient and can be validated based on their decrypted content. This introduces a
-minor limitation at endpoint invocation because each client needs to also append its client id as a header.
+All available authorization codes and tokens are available into a NoSQL (in memory) storage.
 
-In addition, no tokens audit is hold and we can not revoke tokens till they expire.
+.. image:: /images/oauth2/tokens_storage.png
+
+Initially only **MemoryStore** will be supported but the storage can be easily changed with other implementations. Ideally,
+Fantastico OAUTH2 implementation will provide the following tokens storage:
+
+   * Amazon DynamoDb tokens storage.
+   * Memcache tokens storage.
+   * MongoDB tokens storage.
+   * Redis tokens storage.

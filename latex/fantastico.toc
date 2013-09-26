@@ -80,68 +80,75 @@
 \contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{38}{subsubsection*.143}
 \contentsline {paragraph}{Authorization code structure}{38}{paragraph*.144}
 \contentsline {paragraph}{Access token structure}{39}{paragraph*.145}
-\contentsline {paragraph}{Obtaining access tokens}{40}{paragraph*.146}
+\contentsline {paragraph}{Obtaining access tokens}{39}{paragraph*.146}
 \contentsline {subsubsection}{OAUTH2 Fantastico Tokens Storage}{40}{subsubsection*.147}
 \contentsline {paragraph}{Relational storage}{40}{paragraph*.148}
-\contentsline {subparagraph}{Clients registration}{41}{subparagraph*.149}
-\contentsline {paragraph}{Considerations}{41}{paragraph*.150}
+\contentsline {subparagraph}{Clients registration}{40}{subparagraph*.149}
+\contentsline {paragraph}{NoSQL}{41}{paragraph*.150}
 \contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{41}{subsubsection*.151}
-\contentsline {section}{\numberline {3.7}SDK}{41}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}Intro}{41}{subsection.3.7.1}
-\contentsline {subsection}{\numberline {3.7.2}Usage}{41}{subsection.3.7.2}
-\contentsline {subsection}{\numberline {3.7.3}Supported commands}{42}{subsection.3.7.3}
-\contentsline {subsubsection}{Activate extension command}{42}{subsubsection*.152}
-\contentsline {subsubsection}{Fantastico command}{42}{subsubsection*.157}
-\contentsline {subsubsection}{Syncdb command}{42}{subsubsection*.158}
-\contentsline {subsubsection}{Version command}{43}{subsubsection*.163}
-\contentsline {subsection}{\numberline {3.7.4}Technical summary}{44}{subsection.3.7.4}
-\contentsline {section}{\numberline {3.8}Component model}{46}{section.3.8}
-\contentsline {subsection}{\numberline {3.8.1}Static folder}{47}{subsection.3.8.1}
-\contentsline {subsection}{\numberline {3.8.2}Sql folder}{47}{subsection.3.8.2}
-\contentsline {subsubsection}{Sql folder example}{47}{subsubsection*.187}
-\contentsline {section}{\numberline {3.9}Component reusage}{48}{section.3.9}
-\contentsline {section}{\numberline {3.10}Built in components}{50}{section.3.10}
-\contentsline {subsection}{\numberline {3.10.1}Dynamic menu}{50}{subsection.3.10.1}
-\contentsline {subsubsection}{Integration}{50}{subsubsection*.191}
-\contentsline {paragraph}{Component files activation deprecated}{50}{paragraph*.192}
-\contentsline {paragraph}{Component files activation (SDK)}{50}{paragraph*.193}
-\contentsline {paragraph}{Component sample + db data}{50}{paragraph*.194}
-\contentsline {subsubsection}{Current limitations}{51}{subsubsection*.195}
-\contentsline {subsubsection}{Technical summary}{51}{subsubsection*.196}
-\contentsline {subsection}{\numberline {3.10.2}Dynamic pages}{52}{subsection.3.10.2}
-\contentsline {subsubsection}{Integration}{52}{subsubsection*.201}
+\contentsline {paragraph}{/authorize}{41}{paragraph*.152}
+\contentsline {subsubsection}{OAUTH2 Fantastico IDP}{42}{subsubsection*.153}
+\contentsline {paragraph}{Endpoints}{42}{paragraph*.154}
+\contentsline {subparagraph}{/authenticate}{42}{subparagraph*.155}
+\contentsline {subparagraph}{/consent}{42}{subparagraph*.156}
+\contentsline {subparagraph}{/profile}{43}{subparagraph*.157}
+\contentsline {subsubsection}{ROA OAUTH2 Security}{43}{subsubsection*.158}
+\contentsline {section}{\numberline {3.7}SDK}{43}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Intro}{43}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}Usage}{44}{subsection.3.7.2}
+\contentsline {subsection}{\numberline {3.7.3}Supported commands}{44}{subsection.3.7.3}
+\contentsline {subsubsection}{Activate extension command}{44}{subsubsection*.159}
+\contentsline {subsubsection}{Fantastico command}{44}{subsubsection*.164}
+\contentsline {subsubsection}{Syncdb command}{45}{subsubsection*.165}
+\contentsline {subsubsection}{Version command}{45}{subsubsection*.170}
+\contentsline {subsection}{\numberline {3.7.4}Technical summary}{46}{subsection.3.7.4}
+\contentsline {section}{\numberline {3.8}Component model}{49}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}Static folder}{49}{subsection.3.8.1}
+\contentsline {subsection}{\numberline {3.8.2}Sql folder}{49}{subsection.3.8.2}
+\contentsline {subsubsection}{Sql folder example}{49}{subsubsection*.194}
+\contentsline {section}{\numberline {3.9}Component reusage}{51}{section.3.9}
+\contentsline {section}{\numberline {3.10}Built in components}{52}{section.3.10}
+\contentsline {subsection}{\numberline {3.10.1}Dynamic menu}{52}{subsection.3.10.1}
+\contentsline {subsubsection}{Integration}{52}{subsubsection*.198}
+\contentsline {paragraph}{Component files activation deprecated}{52}{paragraph*.199}
+\contentsline {paragraph}{Component files activation (SDK)}{53}{paragraph*.200}
+\contentsline {paragraph}{Component sample + db data}{53}{paragraph*.201}
 \contentsline {subsubsection}{Current limitations}{53}{subsubsection*.202}
 \contentsline {subsubsection}{Technical summary}{53}{subsubsection*.203}
-\contentsline {subsection}{\numberline {3.10.3}Tracking codes}{55}{subsection.3.10.3}
-\contentsline {subsubsection}{Analytic solutions}{55}{subsubsection*.208}
-\contentsline {subsubsection}{Integration}{55}{subsubsection*.209}
-\contentsline {subsubsection}{Current limitations}{56}{subsubsection*.210}
-\contentsline {subsubsection}{Technical summary}{56}{subsubsection*.211}
-\contentsline {chapter}{\numberline {4}How to articles}{57}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{57}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{57}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{57}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{58}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{58}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Deployment how to}{58}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{59}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{60}{subsubsection*.216}
-\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{60}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{61}{subsubsection*.217}
-\contentsline {subsubsection}{Optimization}{61}{subsubsection*.218}
-\contentsline {subsubsection}{Setup with S3}{62}{subsubsection*.219}
-\contentsline {section}{\numberline {4.3}Static assets}{62}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{62}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{63}{subsubsection*.220}
-\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{63}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Creating a new project}{63}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Create first component}{63}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{64}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{64}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Changes}{65}{chapter.5}
-\contentsline {section}{\numberline {5.1}Feedback}{65}{section.5.1}
-\contentsline {section}{\numberline {5.2}Versions}{65}{section.5.2}
-\contentsline {chapter}{\numberline {6}Provide feedback}{67}{chapter.6}
-\contentsline {chapter}{\numberline {7}Build status}{69}{chapter.7}
-\contentsline {chapter}{\numberline {8}License}{71}{chapter.8}
-\contentsline {chapter}{Index}{73}{section*.221}
+\contentsline {subsection}{\numberline {3.10.2}Dynamic pages}{54}{subsection.3.10.2}
+\contentsline {subsubsection}{Integration}{54}{subsubsection*.208}
+\contentsline {subsubsection}{Current limitations}{55}{subsubsection*.209}
+\contentsline {subsubsection}{Technical summary}{55}{subsubsection*.210}
+\contentsline {subsection}{\numberline {3.10.3}Tracking codes}{57}{subsection.3.10.3}
+\contentsline {subsubsection}{Analytic solutions}{57}{subsubsection*.215}
+\contentsline {subsubsection}{Integration}{58}{subsubsection*.216}
+\contentsline {subsubsection}{Current limitations}{58}{subsubsection*.217}
+\contentsline {subsubsection}{Technical summary}{58}{subsubsection*.218}
+\contentsline {chapter}{\numberline {4}How to articles}{61}{chapter.4}
+\contentsline {section}{\numberline {4.1}MVC How to}{61}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Code the model}{61}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Code the controller}{61}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Code the view}{62}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Test your application}{62}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Deployment how to}{62}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{63}{subsection.4.2.1}
+\contentsline {subsubsection}{Setup}{64}{subsubsection*.223}
+\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{64}{subsection.4.2.2}
+\contentsline {subsubsection}{Setup}{65}{subsubsection*.224}
+\contentsline {subsubsection}{Optimization}{65}{subsubsection*.225}
+\contentsline {subsubsection}{Setup with S3}{66}{subsubsection*.226}
+\contentsline {section}{\numberline {4.3}Static assets}{66}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{66}{subsection.4.3.1}
+\contentsline {subsubsection}{Favicon}{67}{subsubsection*.227}
+\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{67}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Creating a new project}{67}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Create first component}{67}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{68}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{68}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Changes}{69}{chapter.5}
+\contentsline {section}{\numberline {5.1}Feedback}{69}{section.5.1}
+\contentsline {section}{\numberline {5.2}Versions}{69}{section.5.2}
+\contentsline {chapter}{\numberline {6}Provide feedback}{71}{chapter.6}
+\contentsline {chapter}{\numberline {7}Build status}{73}{chapter.7}
+\contentsline {chapter}{\numberline {8}License}{75}{chapter.8}
+\contentsline {chapter}{Index}{77}{section*.228}

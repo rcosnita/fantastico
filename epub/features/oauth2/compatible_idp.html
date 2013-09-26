@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OAUTH2 Fantastico IDP</title>
+    
+    <link rel="stylesheet" href="../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="roa_security.html" title="ROA OAUTH2 Security"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="error_responses.html" title="OAUTH2 Fantastico Error Responses"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b122 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="oauth2-fantastico-idp">
+<h1>OAUTH2 Fantastico IDP</h1>
+<p>In this document you can find information about the requirements for an OAUTH2 Fantastico Identity Provider.</p>
+<div class="section" id="endpoints">
+<h2>Endpoints</h2>
+<div class="section" id="authenticate">
+<h3>/authenticate</h3>
+<p>This endpoint is responsible for authenticating a resource owner. Optionally, it can ask the user to accept terms of use and
+to grant required permissions to the application. Consent given for an application will contain all scopes for which it was
+signed.</p>
+<p>Below you can find an authenticate request initiated by OAUTH2 Fantastico authorization server:</p>
+<blockquote>
+<div><div class="highlight-html"><pre>GET /authenticate?client_id=s6BhdRkqt&amp;state=xyz&amp;redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb%3Fclient_id%3Ds6BhdRkqt%26state%3D&amp;scopes=simple_menus.create%20simple_menus.update%20simple_menus.delete HTTP/1.1
+Host: idp.fantasticoproject.com
+Referrer: http://oauth2.fantasticoproject.com/authorize</pre>
+</div>
+</div></blockquote>
+<p>Once the authenticate endpoint authenticate an user and obtain his consent for client required permissions the following redirect
+is done:</p>
+<blockquote>
+<div><div class="highlight-html"><pre>HTTP/1.1 302 Found
+Location: http://oauth2.fantasticoproject.com/authorize?client_id=s6BhdRkqt&amp;state=xyz&amp;redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb%3Fclient_id%3Ds6BhdRkqt%26state%3D&amp;scopes=simple_menus.create%20simple_menus.update%20simple_menus.delete&amp;response_type=code&amp;userid=123</pre>
+</div>
+</div></blockquote>
+<p>Now the authorize endpoint will obtain an authorization code (<a class="reference internal" href="tokens_format.html"><em>OAUTH2 Fantastico Tokens</em></a>). Based on the userid,
+the endpoint will double check user consent with the idp in order to avoid attacks.</p>
+</div>
+<div class="section" id="consent">
+<h3>/consent</h3>
+<p>This endpoint supports the following operations:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">GET /consents/:userid?scopes=:scopes HTTP/1.1</p>
+<blockquote>
+<div><ul class="simple">
+<li>This operation can response with 204 if consent was given or 403 if the consent was not given by resource owner.</li>
+<li>In addition it can return 400 if the scopes query parameter is not given.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="profile">
+<h3>/profile</h3>
+<p>This endpoint supports the following operations:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">GET /profiles/:userid HTTP/1.1</p>
+<blockquote>
+<div><ul class="simple">
+<li>This operation returns given user profile.</li>
+<li>It needs a valid access token.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>At the moment, users are manually created and there is no API provided.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

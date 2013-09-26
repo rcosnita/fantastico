@@ -20,12 +20,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../sdk.html" title="SDK"
+          <a href="compatible_idp.html" title="OAUTH2 Fantastico IDP"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="tokens_storage.html" title="OAUTH2 Fantastico Tokens Storage"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b121 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b122 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -37,6 +37,75 @@
             
   <div class="section" id="oauth2-fantastico-error-responses">
 <h1>OAUTH2 Fantastico Error Responses</h1>
+<p>In this section you can find possible error responses retrieved by <strong>Fantastico</strong> OAUTH2 endpoints.</p>
+<div class="section" id="authorize">
+<h2>/authorize</h2>
+<p>Below attributes are appended as query parameters or sent as json object to the client application in case of an exception:</p>
+<ul>
+<li><p class="first">error</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>400 Bad request</strong></p>
+<blockquote>
+<div><ul>
+<li><p class="first">invalid_request</p>
+<blockquote>
+<div><p>The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once,
+or is otherwise malformed.</p>
+</div></blockquote>
+</li>
+<li><p class="first">unsupported_response_type</p>
+<blockquote>
+<div><p>The authorization server does not support obtaining an authorization code using this method.</p>
+</div></blockquote>
+</li>
+<li><p class="first">invalid_scope</p>
+<blockquote>
+<div><p>The requested scope is invalid, unknown, or malformed.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>401 Unauthorized</strong></p>
+<blockquote>
+<div><ul>
+<li><p class="first">unauthorized_client</p>
+<blockquote>
+<div><p>The client is not authorized to request an authorization code using this method.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>403 Forbidden</strong></p>
+<blockquote>
+<div><ul>
+<li><p class="first">access_denied</p>
+<blockquote>
+<div><p>The resource owner or authorization server denied the request.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">error_description</p>
+<blockquote>
+<div><p>Human-readable ASCII [USASCII] text providing additional information, used to assist the client developer in
+understanding the error that occurred.</p>
+</div></blockquote>
+</li>
+<li><p class="first">error_uri</p>
+<blockquote>
+<div><p>A URI identifying a human-readable web page with information about the error, used to provide the client developer
+with additional information about the error.</p>
+</div></blockquote>
+</li>
+</ul>
+</div>
 </div>
 
 

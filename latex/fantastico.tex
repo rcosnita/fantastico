@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 25, 2013}
-\release{0.5.0-b121}
+\date{September 26, 2013}
+\release{0.5.0-b122}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4ab69e0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x520f490\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1850,7 +1850,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1531408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1dd0408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -3187,9 +3187,8 @@ Authorization codes are opaque values for humans with the following structure (e
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{p}{\PYGZob{}}
-   \PYG{l+s+s2}{\PYGZdq{}client\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}s6BhdRkqt3\PYGZdq{}}\PYG{p}{,}
    \PYG{l+s+s2}{\PYGZdq{}scopes\PYGZdq{}}\PYG{o}{:} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.create\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.update\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.delete\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
-   \PYG{l+s+s2}{\PYGZdq{}userid\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}john.doe@gmail.com\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}userid\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
    \PYG{l+s+s2}{\PYGZdq{}state\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}unique generated value\PYGZdq{}}\PYG{p}{,}
    \PYG{l+s+s2}{\PYGZdq{}creation\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137542\PYGZdq{}}\PYG{p}{,}
    \PYG{l+s+s2}{\PYGZdq{}expiration\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137651\PYGZdq{}}
@@ -3198,17 +3197,6 @@ Authorization codes are opaque values for humans with the following structure (e
 \end{quote}
 
 Each authorization code from Fantastico OAUTH2 implementation contains the following fields:
-\begin{quote}
-\begin{enumerate}
-\item {} 
-client\_id
-\begin{itemize}
-\item {} 
-The client unique identifier for which authorization code was requested.
-
-\end{itemize}
-
-\end{enumerate}
 \begin{enumerate}
 \item {} 
 scopes
@@ -3254,14 +3242,12 @@ The timestamp when this token expires (must be a really short period - 1min).
 \end{itemize}
 
 \end{enumerate}
-\end{quote}
 
 
 \paragraph{Access token structure}
 \label{features/oauth2/tokens_format:access-token-structure}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYGZob{}
-   "client\_id": "s6BhdRkqt3",
    "scopes": ["simple\_menus.create", "simple\_menus.update", "simple\_menus.delete"],
    "user": \PYGZob{}
       "id": 1,
@@ -3278,14 +3264,6 @@ The timestamp when this token expires (must be a really short period - 1min).
 
 Each access token from Fantastico OAUTH2 implementation contains the following fields:
 \begin{enumerate}
-\item {} 
-client\_id
-\begin{itemize}
-\item {} 
-The client unique identifier for which token was requested.
-
-\end{itemize}
-
 \item {} 
 scopes
 \begin{itemize}
@@ -3364,7 +3342,7 @@ In order to obtain an access token which can be used for calling \textbf{Fantast
 Obtain an authorization code
 
 \begin{Verbatim}[commandchars=\\\{\}]
-GET /authorize?response\_type=code\&client\_id=s6BhdRkqt3\&state=xyz\&redirect\_uri=https\%3A\%2F\%2Fclient\%2fantasticoproject\%2Ecom\%2Fcb HTTP/1.1
+GET /authorize?response\_type=code\&client\_id=s6BhdRkqt3\&state=xyz\&redirect\_uri=https\%3A\%2F\%2Fclient\%2fantasticoproject\%2Ecom\%2Fcb\&scopes=simple\_menus.create\%20simple\_menus.update\%20simple\_menus.delete HTTP/1.1
 Host: oauth2.fantasticoproject.com
 \end{Verbatim}
 
@@ -3405,7 +3383,7 @@ provide access token for client usage
 
 \subsubsection{OAUTH2 Fantastico Tokens Storage}
 \label{features/oauth2/tokens_storage::doc}\label{features/oauth2/tokens_storage:oauth2-fantastico-tokens-storage}
-For OAUTH2, we need a Relational storage.
+For OAUTH2, we need a Relational storage as well as a NoSQL.
 
 
 \paragraph{Relational storage}
@@ -3488,16 +3466,216 @@ Holds the number of seconds for which access tokens are valid (e.g \textbf{3600}
 Clients registration in \textbf{Fantastico} is done manually by inserting new records into \textbf{clients} table.
 
 
-\paragraph{Considerations}
-\label{features/oauth2/tokens_storage:considerations}
-At the moment all generated tokens are transient and can be validated based on their decrypted content. This introduces a
-minor limitation at endpoint invocation because each client needs to also append its client id as a header.
+\paragraph{NoSQL}
+\label{features/oauth2/tokens_storage:nosql}
+All available authorization codes and tokens are available into a NoSQL (in memory) storage.
 
-In addition, no tokens audit is hold and we can not revoke tokens till they expire.
+\includegraphics{tokens_storage.png}
+
+Initially only \textbf{MemoryStore} will be supported but the storage can be easily changed with other implementations. Ideally,
+Fantastico OAUTH2 implementation will provide the following tokens storage:
+\begin{itemize}
+\item {} 
+Amazon DynamoDb tokens storage.
+
+\item {} 
+Memcache tokens storage.
+
+\item {} 
+MongoDB tokens storage.
+
+\item {} 
+Redis tokens storage.
+
+\end{itemize}
 
 
 \subsubsection{OAUTH2 Fantastico Error Responses}
 \label{features/oauth2/error_responses::doc}\label{features/oauth2/error_responses:oauth2-fantastico-error-responses}
+In this section you can find possible error responses retrieved by \textbf{Fantastico} OAUTH2 endpoints.
+
+
+\paragraph{/authorize}
+\label{features/oauth2/error_responses:authorize}
+Below attributes are appended as query parameters or sent as json object to the client application in case of an exception:
+\begin{itemize}
+\item {} 
+error
+\begin{itemize}
+\item {} 
+\textbf{400 Bad request}
+\begin{itemize}
+\item {} 
+invalid\_request
+\begin{quote}
+
+The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once,
+or is otherwise malformed.
+\end{quote}
+
+\item {} 
+unsupported\_response\_type
+\begin{quote}
+
+The authorization server does not support obtaining an authorization code using this method.
+\end{quote}
+
+\item {} 
+invalid\_scope
+\begin{quote}
+
+The requested scope is invalid, unknown, or malformed.
+\end{quote}
+
+\end{itemize}
+
+\item {} 
+\textbf{401 Unauthorized}
+\begin{itemize}
+\item {} 
+unauthorized\_client
+\begin{quote}
+
+The client is not authorized to request an authorization code using this method.
+\end{quote}
+
+\end{itemize}
+
+\item {} 
+\textbf{403 Forbidden}
+\begin{itemize}
+\item {} 
+access\_denied
+\begin{quote}
+
+The resource owner or authorization server denied the request.
+\end{quote}
+
+\end{itemize}
+
+\end{itemize}
+
+\item {} 
+error\_description
+\begin{quote}
+
+Human-readable ASCII {[}USASCII{]} text providing additional information, used to assist the client developer in
+understanding the error that occurred.
+\end{quote}
+
+\item {} 
+error\_uri
+\begin{quote}
+
+A URI identifying a human-readable web page with information about the error, used to provide the client developer
+with additional information about the error.
+\end{quote}
+
+\end{itemize}
+
+
+\subsubsection{OAUTH2 Fantastico IDP}
+\label{features/oauth2/compatible_idp:oauth2-fantastico-idp}\label{features/oauth2/compatible_idp::doc}
+In this document you can find information about the requirements for an OAUTH2 Fantastico Identity Provider.
+
+
+\paragraph{Endpoints}
+\label{features/oauth2/compatible_idp:endpoints}
+
+\subparagraph{/authenticate}
+\label{features/oauth2/compatible_idp:authenticate}
+This endpoint is responsible for authenticating a resource owner. Optionally, it can ask the user to accept terms of use and
+to grant required permissions to the application. Consent given for an application will contain all scopes for which it was
+signed.
+
+Below you can find an authenticate request initiated by OAUTH2 Fantastico authorization server:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+GET /authenticate?client\_id=s6BhdRkqt\&state=xyz\&redirect\_uri=https\%3A\%2F\%2Fclient\%2fantasticoproject\%2Ecom\%2Fcb\%3Fclient\_id\%3Ds6BhdRkqt\%26state\%3D\&scopes=simple\_menus.create\%20simple\_menus.update\%20simple\_menus.delete HTTP/1.1
+Host: idp.fantasticoproject.com
+Referrer: http://oauth2.fantasticoproject.com/authorize
+\end{Verbatim}
+\end{quote}
+
+Once the authenticate endpoint authenticate an user and obtain his consent for client required permissions the following redirect
+is done:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+HTTP/1.1 302 Found
+Location: http://oauth2.fantasticoproject.com/authorize?client\_id=s6BhdRkqt\&state=xyz\&redirect\_uri=https\%3A\%2F\%2Fclient\%2fantasticoproject\%2Ecom\%2Fcb\%3Fclient\_id\%3Ds6BhdRkqt\%26state\%3D\&scopes=simple\_menus.create\%20simple\_menus.update\%20simple\_menus.delete\&response\_type=code\&userid=123
+\end{Verbatim}
+\end{quote}
+
+Now the authorize endpoint will obtain an authorization code ({\hyperref[features/oauth2/tokens_format::doc]{\emph{OAUTH2 Fantastico Tokens}}}). Based on the userid,
+the endpoint will double check user consent with the idp in order to avoid attacks.
+
+
+\subparagraph{/consent}
+\label{features/oauth2/compatible_idp:consent}
+This endpoint supports the following operations:
+\begin{itemize}
+\item {} 
+GET /consents/:userid?scopes=:scopes HTTP/1.1
+\begin{itemize}
+\item {} 
+This operation can response with 204 if consent was given or 403 if the consent was not given by resource owner.
+
+\item {} 
+In addition it can return 400 if the scopes query parameter is not given.
+
+\end{itemize}
+
+\end{itemize}
+
+
+\subparagraph{/profile}
+\label{features/oauth2/compatible_idp:profile}
+This endpoint supports the following operations:
+\begin{itemize}
+\item {} 
+GET /profiles/:userid HTTP/1.1
+\begin{itemize}
+\item {} 
+This operation returns given user profile.
+
+\item {} 
+It needs a valid access token.
+
+\end{itemize}
+
+\end{itemize}
+
+At the moment, users are manually created and there is no API provided.
+
+
+\subsubsection{ROA OAUTH2 Security}
+\label{features/oauth2/roa_security::doc}\label{features/oauth2/roa_security:roa-oauth2-security}
+In this document we continue the discussion about Resource Oriented Architecture encouraged by Fantastico. Here you can
+find how to secure your resources.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{)}
+\PYG{n+nd}{@RequiredScopes}\PYG{p}{(}\PYG{n}{create}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}setting.create}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                \PYG{n}{read}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}setting.read}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                \PYG{n}{update}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}setting.update}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                \PYG{n}{delete}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}setting.delete}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{AppSetting}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+   \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+   \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+\end{Verbatim}
+
+This is an extremely convenient way to secure a resource. In addition, each argument from \textbf{@Resource} constructor is optional.
+For instance, if read is not given any scope then everyone can read \textbf{AppSetting} resources.
+
+Fantastico will autodiscover endpoints / resources which require scopes and preauthorize every call to them.
+
 
 \section{SDK}
 \label{features/sdk::doc}\label{features/sdk:sdk}
@@ -3639,7 +3817,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x1a012f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x22a02f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -4184,7 +4362,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2d971e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x36361e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

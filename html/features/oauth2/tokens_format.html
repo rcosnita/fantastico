@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OAUTH2 Fantastico Tokens &mdash; fantastico 0.5.0-b121 documentation</title>
+    <title>OAUTH2 Fantastico Tokens &mdash; fantastico 0.5.0-b122 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.0-b121',
+        VERSION:     '0.5.0-b122',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b121 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b122 documentation" href="../../index.html" />
     <link rel="up" title="OAUTH2" href="../oauth2.html" />
     <link rel="next" title="OAUTH2 Fantastico Tokens Storage" href="tokens_storage.html" />
     <link rel="prev" title="Example (Simple Menu API)" href="simple_api_example.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="simple_api_example.html" title="Example (Simple Menu API)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b121 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b122 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -62,9 +62,8 @@ endpoint authorization without storage calls (increased performance and response
 <p>Authorization codes are opaque values for humans with the following structure (encrypted):</p>
 <blockquote>
 <div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
-   <span class="s2">&quot;client_id&quot;</span><span class="o">:</span> <span class="s2">&quot;s6BhdRkqt3&quot;</span><span class="p">,</span>
    <span class="s2">&quot;scopes&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;simple_menus.create&quot;</span><span class="p">,</span> <span class="s2">&quot;simple_menus.update&quot;</span><span class="p">,</span> <span class="s2">&quot;simple_menus.delete&quot;</span><span class="p">],</span>
-   <span class="s2">&quot;userid&quot;</span><span class="o">:</span> <span class="s2">&quot;john.doe@gmail.com&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;userid&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
    <span class="s2">&quot;state&quot;</span><span class="o">:</span> <span class="s2">&quot;unique generated value&quot;</span><span class="p">,</span>
    <span class="s2">&quot;creation_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137542&quot;</span><span class="p">,</span>
    <span class="s2">&quot;expiration_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137651&quot;</span>
@@ -73,16 +72,6 @@ endpoint authorization without storage calls (increased performance and response
 </div>
 </div></blockquote>
 <p>Each authorization code from Fantastico OAUTH2 implementation contains the following fields:</p>
-<blockquote>
-<div><ol class="arabic">
-<li><p class="first">client_id</p>
-<blockquote>
-<div><ul class="simple">
-<li>The client unique identifier for which authorization code was requested.</li>
-</ul>
-</div></blockquote>
-</li>
-</ol>
 <blockquote>
 <div><ol class="arabic simple">
 <li>scopes<ul>
@@ -108,12 +97,10 @@ endpoint authorization without storage calls (increased performance and response
 </li>
 </ol>
 </div></blockquote>
-</div></blockquote>
 </div>
 <div class="section" id="access-token-structure">
 <h2>Access token structure<a class="headerlink" href="#access-token-structure" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-javascript"><pre>{
-   &quot;client_id&quot;: &quot;s6BhdRkqt3&quot;,
    &quot;scopes&quot;: [&quot;simple_menus.create&quot;, &quot;simple_menus.update&quot;, &quot;simple_menus.delete&quot;],
    &quot;user&quot;: {
       &quot;id&quot;: 1,
@@ -130,10 +117,6 @@ endpoint authorization without storage calls (increased performance and response
 <p>Each access token from Fantastico OAUTH2 implementation contains the following fields:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>client_id<ul>
-<li>The client unique identifier for which token was requested.</li>
-</ul>
-</li>
 <li>scopes<ul>
 <li>A JSON list of scopes for which this token was generated. (used for endpoint authorization).</li>
 </ul>
@@ -176,7 +159,7 @@ endpoint authorization without storage calls (increased performance and response
 <blockquote>
 <div><ol class="arabic">
 <li><p class="first">Obtain an authorization code</p>
-<div class="highlight-html"><pre>GET /authorize?response_type=code&amp;client_id=s6BhdRkqt3&amp;state=xyz&amp;redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb HTTP/1.1
+<div class="highlight-html"><pre>GET /authorize?response_type=code&amp;client_id=s6BhdRkqt3&amp;state=xyz&amp;redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb&amp;scopes=simple_menus.create%20simple_menus.update%20simple_menus.delete HTTP/1.1
 Host: oauth2.fantasticoproject.com</pre>
 </div>
 </li>
@@ -268,7 +251,7 @@ Content-Type: application/json
         <li class="right" >
           <a href="simple_api_example.html" title="Example (Simple Menu API)"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b121 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b122 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" >OAUTH2</a> &raquo;</li> 
       </ul>
