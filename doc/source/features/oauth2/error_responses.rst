@@ -6,10 +6,7 @@ In this section you can find possible error responses retrieved by **Fantastico*
 /authorize
 ----------
 
-Authorization code
-------------------
-
-Below parameters are appended as query parameters to the redirect sent by authorize endpoint:
+Below attributes are appended as query parameters or sent as json object to the client application in case of an exception:
 
 * error
 
