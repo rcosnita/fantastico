@@ -13,7 +13,6 @@ Authorization codes are opaque values for humans with the following structure (e
    .. code-block:: javascript
 
       {
-         "client_id": "s6BhdRkqt3",
          "scopes": ["simple_menus.create", "simple_menus.update", "simple_menus.delete"],
          "userid": "john.doe@gmail.com",
          "state": "unique generated value",
@@ -22,10 +21,6 @@ Authorization codes are opaque values for humans with the following structure (e
       }
 
 Each authorization code from Fantastico OAUTH2 implementation contains the following fields:
-
-  #. client_id
-
-      * The client unique identifier for which authorization code was requested.
 
    #. scopes
 
@@ -54,7 +49,6 @@ Access token structure
 .. code-block:: javascript
 
    {
-      "client_id": "s6BhdRkqt3", 
       "scopes": ["simple_menus.create", "simple_menus.update", "simple_menus.delete"],
       "user": {
          "id": 1,
@@ -70,10 +64,6 @@ Access token structure
 
 
 Each access token from Fantastico OAUTH2 implementation contains the following fields:
-
-   #. client_id
-
-      * The client unique identifier for which token was requested.
 
    #. scopes
 
