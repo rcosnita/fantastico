@@ -22,3 +22,5 @@ find how to secure your resources.
 
 This is an extremely convenient way to secure a resource. In addition, each argument from **@Resource** constructor is optional.
 For instance, if read is not given any scope then everyone can read **AppSetting** resources.
+
+Fantastico will autodiscover endpoints / resources which require scopes and preauthorize every call to them.
