@@ -14,7 +14,7 @@ Authorization codes are opaque values for humans with the following structure (e
 
       {
          "scopes": ["simple_menus.create", "simple_menus.update", "simple_menus.delete"],
-         "userid": "john.doe@gmail.com",
+         "userid": 1,
          "state": "unique generated value",
          "creation_time": "1380137542",
          "expiration_time": "1380137651"
