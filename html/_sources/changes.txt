@@ -11,6 +11,17 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 Versions
 --------
 
+* v0.5.0 (Work in progress)
+
+   * Added specification for auto generated API for resources.
+   * Added OAUTH2 implementation details for Fantastico.
+   * Added Identity Provider draft specification.
+   * Added auto generated APIs for resources (Resource Oriented Architecture)
+   * Added OAUTH2 extendable tokens generator.
+   * Added OAUTH2 authorization code grant type support.
+   * Added OAUTH2 resource owner password credentials for Anonymous user.
+   * Added first version of Fantastico Identity Provider.
+
 * v0.4.1 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
    * Fix a bug into analytics component sample data insert.
    * Fix a bug into component rendering for no json responses coming for given url.

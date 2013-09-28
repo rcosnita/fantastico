@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 26, 2013}
-\release{0.5.0-b122}
+\date{September 28, 2013}
+\release{0.5.0-b123}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -770,7 +770,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x520f490\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5006490\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1850,7 +1850,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1dd0408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1bcd408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -3029,9 +3029,6 @@ We only support \textbf{Authorization code grant} (for all use cases where prote
 We only support \textbf{Resource owner password credentials grant} for Anonymous access to resources.
 
 \item {} 
-For ease of tokens introspection, we use JWT as bearer tokens
-
-\item {} 
 We fully support scopes
 
 \item {} 
@@ -3248,6 +3245,7 @@ The timestamp when this token expires (must be a really short period - 1min).
 \label{features/oauth2/tokens_format:access-token-structure}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYGZob{}
+   "code": "\textless{}authorization code used for obtaining the token\textgreater{}",
    "scopes": ["simple\_menus.create", "simple\_menus.update", "simple\_menus.delete"],
    "user": \PYGZob{}
       "id": 1,
@@ -3257,13 +3255,20 @@ The timestamp when this token expires (must be a really short period - 1min).
    \PYGZcb{},
    "state": "unique generated value",
    "creation\_time": "1380137651",
-   "expiration\_time": "1380163800",
-   "token\_type": "bearer"
+   "expiration\_time": "1380163800"
 \PYGZcb{}
 \end{Verbatim}
 
 Each access token from Fantastico OAUTH2 implementation contains the following fields:
 \begin{enumerate}
+\item {} 
+code
+\begin{itemize}
+\item {} 
+The authorization code used for obtaining this access token. It only applies for authorization code grant type.
+
+\end{itemize}
+
 \item {} 
 scopes
 \begin{itemize}
@@ -3374,7 +3379,9 @@ provide access token for client usage
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{p}{\PYGZob{}}
-   \PYG{l+s+s2}{\PYGZdq{}access\PYGZus{}token\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}encrypted token containing all specified information\PYGZdq{}}
+   \PYG{l+s+s2}{\PYGZdq{}access\PYGZus{}token\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}encrypted token containing all specified information\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}token\PYGZus{}type\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}bearer\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}expires\PYGZus{}in\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{900}
 \PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 
@@ -3817,7 +3824,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x22a02f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x209d2f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -4362,7 +4369,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x36361e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x34321e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -5496,6 +5503,35 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 
 \section{Versions}
 \label{changes:versions}\begin{itemize}
+\item {} 
+v0.5.0 (Work in progress)
+\begin{itemize}
+\item {} 
+Added specification for auto generated API for resources.
+
+\item {} 
+Added OAUTH2 implementation details for Fantastico.
+
+\item {} 
+Added Identity Provider draft specification.
+
+\item {} 
+Added auto generated APIs for resources (Resource Oriented Architecture)
+
+\item {} 
+Added OAUTH2 extendable tokens generator.
+
+\item {} 
+Added OAUTH2 authorization code grant type support.
+
+\item {} 
+Added OAUTH2 resource owner password credentials for Anonymous user.
+
+\item {} 
+Added first version of Fantastico Identity Provider.
+
+\end{itemize}
+
 \item {} \begin{description}
 \item[{v0.4.1 (\href{https://docs.google.com/forms/d/1tKBopU3lfDB\_w8F4h7Rl1Rn4uydAJq-nha09L\_ptJck/edit?usp=sharing}{Provide feedback})}] \leavevmode\begin{itemize}
 \item {} 

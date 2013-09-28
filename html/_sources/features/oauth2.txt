@@ -25,7 +25,6 @@ you can find some particularities of Fantastico implementation:
 
    * We only support **Authorization code grant** (for all use cases where protected resources are involved).
    * We only support **Resource owner password credentials grant** for Anonymous access to resources.
-   * For ease of tokens introspection, we use JWT as bearer tokens
    * We fully support scopes
    * We support state parameter for avoiding Cross Site Request Forgery
 

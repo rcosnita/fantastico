@@ -83,7 +83,7 @@
 \contentsline {paragraph}{Obtaining access tokens}{39}{paragraph*.146}
 \contentsline {subsubsection}{OAUTH2 Fantastico Tokens Storage}{40}{subsubsection*.147}
 \contentsline {paragraph}{Relational storage}{40}{paragraph*.148}
-\contentsline {subparagraph}{Clients registration}{40}{subparagraph*.149}
+\contentsline {subparagraph}{Clients registration}{41}{subparagraph*.149}
 \contentsline {paragraph}{NoSQL}{41}{paragraph*.150}
 \contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{41}{subsubsection*.151}
 \contentsline {paragraph}{/authorize}{41}{paragraph*.152}
@@ -148,7 +148,7 @@
 \contentsline {chapter}{\numberline {5}Changes}{69}{chapter.5}
 \contentsline {section}{\numberline {5.1}Feedback}{69}{section.5.1}
 \contentsline {section}{\numberline {5.2}Versions}{69}{section.5.2}
-\contentsline {chapter}{\numberline {6}Provide feedback}{71}{chapter.6}
-\contentsline {chapter}{\numberline {7}Build status}{73}{chapter.7}
-\contentsline {chapter}{\numberline {8}License}{75}{chapter.8}
-\contentsline {chapter}{Index}{77}{section*.228}
+\contentsline {chapter}{\numberline {6}Provide feedback}{73}{chapter.6}
+\contentsline {chapter}{\numberline {7}Build status}{75}{chapter.7}
+\contentsline {chapter}{\numberline {8}License}{77}{chapter.8}
+\contentsline {chapter}{Index}{79}{section*.228}

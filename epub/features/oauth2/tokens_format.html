@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="simple_api_example.html" title="Example (Simple Menu API)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b122 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b123 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -84,6 +84,7 @@ endpoint authorization without storage calls (increased performance and response
 <div class="section" id="access-token-structure">
 <h2>Access token structure</h2>
 <div class="highlight-javascript"><pre>{
+   &quot;code&quot;: &quot;&lt;authorization code used for obtaining the token&gt;&quot;,
    &quot;scopes&quot;: [&quot;simple_menus.create&quot;, &quot;simple_menus.update&quot;, &quot;simple_menus.delete&quot;],
    &quot;user&quot;: {
       &quot;id&quot;: 1,
@@ -93,13 +94,16 @@ endpoint authorization without storage calls (increased performance and response
    },
    &quot;state&quot;: &quot;unique generated value&quot;,
    &quot;creation_time&quot;: &quot;1380137651&quot;,
-   &quot;expiration_time&quot;: &quot;1380163800&quot;,
-   &quot;token_type&quot;: &quot;bearer&quot;
+   &quot;expiration_time&quot;: &quot;1380163800&quot;
 }</pre>
 </div>
 <p>Each access token from Fantastico OAUTH2 implementation contains the following fields:</p>
 <blockquote>
 <div><ol class="arabic simple">
+<li>code<ul>
+<li>The authorization code used for obtaining this access token. It only applies for authorization code grant type.</li>
+</ul>
+</li>
 <li>scopes<ul>
 <li>A JSON list of scopes for which this token was generated. (used for endpoint authorization).</li>
 </ul>
@@ -168,7 +172,9 @@ Content-Type: application/json
 </li>
 <li><p class="first">provide access token for client usage</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
-   <span class="s2">&quot;access_token&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;encrypted token containing all specified information&quot;</span>
+   <span class="s2">&quot;access_token&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;encrypted token containing all specified information&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;token_type&quot;</span><span class="o">:</span> <span class="s2">&quot;bearer&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;expires_in&quot;</span><span class="o">:</span> <span class="mi">900</span>
 <span class="p">}</span>
 </pre></div>
 </div>
