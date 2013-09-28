@@ -49,6 +49,7 @@ Access token structure
 .. code-block:: javascript
 
    {
+      "code": "<authorization code used for obtaining the token>",
       "scopes": ["simple_menus.create", "simple_menus.update", "simple_menus.delete"],
       "user": {
          "id": 1,
@@ -58,12 +59,15 @@ Access token structure
       },
       "state": "unique generated value",
       "creation_time": "1380137651",
-      "expiration_time": "1380163800",
-      "token_type": "bearer"
+      "expiration_time": "1380163800"
    }
 
 
 Each access token from Fantastico OAUTH2 implementation contains the following fields:
+
+   #. code
+
+      * The authorization code used for obtaining this access token. It only applies for authorization code grant type.
 
    #. scopes
 
@@ -132,5 +136,7 @@ In order to obtain an access token which can be used for calling **Fantastico** 
       .. code-block:: javascript
 
          {
-            "access_token": "<encrypted token containing all specified information"
+            "access_token": "<encrypted token containing all specified information",
+            "token_type": "bearer",
+            "expires_in": 900
          }
