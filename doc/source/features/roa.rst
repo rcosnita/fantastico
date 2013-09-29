@@ -283,3 +283,4 @@ Advantages
    
    roa/rest_standard
    roa/rest_responses
+   roa/technical_summary
