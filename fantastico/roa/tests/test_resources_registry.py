@@ -173,3 +173,10 @@ class ResourcesRegistryTests(FantasticoUnitTestsCase):
         resources = registry.all_resources()
 
         self.assertEqual(resources, expected_resources)
+
+    def test_all_resources_list_empty(self):
+        '''This test case ensures empty registry can be still listed.'''
+
+        registry = ResourcesRegistry()
+
+        self.assertEqual(registry.all_resources(), [])
