@@ -22,6 +22,8 @@ class ResourcesRegistry(object):
     '''This class provide the methods for registering resources into Fantastico framework and locating them by url or name and
     version. As a Developer you will not usually need access to this class.'''
 
+    _RESOURCE_LATEST_VERSION = "latest"
+
     AVAILABLE_RESOURCES = {}
 
     AVAILABLE_URL_RESOURCES = {}
@@ -37,8 +39,14 @@ class ResourcesRegistry(object):
             * resource name and version already registered.
             * resource url already registered.'''
 
+        self._register_resource_in_resources(resource)
+
+        self._register_resource_in_urls(resource)
+
+    def _register_resource_in_resources(self, resource):
+        '''This method registers a given resource into AVAILABLE_RESOURCES dictionary.'''
+
         registry = ResourcesRegistry.AVAILABLE_RESOURCES
-        registry_urls = ResourcesRegistry.AVAILABLE_URL_RESOURCES
 
         if not registry.get(resource.name):
             registry[resource.name] = {}
@@ -51,6 +59,13 @@ class ResourcesRegistry(object):
 
         resource_versions[resource.version] = resource
 
+        self._update_latest_version(resource_versions, resource)
+
+    def _register_resource_in_urls(self, resource):
+        '''This method registers a given resource into AVAILABLE_URLS dictionary.'''
+
+        registry_urls = ResourcesRegistry.AVAILABLE_URL_RESOURCES
+
         if not registry_urls.get(resource.url):
             registry_urls[resource.url] = {}
 
@@ -61,3 +76,38 @@ class ResourcesRegistry(object):
                                               (resource.url, resource.name))
 
         registry_url_versions[resource.version] = resource
+
+        self._update_latest_version(registry_url_versions, resource)
+
+    def _update_latest_version(self, registry, resource):
+        '''This method updates the registry latest version to point to the given resource (if necessary).'''
+
+        for registered_version in registry.keys():
+            if registered_version == self._RESOURCE_LATEST_VERSION:
+                continue
+
+            if registered_version > resource.version:
+                return
+
+        registry[self._RESOURCE_LATEST_VERSION] = resource
+
+    def find_by_name(self, name, version):
+        '''This method returns a registered resource under the given name and version.
+
+        :param name: The resource name.
+        :type name: string
+        :param version: The numeric version of the resource or **latest**.
+        :type version: string
+        :returns: The resource found or None.
+        :rtype: :py:class:`fantastico.roa.resource_decorator.Resource`
+        '''
+
+        registry = ResourcesRegistry.AVAILABLE_RESOURCES
+
+        if not registry.get(name):
+            return
+
+        if not registry[name].get(version):
+            return
+
+        return registry[name][version]

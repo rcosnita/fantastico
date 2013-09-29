@@ -55,3 +55,51 @@ class ResourcesRegistryTests(FantasticoUnitTestsCase):
         resource2 = Resource(name="custom-setting", url="/app-settings")
 
         self._register_resource_duplicate(resource1, resource2)
+
+    def test_find_resource_by_name_notfound(self):
+        '''This test case ensures no exception is raised when we try to retrieve a resource which is not registered.'''
+
+        registry = ResourcesRegistry()
+
+        resource = registry.find_by_name("app-setting", 1.0)
+
+        self.assertIsNone(resource)
+
+    def test_find_resource_by_name_version_notfound(self):
+        '''This test case ensures no exception is raised when we try to retrieve a resource which does not have the version
+        requested registered.'''
+
+        registry = ResourcesRegistry()
+
+        registry.register_resource(Resource(name="app-setting", url="/app-settings"))
+
+        resource = registry.find_by_name("app-setting", 2.0)
+
+        self.assertIsNone(resource)
+
+    def _find_resource_by_name(self, name, version):
+        '''This method provides a test case template for find by name method.'''
+
+        resource = Resource(name=name, url="/%ss" % name)
+
+        registry = ResourcesRegistry()
+
+        registry.register_resource(resource)
+
+        found_resource = registry.find_by_name(name, version)
+
+        self.assertEqual(resource.name, found_resource.name)
+        self.assertEqual(resource.version, found_resource.version)
+        self.assertEqual(resource.url, found_resource.url)
+        self.assertEqual(resource.model, found_resource.model)
+
+
+    def test_find_resource_by_name(self):
+        '''This test case ensures registered resources can be return by name and version.'''
+
+        self._find_resource_by_name("app-setting", 1.0)
+
+    def test_find_resource_by_name_latest(self):
+        '''This test case ensures latest versions of resources can be retrieved by resource name.'''
+
+        self._find_resource_by_name("app-setting", "latest")

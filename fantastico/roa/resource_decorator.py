@@ -63,7 +63,7 @@ class Resource(object):
     def __init__(self, name, url, version=1.0):
         self._name = name
         self._url = url
-        self._version = version
+        self._version = float(version)
         self._model = None
 
     def __call__(self, model_cls, resources_registry=None):
