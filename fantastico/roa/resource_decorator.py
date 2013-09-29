@@ -74,3 +74,17 @@ class Resource(object):
         resources_registry.register_resource(self)
 
         return model_cls
+
+    def __lt__(self, resource):
+        '''This method put order between resources by comparing by name and version.'''
+
+        if self.name == resource.name and self.version == resource.version:
+            return False
+
+        if self.name == resource.name:
+            if self.version == "latest":
+                return True
+
+            return self.version < resource.version
+
+        return self.name < resource.name

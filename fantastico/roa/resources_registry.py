@@ -131,3 +131,16 @@ class ResourcesRegistry(object):
         registry = ResourcesRegistry.AVAILABLE_URL_RESOURCES
 
         return self._find_resource_in_registry(registry, url, version)
+
+    def all_resources(self):
+        '''This method returns a list of all registered resources order by name and version. It is extremely useful for
+        introspecting Fantastico ROA platform.'''
+
+        registry = ResourcesRegistry.AVAILABLE_RESOURCES
+
+        resources = []
+
+        for name in registry.keys():
+            resources.extend(registry[name].values())
+
+        return sorted(resources)

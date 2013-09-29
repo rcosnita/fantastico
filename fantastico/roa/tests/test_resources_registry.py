@@ -154,3 +154,22 @@ class ResourcesRegistryTests(FantasticoUnitTestsCase):
         '''This test case ensures a resource can be found by url and latest version.'''
 
         self._find_resource_by_url("/app-settings", "latest")
+
+    def test_all_resources_list(self):
+        '''This test case ensures registered resources can be listed correctly (sorted by name).'''
+
+        resource1 = Resource(name="triplex", url="/triplex", version=2.0)
+        resource2 = Resource(name="triplex", url="/triplex", version=1.0)
+
+        resource3 = Resource(name="abc", url="/abc", version=1.0)
+
+        registry = ResourcesRegistry()
+
+        registry.register_resource(resource1)
+        registry.register_resource(resource2)
+        registry.register_resource(resource3)
+
+        expected_resources = [resource3, resource3, resource2, resource1, resource1]
+        resources = registry.all_resources()
+
+        self.assertEqual(resources, expected_resources)
