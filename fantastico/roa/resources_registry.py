@@ -91,7 +91,19 @@ class ResourcesRegistry(object):
 
         registry[self._RESOURCE_LATEST_VERSION] = resource
 
-    def find_by_name(self, name, version):
+    def _find_resource_in_registry(self, registry, resource_id, version):
+        '''This method returns a resource from a given registry by a given id (resource name or resource url) and resource
+        version.'''
+
+        if not registry.get(resource_id):
+            return
+
+        if not registry[resource_id].get(version):
+            return
+
+        return registry[resource_id][version]
+
+    def find_by_name(self, name, version=_RESOURCE_LATEST_VERSION):
         '''This method returns a registered resource under the given name and version.
 
         :param name: The resource name.
@@ -104,10 +116,18 @@ class ResourcesRegistry(object):
 
         registry = ResourcesRegistry.AVAILABLE_RESOURCES
 
-        if not registry.get(name):
-            return
+        return self._find_resource_in_registry(registry, name, version)
 
-        if not registry[name].get(version):
-            return
+    def find_by_url(self, url, version=_RESOURCE_LATEST_VERSION):
+        '''This method returns a registered resource under the given url and version.
 
-        return registry[name][version]
+        :param name: The resource name.
+        :type name: string
+        :param version: The numeric version of the resource or **latest**.
+        :type version: string
+        :returns: The resource found or None.
+        :rtype: :py:class:`fantastico.roa.resource_decorator.Resource`'''
+
+        registry = ResourcesRegistry.AVAILABLE_URL_RESOURCES
+
+        return self._find_resource_in_registry(registry, url, version)

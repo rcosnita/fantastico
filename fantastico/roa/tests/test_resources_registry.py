@@ -86,13 +86,15 @@ class ResourcesRegistryTests(FantasticoUnitTestsCase):
 
         registry.register_resource(resource)
 
-        found_resource = registry.find_by_name(name, version)
+        if version != "latest":
+            found_resource = registry.find_by_name(name, version)
+        else:
+            found_resource = registry.find_by_name(name)
 
         self.assertEqual(resource.name, found_resource.name)
         self.assertEqual(resource.version, found_resource.version)
         self.assertEqual(resource.url, found_resource.url)
         self.assertEqual(resource.model, found_resource.model)
-
 
     def test_find_resource_by_name(self):
         '''This test case ensures registered resources can be return by name and version.'''
@@ -103,3 +105,52 @@ class ResourcesRegistryTests(FantasticoUnitTestsCase):
         '''This test case ensures latest versions of resources can be retrieved by resource name.'''
 
         self._find_resource_by_name("app-setting", "latest")
+
+    def _find_resource_by_url(self, url, version):
+        '''This method provides a test case template for find by url method.'''
+
+        resource = Resource(name=url[1:-1], url=url)
+
+        registry = ResourcesRegistry()
+
+        registry.register_resource(resource)
+
+        if version != "latest":
+            found_resource = registry.find_by_url(url, version)
+        else:
+            found_resource = registry.find_by_url(url)
+
+        self.assertEqual(resource.name, found_resource.name)
+        self.assertEqual(resource.version, found_resource.version)
+        self.assertEqual(resource.url, found_resource.url)
+        self.assertEqual(resource.model, found_resource.model)
+
+    def test_find_resource_by_url_notofound(self):
+        '''This test case ensures None is returned if the resource can not be found by url.'''
+
+        registry = ResourcesRegistry()
+
+        resource = registry.find_by_url("/app-settings", "latest")
+
+        self.assertIsNone(resource)
+
+    def test_find_resource_by_url_version_notfound(self):
+        '''This test case ensures None is returned if the resource url is found but the requested version is not registered.'''
+
+        registry = ResourcesRegistry()
+
+        registry.register_resource(Resource(name="app-setting", url="/app-settings", version="1.0"))
+
+        resource = registry.find_by_url("/app-settings", 2.0)
+
+        self.assertIsNone(resource)
+
+    def test_find_resource_by_url(self):
+        '''This test case ensures a resource can be found by url and version.'''
+
+        self._find_resource_by_url("/app-settings", 1.0)
+
+    def test_find_resource_by_url_latest(self):
+        '''This test case ensures a resource can be found by url and latest version.'''
+
+        self._find_resource_by_url("/app-settings", "latest")
