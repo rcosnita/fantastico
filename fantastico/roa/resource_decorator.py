@@ -60,11 +60,37 @@ class Resource(object):
 
         return self._model
 
-    def __init__(self, name, url, version=1.0):
+    @property
+    def subresources(self):
+        '''This read only property holds the subresources of this resource. A resource can identify a subresource by one
+        or multiple (composite uniquely identified resources) resource attributes.
+
+        .. code-block:: python
+
+            @Resource(name="person", url="/persons", version=1.0,
+                      subresources={"bill_address": ["bill_address_id"],
+                                    "mail_address": ["mail_address_id"],
+                                    "ship_address:" ["ship_address_id"])
+            class Person(BASEMODEL):
+               id = Column("id", Integer, primary_key=True, autoincrement=True)
+               first_name = Column("first_name", String(80))
+               last_name = Column("last_name", String(50))
+               bill_address_id = Column("bill_address_id", ForeignKey("addresses.id"))
+               bill_address = relationship(Address, primaryjoin=bill_address_id == Address.id)
+               ship_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
+               ship_address = relationship(Address, primaryjoin=ship_address_id == Address.id)
+               mail_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
+               ship_address = relationship(Address, primaryjoin=mail_address_id == Address.id)
+        '''
+
+        return self._subresources
+
+    def __init__(self, name, url, version=1.0, subresources=None):
         self._name = name
         self._url = url
         self._version = float(version)
         self._model = None
+        self._subresources = subresources or {}
 
     def __call__(self, model_cls, resources_registry=None):
         '''This method is invoked when the model class is first imported into python virtual machine.'''
@@ -76,7 +102,7 @@ class Resource(object):
         return model_cls
 
     def __lt__(self, resource):
-        '''This method put order between resources by comparing by name and version.'''
+        '''This method puts order between resources by  name and version comparisons.'''
 
         if self.name == resource.name and self.version == resource.version:
             return False

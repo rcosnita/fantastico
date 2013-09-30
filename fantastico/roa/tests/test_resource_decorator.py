@@ -29,8 +29,9 @@ class ResourceDecoratorTests(FantasticoUnitTestsCase):
         expected_name = "app-setting"
         expected_url = "/app-settings"
         expected_version = 1.0
+        expected_subresources = {"default_address": ["default_address_id"]}
 
-        resource = Resource(name=expected_name, url=expected_url)
+        resource = Resource(name=expected_name, url=expected_url, subresources=expected_subresources)
         resource_explicit = Resource(name=expected_name, url=expected_url, version=expected_version)
 
         self.assertEqual(resource.name, resource_explicit.name)
@@ -41,6 +42,7 @@ class ResourceDecoratorTests(FantasticoUnitTestsCase):
         self.assertEqual(resource.name, expected_name)
         self.assertEqual(resource.url, expected_url)
         self.assertEqual(resource.version, expected_version)
+        self.assertEqual(resource.subresources, expected_subresources)
         self.assertIsNone(resource.model)
 
     def test_check_call(self):
