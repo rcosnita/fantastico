@@ -164,7 +164,7 @@ class ResourcesRegistry(object):
 
         return resource_latest
 
-    def _unregister_resource_from_registry(self, registry, resource_id, version):
+    def _unregister_registry_resource(self, registry, resource_id, version):
         '''This method unregister a given resource from the given registry.'''
 
         versions = registry.get(resource_id)
@@ -203,9 +203,9 @@ class ResourcesRegistry(object):
         registry_resources = ResourcesRegistry.AVAILABLE_RESOURCES
         registry_urls = ResourcesRegistry.AVAILABLE_URL_RESOURCES
 
-        resource = self._unregister_resource_from_registry(registry_resources, name, version)
+        resource = self._unregister_registry_resource(registry_resources, name, version)
 
         if not resource:
             return
 
-        self._unregister_resource_from_registry(registry_urls, resource.url, version)
+        self._unregister_registry_resource(registry_urls, resource.url, version)
