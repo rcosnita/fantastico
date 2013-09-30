@@ -180,3 +180,81 @@ class ResourcesRegistryTests(FantasticoUnitTestsCase):
         registry = ResourcesRegistry()
 
         self.assertEqual(registry.all_resources(), [])
+
+    def test_unregister_resource_namenotfound(self):
+        '''This test case ensures no exception is raised if the given resource name is not registered.'''
+
+        registry = ResourcesRegistry()
+
+        registry.unregister_resource("not_found", 1.0)
+
+        self.assertIsNone(registry.find_by_name("not_found", 1.0))
+
+    def test_unregister_resource_versionnotfound(self):
+        '''This test case ensures no exception is raised if the given resource version is not registered.'''
+
+        registry = ResourcesRegistry()
+
+        registry.register_resource(Resource(name="for_test", url="/for_test", version=2.0))
+
+        registry.unregister_resource("for_test", 1.0)
+
+        self.assertIsNone(registry.find_by_name("for_test", 1.0))
+
+    def test_unregister_resource_ok(self):
+        '''This test case ensures unregister is ok for registered resources.'''
+
+        registry = ResourcesRegistry()
+
+        expected_name = "app-setting"
+        expected_url = "/app-setting"
+
+        resource1 = Resource(name=expected_name, url=expected_url, version=1.0)
+        resource2 = Resource(name=expected_name, url=expected_url, version=2.0)
+
+        registry.register_resource(resource1)
+        registry.register_resource(resource2)
+
+        registry.unregister_resource(expected_name, 2.0)
+
+        self.assertIsNone(registry.find_by_name(expected_name, 2.0))
+        self.assertIsNone(registry.find_by_url(expected_url, 2.0))
+        self.assertEqual(registry.find_by_name(expected_name), resource1)
+        self.assertEqual(registry.find_by_url(expected_url), resource1)
+
+    def test_unregister_resource_noremaining_version(self):
+        '''This test case ensures latest version is also removed when all resource versions are removed.'''
+
+        registry = ResourcesRegistry()
+
+        expected_name = "app-setting"
+        expected_url = "/app-setting"
+
+        resource1 = Resource(name=expected_name, url=expected_url, version=1.0)
+
+        registry.register_resource(resource1)
+
+        self.assertEqual(registry.find_by_name(expected_name), resource1)
+        self.assertEqual(registry.find_by_url(expected_url), resource1)
+
+        registry.unregister_resource(expected_name, version=1.0)
+
+        self.assertIsNone(registry.find_by_name(expected_name))
+        self.assertIsNone(registry.find_by_url(expected_url))
+
+    def test_unregister_resource_latestnotallowed(self):
+        '''This test case ensures that nothing happens if latest is given as version.'''
+
+        registry = ResourcesRegistry()
+
+        expected_name = "app-setting"
+        expected_url = "/app-setting"
+
+        resource1 = Resource(name=expected_name, url=expected_url, version=1.0)
+
+        registry.register_resource(resource1)
+
+        registry.unregister_resource(expected_name, version="latest")
+
+        self.assertEqual(registry.find_by_name(expected_name), resource1)
+        self.assertEqual(registry.find_by_url(expected_url), resource1)

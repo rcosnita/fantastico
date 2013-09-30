@@ -144,3 +144,68 @@ class ResourcesRegistry(object):
             resources.extend(registry[name].values())
 
         return sorted(resources)
+
+    def _get_latest_version(self, registry):
+        '''This method obtains the latest version resource from the list of available versions.'''
+
+        resource_latest = None
+
+        for registered_version in registry.keys():
+            if registered_version == self._RESOURCE_LATEST_VERSION:
+                continue
+
+            resource = registry[registered_version]
+
+            if not resource_latest:
+                resource_latest = resource
+
+            if resource.version > resource_latest.version:
+                resource_latest = resource
+
+        return resource_latest
+
+    def _unregister_resource_from_registry(self, registry, resource_id, version):
+        '''This method unregister a given resource from the given registry.'''
+
+        versions = registry.get(resource_id)
+
+        if not versions:
+            return
+
+        resource = versions.get(version)
+
+        if resource:
+            del versions[version]
+
+        resource_latest = self._get_latest_version(versions)
+
+        if resource_latest:
+            versions[self._RESOURCE_LATEST_VERSION] = resource_latest
+        else:
+            del versions[self._RESOURCE_LATEST_VERSION]
+
+        return resource
+
+    def unregister_resource(self, name, version):
+        '''This method unregister a resource version. If the given resource is not found no exception is raised. Once a resource
+        is unregistered latest version is recalculated. The resource is completely removed from AVAILABLE_RESOURCES and
+        AVAILABLE_URLS dictionaries.
+
+        :param name: Resource name.
+        :type name: string
+        :param version: Resource version. If you specify **latest** it will have no effect.
+        :type version: float
+        '''
+
+        if version == self._RESOURCE_LATEST_VERSION:
+            return
+
+        registry_resources = ResourcesRegistry.AVAILABLE_RESOURCES
+        registry_urls = ResourcesRegistry.AVAILABLE_URL_RESOURCES
+
+        resource = self._unregister_resource_from_registry(registry_resources, name, version)
+
+        if not resource:
+            return
+
+        self._unregister_resource_from_registry(registry_urls, resource.url, version)
