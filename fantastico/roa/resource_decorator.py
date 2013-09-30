@@ -72,15 +72,15 @@ class Resource(object):
                                     "mail_address": ["mail_address_id"],
                                     "ship_address:" ["ship_address_id"])
             class Person(BASEMODEL):
-               id = Column("id", Integer, primary_key=True, autoincrement=True)
-               first_name = Column("first_name", String(80))
-               last_name = Column("last_name", String(50))
-               bill_address_id = Column("bill_address_id", ForeignKey("addresses.id"))
-               bill_address = relationship(Address, primaryjoin=bill_address_id == Address.id)
-               ship_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
-               ship_address = relationship(Address, primaryjoin=ship_address_id == Address.id)
-               mail_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
-               ship_address = relationship(Address, primaryjoin=mail_address_id == Address.id)
+                id = Column("id", Integer, primary_key=True, autoincrement=True)
+                first_name = Column("first_name", String(80))
+                last_name = Column("last_name", String(50))
+                bill_address_id = Column("bill_address_id", ForeignKey("addresses.id"))
+                bill_address = relationship(Address, primaryjoin=bill_address_id == Address.id)
+                ship_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
+                ship_address = relationship(Address, primaryjoin=ship_address_id == Address.id)
+                mail_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
+                ship_address = relationship(Address, primaryjoin=mail_address_id == Address.id)
         '''
 
         return self._subresources
