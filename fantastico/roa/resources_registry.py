@@ -17,16 +17,30 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.roa.resources_registry
 '''
 from fantastico.roa.roa_exceptions import FantasticoRoaDuplicateError
+from fantastico.utils.singleton import Singleton
 
+@Singleton()
 class ResourcesRegistry(object):
     '''This class provide the methods for registering resources into Fantastico framework and locating them by url or name and
     version. As a Developer you will not usually need access to this class.'''
 
     _RESOURCE_LATEST_VERSION = "latest"
 
-    AVAILABLE_RESOURCES = {}
+    @property
+    def available_resources(self):
+        '''This readonly property returns the indexed resources by name.'''
 
-    AVAILABLE_URL_RESOURCES = {}
+        return self._available_resources
+
+    @property
+    def available_url_resources(self):
+        '''This readonly property returns the indexed resources by urk.'''
+
+        return self._available_url_resources
+
+    def __init__(self):
+        self._available_resources = {}
+        self._available_url_resources = {}
 
     def register_resource(self, resource):
         '''This method register a new resource into Fantastico framework. It first checks against name, url and version collision
@@ -46,7 +60,7 @@ class ResourcesRegistry(object):
     def _register_resource_in_resources(self, resource):
         '''This method registers a given resource into AVAILABLE_RESOURCES dictionary.'''
 
-        registry = ResourcesRegistry.AVAILABLE_RESOURCES
+        registry = self.available_resources
 
         if not registry.get(resource.name):
             registry[resource.name] = {}
@@ -64,7 +78,7 @@ class ResourcesRegistry(object):
     def _register_resource_in_urls(self, resource):
         '''This method registers a given resource into AVAILABLE_URLS dictionary.'''
 
-        registry_urls = ResourcesRegistry.AVAILABLE_URL_RESOURCES
+        registry_urls = self.available_url_resources
 
         if not registry_urls.get(resource.url):
             registry_urls[resource.url] = {}
@@ -114,7 +128,7 @@ class ResourcesRegistry(object):
         :rtype: :py:class:`fantastico.roa.resource_decorator.Resource`
         '''
 
-        registry = ResourcesRegistry.AVAILABLE_RESOURCES
+        registry = self.available_resources
 
         return self._find_resource_in_registry(registry, name, version)
 
@@ -128,7 +142,7 @@ class ResourcesRegistry(object):
         :returns: The resource found or None.
         :rtype: :py:class:`fantastico.roa.resource_decorator.Resource`'''
 
-        registry = ResourcesRegistry.AVAILABLE_URL_RESOURCES
+        registry = self._available_url_resources
 
         return self._find_resource_in_registry(registry, url, version)
 
@@ -136,7 +150,7 @@ class ResourcesRegistry(object):
         '''This method returns a list of all registered resources order by name and version. It is extremely useful for
         introspecting Fantastico ROA platform.'''
 
-        registry = ResourcesRegistry.AVAILABLE_RESOURCES
+        registry = self.available_resources
 
         resources = []
 
@@ -200,8 +214,8 @@ class ResourcesRegistry(object):
         if version == self._RESOURCE_LATEST_VERSION:
             return
 
-        registry_resources = ResourcesRegistry.AVAILABLE_RESOURCES
-        registry_urls = ResourcesRegistry.AVAILABLE_URL_RESOURCES
+        registry_resources = self.available_resources
+        registry_urls = self.available_url_resources
 
         resource = self._unregister_registry_resource(registry_resources, name, version)
 

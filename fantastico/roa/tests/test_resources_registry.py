@@ -24,11 +24,19 @@ from fantastico.tests.base_case import FantasticoUnitTestsCase
 class ResourcesRegistryTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for resources registry.'''
 
+    def init(self):
+        '''This method ensures resources registry is empty before each test case.'''
+
+        registry = ResourcesRegistry()
+        registry.available_resources.clear()
+        registry.available_url_resources.clear()
+
     def cleanup(self):
         '''This method cleanup all affected dependencies after each test case.'''
 
-        ResourcesRegistry.AVAILABLE_RESOURCES.clear()
-        ResourcesRegistry.AVAILABLE_URL_RESOURCES.clear()
+        registry = ResourcesRegistry()
+        registry.available_resources.clear()
+        registry.available_url_resources.clear()
 
     def _register_resource_duplicate(self, resource1, resource2):
         '''This method executes register resource test case for duplicate exception.'''

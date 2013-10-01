@@ -16,21 +16,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.roa.tests.test_resources_registrator
 '''
+
 from fantastico.roa.resources_registrator import ResourcesRegistrator
+from fantastico.roa.resources_registry import ResourcesRegistry
 from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from fantastico.utils import instantiator
-from fantastico.roa.resources_registry import ResourcesRegistry
 
 class ResourcesRegistratorTest(FantasticoUnitTestsCase):
     '''This class provides the test cases for resources registration algorithm.'''
 
+    def init(self):
+        '''This method ensures resources registry is empty before each test case.'''
+
+        registry = ResourcesRegistry()
+        registry.available_resources.clear()
+        registry.available_url_resources.clear()
 
     def cleanup(self):
         '''This method cleanup all affected dependencies.'''
 
-        ResourcesRegistry.AVAILABLE_RESOURCES.clear()
-        ResourcesRegistry.AVAILABLE_URL_RESOURCES.clear()
+        registry = ResourcesRegistry()
+        registry.available_resources.clear()
+        registry.available_url_resources.clear()
 
     def test_registration_ok(self):
         '''This test case ensures all resources are registered correctly.'''
