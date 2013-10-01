@@ -30,15 +30,12 @@ class ResourcesRegistrator(object):
 
     def __init__(self, file_patterns=None):
         self._file_patterns = file_patterns or []
-        self._visited = []
 
     def _is_file_supported(self, abspath, filename):
         '''This method determins if a given file name may contain resources or not.'''
 
         if os.path.isdir(os.path.join(abspath, filename)):
             return True
-
-        self._visited.append(filename)
 
         for file_pattern in self._file_patterns:
             if re.search(file_pattern, filename):

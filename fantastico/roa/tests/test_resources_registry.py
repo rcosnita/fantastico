@@ -25,7 +25,7 @@ class ResourcesRegistryTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for resources registry.'''
 
     def init(self):
-        '''This method ensures resources registry is empty before each test case.'''
+        '''This method ensures registry is empty before each test case.'''
 
         registry = ResourcesRegistry()
         registry.available_resources.clear()
