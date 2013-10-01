@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.roa.resource_decorator
 '''
+from fantastico.roa.resources_registry import ResourcesRegistry
 
 class Resource(object):
     '''
@@ -94,6 +95,8 @@ class Resource(object):
 
     def __call__(self, model_cls, resources_registry=None):
         '''This method is invoked when the model class is first imported into python virtual machine.'''
+
+        resources_registry = resources_registry or ResourcesRegistry()
 
         self._model = model_cls
 

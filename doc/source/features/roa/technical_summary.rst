@@ -6,7 +6,10 @@ ROA Technical Summary
 
 .. autoclass:: fantastico.roa.resources_registry.ResourcesRegistry
    :members:
-   
+
+.. autoclass:: fantastico.roa.resources_registrator.ResourcesRegistrator
+   :members:
+
 Exceptions
 ----------
 
