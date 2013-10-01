@@ -25,6 +25,13 @@ from fantastico.roa.resources_registry import ResourcesRegistry
 class ResourcesRegistratorTest(FantasticoUnitTestsCase):
     '''This class provides the test cases for resources registration algorithm.'''
 
+
+    def cleanup(self):
+        '''This method cleanup all affected dependencies.'''
+
+        ResourcesRegistry.AVAILABLE_RESOURCES.clear()
+        ResourcesRegistry.AVAILABLE_URL_RESOURCES.clear()
+
     def test_registration_ok(self):
         '''This test case ensures all resources are registered correctly.'''
 
