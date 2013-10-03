@@ -119,6 +119,13 @@ class BasicSettings(object):
 
         return "http://rcosnita.github.io/fantastico/html/"
 
+    @property
+    def roa_api(self):
+        '''This property defines the url for mapping ROA resources api. By default is **/api**. Read more about ROA on
+        :doc:`/features/components/roa_discovery/roa_discovery`.'''
+
+        return "/api"
+
 class AwsStageSettings(BasicSettings):
     '''This class provides the configuration profile for Aws Stage environment integration.'''
 

@@ -10,6 +10,9 @@ ROA Technical Summary
 .. autoclass:: fantastico.roa.resources_registrator.ResourcesRegistrator
    :members:
 
+.. autoclass:: fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController
+   :members:
+
 Exceptions
 ----------
 
