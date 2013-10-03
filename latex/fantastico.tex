@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{September 28, 2013}
-\release{0.5.0-b123}
+\date{October 03, 2013}
+\release{0.5.0-b124}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -353,6 +353,15 @@ This property defines public location of \textbf{Fantastico} documentation.
 \begin{fulllineitems}
 \phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.installed_middleware}\pysigline{\bfcode{installed\_middleware}}
 Property that holds all installed middlewares.
+
+\end{fulllineitems}
+
+\index{roa\_api (fantastico.settings.BasicSettings attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.roa_api}\pysigline{\bfcode{roa\_api}}
+This property defines the url for mapping ROA resources api. By default is \textbf{/api}. Read more about ROA on
+{\hyperref[features/components/roa_discovery/roa_discovery::doc]{\emph{ROA Auto discovery}}}.
 
 \end{fulllineitems}
 
@@ -770,7 +779,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5006490\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x56f9c00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1850,7 +1859,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1bcd408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2897408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2982,6 +2991,322 @@ Content\PYGZhy{}Length:
 Fantastico APIs do not support bulk creation of items. We do not intend to add this kind of capability.
 
 
+\subsubsection{ROA Technical Summary}
+\label{features/roa/technical_summary:roa-technical-summary}\label{features/roa/technical_summary::doc}\index{Resource (class in fantastico.roa.resource\_decorator)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.resource\_decorator.}\bfcode{Resource}}{\emph{name}, \emph{url}, \emph{version=1.0}, \emph{subresources=None}}{}~
+\includegraphics{roa_classes.png}
+
+This class provides the main way for defining resources. Below you can find a very simple example for defining new resources:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{AppSetting}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+       \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+       \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+\end{Verbatim}
+\index{model (fantastico.roa.resource\_decorator.Resource attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource.model}\pysigline{\bfcode{model}}
+This read only property holds the model of the resource.
+
+\end{fulllineitems}
+
+\index{name (fantastico.roa.resource\_decorator.Resource attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource.name}\pysigline{\bfcode{name}}
+This read only property holds the name of the resource.
+
+\end{fulllineitems}
+
+\index{subresources (fantastico.roa.resource\_decorator.Resource attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource.subresources}\pysigline{\bfcode{subresources}}
+This read only property holds the subresources of this resource. A resource can identify a subresource by one
+or multiple (composite uniquely identified resources) resource attributes.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{person}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/persons}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{,}
+          \PYG{n}{subresources}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
+                        \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mail\PYGZus{}address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mail\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
+                        \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address:}\PYG{l+s}{\PYGZdq{}} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{Person}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{bill\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{bill\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{bill\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+    \PYG{n}{ship\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{ship\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{ship\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+    \PYG{n}{mail\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{ship\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{mail\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{url (fantastico.roa.resource\_decorator.Resource attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource.url}\pysigline{\bfcode{url}}
+This read only property holds the url of the resource.
+
+\end{fulllineitems}
+
+\index{version (fantastico.roa.resource\_decorator.Resource attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource.version}\pysigline{\bfcode{version}}
+This read only property holds the version of the resource.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{ResourcesRegistry (class in fantastico.roa.resources\_registry)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registry.ResourcesRegistry}\pysigline{\strong{class }\code{fantastico.roa.resources\_registry.}\bfcode{ResourcesRegistry}}
+This class provide the methods for registering resources into Fantastico framework and locating them by url or name and
+version. As a Developer you will not usually need access to this class.
+\index{all\_resources() (fantastico.roa.resources\_registry.ResourcesRegistry method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registry.ResourcesRegistry.all_resources}\pysiglinewithargsret{\bfcode{all\_resources}}{}{}
+This method returns a list of all registered resources order by name and version. It is extremely useful for
+introspecting Fantastico ROA platform.
+
+\end{fulllineitems}
+
+\index{available\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registry.ResourcesRegistry.available_resources}\pysigline{\bfcode{available\_resources}}
+This readonly property returns the indexed resources by name.
+
+\end{fulllineitems}
+
+\index{available\_url\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registry.ResourcesRegistry.available_url_resources}\pysigline{\bfcode{available\_url\_resources}}
+This readonly property returns the indexed resources by urk.
+
+\end{fulllineitems}
+
+\index{find\_by\_name() (fantastico.roa.resources\_registry.ResourcesRegistry method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registry.ResourcesRegistry.find_by_name}\pysiglinewithargsret{\bfcode{find\_by\_name}}{\emph{name}, \emph{version='latest'}}{}
+This method returns a registered resource under the given name and version.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{name} (\emph{string}) -- The resource name.
+
+\item {} 
+\textbf{version} (\emph{string}) -- The numeric version of the resource or \textbf{latest}.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+The resource found or None.
+
+\item[{Return type}] \leavevmode
+{\hyperref[features/roa/technical_summary:fantastico.roa.resource_decorator.Resource]{\code{fantastico.roa.resource\_decorator.Resource}}}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{find\_by\_url() (fantastico.roa.resources\_registry.ResourcesRegistry method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registry.ResourcesRegistry.find_by_url}\pysiglinewithargsret{\bfcode{find\_by\_url}}{\emph{url}, \emph{version='latest'}}{}
+This method returns a registered resource under the given url and version.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{name} (\emph{string}) -- The resource name.
+
+\item {} 
+\textbf{version} (\emph{string}) -- The numeric version of the resource or \textbf{latest}.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+The resource found or None.
+
+\item[{Return type}] \leavevmode
+{\hyperref[features/roa/technical_summary:fantastico.roa.resource_decorator.Resource]{\code{fantastico.roa.resource\_decorator.Resource}}}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{register\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registry.ResourcesRegistry.register_resource}\pysiglinewithargsret{\bfcode{register\_resource}}{\emph{resource}}{}
+This method register a new resource into Fantastico framework. It first checks against name, url and version collision
+in order to detect as early as possible errors with the current defined resources.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{resource} ({\hyperref[features/roa/technical_summary:fantastico.roa.resource_decorator.Resource]{\code{fantastico.roa.resource\_decorator.Resource}}}) -- The resource instance we want to register into Fantastico ROA registry.
+
+\item[{Raises {\hyperref[features/roa/technical_summary:fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError]{fantastico.roa.roa\_exceptions.FantasticoRoaDuplicateError}}}] \leavevmode
+
+This exception is raised when:
+\begin{itemize}
+\item {} 
+resource name and version already registered.
+
+\item {} 
+resource url already registered.
+
+\end{itemize}
+
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{unregister\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registry.ResourcesRegistry.unregister_resource}\pysiglinewithargsret{\bfcode{unregister\_resource}}{\emph{name}, \emph{version}}{}
+This method unregister a resource version. If the given resource is not found no exception is raised. Once a resource
+is unregistered latest version is recalculated. The resource is completely removed from AVAILABLE\_RESOURCES and
+AVAILABLE\_URLS dictionaries.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{name} (\emph{string}) -- Resource name.
+
+\item {} 
+\textbf{version} (\emph{float}) -- Resource version. If you specify \textbf{latest} it will have no effect.
+
+\end{itemize}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{ResourcesRegistrator (class in fantastico.roa.resources\_registrator)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registrator.ResourcesRegistrator}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.resources\_registrator.}\bfcode{ResourcesRegistrator}}{\emph{settings\_facade}, \emph{file\_patterns=None}, \emph{folder\_pattern=None}}{}
+This class provides the algorithm for registering all defined resources. Resources discovered by this class are decorated
+by {\hyperref[features/roa/technical_summary:fantastico.roa.resource_decorator.Resource]{\code{fantastico.roa.resource\_decorator.Resource}}}. In the constructor of this class you can define special naming
+convention for discovered resources (through regex). Default behavior is to scan only in models folder / subfolders in all
+available files.
+
+In addition this class is also designed to be a route provider. This guarantees that at start time, all resources will be
+registered correctly.
+\index{load\_routes() (fantastico.roa.resources\_registrator.ResourcesRegistrator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registrator.ResourcesRegistrator.load_routes}\pysiglinewithargsret{\bfcode{load\_routes}}{}{}
+This method simple triggers resources registration and returns empty routes. Using this mechanism guarantees that
+routing engine will also discover ROA resources.
+
+\end{fulllineitems}
+
+\index{register\_resources() (fantastico.roa.resources\_registrator.ResourcesRegistrator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resources_registrator.ResourcesRegistrator.register_resources}\pysiglinewithargsret{\bfcode{register\_resources}}{\emph{path}}{}
+This method scans all files and folders from the given path, match the filenames against registered file patterns
+and import all ROA resources.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.roa\_discovery.discovery\_controller.}\bfcode{RoaDiscoveryController}}{\emph{settings\_facade}, \emph{registry\_cls=None}}{}
+This class provides the routes for introspecting Fantastico registered resources through ROA. It is extremely useful
+to surf using your browser and to not be required to hardcode links in your code. Typically, you will want to code your
+client side applications against resources name and you are going to use this controller to find the location of those
+records.
+
+By default, all ROA resources are mapped on \textbf{/api/} relative to current project root. You can easily change this behavior
+by modifying the settings of your application ({\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}} - property \textbf{roa\_api\_url})
+\index{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.list_registered_resources}\pysiglinewithargsret{\bfcode{list\_registered\_resources}}{\emph{*args}, \emph{**kwargs}}{}
+This method list all registered resources as well as a link to their entry point.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// ROA api is mapped on a subdomain: roa.fantasticoproject.com}
+\PYG{c+c1}{// listing is done by GET http://fantasticoproject.com/roa/resources HTTP/1.1}
+
+\PYG{p}{\PYGZob{}}
+    \PYG{l+s+s2}{\PYGZdq{}Person\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}\PYG{l+m+mf}{1.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/1.0/persons\PYGZdq{}}\PYG{p}{,}
+               \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/latest/persons\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}Address\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}\PYG{l+m+mf}{1.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/1.0/addresses\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+m+mf}{2.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/2.0/addresses\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/latest/addresses\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// ROA api is mapped on a relative path of the project: http://fantasticoproject.com/api/}
+\PYG{c+c1}{// listing is done by GET http://fantasticoproject.com/roa/resources HTTP/1.1}
+
+\PYG{p}{\PYGZob{}}
+    \PYG{l+s+s2}{\PYGZdq{}Person\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}\PYG{l+m+mf}{1.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://fantasticoproject.com/api/1.0/persons\PYGZdq{}}\PYG{p}{,}
+               \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/api/latest/persons\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}Address\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}\PYG{l+m+mf}{1.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/api/1.0/addresses\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+m+mf}{2.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/api/2.0/addresses\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/api/latest/addresses\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\paragraph{Exceptions}
+\label{features/roa/technical_summary:exceptions}\index{FantasticoRoaError (class in fantastico.roa.roa\_exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.roa_exceptions.FantasticoRoaError}\pysigline{\strong{class }\code{fantastico.roa.roa\_exceptions.}\bfcode{FantasticoRoaError}}
+This class provides the core error used within Fantastico ROA layer. Usually, more concrete exceptions are raised by
+ROA layers.
+
+\end{fulllineitems}
+
+\index{FantasticoRoaDuplicateError (class in fantastico.roa.roa\_exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError}\pysigline{\strong{class }\code{fantastico.roa.roa\_exceptions.}\bfcode{FantasticoRoaDuplicateError}}
+This concrete exception is used to notify user that multiple resources with same name and version or url and version
+can not be registered multiple times.
+
+\end{fulllineitems}
+
+
+
 \section{OAUTH2}
 \label{features/oauth2:oauth2}\label{features/oauth2::doc}
 In Fantastico, a very modern authorization framework (\textbf{OAUTH2}) was choosen for guaranteeing:
@@ -3824,7 +4149,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x209d2f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2d672f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -4369,7 +4694,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x34321e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x40fe1e8\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -4936,6 +5261,96 @@ This method renders all available tracking codes.
 \phantomsection\label{features/components/tracking_codes/tracking_codes:fantastico.contrib.tracking_codes.models.codes.TrackingCode}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.tracking\_codes.models.codes.}\bfcode{TrackingCode}}{\emph{provider}, \emph{script}}{}
 This class provides the model for tracking codes. It maps \textbf{tracking\_codes} table to an object. In order to use this model
 please read {\hyperref[features/mvc::doc]{\emph{Model View Controller}}}.
+
+\end{fulllineitems}
+
+
+
+\subsection{ROA Auto discovery}
+\label{features/components/roa_discovery/roa_discovery::doc}\label{features/components/roa_discovery/roa_discovery:roa-auto-discovery}
+REST relies on hypermedia and links in order to decouple clients from physical location of resources. In Fantastico,
+we allow clients to introspect the platform in order to know which are the registered resources. Following some simple steps
+you can enable autodiscovery of resources.
+
+
+\subsubsection{Integration}
+\label{features/components/roa_discovery/roa_discovery:integration}\begin{enumerate}
+\item {} 
+Activate \textbf{ROA Discovery} extension.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name roa\PYGZhy{}discovery \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}comp\PYGZus{}root\PYGZgt{}
+\end{Verbatim}
+
+\item {} 
+Start your project
+
+\item {} 
+Access \href{http://localhost/roa/resources}{http://localhost/roa/resources}
+
+\end{enumerate}
+
+By default, \textbf{ROA Discovery} extension defines a sample resource (\textbf{Sample Resource}) which must be always present in your
+discovery registry.
+
+
+\subsubsection{Current limitations}
+\label{features/components/roa_discovery/roa_discovery:current-limitations}\begin{itemize}
+\item {} 
+ROA discovery supports only application/json content type for responses.
+
+\item {} 
+ROA sample resource can not be removed from registry.
+
+\end{itemize}
+
+
+\subsubsection{Technical summary}
+\label{features/components/roa_discovery/roa_discovery:technical-summary}\index{RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/roa_discovery/roa_discovery:fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.roa\_discovery.discovery\_controller.}\bfcode{RoaDiscoveryController}}{\emph{settings\_facade}, \emph{registry\_cls=None}}{}
+This class provides the routes for introspecting Fantastico registered resources through ROA. It is extremely useful
+to surf using your browser and to not be required to hardcode links in your code. Typically, you will want to code your
+client side applications against resources name and you are going to use this controller to find the location of those
+records.
+
+By default, all ROA resources are mapped on \textbf{/api/} relative to current project root. You can easily change this behavior
+by modifying the settings of your application ({\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}} - property \textbf{roa\_api\_url})
+\index{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/roa_discovery/roa_discovery:fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.list_registered_resources}\pysiglinewithargsret{\bfcode{list\_registered\_resources}}{\emph{*args}, \emph{**kwargs}}{}
+This method list all registered resources as well as a link to their entry point.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// ROA api is mapped on a subdomain: roa.fantasticoproject.com}
+\PYG{c+c1}{// listing is done by GET http://fantasticoproject.com/roa/resources HTTP/1.1}
+
+\PYG{p}{\PYGZob{}}
+    \PYG{l+s+s2}{\PYGZdq{}Person\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}\PYG{l+m+mf}{1.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/1.0/persons\PYGZdq{}}\PYG{p}{,}
+               \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/latest/persons\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}Address\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}\PYG{l+m+mf}{1.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/1.0/addresses\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+m+mf}{2.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/2.0/addresses\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/latest/addresses\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// ROA api is mapped on a relative path of the project: http://fantasticoproject.com/api/}
+\PYG{c+c1}{// listing is done by GET http://fantasticoproject.com/roa/resources HTTP/1.1}
+
+\PYG{p}{\PYGZob{}}
+    \PYG{l+s+s2}{\PYGZdq{}Person\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}\PYG{l+m+mf}{1.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://fantasticoproject.com/api/1.0/persons\PYGZdq{}}\PYG{p}{,}
+               \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/api/latest/persons\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}Address\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}\PYG{l+m+mf}{1.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/api/1.0/addresses\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+m+mf}{2.0} \PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/api/2.0/addresses\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://roa.fantasticoproject.com/api/latest/addresses\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 

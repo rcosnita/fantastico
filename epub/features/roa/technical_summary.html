@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ROA Technical Summary</title>
+    
+    <link rel="stylesheet" href="../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../oauth2.html" title="OAUTH2"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rest_responses.html" title="REST Responses"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../roa.html" accesskey="U">ROA (Resource Oriented Architecture)</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="roa-technical-summary">
+<h1>ROA Technical Summary</h1>
+<dl class="class">
+<dt id="fantastico.roa.resource_decorator.Resource">
+<em class="property">class </em><tt class="descclassname">fantastico.roa.resource_decorator.</tt><tt class="descname">Resource</tt><big>(</big><em>name</em>, <em>url</em>, <em>version=1.0</em>, <em>subresources=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource"><span class="viewcode-link">[source]</span></a></dt>
+<dd><img alt="../../_images/roa_classes.png" src="../../_images/roa_classes.png" />
+<p>This class provides the main way for defining resources. Below you can find a very simple example for defining new resources:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AppSetting</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fantastico.roa.resource_decorator.Resource.model">
+<tt class="descname">model</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource.model"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This read only property holds the model of the resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.roa.resource_decorator.Resource.name">
+<tt class="descname">name</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource.name"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This read only property holds the name of the resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.roa.resource_decorator.Resource.subresources">
+<tt class="descname">subresources</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource.subresources"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This read only property holds the subresources of this resource. A resource can identify a subresource by one
+or multiple (composite uniquely identified resources) resource attributes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;person&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/persons&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+          <span class="n">subresources</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;bill_address&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;bill_address_id&quot;</span><span class="p">],</span>
+                        <span class="s">&quot;mail_address&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;mail_address_id&quot;</span><span class="p">],</span>
+                        <span class="s">&quot;ship_address:&quot;</span> <span class="p">[</span><span class="s">&quot;ship_address_id&quot;</span><span class="p">])</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;first_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">))</span>
+    <span class="n">last_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;last_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">bill_address_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;bill_address_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&quot;addresses.id&quot;</span><span class="p">))</span>
+    <span class="n">bill_address</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">primaryjoin</span><span class="o">=</span><span class="n">bill_address_id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">ship_address_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;ship_address_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&quot;addresses.id&quot;</span><span class="p">))</span>
+    <span class="n">ship_address</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">primaryjoin</span><span class="o">=</span><span class="n">ship_address_id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">mail_address_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;ship_address_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s">&quot;addresses.id&quot;</span><span class="p">))</span>
+    <span class="n">ship_address</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">primaryjoin</span><span class="o">=</span><span class="n">mail_address_id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.roa.resource_decorator.Resource.url">
+<tt class="descname">url</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource.url"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This read only property holds the url of the resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.roa.resource_decorator.Resource.version">
+<tt class="descname">version</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource.version"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This read only property holds the version of the resource.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.roa.resources_registry.ResourcesRegistry">
+<em class="property">class </em><tt class="descclassname">fantastico.roa.resources_registry.</tt><tt class="descname">ResourcesRegistry</tt><a class="reference internal" href="../../_modules/fantastico/roa/resources_registry.html#ResourcesRegistry"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provide the methods for registering resources into Fantastico framework and locating them by url or name and
+version. As a Developer you will not usually need access to this class.</p>
+<dl class="method">
+<dt id="fantastico.roa.resources_registry.ResourcesRegistry.all_resources">
+<tt class="descname">all_resources</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resources_registry.html#ResourcesRegistry.all_resources"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method returns a list of all registered resources order by name and version. It is extremely useful for
+introspecting Fantastico ROA platform.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.roa.resources_registry.ResourcesRegistry.available_resources">
+<tt class="descname">available_resources</tt><a class="reference internal" href="../../_modules/fantastico/roa/resources_registry.html#ResourcesRegistry.available_resources"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This readonly property returns the indexed resources by name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.roa.resources_registry.ResourcesRegistry.available_url_resources">
+<tt class="descname">available_url_resources</tt><a class="reference internal" href="../../_modules/fantastico/roa/resources_registry.html#ResourcesRegistry.available_url_resources"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This readonly property returns the indexed resources by urk.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resources_registry.ResourcesRegistry.find_by_name">
+<tt class="descname">find_by_name</tt><big>(</big><em>name</em>, <em>version='latest'</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resources_registry.html#ResourcesRegistry.find_by_name"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method returns a registered resource under the given name and version.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; The resource name.</li>
+<li><strong>version</strong> (<em>string</em>) &#8211; The numeric version of the resource or <strong>latest</strong>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The resource found or None.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fantastico.roa.resource_decorator.Resource" title="fantastico.roa.resource_decorator.Resource"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.roa.resource_decorator.Resource</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resources_registry.ResourcesRegistry.find_by_url">
+<tt class="descname">find_by_url</tt><big>(</big><em>url</em>, <em>version='latest'</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resources_registry.html#ResourcesRegistry.find_by_url"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method returns a registered resource under the given url and version.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; The resource name.</li>
+<li><strong>version</strong> (<em>string</em>) &#8211; The numeric version of the resource or <strong>latest</strong>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The resource found or None.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fantastico.roa.resource_decorator.Resource" title="fantastico.roa.resource_decorator.Resource"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.roa.resource_decorator.Resource</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resources_registry.ResourcesRegistry.register_resource">
+<tt class="descname">register_resource</tt><big>(</big><em>resource</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resources_registry.html#ResourcesRegistry.register_resource"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method register a new resource into Fantastico framework. It first checks against name, url and version collision
+in order to detect as early as possible errors with the current defined resources.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource</strong> (<a class="reference internal" href="#fantastico.roa.resource_decorator.Resource" title="fantastico.roa.resource_decorator.Resource"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.roa.resource_decorator.Resource</span></tt></a>) &#8211; The resource instance we want to register into Fantastico ROA registry.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="#fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError" title="fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError">fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">This exception is raised when:<ul class="simple">
+<li>resource name and version already registered.</li>
+<li>resource url already registered.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resources_registry.ResourcesRegistry.unregister_resource">
+<tt class="descname">unregister_resource</tt><big>(</big><em>name</em>, <em>version</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resources_registry.html#ResourcesRegistry.unregister_resource"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method unregister a resource version. If the given resource is not found no exception is raised. Once a resource
+is unregistered latest version is recalculated. The resource is completely removed from AVAILABLE_RESOURCES and
+AVAILABLE_URLS dictionaries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; Resource name.</li>
+<li><strong>version</strong> (<em>float</em>) &#8211; Resource version. If you specify <strong>latest</strong> it will have no effect.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.roa.resources_registrator.ResourcesRegistrator">
+<em class="property">class </em><tt class="descclassname">fantastico.roa.resources_registrator.</tt><tt class="descname">ResourcesRegistrator</tt><big>(</big><em>settings_facade</em>, <em>file_patterns=None</em>, <em>folder_pattern=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resources_registrator.html#ResourcesRegistrator"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the algorithm for registering all defined resources. Resources discovered by this class are decorated
+by <a class="reference internal" href="#fantastico.roa.resource_decorator.Resource" title="fantastico.roa.resource_decorator.Resource"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.roa.resource_decorator.Resource</span></tt></a>. In the constructor of this class you can define special naming
+convention for discovered resources (through regex). Default behavior is to scan only in models folder / subfolders in all
+available files.</p>
+<p>In addition this class is also designed to be a route provider. This guarantees that at start time, all resources will be
+registered correctly.</p>
+<dl class="method">
+<dt id="fantastico.roa.resources_registrator.ResourcesRegistrator.load_routes">
+<tt class="descname">load_routes</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resources_registrator.html#ResourcesRegistrator.load_routes"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method simple triggers resources registration and returns empty routes. Using this mechanism guarantees that
+routing engine will also discover ROA resources.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resources_registrator.ResourcesRegistrator.register_resources">
+<tt class="descname">register_resources</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resources_registrator.html#ResourcesRegistrator.register_resources"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method scans all files and folders from the given path, match the filenames against registered file patterns
+and import all ROA resources.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController">
+<em class="property">class </em><tt class="descclassname">fantastico.contrib.roa_discovery.discovery_controller.</tt><tt class="descname">RoaDiscoveryController</tt><big>(</big><em>settings_facade</em>, <em>registry_cls=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/contrib/roa_discovery/discovery_controller.html#RoaDiscoveryController"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the routes for introspecting Fantastico registered resources through ROA. It is extremely useful
+to surf using your browser and to not be required to hardcode links in your code. Typically, you will want to code your
+client side applications against resources name and you are going to use this controller to find the location of those
+records.</p>
+<p>By default, all ROA resources are mapped on <strong>/api/</strong> relative to current project root. You can easily change this behavior
+by modifying the settings of your application (<a class="reference internal" href="../../get_started/settings.html#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a> - property <strong>roa_api_url</strong>)</p>
+<dl class="method">
+<dt id="fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.list_registered_resources">
+<tt class="descname">list_registered_resources</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/contrib/roa_discovery/discovery_controller.html#RoaDiscoveryController.list_registered_resources"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method list all registered resources as well as a link to their entry point.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// ROA api is mapped on a subdomain: roa.fantasticoproject.com</span>
+<span class="c1">// listing is done by GET http://fantasticoproject.com/roa/resources HTTP/1.1</span>
+
+<span class="p">{</span>
+    <span class="s2">&quot;Person&quot;</span><span class="o">:</span> <span class="p">{</span><span class="mf">1.0</span> <span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/1.0/persons&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;latest&quot;</span><span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/latest/persons&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;Address&quot;</span><span class="o">:</span> <span class="p">{</span><span class="mf">1.0</span> <span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/1.0/addresses&quot;</span><span class="p">,</span>
+                <span class="mf">2.0</span> <span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/2.0/addresses&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;latest&quot;</span><span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/latest/addresses&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// ROA api is mapped on a relative path of the project: http://fantasticoproject.com/api/</span>
+<span class="c1">// listing is done by GET http://fantasticoproject.com/roa/resources HTTP/1.1</span>
+
+<span class="p">{</span>
+    <span class="s2">&quot;Person&quot;</span><span class="o">:</span> <span class="p">{</span><span class="mf">1.0</span> <span class="o">:</span> <span class="s2">&quot;http://fantasticoproject.com/api/1.0/persons&quot;</span><span class="p">,</span>
+               <span class="s2">&quot;latest&quot;</span><span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/api/latest/persons&quot;</span><span class="p">},</span>
+    <span class="s2">&quot;Address&quot;</span><span class="o">:</span> <span class="p">{</span><span class="mf">1.0</span> <span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/api/1.0/addresses&quot;</span><span class="p">,</span>
+                <span class="mf">2.0</span> <span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/api/2.0/addresses&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;latest&quot;</span><span class="o">:</span> <span class="s2">&quot;http://roa.fantasticoproject.com/api/latest/addresses&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="exceptions">
+<h2>Exceptions</h2>
+<dl class="class">
+<dt id="fantastico.roa.roa_exceptions.FantasticoRoaError">
+<em class="property">class </em><tt class="descclassname">fantastico.roa.roa_exceptions.</tt><tt class="descname">FantasticoRoaError</tt><a class="reference internal" href="../../_modules/fantastico/roa/roa_exceptions.html#FantasticoRoaError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the core error used within Fantastico ROA layer. Usually, more concrete exceptions are raised by
+ROA layers.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError">
+<em class="property">class </em><tt class="descclassname">fantastico.roa.roa_exceptions.</tt><tt class="descname">FantasticoRoaDuplicateError</tt><a class="reference internal" href="../../_modules/fantastico/roa/roa_exceptions.html#FantasticoRoaDuplicateError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This concrete exception is used to notify user that multiple resources with same name and version or url and version
+can not be registered multiple times.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

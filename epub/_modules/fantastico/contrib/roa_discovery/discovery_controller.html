@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.contrib.roa_discovery.discovery_controller</title>
+    
+    <link rel="stylesheet" href="../../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.contrib.roa_discovery.discovery_controller</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.contrib.roa_discovery.discovery_controller</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">ControllerProvider</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa</span> <span class="kn">import</span> <span class="n">resources_registry</span>
+<span class="kn">from</span> <span class="nn">webob.response</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="nd">@ControllerProvider</span><span class="p">()</span>
+<div class="viewcode-block" id="RoaDiscoveryController"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController">[docs]</a><span class="k">class</span> <span class="nc">RoaDiscoveryController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the routes for introspecting Fantastico registered resources through ROA. It is extremely useful</span>
+<span class="sd">    to surf using your browser and to not be required to hardcode links in your code. Typically, you will want to code your</span>
+<span class="sd">    client side applications against resources name and you are going to use this controller to find the location of those</span>
+<span class="sd">    records.</span>
+
+<span class="sd">    By default, all ROA resources are mapped on **/api/** relative to current project root. You can easily change this behavior</span>
+<span class="sd">    by modifying the settings of your application (:py:class:`fantastico.settings.BasicSettings` - property **roa_api_url**)&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">,</span> <span class="n">registry_cls</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RoaDiscoveryController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">settings_facade</span><span class="p">)</span>
+
+        <span class="n">registry_cls</span> <span class="o">=</span> <span class="n">registry_cls</span> <span class="ow">or</span> <span class="n">resources_registry</span><span class="o">.</span><span class="n">ResourcesRegistry</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span> <span class="o">=</span> <span class="n">registry_cls</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;roa_api&quot;</span><span class="p">)</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/roa/resources(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">)</span> <span class="c"># pylint: disable=W0613</span>
+<div class="viewcode-block" id="RoaDiscoveryController.list_registered_resources"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.list_registered_resources">[docs]</a>    <span class="k">def</span> <span class="nf">list_registered_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method list all registered resources as well as a link to their entry point.</span>
+
+<span class="sd">        .. code-block:: javascript</span>
+
+<span class="sd">            // ROA api is mapped on a subdomain: roa.fantasticoproject.com</span>
+<span class="sd">            // listing is done by GET http://fantasticoproject.com/roa/resources HTTP/1.1</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;Person&quot;: {1.0 : &quot;http://roa.fantasticoproject.com/1.0/persons&quot;,</span>
+<span class="sd">                           &quot;latest&quot;: &quot;http://roa.fantasticoproject.com/latest/persons&quot;},</span>
+<span class="sd">                &quot;Address&quot;: {1.0 : &quot;http://roa.fantasticoproject.com/1.0/addresses&quot;,</span>
+<span class="sd">                            2.0 : &quot;http://roa.fantasticoproject.com/2.0/addresses&quot;,</span>
+<span class="sd">                            &quot;latest&quot;: &quot;http://roa.fantasticoproject.com/latest/addresses&quot;}</span>
+<span class="sd">            }</span>
+
+<span class="sd">        .. code-block:: javascript</span>
+
+<span class="sd">            // ROA api is mapped on a relative path of the project: http://fantasticoproject.com/api/</span>
+<span class="sd">            // listing is done by GET http://fantasticoproject.com/roa/resources HTTP/1.1</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;Person&quot;: {1.0 : &quot;http://fantasticoproject.com/api/1.0/persons&quot;,</span>
+<span class="sd">                           &quot;latest&quot;: &quot;http://roa.fantasticoproject.com/api/latest/persons&quot;},</span>
+<span class="sd">                &quot;Address&quot;: {1.0 : &quot;http://roa.fantasticoproject.com/api/1.0/addresses&quot;,</span>
+<span class="sd">                            2.0 : &quot;http://roa.fantasticoproject.com/api/2.0/addresses&quot;,</span>
+<span class="sd">                            &quot;latest&quot;: &quot;http://roa.fantasticoproject.com/api/latest/addresses&quot;}</span>
+<span class="sd">            }&#39;&#39;&#39;</span>
+
+        <span class="n">body</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">resources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">all_resources</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resources</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                <span class="n">body</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="n">body</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_resource_url</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+            <span class="n">body</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s">&quot;latest&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_resource_url</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">)</span>
+
+        <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_calculate_resource_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method calculates resource API url based on the given resource object and version.&#39;&#39;&#39;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(api_url)s</span><span class="s">/</span><span class="si">%(version)s%(url)s</span><span class="s">&quot;</span> <span class="o">%</span> \
+                <span class="p">{</span><span class="s">&quot;api_url&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span><span class="p">,</span>
+                 <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
+                 <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">url</span></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

@@ -4,6 +4,7 @@
 \indexentry{dev\_server\_port (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{doc\_base (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{installed\_middleware (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
+\indexentry{roa\_api (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{routes\_loaders (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{supported\_languages (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{templates\_config (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
@@ -109,49 +110,72 @@
 \indexentry{get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method)|hyperpage}{26}
 \indexentry{sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute)|hyperpage}{26}
 \indexentry{ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware)|hyperpage}{26}
-\indexentry{SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension)|hyperpage}{44}
-\indexentry{exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{44}
-\indexentry{get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{44}
-\indexentry{get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{44}
-\indexentry{SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb)|hyperpage}{45}
-\indexentry{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{45}
-\indexentry{get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{45}
-\indexentry{get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{45}
-\indexentry{SdkCommandVersion (class in fantastico.sdk.commands.command\_version)|hyperpage}{45}
-\indexentry{exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{46}
-\indexentry{get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{46}
-\indexentry{SdkCore (class in fantastico.sdk.fantastico)|hyperpage}{46}
-\indexentry{exec() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{46}
-\indexentry{get\_arguments() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{46}
-\indexentry{get\_help() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{46}
-\indexentry{SdkCommandsRegistry (class in fantastico.sdk.sdk\_core)|hyperpage}{46}
-\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{47}
-\indexentry{get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{47}
-\indexentry{SdkCommandArgument (class in fantastico.sdk.sdk\_core)|hyperpage}{47}
-\indexentry{help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{47}
-\indexentry{name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{47}
-\indexentry{short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{47}
-\indexentry{type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{47}
-\indexentry{SdkCommand (class in fantastico.sdk.sdk\_core)|hyperpage}{47}
-\indexentry{exec() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{47}
-\indexentry{exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{48}
-\indexentry{get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{48}
-\indexentry{SdkCommand (class in fantastico.sdk.sdk\_decorators)|hyperpage}{48}
-\indexentry{FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{48}
-\indexentry{FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{48}
-\indexentry{FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{49}
-\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{51}
-\indexentry{parse() (fantastico.rendering.component.Component method)|hyperpage}{51}
-\indexentry{render() (fantastico.rendering.component.Component method)|hyperpage}{52}
-\indexentry{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)|hyperpage}{53}
-\indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{54}
-\indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{54}
-\indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{54}
-\indexentry{PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router)|hyperpage}{55}
-\indexentry{serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method)|hyperpage}{56}
-\indexentry{DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{56}
-\indexentry{DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{57}
-\indexentry{TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller)|hyperpage}{58}
-\indexentry{list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{58}
-\indexentry{list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{59}
-\indexentry{TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes)|hyperpage}{59}
+\indexentry{Resource (class in fantastico.roa.resource\_decorator)|hyperpage}{36}
+\indexentry{model (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{36}
+\indexentry{name (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{36}
+\indexentry{subresources (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{36}
+\indexentry{url (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{36}
+\indexentry{version (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{37}
+\indexentry{ResourcesRegistry (class in fantastico.roa.resources\_registry)|hyperpage}{37}
+\indexentry{all\_resources() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{37}
+\indexentry{available\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute)|hyperpage}{37}
+\indexentry{available\_url\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute)|hyperpage}{37}
+\indexentry{find\_by\_name() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{37}
+\indexentry{find\_by\_url() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{37}
+\indexentry{register\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{37}
+\indexentry{unregister\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{37}
+\indexentry{ResourcesRegistrator (class in fantastico.roa.resources\_registrator)|hyperpage}{38}
+\indexentry{load\_routes() (fantastico.roa.resources\_registrator.ResourcesRegistrator method)|hyperpage}{38}
+\indexentry{register\_resources() (fantastico.roa.resources\_registrator.ResourcesRegistrator method)|hyperpage}{38}
+\indexentry{RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller)|hyperpage}{38}
+\indexentry{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)|hyperpage}{38}
+\indexentry{FantasticoRoaError (class in fantastico.roa.roa\_exceptions)|hyperpage}{39}
+\indexentry{FantasticoRoaDuplicateError (class in fantastico.roa.roa\_exceptions)|hyperpage}{39}
+\indexentry{SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension)|hyperpage}{48}
+\indexentry{exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{48}
+\indexentry{get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{48}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{48}
+\indexentry{SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb)|hyperpage}{48}
+\indexentry{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{49}
+\indexentry{get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{49}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{49}
+\indexentry{SdkCommandVersion (class in fantastico.sdk.commands.command\_version)|hyperpage}{49}
+\indexentry{exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{49}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{49}
+\indexentry{SdkCore (class in fantastico.sdk.fantastico)|hyperpage}{50}
+\indexentry{exec() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{50}
+\indexentry{get\_arguments() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{50}
+\indexentry{get\_help() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{50}
+\indexentry{SdkCommandsRegistry (class in fantastico.sdk.sdk\_core)|hyperpage}{50}
+\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{50}
+\indexentry{get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{51}
+\indexentry{SdkCommandArgument (class in fantastico.sdk.sdk\_core)|hyperpage}{51}
+\indexentry{help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{51}
+\indexentry{name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{51}
+\indexentry{short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{51}
+\indexentry{type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{51}
+\indexentry{SdkCommand (class in fantastico.sdk.sdk\_core)|hyperpage}{51}
+\indexentry{exec() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{51}
+\indexentry{exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{51}
+\indexentry{get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{52}
+\indexentry{SdkCommand (class in fantastico.sdk.sdk\_decorators)|hyperpage}{52}
+\indexentry{FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{52}
+\indexentry{FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{52}
+\indexentry{FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{52}
+\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{54}
+\indexentry{parse() (fantastico.rendering.component.Component method)|hyperpage}{55}
+\indexentry{render() (fantastico.rendering.component.Component method)|hyperpage}{55}
+\indexentry{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)|hyperpage}{57}
+\indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{57}
+\indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{57}
+\indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{58}
+\indexentry{PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router)|hyperpage}{59}
+\indexentry{serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method)|hyperpage}{60}
+\indexentry{DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{60}
+\indexentry{DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{60}
+\indexentry{TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller)|hyperpage}{62}
+\indexentry{list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{62}
+\indexentry{list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{62}
+\indexentry{TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes)|hyperpage}{62}
+\indexentry{RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller)|hyperpage}{63}
+\indexentry{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)|hyperpage}{63}

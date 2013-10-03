@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.roa.resources_registry &mdash; fantastico 0.5.0-b124 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5.0-b124',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.0-b124 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.roa.resources_registry</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.roa.resources_registry</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.roa_exceptions</span> <span class="kn">import</span> <span class="n">FantasticoRoaDuplicateError</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils.singleton</span> <span class="kn">import</span> <span class="n">Singleton</span>
+
+<span class="nd">@Singleton</span><span class="p">()</span>
+<div class="viewcode-block" id="ResourcesRegistry"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registry.ResourcesRegistry">[docs]</a><span class="k">class</span> <span class="nc">ResourcesRegistry</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provide the methods for registering resources into Fantastico framework and locating them by url or name and</span>
+<span class="sd">    version. As a Developer you will not usually need access to this class.&#39;&#39;&#39;</span>
+
+    <span class="n">_RESOURCE_LATEST_VERSION</span> <span class="o">=</span> <span class="s">&quot;latest&quot;</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="ResourcesRegistry.available_resources"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registry.ResourcesRegistry.available_resources">[docs]</a>    <span class="k">def</span> <span class="nf">available_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This readonly property returns the indexed resources by name.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_resources</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="ResourcesRegistry.available_url_resources"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registry.ResourcesRegistry.available_url_resources">[docs]</a>    <span class="k">def</span> <span class="nf">available_url_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This readonly property returns the indexed resources by urk.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_url_resources</span>
+</div>
+    <span class="n">_available_resources</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">_available_url_resources</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="ResourcesRegistry.register_resource"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registry.ResourcesRegistry.register_resource">[docs]</a>    <span class="k">def</span> <span class="nf">register_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method register a new resource into Fantastico framework. It first checks against name, url and version collision</span>
+<span class="sd">        in order to detect as early as possible errors with the current defined resources.</span>
+
+<span class="sd">        :param resource: The resource instance we want to register into Fantastico ROA registry.</span>
+<span class="sd">        :type resource: :py:class:`fantastico.roa.resource_decorator.Resource`</span>
+<span class="sd">        :raises fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError: This exception is raised when:</span>
+
+<span class="sd">            * resource name and version already registered.</span>
+<span class="sd">            * resource url already registered.&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_resource_in_resources</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_resource_in_urls</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_register_resource_in_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method registers a given resource into AVAILABLE_RESOURCES dictionary.&#39;&#39;&#39;</span>
+
+        <span class="n">registry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_resources</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">registry</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">resource_versions</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">resource_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FantasticoRoaDuplicateError</span><span class="p">(</span><span class="s">&quot;Resource </span><span class="si">%s</span><span class="s"> with version </span><span class="si">%s</span><span class="s"> already registered.&quot;</span> <span class="o">%</span> \
+                                              <span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
+
+        <span class="n">resource_versions</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">]</span> <span class="o">=</span> <span class="n">resource</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_latest_version</span><span class="p">(</span><span class="n">resource_versions</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_register_resource_in_urls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method registers a given resource into AVAILABLE_URLS dictionary.&#39;&#39;&#39;</span>
+
+        <span class="n">registry_urls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_url_resources</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">registry_urls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">):</span>
+            <span class="n">registry_urls</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">registry_url_versions</span> <span class="o">=</span> <span class="n">registry_urls</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">registry_url_versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FantasticoRoaDuplicateError</span><span class="p">(</span><span class="s">&quot;URL </span><span class="si">%s</span><span class="s"> is already taken. Can not register resource </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> \
+                                              <span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="n">registry_url_versions</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">]</span> <span class="o">=</span> <span class="n">resource</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_latest_version</span><span class="p">(</span><span class="n">registry_url_versions</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_latest_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registry</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method updates the registry latest version to point to the given resource (if necessary).&#39;&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">registered_version</span> <span class="ow">in</span> <span class="n">registry</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">registered_version</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_RESOURCE_LATEST_VERSION</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">registered_version</span> <span class="o">&gt;</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+                <span class="k">return</span>
+
+        <span class="n">registry</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_RESOURCE_LATEST_VERSION</span><span class="p">]</span> <span class="o">=</span> <span class="n">resource</span>
+
+    <span class="k">def</span> <span class="nf">_find_resource_in_registry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registry</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns a resource from a given registry by a given id (resource name or resource url) and resource</span>
+<span class="sd">        version.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource_id</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">registry</span><span class="p">[</span><span class="n">resource_id</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="k">return</span> <span class="n">registry</span><span class="p">[</span><span class="n">resource_id</span><span class="p">][</span><span class="n">version</span><span class="p">]</span>
+
+<div class="viewcode-block" id="ResourcesRegistry.find_by_name"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registry.ResourcesRegistry.find_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">find_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">_RESOURCE_LATEST_VERSION</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns a registered resource under the given name and version.</span>
+
+<span class="sd">        :param name: The resource name.</span>
+<span class="sd">        :type name: string</span>
+<span class="sd">        :param version: The numeric version of the resource or **latest**.</span>
+<span class="sd">        :type version: string</span>
+<span class="sd">        :returns: The resource found or None.</span>
+<span class="sd">        :rtype: :py:class:`fantastico.roa.resource_decorator.Resource`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">registry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_resources</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_resource_in_registry</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ResourcesRegistry.find_by_url"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registry.ResourcesRegistry.find_by_url">[docs]</a>    <span class="k">def</span> <span class="nf">find_by_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">_RESOURCE_LATEST_VERSION</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns a registered resource under the given url and version.</span>
+
+<span class="sd">        :param name: The resource name.</span>
+<span class="sd">        :type name: string</span>
+<span class="sd">        :param version: The numeric version of the resource or **latest**.</span>
+<span class="sd">        :type version: string</span>
+<span class="sd">        :returns: The resource found or None.</span>
+<span class="sd">        :rtype: :py:class:`fantastico.roa.resource_decorator.Resource`&#39;&#39;&#39;</span>
+
+        <span class="n">registry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_url_resources</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_resource_in_registry</span><span class="p">(</span><span class="n">registry</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ResourcesRegistry.all_resources"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registry.ResourcesRegistry.all_resources">[docs]</a>    <span class="k">def</span> <span class="nf">all_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns a list of all registered resources order by name and version. It is extremely useful for</span>
+<span class="sd">        introspecting Fantastico ROA platform.&#39;&#39;&#39;</span>
+
+        <span class="n">registry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_resources</span>
+
+        <span class="n">resources</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">registry</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">resources</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">registry</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">resources</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_get_latest_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registry</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method obtains the latest version resource from the list of available versions.&#39;&#39;&#39;</span>
+
+        <span class="n">resource_latest</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">for</span> <span class="n">registered_version</span> <span class="ow">in</span> <span class="n">registry</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">registered_version</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_RESOURCE_LATEST_VERSION</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">resource</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="n">registered_version</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">resource_latest</span><span class="p">:</span>
+                <span class="n">resource_latest</span> <span class="o">=</span> <span class="n">resource</span>
+
+            <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;</span> <span class="n">resource_latest</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+                <span class="n">resource_latest</span> <span class="o">=</span> <span class="n">resource</span>
+
+        <span class="k">return</span> <span class="n">resource_latest</span>
+
+    <span class="k">def</span> <span class="nf">_unregister_registry_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registry</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method unregister a given resource from the given registry.&#39;&#39;&#39;</span>
+
+        <span class="n">versions</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource_id</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">versions</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">versions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">versions</span><span class="p">[</span><span class="n">version</span><span class="p">]</span>
+
+        <span class="n">resource_latest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_latest_version</span><span class="p">(</span><span class="n">versions</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">resource_latest</span><span class="p">:</span>
+            <span class="n">versions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_RESOURCE_LATEST_VERSION</span><span class="p">]</span> <span class="o">=</span> <span class="n">resource_latest</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">versions</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_RESOURCE_LATEST_VERSION</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">resource</span>
+
+<div class="viewcode-block" id="ResourcesRegistry.unregister_resource"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registry.ResourcesRegistry.unregister_resource">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method unregister a resource version. If the given resource is not found no exception is raised. Once a resource</span>
+<span class="sd">        is unregistered latest version is recalculated. The resource is completely removed from AVAILABLE_RESOURCES and</span>
+<span class="sd">        AVAILABLE_URLS dictionaries.</span>
+
+<span class="sd">        :param name: Resource name.</span>
+<span class="sd">        :type name: string</span>
+<span class="sd">        :param version: Resource version. If you specify **latest** it will have no effect.</span>
+<span class="sd">        :type version: float</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_RESOURCE_LATEST_VERSION</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">registry_resources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_resources</span>
+        <span class="n">registry_urls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_available_url_resources</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unregister_registry_resource</span><span class="p">(</span><span class="n">registry_resources</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_unregister_registry_resource</span><span class="p">(</span><span class="n">registry_urls</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

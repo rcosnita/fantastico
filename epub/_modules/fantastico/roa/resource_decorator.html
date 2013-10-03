@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.roa.resource_decorator</title>
+    
+    <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.roa.resource_decorator</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.roa.resource_decorator</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_decorator.Resource">[docs]</a><span class="k">class</span> <span class="nc">Resource</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    .. image:: /images/roa/roa_classes.png</span>
+
+<span class="sd">    This class provides the main way for defining resources. Below you can find a very simple example for defining new resources:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        @Resource(name=&quot;app-setting&quot;, url=&quot;/app-settings&quot;)</span>
+<span class="sd">        class AppSetting(BASEMODEL):</span>
+<span class="sd">            id = Column(&quot;id&quot;, Integer, primary_key=True, autoincrement=True)</span>
+<span class="sd">            name = Column(&quot;name&quot;, String(50), unique=True, nullable=False)</span>
+<span class="sd">            value = Column(&quot;value&quot;, Text, nullable=False)</span>
+
+<span class="sd">            def __init__(self, name, value):</span>
+<span class="sd">               self.name = name</span>
+<span class="sd">               self.value = value</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Resource.name"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_decorator.Resource.name">[docs]</a>    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This read only property holds the name of the resource.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Resource.url"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_decorator.Resource.url">[docs]</a>    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This read only property holds the url of the resource.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Resource.version"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_decorator.Resource.version">[docs]</a>    <span class="k">def</span> <span class="nf">version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This read only property holds the version of the resource.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Resource.model"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_decorator.Resource.model">[docs]</a>    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This read only property holds the model of the resource.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Resource.subresources"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_decorator.Resource.subresources">[docs]</a>    <span class="k">def</span> <span class="nf">subresources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This read only property holds the subresources of this resource. A resource can identify a subresource by one</span>
+<span class="sd">        or multiple (composite uniquely identified resources) resource attributes.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            @Resource(name=&quot;person&quot;, url=&quot;/persons&quot;, version=1.0,</span>
+<span class="sd">                      subresources={&quot;bill_address&quot;: [&quot;bill_address_id&quot;],</span>
+<span class="sd">                                    &quot;mail_address&quot;: [&quot;mail_address_id&quot;],</span>
+<span class="sd">                                    &quot;ship_address:&quot; [&quot;ship_address_id&quot;])</span>
+<span class="sd">            class Person(BASEMODEL):</span>
+<span class="sd">                id = Column(&quot;id&quot;, Integer, primary_key=True, autoincrement=True)</span>
+<span class="sd">                first_name = Column(&quot;first_name&quot;, String(80))</span>
+<span class="sd">                last_name = Column(&quot;last_name&quot;, String(50))</span>
+<span class="sd">                bill_address_id = Column(&quot;bill_address_id&quot;, ForeignKey(&quot;addresses.id&quot;))</span>
+<span class="sd">                bill_address = relationship(Address, primaryjoin=bill_address_id == Address.id)</span>
+<span class="sd">                ship_address_id = Column(&quot;ship_address_id&quot;, ForeignKey(&quot;addresses.id&quot;))</span>
+<span class="sd">                ship_address = relationship(Address, primaryjoin=ship_address_id == Address.id)</span>
+<span class="sd">                mail_address_id = Column(&quot;ship_address_id&quot;, ForeignKey(&quot;addresses.id&quot;))</span>
+<span class="sd">                ship_address = relationship(Address, primaryjoin=mail_address_id == Address.id)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subresources</span>
+</div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">subresources</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subresources</span> <span class="o">=</span> <span class="n">subresources</span> <span class="ow">or</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_cls</span><span class="p">,</span> <span class="n">resources_registry</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is invoked when the model class is first imported into python virtual machine.&#39;&#39;&#39;</span>
+
+        <span class="kn">from</span> <span class="nn">fantastico.roa.resources_registry</span> <span class="kn">import</span> <span class="n">ResourcesRegistry</span>
+
+        <span class="n">resources_registry</span> <span class="o">=</span> <span class="n">resources_registry</span> <span class="ow">or</span> <span class="n">ResourcesRegistry</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model_cls</span>
+
+        <span class="n">resources_registry</span><span class="o">.</span><span class="n">register_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model_cls</span>
+
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method puts order between resources by  name and version comparisons.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">==</span> <span class="s">&quot;latest&quot;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">True</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">&lt;</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">&lt;</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

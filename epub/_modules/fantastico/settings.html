@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.5.0-b123 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -84,7 +84,8 @@
         <span class="sd">&#39;&#39;&#39;This property holds all routes loaders available.&#39;&#39;&#39;</span>
 
         <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader&quot;</span><span class="p">,</span>
-                <span class="s">&quot;fantastico.mvc.controller_registrator.ControllerRouteLoader&quot;</span><span class="p">]</span>
+                <span class="s">&quot;fantastico.mvc.controller_registrator.ControllerRouteLoader&quot;</span><span class="p">,</span>
+                <span class="s">&quot;fantastico.roa.resources_registrator.ResourcesRegistrator&quot;</span><span class="p">]</span>
 </div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.dev_server_port"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.dev_server_port">[docs]</a>    <span class="k">def</span> <span class="nf">dev_server_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -149,6 +150,13 @@
         <span class="sd">&#39;&#39;&#39;This property defines public location of **Fantastico** documentation.&#39;&#39;&#39;</span>
 
         <span class="k">return</span> <span class="s">&quot;http://rcosnita.github.io/fantastico/html/&quot;</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.roa_api"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.roa_api">[docs]</a>    <span class="k">def</span> <span class="nf">roa_api</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property defines the url for mapping ROA resources api. By default is **/api**. Read more about ROA on</span>
+<span class="sd">        :doc:`/features/components/roa_discovery/roa_discovery`.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;/api&quot;</span>
 </div></div>
 <span class="k">class</span> <span class="nc">AwsStageSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the configuration profile for Aws Stage environment integration.&#39;&#39;&#39;</span>

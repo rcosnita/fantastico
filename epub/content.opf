@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-09-28</dc:date>
+    <dc:date>2013-10-03</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -157,6 +157,18 @@
     <item id="_modules_fantastico_locale_language.html"
           href="_modules/fantastico/locale/language.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_resources_registry.html"
+          href="_modules/fantastico/roa/resources_registry.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_resource_decorator.html"
+          href="_modules/fantastico/roa/resource_decorator.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_roa_exceptions.html"
+          href="_modules/fantastico/roa/roa_exceptions.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_resources_registrator.html"
+          href="_modules/fantastico/roa/resources_registrator.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_routing_engine_router.html"
           href="_modules/fantastico/routing_engine/router.html"
           media-type="application/xhtml+xml" />
@@ -202,6 +214,9 @@
     <item id="_modules_fantastico_contrib_dynamic_pages_models_pages.html"
           href="_modules/fantastico/contrib/dynamic_pages/models/pages.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_contrib_roa_discovery_discovery_controller.html"
+          href="_modules/fantastico/contrib/roa_discovery/discovery_controller.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_contrib_dynamic_menu_menu_controller.html"
           href="_modules/fantastico/contrib/dynamic_menu/menu_controller.html"
           media-type="application/xhtml+xml" />
@@ -240,6 +255,9 @@
           media-type="image/png" />
     <item id="_images_low_usage_s3_aws.png"
           href="_images/low_usage_s3_aws.png"
+          media-type="image/png" />
+    <item id="_images_roa_classes.png"
+          href="_images/roa_classes.png"
           media-type="image/png" />
     <item id="_images_simple_menu_read.png"
           href="_images/simple_menu_read.png"
@@ -322,11 +340,17 @@
     <item id="features_components_dynamic_pages_dynamic_pages.html"
           href="features/components/dynamic_pages/dynamic_pages.html"
           media-type="application/xhtml+xml" />
+    <item id="features_components_roa_discovery_roa_discovery.html"
+          href="features/components/roa_discovery/roa_discovery.html"
+          media-type="application/xhtml+xml" />
     <item id="features_components_dynamic_menu_dynamic_menu.html"
           href="features/components/dynamic_menu/dynamic_menu.html"
           media-type="application/xhtml+xml" />
     <item id="features_components_tracking_codes_tracking_codes.html"
           href="features/components/tracking_codes/tracking_codes.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_roa_technical_summary.html"
+          href="features/roa/technical_summary.html"
           media-type="application/xhtml+xml" />
     <item id="features_roa_rest_standard.html"
           href="features/roa/rest_standard.html"
@@ -363,6 +387,7 @@
     <itemref idref="features_roa.html" />
     <itemref idref="features_roa_rest_standard.html" />
     <itemref idref="features_roa_rest_responses.html" />
+    <itemref idref="features_roa_technical_summary.html" />
     <itemref idref="features_oauth2.html" />
     <itemref idref="features_oauth2_simple_api_example.html" />
     <itemref idref="features_oauth2_tokens_format.html" />
@@ -381,6 +406,7 @@
     <itemref idref="features_components_dynamic_menu_dynamic_menu.html" />
     <itemref idref="features_components_dynamic_pages_dynamic_pages.html" />
     <itemref idref="features_components_tracking_codes_tracking_codes.html" />
+    <itemref idref="features_components_roa_discovery_roa_discovery.html" />
     <itemref idref="how_to_how_to.html" />
     <itemref idref="how_to_mvc_how_to.html" />
     <itemref idref="how_to_deployment_how_to.html" />

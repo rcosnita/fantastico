@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.roa.resources_registrator &mdash; fantastico 0.5.0-b124 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5.0-b124',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.0-b124 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.roa.resources_registrator</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.roa.resources_registrator</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">fantastico.routing_engine.routing_loaders</span> <span class="kn">import</span> <span class="n">RouteLoader</span>
+
+<div class="viewcode-block" id="ResourcesRegistrator"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registrator.ResourcesRegistrator">[docs]</a><span class="k">class</span> <span class="nc">ResourcesRegistrator</span><span class="p">(</span><span class="n">RouteLoader</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the algorithm for registering all defined resources. Resources discovered by this class are decorated</span>
+<span class="sd">    by :py:class:`fantastico.roa.resource_decorator.Resource`. In the constructor of this class you can define special naming</span>
+<span class="sd">    convention for discovered resources (through regex). Default behavior is to scan only in models folder / subfolders in all</span>
+<span class="sd">    available files.</span>
+
+<span class="sd">    In addition this class is also designed to be a route provider. This guarantees that at start time, all resources will be</span>
+<span class="sd">    registered correctly.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">,</span> <span class="n">file_patterns</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">folder_pattern</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ResourcesRegistrator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">settings_facade</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_file_patterns</span> <span class="o">=</span> <span class="n">file_patterns</span> <span class="ow">or</span> <span class="p">[</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">.py$&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_folder_pattern</span> <span class="o">=</span> <span class="n">folder_pattern</span> <span class="ow">or</span> <span class="p">[</span><span class="s">&quot;models/&quot;</span><span class="p">,</span> <span class="s">&quot;(^tests)&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_is_file_supported</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method determins if a given file name may contain resources or not.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">abspath</span><span class="p">,</span> <span class="n">filename</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">for</span> <span class="n">file_pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file_patterns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">file_pattern</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">False</span>
+
+            <span class="k">for</span> <span class="n">folder_pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder_pattern</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">folder_pattern</span><span class="p">,</span> <span class="n">abspath</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+<div class="viewcode-block" id="ResourcesRegistrator.register_resources"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registrator.ResourcesRegistrator.register_resources">[docs]</a>    <span class="k">def</span> <span class="nf">register_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method scans all files and folders from the given path, match the filenames against registered file patterns</span>
+<span class="sd">        and import all ROA resources.&#39;&#39;&#39;</span>
+
+        <span class="n">instantiator</span><span class="o">.</span><span class="n">import_modules_from_folder</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>
+                                                <span class="n">file_matcher</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_is_file_supported</span><span class="p">,</span>
+                                                <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="ResourcesRegistrator.load_routes"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resources_registrator.ResourcesRegistrator.load_routes">[docs]</a>    <span class="k">def</span> <span class="nf">load_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method simple triggers resources registration and returns empty routes. Using this mechanism guarantees that</span>
+<span class="sd">        routing engine will also discover ROA resources.&#39;&#39;&#39;</span>
+
+        <span class="n">active_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">__class__</span>
+
+        <span class="n">root_folder</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_class_abslocation</span><span class="p">(</span><span class="n">active_config</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_resources</span><span class="p">(</span><span class="n">root_folder</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{}</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

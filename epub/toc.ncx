@@ -476,127 +476,133 @@
           </navLabel>
           <content src="features/components/tracking_codes/tracking_codes.html" />
         </navPoint>
+        <navPoint id="navPoint63" playOrder="63">
+          <navLabel>
+            <text>ROA Auto discovery</text>
+          </navLabel>
+          <content src="features/components/roa_discovery/roa_discovery.html" />
+        </navPoint>
       </navPoint>
     </navPoint>
-    <navPoint id="navPoint63" playOrder="63">
+    <navPoint id="navPoint64" playOrder="64">
       <navLabel>
         <text>How to articles</text>
       </navLabel>
       <content src="how_to/how_to.html" />
-      <navPoint id="navPoint63" playOrder="63">
+      <navPoint id="navPoint64" playOrder="64">
         <navLabel>
           <text>How to articles</text>
         </navLabel>
         <content src="how_to/how_to.html" />
       </navPoint>
-      <navPoint id="navPoint64" playOrder="64">
+      <navPoint id="navPoint65" playOrder="65">
         <navLabel>
           <text>MVC How to</text>
         </navLabel>
         <content src="how_to/mvc_how_to.html" />
-        <navPoint id="navPoint64" playOrder="64">
+        <navPoint id="navPoint65" playOrder="65">
           <navLabel>
             <text>MVC How to</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html" />
         </navPoint>
-        <navPoint id="navPoint65" playOrder="65">
+        <navPoint id="navPoint66" playOrder="66">
           <navLabel>
             <text>Code the model</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-model" />
         </navPoint>
-        <navPoint id="navPoint66" playOrder="66">
+        <navPoint id="navPoint67" playOrder="67">
           <navLabel>
             <text>Code the controller</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-controller" />
         </navPoint>
-        <navPoint id="navPoint67" playOrder="67">
+        <navPoint id="navPoint68" playOrder="68">
           <navLabel>
             <text>Code the view</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#code-the-view" />
         </navPoint>
-        <navPoint id="navPoint68" playOrder="68">
+        <navPoint id="navPoint69" playOrder="69">
           <navLabel>
             <text>Test your application</text>
           </navLabel>
           <content src="how_to/mvc_how_to.html#test-your-application" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint69" playOrder="69">
+      <navPoint id="navPoint70" playOrder="70">
         <navLabel>
           <text>Deployment how to</text>
         </navLabel>
         <content src="how_to/deployment_how_to.html" />
-        <navPoint id="navPoint69" playOrder="69">
+        <navPoint id="navPoint70" playOrder="70">
           <navLabel>
             <text>Deployment how to</text>
           </navLabel>
           <content src="how_to/deployment_how_to.html" />
         </navPoint>
-        <navPoint id="navPoint70" playOrder="70">
+        <navPoint id="navPoint71" playOrder="71">
           <navLabel>
             <text>Low usage (simplest scenario)</text>
           </navLabel>
           <content src="how_to/deployment/low_usage_scenario.html" />
         </navPoint>
-        <navPoint id="navPoint71" playOrder="71">
+        <navPoint id="navPoint72" playOrder="72">
           <navLabel>
             <text>Low usage AWS</text>
           </navLabel>
           <content src="how_to/deployment/aws_low_usage_scenario.html" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint72" playOrder="72">
+      <navPoint id="navPoint73" playOrder="73">
         <navLabel>
           <text>Static assets</text>
         </navLabel>
         <content src="how_to/static_assets.html" />
-        <navPoint id="navPoint72" playOrder="72">
+        <navPoint id="navPoint73" playOrder="73">
           <navLabel>
             <text>Static assets</text>
           </navLabel>
           <content src="how_to/static_assets.html" />
         </navPoint>
-        <navPoint id="navPoint73" playOrder="73">
+        <navPoint id="navPoint74" playOrder="74">
           <navLabel>
             <text>Static assets on dev</text>
           </navLabel>
           <content src="how_to/static_assets.html#static-assets-on-dev" />
         </navPoint>
-        <navPoint id="navPoint74" playOrder="74">
+        <navPoint id="navPoint75" playOrder="75">
           <navLabel>
             <text>Static assets on prod</text>
           </navLabel>
           <content src="how_to/static_assets.html#static-assets-on-prod" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint75" playOrder="75">
+      <navPoint id="navPoint76" playOrder="76">
         <navLabel>
           <text>Creating a new project</text>
         </navLabel>
         <content src="how_to/new_project_how_to.html" />
-        <navPoint id="navPoint75" playOrder="75">
+        <navPoint id="navPoint76" playOrder="76">
           <navLabel>
             <text>Creating a new project</text>
           </navLabel>
           <content src="how_to/new_project_how_to.html" />
         </navPoint>
-        <navPoint id="navPoint76" playOrder="76">
+        <navPoint id="navPoint77" playOrder="77">
           <navLabel>
             <text>Create first component</text>
           </navLabel>
           <content src="how_to/new_project_how_to.html#create-first-component" />
         </navPoint>
-        <navPoint id="navPoint77" playOrder="77">
+        <navPoint id="navPoint78" playOrder="78">
           <navLabel>
             <text>Customize dev server</text>
           </navLabel>
           <content src="how_to/new_project_how_to.html#customize-dev-server" />
         </navPoint>
-        <navPoint id="navPoint78" playOrder="78">
+        <navPoint id="navPoint79" playOrder="79">
           <navLabel>
             <text>Customize uwsgi prod server</text>
           </navLabel>
@@ -604,24 +610,24 @@
         </navPoint>
       </navPoint>
     </navPoint>
-    <navPoint id="navPoint79" playOrder="79">
+    <navPoint id="navPoint80" playOrder="80">
       <navLabel>
         <text>Changes</text>
       </navLabel>
       <content src="changes.html" />
-      <navPoint id="navPoint79" playOrder="79">
+      <navPoint id="navPoint80" playOrder="80">
         <navLabel>
           <text>Changes</text>
         </navLabel>
         <content src="changes.html" />
       </navPoint>
-      <navPoint id="navPoint80" playOrder="80">
+      <navPoint id="navPoint81" playOrder="81">
         <navLabel>
           <text>Feedback</text>
         </navLabel>
         <content src="changes.html#feedback" />
       </navPoint>
-      <navPoint id="navPoint81" playOrder="81">
+      <navPoint id="navPoint82" playOrder="82">
         <navLabel>
           <text>Versions</text>
         </navLabel>
