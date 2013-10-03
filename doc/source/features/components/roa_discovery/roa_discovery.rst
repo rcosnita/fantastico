@@ -17,10 +17,14 @@ Integration
 #. Start your project
 #. Access http://localhost/roa/resources
 
+By default, **ROA Discovery** extension defines a sample resource (**Sample Resource**) which must be always present in your
+discovery registry.
+
 Current limitations
 -------------------
 
    * ROA discovery supports only application/json content type for responses.
+   * ROA sample resource can not be removed from registry.
 
 Technical summary
 -----------------
