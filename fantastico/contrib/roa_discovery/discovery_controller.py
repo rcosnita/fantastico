@@ -39,7 +39,7 @@ class RoaDiscoveryController(BaseController):
         self._registry = registry_cls()
         self._roa_api = self._settings_facade.get("roa_api")
 
-    @Controller(url="/roa/resources(/)?$", method="GET")
+    @Controller(url="/roa/resources(/)?$", method="GET") # pylint: disable=W0613
     def list_registered_resources(self, request):
         '''This method list all registered resources as well as a link to their entry point.
 
