@@ -17,11 +17,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.roa_discovery.discovery_controller
 '''
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import Controller
+from fantastico.mvc.controller_decorators import Controller, ControllerProvider
 from fantastico.roa import resources_registry
 from webob.response import Response
 import json
 
+@ControllerProvider()
 class RoaDiscoveryController(BaseController):
     '''This class provides the routes for introspecting Fantastico registered resources through ROA. It is extremely useful
     to surf using your browser and to not be required to hardcode links in your code. Typically, you will want to code your
