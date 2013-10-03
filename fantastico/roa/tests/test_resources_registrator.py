@@ -22,6 +22,7 @@ from fantastico.roa.resources_registry import ResourcesRegistry
 from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from fantastico.utils import instantiator
+from mock import Mock
 
 class ResourcesRegistratorTest(FantasticoUnitTestsCase):
     '''This class provides the test cases for resources registration algorithm.'''
@@ -43,7 +44,7 @@ class ResourcesRegistratorTest(FantasticoUnitTestsCase):
     def test_registration_ok(self):
         '''This test case ensures all resources are registered correctly.'''
 
-        registrator = ResourcesRegistrator(file_patterns=["simple_resource.py"])
+        registrator = ResourcesRegistrator(Mock(), file_patterns=["simple_resource.py"], folder_pattern=["tests/"])
 
         root_folder = instantiator.get_class_abslocation(SettingsFacade)
 
@@ -65,3 +66,20 @@ class ResourcesRegistratorTest(FantasticoUnitTestsCase):
         from fantastico.roa.tests.simple_resource import SimpleResource
 
         self.assertEqual(model, SimpleResource)
+
+    def test_loadroutes_ok(self):
+        '''This test case ensures loadroutes method first scans all files for resources and then returns an empty dictionary
+        of routes.'''
+
+        expected_path = instantiator.get_class_abslocation(self.__class__)
+
+        settings_facade = Mock()
+        settings_facade.get_config = lambda: self
+
+        registrator = ResourcesRegistrator(settings_facade)
+
+        registrator.register_resources = Mock()
+
+        self.assertEqual(registrator.load_routes(), {})
+
+        registrator.register_resources.assert_called_once_with(expected_path)

@@ -53,7 +53,8 @@ class BasicSettings(object):
         '''This property holds all routes loaders available.'''
 
         return ["fantastico.routing_engine.dummy_routeloader.DummyRouteLoader",
-                "fantastico.mvc.controller_registrator.ControllerRouteLoader"]
+                "fantastico.mvc.controller_registrator.ControllerRouteLoader",
+                "fantastico.roa.resources_registrator.ResourcesRegistrator"]
 
     @property
     def dev_server_port(self):

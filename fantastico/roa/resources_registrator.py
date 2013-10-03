@@ -21,15 +21,22 @@ from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
 import os
 import re
+from fantastico.routing_engine.routing_loaders import RouteLoader
 
-class ResourcesRegistrator(object):
+class ResourcesRegistrator(RouteLoader):
     '''This class provides the algorithm for registering all defined resources. Resources discovered by this class are decorated
     by :py:class:`fantastico.roa.resource_decorator.Resource`. In the constructor of this class you can define special naming
     convention for discovered resources (through regex). Default behavior is to scan only in models folder / subfolders in all
-    available files.'''
+    available files.
 
-    def __init__(self, file_patterns=None):
-        self._file_patterns = file_patterns or []
+    In addition this class is also designed to be a route provider. This guarantees that at start time, all resources will be
+    registered correctly.'''
+
+    def __init__(self, settings_facade, file_patterns=None, folder_pattern=None):
+        super(ResourcesRegistrator, self).__init__(settings_facade)
+
+        self._file_patterns = file_patterns or ["\\.py$"]
+        self._folder_pattern = folder_pattern or ["models/", "(^tests)"]
 
     def _is_file_supported(self, abspath, filename):
         '''This method determins if a given file name may contain resources or not.'''
@@ -38,10 +45,14 @@ class ResourcesRegistrator(object):
             return True
 
         for file_pattern in self._file_patterns:
-            if re.search(file_pattern, filename):
-                return True
+            if not re.search(file_pattern, filename):
+                return False
 
-        return False
+            for folder_pattern in self._folder_pattern:
+                if not re.search(folder_pattern, abspath):
+                    return False
+
+        return True
 
     def register_resources(self, path):
         '''This method scans all files and folders from the given path, match the filenames against registered file patterns
@@ -50,3 +61,15 @@ class ResourcesRegistrator(object):
         instantiator.import_modules_from_folder(path,
                                                 file_matcher=self._is_file_supported,
                                                 settings_facade=SettingsFacade())
+
+    def load_routes(self):
+        '''This method simple triggers resources registration and returns empty routes. Using this mechanism guarantees that
+        routing engine will also discover ROA resources.'''
+
+        active_config = self._settings_facade.get_config().__class__
+
+        root_folder = instantiator.get_class_abslocation(active_config)
+
+        self.register_resources(root_folder)
+
+        return {}
