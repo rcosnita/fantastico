@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.mvc.models.model_filter import ModelFilter
-from fantastico.roa.query_parser_operations import QueryParserOperationBinary, QueryParserOperationOr
+from fantastico.roa.query_parser_operations import QueryParserOperationBinary, QueryParserOperationOr, QueryParserOperationAnd
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 
 class QueryParser(object):
@@ -32,7 +32,8 @@ class QueryParser(object):
                              ModelFilter.LT: QueryParserOperationBinary,
                              ModelFilter.LE: QueryParserOperationBinary,
                              ModelFilter.IN: QueryParserOperationBinary,
-                             "or": QueryParserOperationOr}
+                             "or": QueryParserOperationOr,
+                             "and": QueryParserOperationAnd}
 
     def _get_operation_parser(self, operation, argument):
         '''This method obtains an instance of an operation parser (if possible).'''

@@ -34,7 +34,7 @@ class ModelFilterCompound(ModelFilterAbstract):
             raise FantasticoNotSupportedError("Compound filter takes at least 2 simple model filters.")
 
         for arg in args:
-            if not isinstance(arg, ModelFilter):
+            if not isinstance(arg, ModelFilterAbstract):
                 raise FantasticoNotSupportedError("ModelFilterAnd accept only arguments of type ModelFilter.")
 
         self._operation = operation

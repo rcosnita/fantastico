@@ -18,10 +18,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from abc import ABCMeta, abstractmethod # pylint: disable=W0611
 from fantastico.mvc.models.model_filter import ModelFilter
+from fantastico.mvc.models.model_filter_compound import ModelFilterOr, ModelFilterAnd
 from fantastico.roa.query_parser_exceptions import QueryParserOperationInvalidError
 import json
 import re
-from fantastico.mvc.models.model_filter_compound import ModelFilterOr
 
 class QueryParserOperation(object, metaclass=ABCMeta):
     '''This class defines the contract for a query parser operation.'''
@@ -108,7 +108,24 @@ class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
     def validate(self, model):
         '''This method validates all arguments passed to this compound filter.'''
 
-        filters = re.findall(r"[a-z]{1,}\(.*?\)", self._argument)
+        filters = []
+
+        filters_or = re.findall(r"or\(.*?\)\)", self._argument)
+
+        for filter_expr in filters_or:
+            self._argument = self._argument.replace(filter_expr, "", 1)
+
+        filters_and = re.findall(r"and\(.*?\)\)", self._argument)
+
+        for filter_expr in filters_and:
+            self._argument = self._argument.replace(filter_expr, "", 1)
+
+        filters.extend(filters_or)
+        filters.extend(filters_and)
+
+        filters_binary = re.findall(r"[a-z]{1,}\(.*?\)", self._argument)
+
+        filters.extend(filters_binary)
 
         if len(filters) < 2:
             raise QueryParserOperationInvalidError("%s operation takes at least two arguments." % self._operation)
@@ -116,7 +133,13 @@ class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
         self._argument = [self._parser.parse_filter(filter_expr, model) for filter_expr in filters]
 
 class QueryParserOperationOr(QueryParserOperationCompound):
-    '''This class provides a query parser for or compound filtering.'''
+    '''This class provides a query parser for **or** compound filtering.'''
 
     def __init__(self, operation, argument, parser):
         super(QueryParserOperationOr, self).__init__(operation, argument, parser, compound_filter_cls=ModelFilterOr)
+
+class QueryParserOperationAnd(QueryParserOperationCompound):
+    '''This class provides a query parser for **and** compound filtering.'''
+
+    def __init__(self, operation, argument, parser):
+        super(QueryParserOperationAnd, self).__init__(operation, argument, parser, compound_filter_cls=ModelFilterAnd)

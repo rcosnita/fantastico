@@ -19,14 +19,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from fantastico.mvc import BASEMODEL
 from fantastico.mvc.models.model_filter import ModelFilter
-from fantastico.mvc.models.model_filter_compound import ModelFilterOr
+from fantastico.mvc.models.model_filter_compound import ModelFilterOr, ModelFilterAnd
 from fantastico.roa.query_parser import QueryParser
+from fantastico.roa.query_parser_exceptions import QueryParserOperationInvalidError
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Text
-from fantastico.roa.query_parser_exceptions import QueryParserOperationInvalidError
 
 class QueryParserTests(FantasticoUnitTestsCase):
     '''This class provides the tests cases for query parser.'''
@@ -167,6 +167,57 @@ class QueryParserTests(FantasticoUnitTestsCase):
         self.assertEqual(result_filters[2].column, AppSettingMock.value)
         self.assertEqual(result_filters[2].ref_value, "ro_RO")
         self.assertEqual(result_filters[2].operation, ModelFilter.EQ)
+
+    def test_parse_filter_compoundand(self):
+        '''This test case ensures compound or operations is correctly parsed.'''
+
+        filter_expr = "and(eq(name, \"vat\"), eq(value, \"en_US\"), eq(value, \"ro_RO\"))"
+
+        result = self._query_parser.parse_filter(filter_expr, AppSettingMock)
+
+        self.assertIsInstance(result, ModelFilterAnd)
+
+        result_filters = result.model_filters
+
+        self.assertEqual(len(result_filters), 3)
+
+        self.assertIsInstance(result_filters[0], ModelFilter)
+        self.assertEqual(result_filters[0].column, AppSettingMock.name)
+        self.assertEqual(result_filters[0].ref_value, "vat")
+        self.assertEqual(result_filters[0].operation, ModelFilter.EQ)
+
+        self.assertIsInstance(result_filters[1], ModelFilter)
+        self.assertEqual(result_filters[1].column, AppSettingMock.value)
+        self.assertEqual(result_filters[1].ref_value, "en_US")
+        self.assertEqual(result_filters[1].operation, ModelFilter.EQ)
+
+        self.assertIsInstance(result_filters[2], ModelFilter)
+        self.assertEqual(result_filters[2].column, AppSettingMock.value)
+        self.assertEqual(result_filters[2].ref_value, "ro_RO")
+        self.assertEqual(result_filters[2].operation, ModelFilter.EQ)
+
+    def test_parse_filter_compoundand_with_or(self):
+        '''This test case ensures compound filters can receive other compound filters as argument.'''
+
+        filter_expr = "and(or(eq(name, \"vat\"), eq(name, \"locale\")), eq(name, \"vat\"))"
+
+        result = self._query_parser.parse_filter(filter_expr, AppSettingMock)
+
+        self.assertIsInstance(result, ModelFilterAnd)
+
+        result_filters = result.model_filters
+
+        self.assertEqual(len(result_filters), 2)
+
+        result_or = result_filters[0]
+        result_eq = result_filters[1]
+
+        self.assertIsInstance(result_or, ModelFilterOr)
+
+        self.assertIsInstance(result_eq, ModelFilter)
+        self.assertEqual(result_eq.column, AppSettingMock.name)
+        self.assertEqual(result_eq.ref_value, "vat")
+        self.assertEqual(result_eq.operation, ModelFilter.EQ)
 
     def test_parse_filter_compound_notenoughargs(self):
         '''This test case ensures an exception is raised when not enough arguments are passed to **or** filter.'''
