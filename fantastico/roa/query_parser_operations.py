@@ -1,0 +1,88 @@
+'''
+Copyright 2013 Cosnita Radu Viorel
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+.. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
+.. py:module::
+'''
+from abc import ABCMeta, abstractmethod # pylint: disable=W0611
+from fantastico.mvc.models.model_filter import ModelFilter
+from fantastico.roa.query_parser_exceptions import QueryParserOperationInvalidError
+import json
+
+class QueryParserOperation(object, metaclass=ABCMeta):
+    '''This class defines the contract for a query parser operation.'''
+
+    def __init__(self, operation, argument):
+        self._operation = operation
+        self._argument = argument
+
+    @abstractmethod
+    def build_filter(self, model):
+        '''This method builds the model filter (:doc:`fantastico.mvc.models.model_filter.ModelFilter`).'''
+
+    @abstractmethod
+    def validate(self, model):
+        '''This method validates the given operation and argument in order to ensure a filter can be built.
+
+        :raises fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError:
+            Whenever the current operation attributes are invalid.'''
+
+    def get_filter(self, model):
+        '''This method validates the current operation and build the filter.'''
+
+        self.validate(model)
+
+        return self.build_filter(model)
+
+class QueryParserOperationBinary(QueryParserOperation):
+    '''This class provides the validation / build logic for binary operations.'''
+
+    def __init__(self, operation, argument):
+        super(QueryParserOperationBinary, self).__init__(operation, argument)
+
+        self._column = None
+        self._value = None
+
+    def build_filter(self, model):
+        '''This method builds an equality filter.'''
+
+        self._value = json.loads(self._value)
+
+        return ModelFilter(column=self._column, ref_value=self._value, operation=self._operation)
+
+    def validate(self, model):
+        '''This method ensures that three arguments were passed.'''
+
+        first_comma = self._argument.find(",")
+
+        if first_comma == -1:
+            raise QueryParserOperationInvalidError("Binary operation %s requires two arguments." % self._operation)
+
+        arguments = [self._argument[:first_comma], self._argument[first_comma + 1:]]
+
+        if not arguments[0].strip():
+            raise QueryParserOperationInvalidError("Binary operation %s first argument is empty." % self._operation)
+
+        if not arguments[1].strip():
+            raise QueryParserOperationInvalidError("Binary operation %s second argument is empty." % self._operation)
+
+        column_name = arguments[0].strip()
+
+        try:
+            self._column = getattr(model, column_name)
+        except AttributeError:
+            raise QueryParserOperationInvalidError("Resource model does not contain %s attribute." % column_name)
+
+        self._value = arguments[1].strip()

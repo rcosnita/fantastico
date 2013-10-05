@@ -13,6 +13,15 @@ ROA Technical Summary
 .. autoclass:: fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController
    :members:
 
+.. autoclass:: fantastico.roa.query_parser.QueryParser
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperation
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationEq
+   :members:
+
 Exceptions
 ----------
 
@@ -20,4 +29,7 @@ Exceptions
    :members:
 
 .. autoclass:: fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError
    :members:

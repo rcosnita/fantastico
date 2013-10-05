@@ -8,13 +8,15 @@ understanding how APIs will behave let's assume we have the following resource d
 
    @Resource(name="app-setting", url="/app-settings", version=2.0)
    class AppSettingV2(BASEMODEL):
-      id = Column("id", Integer, primary_key=True, autoincrement=True)
-      name = Column("name", String(80), unique=True, nullable=False)
-      value = Column("value", Text, nullable=False)
+       __tablename__ = "app_settings"
+   
+       id = Column("id", Integer, primary_key=True, autoincrement=True)
+       name = Column("name", String(80), unique=True, nullable=False)
+       value = Column("value", Text, nullable=False)
       
-      def __init__(self, name, value):
-         self.name = name
-         self.value = value
+       def __init__(self, name, value):
+           self.name = name
+           self.value = value
 
 Resource collection
 -------------------
