@@ -31,6 +31,15 @@ ROA Technical Summary
 .. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationAnd
    :members:
 
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationSort
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationSortAsc
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationSortDesc
+   :members:
+
 Exceptions
 ----------
 

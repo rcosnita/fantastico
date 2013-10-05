@@ -27,6 +27,7 @@ from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Text
+from fantastico.mvc.models.model_sort import ModelSort
 
 class QueryParserTests(FantasticoUnitTestsCase):
     '''This class provides the tests cases for query parser.'''
@@ -239,6 +240,70 @@ class QueryParserTests(FantasticoUnitTestsCase):
             self._query_parser.parse_filter(filter_expr, AppSettingMock)
 
         self.assertTrue(str(ctx.exception).find("eq") > -1)
+
+    def test_parse_sort_empty(self):
+        '''This test case ensures an empty list is returned for empty sort expressions.'''
+
+        sort_expr = []
+
+        self.assertEqual(self._query_parser.parse_sort(sort_expr, Mock()), [])
+
+    def _test_parse_sort(self, sort_expr, expected_col, expected_dir):
+        '''This method provides a template for testing simple sort filters.'''
+
+        results = self._query_parser.parse_sort(sort_expr, AppSettingMock)
+
+        self.assertEqual(len(results), 1)
+
+        result = results[0]
+        self.assertIsInstance(result, ModelSort)
+
+        self.assertEqual(result.column, expected_col)
+        self.assertEqual(result.sort_dir, expected_dir)
+
+    def test_parse_sort_asc(self):
+        '''This test case ensures sort ascending is parsed correctly.'''
+
+        sort_expr = ["asc(name)"]
+
+        self._test_parse_sort(sort_expr, AppSettingMock.name, ModelSort.ASC)
+
+    def test_parse_sort_desc(self):
+        '''This test case ensures sort descending is parsed correctly.'''
+
+        sort_expr = ["desc(name)"]
+
+        self._test_parse_sort(sort_expr, AppSettingMock.name, ModelSort.DESC)
+
+    def test_parse_sort_compound(self):
+        '''This test case ensures sort composed expressions are parsed correctly.'''
+
+        sort_expr = ["asc(   name  )", "  desc  (   value)"]
+
+        results = self._query_parser.parse_sort(sort_expr, AppSettingMock)
+
+        self.assertEqual(len(results), 2)
+
+        asc_sort = results[0]
+        desc_sort = results[1]
+
+        self.assertIsInstance(asc_sort, ModelSort)
+        self.assertEqual(asc_sort.column, AppSettingMock.name)
+        self.assertEqual(asc_sort.sort_dir, ModelSort.ASC)
+
+        self.assertIsInstance(desc_sort, ModelSort)
+        self.assertEqual(desc_sort.column, AppSettingMock.value)
+        self.assertEqual(desc_sort.sort_dir, ModelSort.DESC)
+
+    def test_parse_sort_invalidarg(self):
+        '''This test case ensures invalid argument passed into sort expressions fail.'''
+
+        sort_expr = ["asc(not_found)"]
+
+        with self.assertRaises(FantasticoRoaError) as ctx:
+            self._query_parser.parse_sort(sort_expr, AppSettingMock)
+
+        self.assertTrue(str(ctx.exception).find(" not_found ") > -1)
 
 class AppSettingMock(BASEMODEL):
     '''This is a very simple setting of an application.'''

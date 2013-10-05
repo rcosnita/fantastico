@@ -18,7 +18,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.mvc.models.model_filter import ModelFilter
-from fantastico.roa.query_parser_operations import QueryParserOperationBinary, QueryParserOperationOr, QueryParserOperationAnd
+from fantastico.mvc.models.model_sort import ModelSort
+from fantastico.roa.query_parser_operations import QueryParserOperationBinary, QueryParserOperationOr, QueryParserOperationAnd, \
+    QueryParserOperationSortAsc, QueryParserOperationSortDesc
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 
 class QueryParser(object):
@@ -33,7 +35,9 @@ class QueryParser(object):
                              ModelFilter.LE: QueryParserOperationBinary,
                              ModelFilter.IN: QueryParserOperationBinary,
                              "or": QueryParserOperationOr,
-                             "and": QueryParserOperationAnd}
+                             "and": QueryParserOperationAnd,
+                             ModelSort.ASC: QueryParserOperationSortAsc,
+                             ModelSort.DESC: QueryParserOperationSortDesc}
 
     def _get_operation_parser(self, operation, argument):
         '''This method obtains an instance of an operation parser (if possible).'''
@@ -64,3 +68,20 @@ class QueryParser(object):
         operation = self._get_operation_parser(operation.strip(), argument.strip())
 
         return operation.get_filter(model)
+
+    def parse_sort(self, sort_expr, model):
+        '''This method transform the given sort expression into mvc sort filter.
+
+        :param filter_expr: The filter string expression we want to convert to query objects.
+        :type filter_exprt: string
+        :param model: The model used to describe the resource on which the requests are done.
+        :returns: The newly created mvc query object.
+        :rtype: :py:class:`fantastico.mvc.models.model_sort.ModelSort`
+        '''
+
+        results = []
+
+        for expr in sort_expr:
+            results.append(self.parse_filter(expr, model))
+
+        return results

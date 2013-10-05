@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from abc import ABCMeta, abstractmethod # pylint: disable=W0611
 from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.mvc.models.model_filter_compound import ModelFilterOr, ModelFilterAnd
+from fantastico.mvc.models.model_sort import ModelSort
 from fantastico.roa.query_parser_exceptions import QueryParserOperationInvalidError
 import json
 import re
@@ -48,6 +49,42 @@ class QueryParserOperation(object, metaclass=ABCMeta):
         self.validate(model)
 
         return self.build_filter(model)
+
+class QueryParserOperationSort(QueryParserOperation, metaclass=ABCMeta):
+    '''This class provides base support for sort operations: asc / desc.'''
+
+    def __init__(self, operation, argument, parser, sort_dir=None):
+        super(QueryParserOperationSort, self).__init__(operation, argument, parser)
+
+        self._sort_dir = sort_dir
+
+    def validate(self, model):
+        '''This method validates sorting argument passed to this operation.'''
+
+        self._argument = self._argument.strip()
+
+        try:
+            self._argument = getattr(model, self._argument)
+        except AttributeError:
+            raise QueryParserOperationInvalidError("Resource attribute %s does not exist." % self._argument)
+
+    def build_filter(self, model):
+        '''This method builds the sorting model.'''
+
+        return ModelSort(self._argument, self._sort_dir)
+
+class QueryParserOperationSortAsc(QueryParserOperationSort):
+    '''This class provides asc sort operation.'''
+
+    def __init__(self, operation, argument, parser):
+        super(QueryParserOperationSortAsc, self).__init__(operation, argument, parser, sort_dir=ModelSort.ASC)
+
+class QueryParserOperationSortDesc(QueryParserOperationSort):
+    '''This class provides desc sort operation.'''
+
+    def __init__(self, operation, argument, parser):
+        super(QueryParserOperationSortDesc, self).__init__(operation, argument, parser, sort_dir=ModelSort.DESC)
+
 
 class QueryParserOperationBinary(QueryParserOperation):
     '''This class provides the validation / build logic for binary operations.'''

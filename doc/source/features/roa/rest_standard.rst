@@ -72,14 +72,14 @@ When requesting a given resource collection sorted you can specify the sorting c
       .. code-block:: javascript
 
          // retrieve all application settings ordered in ascending order of name and value
-         var url = "/api/2.0/app-settings?order=[asc(name, value)]";
+         var url = "/api/2.0/app-settings?order=[asc(name), asc(value)]";
 
    * **desc** - is a function with one or more arguments which tells API a descending order by given attributes.
 
       .. code-block:: javascript
 
          // retrieve all application settings ordered in descending order of name and value.
-         var url = "/api/2.0/app-settings?order=[desc(name, value)]";
+         var url = "/api/2.0/app-settings?order=[desc(name), desc(value)]";
 
    * **complex ordering** - you can easily specify different ordering criterias by resource attributes.
 
