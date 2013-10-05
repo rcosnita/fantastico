@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.mvc.models.model_filter import ModelFilter
-from fantastico.roa.query_parser_operations import QueryParserOperationBinary
+from fantastico.roa.query_parser_operations import QueryParserOperationBinary, QueryParserOperationOr
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 
 class QueryParser(object):
@@ -31,7 +31,8 @@ class QueryParser(object):
                              ModelFilter.GE: QueryParserOperationBinary,
                              ModelFilter.LT: QueryParserOperationBinary,
                              ModelFilter.LE: QueryParserOperationBinary,
-                             ModelFilter.IN: QueryParserOperationBinary}
+                             ModelFilter.IN: QueryParserOperationBinary,
+                             "or": QueryParserOperationOr}
 
     def _get_operation_parser(self, operation, argument):
         '''This method obtains an instance of an operation parser (if possible).'''
@@ -41,7 +42,7 @@ class QueryParser(object):
         if not operation_parser:
             raise FantasticoRoaError("Operation %s is not supported." % operation)
 
-        return operation_parser(operation, argument)
+        return operation_parser(operation, argument, self)
 
     def parse_filter(self, filter_expr, model):
         '''This method transform the given filter expression into mvc filters.

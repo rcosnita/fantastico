@@ -125,7 +125,7 @@ In fantastico, APIs filtering is done by following a very simple Resource Query 
 +---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
 | GET           | /api/2.0/app-settings?filter=and(eq(name, "vat"), eq(value, "en_US")) | Get all settings which name is **vat** and value is **en_US**.           |
 +---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
-| GET           | /api/2.0/app-settings?&filter=or(eq(name, "vat"), eq(value, "en_US")) | Get all settings which name is **vat** or value is **en_US**.            |
+| GET           | /api/2.0/app-settings?filter=or(eq(name, "vat"), eq(value, "en_US"))  | Get all settings which name is **vat** or value is **en_US**.            |
 +---------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------+
 
 You can see in the above example that the query language supported by Fantastico APIs facilitate very complex filtering on resources.

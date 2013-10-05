@@ -20,13 +20,16 @@ from abc import ABCMeta, abstractmethod # pylint: disable=W0611
 from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.roa.query_parser_exceptions import QueryParserOperationInvalidError
 import json
+import re
+from fantastico.mvc.models.model_filter_compound import ModelFilterOr
 
 class QueryParserOperation(object, metaclass=ABCMeta):
     '''This class defines the contract for a query parser operation.'''
 
-    def __init__(self, operation, argument):
+    def __init__(self, operation, argument, parser):
         self._operation = operation
         self._argument = argument
+        self._parser = parser
 
     @abstractmethod
     def build_filter(self, model):
@@ -49,8 +52,8 @@ class QueryParserOperation(object, metaclass=ABCMeta):
 class QueryParserOperationBinary(QueryParserOperation):
     '''This class provides the validation / build logic for binary operations.'''
 
-    def __init__(self, operation, argument):
-        super(QueryParserOperationBinary, self).__init__(operation, argument)
+    def __init__(self, operation, argument, parser):
+        super(QueryParserOperationBinary, self).__init__(operation, argument, parser)
 
         self._column = None
         self._value = None
@@ -86,3 +89,34 @@ class QueryParserOperationBinary(QueryParserOperation):
             raise QueryParserOperationInvalidError("Resource model does not contain %s attribute." % column_name)
 
         self._value = arguments[1].strip()
+
+class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
+    '''This class provides the parser for compound filter or. It will recursively parse each argument and in the end will return
+    a compatible :py:class:`fantastico.mvc.model_filter_compound.ModelFilterCompound`. Each concrete class must specify the
+    compound filter type to use.'''
+
+    def __init__(self, operation, argument, parser, compound_filter_cls=None):
+        super(QueryParserOperationCompound, self).__init__(operation, argument, parser)
+
+        self._compound_filter_cls = compound_filter_cls
+
+    def build_filter(self, model):
+        '''This method builds the compound filter based on the parsed arguments of this operation.'''
+
+        return self._compound_filter_cls(*self._argument)
+
+    def validate(self, model):
+        '''This method validates all arguments passed to this compound filter.'''
+
+        filters = re.findall(r"[a-z]{1,}\(.*?\)", self._argument)
+
+        if len(filters) < 2:
+            raise QueryParserOperationInvalidError("%s operation takes at least two arguments." % self._operation)
+
+        self._argument = [self._parser.parse_filter(filter_expr, model) for filter_expr in filters]
+
+class QueryParserOperationOr(QueryParserOperationCompound):
+    '''This class provides a query parser for or compound filtering.'''
+
+    def __init__(self, operation, argument, parser):
+        super(QueryParserOperationOr, self).__init__(operation, argument, parser, compound_filter_cls=ModelFilterOr)

@@ -19,7 +19,13 @@ ROA Technical Summary
 .. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperation
    :members:
 
-.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationEq
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinary
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationCompound
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationOr
    :members:
 
 Exceptions
