@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:fantastico.mvc.models.model_filter_compound
 '''
 from fantastico.exceptions import FantasticoNotSupportedError, FantasticoError
-from fantastico.mvc.models.model_filter import ModelFilter, ModelFilterAbstract
+from fantastico.mvc.models.model_filter import ModelFilterAbstract
 from sqlalchemy.sql.expression import and_, or_
 
 class ModelFilterCompound(ModelFilterAbstract):
