@@ -16,7 +16,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.roa.resource_json_serializer
 '''
-from fantastico.roa.roa_exceptions import FantasticoRoaError
+from fantastico.roa.resource_json_serializer_exceptions import ResourceJsonSerializerError
+import re
 
 class ResourceJsonSerializer(object):
     '''This class provides the methods for serializing a given resource into a dictionary and deserializing a dictionary into
@@ -53,6 +54,8 @@ class ResourceJsonSerializer(object):
         :param body: A JSON object we want to convert to the model compatible with this serializer.
         :type body: dict
         :returns: A model instance initiated with attributes from the given dictionary.
+        :raises fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError:
+            Whenever given body contains entries which are not supported by resource underlining model.
         '''
 
         model_cls = self._resource_ref.model
@@ -61,7 +64,8 @@ class ResourceJsonSerializer(object):
 
         for attr_name, attr_value in body.items():
             if not self._supported_attrs.get(attr_name):
-                raise FantasticoRoaError("Resource %s model does not support attibute %s." % (self._resource_ref.name, attr_name))
+                raise ResourceJsonSerializerError("Resource %s model does not support attibute %s." % \
+                                                  (self._resource_ref.name, attr_name))
 
             setattr(model, attr_name, attr_value)
 
@@ -75,10 +79,62 @@ class ResourceJsonSerializer(object):
 
         attrs = []
 
+        composed_attrs = re.findall(r"[a-z]{1,}\(.*?\)", fields)
+
+        for composed_attr in composed_attrs:
+            fields = fields.replace(composed_attr, "")
+
+            paranthesis = composed_attr.find("(")
+            attr_parent = composed_attr[:paranthesis].strip()
+
+            attr_children = composed_attr[paranthesis + 1:-1].split(",")
+
+            for attr in attr_children:
+                field = "%s.%s" % (attr_parent, attr.strip())
+
+                attrs.append(field)
+
         for field in fields.split(","):
-            attrs.append(field.strip())
+            field = field.strip()
+
+            if not field:
+                continue
+
+            attrs.append(field)
 
         return attrs
+
+    def _serialize_subfield_list(self, subfield, subfield_name, attr_name, result):
+        '''This method serializes the subfield list mapped under subfield_name into result dictionary.'''
+
+        if not result.get(subfield_name):
+            result[subfield_name] = []
+
+        idx = 0
+
+        for item in subfield:
+            if len(result[subfield_name]) < idx + 1:
+                result[subfield_name].append({})
+
+            try:
+                result[subfield_name][idx][attr_name] = getattr(item, attr_name)
+            except AttributeError:
+                raise ResourceJsonSerializerError("Submodel %s does not have attribute %s." % \
+                                                  (subfield_name, attr_name))
+
+            idx += 1
+
+    def _serialize_subfield_obj(self, subfield, subfield_name, attr_name, result):
+        '''This method serializes the subfield object mapped under subfield_name into result dictionary.'''
+
+        if not result.get(subfield_name):
+            result[subfield_name] = {}
+
+        try:
+            result[subfield_name][attr_name] = getattr(subfield, attr_name)
+        except AttributeError:
+            raise ResourceJsonSerializerError("Submodel %s does not have attribute %s." % \
+                                              (subfield_name, attr_name))
 
     def serialize(self, model, fields=None):
         '''This method serialize the given model into a json object.
@@ -88,6 +144,8 @@ class ResourceJsonSerializer(object):
         :type fields: str
         :returns: A dictionary containing all required attributes.
         :rtype: dict
+        :raises fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError:
+            Whenever requested fields for serialization are not found in model attributes.
         '''
 
         fields = self._parse_fields(fields)
@@ -95,6 +153,21 @@ class ResourceJsonSerializer(object):
         result = {}
 
         for field in fields:
-            result[field] = getattr(model, field)
+            if field.find(".") == -1:
+                try:
+                    result[field] = getattr(model, field)
+                except AttributeError:
+                    raise ResourceJsonSerializerError("Model does not have attribute %s." % field)
+
+                continue
+
+            subfield_name, subfield_attr = field.split(".")
+
+            subfield = getattr(model, subfield_name)
+
+            if isinstance(subfield, list):
+                self._serialize_subfield_list(subfield, subfield_name, subfield_attr, result)
+            else:
+                self._serialize_subfield_obj(subfield, subfield_name, subfield_attr, result)
 
         return result

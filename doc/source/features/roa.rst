@@ -278,6 +278,7 @@ Composed attributes usage is limited to below mentioned operations:
 
    * Listing collections.
    * Retrieving information about an individual item.
+   * First level subresources.
 
 We do not support update / create of multiple resources using one single request.
 

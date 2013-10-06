@@ -54,3 +54,6 @@ Exceptions
 
 .. autoclass:: fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError
    :members:
+
+.. autoclass:: fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError
+   :members:

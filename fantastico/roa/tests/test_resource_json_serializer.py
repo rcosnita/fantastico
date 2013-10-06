@@ -23,6 +23,7 @@ from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Float
+from fantastico.roa.resource_json_serializer_exceptions import ResourceJsonSerializerError
 
 class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for resource json serializer.'''
@@ -36,9 +37,9 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
 
         FantasticoUnitTestsCase.setup_once()
 
-        from fantastico.roa.resources_registry import ResourcesRegistry
-
-        cls.resource_ref = ResourcesRegistry().find_by_name("Invoice")
+        resource = Resource(name="Invoice", url="/invoices")
+        resource._model = InvoiceMock
+        cls.resource_ref = resource
 
     def init(self):
         '''This method is invoked before each test case in order to set transient dependencies.'''
@@ -74,6 +75,7 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
         with self.assertRaises(FantasticoRoaError) as ctx:
             self._serializer.deserialize(body)
 
+        self.assertIsInstance(ctx.exception, ResourceJsonSerializerError)
         self.assertTrue(str(ctx.exception).find("unknown_column") > -1)
 
     def test_serialize_mainresource_ok(self):
@@ -110,7 +112,106 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
         self.assertNotIn("vat_percent", json_obj)
         self.assertNotIn("vat", json_obj)
 
-@Resource(name="Invoice", url="/invoices")
+    def test_serialize_resource_composed_1tomany_ok(self):
+        '''This test case ensures resource 1 to many relations can be serialized.'''
+
+        fields = "series,number,items(quantity,price)"
+
+        items = [InvoiceLineItemMock(name="Product 1", quantity=5, price=3.0),
+                 InvoiceLineItemMock(name="Product 2", quantity=2, price=1.0)]
+
+        model = InvoiceMock(series="RR", number=111, total=20.00, vat_percent=0.24, vat=0.19, items=items)
+        model.id = 1
+
+        json_obj = self._serializer.serialize(model, fields)
+
+        self.assertIsInstance(json_obj, dict)
+        self.assertEqual(json_obj["series"], model.series)
+        self.assertEqual(json_obj["number"], model.number)
+        self.assertNotIn("id", json_obj)
+        self.assertNotIn("total", json_obj)
+        self.assertNotIn("vat_percent", json_obj)
+        self.assertNotIn("vat", json_obj)
+
+        idx = 0
+
+        for item in json_obj.get("items"):
+            self.assertIsInstance(item, dict)
+            self.assertEqual(item["quantity"], items[idx].quantity)
+            self.assertEqual(item["price"], items[idx].price)
+            self.assertNotIn("id", item)
+            self.assertNotIn("name", item)
+
+            idx += 1
+
+    def test_serialize_resource_composed_partial_1to1(self):
+        '''This test case ensures 1to1 relation of resources are correctly rendered.'''
+
+        fields = "series,number,items(quantity,price)"
+
+        items = InvoiceLineItemMock(name="Product 1", quantity=5, price=3.0)
+
+        model = InvoiceMock(series="RR", number=111, total=20.00, vat_percent=0.24, vat=0.19, items=items)
+        model.id = 1
+
+        json_obj = self._serializer.serialize(model, fields)
+
+        self.assertIsInstance(json_obj, dict)
+        self.assertEqual(json_obj["series"], model.series)
+        self.assertEqual(json_obj["number"], model.number)
+        self.assertNotIn("id", json_obj)
+        self.assertNotIn("total", json_obj)
+        self.assertNotIn("vat_percent", json_obj)
+        self.assertNotIn("vat", json_obj)
+
+        item = json_obj.get("items")
+
+        self.assertIsInstance(item, dict)
+        self.assertEqual(item["quantity"], items.quantity)
+        self.assertEqual(item["price"], items.price)
+        self.assertNotIn("id", item)
+        self.assertNotIn("name", item)
+
+    def test_serialize_mainresource_unknown_attr(self):
+        '''This test case ensures an exception is raised when an unknown field is requested for partial representation.'''
+
+        fields = "unknown_attribute"
+
+        model = InvoiceMock()
+
+        with self.assertRaises(FantasticoRoaError) as ctx:
+            self._serializer.serialize(model, fields)
+
+        self.assertIsInstance(ctx.exception, ResourceJsonSerializerError)
+        self.assertTrue(str(ctx.exception).find("unknown_attribute") > -1)
+
+    def _test_serialize_subresource_1ton_unknown(self, fields, subfield_name, attr_name, items):
+        '''This method provides a template for generating errors into subresources partial serialization.'''
+
+        model = InvoiceMock(items=items)
+        model.id = 1
+
+        with self.assertRaises(FantasticoRoaError) as ctx:
+            self._serializer.serialize(model, fields)
+
+        self.assertIsInstance(ctx.exception, ResourceJsonSerializerError)
+        self.assertTrue(str(ctx.exception).find(attr_name) > -1)
+        self.assertTrue(str(ctx.exception).find(subfield_name) > -1)
+
+    def test_serialize_subresource_1to1_unknown_attr(self):
+        '''This test case ensures an exception is raised when an unknown field belonging to a subresource is requested for
+        partial representation.'''
+
+        self._test_serialize_subresource_1ton_unknown("id,items(unknown_attr)", "items", "unknown_attr",
+                                                      InvoiceLineItemMock())
+
+    def test_serialize_subresource_1ton_unknown_attr(self):
+        '''This test case ensures an exception is raised when an unknown field belonging to a subresource is requested for one
+        to many partial representation.'''
+
+        self._test_serialize_subresource_1ton_unknown("id,items(unknown_attr)", "items", "unknown_attr",
+                                                      [InvoiceLineItemMock(), InvoiceLineItemMock()])
+
 class InvoiceMock(BASEMODEL):
     __tablename__ = "invoices_mock"
 
@@ -120,10 +221,26 @@ class InvoiceMock(BASEMODEL):
     total = Column("total", Float)
     vat_percent = Column("vat_percent", Float)
     vat = Column("vat", Float)
+    items = []
 
-    def __init__(self, series=None, number=None, total=None, vat_percent=None, vat=None):
+    def __init__(self, series=None, number=None, total=None, vat_percent=None, vat=None,
+                 items=None):
         self.series = series
         self.number = number
         self.total = total
         self.vat_percent = vat_percent
         self.vat = vat
+        self.items = items
+
+class InvoiceLineItemMock(BASEMODEL):
+    __tablename__ = "invoice_lineitems"
+
+    id = Column("id", Integer, primary_key=True, autoincrement=True)
+    name = Column("name", String(100), nullable=False)
+    quantity = Column("quantity", Integer, nullable=False)
+    price = Column("price", Float, nullable=False)
+
+    def __init__(self, name=None, quantity=None, price=None):
+        self.name = name
+        self.quantity = quantity
+        self.price = price
