@@ -168,6 +168,8 @@ We are aware that there are some common validation cases which can be reused:
 All common validation cases  are provided out of the box as methods part of ResourceValidator class. You can easily use them into
 your resource validator.
 
+.. _partial-object-representation:
+
 Partial object representation
 -----------------------------
 

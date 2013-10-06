@@ -76,6 +76,40 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
 
         self.assertTrue(str(ctx.exception).find("unknown_column") > -1)
 
+    def test_serialize_mainresource_ok(self):
+        '''This test case ensures a given resource model is correctly serialized into a json object.'''
+
+        model = InvoiceMock(series="RR", number=111, total=20.00, vat_percent=0.24, vat=0.19)
+        model.id = 1
+
+        json_obj = self._serializer.serialize(model)
+
+        self.assertIsInstance(json_obj, dict)
+        self.assertEqual(json_obj["id"], model.id)
+        self.assertEqual(json_obj["series"], model.series)
+        self.assertEqual(json_obj["number"], model.number)
+        self.assertEqual(json_obj["total"], model.total)
+        self.assertEqual(json_obj["vat_percent"], model.vat_percent)
+        self.assertEqual(json_obj["vat"], model.vat)
+
+    def test_serialize_mainresource_partial_ok(self):
+        '''This test case ensures a resource partial serialization work as expected.'''
+
+        fields = "  series, number    "
+
+        model = InvoiceMock(series="RR", number=111, total=20.00, vat_percent=0.24, vat=0.19)
+        model.id = 1
+
+        json_obj = self._serializer.serialize(model, fields)
+
+        self.assertIsInstance(json_obj, dict)
+        self.assertEqual(json_obj["series"], model.series)
+        self.assertEqual(json_obj["number"], model.number)
+        self.assertNotIn("id", json_obj)
+        self.assertNotIn("total", json_obj)
+        self.assertNotIn("vat_percent", json_obj)
+        self.assertNotIn("vat", json_obj)
+
 @Resource(name="Invoice", url="/invoices")
 class InvoiceMock(BASEMODEL):
     __tablename__ = "invoices_mock"
