@@ -40,6 +40,9 @@ ROA Technical Summary
 .. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationSortDesc
    :members:
 
+.. autoclass:: fantastico.roa.resource_json_serializer.ResourceJsonSerializer
+   :members:
+
 Exceptions
 ----------
 
