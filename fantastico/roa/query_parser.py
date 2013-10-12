@@ -18,7 +18,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.roa.query_parser_operations import QueryParserOperationBinaryEq, QueryParserOperationBinaryGe, \
-    QueryParserOperationBinaryGt, QueryParserOperationBinaryLe, QueryParserOperationBinaryLt, QueryParserOperationBinaryLike
+    QueryParserOperationBinaryGt, QueryParserOperationBinaryLe, QueryParserOperationBinaryLt, QueryParserOperationBinaryLike, \
+    QueryParserOperationBinaryIn
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 import re
 
@@ -39,7 +40,7 @@ class QueryParser(object):
 
     TERM = 0
     RULE = 1
-    REGEX_TEXT = "[a-zA-Z\\. \"0-9]{1,}"
+    REGEX_TEXT = "[a-zA-Z\\. \"0-9\\[\\]]{1,}"
 
     def __init__(self):
         self._stack = [(self.TERM, self._T_END)]
@@ -62,8 +63,8 @@ class QueryParser(object):
                             self.REGEX_TEXT: (self.REGEX_TEXT, self.REGEX_TEXT, self._add_argument)
                        },
                        ",": {
-                                ",": (",", ",", self.nop),
-                                self.REGEX_TEXT: (",", self.REGEX_TEXT, self.nop())
+                                ",": (",", ",", self._nop),
+                                self.REGEX_TEXT: (",", self.REGEX_TEXT, self._nop())
                              },
                        ")": {
                                  ")": (")", ")", self._exec_operator)
@@ -84,8 +85,9 @@ class QueryParser(object):
         self._register_operation(QueryParserOperationBinaryLt(self))
         self._register_operation(QueryParserOperationBinaryLe(self))
         self._register_operation(QueryParserOperationBinaryLike(self))
+        self._register_operation(QueryParserOperationBinaryIn(self))
 
-    def nop(self):
+    def _nop(self):
         '''This method is used as default values when a table grammar entry does not require any concrete action.'''
 
         pass
@@ -134,17 +136,19 @@ class QueryParser(object):
                 idx += 1
                 continue
 
-            token = self._SYMBOLS.get(char)
+            token = None
+
+            if "[" not in curr_token:
+                token = self._SYMBOLS.get(char)
 
             if not token:
                 curr_token.append(char)
 
-                if len(curr_token) == self._MAX_TOKEN_LENGTH:
-                    token = self._SYMBOLS.get("".join(curr_token))
+                token = self._SYMBOLS.get("".join(curr_token))
 
-                    if token:
-                        curr_token = []
-                        tokens.append(token)
+                if token:
+                    curr_token = []
+                    tokens.append(token)
             else:
                 if curr_token:
                     tokens.append("".join(curr_token))
@@ -153,13 +157,18 @@ class QueryParser(object):
                 tokens.append(token)
 
             if len(curr_token) > self._MAX_TOKEN_LENGTH:
-                next_delim = filter_expr.find(",", idx)
+                next_delim = None
 
-                if next_delim == -1:
-                    next_delim = filter_expr.find(")", idx)
+                if "[" not in curr_token:
+                    next_delim = filter_expr.find(",", idx)
 
-                if filter_expr[next_delim - 1] == ")":
-                    next_delim -= 2
+                    if next_delim == -1:
+                        next_delim = filter_expr.find(")", idx)
+
+                    if filter_expr[next_delim - 1] == ")":
+                        next_delim -= 2
+                else:
+                    next_delim = filter_expr.find("]", idx) + 1
 
                 curr_token.extend(filter_expr[idx + 1:next_delim])
                 token = "".join(curr_token)
@@ -202,8 +211,7 @@ class QueryParser(object):
                     if token == self._T_END:
                         pass
                 else:
-                    print("Bad input token: %s" % token)
-                    break
+                    raise FantasticoRoaError("Bad input token: %s" % token)
             elif s_type == self.RULE:
                 if s_token == self.REGEX_TEXT and re.match(s_token, token):
                     self._discovered_tokens.insert(0, token)

@@ -29,12 +29,14 @@ class QueryParserOperation(object, metaclass=ABCMeta):
 
     TERM = 0
     RULE = 1
-    REGEX_TEXT = "[a-zA-Z\\. \"0-9]{1,}"
+    REGEX_TEXT = None
 
     def __init__(self, parser):
         self._operation = self.get_token()
         self._parser = parser
         self._arguments = []
+
+        self.REGEX_TEXT = self._parser.REGEX_TEXT
 
     def add_argument(self, argument):
         '''This method add a new argument to the parser operation.'''
@@ -229,6 +231,14 @@ class QueryParserOperationBinaryLike(QueryParserOperationBinary):
         '''This method returns like token supported by ROA query language.'''
 
         return "like"
+
+class QueryParserOperationBinaryIn(QueryParserOperationBinary):
+    '''This class provides the in operator which can compare a value with a possible list of values.'''
+
+    def get_token(self):
+        '''This method returns in token supported by ROA query language.'''
+
+        return "in"
 
 class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
     '''This class provides the parser for compound filter or. It will recursively parse each argument and in the end will return
