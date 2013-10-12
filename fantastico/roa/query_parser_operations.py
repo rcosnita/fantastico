@@ -27,10 +27,54 @@ import re
 class QueryParserOperation(object, metaclass=ABCMeta):
     '''This class defines the contract for a query parser operation.'''
 
-    def __init__(self, operation, argument, parser):
-        self._operation = operation
-        self._argument = argument
+    TERM = 0
+    RULE = 1
+    REGEX_TEXT = "[a-zA-Z\. \"]{1,}"
+
+    def __init__(self, parser):
+        self._operation = self.get_token()
         self._parser = parser
+        self._arguments = []
+
+    def add_argument(self, argument):
+        '''This method add a new argument to the parser operation.'''
+
+        self._arguments.append(argument.strip())
+
+    @abstractmethod
+    def get_token(self):
+        '''This method returns the token which maps on this operation.'''
+
+    @abstractmethod
+    def get_grammar_rules(self):
+        '''This method returns the rules required to interpret this operation.
+
+        .. code-block:: python
+
+            return {
+                        "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
+                              (self.RULE, ")")],
+                   }
+
+        Grammar rules simply describe the tokens which come after operator + symbol. For instance, **eq(** is followed by two
+        comma separated arguments.
+        '''
+
+    @abstractmethod
+    def get_grammar_table(self, new_mixin):
+        '''This method returns a dictionary describing the operator + symbol rule and action.
+
+        .. code-block:: python
+
+            return {
+                        "(": ("eq", "(", lambda: new_mixin(QueryParserOperationBinaryEq)),
+                        ")": None
+                   }
+
+        :param new_mixin: New mixin described a factory method required to correctly pass current operation to parser.
+        :type new_mixin: function
+        :returns: A dictionary describing the grammar table for this operator.
+        '''
 
     @abstractmethod
     def build_filter(self, model):
@@ -89,8 +133,8 @@ class QueryParserOperationSortDesc(QueryParserOperationSort):
 class QueryParserOperationBinary(QueryParserOperation):
     '''This class provides the validation / build logic for binary operations.'''
 
-    def __init__(self, operation, argument, parser):
-        super(QueryParserOperationBinary, self).__init__(operation, argument, parser)
+    def __init__(self, parser):
+        super(QueryParserOperationBinary, self).__init__(parser)
 
         self._column = None
         self._value = None
@@ -105,27 +149,46 @@ class QueryParserOperationBinary(QueryParserOperation):
     def validate(self, model):
         '''This method ensures that three arguments were passed.'''
 
-        first_comma = self._argument.find(",")
-
-        if first_comma == -1:
+        if len(self._arguments) < 2:
             raise QueryParserOperationInvalidError("Binary operation %s requires two arguments." % self._operation)
 
-        arguments = [self._argument[:first_comma], self._argument[first_comma + 1:]]
+        column_name = self._arguments[0].strip()
 
-        if not arguments[0].strip():
+        if not column_name:
             raise QueryParserOperationInvalidError("Binary operation %s first argument is empty." % self._operation)
 
-        if not arguments[1].strip():
-            raise QueryParserOperationInvalidError("Binary operation %s second argument is empty." % self._operation)
+        self._value = self._arguments[1].strip()
 
-        column_name = arguments[0].strip()
+        if not self._value:
+            raise QueryParserOperationInvalidError("Binary operation %s second argument is empty." % self._operation)
 
         try:
             self._column = getattr(model, column_name)
         except AttributeError:
             raise QueryParserOperationInvalidError("Resource model does not contain %s attribute." % column_name)
 
-        self._value = arguments[1].strip()
+class QueryParserOperationBinaryEq(QueryParserOperationBinary):
+    '''This class provides the eq operator which can compare two arguments for equality.'''
+
+    def get_token(self):
+        '''This method returns the equality token supported by ROA query language.'''
+
+        return "eq"
+
+    def get_grammar_rules(self):
+        '''This method returns the grammar rules supported by eq operator.'''
+
+        return {
+                    "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
+                          (self.RULE, ")")],
+               }
+
+    def get_grammar_table(self, new_mixin):
+        '''The grammar table supported by equality operator.'''
+
+        return {
+                    "(": ("eq", "(", lambda: new_mixin(QueryParserOperationBinaryEq))
+               }
 
 class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
     '''This class provides the parser for compound filter or. It will recursively parse each argument and in the end will return
