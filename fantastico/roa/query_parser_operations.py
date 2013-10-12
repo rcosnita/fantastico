@@ -29,7 +29,7 @@ class QueryParserOperation(object, metaclass=ABCMeta):
 
     TERM = 0
     RULE = 1
-    REGEX_TEXT = "[a-zA-Z\. \"]{1,}"
+    REGEX_TEXT = "[a-zA-Z\\. \"0-9]{1,}"
 
     def __init__(self, parser):
         self._operation = self.get_token()
@@ -205,6 +205,30 @@ class QueryParserOperationBinaryGt(QueryParserOperationBinary):
         '''This method returns the greater than token supported by ROA query language.'''
 
         return "gt"
+
+class QueryParserOperationBinaryLe(QueryParserOperationBinary):
+    '''This class provides the le operator which can compare two arguments for less or equal than relation.'''
+
+    def get_token(self):
+        '''This method returns the less equal than token supported by ROA query language.'''
+
+        return "le"
+
+class QueryParserOperationBinaryLt(QueryParserOperationBinary):
+    '''This class provides the lt operator which can compare two arguments for less than relation.'''
+
+    def get_token(self):
+        '''This method returns the less than token supported by ROA query language.'''
+
+        return "lt"
+
+class QueryParserOperationBinaryLike(QueryParserOperationBinary):
+    '''This class provides the like operator which can compare two arguments for similarity.'''
+
+    def get_token(self):
+        '''This method returns like token supported by ROA query language.'''
+
+        return "like"
 
 class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
     '''This class provides the parser for compound filter or. It will recursively parse each argument and in the end will return

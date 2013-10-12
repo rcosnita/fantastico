@@ -18,7 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.roa.query_parser_operations import QueryParserOperationBinaryEq, QueryParserOperationBinaryGe, \
-    QueryParserOperationBinaryGt
+    QueryParserOperationBinaryGt, QueryParserOperationBinaryLe, QueryParserOperationBinaryLt, QueryParserOperationBinaryLike
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 import re
 
@@ -32,14 +32,14 @@ class QueryParser(object):
                 ")": ")",
                 ",": ","}
 
-    _MAX_TOKEN_LENGTH = 2
+    _MAX_TOKEN_LENGTH = 4
     _RULES = {}
 
     _T_END = "$"
 
     TERM = 0
     RULE = 1
-    REGEX_TEXT = "[a-zA-Z\\. \"]{1,}"
+    REGEX_TEXT = "[a-zA-Z\\. \"0-9]{1,}"
 
     def __init__(self):
         self._stack = [(self.TERM, self._T_END)]
@@ -81,6 +81,9 @@ class QueryParser(object):
         self._register_operation(QueryParserOperationBinaryEq(self))
         self._register_operation(QueryParserOperationBinaryGt(self))
         self._register_operation(QueryParserOperationBinaryGe(self))
+        self._register_operation(QueryParserOperationBinaryLt(self))
+        self._register_operation(QueryParserOperationBinaryLe(self))
+        self._register_operation(QueryParserOperationBinaryLike(self))
 
     def nop(self):
         '''This method is used as default values when a table grammar entry does not require any concrete action.'''
@@ -127,6 +130,10 @@ class QueryParser(object):
         while idx < len(filter_expr):
             char = filter_expr[idx]
 
+            if char == ' ' and "\"" not in curr_token:
+                idx += 1
+                continue
+
             token = self._SYMBOLS.get(char)
 
             if not token:
@@ -139,9 +146,13 @@ class QueryParser(object):
                         curr_token = []
                         tokens.append(token)
             else:
+                if curr_token:
+                    tokens.append("".join(curr_token))
+                    curr_token = []
+
                 tokens.append(token)
 
-            if len(curr_token) > 2:
+            if len(curr_token) > self._MAX_TOKEN_LENGTH:
                 next_delim = filter_expr.find(",", idx)
 
                 if next_delim == -1:
