@@ -17,7 +17,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.roa.query_parser
 '''
 
-from fantastico.roa.query_parser_operations import QueryParserOperationBinaryEq
+from fantastico.roa.query_parser_operations import QueryParserOperationBinaryEq, QueryParserOperationBinaryGe, \
+    QueryParserOperationBinaryGt
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 import re
 
@@ -72,7 +73,14 @@ class QueryParser(object):
         self._last_operator = []
         self._discovered_tokens = []
 
-        self._register_operations(QueryParserOperationBinaryEq(self))
+        self._register_all_operations()
+
+    def _register_all_operations(self):
+        '''This method register all supported operations of this parser.'''
+
+        self._register_operation(QueryParserOperationBinaryEq(self))
+        self._register_operation(QueryParserOperationBinaryGt(self))
+        self._register_operation(QueryParserOperationBinaryGe(self))
 
     def nop(self):
         '''This method is used as default values when a table grammar entry does not require any concrete action.'''
@@ -98,7 +106,7 @@ class QueryParser(object):
 
         self._last_operator.append(operator_cls(self))
 
-    def _register_operations(self, operator):
+    def _register_operation(self, operator):
         '''This method registers a given operations into the list of supported operations. Grammar rules are enriched based
         on the given operator.'''
 

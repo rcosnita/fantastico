@@ -167,6 +167,21 @@ class QueryParserOperationBinary(QueryParserOperation):
         except AttributeError:
             raise QueryParserOperationInvalidError("Resource model does not contain %s attribute." % column_name)
 
+    def get_grammar_rules(self):
+        '''This method returns the grammar rules supported by binary operators.'''
+
+        return {
+                    "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
+                          (self.RULE, ")")],
+               }
+
+    def get_grammar_table(self, new_mixin):
+        '''The grammar table supported by binary operators.'''
+
+        return {
+                    "(": (self.get_token(), "(", lambda: new_mixin(self.__class__))
+               }
+
 class QueryParserOperationBinaryEq(QueryParserOperationBinary):
     '''This class provides the eq operator which can compare two arguments for equality.'''
 
@@ -175,20 +190,21 @@ class QueryParserOperationBinaryEq(QueryParserOperationBinary):
 
         return "eq"
 
-    def get_grammar_rules(self):
-        '''This method returns the grammar rules supported by eq operator.'''
+class QueryParserOperationBinaryGe(QueryParserOperationBinary):
+    '''This class provides the ge operator which can compare two arguments for greater or equal than relation.'''
 
-        return {
-                    "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
-                          (self.RULE, ")")],
-               }
+    def get_token(self):
+        '''This method returns the greater equals token supported by ROA query language.'''
 
-    def get_grammar_table(self, new_mixin):
-        '''The grammar table supported by equality operator.'''
+        return "ge"
 
-        return {
-                    "(": ("eq", "(", lambda: new_mixin(QueryParserOperationBinaryEq))
-               }
+class QueryParserOperationBinaryGt(QueryParserOperationBinary):
+    '''This class provides the gt operator which can compare two arguments for greater than relation.'''
+
+    def get_token(self):
+        '''This method returns the greater than token supported by ROA query language.'''
+
+        return "gt"
 
 class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
     '''This class provides the parser for compound filter or. It will recursively parse each argument and in the end will return
