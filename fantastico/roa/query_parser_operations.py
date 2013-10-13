@@ -28,14 +28,14 @@ class QueryParserOperation(object, metaclass=ABCMeta):
 
     TERM = 0
     RULE = 1
-    REGEX_TEXT = None
+    regex_text = None
 
     def __init__(self, parser):
         self._operation = self.get_token()
         self._parser = parser
         self._arguments = []
 
-        self.REGEX_TEXT = self._parser.REGEX_TEXT
+        self.regex_text = self._parser.regex_text
 
     def add_argument(self, argument):
         '''This method add a new argument to the parser operation.'''
@@ -126,7 +126,7 @@ class QueryParserOperationSort(QueryParserOperation, metaclass=ABCMeta):
         '''This method returns the grammar rules supported by binary operators.'''
 
         return {
-                    "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ")")],
+                    "(": [(self.TERM, "("), (self.RULE, self.regex_text), (self.RULE, ")")],
                }
 
     def get_grammar_table(self, new_mixin):
@@ -199,10 +199,10 @@ class QueryParserOperationBinary(QueryParserOperation):
         '''This method returns the grammar rules supported by binary operators.'''
 
         return {
-                    "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
+                    "(": [(self.TERM, "("), (self.RULE, self.regex_text), (self.RULE, ","), (self.RULE, self.regex_text),
                           (self.RULE, ")")],
-                    self.get_token() : [(self.TERM, self.get_token()), (self.TERM, "("), (self.RULE, self.REGEX_TEXT),
-                                        (self.RULE, ","), (self.RULE, self.REGEX_TEXT), (self.RULE, ")")]
+                    self.get_token() : [(self.TERM, self.get_token()), (self.TERM, "("), (self.RULE, self.regex_text),
+                                        (self.RULE, ","), (self.RULE, self.regex_text), (self.RULE, ")")]
                }
 
     def get_grammar_table(self, new_mixin):
@@ -294,10 +294,10 @@ class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
         '''This method returns the grammar rules supported by binary operators.'''
 
         return {
-                    "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
+                    "(": [(self.TERM, "("), (self.RULE, self.regex_text), (self.RULE, ","), (self.RULE, self.regex_text),
                           (self.RULE, ")")],
-                    self.get_token() : [(self.TERM, self.get_token()), (self.TERM, "("), (self.RULE, self.REGEX_TEXT),
-                                        (self.RULE, ","), (self.RULE, self.REGEX_TEXT), (self.RULE, ")")]
+                    self.get_token() : [(self.TERM, self.get_token()), (self.TERM, "("), (self.RULE, self.regex_text),
+                                        (self.RULE, ","), (self.RULE, self.regex_text), (self.RULE, ")")]
                }
 
     def get_grammar_table(self, new_mixin):

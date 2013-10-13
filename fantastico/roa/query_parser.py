@@ -28,29 +28,27 @@ class QueryParser(object):
     '''This class provides ROA query parser functionality. It provides methods for transforming filter and sorting expressions
     (:doc:`/features/roa/rest_standard`) into mvc filters (:doc:`/features/mvc`).'''
 
-    REGISTERED_OPERATIONS = {}
-
-    _SYMBOLS = {"(": "(",
-                ")": ")",
-                ",": ","}
+    _lang_symbols = {"(": "(",
+                    ")": ")",
+                    ",": ","}
 
     _MAX_TOKEN_LENGTH = 4
-    _RULES = {}
+    _lang_rules = {}
 
     _T_END = "$"
 
     TERM = 0
     RULE = 1
-    REGEX_TEXT = "[a-zA-Z\\. \"0-9\\[\\]]{1,}"
+    regex_text = "[a-zA-Z\\. \"0-9\\[\\]]{1,}"
 
     def __init__(self):
         self._stack = [(self.TERM, self._T_END)]
         self._model = None
 
-        self._RULES = {
-                self.REGEX_TEXT: {
-                                ",": [(self.RULE, self.REGEX_TEXT), (self.TERM, ")")],
-                                self.REGEX_TEXT: [(self.TERM, self.REGEX_TEXT)]
+        self._lang_rules = {
+                self.regex_text: {
+                                ",": [(self.RULE, self.regex_text), (self.TERM, ")")],
+                                self.regex_text: [(self.TERM, self.regex_text)]
                               },
                 ",": {
                         ",": [(self.TERM, ",")]
@@ -64,8 +62,8 @@ class QueryParser(object):
                       }
              }
 
-        self._TABLE = {self.REGEX_TEXT: {
-                                            self.REGEX_TEXT: (self.REGEX_TEXT, self.REGEX_TEXT, self._add_argument)
+        self._lang_grammar = {self.regex_text: {
+                                            self.regex_text: (self.regex_text, self.regex_text, self._add_argument)
                                         },
                        ",": {
                                 ",": (",", ",", self._nop)
@@ -101,6 +99,16 @@ class QueryParser(object):
 
         self._register_operation(QueryParserOperationSortAsc(self))
         self._register_operation(QueryParserOperationSortDesc(self))
+
+    def _register_operation(self, operator):
+        '''This method registers a given operations into the list of supported operations. Grammar rules are enriched based
+        on the given operator.'''
+
+        token = operator.get_token()
+
+        self._lang_grammar[token] = operator.get_grammar_table(self._new_operator)
+        self._lang_symbols[operator.get_token()] = token
+        self._lang_rules[token] = operator.get_grammar_rules()
 
     def _nop(self):
         '''This method is used as default values when a table grammar entry does not require any concrete action.'''
@@ -138,16 +146,6 @@ class QueryParser(object):
 
         self._last_operator.append(operator_cls(self))
 
-    def _register_operation(self, operator):
-        '''This method registers a given operations into the list of supported operations. Grammar rules are enriched based
-        on the given operator.'''
-
-        token = operator.get_token()
-
-        self._TABLE[token] = operator.get_grammar_table(self._new_operator)
-        self._SYMBOLS[operator.get_token()] = token
-        self._RULES[token] = operator.get_grammar_rules()
-
     def _parse_lexic(self, filter_expr):
         '''This method identify the lexic of the given filter expression. As a result a set of supported symbols are returned.'''
 
@@ -166,12 +164,12 @@ class QueryParser(object):
             token = None
 
             if "[" not in curr_token and "\"" not in curr_token:
-                token = self._SYMBOLS.get(char)
+                token = self._lang_symbols.get(char)
 
             if not token:
                 curr_token.append(char)
 
-                token = self._SYMBOLS.get("".join(curr_token))
+                token = self._lang_symbols.get("".join(curr_token))
 
                 if token:
                     curr_token = []
@@ -235,38 +233,48 @@ class QueryParser(object):
             token = tokens[position]
 
             if s_type == self.TERM:
-                if token == s_token:
-                    position += 1
+                position = self._handle_term_token(s_token, token, position)
+                continue
 
-                    if token == self._T_END:
-                        pass
-                else:
-                    if len(self._discovered_tokens) == 0:
-                        raise QueryParserOperationInvalidError("Invalid operation in expression.")
-
-                    raise QueryParserOperationInvalidError("Operator %s received bad input token %s" % \
-                                                           (self._discovered_tokens[-1], token))
-            elif s_type == self.RULE:
-                if not self._SYMBOLS.get(token) and s_token == self.REGEX_TEXT and re.match(s_token, token):
-                    self._discovered_tokens.insert(0, token)
-
-                    token = self.REGEX_TEXT
-                    tokens[position] = self.REGEX_TEXT
-
-                if self._SYMBOLS.get(token) and s_token == self.REGEX_TEXT:
-                    s_token = "("
-
-                rule = self._TABLE[s_token].get(token)
-
-                if not rule:
-                    continue
-
-                ll_derivation.append(rule)
-
-                for r in reversed(self._RULES[rule[0]][rule[1]]):
-                    self._stack.append(r)
+            self._handle_rule_token(tokens, ll_derivation, s_token, token, position)
 
         return ll_derivation
+
+    def _handle_term_token(self, s_token, token, curr_pos):
+        '''This method handles the given tuple of s_token and token when the given s_token is terminal.'''
+
+        if token == s_token:
+            curr_pos += 1
+
+            return curr_pos
+
+        if len(self._discovered_tokens) == 0:
+            raise QueryParserOperationInvalidError("Invalid operation in expression.")
+
+        raise QueryParserOperationInvalidError("Operator %s received bad input token %s" % \
+                                               (self._discovered_tokens[-1], token))
+
+    def _handle_rule_token(self, all_tokens, ll_derivation, s_token, token, curr_pos):
+        '''This method handles the given tuple of s_token and token when the given s_token is a grammar rule.'''
+
+        if not self._lang_symbols.get(token) and s_token == self.regex_text and re.match(s_token, token):
+            self._discovered_tokens.insert(0, token)
+
+            token = self.regex_text
+            all_tokens[curr_pos] = self.regex_text
+
+        if self._lang_symbols.get(token) and s_token == self.regex_text:
+            s_token = "("
+
+        rule = self._lang_grammar[s_token].get(token)
+
+        if not rule:
+            return
+
+        ll_derivation.append(rule)
+
+        for curr_rule in reversed(self._lang_rules[rule[0]][rule[1]]):
+            self._stack.append(curr_rule)
 
     def parse_filter(self, filter_expr, model):
         '''This method transform the given filter expression into mvc filters.
@@ -288,8 +296,8 @@ class QueryParser(object):
 
         model_filter = None
 
-        for ll in ll_derivation:
-            model_filter = ll[2]()
+        for ll_rule in ll_derivation:
+            model_filter = ll_rule[2]()
 
         return model_filter
 
