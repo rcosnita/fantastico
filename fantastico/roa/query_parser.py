@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from fantastico.roa.query_parser_operations import QueryParserOperationBinaryEq, QueryParserOperationBinaryGe, \
     QueryParserOperationBinaryGt, QueryParserOperationBinaryLe, QueryParserOperationBinaryLt, QueryParserOperationBinaryLike, \
-    QueryParserOperationBinaryIn, QueryParserOperationSortAsc
+    QueryParserOperationBinaryIn, QueryParserOperationSortAsc, QueryParserOperationSortDesc
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 import re
 
@@ -88,6 +88,7 @@ class QueryParser(object):
         self._register_operation(QueryParserOperationBinaryIn(self))
 
         self._register_operation(QueryParserOperationSortAsc(self))
+        self._register_operation(QueryParserOperationSortDesc(self))
 
     def _nop(self):
         '''This method is used as default values when a table grammar entry does not require any concrete action.'''

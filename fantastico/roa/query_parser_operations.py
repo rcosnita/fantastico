@@ -141,16 +141,20 @@ class QueryParserOperationSortAsc(QueryParserOperationSort):
         super(QueryParserOperationSortAsc, self).__init__(parser, sort_dir=ModelSort.ASC)
 
     def get_token(self):
-        '''This method returns asc sort order operator for ROA query language.'''
+        '''This method returns asc sort token for ROA query language.'''
 
         return "asc"
 
 class QueryParserOperationSortDesc(QueryParserOperationSort):
     '''This class provides desc sort operation.'''
 
-    def __init__(self, operation, argument, parser):
-        super(QueryParserOperationSortDesc, self).__init__(operation, argument, parser, sort_dir=ModelSort.DESC)
+    def __init__(self, parser):
+        super(QueryParserOperationSortDesc, self).__init__(parser, sort_dir=ModelSort.DESC)
 
+    def get_token(self):
+        '''This method returns desc sort token for ROA query language.'''
+
+        return "desc"
 
 class QueryParserOperationBinary(QueryParserOperation):
     '''This class provides the validation / build logic for binary operations.'''
