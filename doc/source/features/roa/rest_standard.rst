@@ -30,17 +30,17 @@ This entry point supports the following additional operations:
 
 The main entry point for **AppSettingV2** collection of resources is **/api/2.0/app-settings**.
 
-+---------------+------------------------------------------------------+------------------------------------------------------------+
-| **HTTP Verb** | **URL**                                              | **Description**                                            |
-+---------------+------------------------------------------------------+------------------------------------------------------------+
-| GET           | /api/2.0/app-settings?offset=0&limit=100             | Get the first 100 settings.                                |
-+---------------+------------------------------------------------------+------------------------------------------------------------+
-| GET           | /api/2.0/app-settings?order=[desc(name), asc(value)] | Order settings by name (descending) and value (ascending). |
-+---------------+------------------------------------------------------+------------------------------------------------------------+
-| GET           | /api/2.0/app-settings?filter=<complex filter>        | See :ref:`roa-filtering`.                                  |
-+---------------+------------------------------------------------------+------------------------------------------------------------+
-| POST          | /api/2.0/app-settings                                | Create a new custom setting                                |
-+---------------+------------------------------------------------------+------------------------------------------------------------+
++---------------+-----------------------------------------------+--------------------------------------+
+| **HTTP Verb** | **URL**                                       | **Description**                      |
++---------------+-----------------------------------------------+--------------------------------------+
+| GET           | /api/2.0/app-settings?offset=0&limit=100      | Get the first 100 settings.          |
++---------------+-----------------------------------------------+--------------------------------------+
+| GET           | /api/2.0/app-settings?order=desc(name)        | Order settings by name (descending). |
++---------------+-----------------------------------------------+--------------------------------------+
+| GET           | /api/2.0/app-settings?filter=<complex filter> | See :ref:`roa-filtering`.            |
++---------------+-----------------------------------------------+--------------------------------------+
+| POST          | /api/2.0/app-settings                         | Create a new custom setting          |
++---------------+-----------------------------------------------+--------------------------------------+
 
 Pagination
 ~~~~~~~~~~
@@ -66,29 +66,22 @@ Sorting
 
 When requesting a given resource collection sorted you can specify the sorting criteria:
 
-   * **order** - a JSON list containing asc / desc function calls. This list is evaluated from left to right with left most element having the highest priority.
-   * **asc** - is a function with one or more arguments which tells API an ascending order by given attributes.
+   * **order** - Containing asc / desc function calls.
+   * **asc** - is a function with one argument which tells API an ascending order by given attribute.
 
       .. code-block:: javascript
 
-         // retrieve all application settings ordered in ascending order of name and value
-         var url = "/api/2.0/app-settings?order=[asc(name), asc(value)]";
+         // retrieve all application settings ascending ordered by name
+         var url = "/api/2.0/app-settings?order=asc(name)";
 
-   * **desc** - is a function with one or more arguments which tells API a descending order by given attributes.
-
-      .. code-block:: javascript
-
-         // retrieve all application settings ordered in descending order of name and value.
-         var url = "/api/2.0/app-settings?order=[desc(name), desc(value)]";
-
-   * **complex ordering** - you can easily specify different ordering criterias by resource attributes.
+   * **desc** - is a function with one argument which tells API a descending order by given attribute.
 
       .. code-block:: javascript
 
-         // retrieve all application settings ordered in descending order of name and ascending order of value.
-         var url = "/api/2.0/app-settings?order=[desc(name), asc(value)]";
+         // retrieve all application settings ordered descending ordered by value.
+         var url = "/api/2.0/app-settings?order=desc(value)";
 
-A possible result for **AppSettingV2** collection retrieval (**/api/2.0/app-settings?order=[desc(name)]**) looks like:
+A possible result for **AppSettingV2** collection retrieval (**/api/2.0/app-settings?order=desc(name)**) looks like:
 
 .. code-block:: javascript
 

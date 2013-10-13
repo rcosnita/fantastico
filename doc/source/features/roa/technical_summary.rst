@@ -22,6 +22,27 @@ ROA Technical Summary
 .. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinary
    :members:
 
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinaryEq
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinaryGt
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinaryGe
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinaryLt
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinaryLe
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinaryIn
+   :members:
+
+.. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationBinaryLike
+   :members:
+
 .. autoclass:: fantastico.roa.query_parser_operations.QueryParserOperationCompound
    :members:
 
