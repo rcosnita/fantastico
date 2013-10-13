@@ -16,11 +16,9 @@ Versions
    * Added specification for auto generated API for resources.
    * Added OAUTH2 implementation details for Fantastico.
    * Added Identity Provider draft specification.
-   * Added auto generated APIs for resources (Resource Oriented Architecture)
-   * Added OAUTH2 extendable tokens generator.
-   * Added OAUTH2 authorization code grant type support.
-   * Added OAUTH2 resource owner password credentials for Anonymous user.
-   * Added first version of Fantastico Identity Provider.
+   * Added REST API Standard for ROA (Resource Oriented Architecture).
+   * Added REST filter parser implementation using fast ll grammar for ROA (Resource Oriented Architecture).
+   * Added auto generated APIs for resources (Resource Oriented Architecture).
 
 * v0.4.1 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
    * Fix a bug into analytics component sample data insert.
