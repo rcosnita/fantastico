@@ -22,7 +22,6 @@ from fantastico.mvc.models.model_filter_compound import ModelFilterOr, ModelFilt
 from fantastico.mvc.models.model_sort import ModelSort
 from fantastico.roa.query_parser_exceptions import QueryParserOperationInvalidError
 import json
-import re
 
 class QueryParserOperation(object, metaclass=ABCMeta):
     '''This class defines the contract for a query parser operation.'''
@@ -41,7 +40,10 @@ class QueryParserOperation(object, metaclass=ABCMeta):
     def add_argument(self, argument):
         '''This method add a new argument to the parser operation.'''
 
-        self._arguments.append(argument.strip())
+        if isinstance(argument, str):
+            argument = argument.strip()
+
+        self._arguments.append(argument)
 
     @abstractmethod
     def get_token(self):
@@ -199,13 +201,16 @@ class QueryParserOperationBinary(QueryParserOperation):
         return {
                     "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
                           (self.RULE, ")")],
+                    self.get_token() : [(self.TERM, self.get_token()), (self.TERM, "("), (self.RULE, self.REGEX_TEXT),
+                                        (self.RULE, ","), (self.RULE, self.REGEX_TEXT), (self.RULE, ")")]
                }
 
     def get_grammar_table(self, new_mixin):
         '''The grammar table supported by binary operators.'''
 
         return {
-                    "(": (self.get_token(), "(", lambda: new_mixin(self.__class__))
+                    "(": (self.get_token(), "(", lambda: new_mixin(self.__class__)),
+                    self.get_token(): (self.get_token(), self.get_token(), lambda: new_mixin(self.__class__))
                }
 
 class QueryParserOperationBinaryEq(QueryParserOperationBinary):
@@ -269,51 +274,55 @@ class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
     a compatible :py:class:`fantastico.mvc.model_filter_compound.ModelFilterCompound`. Each concrete class must specify the
     compound filter type to use.'''
 
-    def __init__(self, operation, argument, parser, compound_filter_cls=None):
-        super(QueryParserOperationCompound, self).__init__(operation, argument, parser)
+    def __init__(self, parser, compound_filter_cls=None):
+        super(QueryParserOperationCompound, self).__init__(parser)
 
         self._compound_filter_cls = compound_filter_cls
 
     def build_filter(self, model):
         '''This method builds the compound filter based on the parsed arguments of this operation.'''
 
-        return self._compound_filter_cls(*self._argument)
+        return self._compound_filter_cls(*self._arguments)
 
     def validate(self, model):
         '''This method validates all arguments passed to this compound filter.'''
 
-        filters = []
-
-        filters_or = re.findall(r"or\(.*?\)\)", self._argument)
-
-        for filter_expr in filters_or:
-            self._argument = self._argument.replace(filter_expr, "", 1)
-
-        filters_and = re.findall(r"and\(.*?\)\)", self._argument)
-
-        for filter_expr in filters_and:
-            self._argument = self._argument.replace(filter_expr, "", 1)
-
-        filters.extend(filters_or)
-        filters.extend(filters_and)
-
-        filters_binary = re.findall(r"[a-z]{1,}\(.*?\)", self._argument)
-
-        filters.extend(filters_binary)
-
-        if len(filters) < 2:
+        if len(self._arguments) < 2:
             raise QueryParserOperationInvalidError("%s operation takes at least two arguments." % self._operation)
 
-        self._argument = [self._parser.parse_filter(filter_expr, model) for filter_expr in filters]
+    def get_grammar_rules(self):
+        '''This method returns the grammar rules supported by binary operators.'''
+
+        return {
+                    "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
+                          (self.RULE, ")")]
+               }
+
+    def get_grammar_table(self, new_mixin):
+        '''The grammar table supported by binary operators.'''
+
+        return {
+                    "(": (self.get_token(), "(", lambda: new_mixin(self.__class__))
+               }
 
 class QueryParserOperationOr(QueryParserOperationCompound):
     '''This class provides a query parser for **or** compound filtering.'''
 
-    def __init__(self, operation, argument, parser):
-        super(QueryParserOperationOr, self).__init__(operation, argument, parser, compound_filter_cls=ModelFilterOr)
+    def __init__(self, parser):
+        super(QueryParserOperationOr, self).__init__(parser, compound_filter_cls=ModelFilterOr)
+
+    def get_token(self):
+        '''This method returns or compound token for ROA query language.'''
+
+        return "or"
 
 class QueryParserOperationAnd(QueryParserOperationCompound):
     '''This class provides a query parser for **and** compound filtering.'''
 
-    def __init__(self, operation, argument, parser):
-        super(QueryParserOperationAnd, self).__init__(operation, argument, parser, compound_filter_cls=ModelFilterAnd)
+    def __init__(self, parser):
+        super(QueryParserOperationAnd, self).__init__(parser, compound_filter_cls=ModelFilterAnd)
+
+    def get_token(self):
+        '''This method returns and compound token for ROA query language.'''
+
+        return "and"

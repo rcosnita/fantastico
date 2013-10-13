@@ -17,10 +17,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.roa.query_parser
 '''
 
+from fantastico.roa.query_parser_exceptions import QueryParserOperationInvalidError
 from fantastico.roa.query_parser_operations import QueryParserOperationBinaryEq, QueryParserOperationBinaryGe, \
     QueryParserOperationBinaryGt, QueryParserOperationBinaryLe, QueryParserOperationBinaryLt, QueryParserOperationBinaryLike, \
-    QueryParserOperationBinaryIn, QueryParserOperationSortAsc, QueryParserOperationSortDesc
-from fantastico.roa.roa_exceptions import FantasticoRoaError
+    QueryParserOperationBinaryIn, QueryParserOperationSortAsc, QueryParserOperationSortDesc, QueryParserOperationOr, \
+    QueryParserOperationAnd, QueryParserOperationCompound
 import re
 
 class QueryParser(object):
@@ -56,23 +57,29 @@ class QueryParser(object):
                       },
                 ")": {
                         ")": [(self.TERM, ")")]
+                      },
+                "(": {
+                        "eq": [(self.RULE, "eq")]
                       }
              }
 
         self._TABLE = {self.REGEX_TEXT: {
-                            self.REGEX_TEXT: (self.REGEX_TEXT, self.REGEX_TEXT, self._add_argument)
-                       },
+                                            self.REGEX_TEXT: (self.REGEX_TEXT, self.REGEX_TEXT, self._add_argument)
+                                        },
                        ",": {
-                                ",": (",", ",", self._nop),
-                                self.REGEX_TEXT: (",", self.REGEX_TEXT, self._nop())
+                                ",": (",", ",", self._nop)
                              },
                        ")": {
                                  ")": (")", ")", self._exec_operator)
+                             },
+                       "(": {
+                                "eq": ("(", "eq", self._nop)
                              }
-                       }
+                     }
 
         self._last_operator = []
         self._discovered_tokens = []
+        self._compound_arguments = []
 
         self._register_all_operations()
 
@@ -86,6 +93,9 @@ class QueryParser(object):
         self._register_operation(QueryParserOperationBinaryLe(self))
         self._register_operation(QueryParserOperationBinaryLike(self))
         self._register_operation(QueryParserOperationBinaryIn(self))
+
+        self._register_operation(QueryParserOperationOr(self))
+        self._register_operation(QueryParserOperationAnd(self))
 
         self._register_operation(QueryParserOperationSortAsc(self))
         self._register_operation(QueryParserOperationSortDesc(self))
@@ -102,7 +112,15 @@ class QueryParser(object):
 
         curr_operation = self._last_operator.pop()
 
-        return curr_operation.get_filter(self._model)
+        if isinstance(curr_operation, QueryParserOperationCompound):
+            curr_operation.add_argument(self._compound_arguments.pop())
+            curr_operation.add_argument(self._compound_arguments.pop())
+
+            self._compound_arguments.insert(0, curr_operation.get_filter(self._model))
+        else:
+            self._compound_arguments.insert(0, curr_operation.get_filter(self._model))
+
+        return self._compound_arguments[-1]
 
     def _add_argument(self):
         '''This method adds a new argument to the current operation.'''
@@ -169,7 +187,7 @@ class QueryParser(object):
                         next_delim = filter_expr.find(")", idx)
 
                     if filter_expr[next_delim - 1] == ")":
-                        next_delim -= 2
+                        next_delim -= 1
                 else:
                     next_delim = filter_expr.find("]", idx) + 1
 
@@ -214,13 +232,17 @@ class QueryParser(object):
                     if token == self._T_END:
                         pass
                 else:
-                    raise FantasticoRoaError("Bad input token: %s" % token)
+                    raise QueryParserOperationInvalidError("Operator %s received bad input token %s" % \
+                                                           (self._discovered_tokens[-1], token))
             elif s_type == self.RULE:
-                if s_token == self.REGEX_TEXT and re.match(s_token, token):
+                if not self._SYMBOLS.get(token) and s_token == self.REGEX_TEXT and re.match(s_token, token):
                     self._discovered_tokens.insert(0, token)
 
                     token = self.REGEX_TEXT
                     tokens[position] = self.REGEX_TEXT
+
+                if self._SYMBOLS.get(token) and s_token == self.REGEX_TEXT:
+                    s_token = "("
 
                 rule = self._TABLE[s_token].get(token)
 

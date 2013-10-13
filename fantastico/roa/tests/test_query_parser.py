@@ -172,7 +172,7 @@ class QueryParserTests(FantasticoUnitTestsCase):
     def test_parse_filter_compoundand(self):
         '''This test case ensures compound or operations is correctly parsed.'''
 
-        filter_expr = "and(eq(name, \"vat\"), eq(value, \"en_US\"), eq(value, \"ro_RO\"))"
+        filter_expr = "and(eq(name, \"vat\"), eq(value, \"en_US\"))"
 
         result = self._query_parser.parse_filter(filter_expr, AppSettingMock)
 
@@ -180,7 +180,7 @@ class QueryParserTests(FantasticoUnitTestsCase):
 
         result_filters = result.model_filters
 
-        self.assertEqual(len(result_filters), 3)
+        self.assertEqual(len(result_filters), 2)
 
         self.assertIsInstance(result_filters[0], ModelFilter)
         self.assertEqual(result_filters[0].column, AppSettingMock.name)
@@ -191,11 +191,6 @@ class QueryParserTests(FantasticoUnitTestsCase):
         self.assertEqual(result_filters[1].column, AppSettingMock.value)
         self.assertEqual(result_filters[1].ref_value, "en_US")
         self.assertEqual(result_filters[1].operation, ModelFilter.EQ)
-
-        self.assertIsInstance(result_filters[2], ModelFilter)
-        self.assertEqual(result_filters[2].column, AppSettingMock.value)
-        self.assertEqual(result_filters[2].ref_value, "ro_RO")
-        self.assertEqual(result_filters[2].operation, ModelFilter.EQ)
 
     def test_parse_filter_compoundand_with_or(self):
         '''This test case ensures compound filters can receive other compound filters as argument.'''
