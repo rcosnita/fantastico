@@ -99,15 +99,16 @@ class QueryParserOperation(object, metaclass=ABCMeta):
 class QueryParserOperationSort(QueryParserOperation, metaclass=ABCMeta):
     '''This class provides base support for sort operations: asc / desc.'''
 
-    def __init__(self, operation, argument, parser, sort_dir=None):
-        super(QueryParserOperationSort, self).__init__(operation, argument, parser)
+    def __init__(self, parser, sort_dir=None):
+        super(QueryParserOperationSort, self).__init__(parser)
 
+        self._argument = None
         self._sort_dir = sort_dir
 
     def validate(self, model):
         '''This method validates sorting argument passed to this operation.'''
 
-        self._argument = self._argument.strip()
+        self._argument = self._arguments[0].strip()
 
         try:
             self._argument = getattr(model, self._argument)
@@ -119,11 +120,30 @@ class QueryParserOperationSort(QueryParserOperation, metaclass=ABCMeta):
 
         return ModelSort(self._argument, self._sort_dir)
 
+    def get_grammar_rules(self):
+        '''This method returns the grammar rules supported by binary operators.'''
+
+        return {
+                    "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ")")],
+               }
+
+    def get_grammar_table(self, new_mixin):
+        '''The grammar table supported by binary operators.'''
+
+        return {
+                    "(": (self.get_token(), "(", lambda: new_mixin(self.__class__))
+               }
+
 class QueryParserOperationSortAsc(QueryParserOperationSort):
     '''This class provides asc sort operation.'''
 
-    def __init__(self, operation, argument, parser):
-        super(QueryParserOperationSortAsc, self).__init__(operation, argument, parser, sort_dir=ModelSort.ASC)
+    def __init__(self, parser):
+        super(QueryParserOperationSortAsc, self).__init__(parser, sort_dir=ModelSort.ASC)
+
+    def get_token(self):
+        '''This method returns asc sort order operator for ROA query language.'''
+
+        return "asc"
 
 class QueryParserOperationSortDesc(QueryParserOperationSort):
     '''This class provides desc sort operation.'''
