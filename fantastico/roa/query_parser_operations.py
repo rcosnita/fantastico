@@ -295,14 +295,17 @@ class QueryParserOperationCompound(QueryParserOperation, metaclass=ABCMeta):
 
         return {
                     "(": [(self.TERM, "("), (self.RULE, self.REGEX_TEXT), (self.RULE, ","), (self.RULE, self.REGEX_TEXT),
-                          (self.RULE, ")")]
+                          (self.RULE, ")")],
+                    self.get_token() : [(self.TERM, self.get_token()), (self.TERM, "("), (self.RULE, self.REGEX_TEXT),
+                                        (self.RULE, ","), (self.RULE, self.REGEX_TEXT), (self.RULE, ")")]
                }
 
     def get_grammar_table(self, new_mixin):
         '''The grammar table supported by binary operators.'''
 
         return {
-                    "(": (self.get_token(), "(", lambda: new_mixin(self.__class__))
+                    "(": (self.get_token(), "(", lambda: new_mixin(self.__class__)),
+                    self.get_token(): (self.get_token(), self.get_token(), lambda: new_mixin(self.__class__))
                }
 
 class QueryParserOperationOr(QueryParserOperationCompound):

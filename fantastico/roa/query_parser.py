@@ -59,7 +59,8 @@ class QueryParser(object):
                         ")": [(self.TERM, ")")]
                       },
                 "(": {
-                        "eq": [(self.RULE, "eq")]
+                        "eq": [(self.RULE, "eq")],
+                        "or": [(self.RULE, "or")]
                       }
              }
 
@@ -73,7 +74,8 @@ class QueryParser(object):
                                  ")": (")", ")", self._exec_operator)
                              },
                        "(": {
-                                "eq": ("(", "eq", self._nop)
+                                "eq": ("(", "eq", self._nop),
+                                "or": ("(", "or", self._nop)
                              }
                      }
 
@@ -113,6 +115,10 @@ class QueryParser(object):
         curr_operation = self._last_operator.pop()
 
         if isinstance(curr_operation, QueryParserOperationCompound):
+            if len(self._compound_arguments) != 2:
+                raise QueryParserOperationInvalidError("Operation %s accepts 2 parameters. %s given." % \
+                                                       (curr_operation.get_token(), len(self._compound_arguments)))
+
             curr_operation.add_argument(self._compound_arguments.pop())
             curr_operation.add_argument(self._compound_arguments.pop())
 
@@ -159,7 +165,7 @@ class QueryParser(object):
 
             token = None
 
-            if "[" not in curr_token:
+            if "[" not in curr_token and "\"" not in curr_token:
                 token = self._SYMBOLS.get(char)
 
             if not token:
@@ -182,6 +188,9 @@ class QueryParser(object):
 
                 if "[" not in curr_token:
                     next_delim = filter_expr.find(",", idx)
+
+                    if next_delim > -1 and filter_expr[next_delim - 1] == ")":
+                        next_delim = next_delim - 1
 
                     if next_delim == -1:
                         next_delim = filter_expr.find(")", idx)
@@ -232,6 +241,9 @@ class QueryParser(object):
                     if token == self._T_END:
                         pass
                 else:
+                    if len(self._discovered_tokens) == 0:
+                        raise QueryParserOperationInvalidError("Invalid operation in expression.")
+
                     raise QueryParserOperationInvalidError("Operator %s received bad input token %s" % \
                                                            (self._discovered_tokens[-1], token))
             elif s_type == self.RULE:
