@@ -265,26 +265,6 @@ class QueryParserTests(FantasticoUnitTestsCase):
 
         self._test_parse_sort(sort_expr, AppSettingMock.name, ModelSort.DESC)
 
-    def test_parse_sort_compound(self):
-        '''This test case ensures sort composed expressions are parsed correctly.'''
-
-        sort_expr = ["asc(   name  )", "  desc  (   value)"]
-
-        results = self._query_parser.parse_sort(sort_expr, AppSettingMock)
-
-        self.assertEqual(len(results), 2)
-
-        asc_sort = results[0]
-        desc_sort = results[1]
-
-        self.assertIsInstance(asc_sort, ModelSort)
-        self.assertEqual(asc_sort.column, AppSettingMock.name)
-        self.assertEqual(asc_sort.sort_dir, ModelSort.ASC)
-
-        self.assertIsInstance(desc_sort, ModelSort)
-        self.assertEqual(desc_sort.column, AppSettingMock.value)
-        self.assertEqual(desc_sort.sort_dir, ModelSort.DESC)
-
     def test_parse_sort_invalidarg(self):
         '''This test case ensures invalid argument passed into sort expressions fail.'''
 
