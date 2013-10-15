@@ -56,10 +56,7 @@ class QueryParser(object):
                 ")": {
                         ")": [(self.TERM, ")")]
                       },
-                "(": {
-                        "eq": [(self.RULE, "eq")],
-                        "or": [(self.RULE, "or")]
-                      }
+                "(": {}
              }
 
         self._lang_grammar = {self.regex_text: {
@@ -71,10 +68,7 @@ class QueryParser(object):
                        ")": {
                                  ")": (")", ")", self._exec_operator)
                              },
-                       "(": {
-                                "eq": ("(", "eq", self._nop),
-                                "or": ("(", "or", self._nop)
-                             }
+                       "(": {}
                      }
 
         self._last_operator = []
@@ -107,8 +101,10 @@ class QueryParser(object):
         token = operator.get_token()
 
         self._lang_grammar[token] = operator.get_grammar_table(self._new_operator)
+        self._lang_grammar["("][token] = ("(", token, self._nop)
         self._lang_symbols[operator.get_token()] = token
         self._lang_rules[token] = operator.get_grammar_rules()
+        self._lang_rules["("][token] = [(self.RULE, token)]
 
     def _nop(self):
         '''This method is used as default values when a table grammar entry does not require any concrete action.'''
