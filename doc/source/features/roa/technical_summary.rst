@@ -78,3 +78,9 @@ Exceptions
 
 .. autoclass:: fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError
    :members:
+
+API generic controller
+----------------------
+
+.. autoclass:: fantastico.contrib.roa_discovery.roa_controller.RoaController
+   :members:

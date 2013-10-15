@@ -17,9 +17,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.roa_discovery.roa_controller
 '''
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import ControllerProvider
+from fantastico.mvc.controller_decorators import ControllerProvider, Controller
 
 @ControllerProvider()
 class RoaController(BaseController):
     '''This class provides dynamic routes for ROA registered resources. All CRUD operations are supported out of the box. In
     addition error handling is automatically provided by this controller.'''
+
+    @Controller()
+    def get_collection(self, request):
+        '''This method provides the route for accessing a resource collection. :ref:`/features/roa/rest_standard` for collections
+        are enabled by this method.'''
+        pass
