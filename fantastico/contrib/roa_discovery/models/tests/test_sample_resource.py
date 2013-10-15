@@ -14,27 +14,26 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.contrib.roa_discovery.models.sample_resource
+.. py:module:: fantastico.contrib.roa_discovery.models.tests.test_sample_resource
 '''
-from fantastico.mvc import BASEMODEL
-from fantastico.roa.resource_decorator import Resource
-from sqlalchemy.schema import Column
-from sqlalchemy.types import Integer, String, Text, Float
+from fantastico.contrib.roa_discovery.models.sample_resource import SampleResource
+from fantastico.tests.base_case import FantasticoUnitTestsCase
 
-@Resource(name="Sample Resource", url="/sample-resources")
-class SampleResource(BASEMODEL):
-    '''This is a very simple non intrusive resource used to showcase discoverability and ROA api generator.'''
+class SampleResourceTests(FantasticoUnitTestsCase):
+    '''Ths class provides the test cases for ensuring sample resource works as expected.'''
 
-    __tablename__ = "sample_resources"
+    def test_instantiation_ok(self):
+        '''This test case ensures sample resource can be correctly instantiated.'''
 
-    id = Column("id", Integer, primary_key=True, autoincrement=True)
-    name = Column("name", String(100), nullable=False)
-    description = Column("description", Text)
-    total = Column("total", Float, nullable=False)
-    vat = Column("vat", Float, nullable=False)
+        expected_name = "test"
+        expected_desc = "Friendly description"
+        expected_total = 5.0
+        expected_vat = 0.19
 
-    def __init__(self, name=None, description=None, total=None, vat=None):
-        self.name = name
-        self.description = description
-        self.total = total
-        self.vat = vat
+        model = SampleResource(name=expected_name, description=expected_desc, total=expected_total,
+                               vat=expected_vat)
+
+        self.assertEqual(model.name, expected_name)
+        self.assertEqual(model.description, expected_desc)
+        self.assertEqual(model.total, expected_total)
+        self.assertEqual(model.vat, expected_vat)

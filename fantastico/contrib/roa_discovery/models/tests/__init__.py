@@ -14,27 +14,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.contrib.roa_discovery.models.sample_resource
 '''
-from fantastico.mvc import BASEMODEL
-from fantastico.roa.resource_decorator import Resource
-from sqlalchemy.schema import Column
-from sqlalchemy.types import Integer, String, Text, Float
-
-@Resource(name="Sample Resource", url="/sample-resources")
-class SampleResource(BASEMODEL):
-    '''This is a very simple non intrusive resource used to showcase discoverability and ROA api generator.'''
-
-    __tablename__ = "sample_resources"
-
-    id = Column("id", Integer, primary_key=True, autoincrement=True)
-    name = Column("name", String(100), nullable=False)
-    description = Column("description", Text)
-    total = Column("total", Float, nullable=False)
-    vat = Column("vat", Float, nullable=False)
-
-    def __init__(self, name=None, description=None, total=None, vat=None):
-        self.name = name
-        self.description = description
-        self.total = total
-        self.vat = vat

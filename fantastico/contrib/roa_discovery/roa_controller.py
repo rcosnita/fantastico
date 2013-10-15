@@ -14,27 +14,12 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.contrib.roa_discovery.models.sample_resource
+.. py:module:: fantastico.contrib.roa_discovery.roa_controller
 '''
-from fantastico.mvc import BASEMODEL
-from fantastico.roa.resource_decorator import Resource
-from sqlalchemy.schema import Column
-from sqlalchemy.types import Integer, String, Text, Float
+from fantastico.mvc.base_controller import BaseController
+from fantastico.mvc.controller_decorators import ControllerProvider
 
-@Resource(name="Sample Resource", url="/sample-resources")
-class SampleResource(BASEMODEL):
-    '''This is a very simple non intrusive resource used to showcase discoverability and ROA api generator.'''
-
-    __tablename__ = "sample_resources"
-
-    id = Column("id", Integer, primary_key=True, autoincrement=True)
-    name = Column("name", String(100), nullable=False)
-    description = Column("description", Text)
-    total = Column("total", Float, nullable=False)
-    vat = Column("vat", Float, nullable=False)
-
-    def __init__(self, name=None, description=None, total=None, vat=None):
-        self.name = name
-        self.description = description
-        self.total = total
-        self.vat = vat
+@ControllerProvider()
+class RoaController(BaseController):
+    '''This class provides dynamic routes for ROA registered resources. All CRUD operations are supported out of the box. In
+    addition error handling is automatically provided by this controller.'''
