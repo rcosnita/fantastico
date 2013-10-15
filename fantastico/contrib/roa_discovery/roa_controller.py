@@ -62,8 +62,7 @@ class RoaController(BaseController):
         '''
 
         version = float(version)
-        offset = request.params.get("offset", RoaController.OFFSET_DEFAULT)
-        limit = request.params.get("limit", RoaController.LIMIT_DEFAULT)
+        params = CollectionParams(request, RoaController.OFFSET_DEFAULT, RoaController.LIMIT_DEFAULT)
 
         resource = self._resources_registry.find_by_url(version, resource_url)
 
@@ -71,7 +70,7 @@ class RoaController(BaseController):
 
         model_facade = self._model_facade_cls(resource.model, self._conn_manager.get_connection(request.request_id))
 
-        models = model_facade.get_records_paged(start_record=offset, end_record=limit)
+        models = model_facade.get_records_paged(start_record=params.offset, end_record=params.limit)
         items = [json_serializer.serialize(model) for model in models]
 
         models_count = model_facade.count_records()
@@ -80,3 +79,22 @@ class RoaController(BaseController):
                 "totalItems": models_count}
 
         return Response(text=json.dumps(body), content_type="application/json", status_code=200)
+
+class CollectionParams(object):
+    '''This object defines the structure for get_collection supported query parameters.'''
+
+    @property
+    def offset(self):
+        '''This property returns offset provided in the request.'''
+
+        return self._offset
+
+    @property
+    def limit(self):
+        '''This property returns limit provided in the request.'''
+
+        return self._limit
+
+    def __init__(self, request, offset_default, limit_default):
+        self._offset = request.params.get("offset", offset_default)
+        self._limit = request.params.get("limit", limit_default)
