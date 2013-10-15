@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.contrib.roa_discovery.discovery_controller
 '''
+from fantastico.contrib.roa_discovery import roa_helper
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
 from fantastico.roa import resources_registry
@@ -38,7 +39,7 @@ class RoaDiscoveryController(BaseController):
         registry_cls = registry_cls or resources_registry.ResourcesRegistry
 
         self._registry = registry_cls()
-        self._roa_api = self._settings_facade.get("roa_api")
+        self._roa_api = settings_facade.get("roa_api")
 
     @Controller(url="/roa/resources(/)?$", method="GET") # pylint: disable=W0613
     def list_registered_resources(self, request):
@@ -77,19 +78,12 @@ class RoaDiscoveryController(BaseController):
             if not body.get(resource.name):
                 body[resource.name] = {}
 
-            body[resource.name][resource.version] = self._calculate_resource_url(resource, resource.version)
-            body[resource.name]["latest"] = self._calculate_resource_url(resource, "latest")
+            api_url = roa_helper.calculate_resource_url(self._roa_api, resource, resource.version)
+            api_url_latest = roa_helper.calculate_resource_url(self._roa_api, resource, "latest")
+
+            body[resource.name][resource.version] = api_url
+            body[resource.name]["latest"] = api_url_latest
 
         body = json.dumps(body).encode()
 
         return Response(body=body, content_type="application/json", charset="UTF-8")
-
-    def _calculate_resource_url(self, resource, version):
-        '''This method calculates resource API url based on the given resource object and version.'''
-
-        url = "%(api_url)s/%(version)s%(url)s" % \
-                {"api_url": self._roa_api,
-                 "version": version,
-                 "url": resource.url}
-
-        return url
