@@ -84,3 +84,11 @@ API generic controller
 
 .. autoclass:: fantastico.contrib.roa_discovery.roa_controller.RoaController
    :members:
+
+API error responses
+-------------------
+
+.. toctree::
+   :maxdepth: 3
+   
+   errors/error_10000

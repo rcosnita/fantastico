@@ -1,0 +1,11 @@
+10000 - Resource Not Found
+==========================
+
+Whenever we try a ROA dynamic REST operation (Read / Create / Update / Delete) on a resource and version which are not registered
+this error is returned. It is always a **json** compatible response:
+
+.. code-block:: javascript
+
+   {"error_code": 10000,
+    "error_description": "Friendly error description.",
+    "error_details": <link to this page>}
