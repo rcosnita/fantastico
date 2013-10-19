@@ -130,7 +130,7 @@ class RoaController(BaseController):
         models = model_facade.get_records_paged(start_record=params.offset, end_record=params.limit,
                                                 filter_expr=filter_expr,
                                                 sort_expr=sort_expr)
-        items = [json_serializer.serialize(model) for model in models]
+        items = [json_serializer.serialize(model, params.fields) for model in models]
 
         models_count = model_facade.count_records(filter_expr=filter_expr)
 
@@ -191,6 +191,12 @@ class CollectionParams(object):
 
         return self._order
 
+    @property
+    def fields(self):
+        '''This property returns **fields** query parameter received by collection.'''
+
+        return self._fields
+
     def __init__(self, request, offset_default, limit_default):
         self._offset = request.params.get("offset", offset_default)
 
@@ -204,3 +210,4 @@ class CollectionParams(object):
 
         self._filter = request.params.get("filter")
         self._order = request.params.get("order")
+        self._fields = request.params.get("fields")

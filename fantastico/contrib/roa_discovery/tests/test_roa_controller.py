@@ -130,8 +130,9 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         '''This test case ensures get collection can return first page populated with items. In addition it ensures
         filtering and sorting is supported.'''
 
-        expected_records = [{"name": "Resource 1", "description": "", "total": "12.00", "vat": "0.19"},
-                            {"name": "Resource 2", "description": "", "total": "15.00", "vat": "0.24"}]
+        expected_fields = "name,description"
+        expected_records = [{"name": "Resource 1", "description": ""},
+                            {"name": "Resource 2", "description": ""}]
         expected_records_count = 3
         expected_filter = Mock()
         expected_sort = Mock()
@@ -142,7 +143,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         request = Mock()
         request.params = {"offset": "0", "limit": "2",
                           "filter": "like(name, \"resource 1\")",
-                          "order": "asc(name)"}
+                          "order": "asc(name)",
+                          "fields": expected_fields}
 
         resource = Mock()
         resource.model = Mock()
@@ -156,7 +158,12 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self._resources_registry.find_by_url = Mock(return_value=resource)
 
-        self._json_serializer.serialize = lambda model: model
+        def mock_serialize(model, fields):
+            self.assertEqual(expected_fields, fields)
+
+            return model
+
+        self._json_serializer.serialize = mock_serialize
 
         response = self._controller.get_collection(request, version, resource_url)
 
