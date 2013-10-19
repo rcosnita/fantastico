@@ -87,7 +87,7 @@ class RoaController(BaseController):
 
         return Response(text=json.dumps(error), status_code=404, content_type="application/json")
 
-    @Controller(url=BASE_URL + "(/)?$")
+    @Controller(url=BASE_URL + "(/)?$", method="GET")
     def get_collection(self, request, version, resource_url):
         '''This method provides the route for accessing a resource collection. :doc:`/features/roa/rest_standard` for collections
         are enabled by this method. The typical response format is presented below:
@@ -134,6 +134,25 @@ class RoaController(BaseController):
                 "totalItems": models_count}
 
         return Response(text=json.dumps(body), content_type="application/json", status_code=200)
+
+    @Controller(url=BASE_URL + "(/)?$", method="OPTIONS")
+    def handle_resource_options(self, request, version, resource_url):
+        '''This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different
+        domains than project host.'''
+
+        resource = self._resources_registry.find_by_url(resource_url, float(version))
+
+        if not resource:
+            return self._handle_resource_notfound(version, resource_url)
+
+        response = Response(content_type="application/json", status_code=200)
+        response.headers["Content-Length"] = "0"
+        response.headers["Cache-Control"] = "private"
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"
+        response.headers["Access-Control-Allow-Headers"] = request.headers.get("Access-Control-Request-Headers", "")
+
+        return response
 
 class CollectionParams(object):
     '''This object defines the structure for get_collection supported query parameters.'''

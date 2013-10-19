@@ -173,6 +173,22 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._query_parser.parse_filter.assert_called_once_with(request.params["filter"])
         self._query_parser.parse_sort.assert_called_once_with(request.params["order"])
 
+    def _assert_resource_error(self, response, http_code, error_code, version, url):
+        '''This method asserts a given error response against expected resource error format.'''
+
+        self.assertIsNotNone(response)
+        self.assertEqual(http_code, response.status_code)
+        self.assertEqual("application/json", response.content_type)
+
+        self.assertIsNotNone(response.body)
+
+        body = json.loads(response.body.decode())
+
+        self.assertEqual(error_code, body["error_code"])
+        self.assertTrue(body["error_description"].find(version) > -1)
+        self.assertTrue(body["error_description"].find(url) > -1)
+        self.assertEqual("%sfeatures/roa/errors/error_%s.html" % (self._doc_base, error_code), body["error_details"])
+
     def test_get_collection_resource_notfound(self):
         '''This test case ensures 404 is returned if we try to access a resource which does not exist.'''
 
@@ -188,16 +204,48 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         response = self._controller.get_collection(request, version, url)
 
+        self._assert_resource_error(response, 404, 10000, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+
+    def test_roa_cors_support(self):
+        '''This test case ensures CORS is enabled on all ROA dynamic generated apis.'''
+
+        url = "/simple-resource"
+        version = "1.0"
+
+        self._resources_registry.find_by_url = Mock(return_value=Mock())
+
+        request = Mock()
+        request.headers = {"Access-Control-Request-Headers": "header1,header2"}
+
+        response = self._controller.handle_resource_options(request, version, url)
+
         self.assertIsNotNone(response)
-        self.assertEqual(404, response.status_code)
+        self.assertEqual(200, response.status_code)
         self.assertEqual("application/json", response.content_type)
+        self.assertEqual(0, response.content_length)
 
-        self.assertIsNotNone(response.body)
+        self.assertEqual("private", response.headers["Cache-Control"])
+        self.assertEqual("*", response.headers["Access-Control-Allow-Origin"])
+        self.assertEqual("OPTIONS,GET,POST,PUT,DELETE", response.headers["Access-Control-Allow-Methods"])
+        self.assertEqual(request.headers["Access-Control-Request-Headers"], response.headers["Access-Control-Allow-Headers"])
 
-        body = json.loads(response.body.decode())
-        self.assertEqual(10000, body["error_code"])
-        self.assertTrue(body["error_description"].find(version) > -1)
-        self.assertTrue(body["error_description"].find(url) > -1)
-        self.assertEqual("%sfeatures/roa/errors/error_10000.html" % self._doc_base, body["error_details"])
+        self.assertEqual(0, len(response.body))
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+
+    def test_roa_cors_support_resourcenotfound(self):
+        '''This test case ensures an error is returned if an options http request is done for a resource which is not
+        registered.'''
+
+        url = "/resource-not-found"
+        version = "1.0"
+
+        self._resources_registry.find_by_url = Mock(return_value=None)
+
+        response = self._controller.handle_resource_options(Mock(), version, url)
+
+        self._assert_resource_error(response, 404, 10000, version, url)
 
         self._resources_registry.find_by_url.assert_called_once_with(url, float(version))

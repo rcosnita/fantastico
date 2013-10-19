@@ -31,10 +31,15 @@ class RouteLoader(object, metaclass=ABCMeta):
                 self_settings_facade = settings_facade
 
             def load_routes(self):
-                return {"/index.html": {"method": "fantastico.plugins.static_assets.StaticAssetsController.resolve_text",
-                                        "http_verbs": ["GET"]},
-                        "/images/image.png": {"method": "fantastico.plugins.static_assets.StaticAssetsController.resolve_binary",
-                                              "http_verbs": ["GET"]}
+                return {"/index.html": {"http_verbs": {
+                                                    "GET": "fantastico.plugins.static_assets.StaticAssetsController.resolve_text"
+                                                    }
+                                        },
+                        "/images/image.png": {"http_verbs": {
+                                                    "GET": "fantastico.plugins.static_assets.StaticAssetsController.resolve_binary"
+                                                    }
+                                             }
+                }
     '''
 
     def __init__(self, settings_facade):

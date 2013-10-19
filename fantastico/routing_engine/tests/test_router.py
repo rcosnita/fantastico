@@ -80,9 +80,9 @@ class RouterTests(FantasticoUnitTestsCase):
 
         self.assertIsNotNone(routes)
         self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff",
-                         routes.get("/index.html")["method"])
+                         routes.get("/index.html")["http_verbs"]["GET"])
         self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff2",
-                         routes.get("/index2.html")["method"])
+                         routes.get("/index2.html")["http_verbs"]["GET"])
 
     def test_register_routes_conflict(self):
         '''Test case that ensures an exception is thrown whenever duplicate routes are detected.'''
@@ -145,9 +145,9 @@ class RouterTests(FantasticoUnitTestsCase):
 
         self.assertIsNotNone(routes)
         self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff",
-                         routes.get("/index.html")["method"])
+                         routes.get("/index.html")["http_verbs"]["GET"])
         self.assertEqual("fantastico.routing_engine.tests.test_router.Controller.do_stuff2",
-                         routes.get("/index2.html")["method"])
+                         routes.get("/index2.html")["http_verbs"]["GET"])
 
     def test_no_loaders_error(self):
         '''Test case that ensures router will not work correctly without loaders configured in current configuration.'''
@@ -217,7 +217,7 @@ class RouterTests(FantasticoUnitTestsCase):
         '''Test case that ensures handle route will raise a fantastico exception in case an None or empty string is
         retrieved as route handler.'''
 
-        environ = {}
+        environ = {"REQUEST_METHOD": "get"}
 
         self._settings_facade.get = Mock(return_value=["fantastico.routing_engine.tests.test_router.TestLoader3"])
 
@@ -254,27 +254,38 @@ class TestLoader(RouteLoader):
     '''Simple route loader used for unit testing.'''
 
     def load_routes(self):
-        return {"/index.html": {"method": "fantastico.routing_engine.tests.test_router.Controller.do_stuff",
-                                "http_verbs": ["GET"]},
+        return {"/index.html": {"http_verbs": {
+                                               "GET": "fantastico.routing_engine.tests.test_router.Controller.do_stuff"
+                                               }
+                                },
                 "^/(?P<component_name>.*)/static-test/(?P<path>.*)":
-                    {"method": "fantastico.routing_engine.tests.test_router.Controller.do_regex_action",
-                     "http_verbs": ["GET"]}}
+                    {"http_verbs": {"GET": "fantastico.routing_engine.tests.test_router.Controller.do_regex_action"
+                                    }
+                     }
+                }
 
 class TestLoader2(RouteLoader):
     '''Simple route loader used for unit testing.'''
 
     def load_routes(self):
-        return {"/index2.html": {"method": "fantastico.routing_engine.tests.test_router.Controller.do_stuff2",
-                                 "http_verbs": ["GET"]}}
+        return {"/index2.html": {"http_verbs": {"GET": "fantastico.routing_engine.tests.test_router.Controller.do_stuff2"
+                                                }
+                                 }
+                }
 
 class TestLoader3(RouteLoader):
     '''Simple route loader used for unit testing.'''
 
     def load_routes(self):
-        return {"/index.html": {"method": "fantastico.routing_engine.tests.test_router.not_found.Controller.do_stuff2",
-                                "http_verbs": ["GET"]},
-                "/index2.html": {"method": "",
-                                 "http_verbs": ["GET"]}}
+        return {"/index.html": {"http_verbs": {
+                                               "GET": "fantastico.routing_engine.tests.test_router.not_found.Controller.do_stuff2"
+                                              }
+                                },
+                "/index2.html": {"http_verbs": {
+                                                "GET": ""
+                                               }
+                                 }
+                }
 
 class TestLoaderEmpty(RouteLoader):
     '''Simple route loader meant to return no routes - unit testing purposes.'''

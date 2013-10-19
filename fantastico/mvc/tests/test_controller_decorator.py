@@ -40,6 +40,15 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
 
         controller_decorators.Controller = cls._old_controller_decorator
 
+    def _find_route_in_registeredroutes(self, route, registered_routes):
+        '''This method find a specified route in a list of registered controllers.'''
+
+        for controller in registered_routes:
+            if controller.url == route:
+                return controller
+
+        return None
+
     def test_controller_registration_ok(self):
         '''This test case checks that routes are correctly registered by controller decorator.'''
 
@@ -47,11 +56,10 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
 
         registered_routes = controller_decorators.Controller.get_registered_routes()
 
-        hello_route = registered_routes.get("/say_hello")
+        hello_route = self._find_route_in_registeredroutes("/say_hello", registered_routes)
 
         self.assertIsNotNone(hello_route)
         self.assertIsInstance(hello_route, controller_decorators.Controller)
-        self.assertEqual("/say_hello", hello_route.url)
         self.assertEqual(["GET"], hello_route.method)
         self.assertEqual({}, hello_route.models)
         self.assertEqual("fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.say_hello",
@@ -68,7 +76,7 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
 
         registered_routes = controller_decorators.Controller.get_registered_routes()
 
-        upload_file = registered_routes.get("/upload_file")
+        upload_file = self._find_route_in_registeredroutes("/upload_file", registered_routes)
 
         self.assertIsNotNone(upload_file)
         self.assertIsInstance(upload_file, controller_decorators.Controller)

@@ -69,7 +69,7 @@ class Controller(object):
     .. image:: /images/core/mvc.png'''
 
     _SUPPORTED_VERBS = ["get", "head", "post", "put", "delete", "trace", "options", "connect", "patch"]
-    _REGISTERED_ROUTES = {}
+    _REGISTERED_ROUTES = []
 
     @property
     def url(self):
@@ -176,7 +176,7 @@ class Controller(object):
 
         self._fn_handler = new_handler
 
-        self.get_registered_routes()[self.url] = self
+        self.get_registered_routes().append(self)
 
         return self._fn_handler
 
