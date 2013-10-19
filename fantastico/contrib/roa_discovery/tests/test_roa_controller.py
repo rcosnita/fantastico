@@ -45,12 +45,13 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._conn_manager = Mock()
         self._json_serializer = Mock()
         self._query_parser = Mock()
+        self._doc_base = "https://fantastico/html/"
 
         resources_registry_cls = Mock(return_value=self._resources_registry)
         model_facade_cls = Mock(return_value=self._model_facade)
         self._json_serializer_cls = Mock(return_value=self._json_serializer)
 
-        self._settings_facade = Mock(return_value=self._settings_facade)
+        self._settings_facade.get = self._mock_settings_get
 
         self._query_parser_cls = Mock(return_value=self._query_parser)
 
@@ -60,6 +61,12 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                                          conn_manager=self._conn_manager,
                                          json_serializer_cls=self._json_serializer_cls,
                                          query_parser_cls=self._query_parser_cls)
+
+    def _mock_settings_get(self, setting_name):
+        if setting_name == "doc_base":
+            return self._doc_base
+
+        raise Exception("Unexpected setting %s." % setting_name)
 
     def _mock_model_facade(self, records, records_count):
         '''This method mocks the current model facade object in order to return the specified values.'''
@@ -116,7 +123,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                                              offset=self._controller.OFFSET_DEFAULT,
                                              limit=self._controller.LIMIT_DEFAULT)
 
-        self._resources_registry.find_by_url.assert_called_once_with(float(version), resource_url)
+        self._resources_registry.find_by_url.assert_called_once_with(resource_url, float(version))
         self._json_serializer_cls.assert_called_once_with(resource.model)
 
     def test_get_collection_first_page(self):
@@ -161,7 +168,36 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                                              expected_filter=expected_filter,
                                              expected_sort=expected_sort)
 
-        self._resources_registry.find_by_url.assert_called_once_with(float(version), resource_url)
+        self._resources_registry.find_by_url.assert_called_once_with(resource_url, float(version))
         self._json_serializer_cls.assert_called_once_with(resource.model)
         self._query_parser.parse_filter.assert_called_once_with(request.params["filter"])
         self._query_parser.parse_sort.assert_called_once_with(request.params["order"])
+
+    def test_get_collection_resource_notfound(self):
+        '''This test case ensures 404 is returned if we try to access a resource which does not exist.'''
+
+        url = "/resource-not-found"
+        version = "1.0"
+
+        request = Mock()
+        request.params = {}
+
+        self._settings_facade.get = Mock(return_value=self._doc_base)
+
+        self._resources_registry.find_by_url = Mock(return_value=None)
+
+        response = self._controller.get_collection(request, version, url)
+
+        self.assertIsNotNone(response)
+        self.assertEqual(404, response.status_code)
+        self.assertEqual("application/json", response.content_type)
+
+        self.assertIsNotNone(response.body)
+
+        body = json.loads(response.body.decode())
+        self.assertEqual(10000, body["error_code"])
+        self.assertTrue(body["error_description"].find(version) > -1)
+        self.assertTrue(body["error_description"].find(url) > -1)
+        self.assertEqual("%sfeatures/roa/errors/error_10000.html" % self._doc_base, body["error_details"])
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))

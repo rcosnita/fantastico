@@ -51,6 +51,10 @@ class RoaController(BaseController):
         self._json_serializer_cls = json_serializer_cls
         self._query_parser_cls = query_parser_cls
 
+
+        doc_base = "%sfeatures/roa/errors/" % self._settings_facade.get("doc_base")
+        self._errors_url = doc_base + "error_%s.html"
+
     def _parse_filter(self, filter_expr):
         '''This method parse a string filter expression and builds a compatible ModelFilter.'''
 
@@ -71,6 +75,18 @@ class RoaController(BaseController):
 
         return query_parser.parse_sort(sort_expr)
 
+    def _handle_resource_notfound(self, version, url):
+        '''This method build a resource not found response which is sent as response. You can find more information about error
+        responses format on :doc:`/features/roa/rest_responses`'''
+
+        error_code = 10000
+
+        error = {"error_code": error_code,
+                 "error_description": "Resource %s version %s does not exist." % (url, version),
+                 "error_details": self._errors_url % error_code}
+
+        return Response(text=json.dumps(error), status_code=404, content_type="application/json")
+
     @Controller(url=BASE_URL + "(/)?$")
     def get_collection(self, request, version, resource_url):
         '''This method provides the route for accessing a resource collection. :doc:`/features/roa/rest_standard` for collections
@@ -82,12 +98,23 @@ class RoaController(BaseController):
                                 // resources represented as json objects.
                             ],
                             "totalItems": 100}
+
+        If a resource is not found or the resource version does not exist the following response is returned:
+
+        .. code-block:: javascript
+
+            {"error_code": 10000,
+             "error_description": "Resource %s version %s does not exist.",
+             "error_details": "http://rcosnita.github.io/fantastico/html/features/roa/errors/error_10000.html"}
         '''
 
         version = float(version)
         params = CollectionParams(request, RoaController.OFFSET_DEFAULT, RoaController.LIMIT_DEFAULT)
 
-        resource = self._resources_registry.find_by_url(version, resource_url)
+        resource = self._resources_registry.find_by_url(resource_url, version)
+
+        if not resource:
+            return self._handle_resource_notfound(version, resource_url)
 
         json_serializer = self._json_serializer_cls(resource.model)
 
