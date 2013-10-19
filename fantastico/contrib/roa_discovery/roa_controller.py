@@ -139,7 +139,7 @@ class RoaController(BaseController):
 
         return Response(text=json.dumps(body), content_type="application/json", status_code=200)
 
-    @Controller(url=BASE_LATEST_URL)
+    @Controller(url=BASE_LATEST_URL + "(/)?$", method="GET")
     def get_collection_latest(self, request, resource_url):
         '''This method retrieves a resource collection using the latest version of the api.'''
 
@@ -163,6 +163,13 @@ class RoaController(BaseController):
         response.headers["Access-Control-Allow-Headers"] = request.headers.get("Access-Control-Request-Headers", "")
 
         return response
+
+    @Controller(url=BASE_URL + "(/)?$", method="POST")
+    def create_item(self, request, version, resource_url):
+        '''This method provides the route for adding new resources into an existing collection. The API is json only and invoke
+        the validator as described in ROA spec.'''
+
+        pass
 
 class CollectionParams(object):
     '''This object defines the structure for get_collection supported query parameters.'''

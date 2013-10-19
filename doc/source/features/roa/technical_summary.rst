@@ -82,6 +82,9 @@ Exceptions
 API generic controller
 ----------------------
 
+.. autoclass:: fantastico.roa.resource_validator.ResourceValidator
+   :members:
+
 .. autoclass:: fantastico.contrib.roa_discovery.roa_controller.RoaController
    :members:
 
