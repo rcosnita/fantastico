@@ -35,6 +35,7 @@ class RoaController(BaseController):
     SETTINGS_FACADE = SettingsFacade()
     ROA_API = SETTINGS_FACADE.get("roa_api")
     BASE_URL = "%s/(?P<version>[0-9]{1,}\\.[0-9]{1,})(?P<resource_url>.*)" % ROA_API
+    BASE_LATEST_URL = "%s/latest/(?P<resource_url>.*)" % ROA_API
 
     OFFSET_DEFAULT = 0
     LIMIT_DEFAULT = 100
@@ -108,7 +109,9 @@ class RoaController(BaseController):
              "error_details": "http://rcosnita.github.io/fantastico/html/features/roa/errors/error_10000.html"}
         '''
 
-        version = float(version)
+        if version != "latest":
+            version = float(version)
+
         params = CollectionParams(request, RoaController.OFFSET_DEFAULT, RoaController.LIMIT_DEFAULT)
 
         resource = self._resources_registry.find_by_url(resource_url, version)
@@ -134,6 +137,12 @@ class RoaController(BaseController):
                 "totalItems": models_count}
 
         return Response(text=json.dumps(body), content_type="application/json", status_code=200)
+
+    @Controller(url=BASE_LATEST_URL)
+    def get_collection_latest(self, request, resource_url):
+        '''This method retrieves a resource collection using the latest version of the api.'''
+
+        return self.get_collection(request, "latest", resource_url)
 
     @Controller(url=BASE_URL + "(/)?$", method="OPTIONS")
     def handle_resource_options(self, request, version, resource_url):
