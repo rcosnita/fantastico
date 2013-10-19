@@ -30,6 +30,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     _conn_manager = None
     _json_serializer_cls = None
     _json_serializer = None
+    _query_parser_cls = None
+    _query_parser = None
     _controller = None
 
     def init(self):
@@ -42,6 +44,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._model_facade = Mock()
         self._conn_manager = Mock()
         self._json_serializer = Mock()
+        self._query_parser = Mock()
 
         resources_registry_cls = Mock(return_value=self._resources_registry)
         model_facade_cls = Mock(return_value=self._model_facade)
@@ -49,11 +52,14 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self._settings_facade = Mock(return_value=self._settings_facade)
 
+        self._query_parser_cls = Mock(return_value=self._query_parser)
+
         self._controller = RoaController(settings_facade=self._settings_facade,
                                          resources_registry_cls=resources_registry_cls,
                                          model_facade_cls=model_facade_cls,
                                          conn_manager=self._conn_manager,
-                                         json_serializer_cls=self._json_serializer_cls)
+                                         json_serializer_cls=self._json_serializer_cls,
+                                         query_parser_cls=self._query_parser_cls)
 
     def _mock_model_facade(self, records, records_count):
         '''This method mocks the current model facade object in order to return the specified values.'''
@@ -61,7 +67,9 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._model_facade.get_records_paged = Mock(return_value=records)
         self._model_facade.count_records = Mock(return_value=records_count)
 
-    def _assert_get_collection_response(self, response, records, records_count, offset, limit):
+    def _assert_get_collection_response(self, response, records, records_count, offset, limit,
+                                        expected_filter=None,
+                                        expected_sort=None):
         '''This test case assert the given response against expected values.'''
 
         self.assertIsNotNone(response)
@@ -75,8 +83,10 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertEqual(len(records), len(body["items"]))
         self.assertEqual(records_count, body["totalItems"])
 
-        self._model_facade.get_records_paged.assert_called_once_with(start_record=offset, end_record=limit)
-        self._model_facade.count_records.assert_called_once_with()
+        self._model_facade.get_records_paged.assert_called_once_with(start_record=offset, end_record=limit,
+                                                                     filter_expr=expected_filter,
+                                                                     sort_expr=expected_sort)
+        self._model_facade.count_records.assert_called_once_with(filter_expr=expected_filter)
 
     def test_get_collection_default_values_emptyresult(self):
         '''This test case ensures get collection works as expected without any query parameters passed. It ensures
@@ -108,3 +118,50 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self._resources_registry.find_by_url.assert_called_once_with(float(version), resource_url)
         self._json_serializer_cls.assert_called_once_with(resource.model)
+
+    def test_get_collection_first_page(self):
+        '''This test case ensures get collection can return first page populated with items. In addition it ensures
+        filtering and sorting is supported.'''
+
+        expected_records = [{"name": "Resource 1", "description": "", "total": "12.00", "vat": "0.19"},
+                            {"name": "Resource 2", "description": "", "total": "15.00", "vat": "0.24"}]
+        expected_records_count = 3
+        expected_filter = Mock()
+        expected_sort = Mock()
+
+        version = "1.0"
+        resource_url = "/sample-resources"
+
+        request = Mock()
+        request.params = {"offset": "0", "limit": "2",
+                          "filter": "like(name, \"resource 1\")",
+                          "order": "asc(name)"}
+
+        resource = Mock()
+        resource.model = Mock()
+
+        self._query_parser.parse_filter = Mock(return_value=expected_filter)
+        self._query_parser.parse_sort = Mock(return_value=expected_sort)
+
+        self._mock_model_facade(records=expected_records, records_count=expected_records_count)
+        self._model_facade.get_records_paged = Mock(return_value=expected_records)
+        self._model_facade.count_records = Mock(return_value=expected_records_count)
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+
+        self._json_serializer.serialize = lambda model: model
+
+        response = self._controller.get_collection(request, version, resource_url)
+
+        self._assert_get_collection_response(response,
+                                             records=expected_records,
+                                             records_count=expected_records_count,
+                                             offset=0,
+                                             limit=2,
+                                             expected_filter=expected_filter,
+                                             expected_sort=expected_sort)
+
+        self._resources_registry.find_by_url.assert_called_once_with(float(version), resource_url)
+        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._query_parser.parse_filter.assert_called_once_with(request.params["filter"])
+        self._query_parser.parse_sort.assert_called_once_with(request.params["order"])
