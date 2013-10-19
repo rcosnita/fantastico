@@ -17,15 +17,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.roa_discovery.roa_controller
 '''
 from fantastico import mvc
+from fantastico.contrib.roa_discovery import roa_helper
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import ControllerProvider, Controller
 from fantastico.mvc.model_facade import ModelFacade
+from fantastico.roa.query_parser import QueryParser
 from fantastico.roa.resource_json_serializer import ResourceJsonSerializer
 from fantastico.roa.resources_registry import ResourcesRegistry
 from fantastico.settings import SettingsFacade
 from webob.response import Response
 import json
-from fantastico.roa.query_parser import QueryParser
 
 @ControllerProvider()
 class RoaController(BaseController):
@@ -33,7 +34,7 @@ class RoaController(BaseController):
     addition error handling is automatically provided by this controller.'''
 
     SETTINGS_FACADE = SettingsFacade()
-    ROA_API = SETTINGS_FACADE.get("roa_api")
+    ROA_API = roa_helper.normalize_absolute_roa_uri(SETTINGS_FACADE.get("roa_api"))
     BASE_URL = "%s/(?P<version>[0-9]{1,}\\.[0-9]{1,})(?P<resource_url>.*)" % ROA_API
     BASE_LATEST_URL = "%s/latest/(?P<resource_url>.*)" % ROA_API
 

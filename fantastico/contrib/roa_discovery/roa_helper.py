@@ -26,3 +26,18 @@ def calculate_resource_url(roa_api, resource, version):
              "url": resource.url}
 
     return url
+
+def normalize_absolute_roa_uri(roa_api):
+    '''This method normalize a given url so that it does not include protocol and host sections.'''
+
+    roa_api = roa_api.lower()
+
+    if not roa_api.startswith("http") and not roa_api.startswith("https"):
+        return roa_api
+
+    segments = roa_api.split("/")
+
+    if len(segments) < 4:
+        return "/"
+
+    return "/%s" % "/".join(segments[3:])
