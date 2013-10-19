@@ -40,7 +40,7 @@ class RoaController(BaseController):
     LIMIT_DEFAULT = 100
 
     def __init__(self, settings_facade, resources_registry_cls=ResourcesRegistry, model_facade_cls=ModelFacade,
-                 conn_manager=mvc.CONN_MANAGER,
+                 conn_manager=mvc,
                  json_serializer_cls=ResourceJsonSerializer,
                  query_parser_cls=QueryParser):
         super(RoaController, self).__init__(settings_facade)
@@ -116,12 +116,12 @@ class RoaController(BaseController):
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
 
-        json_serializer = self._json_serializer_cls(resource.model)
+        json_serializer = self._json_serializer_cls(resource)
 
         filter_expr = self._parse_filter(params.filter_expr)
         sort_expr = self._parse_sort(params.order_expr)
 
-        model_facade = self._model_facade_cls(resource.model, self._conn_manager.get_connection(request.request_id))
+        model_facade = self._model_facade_cls(resource.model, self._conn_manager.CONN_MANAGER.get_connection(request.request_id))
 
         models = model_facade.get_records_paged(start_record=params.offset, end_record=params.limit,
                                                 filter_expr=filter_expr,

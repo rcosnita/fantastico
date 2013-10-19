@@ -124,7 +124,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                                              limit=self._controller.LIMIT_DEFAULT)
 
         self._resources_registry.find_by_url.assert_called_once_with(resource_url, float(version))
-        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._json_serializer_cls.assert_called_once_with(resource)
 
     def test_get_collection_first_page(self):
         '''This test case ensures get collection can return first page populated with items. In addition it ensures
@@ -169,7 +169,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                                              expected_sort=expected_sort)
 
         self._resources_registry.find_by_url.assert_called_once_with(resource_url, float(version))
-        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._json_serializer_cls.assert_called_once_with(resource)
         self._query_parser.parse_filter.assert_called_once_with(request.params["filter"])
         self._query_parser.parse_sort.assert_called_once_with(request.params["order"])
 
