@@ -28,6 +28,7 @@ from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.settings import SettingsFacade
 from webob.response import Response
 import json
+from fantastico.exceptions import FantasticoDbError
 
 @ControllerProvider()
 class RoaController(BaseController):
@@ -118,6 +119,17 @@ class RoaController(BaseController):
                                           error_code=error_code,
                                           error_description="Resource %s version %s can not be created: no body given." % \
                                                     (url, version),
+                                          error_details=self._errors_url % error_code)
+
+    def _handle_resource_dberror(self, version, url, dbex):
+        '''This method builds a resource dberror response which is sent to the client.'''
+
+        error_code = 10030
+
+        return self._build_error_response(http_code=400,
+                                          error_code=error_code,
+                                          error_description="Resource %s version %s can not be created: %s." % \
+                                                    (url, version, str(dbex)),
                                           error_details=self._errors_url % error_code)
 
     def _get_current_connection(self, request):
@@ -222,7 +234,24 @@ class RoaController(BaseController):
     @Controller(url=BASE_URL + "(/)?$", method="POST")
     def create_item(self, request, version, resource_url):
         '''This method provides the route for adding new resources into an existing collection. The API is json only and invoke
-        the validator as described in ROA spec.'''
+        the validator as described in ROA spec. Usually, when a resource is created successfully a similar answer is returned to
+        the client:
+
+        .. code-block:: html
+
+            201 Created
+            Content-Type: application/json
+            Content-Length: 0
+            Location: /api/2.0/app-settings/123
+
+        Below you can find all error response codes which might be returned when creating a new resource:
+
+            * **10000** - Whenever we try to create a resource with unknown type. (Not registered to ROA).
+            * **10010** - Whenever we try to create a resource which fails validation.
+            * **10020** - Whenever we try to create a resource without passing a valid body.
+            * **10030** - Whenever we try to create a resource and an unexpected database exception occurs.
+
+        You can find more information about typical REST ROA APIs response on :doc:`/features/roa/rest_responses`.'''
 
         version = float(version)
 
@@ -236,8 +265,11 @@ class RoaController(BaseController):
         if isinstance(model, Response):
             return model
 
-        model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
-        model_id = model_facade.create(model)
+        try:
+            model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
+            model_id = model_facade.create(model)
+        except FantasticoDbError as dbex:
+            return self._handle_resource_dberror(resource.version, resource.url, dbex)
 
         model_location = roa_helper.calculate_resource_url(self._roa_api, resource, version)
         model_location += "/%s" % model_id

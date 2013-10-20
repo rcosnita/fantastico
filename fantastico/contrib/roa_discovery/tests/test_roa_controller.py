@@ -26,6 +26,7 @@ from mock import Mock
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Text
 import json
+from fantastico.exceptions import FantasticoDbError
 
 class RoaControllerTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for roa controller.'''
@@ -360,6 +361,35 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._resources_registry.find_by_url.assert_called_once_with(resource.url, resource.version)
         self._json_serializer.deserialize.assert_called_once_with(request.body.decode())
         self._model_facade.create.assert_called_once_with(expected_model)
+
+    def test_create_item_dbexception(self):
+        '''This test case ensures an error response is received if an unexpected db error occurs when creating the resource.'''
+
+        resource = Resource(name="Mock Simple Resource", url="/mock-simple-resources",
+                            version=1.0)
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        request_body = {"name": "simple-resource1",
+                        "description": "Simple resource description."}
+
+        expected_model = MockSimpleResourceRoa(name=request_body.get("name"),
+                                               description=request_body.get("description"))
+
+        request = Mock()
+        request.body = json.dumps(request_body).encode()
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._json_serializer.deserialize = Mock(return_value=expected_model)
+        self._model_facade.create = Mock(side_effect=FantasticoDbError("Unexpected db error."))
+
+        response = self._controller.create_item(request, str(resource.version), resource.url)
+
+        self._assert_resource_error(response, 400, 10030, str(resource.version), resource.url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(resource.url, resource.version)
+        self._json_serializer.deserialize.assert_called_once_with(request.body.decode())
+        self._model_facade.create.assert_called_once_with(expected_model)
+
 
 class MockSimpleResourceRoa(object):
     '''This class provides a very simple used in tests.'''
