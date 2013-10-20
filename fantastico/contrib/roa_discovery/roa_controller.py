@@ -24,6 +24,7 @@ from fantastico.mvc.model_facade import ModelFacade
 from fantastico.roa.query_parser import QueryParser
 from fantastico.roa.resource_json_serializer import ResourceJsonSerializer
 from fantastico.roa.resources_registry import ResourcesRegistry
+from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.settings import SettingsFacade
 from webob.response import Response
 import json
@@ -53,9 +54,9 @@ class RoaController(BaseController):
         self._json_serializer_cls = json_serializer_cls
         self._query_parser_cls = query_parser_cls
 
-
         doc_base = "%sfeatures/roa/errors/" % self._settings_facade.get("doc_base")
         self._errors_url = doc_base + "error_%s.html"
+        self._roa_api = self._settings_facade.get("roa_api")
 
     def _parse_filter(self, filter_expr):
         '''This method parse a string filter expression and builds a compatible ModelFilter.'''
@@ -77,17 +78,52 @@ class RoaController(BaseController):
 
         return query_parser.parse_sort(sort_expr)
 
+    def _build_error_response(self, http_code, error_code, error_description, error_details):
+        '''This method builds an error response compliant with :doc:`/features/roa/rest_responses` specification.'''
+
+        error = {"error_code": error_code,
+                 "error_description": error_description,
+                 "error_details": error_details}
+
+        return Response(text=json.dumps(error), status_code=http_code, content_type="application/json")
+
     def _handle_resource_notfound(self, version, url):
-        '''This method build a resource not found response which is sent as response. You can find more information about error
+        '''This method build a resource not found response which is sent to the client. You can find more information about error
         responses format on :doc:`/features/roa/rest_responses`'''
 
         error_code = 10000
 
-        error = {"error_code": error_code,
-                 "error_description": "Resource %s version %s does not exist." % (url, version),
-                 "error_details": self._errors_url % error_code}
+        return self._build_error_response(http_code=404,
+                                          error_code=error_code,
+                                          error_description="Resource %s version %s does not exist." % (url, version),
+                                          error_details=self._errors_url % error_code)
 
-        return Response(text=json.dumps(error), status_code=404, content_type="application/json")
+    def _handle_resource_invalid(self, version, url, ex):
+        '''This method builds a resource invalid response which is sent to the client.'''
+
+        error_code = 10010
+
+        return self._build_error_response(http_code=ex.http_code,
+                                          error_code=error_code,
+                                          error_description="Resource %s version %s is invalid: %s" % \
+                                                    (url, version, str(ex)),
+                                          error_details=self._errors_url % error_code)
+
+    def _handle_resource_nobody(self, version, url):
+        '''This method builds a resource nobody given response which is sent to the client.'''
+
+        error_code = 10020
+
+        return self._build_error_response(http_code=400,
+                                          error_code=error_code,
+                                          error_description="Resource %s version %s can not be created: no body given." % \
+                                                    (url, version),
+                                          error_details=self._errors_url % error_code)
+
+    def _get_current_connection(self, request):
+        '''This method returns the current db connection for this request.'''
+
+        return self._conn_manager.CONN_MANAGER.get_connection(request.request_id)
 
     @Controller(url=BASE_URL + "(/)?$", method="GET")
     def get_collection(self, request, version, resource_url):
@@ -125,7 +161,7 @@ class RoaController(BaseController):
         filter_expr = self._parse_filter(params.filter_expr)
         sort_expr = self._parse_sort(params.order_expr)
 
-        model_facade = self._model_facade_cls(resource.model, self._conn_manager.CONN_MANAGER.get_connection(request.request_id))
+        model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
 
         models = model_facade.get_records_paged(start_record=params.offset, end_record=params.limit,
                                                 filter_expr=filter_expr,
@@ -164,12 +200,52 @@ class RoaController(BaseController):
 
         return response
 
+    def _validate_resource(self, resource, request_body):
+        '''This method is used to validate the resource. If the resource validation fails an error response is sent. Otherwise
+        the newly validated model is returned.'''
+
+        if not request_body:
+            return self._handle_resource_nobody(resource.version, resource.url)
+
+        model = self._json_serializer_cls(resource.model).deserialize(request_body.decode())
+
+        if not resource.validator:
+            return model
+
+        try:
+            resource.validator().validate(model)
+        except FantasticoRoaError as ex:
+            return self._handle_resource_invalid(resource.version, resource.url, ex)
+
+        return model
+
     @Controller(url=BASE_URL + "(/)?$", method="POST")
     def create_item(self, request, version, resource_url):
         '''This method provides the route for adding new resources into an existing collection. The API is json only and invoke
         the validator as described in ROA spec.'''
 
-        pass
+        version = float(version)
+
+        resource = self._resources_registry.find_by_url(resource_url, version)
+
+        if not resource:
+            return self._handle_resource_notfound(version, resource_url)
+
+        model = self._validate_resource(resource, request.body)
+
+        if isinstance(model, Response):
+            return model
+
+        model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
+        model_id = model_facade.create(model)
+
+        model_location = roa_helper.calculate_resource_url(self._roa_api, resource, version)
+        model_location += "/%s" % model_id
+
+        response = Response(status_code=201, content_type="application/json")
+        response.headers["Location"] = model_location
+
+        return response
 
 class CollectionParams(object):
     '''This object defines the structure for get_collection supported query parameters.'''

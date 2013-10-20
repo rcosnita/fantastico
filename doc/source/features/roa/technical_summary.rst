@@ -95,3 +95,4 @@ API error responses
    :maxdepth: 3
    
    errors/error_10000
+   errors/error_10010

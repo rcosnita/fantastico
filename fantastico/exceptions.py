@@ -29,6 +29,17 @@ class FantasticoError(Exception):
     that at no moment errors will cause fantastico framework wsgi container to crash.
     '''
 
+    @property
+    def http_code(self):
+        '''This method returns the http code on which this exception is mapped.'''
+
+        return self._http_code
+
+    def __init__(self, msg=None, http_code=400):
+        super(FantasticoError, self).__init__(msg)
+
+        self._http_code = http_code
+
 class FantasticoControllerInvalidError(FantasticoError):
     '''This exception is raised whenever a method is decorated with
     :py:class:`fantastico.mvc.controller_decorators.Controller` and the number of arguments is not correct. Usually

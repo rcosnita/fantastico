@@ -85,12 +85,20 @@ class Resource(object):
 
         return self._subresources
 
-    def __init__(self, name, url, version=1.0, subresources=None):
+    @property
+    def validator(self):
+        '''This property returns the validator type which must be used for this resource for creating / updating it. You can
+        read more about it on :py:class:`fantastico.roa.resource_validator.ResourceValidator`.'''
+
+        return self._validator
+
+    def __init__(self, name, url, version=1.0, subresources=None, validator=None):
         self._name = name
         self._url = url
         self._version = float(version)
         self._model = None
         self._subresources = subresources or {}
+        self._validator = validator
 
     def __call__(self, model_cls, resources_registry=None):
         '''This method is invoked when the model class is first imported into python virtual machine.'''

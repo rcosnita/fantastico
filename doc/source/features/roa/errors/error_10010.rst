@@ -1,0 +1,11 @@
+10010 - Resource Invalid
+========================
+
+Whenever a resource is created / updated a validation is done using a custom validator (:doc:`/features/roa`). You can find
+below a sample example of error message you might receive:
+
+.. code-block:: javascript
+
+   {"error_code": 10010,
+    "error_description": "Friendly error description.",
+    "error_details": <link to this page>}

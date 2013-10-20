@@ -17,8 +17,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.roa_discovery.tests.test_roa_controller
 '''
 
+from fantastico.mvc import BASEMODEL
+from fantastico.roa.resource_decorator import Resource
+from fantastico.roa.resource_validator import ResourceValidator
+from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
+from sqlalchemy.schema import Column
+from sqlalchemy.types import Integer, String, Text
 import json
 
 class RoaControllerTests(FantasticoUnitTestsCase):
@@ -65,6 +71,9 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     def _mock_settings_get(self, setting_name):
         if setting_name == "doc_base":
             return self._doc_base
+
+        if setting_name == "roa_api":
+            return "/api"
 
         raise Exception("Unexpected setting %s." % setting_name)
 
@@ -256,3 +265,118 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._assert_resource_error(response, 404, 10000, version, url)
 
         self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+
+    def test_create_item_noresourcefound(self):
+        '''This test case ensures we can not add items to an inexistent resource.'''
+
+        url = "/sample-resource"
+        version = "1.0"
+
+        request = Mock()
+
+        self._resources_registry.find_by_url = Mock(return_value=None)
+
+        response = self._controller.create_item(request, version, url)
+
+        self._assert_resource_error(response, 404, 10000, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+
+    def test_create_item_empty_body(self):
+        '''This test case ensures an item can not be created if no body is given.'''
+
+        url = "/sample-resources"
+        version = "1.0"
+
+        resource = Mock()
+        resource.url = url
+        resource.version = version
+
+        request = Mock()
+        request.body = None
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+
+        response = self._controller.create_item(request, version, url)
+
+        self._assert_resource_error(response, 400, 10020, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+
+    def test_create_item_invalidresource(self):
+        '''This test case ensures an item can not be created if it's invalid.'''
+
+        resource = Resource(name="Mock Simple Resource", url="/mock-simple-resources",
+                            version=1.0,
+                            validator=MockSimpleResourceValidator)
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        request_body = {"description": "Simple resource description."}
+
+        request = Mock()
+        request.body = json.dumps(request_body).encode()
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._json_serializer.deserialize = Mock(return_value=MockSimpleResourceRoa(description=request_body.get("description")))
+
+        response = self._controller.create_item(request, version=str(resource.version), resource_url=resource.url)
+
+        self._assert_resource_error(response, 400, 10010, str(resource.version), resource.url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(resource.url, resource.version)
+        self._json_serializer.deserialize.assert_called_once_with(request.body.decode())
+
+    def test_create_item_ok(self):
+        '''This test case ensures a valid resource can be created correctly.'''
+
+        resource = Resource(name="Mock Simple Resource", url="/mock-simple-resources",
+                            version=1.0)
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        request_body = {"name": "simple-resource1",
+                        "description": "Simple resource description."}
+
+        expected_model = MockSimpleResourceRoa(name=request_body.get("name"),
+                                               description=request_body.get("description"))
+
+        expected_id = 123
+
+        request = Mock()
+        request.body = json.dumps(request_body).encode()
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._json_serializer.deserialize = Mock(return_value=expected_model)
+        self._model_facade.create = Mock(return_value=expected_id)
+
+        response = self._controller.create_item(request, str(resource.version), resource.url)
+
+        self.assertIsNotNone(resource)
+        self.assertEqual(201, response.status_code)
+        self.assertEqual("application/json", response.content_type)
+        self.assertEqual("0", response.headers["Content-Length"])
+        self.assertEqual("/api/%s%s/%s" % (resource.version, resource.url, expected_id),
+                         response.headers["Location"])
+
+        self._resources_registry.find_by_url.assert_called_once_with(resource.url, resource.version)
+        self._json_serializer.deserialize.assert_called_once_with(request.body.decode())
+        self._model_facade.create.assert_called_once_with(expected_model)
+
+class MockSimpleResourceRoa(object):
+    '''This class provides a very simple used in tests.'''
+
+    id = Column("id", Integer)
+    name = Column("name", String(50))
+    description = Column("description", Text)
+
+    def __init__(self, name=None, description=None):
+        self.name = name
+        self.description = description
+
+class MockSimpleResourceValidator(ResourceValidator):
+    '''This is a very simple validator used for testing purposes.'''
+
+    def validate(self, resource):
+        if not resource.name:
+            raise FantasticoRoaError("Name must be provided.")
+
+        return True

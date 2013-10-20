@@ -22,6 +22,9 @@ class FantasticoRoaError(FantasticoError):
     '''This class provides the core error used within Fantastico ROA layer. Usually, more concrete exceptions are raised by
     ROA layers.'''
 
+    def __init__(self, msg):
+        super(FantasticoRoaError, self).__init__(msg, http_code=400)
+
 class FantasticoRoaDuplicateError(FantasticoRoaError):
     '''This concrete exception is used to notify user that multiple resources with same name and version or url and version
     can not be registered multiple times.'''

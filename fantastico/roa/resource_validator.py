@@ -35,11 +35,13 @@ class ResourceValidator(object):
                 if len(errors) == 0:
                     return
 
-                raise FantasticoResourceError(errors)
+                raise FantasticoRoaError(errors)
     '''
 
     def validate(self, resource):
         '''This method must be overriden by each subclass in order to provide the validation logic required for the given
-        resource. The resource received as an argument represents an instance of the model used to describe the resource.'''
+        resource. The resource received as an argument represents an instance of the model used to describe the resource.
+        This method can raise unexpected exceptions. It is recommended to use
+        :py:class:`fantastico.roa.roa_exceptions.FantasticoRoaError`.'''
 
         return True

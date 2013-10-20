@@ -139,7 +139,7 @@ so in Fantastico for each defined resource you can define a validator which will
            if len(errors) == 0:
                return
          
-           raise FantasticoResourceError(errors)
+           raise FantasticoRoaError(errors)
 
 .. code-block:: python
 
