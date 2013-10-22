@@ -382,13 +382,127 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._json_serializer.deserialize = Mock(return_value=expected_model)
         self._model_facade.create = Mock(side_effect=FantasticoDbError("Unexpected db error."))
 
-        response = self._controller.create_item(request, str(resource.version), resource.url)
+        response = self._controller.create_item_latest(request, resource.url)
 
         self._assert_resource_error(response, 400, 10030, str(resource.version), resource.url)
 
-        self._resources_registry.find_by_url.assert_called_once_with(resource.url, resource.version)
+        self._resources_registry.find_by_url.assert_called_once_with(resource.url, "latest")
         self._json_serializer.deserialize.assert_called_once_with(request.body.decode())
         self._model_facade.create.assert_called_once_with(expected_model)
+
+    def test_get_item_resource_notsupported(self):
+        '''This test case covers the scenario for retrieving an item from a resource collection which is not supported.'''
+
+        url = "/simple-settings"
+        version = "1.0"
+        resource_id = 1986
+
+        self._resources_registry.find_by_url = Mock(return_value=None)
+
+        response = self._controller.get_item(Mock(), version, url, resource_id)
+
+        self._assert_resource_error(response, 404, 10000, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+
+    def test_get_item_inexistent_resource(self):
+        '''This test case covers the scenario for retrieving an inexisten item from an existing collection.'''
+
+        url = "/simple-resources"
+        version = "1.0"
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=float(version))
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        resource_id = 1986
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+
+        self._model_facade.model_pk_cols = [MockSimpleResourceRoa.id]
+        self._model_facade.find_by_pk = Mock(return_value=None)
+
+        response = self._controller.get_item(Mock(), version, url, resource_id)
+
+        self._assert_resource_error(response, 404, 10040, version, url)
+
+        self.assertTrue(resource_id, json.loads(response.body.decode())["error_description"])
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
+
+    def test_get_item_ok(self):
+        '''This test case ensures an item can be correctly retrieved from collection.'''
+
+        url = "/simple-resources"
+        version = "1.0"
+        fields = "id,name,description"
+
+        model = Mock()
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=float(version))
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        request = Mock()
+        request.params = {"fields": fields}
+
+        resource_id = 1986
+
+        expected_body = {"id": resource_id,
+                         "name": "Test resource",
+                         "description": "Simple description."}
+
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+
+        self._model_facade.model_pk_cols = [MockSimpleResourceRoa.id]
+        self._model_facade.find_by_pk = Mock(return_value=model)
+
+        self._json_serializer.serialize = Mock(return_value=expected_body)
+
+        response = self._controller.get_item(request, version, url, resource_id)
+
+        self.assertIsNotNone(response)
+        self.assertEqual(200, response.status_code)
+        self.assertEqual("application/json", response.content_type)
+
+        self.assertIsNotNone(response.body)
+        body = json.loads(response.body.decode())
+
+        self.assertEqual(expected_body, body)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
+        self._json_serializer_cls.assert_called_once_with(resource)
+        self._json_serializer.serialize(model, fields)
+
+    def test_get_item_unexpected_dbex(self):
+        '''This test case ensures an exception response is received whenever a database exception occurs.'''
+
+        url = "/simple-resources"
+        version = "1.0"
+        fields = "id,name,description"
+
+        model = Mock()
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=float(version))
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        resource_id = 1986
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+
+        self._model_facade.model_pk_cols = [MockSimpleResourceRoa.id]
+        self._model_facade.find_by_pk = Mock(side_effect=FantasticoDbError("Unexpected db error."))
+
+        response = self._controller.get_item(Mock(), version, url, resource_id)
+
+        self._assert_resource_error(response, 400, 10030, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
 
 
 class MockSimpleResourceRoa(object):

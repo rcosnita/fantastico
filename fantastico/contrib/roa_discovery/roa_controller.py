@@ -99,6 +99,18 @@ class RoaController(BaseController):
                                           error_description="Resource %s version %s does not exist." % (url, version),
                                           error_details=self._errors_url % error_code)
 
+    def _handle_resource_item_notfound(self, version, url, resource_id):
+        '''This method build a resource not found response which is sent to the client. You can find more information about error
+        responses format on :doc:`/features/roa/rest_responses`. In the error description it also contains resource id.'''
+
+        error_code = 10040
+
+        return self._build_error_response(http_code=404,
+                                          error_code=error_code,
+                                          error_description="Resource %s version %s id %s does not exist." % \
+                                            (url, version, resource_id),
+                                          error_details=self._errors_url % error_code)
+
     def _handle_resource_invalid(self, version, url, ex):
         '''This method builds a resource invalid response which is sent to the client.'''
 
@@ -231,6 +243,58 @@ class RoaController(BaseController):
 
         return model
 
+    @Controller(url=BASE_URL + "/(?<resource_id>.*?)(/)?$", method="GET")
+    def get_item(self, request, version, resource_url, resource_id):
+        '''This method provides the API for retrieving a single item from a collection. The item is uniquely identified by
+        resource_id. Below you can find a success response example:
+
+        .. code-block:: html
+
+            GET - /api/1.0/simple-resources/1 HTTP/1.1
+
+            200 OK
+            Content-Type: application/json
+            Content-Length: ...
+
+            {
+                "id": 1,
+                "name": "Test resource",
+                "description": "Simple description"
+            }
+
+        Of course there are cases when exceptions might occur. Below, you can find a list of error response retrieved from
+        get_item API:
+
+            * **10000** - Whenever we try to retrieve a resource with unknown type. (Not registered to ROA).
+            * **10030** - Whenever we try to retrieve a resource and an unexpected database exception occurs.
+            * **10040** - Whenever we try to retrieve a resource which does not exist.
+        '''
+
+        version = float(version)
+        fields = request.params.get("fields")
+
+        resource = self._resources_registry.find_by_url(resource_url, version)
+
+        if not resource:
+            return self._handle_resource_notfound(version, resource_url)
+
+        model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
+
+        try:
+            model = model_facade.find_by_pk({model_facade.model_pk_cols[0]: resource_id})
+        except FantasticoDbError as dbex:
+            return self._handle_resource_dberror(version, resource_url, dbex)
+
+        if not model:
+            return self._handle_resource_item_notfound(version, resource_url, resource_id)
+
+        json_serializer = self._json_serializer_cls(resource)
+
+        resource_body = json_serializer.serialize(model, fields)
+        resource_body = json.dumps(resource_body)
+
+        return Response(body=resource_body.encode(), content_type="application/json", status_code=200)
+
     @Controller(url=BASE_URL + "(/)?$", method="POST")
     def create_item(self, request, version, resource_url):
         '''This method provides the route for adding new resources into an existing collection. The API is json only and invoke
@@ -253,7 +317,8 @@ class RoaController(BaseController):
 
         You can find more information about typical REST ROA APIs response on :doc:`/features/roa/rest_responses`.'''
 
-        version = float(version)
+        if version != "latest":
+            version = float(version)
 
         resource = self._resources_registry.find_by_url(resource_url, version)
 
@@ -278,6 +343,12 @@ class RoaController(BaseController):
         response.headers["Location"] = model_location
 
         return response
+
+    @Controller(url=BASE_LATEST_URL + "(/)?$", method="POST")
+    def create_item_latest(self, request, resource_url):
+        '''This method provides create item latest API version.'''
+
+        return self.create_item(request, "latest", resource_url)
 
 class CollectionParams(object):
     '''This object defines the structure for get_collection supported query parameters.'''

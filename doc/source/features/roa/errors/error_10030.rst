@@ -1,8 +1,8 @@
 10030 - Unexpected database error
 =================================
 
-Whenever we try to create / update / delete resources database exceptions related to constraint or inconsistencies might appear.
-This case is treated in a friendly manner within ROA apis. You can find a sample example below:
+Whenever we try to retrieve / create / update / delete resources database exceptions related to constraint or
+inconsistencies might appear. This case is treated in a friendly manner within ROA apis. You can find a sample example below:
 
 .. code-block:: javascript
 
