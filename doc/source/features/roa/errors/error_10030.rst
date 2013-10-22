@@ -7,5 +7,5 @@ inconsistencies might appear. This case is treated in a friendly manner within R
 .. code-block:: javascript
 
    {"error_code": 10030,
-    "error_description": "Resource /sample-reosource version 1.0 can not be created: DB unexpected exception.",
+    "error_description": "Resource /sample-resource version 1.0 can not be created: DB unexpected exception.",
     "error_details": <link to this page>}

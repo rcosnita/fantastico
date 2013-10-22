@@ -1,5 +1,5 @@
-10000 - Resource Not Found
-==========================
+10000 - Resource Collection Not Found
+=====================================
 
 Whenever we try a ROA dynamic REST operation (Read / Create / Update / Delete) on a resource and version which are not registered
 this error is returned. It is always a **json** compatible response:

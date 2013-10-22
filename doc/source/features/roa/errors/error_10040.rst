@@ -1,0 +1,11 @@
+10040 - Resource item not found
+===============================
+
+Whenever we try to read / update resource from a collection of resources this exception might occur if the given item does not
+exist. Below you can find a sample error response:
+
+.. code-block:: javascript
+
+   {"error_code": 10040,
+    "error_description": "Resource /sample-resource version 1.0 item 123 does not exist.",
+    "error_details": <link to this page>}
