@@ -44,4 +44,7 @@ class ResourceValidator(object):
         This method can raise unexpected exceptions. It is recommended to use
         :py:class:`fantastico.roa.roa_exceptions.FantasticoRoaError`.'''
 
+        if not resource:
+            return False
+
         return True

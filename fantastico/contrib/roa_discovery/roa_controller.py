@@ -243,7 +243,7 @@ class RoaController(BaseController):
 
         return model
 
-    @Controller(url=BASE_URL + "/(?<resource_id>.*?)(/)?$", method="GET")
+    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)(/)?$", method="GET")
     def get_item(self, request, version, resource_url, resource_id):
         '''This method provides the API for retrieving a single item from a collection. The item is uniquely identified by
         resource_id. Below you can find a success response example:
