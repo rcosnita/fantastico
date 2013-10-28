@@ -98,3 +98,4 @@ API error responses
    errors/error_10010
    errors/error_10020
    errors/error_10030
+   errors/error_10040

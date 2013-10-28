@@ -350,6 +350,57 @@ class RoaController(BaseController):
 
         return self.create_item(request, "latest", resource_url)
 
+    @Controller(url=BASE_URL + "/(?P<resource_id>.*)(/)?$", method="PUT")
+    def update_item(self, request, version, resource_url, resource_id):
+        '''This method provides the route for updating existing resources from an existing collection.
+        The API is json only and invokes the validator as described in ROA spec.
+        Usually, when a resource is update successfully a similar answer is returned to the client:
+
+        .. code-block:: html
+
+            204 No Content
+            Content-Type: application/json
+            Content-Length: 0
+
+        Below you can find all error response codes which might be returned when creating a new resource:
+
+            * **10000** - Whenever we try to create a resource with unknown type. (Not registered to ROA).
+            * **10010** - Whenever we try to create a resource which fails validation.
+            * **10020** - Whenever we try to create a resource without passing a valid body.
+            * **10030** - Whenever we try to create a resource and an unexpected database exception occurs.
+            * **10040** - Whenever we try to update a resource which does not exist.
+
+        You can find more information about typical REST ROA APIs response on :doc:`/features/roa/rest_responses`.'''
+
+        version = float(version)
+
+        resource = self._resources_registry.find_by_url(resource_url, version)
+
+        if not resource:
+            return self._handle_resource_notfound(version, resource_url)
+
+        model = self._validate_resource(resource, request.body)
+
+        if isinstance(model, Response):
+            return model
+
+        model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
+        pk_col = model_facade.model_pk_cols[0]
+
+        existing_model = model_facade.find_by_pk({pk_col: resource_id})
+
+        if not existing_model:
+            return self._handle_resource_item_notfound(version, resource_url, resource_id)
+
+        try:
+            setattr(model, pk_col.name, resource_id)
+            model_facade.update(model)
+        except FantasticoDbError as dbex:
+            return self._handle_resource_dberror(resource.version, resource.url, dbex)
+
+
+        return Response(content_type="application/json", status_code=204)
+
 class CollectionParams(object):
     '''This object defines the structure for get_collection supported query parameters.'''
 

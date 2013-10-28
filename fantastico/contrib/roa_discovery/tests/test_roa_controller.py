@@ -453,7 +453,6 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                          "name": "Test resource",
                          "description": "Simple description."}
 
-
         self._resources_registry.find_by_url = Mock(return_value=resource)
 
         self._model_facade.model_pk_cols = [MockSimpleResourceRoa.id]
@@ -482,9 +481,6 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         url = "/simple-resources"
         version = "1.0"
-        fields = "id,name,description"
-
-        model = Mock()
 
         resource = Resource(name="Mock Simple Resource", url=url,
                             version=float(version))
@@ -504,6 +500,183 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
         self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
 
+    def test_update_item_resource_unknown(self):
+        '''This test case ensures an item can not be updated if the resource collection specified is not found.'''
+
+        url = "/simple-resources"
+        version = "1.0"
+        resource_id = 1986
+
+        self._resources_registry.find_by_url = Mock(return_value=None)
+
+        response = self._controller.update_item(Mock(), version, url, resource_id)
+
+        self._assert_resource_error(response, 404, 10000, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+
+    def test_update_item_resource_invalid(self):
+        '''This test case ensures an item is not updated if it fails validation.'''
+
+        expected_body = {}
+
+        url = "/simple-resources"
+        version = "1.0"
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=float(version),
+                            validator=MockSimpleResourceValidator)
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        resource_id = 1986
+
+        request = Mock()
+        request.body = json.dumps(expected_body).encode()
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._json_serializer.deserialize = Mock(return_value=MockSimpleResourceRoa())
+
+        response = self._controller.update_item(request, version, url, resource_id)
+
+        self._assert_resource_error(response, 400, 10010, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
+
+    def test_update_item_nobody(self):
+        '''This test case ensures an item can not be updated without passing a body.'''
+
+        url = "/simple-resources"
+        version = "1.0"
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=float(version))
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        resource_id = 1986
+
+        request = Mock()
+        request.body = None
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+
+        response = self._controller.update_item(request, version, url, resource_id)
+
+        self._assert_resource_error(response, 400, 10020, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+
+    def test_update_item_dbex(self):
+        '''This test case covers scenario when an item can not be updated because of a db exception.'''
+
+        expected_body = {"name": "cool name",
+                         "description": "incredible simple description"}
+        url = "/simple-resources"
+        version = "1.0"
+        resource_id = "12345"
+
+        request = Mock()
+        request.body = json.dumps(expected_body).encode()
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=float(version))
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        pk_col = Mock()
+        pk_col.name = "id"
+
+        model = Mock()
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._json_serializer.deserialize = Mock(return_value=model)
+        self._model_facade.update = Mock(side_effect=FantasticoDbError("Unexpected exception"))
+        self._model_facade.model_pk_cols = [pk_col]
+
+        response = self._controller.update_item(request, version, url, resource_id)
+
+        self._assert_resource_error(response, 400, 10030, version, url)
+
+        self.assertEqual(resource_id, model.id)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
+
+    def test_update_item_itemnotfound(self):
+        '''This test case covers scenario when we want to update an item which does not exist.'''
+
+        expected_body = {"name": "cool name",
+                         "description": "incredible simple description"}
+        url = "/simple-resources"
+        version = "1.0"
+        resource_id = "12345"
+
+        request = Mock()
+        request.body = json.dumps(expected_body).encode()
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=float(version))
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        pk_col = MockSimpleResourceRoa.id
+
+        model = Mock()
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._json_serializer.deserialize = Mock(return_value=model)
+        self._model_facade.find_by_pk = Mock(return_value=None)
+        self._model_facade.model_pk_cols = [pk_col]
+
+        response = self._controller.update_item(request, version, url, resource_id)
+
+        self._assert_resource_error(response, 404, 10040, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
+        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
+
+    def test_update_item_ok(self):
+        '''This test case covers scenario when an item can be updated successfully.'''
+
+        expected_body = {"name": "cool name",
+                         "description": "incredible simple description"}
+        url = "/simple-resources"
+        version = "1.0"
+        resource_id = "12345"
+
+        request = Mock()
+        request.body = json.dumps(expected_body).encode()
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=float(version))
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        pk_col = MockSimpleResourceRoa.id
+
+        model = Mock()
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._json_serializer.deserialize = Mock(return_value=model)
+        self._model_facade.find_by_pk = Mock(return_value=model)
+        self._model_facade.update = Mock(return_value=None)
+        self._model_facade.model_pk_cols = [pk_col]
+
+        response = self._controller.update_item(request, version, url, resource_id)
+
+        self.assertIsNotNone(response)
+        self.assertEqual(204, response.status_code)
+        self.assertEqual("application/json", response.content_type)
+        self.assertEqual("0", response.headers["Content-Length"])
+
+        self.assertEqual(0, len(response.body))
+
+        self.assertEqual(resource_id, model.id)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
+        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
 
 class MockSimpleResourceRoa(object):
     '''This class provides a very simple used in tests.'''
