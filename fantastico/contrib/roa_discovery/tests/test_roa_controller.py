@@ -677,6 +677,104 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
         self._json_serializer_cls.assert_called_once_with(resource.model)
         self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
+        self._model_facade.update.assert_called_once_with(model)
+
+    def test_delete_item_resource_unknown(self):
+        '''This test case ensures an existing item can not be deleted from an unknown collection.'''
+
+        url = "/simple-resources"
+        version = "latest"
+        resource_id = "12345"
+
+        request = Mock()
+
+        self._resources_registry.find_by_url = Mock(return_value=None)
+
+        response = self._controller.delete_item_latest(request, url, resource_id)
+
+        self._assert_resource_error(response, 404, 10000, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, version)
+
+    def test_delete_item_dbex(self):
+        '''This test case ensures a delete operation which fails because of a database exception raises a concrete exception.'''
+
+        url = "/simple-resources"
+        version = "latest"
+        resource_id = "12345"
+
+        request = Mock()
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=1.0)
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._model_facade.model_pk_cols = [MockSimpleResourceRoa.id]
+        self._model_facade.find_by_pk = Mock(side_effect=FantasticoDbError("Unexpected db exception"))
+
+        response = self._controller.delete_item_latest(request, url, resource_id)
+
+        self._assert_resource_error(response, 400, 10030, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, version)
+        self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
+
+    def test_delete_item_itemnotfound(self):
+        '''This test case ensures an item which does not belong to a collection returns a concrete exception response.'''
+
+        url = "/simple-resources"
+        version = "latest"
+        resource_id = "12345"
+
+        request = Mock()
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=1.0)
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._model_facade.model_pk_cols = [MockSimpleResourceRoa.id]
+        self._model_facade.find_by_pk = Mock(return_value=None)
+
+        response = self._controller.delete_item_latest(request, url, resource_id)
+
+        self._assert_resource_error(response, 404, 10040, version, url)
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, version)
+        self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
+
+    def test_delete_item_ok(self):
+        '''This test case ensures an existing item can be deleted successfully.'''
+
+        url = "/simple-resources"
+        version = "1.0"
+        resource_id = "12345"
+
+        request = Mock()
+
+        resource = Resource(name="Mock Simple Resource", url=url,
+                            version=1.0)
+        resource(MockSimpleResourceRoa, self._resources_registry)
+
+        model = Mock()
+
+        self._resources_registry.find_by_url = Mock(return_value=resource)
+        self._model_facade.model_pk_cols = [MockSimpleResourceRoa.id]
+        self._model_facade.find_by_pk = Mock(return_value=model)
+
+        response = self._controller.delete_item(request, version, url, resource_id)
+
+        self.assertIsNotNone(response)
+        self.assertEqual(204, response.status_code)
+        self.assertEqual("application/json", response.content_type)
+        self.assertEqual("0", response.headers["Content-Length"])
+
+        self.assertEqual(0, len(response.body))
+
+        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
+        self._model_facade.delete.assert_called_once_with(model)
 
 class MockSimpleResourceRoa(object):
     '''This class provides a very simple used in tests.'''
