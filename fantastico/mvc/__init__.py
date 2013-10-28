@@ -46,6 +46,7 @@ class DbSessionManager(object):
             raise FantasticoDbError(ex)
 
         self._echo = echo
+        self._pool_recycle = db_config.get("pool_recycle")
         self._create_engine_fn = create_engine_fn
         self._create_session_fn = create_session_fn
 
@@ -77,7 +78,7 @@ class DbSessionManager(object):
             conn_data = URL(**self._conn_props)
 
             if not DbSessionManager.ENGINE:
-                DbSessionManager.ENGINE = self._create_engine_fn(conn_data, echo=self._echo)
+                DbSessionManager.ENGINE = self._create_engine_fn(conn_data, echo=self._echo, pool_recycle=self._pool_recycle)
 
             session = self._create_session_fn(sessionmaker(bind=DbSessionManager.ENGINE))
 

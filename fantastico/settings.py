@@ -99,10 +99,14 @@ class BasicSettings(object):
                         "host": "localhost",
                         "database": "fantastico",
                         "additional_params": {"charset": "utf8"},
-                        "show_sql": True}
+                        "show_sql": True,
+                        "pool_recycle": 600}
 
         As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
         **show_sql** key tells orm engine from **Fantastico** to display all generated queries.
+
+        Moreover, by default **Fantastico** holds connections opened for 10 minutes. After 10 minutes it refreshes the connection
+        and ensures no thread is using that connection till is completely refreshed.
         '''
 
         return {"drivername": "mysql+mysqlconnector",
@@ -112,7 +116,8 @@ class BasicSettings(object):
                 "host": "localhost",
                 "database": "fantastico",
                 "additional_params": {"charset": "utf8"},
-                "show_sql": True}
+                "show_sql": True,
+                "pool_recycle": 600}
 
     @property
     def doc_base(self):

@@ -20,6 +20,7 @@ Versions
    * Added REST filter parser implementation using fast ll grammar for ROA (Resource Oriented Architecture).
    * Added auto generated APIs for resources (Resource Oriented Architecture).
    * Improved routing loaders so that multiple methods can serve separate http verbs of a route.
+   * Fixed a bug in MySql connections pool (not recycling correctly after a long idle period).
 
 * v0.4.1 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
    * Fix a bug into analytics component sample data insert.
