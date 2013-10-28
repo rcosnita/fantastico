@@ -372,7 +372,8 @@ class RoaController(BaseController):
 
         You can find more information about typical REST ROA APIs response on :doc:`/features/roa/rest_responses`.'''
 
-        version = float(version)
+        if version != "latest":
+            version = float(version)
 
         resource = self._resources_registry.find_by_url(resource_url, version)
 
@@ -398,8 +399,13 @@ class RoaController(BaseController):
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(resource.version, resource.url, dbex)
 
-
         return Response(content_type="application/json", status_code=204)
+
+    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*)(/)?$", method="PUT")
+    def update_item_latest(self, request, resource_url, resource_id):
+        '''This is the route handler for latest update existing item api.'''
+
+        return self.update_item(request, "latest", resource_url, resource_id)
 
 class CollectionParams(object):
     '''This object defines the structure for get_collection supported query parameters.'''

@@ -642,14 +642,14 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         expected_body = {"name": "cool name",
                          "description": "incredible simple description"}
         url = "/simple-resources"
-        version = "1.0"
+        version = "latest"
         resource_id = "12345"
 
         request = Mock()
         request.body = json.dumps(expected_body).encode()
 
         resource = Resource(name="Mock Simple Resource", url=url,
-                            version=float(version))
+                            version=1.0)
         resource(MockSimpleResourceRoa, self._resources_registry)
 
         pk_col = MockSimpleResourceRoa.id
@@ -662,7 +662,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._model_facade.update = Mock(return_value=None)
         self._model_facade.model_pk_cols = [pk_col]
 
-        response = self._controller.update_item(request, version, url, resource_id)
+        response = self._controller.update_item_latest(request, url, resource_id)
 
         self.assertIsNotNone(response)
         self.assertEqual(204, response.status_code)
@@ -673,7 +673,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self.assertEqual(resource_id, model.id)
 
-        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._resources_registry.find_by_url.assert_called_once_with(url, version)
         self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
         self._json_serializer_cls.assert_called_once_with(resource.model)
         self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
