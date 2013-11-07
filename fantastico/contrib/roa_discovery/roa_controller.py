@@ -187,7 +187,7 @@ class RoaController(BaseController):
 
         model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
 
-        models = model_facade.get_records_paged(start_record=params.offset, end_record=params.limit,
+        models = model_facade.get_records_paged(start_record=params.offset, end_record=params.offset + params.limit,
                                                 filter_expr=filter_expr,
                                                 sort_expr=sort_expr)
         items = [json_serializer.serialize(model, params.fields) for model in models]

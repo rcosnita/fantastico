@@ -39,13 +39,18 @@ class RoaControllerIntegration(DevServerIntegration):
                            "total": 19.99,
                            "vat": 0.19}]
 
-    _locations_delete = []
+    _locations_delete = None
 
     _response = None
     _exception = None
 
+    _endpoint = "/api/1.0/sample-resources"
+    _endpoint_latest = "/api/latest/sample-resources"
+
     def init(self):
         '''This method is invoked automatically in order to setup test cases dependencies correctly.'''
+
+        self._locations_delete = []
 
         for resource_body in self._expected_resources:
             self._response = None
@@ -69,10 +74,8 @@ class RoaControllerIntegration(DevServerIntegration):
 
         resource_body = resource_body.encode()
 
-        endpoint = "/api/1.0/sample-resources"
-
         def create_resource(server):
-            request = Request(self._get_server_base_url(server, endpoint))
+            request = Request(self._get_server_base_url(server, self._endpoint))
             request.add_header("Content-Type", "application/json")
             request.add_header("Content-Length", len(resource_body))
             request.add_data(resource_body)
@@ -89,7 +92,7 @@ class RoaControllerIntegration(DevServerIntegration):
 
             self.assertEqual("application/json; charset=UTF-8", headers["Content-Type"])
             self.assertEqual("0", headers["Content-Length"])
-            self.assertTrue(headers.get("Location").startswith(endpoint))
+            self.assertTrue(headers.get("Location").startswith(self._endpoint))
 
             self._locations_delete.append(headers["Location"])
 
@@ -114,5 +117,72 @@ class RoaControllerIntegration(DevServerIntegration):
 
         self._run_test_against_dev_server(delete_resource, assert_deletion)
 
-    def test_retrieve_items_paginated(self):
+    def _test_retrieve_items(self, offset, limit, expected_resources, fields=None):
         '''This test case retrieves the first two items of sample resources.'''
+
+        fields = fields or []
+
+        def get_resources(server):
+            url = "%s?offset=%s&limit=%s&fields=%s" % \
+                    (self._get_server_base_url(server, self._endpoint_latest),
+                     offset, limit,
+                     ",".join(fields))
+
+            request = urllib.request.Request(url)
+
+            self._response = urllib.request.urlopen(request)
+
+        def assert_resources(server):
+            self.assertIsNotNone(self._response)
+            self.assertEqual(200, self._response.getcode())
+
+            headers = self._response.info()
+
+            self.assertIsNotNone(headers)
+            self.assertEqual("application/json; charset=UTF-8", headers["Content-Type"])
+
+            body = self._response.read().decode()
+
+            self.assertGreater(len(body), 0)
+
+            body = json.loads(body)
+
+            self.assertEqual(limit, len(body.get("items")))
+            self.assertEqual(len(self._expected_resources), body.get("totalItems"))
+
+            items = body.get("items")
+
+            for idx in range(0, limit):
+                self._assert_resources_equal(expected_resources[idx], items[idx], fields)
+
+        self._run_test_against_dev_server(get_resources, assert_resources)
+
+    def test_retrieve_items_first(self):
+        '''This test case ensures get collection can retrieve only the first item.'''
+
+        self._test_retrieve_items(0, 1, self._expected_resources[0:1])
+
+    def test_retrieve_items_first_two(self):
+        '''This test case ensures get collection can retrieve only the first two items.'''
+
+        self._test_retrieve_items(0, 2, self._expected_resources[0:2])
+
+    def test_retrieve_items_last_two_partial(self):
+        '''This test case ensures last two items from a collection can be partially retrieved.'''
+
+        fields = ["name", "description"]
+
+        self._test_retrieve_items(1, 2, self._expected_resources[1:3], fields)
+
+    def _assert_resources_equal(self, expected, actual, fields):
+        '''This method ensures two given resource bodies are equal (only specified fields). Besides equality of specified
+        of given fields this method also ensures only requested fields are part of the actual response.'''
+
+        fields = fields or ["name", "description", "total", "vat"]
+
+        returned_fields = actual.keys()
+
+        self.assertEqual(0, len(fields) - len(returned_fields))
+
+        for field in fields:
+            self.assertEqual(expected[field], actual[field])
