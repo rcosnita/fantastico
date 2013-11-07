@@ -59,7 +59,7 @@ class RoaController(BaseController):
         self._errors_url = doc_base + "error_%s.html"
         self._roa_api = self._settings_facade.get("roa_api")
 
-    def _parse_filter(self, filter_expr):
+    def _parse_filter(self, filter_expr, model):
         '''This method parse a string filter expression and builds a compatible ModelFilter.'''
 
         if not filter_expr:
@@ -67,9 +67,9 @@ class RoaController(BaseController):
 
         query_parser = self._query_parser_cls()
 
-        return query_parser.parse_filter(filter_expr)
+        return query_parser.parse_filter(filter_expr, model)
 
-    def _parse_sort(self, sort_expr):
+    def _parse_sort(self, sort_expr, model):
         '''This method parse a string sort expression and builds a compatible ModelSort.'''
 
         if not sort_expr:
@@ -77,7 +77,7 @@ class RoaController(BaseController):
 
         query_parser = self._query_parser_cls()
 
-        return query_parser.parse_sort(sort_expr)
+        return query_parser.parse_sort(sort_expr, model)
 
     def _build_error_response(self, http_code, error_code, error_description, error_details):
         '''This method builds an error response compliant with :doc:`/features/roa/rest_responses` specification.'''
@@ -182,8 +182,8 @@ class RoaController(BaseController):
 
         json_serializer = self._json_serializer_cls(resource)
 
-        filter_expr = self._parse_filter(params.filter_expr)
-        sort_expr = self._parse_sort(params.order_expr)
+        filter_expr = self._parse_filter(params.filter_expr, resource.model)
+        sort_expr = self._parse_sort(params.order_expr, resource.model)
 
         model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
 
@@ -502,4 +502,9 @@ class CollectionParams(object):
 
         self._filter = request.params.get("filter")
         self._order = request.params.get("order")
+
+        if self._order:
+            self._order = "[\"%s\"]" % self._order
+            self._order = json.loads(self._order)
+
         self._fields = request.params.get("fields")

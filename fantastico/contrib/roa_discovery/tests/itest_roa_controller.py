@@ -127,13 +127,15 @@ class RoaControllerIntegration(DevServerIntegration):
         fields = fields or []
 
         def get_resources(server):
-            url = "%s?offset=%s&limit=%s&fields=%s" % \
+            url = "%s?offset=%s&limit=%s" % \
                     (self._get_server_base_url(server, self._endpoint_latest),
-                     offset, limit,
-                     ",".join(fields))
+                     offset, limit)
+
+            if fields:
+                url += "&fields=%s" % ",".join(fields)
 
             if order_expr:
-                url += "order=%s" % order_expr
+                url += "&order=%s" % order_expr
 
             request = urllib.request.Request(url)
 
@@ -180,6 +182,15 @@ class RoaControllerIntegration(DevServerIntegration):
         fields = ["name", "description"]
 
         self._test_retrieve_items(1, 2, self._expected_resources[1:3], fields)
+
+    def test_retrieve_items_orderby_name(self):
+        '''This test case ensures items are correctly ordered by name.'''
+
+        order_expr = "asc(name)"
+
+        expected_resources = [resource_body for resource_body in reversed(self._expected_resources)]
+
+        self._test_retrieve_items(0, 3, expected_resources, order_expr=order_expr)
 
     def _assert_resources_equal(self, expected, actual, fields):
         '''This method ensures two given resource bodies are equal (only specified fields). Besides equality of specified

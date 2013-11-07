@@ -186,8 +186,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self._resources_registry.find_by_url.assert_called_once_with(resource_url, version)
         self._json_serializer_cls.assert_called_once_with(resource)
-        self._query_parser.parse_filter.assert_called_once_with(request.params["filter"])
-        self._query_parser.parse_sort.assert_called_once_with(request.params["order"])
+        self._query_parser.parse_filter.assert_called_once_with(request.params["filter"], resource.model)
+        self._query_parser.parse_sort.assert_called_once_with([request.params["order"]], resource.model)
 
     def _assert_resource_error(self, response, http_code, error_code, version, url):
         '''This method asserts a given error response against expected resource error format.'''
