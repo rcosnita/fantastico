@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.roa.resource_json_serializer
 '''
 from fantastico.roa.resource_json_serializer_exceptions import ResourceJsonSerializerError
+import json
 import re
 
 class ResourceJsonSerializer(object):
@@ -62,6 +63,7 @@ class ResourceJsonSerializer(object):
 
         model = model_cls()
 
+        body = json.loads(body)
         for attr_name, attr_value in body.items():
             if not self._supported_attrs.get(attr_name):
                 raise ResourceJsonSerializerError("Resource %s model does not support attibute %s." % \

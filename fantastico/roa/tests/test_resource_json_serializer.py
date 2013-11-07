@@ -19,11 +19,12 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.mvc import BASEMODEL
 from fantastico.roa.resource_decorator import Resource
 from fantastico.roa.resource_json_serializer import ResourceJsonSerializer
+from fantastico.roa.resource_json_serializer_exceptions import ResourceJsonSerializerError
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Float
-from fantastico.roa.resource_json_serializer_exceptions import ResourceJsonSerializerError
+import json
 
 class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for resource json serializer.'''
@@ -56,7 +57,7 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
                 "vat_percent": 0.24,
                 "vat": 4.8}
 
-        resource = self._serializer.deserialize(body)
+        resource = self._serializer.deserialize(json.dumps(body))
 
         self.assertIsInstance(resource, self.resource_ref.model)
         self.assertEqual(resource.id, body["id"])
@@ -73,7 +74,7 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
         body = {"unknown_column": "unknown_value"}
 
         with self.assertRaises(FantasticoRoaError) as ctx:
-            self._serializer.deserialize(body)
+            self._serializer.deserialize(json.dumps(body))
 
         self.assertIsInstance(ctx.exception, ResourceJsonSerializerError)
         self.assertTrue(str(ctx.exception).find("unknown_column") > -1)

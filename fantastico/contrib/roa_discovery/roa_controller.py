@@ -231,7 +231,7 @@ class RoaController(BaseController):
         if not request_body:
             return self._handle_resource_nobody(resource.version, resource.url)
 
-        model = self._json_serializer_cls(resource.model).deserialize(request_body.decode())
+        model = self._json_serializer_cls(resource).deserialize(request_body.decode())
 
         if not resource.validator:
             return model
@@ -332,7 +332,7 @@ class RoaController(BaseController):
 
         try:
             model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
-            model_id = model_facade.create(model)
+            model_id = model_facade.create(model)[0]
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(resource.version, resource.url, dbex)
 

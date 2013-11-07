@@ -17,7 +17,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.roa_discovery.tests.test_roa_controller
 '''
 
-from fantastico.mvc import BASEMODEL
 from fantastico.roa.resource_decorator import Resource
 from fantastico.roa.resource_validator import ResourceValidator
 from fantastico.roa.roa_exceptions import FantasticoRoaError
@@ -347,7 +346,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self._resources_registry.find_by_url = Mock(return_value=resource)
         self._json_serializer.deserialize = Mock(return_value=expected_model)
-        self._model_facade.create = Mock(return_value=expected_id)
+        self._model_facade.create = Mock(return_value=[expected_id])
 
         response = self._controller.create_item(request, str(resource.version), resource.url)
 
@@ -599,7 +598,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertEqual(resource_id, model.id)
 
         self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
-        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._json_serializer_cls.assert_called_once_with(resource)
         self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
 
     def test_update_item_itemnotfound(self):
@@ -633,7 +632,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
         self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
-        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._json_serializer_cls.assert_called_once_with(resource)
         self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
 
     def test_update_item_ok(self):
@@ -675,7 +674,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self._resources_registry.find_by_url.assert_called_once_with(url, version)
         self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
-        self._json_serializer_cls.assert_called_once_with(resource.model)
+        self._json_serializer_cls.assert_called_once_with(resource)
         self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
         self._model_facade.update.assert_called_once_with(model)
 
