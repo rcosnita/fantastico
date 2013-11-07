@@ -27,17 +27,17 @@ class RoaControllerIntegration(DevServerIntegration):
     success scenarios for sample resource provided as example.'''
 
     _expected_resources = [{"name": "Simple resource 1",
-                           "description": "A very long description which must be saved correctly to database.",
-                           "total": 50.0,
-                           "vat": 0.24},
-                          {"name": "Resource 2",
-                           "description": "Resource 2 description which must be saved correctly to database.",
-                           "total": 22.59,
-                           "vat": 0.24},
-                          {"name": "Resource -11",
-                           "description": "Resource -11 description which must be saved correctly to database.",
-                           "total": 19.99,
-                           "vat": 0.19}]
+                            "description": "A very long description which must be saved correctly to database.",
+                            "total": 50.0,
+                            "vat": 0.24},
+                           {"name": "Resource 2",
+                            "description": "Resource 2 description which must be saved correctly to database.",
+                            "total": 22.59,
+                            "vat": 0.24},
+                           {"name": "Resource -11",
+                            "description": "Resource -11 description which must be saved correctly to database.",
+                            "total": 19.99,
+                            "vat": 0.19}]
 
     _locations_delete = None
 
@@ -94,7 +94,11 @@ class RoaControllerIntegration(DevServerIntegration):
             self.assertEqual("0", headers["Content-Length"])
             self.assertTrue(headers.get("Location").startswith(self._endpoint))
 
-            self._locations_delete.append(headers["Location"])
+            location = headers["Location"]
+            self._locations_delete.append(location)
+
+            resource_id = int(location.split("/")[-1])
+            self._expected_resources[len(self._locations_delete) - 1]["id"] = resource_id
 
         self._run_test_against_dev_server(create_resource, assert_creation)
 
@@ -117,7 +121,7 @@ class RoaControllerIntegration(DevServerIntegration):
 
         self._run_test_against_dev_server(delete_resource, assert_deletion)
 
-    def _test_retrieve_items(self, offset, limit, expected_resources, fields=None):
+    def _test_retrieve_items(self, offset, limit, expected_resources, fields=None, order_expr=None):
         '''This test case retrieves the first two items of sample resources.'''
 
         fields = fields or []
@@ -127,6 +131,9 @@ class RoaControllerIntegration(DevServerIntegration):
                     (self._get_server_base_url(server, self._endpoint_latest),
                      offset, limit,
                      ",".join(fields))
+
+            if order_expr:
+                url += "order=%s" % order_expr
 
             request = urllib.request.Request(url)
 
@@ -178,7 +185,7 @@ class RoaControllerIntegration(DevServerIntegration):
         '''This method ensures two given resource bodies are equal (only specified fields). Besides equality of specified
         of given fields this method also ensures only requested fields are part of the actual response.'''
 
-        fields = fields or ["name", "description", "total", "vat"]
+        fields = fields or ["id", "name", "description", "total", "vat"]
 
         returned_fields = actual.keys()
 
