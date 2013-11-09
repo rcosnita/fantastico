@@ -37,8 +37,8 @@ class RoaController(BaseController):
 
     SETTINGS_FACADE = SettingsFacade()
     ROA_API = roa_helper.normalize_absolute_roa_uri(SETTINGS_FACADE.get("roa_api"))
-    BASE_URL = r"%s/(?P<version>\d{1,}\.\d{1,})(?P<resource_url>/.*)" % ROA_API
-    BASE_LATEST_URL = "%s/latest(?P<resource_url>.*)" % ROA_API
+    BASE_URL = r"%s/(?P<version>\d{1,}\.\d{1,})(?P<resource_url>/.*?)" % ROA_API
+    BASE_LATEST_URL = "%s/latest(?P<resource_url>.*?)" % ROA_API
 
     OFFSET_DEFAULT = 0
     LIMIT_DEFAULT = 100
@@ -140,7 +140,7 @@ class RoaController(BaseController):
 
         return self._build_error_response(http_code=400,
                                           error_code=error_code,
-                                          error_description="Resource %s version %s can not be created: %s." % \
+                                          error_description="Resource %s version %s db exception: %s." % \
                                                     (url, version, str(dbex)),
                                           error_details=self._errors_url % error_code)
 
@@ -350,7 +350,7 @@ class RoaController(BaseController):
 
         return self.create_item(request, "latest", resource_url)
 
-    @Controller(url=BASE_URL + "/(?P<resource_id>.*)(/)?$", method="PUT")
+    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)(/)?$", method="PUT")
     def update_item(self, request, version, resource_url, resource_id):
         '''This method provides the route for updating existing resources from an existing collection.
         The API is json only and invokes the validator as described in ROA spec.
@@ -402,13 +402,13 @@ class RoaController(BaseController):
 
         return Response(content_type="application/json", status_code=204)
 
-    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*)(/)?$", method="PUT")
+    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)(/)?$", method="PUT")
     def update_item_latest(self, request, resource_url, resource_id):
         '''This is the route handler for latest update existing item api.'''
 
         return self.update_item(request, "latest", resource_url, resource_id)
 
-    @Controller(url=BASE_URL + "/(?P<resource_id>.*)(/)?$", method="DELETE")
+    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)(/)?$", method="DELETE")
     def delete_item(self, request, version, resource_url, resource_id):
         '''This method provides the route for deleting existing resources from an existing collection.
         The API is json only. Usually, when a resource is deleted successfully a similar answer is returned to the client:
@@ -450,7 +450,7 @@ class RoaController(BaseController):
 
         return Response(content_type="application/json", status_code=204)
 
-    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*)(/)?$", method="DELETE")
+    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)(/)?$", method="DELETE")
     def delete_item_latest(self, request, resource_url, resource_id):
         '''This method provides the functionality for delete item latest version api route.'''
 

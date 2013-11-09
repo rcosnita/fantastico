@@ -215,6 +215,23 @@ class RoaControllerIntegration(DevServerIntegration):
 
         self._test_retrieve_items(0, 2, expected_resources, filter_expr=filter_expr, total_items=2)
 
+    def test_retrieve_item(self):
+        '''This test case covers scenario of individual item retrieval from a given collection.'''
+
+        endpoint = self._locations_delete[-1]
+
+        def retrieve_item(server):
+            request = Request(self._get_server_base_url(server, endpoint))
+
+            self._response = urllib.request.urlopen(request)
+
+        def assert_item(server):
+            self.assertIsNotNone(self._response)
+            self.assertEqual(200, self._response.status)
+            self.assertEqual("application/json; charset=UTF-8", self._response.info()["Content-Type"])
+
+        self._run_test_against_dev_server(retrieve_item, assert_item)
+
     def _assert_resources_equal(self, expected, actual, fields):
         '''This method ensures two given resource bodies are equal (only specified fields). Besides equality of specified
         of given fields this method also ensures only requested fields are part of the actual response.'''

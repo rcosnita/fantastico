@@ -98,7 +98,7 @@ class FantasticoDbError(FantasticoError):
     '''This exception is usually thrown when a database exception occurs. For one good example where this is used see
     :py:class:`fantastico.mvc.model_facade.ModelFacade`.'''
 
-class FantasticoDbNotFoundError(FantasticoError):
+class FantasticoDbNotFoundError(FantasticoDbError):
     '''This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is
     used see :py:class:`fantastico.mvc.model_facade.ModelFacade`.'''
 
