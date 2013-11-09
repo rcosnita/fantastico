@@ -121,9 +121,11 @@ class RoaControllerIntegration(DevServerIntegration):
 
         self._run_test_against_dev_server(delete_resource, assert_deletion)
 
-    def _test_retrieve_items(self, offset, limit, expected_resources, fields=None, order_expr=None):
+    def _test_retrieve_items(self, offset, limit, expected_resources, fields=None, order_expr=None,
+                             filter_expr=None, total_items=None):
         '''This test case retrieves the first two items of sample resources.'''
 
+        total_items = total_items or len(self._expected_resources)
         fields = fields or []
 
         def get_resources(server):
@@ -136,6 +138,9 @@ class RoaControllerIntegration(DevServerIntegration):
 
             if order_expr:
                 url += "&order=%s" % order_expr
+
+            if filter_expr:
+                url += "&filter=%s" % filter_expr
 
             request = urllib.request.Request(url)
 
@@ -157,7 +162,7 @@ class RoaControllerIntegration(DevServerIntegration):
             body = json.loads(body)
 
             self.assertEqual(limit, len(body.get("items")))
-            self.assertEqual(len(self._expected_resources), body.get("totalItems"))
+            self.assertEqual(total_items, body.get("totalItems"))
 
             items = body.get("items")
 
@@ -191,6 +196,24 @@ class RoaControllerIntegration(DevServerIntegration):
         expected_resources = [resource_body for resource_body in reversed(self._expected_resources)]
 
         self._test_retrieve_items(0, 3, expected_resources, order_expr=order_expr)
+
+    def test_retrieve_items_filterby_name(self):
+        '''This test case ensures items can be correctly filtered using like expressions.'''
+
+        filter_expr = urllib.parse.quote("like(name,\"resource %\")")
+
+        expected_resources = self._expected_resources[1:]
+
+        self._test_retrieve_items(0, 2, expected_resources, filter_expr=filter_expr, total_items=2)
+
+    def test_retrieve_items_filterby_and(self):
+        '''This test case ensures compound **and** filter works as expected.'''
+
+        filter_expr = urllib.parse.quote('and(in(name,["Resource 2","Resource -11"]),lt(vat,0.25))')
+
+        expected_resources = self._expected_resources[1:]
+
+        self._test_retrieve_items(0, 2, expected_resources, filter_expr=filter_expr, total_items=2)
 
     def _assert_resources_equal(self, expected, actual, fields):
         '''This method ensures two given resource bodies are equal (only specified fields). Besides equality of specified

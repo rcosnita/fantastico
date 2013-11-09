@@ -168,9 +168,12 @@ class QueryParserOperationBinary(QueryParserOperation):
         self._value = None
 
     def build_filter(self, model):
-        '''This method builds an equality filter.'''
+        '''This method builds a binary filter.'''
 
-        self._value = json.loads(self._value)
+        try:
+            self._value = json.loads(self._value)
+        except ValueError:
+            pass
 
         return ModelFilter(column=self._column, ref_value=self._value, operation=self._operation)
 
