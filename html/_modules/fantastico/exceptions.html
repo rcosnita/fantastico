@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.exceptions &mdash; fantastico 0.5.0-b124 documentation</title>
+    <title>fantastico.exceptions &mdash; fantastico 0.5.0-b125 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.0-b124',
+        VERSION:     '0.5.0-b125',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b124 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -74,6 +74,17 @@
 <span class="sd">    We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees</span>
 <span class="sd">    that at no moment errors will cause fantastico framework wsgi container to crash.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="FantasticoError.http_code"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoError.http_code">[docs]</a>    <span class="k">def</span> <span class="nf">http_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the http code on which this exception is mapped.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_http_code</span>
+</div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">http_code</span><span class="o">=</span><span class="mi">400</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_http_code</span> <span class="o">=</span> <span class="n">http_code</span>
 </div>
 <div class="viewcode-block" id="FantasticoControllerInvalidError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoControllerInvalidError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoControllerInvalidError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is raised whenever a method is decorated with</span>
@@ -133,7 +144,7 @@
     <span class="sd">&#39;&#39;&#39;This exception is usually thrown when a database exception occurs. For one good example where this is used see</span>
 <span class="sd">    :py:class:`fantastico.mvc.model_facade.ModelFacade`.&#39;&#39;&#39;</span>
 </div>
-<div class="viewcode-block" id="FantasticoDbNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoDbNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoDbNotFoundError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
+<div class="viewcode-block" id="FantasticoDbNotFoundError"><a class="viewcode-back" href="../../features/exceptions.html#fantastico.exceptions.FantasticoDbNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoDbNotFoundError</span><span class="p">(</span><span class="n">FantasticoDbError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is</span>
 <span class="sd">    used see :py:class:`fantastico.mvc.model_facade.ModelFacade`.&#39;&#39;&#39;</span>
 </div>
@@ -174,7 +185,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

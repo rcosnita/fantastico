@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{October 03, 2013}
-\release{0.5.0-b124}
+\date{November 10, 2013}
+\release{0.5.0-b125}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -316,11 +316,15 @@ configuration:
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{host}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{localhost}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{database}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{additional\PYGZus{}params}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{charset}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{utf8}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
-            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{show\PYGZus{}sql}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n+nb+bp}{True}\PYG{p}{\PYGZcb{}}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{show\PYGZus{}sql}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n+nb+bp}{True}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{pool\PYGZus{}recycle}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{600}\PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 
 As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
 \textbf{show\_sql} key tells orm engine from \textbf{Fantastico} to display all generated queries.
+
+Moreover, by default \textbf{Fantastico} holds connections opened for 10 minutes. After 10 minutes it refreshes the connection
+and ensures no thread is using that connection till is completely refreshed.
 
 \end{fulllineitems}
 
@@ -779,7 +783,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x56f9c00\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4fa1f30\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -837,20 +841,28 @@ database.
 \label{features/exceptions:exceptions-hierarchy}\label{features/exceptions::doc}\index{FantasticoError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoError}}~
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoError}}{\emph{msg=None}, \emph{http\_code=400}}{}~
 \includegraphics{exceptions.png}
 
 \textbf{FantasticoError} is the base of all exceptions raised within fantastico framework. It describe common attributes that
 each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception.
 We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
 that at no moment errors will cause fantastico framework wsgi container to crash.
+\index{http\_code (fantastico.exceptions.FantasticoError attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoError.http_code}\pysigline{\bfcode{http\_code}}
+This method returns the http code on which this exception is mapped.
+
+\end{fulllineitems}
+
 
 \end{fulllineitems}
 
 \index{FantasticoControllerInvalidError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoControllerInvalidError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoControllerInvalidError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoControllerInvalidError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoControllerInvalidError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is raised whenever a method is decorated with
 {\hyperref[features/mvc:fantastico.mvc.controller_decorators.Controller]{\code{fantastico.mvc.controller\_decorators.Controller}}} and the number of arguments is not correct. Usually
 developer forgot to add request as argument to the controller.
@@ -860,7 +872,7 @@ developer forgot to add request as argument to the controller.
 \index{FantasticoClassNotFoundError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoClassNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoClassNotFoundError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoClassNotFoundError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoClassNotFoundError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.
 
 \end{fulllineitems}
@@ -868,7 +880,7 @@ This exception is raised whenever code tries to dynamically import and instantia
 \index{FantasticoNotSupportedError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNotSupportedError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNotSupportedError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNotSupportedError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNotSupportedError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is raised whenever code tries to do an operation that is  not supported.
 
 \end{fulllineitems}
@@ -876,7 +888,7 @@ This exception is raised whenever code tries to do an operation that is  not sup
 \index{FantasticoSettingNotFoundError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoSettingNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoSettingNotFoundError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoSettingNotFoundError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoSettingNotFoundError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
 configuration.
 
@@ -885,7 +897,7 @@ configuration.
 \index{FantasticoDuplicateRouteError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDuplicateRouteError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDuplicateRouteError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDuplicateRouteError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDuplicateRouteError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually raised by routing engine when it detects duplicate routes.
 
 \end{fulllineitems}
@@ -893,7 +905,7 @@ This exception is usually raised by routing engine when it detects duplicate rou
 \index{FantasticoNoRoutesError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNoRoutesError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNoRoutesError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNoRoutesError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNoRoutesError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually raised by routing engine when no loaders are configured or no routes are registered.
 
 \end{fulllineitems}
@@ -901,7 +913,7 @@ This exception is usually raised by routing engine when no loaders are configure
 \index{FantasticoRouteNotFoundError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoRouteNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoRouteNotFoundError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoRouteNotFoundError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoRouteNotFoundError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually raised by routing engine when a requested url is not registered.
 
 \end{fulllineitems}
@@ -909,7 +921,7 @@ This exception is usually raised by routing engine when a requested url is not r
 \index{FantasticoNoRequestError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNoRequestError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNoRequestError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoNoRequestError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoNoRequestError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually raised when some components try to use fantastico.request from WSGI environ before
 {\hyperref[features/request_response:fantastico.middleware.request_middleware.RequestMiddleware]{\code{fantastico.middleware.request\_middleware.RequestMiddleware}}} was executed.
 
@@ -918,7 +930,7 @@ This exception is usually raised when some components try to use fantastico.requ
 \index{FantasticoContentTypeError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoContentTypeError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoContentTypeError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoContentTypeError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoContentTypeError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually thrown when a mismatch between request accept and response content type. In
 Fantastico we think it's mandatory to fulfill requests correctly and to take in consideration sent headers.
 
@@ -943,7 +955,7 @@ This property returns the http verb that caused the problems.
 \index{FantasticoTemplateNotFoundError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoTemplateNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoTemplateNotFoundError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoTemplateNotFoundError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoTemplateNotFoundError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually thrown when a controller tries to load a template which it does not found.
 
 \end{fulllineitems}
@@ -951,7 +963,7 @@ This exception is usually thrown when a controller tries to load a template whic
 \index{FantasticoIncompatibleClassError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoIncompatibleClassError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoIncompatibleClassError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoIncompatibleClassError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoIncompatibleClassError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually thrown when we want to decorate / inject / mixin a class into another class
 that does not support it. For instance, we want to build a {\hyperref[features/mvc:fantastico.mvc.model_facade.ModelFacade]{\code{fantastico.mvc.model\_facade.ModelFacade}}}
 with a class that does not extend \textbf{BASEMODEL.}
@@ -961,7 +973,7 @@ with a class that does not extend \textbf{BASEMODEL.}
 \index{FantasticoDbError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDbError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDbError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDbError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDbError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually thrown when a database exception occurs. For one good example where this is used see
 {\hyperref[features/mvc:fantastico.mvc.model_facade.ModelFacade]{\code{fantastico.mvc.model\_facade.ModelFacade}}}.
 
@@ -970,7 +982,7 @@ This exception is usually thrown when a database exception occurs. For one good 
 \index{FantasticoDbNotFoundError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDbNotFoundError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDbNotFoundError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoDbNotFoundError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoDbNotFoundError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is
 used see {\hyperref[features/mvc:fantastico.mvc.model_facade.ModelFacade]{\code{fantastico.mvc.model\_facade.ModelFacade}}}.
 
@@ -979,7 +991,7 @@ used see {\hyperref[features/mvc:fantastico.mvc.model_facade.ModelFacade]{\code{
 \index{FantasticoInsufficientArgumentsError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoInsufficientArgumentsError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoInsufficientArgumentsError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoInsufficientArgumentsError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoInsufficientArgumentsError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually thrown when a component extension received wrong number of arguments. See
 {\hyperref[features/component_reusage:fantastico.rendering.component.Component]{\code{fantastico.rendering.component.Component}}}.
 
@@ -988,7 +1000,7 @@ This exception is usually thrown when a component extension received wrong numbe
 \index{FantasticoUrlInvokerError (class in fantastico.exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoUrlInvokerError}\pysigline{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoUrlInvokerError}}
+\phantomsection\label{features/exceptions:fantastico.exceptions.FantasticoUrlInvokerError}\pysiglinewithargsret{\strong{class }\code{fantastico.exceptions.}\bfcode{FantasticoUrlInvokerError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This exception is usually thrown when an internal url invoker fails. For instance, if a component reusage rendering
 fails then this exception is raised.
 
@@ -1254,10 +1266,15 @@ for implementing its own business logic for loading routes.
         \PYG{n}{self\PYGZus{}settings\PYGZus{}facade} \PYG{o}{=} \PYG{n}{settings\PYGZus{}facade}
 
     \PYG{k}{def} \PYG{n+nf}{load\PYGZus{}routes}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
-        \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/index.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{method}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}text}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
-                                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http\PYGZus{}verbs}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
-                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/images/image.png}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{method}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}binary}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
-                                      \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http\PYGZus{}verbs}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{\PYGZcb{}}
+        \PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/index.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http\PYGZus{}verbs}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+                                            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}text}\PYG{l+s}{\PYGZdq{}}
+                                            \PYG{p}{\PYGZcb{}}
+                                \PYG{p}{\PYGZcb{}}\PYG{p}{,}
+                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/images/image.png}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{http\PYGZus{}verbs}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+                                            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.static\PYGZus{}assets.StaticAssetsController.resolve\PYGZus{}binary}\PYG{l+s}{\PYGZdq{}}
+                                            \PYG{p}{\PYGZcb{}}
+                                     \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 \index{load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method)}
 
@@ -1550,15 +1567,15 @@ This method add the given model in the database.
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
-    
+
     \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
     \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
     \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
-    
+
     \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
-        
+
 \PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
 
 \PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{new\PYGZus{}model}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{John}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Doe}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
@@ -1585,15 +1602,15 @@ This method deletes a given model from database. Below you can find a simple exa
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
-    
+
     \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
     \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
     \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
-    
+
     \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
-        
+
 \PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
 \PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{find\PYGZus{}by\PYGZus{}pk}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{:} \PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
 \PYG{n}{facade}\PYG{o}{.}\PYG{n}{delete}\PYG{p}{(}\PYG{n}{model}\PYG{p}{)}
@@ -1616,15 +1633,15 @@ This method returns the entity which matches the given primary key values.
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
-    
+
     \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
     \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
     \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
-    
+
     \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
-        
+
 \PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
 \PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{find\PYGZus{}by\PYGZus{}pk}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{n}{PersonModel}\PYG{o}{.}\PYG{n}{id}\PYG{p}{:} \PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
 \end{Verbatim}
@@ -1638,7 +1655,7 @@ This method returns the entity which matches the given primary key values.
 This method retrieves all records matching the given filters sorted by the given expression.
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{records} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} 
+\PYG{n}{records} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,}
                            \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{create\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{,}
                                       \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Blog}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
                            \PYG{n}{filter\PYGZus{}expr}\PYG{o}{=}\PYG{n}{ModelFilterAnd}\PYG{p}{(}
@@ -1680,6 +1697,14 @@ This property holds the model based on which this facade is built.
 
 \end{fulllineitems}
 
+\index{model\_pk\_cols (fantastico.mvc.model\_facade.ModelFacade attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.model_facade.ModelFacade.model_pk_cols}\pysigline{\bfcode{model\_pk\_cols}}
+This property returns the model primary key columns as defined in the model cls.
+
+\end{fulllineitems}
+
 \index{new\_model() (fantastico.mvc.model\_facade.ModelFacade method)}
 
 \begin{fulllineitems}
@@ -1689,15 +1714,15 @@ This method is used to obtain an instance of the underlining model. Below you ca
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
-    
+
     \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
     \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
     \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
-    
+
     \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
-        
+
 \PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
 
 \PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{new\PYGZus{}model}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{John}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Doe}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
@@ -1728,15 +1753,15 @@ This method updates an existing model from the database based on primary key.
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{PersonModel}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
-    
+
     \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
     \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
     \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
-    
+
     \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{first\PYGZus{}name}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{p}{)}\PYG{p}{:}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{first\PYGZus{}name}
         \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{last\PYGZus{}name}
-        
+
 \PYG{n}{facade} \PYG{o}{=} \PYG{n}{ModelFacade}\PYG{p}{(}\PYG{n}{PersonModel}\PYG{p}{,} \PYG{n}{fantastico}\PYG{o}{.}\PYG{n}{mvc}\PYG{o}{.}\PYG{n}{SESSION}\PYG{p}{)}
 
 \PYG{n}{model} \PYG{o}{=} \PYG{n}{facade}\PYG{o}{.}\PYG{n}{new\PYGZus{}model}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{John}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{last\PYGZus{}name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Doe}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
@@ -1859,7 +1884,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2897408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1ecc408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -1942,6 +1967,14 @@ This method transform the current compound statement into an sql alchemy filter.
 \begin{fulllineitems}
 \phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterCompound.get_expression}\pysiglinewithargsret{\bfcode{get\_expression}}{}{}
 This method transforms calculates sqlalchemy expression held by this filter.
+
+\end{fulllineitems}
+
+\index{model\_filters (fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/mvc:fantastico.mvc.models.model_filter_compound.ModelFilterCompound.model_filters}\pysigline{\bfcode{model\_filters}}
+This property returns all ModelFilter instances being compound.
 
 \end{fulllineitems}
 
@@ -2170,13 +2203,15 @@ Imagine you have a model called \textbf{AppSetting} meant to define custom setti
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{AppSetting}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
-   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-   \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
-   \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}settings}\PYG{l+s}{\PYGZdq{}}
 
-   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
 \end{Verbatim}
 
 In a standard \textbf{MVC} ({\hyperref[features/mvc::doc]{\emph{Model View Controller}}}) web application once you have defined the above mentioned fantastico model you would
@@ -2227,13 +2262,15 @@ A more convenient way for this problem is to provide some additional information
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{AppSetting}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
-   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-   \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
-   \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}settings}\PYG{l+s}{\PYGZdq{}}
 
-   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
 \end{Verbatim}
 
 Once the model is decorated, I expect to have a fully functional API which I can easily invoke through HTTP calls:
@@ -2260,23 +2297,27 @@ It is always a good practice to support API versioning. Going a step further wit
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{AppSetting}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
-   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-   \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
-   \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}settings}\PYG{l+s}{\PYGZdq{}}
 
-   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
 
 \PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{2.0}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{AppSettingV2}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
-   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-   \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
-   \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}settings}\PYG{l+s}{\PYGZdq{}}
 
-   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
 \end{Verbatim}
 
 The above example will actually provide the following endpoints which can be easily accessible:
@@ -2303,31 +2344,31 @@ so in Fantastico for each defined resource you can define a validator which will
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k}{class} \PYG{n+nc}{AppSettingValidator}\PYG{p}{(}\PYG{n}{ResourceValidator}\PYG{p}{)}\PYG{p}{:}
-   \PYG{k}{def} \PYG{n+nf}{validate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{resource}\PYG{p}{)}\PYG{p}{:}
-      \PYG{n}{errors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+    \PYG{k}{def} \PYG{n+nf}{validate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{resource}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{errors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
 
-      \PYG{k}{if} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name} \PYG{o}{==} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{unsupported}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:}
-         \PYG{n}{errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Invalid setting name: }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name} \PYG{o}{==} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{unsupported}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:}
+            \PYG{n}{errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Invalid setting name: }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
 
-      \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{resource}\PYG{o}{.}\PYG{n}{value}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
-         \PYG{n}{errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Setting }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{ value can not be empty. }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{resource}\PYG{o}{.}\PYG{n}{value}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n}{errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Setting }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{ value can not be empty. }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
 
-      \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
-         \PYG{k}{return}
+        \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{k}{return}
 
-      \PYG{k}{raise} \PYG{n}{FantasticoResourceError}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)}
+        \PYG{k}{raise} \PYG{n}{FantasticoRoaError}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{2.0}\PYG{p}{,} \PYG{n}{validator}\PYG{o}{=}\PYG{n}{AppSettingValidator}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{AppSettingV2}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
-   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-   \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
-   \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
 
-   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
 \end{Verbatim}
 
 If no validator is provided no validation is done on the given resource. Also, it is important to always remember that validators
@@ -2359,34 +2400,34 @@ your resource validator.
 
 
 \subsection{Partial object representation}
-\label{features/roa:partial-object-representation}
+\label{features/roa:partial-object-representation}\label{features/roa:id1}
 There are cases when a resource contains many fields but you actually need only a few of them:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/addresses}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{Address}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
-   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-   \PYG{n}{line1} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line1}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
-   \PYG{n}{line2} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line2}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{line3} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line3}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{line4} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line4}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{line5} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line5}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{line6} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line6}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{city} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{city}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{country} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{country}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{zip\PYGZus{}code} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{zip\PYGZus{}code}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{line1} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line1}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{line2} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line2}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{line3} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line3}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{line4} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line4}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{line5} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line5}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{line6} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{line6}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{city} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{city}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{country} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{country}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{zip\PYGZus{}code} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{zip\PYGZus{}code}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{)}\PYG{p}{)}
 
-   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{line1}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line2}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line3}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line4}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line5}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line6}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,}
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{line1}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line2}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line3}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line4}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line5}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{line6}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,}
                \PYG{n}{city}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{country}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{zip\PYGZus{}code}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{)}\PYG{p}{:}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line1} \PYG{o}{=} \PYG{n}{line1}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line2} \PYG{o}{=} \PYG{n}{line2}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line3} \PYG{o}{=} \PYG{n}{line3}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line4} \PYG{o}{=} \PYG{n}{line4}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line5} \PYG{o}{=} \PYG{n}{line5}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line6} \PYG{o}{=} \PYG{n}{line6}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{city} \PYG{o}{=} \PYG{n}{city}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{country} \PYG{o}{=} \PYG{n}{country}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zip\PYGZus{}code} \PYG{o}{=} \PYG{n}{zip\PYGZus{}code}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line1} \PYG{o}{=} \PYG{n}{line1}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line2} \PYG{o}{=} \PYG{n}{line2}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line3} \PYG{o}{=} \PYG{n}{line3}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line4} \PYG{o}{=} \PYG{n}{line4}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line5} \PYG{o}{=} \PYG{n}{line5}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{line6} \PYG{o}{=} \PYG{n}{line6}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{city} \PYG{o}{=} \PYG{n}{city}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{country} \PYG{o}{=} \PYG{n}{country}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{zip\PYGZus{}code} \PYG{o}{=} \PYG{n}{zip\PYGZus{}code}
 \end{Verbatim}
 
 When working with the Address resource there will be cases when we do not need all fields to be transferred to client. For this,
@@ -2431,15 +2472,17 @@ There are resources which have attributes which points to another resource:
                         \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mail\PYGZus{}address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mail\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
                         \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address:}\PYG{l+s}{\PYGZdq{}} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{Person}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
-   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-   \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{bill\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{bill\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{bill\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
-   \PYG{n}{ship\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{ship\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{ship\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
-   \PYG{n}{mail\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
-   \PYG{n}{ship\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{mail\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
+
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{first\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{first\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{last\PYGZus{}name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{last\PYGZus{}name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{bill\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{bill\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{bill\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+    \PYG{n}{ship\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{ship\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{ship\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
+    \PYG{n}{mail\PYGZus{}address\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{ForeignKey}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{addresses.id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{ship\PYGZus{}address} \PYG{o}{=} \PYG{n}{relationship}\PYG{p}{(}\PYG{n}{Address}\PYG{p}{,} \PYG{n}{primaryjoin}\PYG{o}{=}\PYG{n}{mail\PYGZus{}address\PYGZus{}id} \PYG{o}{==} \PYG{n}{Address}\PYG{o}{.}\PYG{n}{id}\PYG{p}{)}
 \end{Verbatim}
 
 The above definition shows you how to mark the subresources of \textbf{person} resource. By default they will not be retrieved in
@@ -2471,6 +2514,9 @@ Listing collections.
 
 \item {} 
 Retrieving information about an individual item.
+
+\item {} 
+First level subresources.
 
 \end{itemize}
 
@@ -2505,13 +2551,15 @@ understanding how APIs will behave let's assume we have the following resource d
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{2.0}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{AppSettingV2}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
-   \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-   \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
-   \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZus{}settings}\PYG{l+s}{\PYGZdq{}}
 
-   \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
-      \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{80}\PYG{p}{)}\PYG{p}{,} \PYG{n}{unique}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{value} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{value}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{value} \PYG{o}{=} \PYG{n}{value}
 \end{Verbatim}
 
 
@@ -2552,9 +2600,9 @@ Get the first 100 settings.
 
 GET
  & 
-/api/2.0/app-settings?order={[}desc(name), asc(value){]}
+/api/2.0/app-settings?order=desc(name)
  & 
-Order settings by name (descending) and value (ascending).
+Order settings by name (descending).
 \\\hline
 
 GET
@@ -2603,41 +2651,31 @@ A possible result for \textbf{AppSettingV2} collection retrieval looks like:
 When requesting a given resource collection sorted you can specify the sorting criteria:
 \begin{itemize}
 \item {} 
-\textbf{order} - a JSON list containing asc / desc function calls. This list is evaluated from left to right with left most element having the highest priority.
+\textbf{order} - Containing asc / desc function calls.
 
 \item {} 
-\textbf{asc} - is a function with one or more arguments which tells API an ascending order by given attributes.
+\textbf{asc} - is a function with one argument which tells API an ascending order by given attribute.
 \begin{quote}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{c+c1}{// retrieve all application settings ordered in ascending order of name and value}
-\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/2.0/app\PYGZhy{}settings?order=[asc(name, value)]\PYGZdq{}}\PYG{p}{;}
+\PYG{c+c1}{// retrieve all application settings ascending ordered by name}
+\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/2.0/app\PYGZhy{}settings?order=asc(name)\PYGZdq{}}\PYG{p}{;}
 \end{Verbatim}
 \end{quote}
 
 \item {} 
-\textbf{desc} - is a function with one or more arguments which tells API a descending order by given attributes.
+\textbf{desc} - is a function with one argument which tells API a descending order by given attribute.
 \begin{quote}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{c+c1}{// retrieve all application settings ordered in descending order of name and value.}
-\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/2.0/app\PYGZhy{}settings?order=[desc(name, value)]\PYGZdq{}}\PYG{p}{;}
-\end{Verbatim}
-\end{quote}
-
-\item {} 
-\textbf{complex ordering} - you can easily specify different ordering criterias by resource attributes.
-\begin{quote}
-
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{c+c1}{// retrieve all application settings ordered in descending order of name and ascending order of value.}
-\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/2.0/app\PYGZhy{}settings?order=[desc(name), asc(value)]\PYGZdq{}}\PYG{p}{;}
+\PYG{c+c1}{// retrieve all application settings ordered descending ordered by value.}
+\PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/api/2.0/app\PYGZhy{}settings?order=desc(value)\PYGZdq{}}\PYG{p}{;}
 \end{Verbatim}
 \end{quote}
 
 \end{itemize}
 
-A possible result for \textbf{AppSettingV2} collection retrieval (\textbf{/api/2.0/app-settings?order={[}desc(name){]}}) looks like:
+A possible result for \textbf{AppSettingV2} collection retrieval (\textbf{/api/2.0/app-settings?order=desc(name)}) looks like:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{p}{\PYGZob{}}
@@ -2721,7 +2759,7 @@ Get all settings which name is \textbf{vat} and value is \textbf{en\_US}.
 
 GET
  & 
-/api/2.0/app-settings?\&filter=or(eq(name, ``vat''), eq(value, ``en\_US''))
+/api/2.0/app-settings?filter=or(eq(name, ``vat''), eq(value, ``en\_US''))
  & 
 Get all settings which name is \textbf{vat} or value is \textbf{en\_US}.
 \\\hline
@@ -2995,7 +3033,7 @@ Fantastico APIs do not support bulk creation of items. We do not intend to add t
 \label{features/roa/technical_summary:roa-technical-summary}\label{features/roa/technical_summary::doc}\index{Resource (class in fantastico.roa.resource\_decorator)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.resource\_decorator.}\bfcode{Resource}}{\emph{name}, \emph{url}, \emph{version=1.0}, \emph{subresources=None}}{}~
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.resource\_decorator.}\bfcode{Resource}}{\emph{name}, \emph{url}, \emph{version=1.0}, \emph{subresources=None}, \emph{validator=None}}{}~
 \includegraphics{roa_classes.png}
 
 This class provides the main way for defining resources. Below you can find a very simple example for defining new resources:
@@ -3058,6 +3096,15 @@ or multiple (composite uniquely identified resources) resource attributes.
 \begin{fulllineitems}
 \phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource.url}\pysigline{\bfcode{url}}
 This read only property holds the url of the resource.
+
+\end{fulllineitems}
+
+\index{validator (fantastico.roa.resource\_decorator.Resource attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_decorator.Resource.validator}\pysigline{\bfcode{validator}}
+This property returns the validator type which must be used for this resource for creating / updating it. You can
+read more about it on {\hyperref[features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator]{\code{fantastico.roa.resource\_validator.ResourceValidator}}}.
 
 \end{fulllineitems}
 
@@ -3284,13 +3331,527 @@ This method list all registered resources as well as a link to their entry point
 
 \end{fulllineitems}
 
+\index{QueryParser (class in fantastico.roa.query\_parser)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser.QueryParser}\pysigline{\strong{class }\code{fantastico.roa.query\_parser.}\bfcode{QueryParser}}
+This class provides ROA query parser functionality. It provides methods for transforming filter and sorting expressions
+({\hyperref[features/roa/rest_standard::doc]{\emph{REST API standard}}}) into mvc filters ({\hyperref[features/mvc::doc]{\emph{Model View Controller}}}).
+\index{parse\_filter() (fantastico.roa.query\_parser.QueryParser method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser.QueryParser.parse_filter}\pysiglinewithargsret{\bfcode{parse\_filter}}{\emph{filter\_expr}, \emph{model}}{}
+This method transform the given filter expression into mvc filters.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{filter\_expr} -- The filter string expression we want to convert to query objects.
+
+\item {} 
+\textbf{model} -- The model used to describe the resource on which the requests are done.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+The newly created mvc query object.
+
+\item[{Return type}] \leavevmode
+{\hyperref[features/mvc:fantastico.mvc.models.model_filter.ModelFilterAbstract]{\code{fantastico.mvc.models.model\_filter.ModelFilterAbstract}}}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{parse\_sort() (fantastico.roa.query\_parser.QueryParser method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser.QueryParser.parse_sort}\pysiglinewithargsret{\bfcode{parse\_sort}}{\emph{sort\_expr}, \emph{model}}{}
+This method transform the given sort expression into mvc sort filter.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{filter\_expr} -- The filter string expression we want to convert to query objects.
+
+\item {} 
+\textbf{model} -- The model used to describe the resource on which the requests are done.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+The newly created mvc query object.
+
+\item[{Return type}] \leavevmode
+{\hyperref[features/mvc:fantastico.mvc.models.model_sort.ModelSort]{\code{fantastico.mvc.models.model\_sort.ModelSort}}}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperation (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperation}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperation}}{\emph{parser}}{}
+This class defines the contract for a query parser operation.
+\index{add\_argument() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperation.add_argument}\pysiglinewithargsret{\bfcode{add\_argument}}{\emph{argument}}{}
+This method add a new argument to the parser operation.
+
+\end{fulllineitems}
+
+\index{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperation.build_filter}\pysiglinewithargsret{\bfcode{build\_filter}}{\emph{model}}{}
+This method builds the model filter (\code{fantastico.mvc.models.model\_filter.ModelFilter}).
+
+\end{fulllineitems}
+
+\index{get\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperation.get_filter}\pysiglinewithargsret{\bfcode{get\_filter}}{\emph{model}}{}
+This method validates the current operation and build the filter.
+
+\end{fulllineitems}
+
+\index{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperation.get_grammar_rules}\pysiglinewithargsret{\bfcode{get\_grammar\_rules}}{}{}
+This method returns the rules required to interpret this operation.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{return} \PYG{p}{\PYGZob{}}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{(}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{TERM}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{(}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{,} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{RULE}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{REGEX\PYGZus{}TEXT}\PYG{p}{)}\PYG{p}{,} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{RULE}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{,}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{,} \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{RULE}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{REGEX\PYGZus{}TEXT}\PYG{p}{)}\PYG{p}{,}
+                  \PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{RULE}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{)}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+       \PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+Grammar rules simply describe the tokens which come after operator + symbol. For instance, \textbf{eq(} is followed by two
+comma separated arguments.
+
+\end{fulllineitems}
+
+\index{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperation.get_grammar_table}\pysiglinewithargsret{\bfcode{get\_grammar\_table}}{\emph{new\_mixin}}{}
+This method returns a dictionary describing the operator + symbol rule and action.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{return} \PYG{p}{\PYGZob{}}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{(}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{eq}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{(}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{k}{lambda}\PYG{p}{:} \PYG{n}{new\PYGZus{}mixin}\PYG{p}{(}\PYG{n}{QueryParserOperationBinaryEq}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{)}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n+nb+bp}{None}
+       \PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{new\_mixin} (\emph{function}) -- New mixin described a factory method required to correctly pass current operation to parser.
+
+\item[{Returns}] \leavevmode
+A dictionary describing the grammar table for this operator.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperation.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns the token which maps on this operation.
+
+\end{fulllineitems}
+
+\index{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperation.validate}\pysiglinewithargsret{\bfcode{validate}}{\emph{model}}{}
+This method validates the given operation and argument in order to ensure a filter can be built.
+\begin{quote}\begin{description}
+\item[{Raises {\hyperref[features/roa/technical_summary:fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError]{fantastico.roa.query\_parser\_exceptions.QueryParserOperationInvalidError}}}] \leavevmode
+Whenever the current operation attributes are invalid.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationBinary (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinary}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationBinary}}{\emph{parser}}{}
+This class provides the validation / build logic for binary operations.
+\index{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinary.build_filter}\pysiglinewithargsret{\bfcode{build\_filter}}{\emph{model}}{}
+This method builds a binary filter.
+
+\end{fulllineitems}
+
+\index{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinary.get_grammar_rules}\pysiglinewithargsret{\bfcode{get\_grammar\_rules}}{}{}
+This method returns the grammar rules supported by binary operators.
+
+\end{fulllineitems}
+
+\index{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinary.get_grammar_table}\pysiglinewithargsret{\bfcode{get\_grammar\_table}}{\emph{new\_mixin}}{}
+The grammar table supported by binary operators.
+
+\end{fulllineitems}
+
+\index{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinary.validate}\pysiglinewithargsret{\bfcode{validate}}{\emph{model}}{}
+This method ensures that three arguments were passed.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationBinaryEq (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryEq}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationBinaryEq}}{\emph{parser}}{}
+This class provides the eq operator which can compare two arguments for equality.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryEq method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryEq.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns the equality token supported by ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationBinaryGt (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryGt}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationBinaryGt}}{\emph{parser}}{}
+This class provides the gt operator which can compare two arguments for greater than relation.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryGt method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryGt.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns the greater than token supported by ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationBinaryGe (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryGe}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationBinaryGe}}{\emph{parser}}{}
+This class provides the ge operator which can compare two arguments for greater or equal than relation.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryGe method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryGe.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns the greater equals token supported by ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationBinaryLt (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryLt}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationBinaryLt}}{\emph{parser}}{}
+This class provides the lt operator which can compare two arguments for less than relation.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLt method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryLt.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns the less than token supported by ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationBinaryLe (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryLe}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationBinaryLe}}{\emph{parser}}{}
+This class provides the le operator which can compare two arguments for less or equal than relation.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLe method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryLe.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns the less equal than token supported by ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationBinaryIn (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryIn}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationBinaryIn}}{\emph{parser}}{}
+This class provides the in operator which can compare a value with a possible list of values.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryIn method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryIn.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns in token supported by ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationBinaryLike (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryLike}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationBinaryLike}}{\emph{parser}}{}
+This class provides the like operator which can compare two arguments for similarity.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLike method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationBinaryLike.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns like token supported by ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationCompound (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationCompound}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationCompound}}{\emph{parser}, \emph{compound\_filter\_cls=None}}{}
+This class provides the parser for compound filter or. It will recursively parse each argument and in the end will return
+a compatible \code{fantastico.mvc.model\_filter\_compound.ModelFilterCompound}. Each concrete class must specify the
+compound filter type to use.
+\index{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationCompound.build_filter}\pysiglinewithargsret{\bfcode{build\_filter}}{\emph{model}}{}
+This method builds the compound filter based on the parsed arguments of this operation.
+
+\end{fulllineitems}
+
+\index{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationCompound.get_grammar_rules}\pysiglinewithargsret{\bfcode{get\_grammar\_rules}}{}{}
+This method returns the grammar rules supported by binary operators.
+
+\end{fulllineitems}
+
+\index{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationCompound.get_grammar_table}\pysiglinewithargsret{\bfcode{get\_grammar\_table}}{\emph{new\_mixin}}{}
+The grammar table supported by binary operators.
+
+\end{fulllineitems}
+
+\index{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationCompound.validate}\pysiglinewithargsret{\bfcode{validate}}{\emph{model}}{}
+This method validates all arguments passed to this compound filter.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationOr (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationOr}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationOr}}{\emph{parser}}{}
+This class provides a query parser for \textbf{or} compound filtering.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationOr method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationOr.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns or compound token for ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationAnd (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationAnd}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationAnd}}{\emph{parser}}{}
+This class provides a query parser for \textbf{and} compound filtering.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationAnd method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationAnd.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns and compound token for ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationSort (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSort}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationSort}}{\emph{parser}, \emph{sort\_dir=None}}{}
+This class provides base support for sort operations: asc / desc.
+\index{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSort.build_filter}\pysiglinewithargsret{\bfcode{build\_filter}}{\emph{model}}{}
+This method builds the sorting model.
+
+\end{fulllineitems}
+
+\index{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSort.get_grammar_rules}\pysiglinewithargsret{\bfcode{get\_grammar\_rules}}{}{}
+This method returns the grammar rules supported by binary operators.
+
+\end{fulllineitems}
+
+\index{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSort.get_grammar_table}\pysiglinewithargsret{\bfcode{get\_grammar\_table}}{\emph{new\_mixin}}{}
+The grammar table supported by binary operators.
+
+\end{fulllineitems}
+
+\index{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSort.validate}\pysiglinewithargsret{\bfcode{validate}}{\emph{model}}{}
+This method validates sorting argument passed to this operation.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationSortAsc (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSortAsc}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationSortAsc}}{\emph{parser}}{}
+This class provides asc sort operation.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortAsc method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSortAsc.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns asc sort token for ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{QueryParserOperationSortDesc (class in fantastico.roa.query\_parser\_operations)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSortDesc}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_operations.}\bfcode{QueryParserOperationSortDesc}}{\emph{parser}}{}
+This class provides desc sort operation.
+\index{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortDesc method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_operations.QueryParserOperationSortDesc.get_token}\pysiglinewithargsret{\bfcode{get\_token}}{}{}
+This method returns desc sort token for ROA query language.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{ResourceJsonSerializer (class in fantastico.roa.resource\_json\_serializer)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_json_serializer.ResourceJsonSerializer}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.resource\_json\_serializer.}\bfcode{ResourceJsonSerializer}}{\emph{resource\_ref}}{}
+This class provides the methods for serializing a given resource into a dictionary and deserializing a dictionary into
+a resource.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZsh{} serialize / deserialize a resource without subresources}
+\PYG{n}{json\PYGZus{}serializer} \PYG{o}{=} \PYG{n}{ResourceJsonSerializer}\PYG{p}{(}\PYG{n}{AppSetting}\PYG{p}{)}
+\PYG{n}{resource\PYGZus{}json} \PYG{o}{=} \PYG{n}{json\PYGZus{}serializer}\PYG{o}{.}\PYG{n}{serialize}\PYG{p}{(}\PYG{n}{AppSetting}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{simple\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{0.19}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}
+\PYG{n}{resource} \PYG{o}{=} \PYG{n}{json\PYGZus{}serializer}\PYG{o}{.}\PYG{n}{deserialize}\PYG{p}{(}\PYG{n}{resource}\PYG{p}{)}
+\end{Verbatim}
+\index{deserialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_json_serializer.ResourceJsonSerializer.deserialize}\pysiglinewithargsret{\bfcode{deserialize}}{\emph{body}}{}
+This method converts the given body into a concrete model (if possible).
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{body} (\emph{dict}) -- A JSON object we want to convert to the model compatible with this serializer.
+
+\item[{Returns}] \leavevmode
+A model instance initiated with attributes from the given dictionary.
+
+\item[{Raises {\hyperref[features/roa/technical_summary:fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError]{fantastico.roa.resource\_json\_serializer\_exceptions.ResourceJsonSerializerError}}}] \leavevmode
+Whenever given body contains entries which are not supported by resource underlining model.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{serialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_json_serializer.ResourceJsonSerializer.serialize}\pysiglinewithargsret{\bfcode{serialize}}{\emph{model}, \emph{fields=None}}{}
+This method serialize the given model into a json object.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{model} -- The model we want to convert to JSON object.
+
+\item {} 
+\textbf{fields} (\emph{str}) -- A list of fields we want to include in result. Read more on {\hyperref[features/roa:partial-object-representation]{\emph{Partial object representation}}}
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+A dictionary containing all required attributes.
+
+\item[{Return type}] \leavevmode
+dict
+
+\item[{Raises {\hyperref[features/roa/technical_summary:fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError]{fantastico.roa.resource\_json\_serializer\_exceptions.ResourceJsonSerializerError}}}] \leavevmode
+Whenever requested fields for serialization are not found in model attributes.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
 
 
 \paragraph{Exceptions}
 \label{features/roa/technical_summary:exceptions}\index{FantasticoRoaError (class in fantastico.roa.roa\_exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/roa/technical_summary:fantastico.roa.roa_exceptions.FantasticoRoaError}\pysigline{\strong{class }\code{fantastico.roa.roa\_exceptions.}\bfcode{FantasticoRoaError}}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.roa_exceptions.FantasticoRoaError}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.roa\_exceptions.}\bfcode{FantasticoRoaError}}{\emph{msg}}{}
 This class provides the core error used within Fantastico ROA layer. Usually, more concrete exceptions are raised by
 ROA layers.
 
@@ -3299,12 +3860,351 @@ ROA layers.
 \index{FantasticoRoaDuplicateError (class in fantastico.roa.roa\_exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/roa/technical_summary:fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError}\pysigline{\strong{class }\code{fantastico.roa.roa\_exceptions.}\bfcode{FantasticoRoaDuplicateError}}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.roa\_exceptions.}\bfcode{FantasticoRoaDuplicateError}}{\emph{msg}}{}
 This concrete exception is used to notify user that multiple resources with same name and version or url and version
 can not be registered multiple times.
 
 \end{fulllineitems}
 
+\index{QueryParserOperationInvalidError (class in fantastico.roa.query\_parser\_exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.query\_parser\_exceptions.}\bfcode{QueryParserOperationInvalidError}}{\emph{msg}}{}
+This exception notifies the query parser that something is wrong with the current operation arguments.
+
+\end{fulllineitems}
+
+\index{ResourceJsonSerializerError (class in fantastico.roa.resource\_json\_serializer\_exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError}\pysiglinewithargsret{\strong{class }\code{fantastico.roa.resource\_json\_serializer\_exceptions.}\bfcode{ResourceJsonSerializerError}}{\emph{msg}}{}
+This class provides a concrete exception used when serializing / deserializing resource models.
+
+\end{fulllineitems}
+
+
+
+\paragraph{API generic controller}
+\label{features/roa/technical_summary:api-generic-controller}\index{ResourceValidator (class in fantastico.roa.resource\_validator)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator}\pysigline{\strong{class }\code{fantastico.roa.resource\_validator.}\bfcode{ResourceValidator}}
+This class provides the base for all validators which can be used for resources.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{AppSettingValidator}\PYG{p}{(}\PYG{n}{ResourceValidator}\PYG{p}{)}\PYG{p}{:}
+    \PYG{k}{def} \PYG{n+nf}{validate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{resource}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{errors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+
+        \PYG{k}{if} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name} \PYG{o}{==} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{unsupported}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:}
+            \PYG{n}{errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Invalid setting name: }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
+
+        \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{resource}\PYG{o}{.}\PYG{n}{value}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n}{errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Setting }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{ value can not be empty. }\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s}{\PYGZdq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)}
+
+        \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{k}{return}
+
+        \PYG{k}{raise} \PYG{n}{FantasticoRoaError}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)}
+\end{Verbatim}
+\index{validate() (fantastico.roa.resource\_validator.ResourceValidator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator.validate}\pysiglinewithargsret{\bfcode{validate}}{\emph{resource}}{}
+This method must be overriden by each subclass in order to provide the validation logic required for the given
+resource. The resource received as an argument represents an instance of the model used to describe the resource.
+This method can raise unexpected exceptions. It is recommended to use
+{\hyperref[features/roa/technical_summary:fantastico.roa.roa_exceptions.FantasticoRoaError]{\code{fantastico.roa.roa\_exceptions.FantasticoRoaError}}}.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{RoaController (class in fantastico.contrib.roa\_discovery.roa\_controller)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.roa\_discovery.roa\_controller.}\bfcode{RoaController}}{\emph{settings\_facade}, \emph{resources\_registry\_cls=\textless{}class `fantastico.roa.resources\_registry.ResourcesRegistry'\textgreater{}}, \emph{model\_facade\_cls=\textless{}class `fantastico.mvc.model\_facade.ModelFacade'\textgreater{}}, \emph{conn\_manager=\textless{}module `fantastico.mvc' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/fantastico/mvc/\_\_init\_\_.py'\textgreater{}}, \emph{json\_serializer\_cls=\textless{}class `fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer'\textgreater{}}, \emph{query\_parser\_cls=\textless{}class `fantastico.roa.query\_parser.QueryParser'\textgreater{}}}{}
+This class provides dynamic routes for ROA registered resources. All CRUD operations are supported out of the box. In
+addition error handling is automatically provided by this controller.
+\index{create\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.create_item}\pysiglinewithargsret{\bfcode{create\_item}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides the route for adding new resources into an existing collection. The API is json only and invoke
+the validator as described in ROA spec. Usually, when a resource is created successfully a similar answer is returned to
+the client:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+201 Created
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 0
+Location: /api/2.0/app\PYGZhy{}settings/123
+\end{Verbatim}
+
+Below you can find all error response codes which might be returned when creating a new resource:
+\begin{itemize}
+\item {} 
+\textbf{10000} - Whenever we try to create a resource with unknown type. (Not registered to ROA).
+
+\item {} 
+\textbf{10010} - Whenever we try to create a resource which fails validation.
+
+\item {} 
+\textbf{10020} - Whenever we try to create a resource without passing a valid body.
+
+\item {} 
+\textbf{10030} - Whenever we try to create a resource and an unexpected database exception occurs.
+
+\end{itemize}
+
+You can find more information about typical REST ROA APIs response on {\hyperref[features/roa/rest_responses::doc]{\emph{REST Responses}}}.
+
+\end{fulllineitems}
+
+\index{create\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.create_item_latest}\pysiglinewithargsret{\bfcode{create\_item\_latest}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides create item latest API version.
+
+\end{fulllineitems}
+
+\index{delete\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.delete_item}\pysiglinewithargsret{\bfcode{delete\_item}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides the route for deleting existing resources from an existing collection.
+The API is json only. Usually, when a resource is deleted successfully a similar answer is returned to the client:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+204 No Content
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 0
+\end{Verbatim}
+
+Below you can find all error response codes which might be returned when creating a new resource:
+\begin{itemize}
+\item {} 
+\textbf{10000} - Whenever we try to delete a resource with unknown type. (Not registered to ROA).
+
+\item {} 
+\textbf{10030} - Whenever we try to delete a resource and an unexpected database exception occurs.
+
+\item {} 
+\textbf{10040} - Whenever we try to delete a resource which does not exist.
+
+\end{itemize}
+
+You can find more information about typical REST ROA APIs response on {\hyperref[features/roa/rest_responses::doc]{\emph{REST Responses}}}.
+
+\end{fulllineitems}
+
+\index{delete\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.delete_item_latest}\pysiglinewithargsret{\bfcode{delete\_item\_latest}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides the functionality for delete item latest version api route.
+
+\end{fulllineitems}
+
+\index{get\_collection() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.get_collection}\pysiglinewithargsret{\bfcode{get\_collection}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides the route for accessing a resource collection. {\hyperref[features/roa/rest_standard::doc]{\emph{REST API standard}}} for collections
+are enabled by this method. The typical response format is presented below:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{var} \PYG{n+nx}{response} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}items\PYGZdq{}}\PYG{o}{:} \PYG{p}{[}
+                    \PYG{c+c1}{// resources represented as json objects.}
+                \PYG{p}{]}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}totalItems\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{100}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+If a resource is not found or the resource version does not exist the following response is returned:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}code\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{10000}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}description\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Resource \PYGZpc{}s version \PYGZpc{}s does not exist.\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}details\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}http://rcosnita.github.io/fantastico/html/features/roa/errors/error\PYGZus{}10000.html\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{get\_collection\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.get_collection_latest}\pysiglinewithargsret{\bfcode{get\_collection\_latest}}{\emph{*args}, \emph{**kwargs}}{}
+This method retrieves a resource collection using the latest version of the api.
+
+\end{fulllineitems}
+
+\index{get\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.get_item}\pysiglinewithargsret{\bfcode{get\_item}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides the API for retrieving a single item from a collection. The item is uniquely identified by
+resource\_id. Below you can find a success response example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+GET \PYGZhy{} /api/1.0/simple\PYGZhy{}resources/1 HTTP/1.1
+
+200 OK
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: ...
+
+\PYGZob{}
+    \PYGZdq{}id\PYGZdq{}: 1,
+    \PYGZdq{}name\PYGZdq{}: \PYGZdq{}Test resource\PYGZdq{},
+    \PYGZdq{}description\PYGZdq{}: \PYGZdq{}Simple description\PYGZdq{}
+\PYGZcb{}
+\end{Verbatim}
+
+Of course there are cases when exceptions might occur. Below, you can find a list of error response retrieved from
+get\_item API:
+\begin{itemize}
+\item {} 
+\textbf{10000} - Whenever we try to retrieve a resource with unknown type. (Not registered to ROA).
+
+\item {} 
+\textbf{10030} - Whenever we try to retrieve a resource and an unexpected database exception occurs.
+
+\item {} 
+\textbf{10040} - Whenever we try to retrieve a resource which does not exist.
+
+\end{itemize}
+
+\end{fulllineitems}
+
+\index{handle\_resource\_options() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options}\pysiglinewithargsret{\bfcode{handle\_resource\_options}}{\emph{*args}, \emph{**kwargs}}{}
+This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different
+domains than project host.
+
+\end{fulllineitems}
+
+\index{handle\_resource\_options\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options_latest}\pysiglinewithargsret{\bfcode{handle\_resource\_options\_latest}}{\emph{*args}, \emph{**kwargs}}{}
+This method handles OPTIONS http requests for ROA api latest versions.
+
+\end{fulllineitems}
+
+\index{update\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.update_item}\pysiglinewithargsret{\bfcode{update\_item}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides the route for updating existing resources from an existing collection.
+The API is json only and invokes the validator as described in ROA spec.
+Usually, when a resource is update successfully a similar answer is returned to the client:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+204 No Content
+Content\PYGZhy{}Type: application/json
+Content\PYGZhy{}Length: 0
+\end{Verbatim}
+
+Below you can find all error response codes which might be returned when creating a new resource:
+\begin{itemize}
+\item {} 
+\textbf{10000} - Whenever we try to update a resource with unknown type. (Not registered to ROA).
+
+\item {} 
+\textbf{10010} - Whenever we try to update a resource which fails validation.
+
+\item {} 
+\textbf{10020} - Whenever we try to update a resource without passing a valid body.
+
+\item {} 
+\textbf{10030} - Whenever we try to update a resource and an unexpected database exception occurs.
+
+\item {} 
+\textbf{10040} - Whenever we try to update a resource which does not exist.
+
+\end{itemize}
+
+You can find more information about typical REST ROA APIs response on {\hyperref[features/roa/rest_responses::doc]{\emph{REST Responses}}}.
+
+\end{fulllineitems}
+
+\index{update\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.update_item_latest}\pysiglinewithargsret{\bfcode{update\_item\_latest}}{\emph{*args}, \emph{**kwargs}}{}
+This is the route handler for latest update existing item api.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\paragraph{API error responses}
+\label{features/roa/technical_summary:api-error-responses}
+
+\subparagraph{10000 - Resource Collection Not Found}
+\label{features/roa/errors/error_10000:resource-collection-not-found}\label{features/roa/errors/error_10000::doc}
+Whenever we try a ROA dynamic REST operation (Read / Create / Update / Delete) on a resource and version which are not registered
+this error is returned. It is always a \textbf{json} compatible response:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}code\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{10000}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}description\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Friendly error description.\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}details\PYGZdq{}}\PYG{o}{:} \PYG{o}{\PYGZlt{}}\PYG{n+nx}{link} \PYG{n+nx}{to} \PYG{k}{this} \PYG{n+nx}{page}\PYG{o}{\PYGZgt{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+
+\subparagraph{10010 - Resource Invalid}
+\label{features/roa/errors/error_10010::doc}\label{features/roa/errors/error_10010:resource-invalid}
+Whenever a resource is created / updated a validation is done using a custom validator ({\hyperref[features/roa::doc]{\emph{ROA (Resource Oriented Architecture)}}}). You can find
+below a sample example of error message you might receive:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}code\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{10010}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}description\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Friendly error description.\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}details\PYGZdq{}}\PYG{o}{:} \PYG{o}{\PYGZlt{}}\PYG{n+nx}{link} \PYG{n+nx}{to} \PYG{k}{this} \PYG{n+nx}{page}\PYG{o}{\PYGZgt{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+
+\subparagraph{10020 - No body given}
+\label{features/roa/errors/error_10020::doc}\label{features/roa/errors/error_10020:no-body-given}
+Whenever we try to create / update a resource without sending resource body (information about the resource) this response is
+received. Below you can see a sample error response:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}code\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{10020}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}description\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Friendly error description.\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}details\PYGZdq{}}\PYG{o}{:} \PYG{o}{\PYGZlt{}}\PYG{n+nx}{link} \PYG{n+nx}{to} \PYG{k}{this} \PYG{n+nx}{page}\PYG{o}{\PYGZgt{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+
+\subparagraph{10030 - Unexpected database error}
+\label{features/roa/errors/error_10030:unexpected-database-error}\label{features/roa/errors/error_10030::doc}
+Whenever we try to retrieve / create / update / delete resources database exceptions related to constraint or
+inconsistencies might appear. This case is treated in a friendly manner within ROA apis. You can find a sample example below:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}code\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{10030}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}description\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Resource /sample\PYGZhy{}resource version 1.0 can not be created: DB unexpected exception.\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}details\PYGZdq{}}\PYG{o}{:} \PYG{o}{\PYGZlt{}}\PYG{n+nx}{link} \PYG{n+nx}{to} \PYG{k}{this} \PYG{n+nx}{page}\PYG{o}{\PYGZgt{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+
+\subparagraph{10040 - Resource item not found}
+\label{features/roa/errors/error_10040:resource-item-not-found}\label{features/roa/errors/error_10040::doc}
+Whenever we try to read / update resource from a collection of resources this exception might occur if the given item does not
+exist. Below you can find a sample error response:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}code\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{10040}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}description\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}Resource /sample\PYGZhy{}resource version 1.0 item 123 does not exist.\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}error\PYGZus{}details\PYGZdq{}}\PYG{o}{:} \PYG{o}{\PYGZlt{}}\PYG{n+nx}{link} \PYG{n+nx}{to} \PYG{k}{this} \PYG{n+nx}{page}\PYG{o}{\PYGZgt{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
 
 
 \section{OAUTH2}
@@ -4149,7 +5049,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2d672f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x239c2f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -4452,7 +5352,7 @@ decorator automatically receives \textbf{get\_name} and \textbf{get\_target} met
 \index{FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkError}\pysigline{\strong{class }\code{fantastico.sdk.sdk\_exceptions.}\bfcode{FantasticoSdkError}}
+\phantomsection\label{features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkError}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.sdk\_exceptions.}\bfcode{FantasticoSdkError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This is the base exception used to describe unexpected situations occuring into fantastico sdk. Below you can see the
 sdk hierarchy of concrete exceptions.
 
@@ -4463,7 +5363,7 @@ sdk hierarchy of concrete exceptions.
 \index{FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError}\pysigline{\strong{class }\code{fantastico.sdk.sdk\_exceptions.}\bfcode{FantasticoSdkCommandError}}
+\phantomsection\label{features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.sdk\_exceptions.}\bfcode{FantasticoSdkCommandError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This class describe an exception which occured into one of fantastico sdk commands.
 
 \end{fulllineitems}
@@ -4471,7 +5371,7 @@ This class describe an exception which occured into one of fantastico sdk comman
 \index{FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandNotFoundError}\pysigline{\strong{class }\code{fantastico.sdk.sdk\_exceptions.}\bfcode{FantasticoSdkCommandNotFoundError}}
+\phantomsection\label{features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandNotFoundError}\pysiglinewithargsret{\strong{class }\code{fantastico.sdk.sdk\_exceptions.}\bfcode{FantasticoSdkCommandNotFoundError}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This class describe an exception which occurs when we try to execute an inexistent command.
 
 \end{fulllineitems}
@@ -4694,7 +5594,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x40fe1e8\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3736408\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -4886,7 +5786,7 @@ Whenever the requested menu does not exist.
 \index{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException}\pysigline{\strong{class }\code{fantastico.contrib.dynamic\_menu.menu\_exceptions.}\bfcode{FantasticoMenuNotFoundException}}
+\phantomsection\label{features/components/dynamic_menu/dynamic_menu:fantastico.contrib.dynamic_menu.menu_exceptions.FantasticoMenuNotFoundException}\pysiglinewithargsret{\strong{class }\code{fantastico.contrib.dynamic\_menu.menu\_exceptions.}\bfcode{FantasticoMenuNotFoundException}}{\emph{msg=None}, \emph{http\_code=400}}{}
 This class defines a concrete fantastico menu not found exception raised whenever someone tries to access an inexistent
 menu attributes.
 
@@ -5931,19 +6831,19 @@ Added OAUTH2 implementation details for Fantastico.
 Added Identity Provider draft specification.
 
 \item {} 
-Added auto generated APIs for resources (Resource Oriented Architecture)
+Added REST API Standard for ROA (Resource Oriented Architecture).
 
 \item {} 
-Added OAUTH2 extendable tokens generator.
+Added REST filter parser implementation using fast ll grammar for ROA (Resource Oriented Architecture).
 
 \item {} 
-Added OAUTH2 authorization code grant type support.
+Added auto generated APIs for resources (Resource Oriented Architecture).
 
 \item {} 
-Added OAUTH2 resource owner password credentials for Anonymous user.
+Improved routing loaders so that multiple methods can serve separate http verbs of a route.
 
 \item {} 
-Added first version of Fantastico Identity Provider.
+Fixed a bug in MySql connections pool (not recycling correctly after a long idle period).
 
 \end{itemize}
 

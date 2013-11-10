@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.settings &mdash; fantastico 0.5.0-b124 documentation</title>
+    <title>fantastico.settings &mdash; fantastico 0.5.0-b125 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.0-b124',
+        VERSION:     '0.5.0-b125',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b124 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -145,10 +145,14 @@
 <span class="sd">                        &quot;host&quot;: &quot;localhost&quot;,</span>
 <span class="sd">                        &quot;database&quot;: &quot;fantastico&quot;,</span>
 <span class="sd">                        &quot;additional_params&quot;: {&quot;charset&quot;: &quot;utf8&quot;},</span>
-<span class="sd">                        &quot;show_sql&quot;: True}</span>
+<span class="sd">                        &quot;show_sql&quot;: True,</span>
+<span class="sd">                        &quot;pool_recycle&quot;: 600}</span>
 
 <span class="sd">        As you can see, in your configuration you can influence many attributes used when configuring the driver / database.</span>
 <span class="sd">        **show_sql** key tells orm engine from **Fantastico** to display all generated queries.</span>
+
+<span class="sd">        Moreover, by default **Fantastico** holds connections opened for 10 minutes. After 10 minutes it refreshes the connection</span>
+<span class="sd">        and ensures no thread is using that connection till is completely refreshed.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
         <span class="k">return</span> <span class="p">{</span><span class="s">&quot;drivername&quot;</span><span class="p">:</span> <span class="s">&quot;mysql+mysqlconnector&quot;</span><span class="p">,</span>
@@ -158,7 +162,8 @@
                 <span class="s">&quot;host&quot;</span><span class="p">:</span> <span class="s">&quot;localhost&quot;</span><span class="p">,</span>
                 <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
                 <span class="s">&quot;additional_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;charset&quot;</span><span class="p">:</span> <span class="s">&quot;utf8&quot;</span><span class="p">},</span>
-                <span class="s">&quot;show_sql&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+                <span class="s">&quot;show_sql&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s">&quot;pool_recycle&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">}</span>
 </div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.doc_base"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.doc_base">[docs]</a>    <span class="k">def</span> <span class="nf">doc_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -275,7 +280,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

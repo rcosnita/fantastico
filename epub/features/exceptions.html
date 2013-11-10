@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="features.html" title="Fantastico features"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -38,17 +38,23 @@
 <h1>Exceptions hierarchy</h1>
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><img alt="../_images/exceptions.png" src="../_images/exceptions.png" />
 <p><strong>FantasticoError</strong> is the base of all exceptions raised within fantastico framework. It describe common attributes that
 each concrete fantastico exception must provide. By default all fantastico exceptions inherit FantasticoError exception.
 We do this because each raised unhandled FantasticoError is map to a specific exception response. This strategy guarantees
 that at no moment errors will cause fantastico framework wsgi container to crash.</p>
+<dl class="attribute">
+<dt id="fantastico.exceptions.FantasticoError.http_code">
+<tt class="descname">http_code</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoError.http_code"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method returns the http code on which this exception is mapped.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoControllerInvalidError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoControllerInvalidError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoControllerInvalidError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoControllerInvalidError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoControllerInvalidError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is raised whenever a method is decorated with
 <a class="reference internal" href="mvc.html#fantastico.mvc.controller_decorators.Controller" title="fantastico.mvc.controller_decorators.Controller"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.controller_decorators.Controller</span></tt></a> and the number of arguments is not correct. Usually
 developer forgot to add request as argument to the controller.</p>
@@ -56,51 +62,51 @@ developer forgot to add request as argument to the controller.</p>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoClassNotFoundError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoClassNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoClassNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoClassNotFoundError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoClassNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is raised whenever code tries to dynamically import and instantiate a class which can not be resolved.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoNotSupportedError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNotSupportedError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNotSupportedError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNotSupportedError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNotSupportedError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is raised whenever code tries to do an operation that is  not supported.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoSettingNotFoundError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoSettingNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoSettingNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoSettingNotFoundError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoSettingNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is raised whenever code tries to obtain a setting that is not available in the current fantastico
 configuration.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoDuplicateRouteError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDuplicateRouteError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDuplicateRouteError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDuplicateRouteError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDuplicateRouteError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually raised by routing engine when it detects duplicate routes.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoNoRoutesError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNoRoutesError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNoRoutesError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNoRoutesError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNoRoutesError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually raised by routing engine when no loaders are configured or no routes are registered.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoRouteNotFoundError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoRouteNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoRouteNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoRouteNotFoundError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoRouteNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually raised by routing engine when a requested url is not registered.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoNoRequestError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNoRequestError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNoRequestError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoNoRequestError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoNoRequestError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually raised when some components try to use fantastico.request from WSGI environ before
 <a class="reference internal" href="request_response.html#fantastico.middleware.request_middleware.RequestMiddleware" title="fantastico.middleware.request_middleware.RequestMiddleware"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.middleware.request_middleware.RequestMiddleware</span></tt></a> was executed.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoContentTypeError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoContentTypeError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoContentTypeError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoContentTypeError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoContentTypeError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when a mismatch between request accept and response content type. In
 Fantastico we think it&#8217;s mandatory to fulfill requests correctly and to take in consideration sent headers.</p>
 </dd></dl>
@@ -119,13 +125,13 @@ Fantastico we think it&#8217;s mandatory to fulfill requests correctly and to ta
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoTemplateNotFoundError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoTemplateNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoTemplateNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoTemplateNotFoundError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoTemplateNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when a controller tries to load a template which it does not found.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoIncompatibleClassError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoIncompatibleClassError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoIncompatibleClassError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoIncompatibleClassError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoIncompatibleClassError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when we want to decorate / inject / mixin a class into another class
 that does not support it. For instance, we want to build a <a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>
 with a class that does not extend <strong>BASEMODEL.</strong></p>
@@ -133,28 +139,28 @@ with a class that does not extend <strong>BASEMODEL.</strong></p>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoDbError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDbError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDbError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDbError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDbError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when a database exception occurs. For one good example where this is used see
 <a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoDbNotFoundError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDbNotFoundError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDbNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoDbNotFoundError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoDbNotFoundError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when an entity does not exist but we try to update it. For one good example where this is
 used see <a class="reference internal" href="mvc.html#fantastico.mvc.model_facade.ModelFacade" title="fantastico.mvc.model_facade.ModelFacade"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.mvc.model_facade.ModelFacade</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoInsufficientArgumentsError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoInsufficientArgumentsError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoInsufficientArgumentsError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoInsufficientArgumentsError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoInsufficientArgumentsError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when a component extension received wrong number of arguments. See
 <a class="reference internal" href="component_reusage.html#fantastico.rendering.component.Component" title="fantastico.rendering.component.Component"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.rendering.component.Component</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.exceptions.FantasticoUrlInvokerError">
-<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoUrlInvokerError</tt><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoUrlInvokerError"><span class="viewcode-link">[source]</span></a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.exceptions.</tt><tt class="descname">FantasticoUrlInvokerError</tt><big>(</big><em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../_modules/fantastico/exceptions.html#FantasticoUrlInvokerError"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This exception is usually thrown when an internal url invoker fails. For instance, if a component reusage rendering
 fails then this exception is raised.</p>
 </dd></dl>

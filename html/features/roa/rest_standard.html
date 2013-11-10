@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>REST API standard &mdash; fantastico 0.5.0-b124 documentation</title>
+    <title>REST API standard &mdash; fantastico 0.5.0-b125 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.0-b124',
+        VERSION:     '0.5.0-b125',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b124 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../../index.html" />
     <link rel="up" title="ROA (Resource Oriented Architecture)" href="../roa.html" />
     <link rel="next" title="REST Responses" href="rest_responses.html" />
     <link rel="prev" title="ROA (Resource Oriented Architecture)" href="../roa.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="../roa.html" title="ROA (Resource Oriented Architecture)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../roa.html" accesskey="U">ROA (Resource Oriented Architecture)</a> &raquo;</li> 
       </ul>
@@ -58,13 +58,15 @@
 understanding how APIs will behave let&#8217;s assume we have the following resource defined:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">AppSettingV2</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
-   <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-   <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-   <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;app_settings&quot;</span>
 
-   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 </pre></div>
 </div>
 <div class="section" id="resource-collection">
@@ -81,9 +83,9 @@ This entry point supports the following additional operations:</p>
 <p>The main entry point for <strong>AppSettingV2</strong> collection of resources is <strong>/api/2.0/app-settings</strong>.</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="12%" />
-<col width="42%" />
+<col width="15%" />
 <col width="47%" />
+<col width="38%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>HTTP Verb</strong></td>
@@ -95,8 +97,8 @@ This entry point supports the following additional operations:</p>
 <td>Get the first 100 settings.</td>
 </tr>
 <tr class="row-odd"><td>GET</td>
-<td>/api/2.0/app-settings?order=[desc(name), asc(value)]</td>
-<td>Order settings by name (descending) and value (ascending).</td>
+<td>/api/2.0/app-settings?order=desc(name)</td>
+<td>Order settings by name (descending).</td>
 </tr>
 <tr class="row-even"><td>GET</td>
 <td>/api/2.0/app-settings?filter=&lt;complex filter&gt;</td>
@@ -132,35 +134,27 @@ This entry point supports the following additional operations:</p>
 <p>When requesting a given resource collection sorted you can specify the sorting criteria:</p>
 <blockquote>
 <div><ul>
-<li><p class="first"><strong>order</strong> - a JSON list containing asc / desc function calls. This list is evaluated from left to right with left most element having the highest priority.</p>
+<li><p class="first"><strong>order</strong> - Containing asc / desc function calls.</p>
 </li>
-<li><p class="first"><strong>asc</strong> - is a function with one or more arguments which tells API an ascending order by given attributes.</p>
+<li><p class="first"><strong>asc</strong> - is a function with one argument which tells API an ascending order by given attribute.</p>
 <blockquote>
-<div><div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// retrieve all application settings ordered in ascending order of name and value</span>
-<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;/api/2.0/app-settings?order=[asc(name, value)]&quot;</span><span class="p">;</span>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// retrieve all application settings ascending ordered by name</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;/api/2.0/app-settings?order=asc(name)&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first"><strong>desc</strong> - is a function with one or more arguments which tells API a descending order by given attributes.</p>
+<li><p class="first"><strong>desc</strong> - is a function with one argument which tells API a descending order by given attribute.</p>
 <blockquote>
-<div><div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// retrieve all application settings ordered in descending order of name and value.</span>
-<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;/api/2.0/app-settings?order=[desc(name, value)]&quot;</span><span class="p">;</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p class="first"><strong>complex ordering</strong> - you can easily specify different ordering criterias by resource attributes.</p>
-<blockquote>
-<div><div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// retrieve all application settings ordered in descending order of name and ascending order of value.</span>
-<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;/api/2.0/app-settings?order=[desc(name), asc(value)]&quot;</span><span class="p">;</span>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// retrieve all application settings ordered descending ordered by value.</span>
+<span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;/api/2.0/app-settings?order=desc(value)&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 </ul>
 </div></blockquote>
-<p>A possible result for <strong>AppSettingV2</strong> collection retrieval (<strong>/api/2.0/app-settings?order=[desc(name)]</strong>) looks like:</p>
+<p>A possible result for <strong>AppSettingV2</strong> collection retrieval (<strong>/api/2.0/app-settings?order=desc(name)</strong>) looks like:</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
    <span class="s2">&quot;items&quot;</span><span class="o">:</span>
       <span class="p">[{</span><span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;vat&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="mf">0.19</span><span class="p">},</span>
@@ -217,7 +211,7 @@ This entry point supports the following additional operations:</p>
 <td>Get all settings which name is <strong>vat</strong> and value is <strong>en_US</strong>.</td>
 </tr>
 <tr class="row-even"><td>GET</td>
-<td>/api/2.0/app-settings?&amp;filter=or(eq(name, &#8220;vat&#8221;), eq(value, &#8220;en_US&#8221;))</td>
+<td>/api/2.0/app-settings?filter=or(eq(name, &#8220;vat&#8221;), eq(value, &#8220;en_US&#8221;))</td>
 <td>Get all settings which name is <strong>vat</strong> or value is <strong>en_US</strong>.</td>
 </tr>
 </tbody>
@@ -363,7 +357,7 @@ Content-Length: 18
         <li class="right" >
           <a href="../roa.html" title="ROA (Resource Oriented Architecture)"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../roa.html" >ROA (Resource Oriented Architecture)</a> &raquo;</li> 
       </ul>

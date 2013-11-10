@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Model View Controller &mdash; fantastico 0.5.0-b124 documentation</title>
+    <title>Model View Controller &mdash; fantastico 0.5.0-b125 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.0-b124',
+        VERSION:     '0.5.0-b125',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b124 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="ROA (Resource Oriented Architecture)" href="roa.html" />
     <link rel="prev" title="Routing engine" href="routing_engine.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -199,15 +199,15 @@ desired dataset. The underlining session used is automatically rollbacked in ord
 <dd><p>This method add the given model in the database.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">PersonModel</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;persons&quot;</span>
-    
+
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;first_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;last_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">first_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="n">last_name</span>
-        
+
 <span class="n">facade</span> <span class="o">=</span> <span class="n">ModelFacade</span><span class="p">(</span><span class="n">PersonModel</span><span class="p">,</span> <span class="n">fantastico</span><span class="o">.</span><span class="n">mvc</span><span class="o">.</span><span class="n">SESSION</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">facade</span><span class="o">.</span><span class="n">new_model</span><span class="p">(</span><span class="s">&quot;John&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s">&quot;Doe&quot;</span><span class="p">)</span>
@@ -234,15 +234,15 @@ is rollback automatically so that other consumers can still work as expected.</t
 <dd><p>This method deletes a given model from database. Below you can find a simple example of how to use this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">PersonModel</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;persons&quot;</span>
-    
+
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;first_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;last_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">first_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="n">last_name</span>
-        
+
 <span class="n">facade</span> <span class="o">=</span> <span class="n">ModelFacade</span><span class="p">(</span><span class="n">PersonModel</span><span class="p">,</span> <span class="n">fantastico</span><span class="o">.</span><span class="n">mvc</span><span class="o">.</span><span class="n">SESSION</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">facade</span><span class="o">.</span><span class="n">find_by_pk</span><span class="p">({</span><span class="n">PersonModel</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
 <span class="n">facade</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
@@ -266,15 +266,15 @@ is rollback automatically so that other consumers can still work as expected.</t
 <dd><p>This method returns the entity which matches the given primary key values.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">PersonModel</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;persons&quot;</span>
-    
+
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;first_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;last_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">first_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="n">last_name</span>
-        
+
 <span class="n">facade</span> <span class="o">=</span> <span class="n">ModelFacade</span><span class="p">(</span><span class="n">PersonModel</span><span class="p">,</span> <span class="n">fantastico</span><span class="o">.</span><span class="n">mvc</span><span class="o">.</span><span class="n">SESSION</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">facade</span><span class="o">.</span><span class="n">find_by_pk</span><span class="p">({</span><span class="n">PersonModel</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
 </pre></div>
@@ -285,7 +285,7 @@ is rollback automatically so that other consumers can still work as expected.</t
 <dt id="fantastico.mvc.model_facade.ModelFacade.get_records_paged">
 <tt class="descname">get_records_paged</tt><big>(</big><em>start_record</em>, <em>end_record</em>, <em>filter_expr=None</em>, <em>sort_expr=None</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/model_facade.html#ModelFacade.get_records_paged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.model_facade.ModelFacade.get_records_paged" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method retrieves all records matching the given filters sorted by the given expression.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">records</span> <span class="o">=</span> <span class="n">facade</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+<div class="highlight-python"><div class="highlight"><pre><span class="n">records</span> <span class="o">=</span> <span class="n">facade</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
                            <span class="n">sort_expr</span><span class="o">=</span><span class="p">[</span><span class="n">ModelSort</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">create_date</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span><span class="p">,</span>
                                       <span class="n">ModelSort</span><span class="p">(</span><span class="n">Blog</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">ModelSort</span><span class="o">.</span><span class="n">DESC</span><span class="p">)],</span>
                            <span class="n">filter_expr</span><span class="o">=</span><span class="n">ModelFilterAnd</span><span class="p">(</span>
@@ -323,21 +323,27 @@ desired dataset. The underlining session used is automatically rollbacked in ord
 <dd><p>This property holds the model based on which this facade is built.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="fantastico.mvc.model_facade.ModelFacade.model_pk_cols">
+<tt class="descname">model_pk_cols</tt><a class="reference internal" href="../_modules/fantastico/mvc/model_facade.html#ModelFacade.model_pk_cols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.model_facade.ModelFacade.model_pk_cols" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns the model primary key columns as defined in the model cls.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="fantastico.mvc.model_facade.ModelFacade.new_model">
 <tt class="descname">new_model</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/model_facade.html#ModelFacade.new_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.model_facade.ModelFacade.new_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is used to obtain an instance of the underlining model. Below you can find a very simple example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">PersonModel</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;persons&quot;</span>
-    
+
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;first_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;last_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">first_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="n">last_name</span>
-        
+
 <span class="n">facade</span> <span class="o">=</span> <span class="n">ModelFacade</span><span class="p">(</span><span class="n">PersonModel</span><span class="p">,</span> <span class="n">fantastico</span><span class="o">.</span><span class="n">mvc</span><span class="o">.</span><span class="n">SESSION</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">facade</span><span class="o">.</span><span class="n">new_model</span><span class="p">(</span><span class="s">&quot;John&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s">&quot;Doe&quot;</span><span class="p">)</span>
@@ -366,15 +372,15 @@ desired dataset. The underlining session used is automatically rollbacked in ord
 <dd><p>This method updates an existing model from the database based on primary key.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">PersonModel</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;persons&quot;</span>
-    
+
     <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
     <span class="n">first_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;first_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
     <span class="n">last_name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;last_name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="n">first_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_name</span> <span class="o">=</span> <span class="n">last_name</span>
-        
+
 <span class="n">facade</span> <span class="o">=</span> <span class="n">ModelFacade</span><span class="p">(</span><span class="n">PersonModel</span><span class="p">,</span> <span class="n">fantastico</span><span class="o">.</span><span class="n">mvc</span><span class="o">.</span><span class="n">SESSION</span><span class="p">)</span>
 
 <span class="n">model</span> <span class="o">=</span> <span class="n">facade</span><span class="o">.</span><span class="n">new_model</span><span class="p">(</span><span class="s">&quot;John&quot;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s">&quot;Doe&quot;</span><span class="p">)</span>
@@ -472,7 +478,7 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 <dl class="method">
 <dt id="fantastico.mvc.base_controller.BaseController.load_template">
-<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x2897408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.base_controller.BaseController.load_template" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x1ecc408&gt;</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.base_controller.BaseController.load_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is responsible for loading a template from disk and render it using the given model data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">TestController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
@@ -532,6 +538,12 @@ powers Fantastico without breaking all existing code.</p>
 <dt id="fantastico.mvc.models.model_filter_compound.ModelFilterCompound.get_expression">
 <tt class="descname">get_expression</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter_compound.html#ModelFilterCompound.get_expression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.models.model_filter_compound.ModelFilterCompound.get_expression" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method transforms calculates sqlalchemy expression held by this filter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.mvc.models.model_filter_compound.ModelFilterCompound.model_filters">
+<tt class="descname">model_filters</tt><a class="reference internal" href="../_modules/fantastico/mvc/models/model_filter_compound.html#ModelFilterCompound.model_filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.models.model_filter_compound.ModelFilterCompound.model_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns all ModelFilter instances being compound.</p>
 </dd></dl>
 
 </dd></dl>
@@ -737,7 +749,7 @@ profile. You can read more on <a class="reference internal" href="../get_started
         <li class="right" >
           <a href="routing_engine.html" title="Routing engine"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

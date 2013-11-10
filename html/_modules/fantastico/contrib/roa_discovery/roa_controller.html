@@ -1,0 +1,625 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.contrib.roa_discovery.roa_controller &mdash; fantastico 0.5.0-b125 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.5.0-b125',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.contrib.roa_discovery.roa_controller</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.contrib.roa_discovery.roa_controller</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">mvc</span>
+<span class="kn">from</span> <span class="nn">fantastico.contrib.roa_discovery</span> <span class="kn">import</span> <span class="n">roa_helper</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span><span class="p">,</span> <span class="n">Controller</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.model_facade</span> <span class="kn">import</span> <span class="n">ModelFacade</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.query_parser</span> <span class="kn">import</span> <span class="n">QueryParser</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.resource_json_serializer</span> <span class="kn">import</span> <span class="n">ResourceJsonSerializer</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.resources_registry</span> <span class="kn">import</span> <span class="n">ResourcesRegistry</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.roa_exceptions</span> <span class="kn">import</span> <span class="n">FantasticoRoaError</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
+<span class="kn">from</span> <span class="nn">webob.response</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoDbError</span>
+
+<span class="nd">@ControllerProvider</span><span class="p">()</span>
+<div class="viewcode-block" id="RoaController"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController">[docs]</a><span class="k">class</span> <span class="nc">RoaController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides dynamic routes for ROA registered resources. All CRUD operations are supported out of the box. In</span>
+<span class="sd">    addition error handling is automatically provided by this controller.&#39;&#39;&#39;</span>
+
+    <span class="n">SETTINGS_FACADE</span> <span class="o">=</span> <span class="n">SettingsFacade</span><span class="p">()</span>
+    <span class="n">ROA_API</span> <span class="o">=</span> <span class="n">roa_helper</span><span class="o">.</span><span class="n">normalize_absolute_roa_uri</span><span class="p">(</span><span class="n">SETTINGS_FACADE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;roa_api&quot;</span><span class="p">))</span>
+    <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">r&quot;</span><span class="si">%s</span><span class="s">/(?P&lt;version&gt;\d{1,}\.\d{1,})(?P&lt;resource_url&gt;/.*?)&quot;</span> <span class="o">%</span> <span class="n">ROA_API</span>
+    <span class="n">BASE_LATEST_URL</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">/latest(?P&lt;resource_url&gt;.*)&quot;</span> <span class="o">%</span> <span class="n">ROA_API</span>
+
+    <span class="n">OFFSET_DEFAULT</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">LIMIT_DEFAULT</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">,</span> <span class="n">resources_registry_cls</span><span class="o">=</span><span class="n">ResourcesRegistry</span><span class="p">,</span> <span class="n">model_facade_cls</span><span class="o">=</span><span class="n">ModelFacade</span><span class="p">,</span>
+                 <span class="n">conn_manager</span><span class="o">=</span><span class="n">mvc</span><span class="p">,</span>
+                 <span class="n">json_serializer_cls</span><span class="o">=</span><span class="n">ResourceJsonSerializer</span><span class="p">,</span>
+                 <span class="n">query_parser_cls</span><span class="o">=</span><span class="n">QueryParser</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RoaController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">settings_facade</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resources_registry</span> <span class="o">=</span> <span class="n">resources_registry_cls</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span> <span class="o">=</span> <span class="n">model_facade_cls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_conn_manager</span> <span class="o">=</span> <span class="n">conn_manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_json_serializer_cls</span> <span class="o">=</span> <span class="n">json_serializer_cls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_query_parser_cls</span> <span class="o">=</span> <span class="n">query_parser_cls</span>
+
+        <span class="n">doc_base</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">features/roa/errors/&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;doc_base&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_errors_url</span> <span class="o">=</span> <span class="n">doc_base</span> <span class="o">+</span> <span class="s">&quot;error_</span><span class="si">%s</span><span class="s">.html&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;roa_api&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_parse_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_expr</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method parse a string filter expression and builds a compatible ModelFilter.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filter_expr</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="n">query_parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_parser_cls</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">query_parser</span><span class="o">.</span><span class="n">parse_filter</span><span class="p">(</span><span class="n">filter_expr</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_parse_sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sort_expr</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method parse a string sort expression and builds a compatible ModelSort.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sort_expr</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">None</span>
+
+        <span class="n">query_parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_parser_cls</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">query_parser</span><span class="o">.</span><span class="n">parse_sort</span><span class="p">(</span><span class="n">sort_expr</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_build_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_code</span><span class="p">,</span> <span class="n">error_code</span><span class="p">,</span> <span class="n">error_description</span><span class="p">,</span> <span class="n">error_details</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method builds an error response compliant with :doc:`/features/roa/rest_responses` specification.&#39;&#39;&#39;</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;error_code&quot;</span><span class="p">:</span> <span class="n">error_code</span><span class="p">,</span>
+                 <span class="s">&quot;error_description&quot;</span><span class="p">:</span> <span class="n">error_description</span><span class="p">,</span>
+                 <span class="s">&quot;error_details&quot;</span><span class="p">:</span> <span class="n">error_details</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="n">status_code</span><span class="o">=</span><span class="n">http_code</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_resource_notfound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method build a resource not found response which is sent to the client. You can find more information about error</span>
+<span class="sd">        responses format on :doc:`/features/roa/rest_responses`&#39;&#39;&#39;</span>
+
+        <span class="n">error_code</span> <span class="o">=</span> <span class="mi">10000</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span><span class="n">http_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span>
+                                          <span class="n">error_code</span><span class="o">=</span><span class="n">error_code</span><span class="p">,</span>
+                                          <span class="n">error_description</span><span class="o">=</span><span class="s">&quot;Resource </span><span class="si">%s</span><span class="s"> version </span><span class="si">%s</span><span class="s"> does not exist.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="p">),</span>
+                                          <span class="n">error_details</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_errors_url</span> <span class="o">%</span> <span class="n">error_code</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_resource_item_notfound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method build a resource not found response which is sent to the client. You can find more information about error</span>
+<span class="sd">        responses format on :doc:`/features/roa/rest_responses`. In the error description it also contains resource id.&#39;&#39;&#39;</span>
+
+        <span class="n">error_code</span> <span class="o">=</span> <span class="mi">10040</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span><span class="n">http_code</span><span class="o">=</span><span class="mi">404</span><span class="p">,</span>
+                                          <span class="n">error_code</span><span class="o">=</span><span class="n">error_code</span><span class="p">,</span>
+                                          <span class="n">error_description</span><span class="o">=</span><span class="s">&quot;Resource </span><span class="si">%s</span><span class="s"> version </span><span class="si">%s</span><span class="s"> id </span><span class="si">%s</span><span class="s"> does not exist.&quot;</span> <span class="o">%</span> \
+                                            <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">),</span>
+                                          <span class="n">error_details</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_errors_url</span> <span class="o">%</span> <span class="n">error_code</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_resource_invalid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">ex</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method builds a resource invalid response which is sent to the client.&#39;&#39;&#39;</span>
+
+        <span class="n">error_code</span> <span class="o">=</span> <span class="mi">10010</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span><span class="n">http_code</span><span class="o">=</span><span class="n">ex</span><span class="o">.</span><span class="n">http_code</span><span class="p">,</span>
+                                          <span class="n">error_code</span><span class="o">=</span><span class="n">error_code</span><span class="p">,</span>
+                                          <span class="n">error_description</span><span class="o">=</span><span class="s">&quot;Resource </span><span class="si">%s</span><span class="s"> version </span><span class="si">%s</span><span class="s"> is invalid: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> \
+                                                    <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)),</span>
+                                          <span class="n">error_details</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_errors_url</span> <span class="o">%</span> <span class="n">error_code</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_resource_nobody</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method builds a resource nobody given response which is sent to the client.&#39;&#39;&#39;</span>
+
+        <span class="n">error_code</span> <span class="o">=</span> <span class="mi">10020</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span><span class="n">http_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+                                          <span class="n">error_code</span><span class="o">=</span><span class="n">error_code</span><span class="p">,</span>
+                                          <span class="n">error_description</span><span class="o">=</span><span class="s">&quot;Resource </span><span class="si">%s</span><span class="s"> version </span><span class="si">%s</span><span class="s"> can not be created: no body given.&quot;</span> <span class="o">%</span> \
+                                                    <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="p">),</span>
+                                          <span class="n">error_details</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_errors_url</span> <span class="o">%</span> <span class="n">error_code</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_resource_dberror</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method builds a resource dberror response which is sent to the client.&#39;&#39;&#39;</span>
+
+        <span class="n">error_code</span> <span class="o">=</span> <span class="mi">10030</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span><span class="n">http_code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+                                          <span class="n">error_code</span><span class="o">=</span><span class="n">error_code</span><span class="p">,</span>
+                                          <span class="n">error_description</span><span class="o">=</span><span class="s">&quot;Resource </span><span class="si">%s</span><span class="s"> version </span><span class="si">%s</span><span class="s"> db exception: </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> \
+                                                    <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">dbex</span><span class="p">)),</span>
+                                          <span class="n">error_details</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_errors_url</span> <span class="o">%</span> <span class="n">error_code</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_current_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the current db connection for this request.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn_manager</span><span class="o">.</span><span class="n">CONN_MANAGER</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">request_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_trim_resource_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method removes traling slash from resource url.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">resource_url</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;/&quot;</span><span class="p">:</span>
+            <span class="n">resource_url</span> <span class="o">=</span> <span class="n">resource_url</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">resource_url</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.get_collection"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.get_collection">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides the route for accessing a resource collection. :doc:`/features/roa/rest_standard` for collections</span>
+<span class="sd">        are enabled by this method. The typical response format is presented below:</span>
+
+<span class="sd">        .. code-block:: javascript</span>
+
+<span class="sd">            var response = {&quot;items&quot;: [</span>
+<span class="sd">                                // resources represented as json objects.</span>
+<span class="sd">                            ],</span>
+<span class="sd">                            &quot;totalItems&quot;: 100}</span>
+
+<span class="sd">        If a resource is not found or the resource version does not exist the following response is returned:</span>
+
+<span class="sd">        .. code-block:: javascript</span>
+
+<span class="sd">            {&quot;error_code&quot;: 10000,</span>
+<span class="sd">             &quot;error_description&quot;: &quot;Resource %s version %s does not exist.&quot;,</span>
+<span class="sd">             &quot;error_details&quot;: &quot;http://rcosnita.github.io/fantastico/html/features/roa/errors/error_10000.html&quot;}</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="s">&quot;latest&quot;</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="n">CollectionParams</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">RoaController</span><span class="o">.</span><span class="n">OFFSET_DEFAULT</span><span class="p">,</span> <span class="n">RoaController</span><span class="o">.</span><span class="n">LIMIT_DEFAULT</span><span class="p">)</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resources_registry</span><span class="o">.</span><span class="n">find_by_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">)</span>
+
+        <span class="n">json_serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_json_serializer_cls</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+
+        <span class="n">filter_expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_filter</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">filter_expr</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">sort_expr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_sort</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">order_expr</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="n">model_facade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_connection</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+
+        <span class="n">models</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">get_records_paged</span><span class="p">(</span><span class="n">start_record</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">offset</span><span class="p">,</span> <span class="n">end_record</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">offset</span> <span class="o">+</span> <span class="n">params</span><span class="o">.</span><span class="n">limit</span><span class="p">,</span>
+                                                <span class="n">filter_expr</span><span class="o">=</span><span class="n">filter_expr</span><span class="p">,</span>
+                                                <span class="n">sort_expr</span><span class="o">=</span><span class="n">sort_expr</span><span class="p">)</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">json_serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">fields</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
+
+        <span class="n">models_count</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">count_records</span><span class="p">(</span><span class="n">filter_expr</span><span class="o">=</span><span class="n">filter_expr</span><span class="p">)</span>
+
+        <span class="n">body</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;items&quot;</span><span class="p">:</span> <span class="n">items</span><span class="p">,</span>
+                <span class="s">&quot;totalItems&quot;</span><span class="p">:</span> <span class="n">models_count</span><span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.get_collection_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.get_collection_latest">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method retrieves a resource collection using the latest version of the api.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">))</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;OPTIONS&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.handle_resource_options"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options">[docs]</a>    <span class="k">def</span> <span class="nf">handle_resource_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different</span>
+<span class="sd">        domains than project host.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="s">&quot;latest&quot;</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resources_registry</span><span class="o">.</span><span class="n">find_by_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;0&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Cache-Control&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;private&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Origin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Methods&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OPTIONS,GET,POST,PUT,DELETE&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Headers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;Access-Control-Request-Headers&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;OPTIONS&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.handle_resource_options_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options_latest">[docs]</a>    <span class="k">def</span> <span class="nf">handle_resource_options_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method handles OPTIONS http requests for ROA api latest versions.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_resource_options</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">))</span>
+</div>
+    <span class="k">def</span> <span class="nf">_validate_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request_body</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to validate the resource. If the resource validation fails an error response is sent. Otherwise</span>
+<span class="sd">        the newly validated model is returned.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">request_body</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_nobody</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_json_serializer_cls</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">request_body</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">model</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">FantasticoRoaError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_invalid</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.get_item"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.get_item">[docs]</a>    <span class="k">def</span> <span class="nf">get_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides the API for retrieving a single item from a collection. The item is uniquely identified by</span>
+<span class="sd">        resource_id. Below you can find a success response example:</span>
+
+<span class="sd">        .. code-block:: html</span>
+
+<span class="sd">            GET - /api/1.0/simple-resources/1 HTTP/1.1</span>
+
+<span class="sd">            200 OK</span>
+<span class="sd">            Content-Type: application/json</span>
+<span class="sd">            Content-Length: ...</span>
+
+<span class="sd">            {</span>
+<span class="sd">                &quot;id&quot;: 1,</span>
+<span class="sd">                &quot;name&quot;: &quot;Test resource&quot;,</span>
+<span class="sd">                &quot;description&quot;: &quot;Simple description&quot;</span>
+<span class="sd">            }</span>
+
+<span class="sd">        Of course there are cases when exceptions might occur. Below, you can find a list of error response retrieved from</span>
+<span class="sd">        get_item API:</span>
+
+<span class="sd">            * **10000** - Whenever we try to retrieve a resource with unknown type. (Not registered to ROA).</span>
+<span class="sd">            * **10030** - Whenever we try to retrieve a resource and an unexpected database exception occurs.</span>
+<span class="sd">            * **10040** - Whenever we try to retrieve a resource which does not exist.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fields&quot;</span><span class="p">)</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resources_registry</span><span class="o">.</span><span class="n">find_by_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">)</span>
+
+        <span class="n">model_facade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_connection</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">find_by_pk</span><span class="p">({</span><span class="n">model_facade</span><span class="o">.</span><span class="n">model_pk_cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">resource_id</span><span class="p">})</span>
+        <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_item_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">)</span>
+
+        <span class="n">json_serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_json_serializer_cls</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+
+        <span class="n">resource_body</span> <span class="o">=</span> <span class="n">json_serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="n">resource_body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">resource_body</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">resource_body</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.create_item"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.create_item">[docs]</a>    <span class="k">def</span> <span class="nf">create_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides the route for adding new resources into an existing collection. The API is json only and invoke</span>
+<span class="sd">        the validator as described in ROA spec. Usually, when a resource is created successfully a similar answer is returned to</span>
+<span class="sd">        the client:</span>
+
+<span class="sd">        .. code-block:: html</span>
+
+<span class="sd">            201 Created</span>
+<span class="sd">            Content-Type: application/json</span>
+<span class="sd">            Content-Length: 0</span>
+<span class="sd">            Location: /api/2.0/app-settings/123</span>
+
+<span class="sd">        Below you can find all error response codes which might be returned when creating a new resource:</span>
+
+<span class="sd">            * **10000** - Whenever we try to create a resource with unknown type. (Not registered to ROA).</span>
+<span class="sd">            * **10010** - Whenever we try to create a resource which fails validation.</span>
+<span class="sd">            * **10020** - Whenever we try to create a resource without passing a valid body.</span>
+<span class="sd">            * **10030** - Whenever we try to create a resource and an unexpected database exception occurs.</span>
+
+<span class="sd">        You can find more information about typical REST ROA APIs response on :doc:`/features/roa/rest_responses`.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="s">&quot;latest&quot;</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resources_registry</span><span class="o">.</span><span class="n">find_by_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_resource</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Response</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">model</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model_facade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_connection</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+            <span class="n">model_id</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
+
+        <span class="n">model_location</span> <span class="o">=</span> <span class="n">roa_helper</span><span class="o">.</span><span class="n">calculate_resource_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+        <span class="n">model_location</span> <span class="o">+=</span> <span class="s">&quot;/</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">model_id</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">201</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Location&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_location</span>
+
+        <span class="k">return</span> <span class="n">response</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.create_item_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.create_item_latest">[docs]</a>    <span class="k">def</span> <span class="nf">create_item_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides create item latest API version.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_item</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">))</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;PUT&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.update_item"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.update_item">[docs]</a>    <span class="k">def</span> <span class="nf">update_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides the route for updating existing resources from an existing collection.</span>
+<span class="sd">        The API is json only and invokes the validator as described in ROA spec.</span>
+<span class="sd">        Usually, when a resource is update successfully a similar answer is returned to the client:</span>
+
+<span class="sd">        .. code-block:: html</span>
+
+<span class="sd">            204 No Content</span>
+<span class="sd">            Content-Type: application/json</span>
+<span class="sd">            Content-Length: 0</span>
+
+<span class="sd">        Below you can find all error response codes which might be returned when creating a new resource:</span>
+
+<span class="sd">            * **10000** - Whenever we try to update a resource with unknown type. (Not registered to ROA).</span>
+<span class="sd">            * **10010** - Whenever we try to update a resource which fails validation.</span>
+<span class="sd">            * **10020** - Whenever we try to update a resource without passing a valid body.</span>
+<span class="sd">            * **10030** - Whenever we try to update a resource and an unexpected database exception occurs.</span>
+<span class="sd">            * **10040** - Whenever we try to update a resource which does not exist.</span>
+
+<span class="sd">        You can find more information about typical REST ROA APIs response on :doc:`/features/roa/rest_responses`.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="s">&quot;latest&quot;</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resources_registry</span><span class="o">.</span><span class="n">find_by_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_resource</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Response</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">model</span>
+
+        <span class="n">model_facade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_connection</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+        <span class="n">pk_col</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">model_pk_cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">existing_model</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">find_by_pk</span><span class="p">({</span><span class="n">pk_col</span><span class="p">:</span> <span class="n">resource_id</span><span class="p">})</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">existing_model</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_item_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">)</span>
+
+
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">pk_col</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">)</span>
+            <span class="n">model_facade</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">204</span><span class="p">)</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;PUT&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.update_item_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.update_item_latest">[docs]</a>    <span class="k">def</span> <span class="nf">update_item_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This is the route handler for latest update existing item api.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_item</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">),</span> <span class="n">resource_id</span><span class="p">)</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;DELETE&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.delete_item"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.delete_item">[docs]</a>    <span class="k">def</span> <span class="nf">delete_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides the route for deleting existing resources from an existing collection.</span>
+<span class="sd">        The API is json only. Usually, when a resource is deleted successfully a similar answer is returned to the client:</span>
+
+<span class="sd">        .. code-block:: html</span>
+
+<span class="sd">            204 No Content</span>
+<span class="sd">            Content-Type: application/json</span>
+<span class="sd">            Content-Length: 0</span>
+
+<span class="sd">        Below you can find all error response codes which might be returned when creating a new resource:</span>
+
+<span class="sd">            * **10000** - Whenever we try to delete a resource with unknown type. (Not registered to ROA).</span>
+<span class="sd">            * **10030** - Whenever we try to delete a resource and an unexpected database exception occurs.</span>
+<span class="sd">            * **10040** - Whenever we try to delete a resource which does not exist.</span>
+
+<span class="sd">        You can find more information about typical REST ROA APIs response on :doc:`/features/roa/rest_responses`.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="s">&quot;latest&quot;</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resources_registry</span><span class="o">.</span><span class="n">find_by_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">model_facade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_connection</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+            <span class="n">pk_col</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">model_pk_cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">existing_model</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">find_by_pk</span><span class="p">({</span><span class="n">pk_col</span><span class="p">:</span> <span class="n">resource_id</span><span class="p">})</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">existing_model</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_item_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">)</span>
+
+            <span class="n">model_facade</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">existing_model</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">204</span><span class="p">)</span>
+</div>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;DELETE&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="RoaController.delete_item_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.delete_item_latest">[docs]</a>    <span class="k">def</span> <span class="nf">delete_item_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides the functionality for delete item latest version api route.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delete_item</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">),</span> <span class="n">resource_id</span><span class="p">)</span>
+</div></div>
+<span class="k">class</span> <span class="nc">CollectionParams</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This object defines the structure for get_collection supported query parameters.&#39;&#39;&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns offset provided in the request.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">limit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns limit provided in the request.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_limit</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">filter_expr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns **filter** query parameter received by collection.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">order_expr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns **order** query parameter received by collection.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns **fields** query parameter received by collection.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fields</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">offset_default</span><span class="p">,</span> <span class="n">limit_default</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;offset&quot;</span><span class="p">,</span> <span class="n">offset_default</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_offset</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_offset</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_limit</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;limit&quot;</span><span class="p">,</span> <span class="n">limit_default</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_limit</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_limit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_limit</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filter</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;filter&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_order</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;order&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order</span> <span class="o">=</span> <span class="s">&quot;[</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_order</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_order</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_order</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fields</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;fields&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

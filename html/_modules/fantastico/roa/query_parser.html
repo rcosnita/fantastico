@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.roa.query_parser &mdash; fantastico 0.5.0-b125 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5.0-b125',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.roa.query_parser</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.roa.query_parser</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">fantastico.roa.query_parser_exceptions</span> <span class="kn">import</span> <span class="n">QueryParserOperationInvalidError</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.query_parser_operations</span> <span class="kn">import</span> <span class="n">QueryParserOperationBinaryEq</span><span class="p">,</span> <span class="n">QueryParserOperationBinaryGe</span><span class="p">,</span> \
+    <span class="n">QueryParserOperationBinaryGt</span><span class="p">,</span> <span class="n">QueryParserOperationBinaryLe</span><span class="p">,</span> <span class="n">QueryParserOperationBinaryLt</span><span class="p">,</span> <span class="n">QueryParserOperationBinaryLike</span><span class="p">,</span> \
+    <span class="n">QueryParserOperationBinaryIn</span><span class="p">,</span> <span class="n">QueryParserOperationSortAsc</span><span class="p">,</span> <span class="n">QueryParserOperationSortDesc</span><span class="p">,</span> <span class="n">QueryParserOperationOr</span><span class="p">,</span> \
+    <span class="n">QueryParserOperationAnd</span><span class="p">,</span> <span class="n">QueryParserOperationCompound</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<div class="viewcode-block" id="QueryParser"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser.QueryParser">[docs]</a><span class="k">class</span> <span class="nc">QueryParser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides ROA query parser functionality. It provides methods for transforming filter and sorting expressions</span>
+<span class="sd">    (:doc:`/features/roa/rest_standard`) into mvc filters (:doc:`/features/mvc`).&#39;&#39;&#39;</span>
+
+    <span class="n">_lang_symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="s">&quot;(&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;)&quot;</span><span class="p">:</span> <span class="s">&quot;)&quot;</span><span class="p">,</span>
+                    <span class="s">&quot;,&quot;</span><span class="p">:</span> <span class="s">&quot;,&quot;</span><span class="p">}</span>
+
+    <span class="n">_MAX_TOKEN_LENGTH</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">_lang_rules</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">_T_END</span> <span class="o">=</span> <span class="s">&quot;$&quot;</span>
+
+    <span class="n">TERM</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">RULE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">regex_text</span> <span class="o">=</span> <span class="s">&quot;[a-zA-Z</span><span class="se">\\</span><span class="s">. </span><span class="se">\&quot;</span><span class="s">0-9</span><span class="se">\\</span><span class="s">[</span><span class="se">\\</span><span class="s">]]{1,}&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_T_END</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lang_rules</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s">&quot;,&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">)],</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">)]</span>
+                              <span class="p">},</span>
+                <span class="s">&quot;,&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;,&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">)]</span>
+                      <span class="p">},</span>
+                <span class="s">&quot;)&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s">&quot;)&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">)]</span>
+                      <span class="p">},</span>
+                <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="p">{}</span>
+             <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lang_grammar</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_argument</span><span class="p">)</span>
+                                        <span class="p">},</span>
+                       <span class="s">&quot;,&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s">&quot;,&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nop</span><span class="p">)</span>
+                             <span class="p">},</span>
+                       <span class="s">&quot;)&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                 <span class="s">&quot;)&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;)&quot;</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exec_operator</span><span class="p">)</span>
+                             <span class="p">},</span>
+                       <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="p">{}</span>
+                     <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_operator</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compound_arguments</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_all_operations</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_register_all_operations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method register all supported operations of this parser.&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationBinaryEq</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationBinaryGt</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationBinaryGe</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationBinaryLt</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationBinaryLe</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationBinaryLike</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationBinaryIn</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationOr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationAnd</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationSortAsc</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_operation</span><span class="p">(</span><span class="n">QueryParserOperationSortDesc</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_register_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method registers a given operations into the list of supported operations. Grammar rules are enriched based</span>
+<span class="sd">        on the given operator.&#39;&#39;&#39;</span>
+
+        <span class="n">token</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lang_grammar</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">get_grammar_table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_new_operator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lang_grammar</span><span class="p">[</span><span class="s">&quot;(&quot;</span><span class="p">][</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;(&quot;</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nop</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lang_symbols</span><span class="p">[</span><span class="n">operator</span><span class="o">.</span><span class="n">get_token</span><span class="p">()]</span> <span class="o">=</span> <span class="n">token</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lang_rules</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">get_grammar_rules</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lang_rules</span><span class="p">[</span><span class="s">&quot;(&quot;</span><span class="p">][</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="n">token</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">_nop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used as default values when a table grammar entry does not require any concrete action.&#39;&#39;&#39;</span>
+
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_exec_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method executes the current operator against the given the model.</span>
+
+<span class="sd">        :rtype: :py:class`fantastico.mvc.models.model_filter.ModelFilterAbstract`&#39;&#39;&#39;</span>
+
+        <span class="n">curr_operation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_operator</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">curr_operation</span><span class="p">,</span> <span class="n">QueryParserOperationCompound</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_compound_arguments</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Operation </span><span class="si">%s</span><span class="s"> accepts 2 parameters. </span><span class="si">%s</span><span class="s"> given.&quot;</span> <span class="o">%</span> \
+                                                       <span class="p">(</span><span class="n">curr_operation</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_compound_arguments</span><span class="p">)))</span>
+
+            <span class="n">curr_operation</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_compound_arguments</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="n">curr_operation</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_compound_arguments</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compound_arguments</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">curr_operation</span><span class="o">.</span><span class="n">get_filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compound_arguments</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">curr_operation</span><span class="o">.</span><span class="n">get_filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compound_arguments</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_add_argument</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method adds a new argument to the current operation.&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_operator</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discovered_tokens</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_new_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator_cls</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method adds a new operator on the stack of operations.&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_operator</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">operator_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_parse_lexic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_expr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method identify the lexic of the given filter expression. As a result a set of supported symbols are returned.&#39;&#39;&#39;</span>
+
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">curr_token</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_expr</span><span class="p">):</span>
+            <span class="n">char</span> <span class="o">=</span> <span class="n">filter_expr</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s">&#39; &#39;</span> <span class="ow">and</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">curr_token</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="bp">None</span>
+
+            <span class="k">if</span> <span class="s">&quot;[&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">curr_token</span> <span class="ow">and</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">curr_token</span><span class="p">:</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lang_symbols</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="p">:</span>
+                <span class="n">curr_token</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+
+                <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lang_symbols</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">curr_token</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">token</span><span class="p">:</span>
+                    <span class="n">curr_token</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">curr_token</span><span class="p">:</span>
+                    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">curr_token</span><span class="p">))</span>
+                    <span class="n">curr_token</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">curr_token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MAX_TOKEN_LENGTH</span><span class="p">:</span>
+                <span class="n">next_delim</span> <span class="o">=</span> <span class="bp">None</span>
+
+                <span class="k">if</span> <span class="s">&quot;[&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">curr_token</span><span class="p">:</span>
+                    <span class="n">next_delim</span> <span class="o">=</span> <span class="n">filter_expr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">next_delim</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">filter_expr</span><span class="p">[</span><span class="n">next_delim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;)&quot;</span><span class="p">:</span>
+                        <span class="n">next_delim</span> <span class="o">=</span> <span class="n">next_delim</span> <span class="o">-</span> <span class="mi">1</span>
+
+                    <span class="k">if</span> <span class="n">next_delim</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                        <span class="n">next_delim</span> <span class="o">=</span> <span class="n">filter_expr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;)&quot;</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">filter_expr</span><span class="p">[</span><span class="n">next_delim</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;)&quot;</span><span class="p">:</span>
+                        <span class="n">next_delim</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">next_delim</span> <span class="o">=</span> <span class="n">filter_expr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;]&quot;</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+                <span class="n">curr_token</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">filter_expr</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="n">next_delim</span><span class="p">])</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">curr_token</span><span class="p">)</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+                <span class="n">curr_token</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">next_delim</span>
+
+                <span class="k">continue</span>
+
+            <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_T_END</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tokens</span>
+
+    <span class="k">def</span> <span class="nf">_parse_syntax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method does a syntax parsing on the given tokens. Tokens simply describe the sentence being analysed. In order</span>
+<span class="sd">        to obtain tokens a lexic analysis must be executed.</span>
+
+<span class="sd">        :param tokens: A list of tokens describing the sentence being analysed.</span>
+<span class="sd">        :type tokens: list</span>
+<span class="sd">        :returns: Left most derivation of the sentence.</span>
+<span class="sd">        :rtype: list</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">ll_derivation</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">s_type</span><span class="p">,</span> <span class="n">s_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">s_type</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">:</span>
+                <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_term_token</span><span class="p">(</span><span class="n">s_token</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle_rule_token</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">ll_derivation</span><span class="p">,</span> <span class="n">s_token</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ll_derivation</span>
+
+    <span class="k">def</span> <span class="nf">_handle_term_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s_token</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">curr_pos</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method handles the given tuple of s_token and token when the given s_token is terminal.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">token</span> <span class="o">==</span> <span class="n">s_token</span><span class="p">:</span>
+            <span class="n">curr_pos</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">return</span> <span class="n">curr_pos</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discovered_tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Invalid operation in expression.&quot;</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Operator </span><span class="si">%s</span><span class="s"> received bad input token </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> \
+                                               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discovered_tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">token</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_handle_rule_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">all_tokens</span><span class="p">,</span> <span class="n">ll_derivation</span><span class="p">,</span> <span class="n">s_token</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">curr_pos</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method handles the given tuple of s_token and token when the given s_token is a grammar rule.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lang_symbols</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s_token</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">s_token</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_discovered_tokens</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span>
+            <span class="n">all_tokens</span><span class="p">[</span><span class="n">curr_pos</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lang_symbols</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s_token</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">:</span>
+            <span class="n">s_token</span> <span class="o">=</span> <span class="s">&quot;(&quot;</span>
+
+        <span class="n">rule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lang_grammar</span><span class="p">[</span><span class="n">s_token</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rule</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">ll_derivation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">curr_rule</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lang_rules</span><span class="p">[</span><span class="n">rule</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">rule</span><span class="p">[</span><span class="mi">1</span><span class="p">]]):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_rule</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QueryParser.parse_filter"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser.QueryParser.parse_filter">[docs]</a>    <span class="k">def</span> <span class="nf">parse_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_expr</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method transform the given filter expression into mvc filters.</span>
+
+<span class="sd">        :param filter_expr: The filter string expression we want to convert to query objects.</span>
+<span class="sd">        :type filter_exprt: string</span>
+<span class="sd">        :param model: The model used to describe the resource on which the requests are done.</span>
+<span class="sd">        :returns: The newly created mvc query object.</span>
+<span class="sd">        :rtype: :py:class:`fantastico.mvc.models.model_filter.ModelFilterAbstract`&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filter_expr</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_expr</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_lexic</span><span class="p">(</span><span class="n">filter_expr</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">ll_derivation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_syntax</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+        <span class="n">model_filter</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">for</span> <span class="n">ll_rule</span> <span class="ow">in</span> <span class="n">ll_derivation</span><span class="p">:</span>
+            <span class="n">model_filter</span> <span class="o">=</span> <span class="n">ll_rule</span><span class="p">[</span><span class="mi">2</span><span class="p">]()</span>
+
+        <span class="k">return</span> <span class="n">model_filter</span>
+</div>
+<div class="viewcode-block" id="QueryParser.parse_sort"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser.QueryParser.parse_sort">[docs]</a>    <span class="k">def</span> <span class="nf">parse_sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sort_expr</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method transform the given sort expression into mvc sort filter.</span>
+
+<span class="sd">        :param filter_expr: The filter string expression we want to convert to query objects.</span>
+<span class="sd">        :type filter_exprt: string</span>
+<span class="sd">        :param model: The model used to describe the resource on which the requests are done.</span>
+<span class="sd">        :returns: The newly created mvc query object.</span>
+<span class="sd">        :rtype: :py:class:`fantastico.mvc.models.model_sort.ModelSort`</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">expr</span> <span class="ow">in</span> <span class="n">sort_expr</span><span class="p">:</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_filter</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">model</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">results</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

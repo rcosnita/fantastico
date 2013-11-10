@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.roa.query_parser_operations</title>
+    
+    <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.roa.query_parser_operations</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module::</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span> <span class="c"># pylint: disable=W0611</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter</span> <span class="kn">import</span> <span class="n">ModelFilter</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter_compound</span> <span class="kn">import</span> <span class="n">ModelFilterOr</span><span class="p">,</span> <span class="n">ModelFilterAnd</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_sort</span> <span class="kn">import</span> <span class="n">ModelSort</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.query_parser_exceptions</span> <span class="kn">import</span> <span class="n">QueryParserOperationInvalidError</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<div class="viewcode-block" id="QueryParserOperation"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperation">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperation</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class defines the contract for a query parser operation.&#39;&#39;&#39;</span>
+
+    <span class="n">TERM</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">RULE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">regex_text</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">parser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">regex_text</span>
+
+<div class="viewcode-block" id="QueryParserOperation.add_argument"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperation.add_argument">[docs]</a>    <span class="k">def</span> <span class="nf">add_argument</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method add a new argument to the parser operation.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">argument</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+</div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="QueryParserOperation.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperation.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the token which maps on this operation.&#39;&#39;&#39;</span>
+</div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="QueryParserOperation.get_grammar_rules"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperation.get_grammar_rules">[docs]</a>    <span class="k">def</span> <span class="nf">get_grammar_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the rules required to interpret this operation.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            return {</span>
+<span class="sd">                        &quot;(&quot;: [(self.TERM, &quot;(&quot;), (self.RULE, self.REGEX_TEXT), (self.RULE, &quot;,&quot;), (self.RULE, self.REGEX_TEXT),</span>
+<span class="sd">                              (self.RULE, &quot;)&quot;)],</span>
+<span class="sd">                   }</span>
+
+<span class="sd">        Grammar rules simply describe the tokens which come after operator + symbol. For instance, **eq(** is followed by two</span>
+<span class="sd">        comma separated arguments.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+</div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="QueryParserOperation.get_grammar_table"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperation.get_grammar_table">[docs]</a>    <span class="k">def</span> <span class="nf">get_grammar_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_mixin</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns a dictionary describing the operator + symbol rule and action.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            return {</span>
+<span class="sd">                        &quot;(&quot;: (&quot;eq&quot;, &quot;(&quot;, lambda: new_mixin(QueryParserOperationBinaryEq)),</span>
+<span class="sd">                        &quot;)&quot;: None</span>
+<span class="sd">                   }</span>
+
+<span class="sd">        :param new_mixin: New mixin described a factory method required to correctly pass current operation to parser.</span>
+<span class="sd">        :type new_mixin: function</span>
+<span class="sd">        :returns: A dictionary describing the grammar table for this operator.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+</div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="QueryParserOperation.build_filter"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperation.build_filter">[docs]</a>    <span class="k">def</span> <span class="nf">build_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method builds the model filter (:doc:`fantastico.mvc.models.model_filter.ModelFilter`).&#39;&#39;&#39;</span>
+</div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="QueryParserOperation.validate"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperation.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method validates the given operation and argument in order to ensure a filter can be built.</span>
+
+<span class="sd">        :raises fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError:</span>
+<span class="sd">            Whenever the current operation attributes are invalid.&#39;&#39;&#39;</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperation.get_filter"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperation.get_filter">[docs]</a>    <span class="k">def</span> <span class="nf">get_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method validates the current operation and build the filter.&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_filter</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationSort"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSort">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationSort</span><span class="p">(</span><span class="n">QueryParserOperation</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides base support for sort operations: asc / desc.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">sort_dir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QueryParserOperationSort</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_dir</span> <span class="o">=</span> <span class="n">sort_dir</span>
+
+<div class="viewcode-block" id="QueryParserOperationSort.validate"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSort.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method validates sorting argument passed to this operation.&#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Resource attribute </span><span class="si">%s</span><span class="s"> does not exist.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationSort.build_filter"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSort.build_filter">[docs]</a>    <span class="k">def</span> <span class="nf">build_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method builds the sorting model.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="n">ModelSort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_argument</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_dir</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationSort.get_grammar_rules"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSort.get_grammar_rules">[docs]</a>    <span class="k">def</span> <span class="nf">get_grammar_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the grammar rules supported by binary operators.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+                    <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="s">&quot;(&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">)],</span>
+               <span class="p">}</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationSort.get_grammar_table"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSort.get_grammar_table">[docs]</a>    <span class="k">def</span> <span class="nf">get_grammar_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_mixin</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;The grammar table supported by binary operators.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+                    <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span> <span class="s">&quot;(&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">new_mixin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">))</span>
+               <span class="p">}</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationSortAsc"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSortAsc">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationSortAsc</span><span class="p">(</span><span class="n">QueryParserOperationSort</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides asc sort operation.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QueryParserOperationSortAsc</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">sort_dir</span><span class="o">=</span><span class="n">ModelSort</span><span class="o">.</span><span class="n">ASC</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QueryParserOperationSortAsc.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSortAsc.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns asc sort token for ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;asc&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationSortDesc"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSortDesc">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationSortDesc</span><span class="p">(</span><span class="n">QueryParserOperationSort</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides desc sort operation.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QueryParserOperationSortDesc</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">sort_dir</span><span class="o">=</span><span class="n">ModelSort</span><span class="o">.</span><span class="n">DESC</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QueryParserOperationSortDesc.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSortDesc.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns desc sort token for ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;desc&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationBinary"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinary">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationBinary</span><span class="p">(</span><span class="n">QueryParserOperation</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the validation / build logic for binary operations.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QueryParserOperationBinary</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_column</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="QueryParserOperationBinary.build_filter"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinary.build_filter">[docs]</a>    <span class="k">def</span> <span class="nf">build_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method builds a binary filter.&#39;&#39;&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">ModelFilter</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_column</span><span class="p">,</span> <span class="n">ref_value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_operation</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationBinary.validate"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinary.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method ensures that three arguments were passed.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Binary operation </span><span class="si">%s</span><span class="s"> requires two arguments.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span><span class="p">)</span>
+
+        <span class="n">column_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">column_name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Binary operation </span><span class="si">%s</span><span class="s"> first argument is empty.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Binary operation </span><span class="si">%s</span><span class="s"> second argument is empty.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_column</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">column_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Resource model does not contain </span><span class="si">%s</span><span class="s"> attribute.&quot;</span> <span class="o">%</span> <span class="n">column_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationBinary.get_grammar_rules"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinary.get_grammar_rules">[docs]</a>    <span class="k">def</span> <span class="nf">get_grammar_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the grammar rules supported by binary operators.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+                    <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="s">&quot;(&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span>
+                          <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">)],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span> <span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="s">&quot;(&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span>
+                                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">)]</span>
+               <span class="p">}</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationBinary.get_grammar_table"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinary.get_grammar_table">[docs]</a>    <span class="k">def</span> <span class="nf">get_grammar_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_mixin</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;The grammar table supported by binary operators.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+                    <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span> <span class="s">&quot;(&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">new_mixin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">():</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">new_mixin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">))</span>
+               <span class="p">}</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationBinaryEq"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryEq">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationBinaryEq</span><span class="p">(</span><span class="n">QueryParserOperationBinary</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the eq operator which can compare two arguments for equality.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="QueryParserOperationBinaryEq.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryEq.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the equality token supported by ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;eq&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationBinaryGe"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryGe">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationBinaryGe</span><span class="p">(</span><span class="n">QueryParserOperationBinary</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the ge operator which can compare two arguments for greater or equal than relation.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="QueryParserOperationBinaryGe.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryGe.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the greater equals token supported by ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;ge&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationBinaryGt"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryGt">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationBinaryGt</span><span class="p">(</span><span class="n">QueryParserOperationBinary</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the gt operator which can compare two arguments for greater than relation.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="QueryParserOperationBinaryGt.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryGt.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the greater than token supported by ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;gt&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationBinaryLe"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryLe">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationBinaryLe</span><span class="p">(</span><span class="n">QueryParserOperationBinary</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the le operator which can compare two arguments for less or equal than relation.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="QueryParserOperationBinaryLe.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryLe.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the less equal than token supported by ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;le&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationBinaryLt"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryLt">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationBinaryLt</span><span class="p">(</span><span class="n">QueryParserOperationBinary</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the lt operator which can compare two arguments for less than relation.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="QueryParserOperationBinaryLt.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryLt.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the less than token supported by ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;lt&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationBinaryLike"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryLike">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationBinaryLike</span><span class="p">(</span><span class="n">QueryParserOperationBinary</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the like operator which can compare two arguments for similarity.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="QueryParserOperationBinaryLike.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryLike.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns like token supported by ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;like&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationBinaryIn"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryIn">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationBinaryIn</span><span class="p">(</span><span class="n">QueryParserOperationBinary</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the in operator which can compare a value with a possible list of values.&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="QueryParserOperationBinaryIn.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationBinaryIn.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns in token supported by ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;in&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationCompound"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationCompound">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationCompound</span><span class="p">(</span><span class="n">QueryParserOperation</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the parser for compound filter or. It will recursively parse each argument and in the end will return</span>
+<span class="sd">    a compatible :py:class:`fantastico.mvc.model_filter_compound.ModelFilterCompound`. Each concrete class must specify the</span>
+<span class="sd">    compound filter type to use.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">compound_filter_cls</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QueryParserOperationCompound</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parser</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compound_filter_cls</span> <span class="o">=</span> <span class="n">compound_filter_cls</span>
+
+<div class="viewcode-block" id="QueryParserOperationCompound.build_filter"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationCompound.build_filter">[docs]</a>    <span class="k">def</span> <span class="nf">build_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method builds the compound filter based on the parsed arguments of this operation.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compound_filter_cls</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationCompound.validate"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationCompound.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method validates all arguments passed to this compound filter.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> operation takes at least two arguments.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationCompound.get_grammar_rules"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationCompound.get_grammar_rules">[docs]</a>    <span class="k">def</span> <span class="nf">get_grammar_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the grammar rules supported by binary operators.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+                    <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="s">&quot;(&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span>
+                          <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">)],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()</span> <span class="p">:</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">()),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TERM</span><span class="p">,</span> <span class="s">&quot;(&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span>
+                                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;,&quot;</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex_text</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">RULE</span><span class="p">,</span> <span class="s">&quot;)&quot;</span><span class="p">)]</span>
+               <span class="p">}</span>
+</div>
+<div class="viewcode-block" id="QueryParserOperationCompound.get_grammar_table"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationCompound.get_grammar_table">[docs]</a>    <span class="k">def</span> <span class="nf">get_grammar_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_mixin</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;The grammar table supported by binary operators.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+                    <span class="s">&quot;(&quot;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span> <span class="s">&quot;(&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">new_mixin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)),</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">():</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_token</span><span class="p">(),</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">new_mixin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">))</span>
+               <span class="p">}</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationOr"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationOr">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationOr</span><span class="p">(</span><span class="n">QueryParserOperationCompound</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a query parser for **or** compound filtering.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QueryParserOperationOr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">compound_filter_cls</span><span class="o">=</span><span class="n">ModelFilterOr</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QueryParserOperationOr.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationOr.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns or compound token for ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;or&quot;</span>
+</div></div>
+<div class="viewcode-block" id="QueryParserOperationAnd"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationAnd">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationAnd</span><span class="p">(</span><span class="n">QueryParserOperationCompound</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a query parser for **and** compound filtering.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QueryParserOperationAnd</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">compound_filter_cls</span><span class="o">=</span><span class="n">ModelFilterAnd</span><span class="p">)</span>
+
+<div class="viewcode-block" id="QueryParserOperationAnd.get_token"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationAnd.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns and compound token for ROA query language.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="s">&quot;and&quot;</span></div></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

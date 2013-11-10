@@ -1,0 +1,11 @@
+10020 - No body given
+=====================
+
+Whenever we try to create / update a resource without sending resource body (information about the resource) this response is
+received. Below you can see a sample error response:
+
+.. code-block:: javascript
+
+   {"error_code": 10020,
+    "error_description": "Friendly error description.",
+    "error_details": <link to this page>}

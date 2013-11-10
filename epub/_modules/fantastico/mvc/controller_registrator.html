@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -94,11 +94,19 @@
         <span class="n">controller_routes</span> <span class="o">=</span> <span class="n">Controller</span><span class="o">.</span><span class="n">get_registered_routes</span><span class="p">()</span>
         <span class="n">routes</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="k">for</span> <span class="n">route</span> <span class="ow">in</span> <span class="n">controller_routes</span><span class="p">:</span>
-            <span class="n">controller</span> <span class="o">=</span> <span class="n">controller_routes</span><span class="p">[</span><span class="n">route</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">controller</span> <span class="ow">in</span> <span class="n">controller_routes</span><span class="p">:</span>
+            <span class="n">route</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">url</span>
 
-            <span class="n">routes</span><span class="p">[</span><span class="n">route</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="n">controller</span><span class="o">.</span><span class="n">fn_handler</span><span class="o">.</span><span class="n">full_name</span><span class="p">,</span>
-                             <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="n">controller</span><span class="o">.</span><span class="n">method</span><span class="p">}</span>
+            <span class="n">route_config</span> <span class="o">=</span> <span class="n">routes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">route</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">route_config</span><span class="p">:</span>
+                <span class="n">route_config</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">routes</span><span class="p">[</span><span class="n">route</span><span class="p">]</span> <span class="o">=</span> <span class="n">route_config</span>
+
+            <span class="n">route_config</span><span class="p">[</span><span class="s">&quot;http_verbs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">route_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;http_verbs&quot;</span><span class="p">,</span> <span class="p">{})</span>
+
+            <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">method</span><span class="p">:</span>
+                <span class="n">route_config</span><span class="p">[</span><span class="s">&quot;http_verbs&quot;</span><span class="p">][</span><span class="n">method</span><span class="p">]</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">fn_handler</span><span class="o">.</span><span class="n">full_name</span>
 
         <span class="k">return</span> <span class="n">routes</span></div></div>
 </pre></div>

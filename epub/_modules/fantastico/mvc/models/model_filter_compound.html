@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -32,81 +32,87 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:fantastico.mvc.models.model_filter_compound</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoNotSupportedError</span><span class="p">,</span> <span class="n">FantasticoError</span>
-<span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter</span> <span class="kn">import</span> <span class="n">ModelFilter</span><span class="p">,</span> <span class="n">ModelFilterAbstract</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter</span> <span class="kn">import</span> <span class="n">ModelFilterAbstract</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.sql.expression</span> <span class="kn">import</span> <span class="n">and_</span><span class="p">,</span> <span class="n">or_</span>
 
 <div class="viewcode-block" id="ModelFilterCompound"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter_compound.ModelFilterCompound">[docs]</a><span class="k">class</span> <span class="nc">ModelFilterCompound</span><span class="p">(</span><span class="n">ModelFilterAbstract</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the api for compounding ModelFilter objects into a specified sql alchemy operation.&#39;&#39;&#39;</span>
-    
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="ModelFilterCompound.model_filters"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter_compound.ModelFilterCompound.model_filters">[docs]</a>    <span class="k">def</span> <span class="nf">model_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns all ModelFilter instances being compound.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_filters</span>
+</div>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">FantasticoNotSupportedError</span><span class="p">(</span><span class="s">&quot;Compound filter *and* takes at least 2 simple model filters.&quot;</span><span class="p">)</span>
-        
+            <span class="k">raise</span> <span class="n">FantasticoNotSupportedError</span><span class="p">(</span><span class="s">&quot;Compound filter takes at least 2 simple model filters.&quot;</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">ModelFilter</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">ModelFilterAbstract</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="n">FantasticoNotSupportedError</span><span class="p">(</span><span class="s">&quot;ModelFilterAnd accept only arguments of type ModelFilter.&quot;</span><span class="p">)</span>
-        
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span> <span class="o">=</span> <span class="n">operation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_filters</span> <span class="o">=</span> <span class="n">args</span>
 
 <div class="viewcode-block" id="ModelFilterCompound.build"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter_compound.ModelFilterCompound.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method transform the current compound statement into an sql alchemy filter.&#39;&#39;&#39;</span>
-        
+
         <span class="k">try</span><span class="p">:</span>
             <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">())</span>
-            
+
             <span class="k">return</span> <span class="n">query</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">FantasticoError</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-    </div>
+</div>
 <div class="viewcode-block" id="ModelFilterCompound.get_expression"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter_compound.ModelFilterCompound.get_expression">[docs]</a>    <span class="k">def</span> <span class="nf">get_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method transforms calculates sqlalchemy expression held by this filter.&#39;&#39;&#39;</span>
-        
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">model_filter</span><span class="o">.</span><span class="n">get_expression</span><span class="p">()</span> <span class="k">for</span> <span class="n">model_filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_filters</span><span class="p">])</span>
-    </div></div>
+</div></div>
 <div class="viewcode-block" id="ModelFilterAnd"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter_compound.ModelFilterAnd">[docs]</a><span class="k">class</span> <span class="nc">ModelFilterAnd</span><span class="p">(</span><span class="n">ModelFilterCompound</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides a compound filter that allows **and** conditions against models. Below you can find a simple example:</span>
-<span class="sd">    </span>
+
 <span class="sd">        .. code-block:: python</span>
-<span class="sd">        </span>
+
 <span class="sd">            id_gt_filter = ModelFilter(PersonModel.id, 1, ModelFilter.GT)</span>
 <span class="sd">            id_lt_filter = ModelFilter(PersonModel.id, 5, ModelFilter.LT)</span>
 <span class="sd">            name_like_filter = ModelFilter(PersonModel.name, &#39;%%john%%&#39;, ModelFilter.LIKE)</span>
-<span class="sd">            </span>
+
 <span class="sd">            complex_condition = ModelFilterAnd(id_gt_filter, id_lt_filter, name_like_filter)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ModelFilterAnd</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">and_</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-        </div>
+</div>
 <div class="viewcode-block" id="ModelFilterOr"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter_compound.ModelFilterOr">[docs]</a><span class="k">class</span> <span class="nc">ModelFilterOr</span><span class="p">(</span><span class="n">ModelFilterCompound</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides a compound filter that allows **or** conditions against models. Below you can find a simple example:</span>
 
 <span class="sd">        .. code-block:: python</span>
-<span class="sd">        </span>
+
 <span class="sd">            id_gt_filter = ModelFilter(PersonModel.id, 1, ModelFilter.GT)</span>
 <span class="sd">            id_lt_filter = ModelFilter(PersonModel.id, 5, ModelFilter.LT)</span>
 <span class="sd">            name_like_filter = ModelFilter(PersonModel.name, &#39;%%john%%&#39;, ModelFilter.LIKE)</span>
-<span class="sd">            </span>
+
 <span class="sd">            complex_condition = ModelFilterOr(id_gt_filter, id_lt_filter, name_like_filter)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ModelFilterOr</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">or_</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 </pre></div>

@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-10-03</dc:date>
+    <dc:date>2013-11-10</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -160,14 +160,32 @@
     <item id="_modules_fantastico_roa_resources_registry.html"
           href="_modules/fantastico/roa/resources_registry.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_query_parser.html"
+          href="_modules/fantastico/roa/query_parser.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_resource_validator.html"
+          href="_modules/fantastico/roa/resource_validator.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_query_parser_exceptions.html"
+          href="_modules/fantastico/roa/query_parser_exceptions.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_roa_resource_decorator.html"
           href="_modules/fantastico/roa/resource_decorator.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_resource_json_serializer.html"
+          href="_modules/fantastico/roa/resource_json_serializer.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_roa_roa_exceptions.html"
           href="_modules/fantastico/roa/roa_exceptions.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_resource_json_serializer_exceptions.html"
+          href="_modules/fantastico/roa/resource_json_serializer_exceptions.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_roa_resources_registrator.html"
           href="_modules/fantastico/roa/resources_registrator.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_roa_query_parser_operations.html"
+          href="_modules/fantastico/roa/query_parser_operations.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_routing_engine_router.html"
           href="_modules/fantastico/routing_engine/router.html"
@@ -213,6 +231,9 @@
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_contrib_dynamic_pages_models_pages.html"
           href="_modules/fantastico/contrib/dynamic_pages/models/pages.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_contrib_roa_discovery_roa_controller.html"
+          href="_modules/fantastico/contrib/roa_discovery/roa_controller.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_contrib_roa_discovery_discovery_controller.html"
           href="_modules/fantastico/contrib/roa_discovery/discovery_controller.html"
@@ -358,6 +379,21 @@
     <item id="features_roa_rest_responses.html"
           href="features/roa/rest_responses.html"
           media-type="application/xhtml+xml" />
+    <item id="features_roa_errors_error_10020.html"
+          href="features/roa/errors/error_10020.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_roa_errors_error_10010.html"
+          href="features/roa/errors/error_10010.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_roa_errors_error_10030.html"
+          href="features/roa/errors/error_10030.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_roa_errors_error_10040.html"
+          href="features/roa/errors/error_10040.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_roa_errors_error_10000.html"
+          href="features/roa/errors/error_10000.html"
+          media-type="application/xhtml+xml" />
     <item id="features_sdk_command_fantastico.html"
           href="features/sdk/command_fantastico.html"
           media-type="application/xhtml+xml" />
@@ -388,6 +424,11 @@
     <itemref idref="features_roa_rest_standard.html" />
     <itemref idref="features_roa_rest_responses.html" />
     <itemref idref="features_roa_technical_summary.html" />
+    <itemref idref="features_roa_errors_error_10000.html" />
+    <itemref idref="features_roa_errors_error_10010.html" />
+    <itemref idref="features_roa_errors_error_10020.html" />
+    <itemref idref="features_roa_errors_error_10030.html" />
+    <itemref idref="features_roa_errors_error_10040.html" />
     <itemref idref="features_oauth2.html" />
     <itemref idref="features_oauth2_simple_api_example.html" />
     <itemref idref="features_oauth2_tokens_format.html" />

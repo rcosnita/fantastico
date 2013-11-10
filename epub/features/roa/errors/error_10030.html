@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10030 - Unexpected database error</title>
+    
+    <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="error_10040.html" title="10040 - Resource item not found"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="error_10020.html" title="10020 - No body given"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+          <li><a href="../../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../../roa.html" >ROA (Resource Oriented Architecture)</a> &raquo;</li>
+          <li><a href="../technical_summary.html" accesskey="U">ROA Technical Summary</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="unexpected-database-error">
+<h1>10030 - Unexpected database error</h1>
+<p>Whenever we try to retrieve / create / update / delete resources database exceptions related to constraint or
+inconsistencies might appear. This case is treated in a friendly manner within ROA apis. You can find a sample example below:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span><span class="s2">&quot;error_code&quot;</span><span class="o">:</span> <span class="mi">10030</span><span class="p">,</span>
+ <span class="s2">&quot;error_description&quot;</span><span class="o">:</span> <span class="s2">&quot;Resource /sample-resource version 1.0 can not be created: DB unexpected exception.&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;error_details&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">link</span> <span class="nx">to</span> <span class="k">this</span> <span class="nx">page</span><span class="o">&gt;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

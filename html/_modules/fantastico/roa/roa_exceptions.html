@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.roa.roa_exceptions &mdash; fantastico 0.5.0-b124 documentation</title>
+    <title>fantastico.roa.roa_exceptions &mdash; fantastico 0.5.0-b125 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.5.0-b124',
+        VERSION:     '0.5.0-b125',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b124 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -67,6 +67,9 @@
 <div class="viewcode-block" id="FantasticoRoaError"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.roa_exceptions.FantasticoRoaError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoRoaError</span><span class="p">(</span><span class="n">FantasticoError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the core error used within Fantastico ROA layer. Usually, more concrete exceptions are raised by</span>
 <span class="sd">    ROA layers.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoRoaError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">http_code</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="FantasticoRoaDuplicateError"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoRoaDuplicateError</span><span class="p">(</span><span class="n">FantasticoRoaError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This concrete exception is used to notify user that multiple resources with same name and version or url and version</span>
@@ -101,7 +104,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

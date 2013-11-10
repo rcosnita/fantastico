@@ -25,13 +25,15 @@ Imagine you have a model called **AppSetting** meant to define custom settings a
 .. code-block:: python
 
    class AppSetting(BASEMODEL):
-      id = Column("id", Integer, primary_key=True, autoincrement=True)
-      name = Column("name", String(50), unique=True, nullable=False)
-      value = Column("value", Text, nullable=False)
+       __tablename__ = "app_settings"
+       
+       id = Column("id", Integer, primary_key=True, autoincrement=True)
+       name = Column("name", String(50), unique=True, nullable=False)
+       value = Column("value", Text, nullable=False)
       
-      def __init__(self, name, value):
-         self.name = name
-         self.value = value
+       def __init__(self, name, value):
+           self.name = name
+           self.value = value
 
 In a standard **MVC** (:doc:`/features/mvc`) web application once you have defined the above mentioned fantastico model you would
 have to do the following: (for providing minimal CRUD)
@@ -59,13 +61,15 @@ A more convenient way for this problem is to provide some additional information
 
    @Resource(name="app-setting", url="/app-settings")
    class AppSetting(BASEMODEL):
-      id = Column("id", Integer, primary_key=True, autoincrement=True)
-      name = Column("name", String(50), unique=True, nullable=False)
-      value = Column("value", Text, nullable=False)
+       __tablename__ = "app_settings"
+       
+       id = Column("id", Integer, primary_key=True, autoincrement=True)
+       name = Column("name", String(50), unique=True, nullable=False)
+       value = Column("value", Text, nullable=False)
       
-      def __init__(self, name, value):
-         self.name = name
-         self.value = value
+       def __init__(self, name, value):
+           self.name = name
+           self.value = value
 
 Once the model is decorated, I expect to have a fully functional API which I can easily invoke through HTTP calls:
 
@@ -83,23 +87,27 @@ It is always a good practice to support API versioning. Going a step further wit
 
    @Resource(name="app-setting", url="/app-settings", version=1.0)
    class AppSetting(BASEMODEL):
-      id = Column("id", Integer, primary_key=True, autoincrement=True)
-      name = Column("name", String(50), unique=True, nullable=False)
-      value = Column("value", Text, nullable=False)
+       __tablename__ = "app_settings"
       
-      def __init__(self, name, value):
-         self.name = name
-         self.value = value
+       id = Column("id", Integer, primary_key=True, autoincrement=True)
+       name = Column("name", String(50), unique=True, nullable=False)
+       value = Column("value", Text, nullable=False)
+      
+       def __init__(self, name, value):
+           self.name = name
+           self.value = value
    
    @Resource(name="app-setting", url="/app-settings", version=2.0)
    class AppSettingV2(BASEMODEL):
-      id = Column("id", Integer, primary_key=True, autoincrement=True)
-      name = Column("name", String(80), unique=True, nullable=False)
-      value = Column("value", Text, nullable=False)
+       __tablename__ = "app_settings"
+       
+       id = Column("id", Integer, primary_key=True, autoincrement=True)
+       name = Column("name", String(80), unique=True, nullable=False)
+       value = Column("value", Text, nullable=False)
       
-      def __init__(self, name, value):
-         self.name = name
-         self.value = value
+       def __init__(self, name, value):
+           self.name = name
+           self.value = value
 
 The above example will actually provide the following endpoints which can be easily accessible:
 
@@ -119,31 +127,31 @@ so in Fantastico for each defined resource you can define a validator which will
 .. code-block:: python
 
    class AppSettingValidator(ResourceValidator):
-      def validate(self, resource):
-         errors = []
+       def validate(self, resource):
+           errors = []
          
-         if resource.name == "unsupported":
-            errors.append("Invalid setting name: %s" % resource.name)
+           if resource.name == "unsupported":
+               errors.append("Invalid setting name: %s" % resource.name)
          
-         if len(resource.value) == 0:
-            errors.append("Setting %s value can not be empty. %s" % resource.name)
+           if len(resource.value) == 0:
+               errors.append("Setting %s value can not be empty. %s" % resource.name)
          
-         if len(errors) == 0:
-            return
+           if len(errors) == 0:
+               return
          
-         raise FantasticoResourceError(errors)
+           raise FantasticoRoaError(errors)
 
 .. code-block:: python
 
    @Resource(name="app-setting", url="/app-settings", version=2.0, validator=AppSettingValidator)
    class AppSettingV2(BASEMODEL):
-      id = Column("id", Integer, primary_key=True, autoincrement=True)
-      name = Column("name", String(80), unique=True, nullable=False)
-      value = Column("value", Text, nullable=False)
+       id = Column("id", Integer, primary_key=True, autoincrement=True)
+       name = Column("name", String(80), unique=True, nullable=False)
+       value = Column("value", Text, nullable=False)
       
-      def __init__(self, name, value):
-         self.name = name
-         self.value = value
+       def __init__(self, name, value):
+           self.name = name
+           self.value = value
 
 If no validator is provided no validation is done on the given resource. Also, it is important to always remember that validators
 are only invoked for **Create** and **Update**:
@@ -160,6 +168,8 @@ We are aware that there are some common validation cases which can be reused:
 All common validation cases  are provided out of the box as methods part of ResourceValidator class. You can easily use them into
 your resource validator.
 
+.. _partial-object-representation:
+
 Partial object representation
 -----------------------------
 
@@ -169,28 +179,28 @@ There are cases when a resource contains many fields but you actually need only 
 
    @Resource(name="address", url="/addresses", version=1.0)
    class Address(BASEMODEL):
-      id = Column("id", Integer, primary_key=True, autoincrement=True)
-      line1 = Column("line1", String(200), nullable=False)
-      line2 = Column("line2", String(200))
-      line3 = Column("line3", String(200))
-      line4 = Column("line4", String(200))
-      line5 = Column("line5", String(200))
-      line6 = Column("line6", String(200))
-      city = Column("city", String(80))
-      country = Column("country", String(80))
-      zip_code = Column("zip_code", String(10))
+       id = Column("id", Integer, primary_key=True, autoincrement=True)
+       line1 = Column("line1", String(200), nullable=False)
+       line2 = Column("line2", String(200))
+       line3 = Column("line3", String(200))
+       line4 = Column("line4", String(200))
+       line5 = Column("line5", String(200))
+       line6 = Column("line6", String(200))
+       city = Column("city", String(80))
+       country = Column("country", String(80))
+       zip_code = Column("zip_code", String(10))
       
-      def __init__(self, line1=None, line2=None, line3=None, line4=None, line5=None, line6=None,
+       def __init__(self, line1=None, line2=None, line3=None, line4=None, line5=None, line6=None,
                   city=None, country=None, zip_code=None):
-         self.line1 = line1
-         self.line2 = line2
-         self.line3 = line3
-         self.line4 = line4
-         self.line5 = line5
-         self.line6 = line6
-         self.city = city
-         self.country = country
-         self.zip_code = zip_code
+           self.line1 = line1
+           self.line2 = line2
+           self.line3 = line3
+           self.line4 = line4
+           self.line5 = line5
+           self.line6 = line6
+           self.city = city
+           self.country = country
+           self.zip_code = zip_code
 
 When working with the Address resource there will be cases when we do not need all fields to be transferred to client. For this,
 partial representation is supported out of the box into Fantastico:
@@ -230,15 +240,17 @@ There are resources which have attributes which points to another resource:
                            "mail_address": ["mail_address_id"],
                            "ship_address:" ["ship_address_id"])
    class Person(BASEMODEL):
-      id = Column("id", Integer, primary_key=True, autoincrement=True)
-      first_name = Column("first_name", String(80))
-      last_name = Column("last_name", String(50))
-      bill_address_id = Column("bill_address_id", ForeignKey("addresses.id"))
-      bill_address = relationship(Address, primaryjoin=bill_address_id == Address.id)
-      ship_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
-      ship_address = relationship(Address, primaryjoin=ship_address_id == Address.id)
-      mail_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
-      ship_address = relationship(Address, primaryjoin=mail_address_id == Address.id)
+       __tablename__ = "persons"
+   
+       id = Column("id", Integer, primary_key=True, autoincrement=True)
+       first_name = Column("first_name", String(80))
+       last_name = Column("last_name", String(50))
+       bill_address_id = Column("bill_address_id", ForeignKey("addresses.id"))
+       bill_address = relationship(Address, primaryjoin=bill_address_id == Address.id)
+       ship_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
+       ship_address = relationship(Address, primaryjoin=ship_address_id == Address.id)
+       mail_address_id = Column("ship_address_id", ForeignKey("addresses.id"))
+       ship_address = relationship(Address, primaryjoin=mail_address_id == Address.id)
 
 The above definition shows you how to mark the subresources of **person** resource. By default they will not be retrieved in
 requests. Only subresource identifier keys pointing from **person** to various **address** objects are retrieved. If you want
@@ -266,6 +278,7 @@ Composed attributes usage is limited to below mentioned operations:
 
    * Listing collections.
    * Retrieving information about an individual item.
+   * First level subresources.
 
 We do not support update / create of multiple resources using one single request.
 

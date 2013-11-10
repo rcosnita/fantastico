@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -47,6 +47,7 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.contrib.roa_discovery.discovery_controller</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.contrib.roa_discovery</span> <span class="kn">import</span> <span class="n">roa_helper</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">ControllerProvider</span>
 <span class="kn">from</span> <span class="nn">fantastico.roa</span> <span class="kn">import</span> <span class="n">resources_registry</span>
@@ -69,7 +70,7 @@
         <span class="n">registry_cls</span> <span class="o">=</span> <span class="n">registry_cls</span> <span class="ow">or</span> <span class="n">resources_registry</span><span class="o">.</span><span class="n">ResourcesRegistry</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span> <span class="o">=</span> <span class="n">registry_cls</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;roa_api&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span> <span class="o">=</span> <span class="n">settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;roa_api&quot;</span><span class="p">)</span>
 
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/roa/resources(/)?$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">)</span> <span class="c"># pylint: disable=W0613</span>
 <div class="viewcode-block" id="RoaDiscoveryController.list_registered_resources"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.list_registered_resources">[docs]</a>    <span class="k">def</span> <span class="nf">list_registered_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
@@ -108,22 +109,15 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
                 <span class="n">body</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-            <span class="n">body</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_resource_url</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
-            <span class="n">body</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s">&quot;latest&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_resource_url</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">)</span>
+            <span class="n">api_url</span> <span class="o">=</span> <span class="n">roa_helper</span><span class="o">.</span><span class="n">calculate_resource_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+            <span class="n">api_url_latest</span> <span class="o">=</span> <span class="n">roa_helper</span><span class="o">.</span><span class="n">calculate_resource_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">)</span>
+
+            <span class="n">body</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">]</span> <span class="o">=</span> <span class="n">api_url</span>
+            <span class="n">body</span><span class="p">[</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s">&quot;latest&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">api_url_latest</span>
 
         <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">)</span>
-</div>
-    <span class="k">def</span> <span class="nf">_calculate_resource_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;This method calculates resource API url based on the given resource object and version.&#39;&#39;&#39;</span>
-
-        <span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(api_url)s</span><span class="s">/</span><span class="si">%(version)s%(url)s</span><span class="s">&quot;</span> <span class="o">%</span> \
-                <span class="p">{</span><span class="s">&quot;api_url&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_roa_api</span><span class="p">,</span>
-                 <span class="s">&quot;version&quot;</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
-                 <span class="s">&quot;url&quot;</span><span class="p">:</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">}</span>
-
-        <span class="k">return</span> <span class="n">url</span></div>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

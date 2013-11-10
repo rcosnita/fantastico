@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.routing_engine.dummy_routeloader &mdash; fantastico 0.5.0-b124 documentation</title>
+    <title>fantastico.routing_engine.dummy_routeloader &mdash; fantastico 0.5.0-b125 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.5.0-b124',
+        VERSION:     '0.5.0-b125',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b124 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -47,16 +47,16 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
 
-<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated </span>
-<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation </span>
-<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, </span>
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
 <span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
 
 <span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
 
-<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE </span>
-<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR </span>
-<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, </span>
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
 <span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
 
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
@@ -70,39 +70,36 @@
     <span class="sd">&#39;&#39;&#39;This class represents an example of how to write a route loader. **DummyRouteLoader** is available in all configurations</span>
 <span class="sd">    and it provides a single route to the routing engine: */dummy/route/loader/test*. Integration tests rely on this loader</span>
 <span class="sd">    to be configured in each available profile.&#39;&#39;&#39;</span>
-    
+
     <span class="n">DUMMY_ROUTE</span> <span class="o">=</span> <span class="s">&quot;/dummy/route/loader/test&quot;</span>
     <span class="n">STATIC_ROUTE</span> <span class="o">=</span> <span class="s">&quot;^/(?P&lt;component_name&gt;.*)/static/(?P&lt;asset_path&gt;.*)$&quot;</span>
     <span class="n">FAVICON_ROUTE</span> <span class="o">=</span> <span class="s">&quot;^/favicon.ico&quot;</span>
-    
+
     <span class="k">def</span> <span class="nf">load_routes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">routes</span> <span class="o">=</span> <span class="p">{</span><span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">:</span> 
+        <span class="n">routes</span> <span class="o">=</span> <span class="p">{</span><span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">DUMMY_ROUTE</span><span class="p">:</span>
                     <span class="p">{</span>
-                     <span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test&quot;</span><span class="p">,</span>
-                     <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">]},</span>
+                     <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;GET&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test&quot;</span><span class="p">}},</span>
                   <span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">STATIC_ROUTE</span><span class="p">:</span>
-                    <span class="p">{</span><span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.mvc.static_assets_controller.StaticAssetsController.serve_asset&quot;</span><span class="p">,</span>
-                     <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">]},</span>
+                    <span class="p">{</span><span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;GET&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.mvc.static_assets_controller.StaticAssetsController.serve_asset&quot;</span><span class="p">}},</span>
                   <span class="n">DummyRouteLoader</span><span class="o">.</span><span class="n">FAVICON_ROUTE</span><span class="p">:</span>
-                    <span class="p">{</span><span class="s">&quot;method&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.mvc.static_assets_controller.StaticAssetsController.handle_favicon&quot;</span><span class="p">,</span>
-                     <span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s">&quot;GET&quot;</span><span class="p">]}</span>                  
+                    <span class="p">{</span><span class="s">&quot;http_verbs&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;GET&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.mvc.static_assets_controller.StaticAssetsController.handle_favicon&quot;</span><span class="p">}}</span>
                  <span class="p">}</span>
-        
+
         <span class="k">return</span> <span class="n">routes</span>
-        
+
 <div class="viewcode-block" id="DummyRouteLoader.display_test"><a class="viewcode-back" href="../../../features/routing_engine.html#fantastico.routing_engine.dummy_routeloader.DummyRouteLoader.display_test">[docs]</a>    <span class="k">def</span> <span class="nf">display_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method handles **/dummy/route/loader/test route**. It is expected to receive a response with status code 400.</span>
 <span class="sd">        We do this for being able to test rendering and also avoid false positive security scans messages.&#39;&#39;&#39;</span>
-        
+
         <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="s">&quot;text/html&quot;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">content_type</span><span class="p">:</span>
             <span class="n">response</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s">&quot;application/html; charset=UTF-8&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">response</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">content_type</span> <span class="ow">or</span> <span class="s">&quot;application/html; charset=UTF-8&quot;</span>
-            
+
         <span class="n">response</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;Hello world.&quot;</span>
-        
+
         <span class="k">return</span> <span class="n">response</span></div></div>
 </pre></div>
 
@@ -134,7 +131,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

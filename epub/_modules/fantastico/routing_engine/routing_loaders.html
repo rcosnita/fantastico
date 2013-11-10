@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.5.0-b124 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -62,10 +62,15 @@
 <span class="sd">                self_settings_facade = settings_facade</span>
 
 <span class="sd">            def load_routes(self):</span>
-<span class="sd">                return {&quot;/index.html&quot;: {&quot;method&quot;: &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_text&quot;,</span>
-<span class="sd">                                        &quot;http_verbs&quot;: [&quot;GET&quot;]},</span>
-<span class="sd">                        &quot;/images/image.png&quot;: {&quot;method&quot;: &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_binary&quot;,</span>
-<span class="sd">                                              &quot;http_verbs&quot;: [&quot;GET&quot;]}</span>
+<span class="sd">                return {&quot;/index.html&quot;: {&quot;http_verbs&quot;: {</span>
+<span class="sd">                                                    &quot;GET&quot;: &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_text&quot;</span>
+<span class="sd">                                                    }</span>
+<span class="sd">                                        },</span>
+<span class="sd">                        &quot;/images/image.png&quot;: {&quot;http_verbs&quot;: {</span>
+<span class="sd">                                                    &quot;GET&quot;: &quot;fantastico.plugins.static_assets.StaticAssetsController.resolve_binary&quot;</span>
+<span class="sd">                                                    }</span>
+<span class="sd">                                             }</span>
+<span class="sd">                }</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">):</span>

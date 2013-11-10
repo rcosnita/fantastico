@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.roa.resource_json_serializer &mdash; fantastico 0.5.0-b125 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5.0-b125',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.0-b125 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.roa.resource_json_serializer</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.roa.resource_json_serializer</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.resource_json_serializer_exceptions</span> <span class="kn">import</span> <span class="n">ResourceJsonSerializerError</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<div class="viewcode-block" id="ResourceJsonSerializer"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_json_serializer.ResourceJsonSerializer">[docs]</a><span class="k">class</span> <span class="nc">ResourceJsonSerializer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the methods for serializing a given resource into a dictionary and deserializing a dictionary into</span>
+<span class="sd">    a resource.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        # serialize / deserialize a resource without subresources</span>
+<span class="sd">        json_serializer = ResourceJsonSerializer(AppSetting)</span>
+<span class="sd">        resource_json = json_serializer.serialize(AppSetting(&quot;simple-setting&quot;, &quot;0.19&quot;))</span>
+<span class="sd">        resource = json_serializer.deserialize(resource)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_ref</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resource_ref</span> <span class="o">=</span> <span class="n">resource_ref</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_supported_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identify_public_attrs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_resource_ref</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_identify_public_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_cls</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns a dictionary containing all public atttributes of a given model class.&#39;&#39;&#39;</span>
+
+        <span class="n">public_attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="n">model_cls</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">attr_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;_&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">attr_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;__&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">public_attrs</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">return</span> <span class="n">public_attrs</span>
+
+<div class="viewcode-block" id="ResourceJsonSerializer.deserialize"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_json_serializer.ResourceJsonSerializer.deserialize">[docs]</a>    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method converts the given body into a concrete model (if possible).</span>
+
+<span class="sd">        :param body: A JSON object we want to convert to the model compatible with this serializer.</span>
+<span class="sd">        :type body: dict</span>
+<span class="sd">        :returns: A model instance initiated with attributes from the given dictionary.</span>
+<span class="sd">        :raises fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError:</span>
+<span class="sd">            Whenever given body contains entries which are not supported by resource underlining model.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">model_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_ref</span><span class="o">.</span><span class="n">model</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">model_cls</span><span class="p">()</span>
+
+        <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">attr_value</span> <span class="ow">in</span> <span class="n">body</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supported_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr_name</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ResourceJsonSerializerError</span><span class="p">(</span><span class="s">&quot;Resource </span><span class="si">%s</span><span class="s"> model does not support attibute </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> \
+                                                  <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_resource_ref</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">))</span>
+
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">attr_value</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span>
+</div>
+    <span class="k">def</span> <span class="nf">_parse_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method convert a string expression for fields into a list of fields we want to list.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supported_attrs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">composed_attrs</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">r&quot;[a-z]{1,}\(.*?\)&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">composed_attr</span> <span class="ow">in</span> <span class="n">composed_attrs</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">composed_attr</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+
+            <span class="n">paranthesis</span> <span class="o">=</span> <span class="n">composed_attr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;(&quot;</span><span class="p">)</span>
+            <span class="n">attr_parent</span> <span class="o">=</span> <span class="n">composed_attr</span><span class="p">[:</span><span class="n">paranthesis</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="n">attr_children</span> <span class="o">=</span> <span class="n">composed_attr</span><span class="p">[</span><span class="n">paranthesis</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attr_children</span><span class="p">:</span>
+                <span class="n">field</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">attr_parent</span><span class="p">,</span> <span class="n">attr</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+                <span class="n">attrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">):</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">field</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">attrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">attrs</span>
+
+    <span class="k">def</span> <span class="nf">_serialize_subfield_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subfield</span><span class="p">,</span> <span class="n">subfield_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method serializes the subfield list mapped under subfield_name into result dictionary.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subfield_name</span><span class="p">):</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">subfield</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ResourceJsonSerializerError</span><span class="p">(</span><span class="s">&quot;Submodel </span><span class="si">%s</span><span class="s"> does not have attribute </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> \
+                                                  <span class="p">(</span><span class="n">subfield_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">))</span>
+
+            <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_serialize_subfield_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subfield</span><span class="p">,</span> <span class="n">subfield_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method serializes the subfield object mapped under subfield_name into result dictionary.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subfield_name</span><span class="p">):</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">][</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">subfield</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ResourceJsonSerializerError</span><span class="p">(</span><span class="s">&quot;Submodel </span><span class="si">%s</span><span class="s"> does not have attribute </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> \
+                                              <span class="p">(</span><span class="n">subfield_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">))</span>
+
+<div class="viewcode-block" id="ResourceJsonSerializer.serialize"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_json_serializer.ResourceJsonSerializer.serialize">[docs]</a>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method serialize the given model into a json object.</span>
+
+<span class="sd">        :param model: The model we want to convert to JSON object.</span>
+<span class="sd">        :param fields: A list of fields we want to include in result. Read more on :ref:`partial-object-representation`</span>
+<span class="sd">        :type fields: str</span>
+<span class="sd">        :returns: A dictionary containing all required attributes.</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        :raises fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError:</span>
+<span class="sd">            Whenever requested fields for serialization are not found in model attributes.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_fields</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ResourceJsonSerializerError</span><span class="p">(</span><span class="s">&quot;Model does not have attribute </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">field</span><span class="p">)</span>
+
+                <span class="k">continue</span>
+
+            <span class="n">subfield_name</span><span class="p">,</span> <span class="n">subfield_attr</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+
+            <span class="n">subfield</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">subfield_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">subfield</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_serialize_subfield_list</span><span class="p">(</span><span class="n">subfield</span><span class="p">,</span> <span class="n">subfield_name</span><span class="p">,</span> <span class="n">subfield_attr</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_serialize_subfield_obj</span><span class="p">(</span><span class="n">subfield</span><span class="p">,</span> <span class="n">subfield_name</span><span class="p">,</span> <span class="n">subfield_attr</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
