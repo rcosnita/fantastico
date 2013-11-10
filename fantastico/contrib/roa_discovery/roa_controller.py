@@ -38,7 +38,7 @@ class RoaController(BaseController):
     SETTINGS_FACADE = SettingsFacade()
     ROA_API = roa_helper.normalize_absolute_roa_uri(SETTINGS_FACADE.get("roa_api"))
     BASE_URL = r"%s/(?P<version>\d{1,}\.\d{1,})(?P<resource_url>/.*?)" % ROA_API
-    BASE_LATEST_URL = "%s/latest(?P<resource_url>.*?)" % ROA_API
+    BASE_LATEST_URL = "%s/latest(?P<resource_url>.*)" % ROA_API
 
     OFFSET_DEFAULT = 0
     LIMIT_DEFAULT = 100
@@ -149,6 +149,14 @@ class RoaController(BaseController):
 
         return self._conn_manager.CONN_MANAGER.get_connection(request.request_id)
 
+    def _trim_resource_url(self, resource_url):
+        '''This method removes traling slash from resource url.'''
+
+        if resource_url[-1] == "/":
+            resource_url = resource_url[:-1]
+
+        return resource_url
+
     @Controller(url=BASE_URL + "(/)?$", method="GET")
     def get_collection(self, request, version, resource_url):
         '''This method provides the route for accessing a resource collection. :doc:`/features/roa/rest_standard` for collections
@@ -203,7 +211,7 @@ class RoaController(BaseController):
     def get_collection_latest(self, request, resource_url):
         '''This method retrieves a resource collection using the latest version of the api.'''
 
-        return self.get_collection(request, "latest", resource_url)
+        return self.get_collection(request, "latest", self._trim_resource_url(resource_url))
 
     @Controller(url=BASE_URL + "(/)?$", method="OPTIONS")
     def handle_resource_options(self, request, version, resource_url):
@@ -348,7 +356,7 @@ class RoaController(BaseController):
     def create_item_latest(self, request, resource_url):
         '''This method provides create item latest API version.'''
 
-        return self.create_item(request, "latest", resource_url)
+        return self.create_item(request, "latest", self._trim_resource_url(resource_url))
 
     @Controller(url=BASE_URL + "/(?P<resource_id>.*?)(/)?$", method="PUT")
     def update_item(self, request, version, resource_url, resource_id):
@@ -406,7 +414,7 @@ class RoaController(BaseController):
     def update_item_latest(self, request, resource_url, resource_id):
         '''This is the route handler for latest update existing item api.'''
 
-        return self.update_item(request, "latest", resource_url, resource_id)
+        return self.update_item(request, "latest", self._trim_resource_url(resource_url), resource_id)
 
     @Controller(url=BASE_URL + "/(?P<resource_id>.*?)(/)?$", method="DELETE")
     def delete_item(self, request, version, resource_url, resource_id):
@@ -454,7 +462,7 @@ class RoaController(BaseController):
     def delete_item_latest(self, request, resource_url, resource_id):
         '''This method provides the functionality for delete item latest version api route.'''
 
-        return self.delete_item(request, "latest", resource_url, resource_id)
+        return self.delete_item(request, "latest", self._trim_resource_url(resource_url), resource_id)
 
 class CollectionParams(object):
     '''This object defines the structure for get_collection supported query parameters.'''

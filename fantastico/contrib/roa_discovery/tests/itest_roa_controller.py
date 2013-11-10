@@ -47,7 +47,7 @@ class RoaControllerIntegration(DevServerIntegration):
     _exception = None
 
     _endpoint = "/api/1.0/sample-resources"
-    _endpoint_latest = "/api/latest/sample-resources"
+    _endpoint_latest = "/api/latest/sample-resources/"
 
     def init(self):
         '''This method is invoked automatically in order to setup test cases dependencies correctly.'''
