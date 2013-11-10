@@ -218,7 +218,10 @@ class RoaController(BaseController):
         '''This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different
         domains than project host.'''
 
-        resource = self._resources_registry.find_by_url(resource_url, float(version))
+        if version != "latest":
+            version = float(version)
+
+        resource = self._resources_registry.find_by_url(resource_url, version)
 
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
@@ -231,6 +234,12 @@ class RoaController(BaseController):
         response.headers["Access-Control-Allow-Headers"] = request.headers.get("Access-Control-Request-Headers", "")
 
         return response
+
+    @Controller(url=BASE_LATEST_URL + "(/)?$", method="OPTIONS")
+    def handle_resource_options_latest(self, request, resource_url):
+        '''This method handles OPTIONS http requests for ROA api latest versions.'''
+
+        return self.handle_resource_options(request, "latest", self._trim_resource_url(resource_url))
 
     def _validate_resource(self, resource, request_body):
         '''This method is used to validate the resource. If the resource validation fails an error response is sent. Otherwise

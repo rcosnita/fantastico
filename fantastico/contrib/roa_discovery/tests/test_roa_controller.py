@@ -228,14 +228,14 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         '''This test case ensures CORS is enabled on all ROA dynamic generated apis.'''
 
         url = "/simple-resource"
-        version = "1.0"
+        version = "latest"
 
         self._resources_registry.find_by_url = Mock(return_value=Mock())
 
         request = Mock()
         request.headers = {"Access-Control-Request-Headers": "header1,header2"}
 
-        response = self._controller.handle_resource_options(request, version, url)
+        response = self._controller.handle_resource_options_latest(request, url)
 
         self.assertIsNotNone(response)
         self.assertEqual(200, response.status_code)
@@ -249,7 +249,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self.assertEqual(0, len(response.body))
 
-        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._resources_registry.find_by_url.assert_called_once_with(url, version)
 
     def test_roa_cors_support_resourcenotfound(self):
         '''This test case ensures an error is returned if an options http request is done for a resource which is not

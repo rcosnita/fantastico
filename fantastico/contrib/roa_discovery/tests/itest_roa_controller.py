@@ -282,6 +282,31 @@ class RoaControllerIntegration(DevServerIntegration):
 
         self._run_test_against_dev_server(update_item, assert_update)
 
+    def test_roa_cors(self):
+        '''This test case ensures CORS is enabled for ROA apis.'''
+
+        endpoint = self._endpoint_latest
+
+        def request_options(server):
+            http_conn = HTTPConnection(server.hostname, server.port)
+
+            http_conn.request("OPTIONS", endpoint, headers={"Access-Control-Request-Headers": "Header2"})
+            self._response = http_conn.getresponse()
+
+            http_conn.close()
+
+        def assert_options(server):
+            self.assertIsNotNone(self._response)
+            self.assertEqual(200, self._response.status)
+            self.assertEqual("application/json; charset=UTF-8", self._response.headers["Content-Type"])
+            self.assertEqual("0", self._response.headers["Content-Length"])
+            self.assertEqual("private", self._response.headers["Cache-Control"])
+            self.assertEqual("*", self._response.headers["Access-Control-Allow-Origin"])
+            self.assertEqual("OPTIONS,GET,POST,PUT,DELETE", self._response.headers["Access-Control-Allow-Methods"])
+            self.assertEqual("Header2", self._response.headers["Access-Control-Allow-Headers"])
+
+        self._run_test_against_dev_server(request_options, assert_options)
+
     def _assert_resources_equal(self, expected, actual, fields=None):
         '''This method ensures two given resource bodies are equal (only specified fields). Besides equality of specified
         of given fields this method also ensures only requested fields are part of the actual response.'''
