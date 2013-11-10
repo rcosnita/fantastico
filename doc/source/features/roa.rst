@@ -238,7 +238,7 @@ There are resources which have attributes which points to another resource:
    @Resource(name="person", url="/persons", version=1.0,
              subresources={"bill_address": ["bill_address_id"],
                            "mail_address": ["mail_address_id"],
-                           "ship_address:" ["ship_address_id"])
+                           "ship_address:" ["ship_address_id"]})
    class Person(BASEMODEL):
        __tablename__ = "persons"
    

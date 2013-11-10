@@ -38,7 +38,7 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
 
         FantasticoUnitTestsCase.setup_once()
 
-        resource = Resource(name="Invoice", url="/invoices")
+        resource = Resource(name="Invoice", url="/invoices", subresources={"items": []})
         resource._model = InvoiceMock
         cls.resource_ref = resource
 
@@ -94,6 +94,7 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
         self.assertEqual(json_obj["total"], model.total)
         self.assertEqual(json_obj["vat_percent"], model.vat_percent)
         self.assertEqual(json_obj["vat"], model.vat)
+        self.assertIsNone(json_obj.get("items"))
 
     def test_serialize_mainresource_partial_ok(self):
         '''This test case ensures a resource partial serialization work as expected.'''

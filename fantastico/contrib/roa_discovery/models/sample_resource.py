@@ -19,9 +19,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.mvc import BASEMODEL
 from fantastico.roa.resource_decorator import Resource
 from fantastico.roa.resource_validator import ResourceValidator
-from sqlalchemy.schema import Column
-from sqlalchemy.types import Integer, String, Text, Float
 from fantastico.roa.roa_exceptions import FantasticoRoaError
+from sqlalchemy.orm import relationship
+from sqlalchemy.schema import Column, ForeignKey
+from sqlalchemy.types import Integer, String, Text, Float
 
 class SampleResourceValidator(ResourceValidator):
     '''This class provides the validation logic for sample resource model.'''
@@ -39,7 +40,8 @@ class SampleResourceValidator(ResourceValidator):
 
         raise FantasticoRoaError("\n".join(errors))
 
-@Resource(name="Sample Resource", url="/sample-resources", validator=SampleResourceValidator)
+@Resource(name="Sample Resource", url="/sample-resources", validator=SampleResourceValidator,
+          subresources={"subresources": []})
 class SampleResource(BASEMODEL):
     '''This is a very simple non intrusive resource used to showcase discoverability and ROA api generator.'''
 
@@ -56,3 +58,21 @@ class SampleResource(BASEMODEL):
         self.description = description
         self.total = total
         self.vat = vat
+
+@Resource(name="Sample Subresource", url="/sample-subresources",
+          subresources={"resource": ["resource_id", "resource"]})
+class SampleResourceSubresource(BASEMODEL):
+    '''This is a very simple non intrusive subresource used to showcase composed attributes rest retrieval.'''
+
+    __tablename__ = "sample_resource_subresources"
+
+    id = Column("id", Integer, primary_key=True, autoincrement=True)
+    name = Column("name", String(100), nullable=False)
+    description = Column("description", Text)
+    resource_id = Column("resource_id", ForeignKey("sample_resources.id"))
+    resource = relationship(SampleResource, primaryjoin=resource_id == SampleResource.id, backref="subresources")
+
+    def __init__(self, name=None, description=None, resource_id=None):
+        self.name = name
+        self.description = description
+        self.resource_id = resource_id

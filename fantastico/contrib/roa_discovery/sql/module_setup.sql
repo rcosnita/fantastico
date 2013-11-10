@@ -28,3 +28,12 @@ CREATE TABLE sample_resources(
 	vat FLOAT NOT NULL,
 	PRIMARY KEY(id)
 );
+
+CREATE TABLE sample_resource_subresources(
+	id INTEGER AUTO_INCREMENT,
+	name VARCHAR(100) NOT NULL,
+	description TEXT,
+	resource_id INTEGER NOT NULL,
+	PRIMARY KEY(id),
+	CONSTRAINT fk_sample_subresources_resource FOREIGN KEY(resource_id) REFERENCES sample_resources(id)
+);
