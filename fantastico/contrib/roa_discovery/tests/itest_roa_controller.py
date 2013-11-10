@@ -17,7 +17,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.roa_discovery.tests.itest_roa_controller
 '''
 from fantastico.server.tests.itest_dev_server import DevServerIntegration
+from http.client import HTTPConnection
 from urllib.request import Request
+import copy
 import http
 import json
 import urllib
@@ -230,9 +232,57 @@ class RoaControllerIntegration(DevServerIntegration):
             self.assertEqual(200, self._response.status)
             self.assertEqual("application/json; charset=UTF-8", self._response.info()["Content-Type"])
 
+            body = self._response.read()
+
+            self.assertIsNotNone(body)
+
+            body = json.loads(body.decode())
+
+            self._assert_resources_equal(self._expected_resources[-1], body)
+
         self._run_test_against_dev_server(retrieve_item, assert_item)
 
-    def _assert_resources_equal(self, expected, actual, fields):
+    def test_update_item(self):
+        '''This test case covers scenario of item update.'''
+
+        endpoint = self._locations_delete[-1]
+        expected_body = copy.copy(self._expected_resources[-1])
+        expected_body["name"] = "Cool resource"
+        expected_body["description"] = "Cool description"
+        expected_body["total"] = 12.99
+        expected_body["vat"] = 0.05
+
+        def update_item(server):
+            http_conn = HTTPConnection(server.hostname, server.port)
+
+            http_conn.request("PUT", endpoint, json.dumps(expected_body).encode(), {"Content-Type": "application/json"})
+
+            http_conn.close()
+
+            http_conn = HTTPConnection(server.hostname, server.port)
+
+            http_conn.request("GET", endpoint, headers={"Content-Type": "application/json"})
+
+            self._response = http_conn.getresponse()
+
+            http_conn.close()
+
+        def assert_update(server):
+            self.assertIsNotNone(self._response)
+            self.assertEqual(200, self._response.status)
+            self.assertEqual("application/json; charset=UTF-8", self._response.headers["Content-Type"])
+
+            body = self._response.read()
+
+            self.assertIsNotNone(body)
+
+            body = json.loads(body.decode())
+
+            self._assert_resources_equal(expected_body, body)
+
+        self._run_test_against_dev_server(update_item, assert_update)
+
+    def _assert_resources_equal(self, expected, actual, fields=None):
         '''This method ensures two given resource bodies are equal (only specified fields). Besides equality of specified
         of given fields this method also ensures only requested fields are part of the actual response.'''
 
