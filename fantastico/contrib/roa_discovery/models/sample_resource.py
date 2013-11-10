@@ -18,10 +18,28 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.mvc import BASEMODEL
 from fantastico.roa.resource_decorator import Resource
+from fantastico.roa.resource_validator import ResourceValidator
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Text, Float
+from fantastico.roa.roa_exceptions import FantasticoRoaError
 
-@Resource(name="Sample Resource", url="/sample-resources")
+class SampleResourceValidator(ResourceValidator):
+    '''This class provides the validation logic for sample resource model.'''
+
+    def validate(self, resource):
+        '''This method ensures sample resource name is not empty.'''
+
+        errors = []
+
+        if not resource.name:
+            errors.append("You must provide resource name.")
+
+        if len(errors) == 0:
+            return
+
+        raise FantasticoRoaError("\n".join(errors))
+
+@Resource(name="Sample Resource", url="/sample-resources", validator=SampleResourceValidator)
 class SampleResource(BASEMODEL):
     '''This is a very simple non intrusive resource used to showcase discoverability and ROA api generator.'''
 
