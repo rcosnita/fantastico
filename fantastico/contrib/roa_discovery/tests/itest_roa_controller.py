@@ -354,15 +354,55 @@ class RoaControllerIntegration(DevServerIntegration):
 
         self._run_test_against_dev_server(request_options, assert_options)
 
-    def _assert_resources_equal(self, expected, actual, fields=None):
+    def test_get_collection_with_fields_included(self):
+        '''This test case ensures retrieve collection can correctly fetch subresources.'''
+
+        endpoint = "/api/latest/sample-resources?offset=0&limit=1&fields=id,name,description,total,vat,subresources(id,name)"
+
+        def retrieve_resources(server):
+            http_conn = HTTPConnection(server.hostname, server.port)
+
+            http_conn.request("GET", endpoint, headers={"Content-Type": "application/json"})
+            self._response = http_conn.getresponse()
+
+            http_conn.close()
+
+        def assert_resources(server):
+            self.assertIsNotNone(self._response)
+            self.assertEqual(200, self._response.status)
+            self.assertEqual("application/json; charset=UTF-8", self._response.headers["Content-Type"])
+
+            body = self._response.read()
+
+            self.assertIsNotNone(body)
+
+            body = json.loads(body.decode())
+            items = body.get("items")
+
+            self.assertEqual(len(self._expected_resources), body.get("totalItems"))
+            self.assertEqual(1, len(items))
+
+            self._assert_resources_equal(self._expected_resources[0], items[0], ignore_fieldscount=True)
+
+            idx = 0
+            for subresource in items[0]["subresources"]:
+                self._assert_resources_equal(self._expected_subresources[idx], subresource,
+                                             fields=["id", "name"], ignore_fieldscount=False)
+
+                idx += 1
+
+        self._run_test_against_dev_server(retrieve_resources, assert_resources)
+
+    def _assert_resources_equal(self, expected, actual, fields=None, ignore_fieldscount=False):
         '''This method ensures two given resource bodies are equal (only specified fields). Besides equality of specified
         of given fields this method also ensures only requested fields are part of the actual response.'''
 
         fields = fields or ["id", "name", "description", "total", "vat"]
 
-        returned_fields = actual.keys()
+        if not ignore_fieldscount:
+            returned_fields = actual.keys()
 
-        self.assertEqual(0, len(fields) - len(returned_fields))
+            self.assertEqual(0, len(fields) - len(returned_fields))
 
         for field in fields:
             self.assertEqual(expected[field], actual[field])
