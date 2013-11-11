@@ -64,6 +64,16 @@ class Controller(object):
     #. As developer you create the method that knows how to handle **/blog/** url.
     #. Write your view.
 
+    You can also map multiple routes for the same controller:
+
+    .. code-block python
+
+        @ControllerProvider()
+        class SimpleExample(BaseController):
+            @Controller(url=["/url1$", "/url2$")
+            def handle_urls(self, request):
+                # your logic comes here
+
     Below you can find the design for MVC provided by **Fantastico** framework:
 
     .. image:: /images/core/mvc.png'''
@@ -97,7 +107,11 @@ class Controller(object):
         return self._fn_handler
 
     def __init__(self, url, method="GET", models=None, **kwargs):
-        self._url = url
+        if isinstance(url, str):
+            self._url = [url]
+        elif isinstance(url, list):
+            self._url = url
+
         self._method = None
 
         if isinstance(method, str):

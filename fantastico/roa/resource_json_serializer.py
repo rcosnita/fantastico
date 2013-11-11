@@ -34,11 +34,11 @@ class ResourceJsonSerializer(object):
 
     def __init__(self, resource_ref):
         self._resource_ref = resource_ref
-        self._subresources_attrs = self._identify_subresource_attributes()
+        self._subresources_attrs = self._identify_subres_attributes()
         self._supported_attrs = self._identify_public_attrs(self._resource_ref.model)
 
 
-    def _identify_subresource_attributes(self):
+    def _identify_subres_attributes(self):
         '''This method returns all subresource attributes which must be ignored by serializer.'''
 
         attrs = {}

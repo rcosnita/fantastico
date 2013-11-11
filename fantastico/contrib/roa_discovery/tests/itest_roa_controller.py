@@ -41,24 +41,32 @@ class RoaControllerIntegration(DevServerIntegration):
                             "total": 19.99,
                             "vat": 0.19}]
 
+    _expected_subresources = [{"name": "subresource-1-resource-1",
+                               "description": "simple description"},
+                              {"name": "subresource-2-resource-1",
+                               "description": "simple description 2"}]
+
     _locations_delete = None
+    _locations_subresource_delete = None
 
     _response = None
     _exception = None
 
     _endpoint = "/api/1.0/sample-resources"
-    _endpoint_latest = "/api/latest/sample-resources/"
+    _endpoint_latest = "/api/latest/sample-resources"
+    _endpoint_subresource_latest = "/api/latest/sample-subresources"
 
     def init(self):
         '''This method is invoked automatically in order to setup test cases dependencies correctly.'''
 
         self._locations_delete = []
+        self._locations_subresource_delete = []
 
         for resource_body in self._expected_resources:
             self._response = None
             self._exception = None
 
-            self._create_resource(json.dumps(resource_body))
+            self._create_resource(resource_body)
 
     def cleanup(self):
         '''This method is invoked after each test case in order to delete all resources that were added in the setup of this
@@ -66,7 +74,9 @@ class RoaControllerIntegration(DevServerIntegration):
 
         self.assertEqual(len(self._expected_resources), len(self._locations_delete))
 
-        for location in self._locations_delete:
+        self._locations_delete.extend(self._locations_subresource_delete)
+
+        for location in reversed(self._locations_delete):
             self._response = None
             self._exception = None
             self._delete_resource(location)
@@ -74,7 +84,9 @@ class RoaControllerIntegration(DevServerIntegration):
     def _create_resource(self, resource_body):
         '''This method tries to create the given resource body and asserts for successful response.'''
 
-        resource_body = resource_body.encode()
+        create_subresources = resource_body == self._expected_resources[0]
+
+        resource_body = json.dumps(resource_body).encode()
 
         def create_resource(server):
             request = Request(self._get_server_base_url(server, self._endpoint))
@@ -83,6 +95,15 @@ class RoaControllerIntegration(DevServerIntegration):
             request.add_data(resource_body)
 
             self._response = urllib.request.urlopen(request)
+
+            if not create_subresources:
+                return
+
+            location = self._response.info()["Location"]
+            resource_id = int(location.split("/")[-1])
+
+            for subresource_body in self._expected_subresources:
+                self._create_subresource_for_resource(subresource_body, resource_id, server)
 
         def assert_creation(server):
             self.assertIsNotNone(self._response)
@@ -103,6 +124,32 @@ class RoaControllerIntegration(DevServerIntegration):
             self._expected_resources[len(self._locations_delete) - 1]["id"] = resource_id
 
         self._run_test_against_dev_server(create_resource, assert_creation)
+
+    def _create_subresource_for_resource(self, subresource_body, resource_id, server):
+        '''This method creates the given resource and assign it to the given resource unique identifier.'''
+
+        subresource_body["resource_id"] = resource_id
+
+        http_conn = HTTPConnection(server.hostname, server.port)
+
+        http_conn.request("POST", self._endpoint_subresource_latest, json.dumps(subresource_body).encode(),
+                          headers={"Content-Type": "application/json"})
+
+        response = http_conn.getresponse()
+
+        http_conn.close()
+
+        self.assertEqual(201, response.status)
+        self.assertEqual("application/json; charset=UTF-8", response.headers["Content-Type"])
+        self.assertEqual("0", response.headers["Content-Length"])
+
+        location = response.headers["Location"]
+        self.assertIsNotNone(location)
+
+        self._locations_subresource_delete.insert(0, location)
+
+        subresource_id = int(location.split("/")[-1])
+        subresource_body["id"] = subresource_id
 
     def _delete_resource(self, location):
         '''This method removes the given resource by location.'''

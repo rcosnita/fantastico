@@ -38,7 +38,7 @@ class RoaController(BaseController):
     SETTINGS_FACADE = SettingsFacade()
     ROA_API = roa_helper.normalize_absolute_roa_uri(SETTINGS_FACADE.get("roa_api"))
     BASE_URL = r"%s/(?P<version>\d{1,}\.\d{1,})(?P<resource_url>/.*?)" % ROA_API
-    BASE_LATEST_URL = "%s/latest(?P<resource_url>.*)" % ROA_API
+    BASE_LATEST_URL = "%s/latest(?P<resource_url>/.*?)" % ROA_API
 
     OFFSET_DEFAULT = 0
     LIMIT_DEFAULT = 100
@@ -155,9 +155,12 @@ class RoaController(BaseController):
         if resource_url[-1] == "/":
             resource_url = resource_url[:-1]
 
+        if resource_url[0] != "/":
+            resource_url = "/%s" % resource_url
+
         return resource_url
 
-    @Controller(url=BASE_URL + "(/)?$", method="GET")
+    @Controller(url=BASE_URL + "$", method="GET")
     def get_collection(self, request, version, resource_url):
         '''This method provides the route for accessing a resource collection. :doc:`/features/roa/rest_standard` for collections
         are enabled by this method. The typical response format is presented below:
@@ -207,16 +210,18 @@ class RoaController(BaseController):
 
         return Response(text=json.dumps(body), content_type="application/json", status_code=200)
 
-    @Controller(url=BASE_LATEST_URL + "(/)?$", method="GET")
+    @Controller(url=BASE_LATEST_URL + "$", method="GET")
     def get_collection_latest(self, request, resource_url):
         '''This method retrieves a resource collection using the latest version of the api.'''
 
         return self.get_collection(request, "latest", self._trim_resource_url(resource_url))
 
-    @Controller(url=BASE_URL + "(/)?$", method="OPTIONS")
-    def handle_resource_options(self, request, version, resource_url):
+    @Controller(url=[BASE_URL + "$", BASE_URL + "/(?P<resource_id>.*?)$"], method="OPTIONS")
+    def handle_resource_options(self, request, version, resource_url, kwargs=None):
         '''This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different
         domains than project host.'''
+
+        kwargs = kwargs or {}
 
         if version != "latest":
             version = float(version)
@@ -235,11 +240,11 @@ class RoaController(BaseController):
 
         return response
 
-    @Controller(url=BASE_LATEST_URL + "(/)?$", method="OPTIONS")
-    def handle_resource_options_latest(self, request, resource_url):
+    @Controller(url=[BASE_LATEST_URL + "$", BASE_LATEST_URL + "/(?P<resource_id>.*?)$"], method="OPTIONS")
+    def handle_resource_options_latest(self, request, resource_url, kwargs=None):
         '''This method handles OPTIONS http requests for ROA api latest versions.'''
 
-        return self.handle_resource_options(request, "latest", self._trim_resource_url(resource_url))
+        return self.handle_resource_options(request, "latest", self._trim_resource_url(resource_url), kwargs)
 
     def _validate_resource(self, resource, request_body):
         '''This method is used to validate the resource. If the resource validation fails an error response is sent. Otherwise
@@ -260,7 +265,7 @@ class RoaController(BaseController):
 
         return model
 
-    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)(/)?$", method="GET")
+    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)$", method="GET")
     def get_item(self, request, version, resource_url, resource_id):
         '''This method provides the API for retrieving a single item from a collection. The item is uniquely identified by
         resource_id. Below you can find a success response example:
@@ -287,7 +292,9 @@ class RoaController(BaseController):
             * **10040** - Whenever we try to retrieve a resource which does not exist.
         '''
 
-        version = float(version)
+        if version != "latest":
+            version = float(version)
+
         fields = request.params.get("fields")
 
         resource = self._resources_registry.find_by_url(resource_url, version)
@@ -312,7 +319,13 @@ class RoaController(BaseController):
 
         return Response(body=resource_body.encode(), content_type="application/json", status_code=200)
 
-    @Controller(url=BASE_URL + "(/)?$", method="POST")
+    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)$", method="GET")
+    def get_item_latest(self, request, resource_url, resource_id):
+        '''This method provides the latest get_item route for ROA api.'''
+
+        return self.get_item(request, "latest", self._trim_resource_url(resource_url), resource_id)
+
+    @Controller(url=BASE_URL + "$", method="POST")
     def create_item(self, request, version, resource_url):
         '''This method provides the route for adding new resources into an existing collection. The API is json only and invoke
         the validator as described in ROA spec. Usually, when a resource is created successfully a similar answer is returned to
@@ -361,13 +374,13 @@ class RoaController(BaseController):
 
         return response
 
-    @Controller(url=BASE_LATEST_URL + "(/)?$", method="POST")
+    @Controller(url=BASE_LATEST_URL + "$", method="POST")
     def create_item_latest(self, request, resource_url):
         '''This method provides create item latest API version.'''
 
         return self.create_item(request, "latest", self._trim_resource_url(resource_url))
 
-    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)(/)?$", method="PUT")
+    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)$", method="PUT")
     def update_item(self, request, version, resource_url, resource_id):
         '''This method provides the route for updating existing resources from an existing collection.
         The API is json only and invokes the validator as described in ROA spec.
@@ -419,13 +432,13 @@ class RoaController(BaseController):
 
         return Response(content_type="application/json", status_code=204)
 
-    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)(/)?$", method="PUT")
+    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)$", method="PUT")
     def update_item_latest(self, request, resource_url, resource_id):
         '''This is the route handler for latest update existing item api.'''
 
         return self.update_item(request, "latest", self._trim_resource_url(resource_url), resource_id)
 
-    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)(/)?$", method="DELETE")
+    @Controller(url=BASE_URL + "/(?P<resource_id>.*?)$", method="DELETE")
     def delete_item(self, request, version, resource_url, resource_id):
         '''This method provides the route for deleting existing resources from an existing collection.
         The API is json only. Usually, when a resource is deleted successfully a similar answer is returned to the client:
@@ -467,7 +480,7 @@ class RoaController(BaseController):
 
         return Response(content_type="application/json", status_code=204)
 
-    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)(/)?$", method="DELETE")
+    @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)$", method="DELETE")
     def delete_item_latest(self, request, resource_url, resource_id):
         '''This method provides the functionality for delete item latest version api route.'''
 

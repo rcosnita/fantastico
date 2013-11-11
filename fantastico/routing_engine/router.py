@@ -100,10 +100,19 @@ class Router(object):
         '''Method used to identify the given url method handler. It enrich the environ dictionary with a new entry that
         holds a controller instance and a function to be executed from that controller.'''
 
-        route_config = self._find_url_regex(url)
+        route_configs = self._find_url_regex(url)
+        route_config = None
 
         http_verb = environ.get("REQUEST_METHOD").upper()
-        if http_verb not in route_config["http_verbs"]:
+
+        for route_config in route_configs:
+            if http_verb not in route_config["http_verbs"]:
+                route_config = None
+                continue
+
+            break
+
+        if not route_config:
             raise FantasticoHttpVerbNotSupported(http_verb)
 
         http_verb_config = route_config["http_verbs"][http_verb]
@@ -126,10 +135,11 @@ class Router(object):
 
         :param url: the relative url we want to serve. E.g: /component1/test/url
         :type url: string
-        :returns: A dictionary containing the method and http_verbs supported.
+        :returns: A list of dictionaries containing the method and http_verbs supported.
         :raises FantasticoNoRoutesError: This exception is raised if the url does not match any registered patterns.
         '''
 
+        route_configs = []
         route_config = None
 
         for route_pat in self._routes.keys():
@@ -142,7 +152,9 @@ class Router(object):
 
             route_config["url_params"] = match.groupdict()
 
+            route_configs.append(route_config)
+
         if not route_config:
             raise FantasticoRouteNotFoundError("Route %s is not registered or no config registered." % url)
 
-        return route_config
+        return route_configs

@@ -393,7 +393,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         '''This test case covers the scenario for retrieving an item from a resource collection which is not supported.'''
 
         url = "/simple-settings"
-        version = "1.0"
+        version = "latest"
         resource_id = 1986
 
         self._resources_registry.find_by_url = Mock(return_value=None)
@@ -402,7 +402,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         self._assert_resource_error(response, 404, 10000, version, url)
 
-        self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
+        self._resources_registry.find_by_url.assert_called_once_with(url, version)
 
     def test_get_item_inexistent_resource(self):
         '''This test case covers the scenario for retrieving an inexisten item from an existing collection.'''

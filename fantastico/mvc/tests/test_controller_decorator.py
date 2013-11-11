@@ -44,8 +44,9 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
         '''This method find a specified route in a list of registered controllers.'''
 
         for controller in registered_routes:
-            if controller.url == route:
-                return controller
+            for contr_url in controller.url:
+                if contr_url == route:
+                    return controller
 
         return None
 
@@ -80,7 +81,7 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
 
         self.assertIsNotNone(upload_file)
         self.assertIsInstance(upload_file, controller_decorators.Controller)
-        self.assertEqual("/upload_file", upload_file.url)
+        self.assertEqual("/upload_file", upload_file.url[0])
         self.assertEqual(["POST"], upload_file.method)
         self.assertEqual({"File": "fantastico.mvc.tests.routes_for_testing.File"}, upload_file.models)
         self.assertEqual("fantastico.mvc.tests.routes_for_testing.RoutesForControllerTesting.upload_file",
