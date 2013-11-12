@@ -22,6 +22,7 @@ Versions
    * Improved routing loaders so that multiple methods can serve separate http verbs of a route.
    * Added support for multiple routes mapped on the same controller.
    * Fixed a bug in MySql connections pool (not recycling correctly after a long idle period).
+   * I changed thread local MySql connection strategy to request based.
 
 * v0.4.1 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
    * Fix a bug into analytics component sample data insert.

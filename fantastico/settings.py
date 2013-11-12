@@ -100,7 +100,10 @@ class BasicSettings(object):
                         "database": "fantastico",
                         "additional_params": {"charset": "utf8"},
                         "show_sql": True,
-                        "pool_recycle": 600}
+                        "additional_engine_settings": {
+                            "pool_size": 20,
+                            "pool_recycle": 600}
+                      }
 
         As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
         **show_sql** key tells orm engine from **Fantastico** to display all generated queries.
@@ -117,7 +120,10 @@ class BasicSettings(object):
                 "database": "fantastico",
                 "additional_params": {"charset": "utf8"},
                 "show_sql": True,
-                "pool_recycle": 600}
+                "additional_engine_settings": {
+                    "pool_size": 20,
+                    "pool_recycle": 600}
+               }
 
     @property
     def doc_base(self):
