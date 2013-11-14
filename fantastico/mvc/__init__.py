@@ -18,6 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.exceptions import FantasticoDbError
+from fantastico.utils.singleton import Singleton
 from sqlalchemy import create_engine
 from sqlalchemy.engine.url import URL
 from sqlalchemy.ext.declarative import declarative_base
@@ -31,13 +32,17 @@ class DbSessionManager(object):
     for the whole request.'''
 
     ENGINE = None
+    SESSION = None
 
     class ConnectionData(object):
         '''This class is responsible for description the connection data descriptor.'''
 
-        def __init__(self, session, engine):
+        @property
+        def engine(self):
+            return DbSessionManager.ENGINE
+
+        def __init__(self, session):
             self.session = session
-            self.engine = engine
 
     def __init__(self, db_config, echo=False, create_engine_fn=None, create_session_fn=None):
         try:
@@ -78,11 +83,13 @@ class DbSessionManager(object):
             conn_data = URL(**self._conn_props)
 
             if not DbSessionManager.ENGINE:
-                DbSessionManager.ENGINE = self._create_engine_fn(conn_data, echo=self._echo, **self._engine_params)
+                DbSessionManager.ENGINE = self._create_engine_fn(conn_data,
+                                                                 echo=self._echo, **self._engine_params)
+                DbSessionManager.SESSION = sessionmaker(bind=DbSessionManager.ENGINE)
 
-            session = self._create_session_fn(sessionmaker(bind=DbSessionManager.ENGINE), lambda: request_id)
+            session = self._create_session_fn(DbSessionManager.SESSION, lambda: request_id)
 
-            conn = DbSessionManager.ConnectionData(session, DbSessionManager.ENGINE)
+            conn = DbSessionManager.ConnectionData(session)
 
             self._cached_conns[request_id] = conn
 
@@ -90,6 +97,7 @@ class DbSessionManager(object):
         except Exception as ex:
             if session:
                 session.remove()
+                session.close()
 
             raise FantasticoDbError(ex)
 
@@ -104,6 +112,7 @@ class DbSessionManager(object):
             return
 
         conn.session.remove()
+        conn.session.close()
 
         del self._cached_conns[request_id]
 
@@ -118,4 +127,4 @@ def init_dm_db_engine(db_config, echo=False, create_engine_fn=None, create_sessi
 
     global CONN_MANAGER
 
-    CONN_MANAGER = DbSessionManager(db_config, echo, create_engine_fn, create_session_fn)
+    CONN_MANAGER = Singleton()(DbSessionManager(db_config, echo, create_engine_fn, create_session_fn))

@@ -57,6 +57,8 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
         It accepts a request logic (code that actually do the http request) and an assert logic for making sure
         code is correct.'''
 
+        assert_logic = assert_logic or self._check_server_started
+
         server = DevServer()
 
         def start_server():
@@ -81,9 +83,6 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
 
         thread_stop.join()
 
-        if assert_logic is None:
-            assert_logic = self._check_server_started
-
         self._check_server_started(server)
         assert_logic(server)
 
@@ -96,4 +95,4 @@ class DevServerIntegration(FantasticoIntegrationTestCase):
     def _get_server_base_url(self, server, route):
         '''This method returns the absolute url for a given relative url (route).'''
 
-        return "http://localhost:12000%s" % route
+        return "http://%s:%s%s" % (server.hostname, server.port, route)

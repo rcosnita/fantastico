@@ -54,6 +54,7 @@ class DevServer(object):
         if self._httpd:
             try:
                 self._httpd.shutdown()
+                self._httpd.socket.close()
             finally:
                 self._httpd = None
 

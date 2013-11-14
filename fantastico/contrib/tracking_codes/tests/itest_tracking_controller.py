@@ -18,8 +18,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.server.tests.itest_dev_server import DevServerIntegration
+from http.client import HTTPConnection
 from urllib.request import Request
 import json
+import time
 import urllib
 
 class TrackingControllerIntegration(DevServerIntegration):
@@ -54,18 +56,23 @@ class TrackingControllerIntegration(DevServerIntegration):
         endpoint = "/tracking-codes/ui/codes"
 
         def retrieve_ui(server):
-            request = Request(self._get_server_base_url(server, endpoint))
+            http_conn = HTTPConnection(server.hostname, server.port)
+            http_conn.connect()
 
-            self._response = urllib.request.urlopen(request)
+            http_conn.request("GET", endpoint, headers={"Content-Type": "text/html"})
+
+            self._response = http_conn.getresponse()
+
+            http_conn.close()
 
         def assert_logic(server):
             self.assertIsNotNone(self._response)
-            self.assertEqual(200, self._response.getcode())
-            self.assertEqual("text/html; charset=UTF-8", self._response.info()["Content-Type"])
+            self.assertEqual(200, self._response.status)
+            self.assertEqual("text/html; charset=UTF-8", self._response.headers["Content-Type"])
 
             body = self._response.read().decode()
 
-            self.assertEqual("<script>test snippet</script>\n", body);
+            self.assertEqual("<script>test snippet</script>\n", body)
 
         self._run_test_against_dev_server(retrieve_ui, assert_logic)
 

@@ -131,6 +131,7 @@ class RoaControllerIntegration(DevServerIntegration):
         subresource_body["resource_id"] = resource_id
 
         http_conn = HTTPConnection(server.hostname, server.port)
+        http_conn.connect()
 
         http_conn.request("POST", self._endpoint_subresource_latest, json.dumps(subresource_body).encode(),
                           headers={"Content-Type": "application/json"})
@@ -301,12 +302,11 @@ class RoaControllerIntegration(DevServerIntegration):
 
         def update_item(server):
             http_conn = HTTPConnection(server.hostname, server.port)
+            http_conn.connect()
 
             http_conn.request("PUT", endpoint, json.dumps(expected_body).encode(), {"Content-Type": "application/json"})
 
-            http_conn.close()
-
-            http_conn = HTTPConnection(server.hostname, server.port)
+            self._response = http_conn.getresponse()
 
             http_conn.request("GET", endpoint, headers={"Content-Type": "application/json"})
 
