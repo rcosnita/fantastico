@@ -110,6 +110,4 @@ def init_dm_db_engine(db_config, echo=False, create_engine_fn=None, create_sessi
     create_engine_fn = create_engine_fn or create_engine
     create_session_fn = create_session_fn or scoped_session
 
-    global CONN_MANAGER
-
-    CONN_MANAGER = Singleton()(DbSessionManager(db_config, echo, create_engine_fn, create_session_fn))
+    return Singleton()(DbSessionManager(db_config, echo, create_engine_fn, create_session_fn))
