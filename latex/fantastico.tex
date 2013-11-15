@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{November 10, 2013}
-\release{0.5.0-b125}
+\date{November 15, 2013}
+\release{0.5.0-b126}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -317,7 +317,10 @@ configuration:
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{database}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{additional\PYGZus{}params}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{charset}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{utf8}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
             \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{show\PYGZus{}sql}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n+nb+bp}{True}\PYG{p}{,}
-            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{pool\PYGZus{}recycle}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{600}\PYG{p}{\PYGZcb{}}
+            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{additional\PYGZus{}engine\PYGZus{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{pool\PYGZus{}size}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{20}\PYG{p}{,}
+                \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{pool\PYGZus{}recycle}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{600}\PYG{p}{\PYGZcb{}}
+          \PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 
 As you can see, in your configuration you can influence many attributes used when configuring the driver / database.
@@ -783,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4fa1f30\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4478518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1451,6 +1454,8 @@ Write your view.
 
 \end{enumerate}
 
+You can also map multiple routes for the same controller:
+
 Below you can find the design for MVC provided by \textbf{Fantastico} framework:
 
 \includegraphics{mvc.png}
@@ -1884,7 +1889,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1ecc408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x13d3408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2356,7 +2361,7 @@ so in Fantastico for each defined resource you can define a validator which will
         \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
             \PYG{k}{return}
 
-        \PYG{k}{raise} \PYG{n}{FantasticoRoaError}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)}
+        \PYG{k}{raise} \PYG{n}{FantasticoRoaError}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)}\PYG{p}{)}
 \end{Verbatim}
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -2470,7 +2475,7 @@ There are resources which have attributes which points to another resource:
 \PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{person}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/persons}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{,}
           \PYG{n}{subresources}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bill\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
                         \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mail\PYGZus{}address}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{mail\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
-                        \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address:}\PYG{l+s}{\PYGZdq{}} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+                        \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address:}\PYG{l+s}{\PYGZdq{}} \PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{ship\PYGZus{}address\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{Person}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
     \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{persons}\PYG{l+s}{\PYGZdq{}}
 
@@ -4077,6 +4082,14 @@ get\_item API:
 
 \end{fulllineitems}
 
+\index{get\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.roa_controller.RoaController.get_item_latest}\pysiglinewithargsret{\bfcode{get\_item\_latest}}{\emph{*args}, \emph{**kwargs}}{}
+This method provides the latest get\_item route for ROA api.
+
+\end{fulllineitems}
+
 \index{handle\_resource\_options() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)}
 
 \begin{fulllineitems}
@@ -5049,7 +5062,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x239c2f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x18a32f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -5594,7 +5607,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3736408\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2c3b408\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -6825,7 +6838,7 @@ v0.5.0 (Work in progress)
 Added specification for auto generated API for resources.
 
 \item {} 
-Added OAUTH2 implementation details for Fantastico.
+Added OAUTH2 draft implementation details for Fantastico.
 
 \item {} 
 Added Identity Provider draft specification.
@@ -6843,7 +6856,13 @@ Added auto generated APIs for resources (Resource Oriented Architecture).
 Improved routing loaders so that multiple methods can serve separate http verbs of a route.
 
 \item {} 
+Added support for multiple routes mapped on the same controller.
+
+\item {} 
 Fixed a bug in MySql connections pool (not recycling correctly after a long idle period).
+
+\item {} 
+I changed thread local MySql connection strategy to request based.
 
 \end{itemize}
 

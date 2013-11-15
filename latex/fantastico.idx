@@ -9,7 +9,7 @@
 \indexentry{supported\_languages (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{templates\_config (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{5}
-\indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{5}
+\indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
 \indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
 \indexentry{get\_root\_folder() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
 \indexentry{FantasticoUnitTestsCase (class in fantastico.tests.base\_case)|hyperpage}{7}
@@ -18,7 +18,7 @@
 \indexentry{check\_original\_methods() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
 \indexentry{setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method)|hyperpage}{7}
 \indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{7}
-\indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{7}
+\indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{8}
 \indexentry{\_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
 \indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
 \indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
@@ -198,6 +198,7 @@
 \indexentry{get\_collection() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{44}
 \indexentry{get\_collection\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{44}
 \indexentry{get\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{44}
+\indexentry{get\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{45}
 \indexentry{handle\_resource\_options() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{45}
 \indexentry{handle\_resource\_options\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{45}
 \indexentry{update\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{45}

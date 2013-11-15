@@ -4,7 +4,7 @@
   \bigletter {Symbols}
   \item \_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method), 
 		\hyperpage{8}
-  \item \_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), \hyperpage{7}
+  \item \_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), \hyperpage{8}
   \item \_get\_class\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method), 
 		\hyperpage{7}
   \item \_get\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method), 
@@ -140,7 +140,7 @@
 
   \indexspace
   \bigletter G
-  \item get() (fantastico.settings.SettingsFacade method), \hyperpage{5}
+  \item get() (fantastico.settings.SettingsFacade method), \hyperpage{6}
   \item get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
 		\hyperpage{55}
   \item get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
@@ -188,6 +188,8 @@
   \item get\_help() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{57}
   \item get\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
 		\hyperpage{44}
+  \item get\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
+		\hyperpage{45}
   \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
   \item get\_records\_paged() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{21}
   \item get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method), 

@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b126 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -95,6 +95,16 @@
 <span class="sd">    #. As developer you create the method that knows how to handle **/blog/** url.</span>
 <span class="sd">    #. Write your view.</span>
 
+<span class="sd">    You can also map multiple routes for the same controller:</span>
+
+<span class="sd">    .. code-block python</span>
+
+<span class="sd">        @ControllerProvider()</span>
+<span class="sd">        class SimpleExample(BaseController):</span>
+<span class="sd">            @Controller(url=[&quot;/url1$&quot;, &quot;/url2$&quot;)</span>
+<span class="sd">            def handle_urls(self, request):</span>
+<span class="sd">                # your logic comes here</span>
+
 <span class="sd">    Below you can find the design for MVC provided by **Fantastico** framework:</span>
 
 <span class="sd">    .. image:: /images/core/mvc.png&#39;&#39;&#39;</span>
@@ -128,7 +138,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span>
 </div>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="p">[</span><span class="n">url</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="bp">None</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>

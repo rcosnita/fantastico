@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.5.0-b126 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -49,6 +49,7 @@
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">fantastico.server.dev_server</span> <span class="kn">import</span> <span class="n">DevServer</span>
 <span class="kn">from</span> <span class="nn">fantastico.tests.base_case</span> <span class="kn">import</span> <span class="n">FantasticoIntegrationTestCase</span>
+<span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">mvc</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
@@ -88,6 +89,8 @@
 <span class="sd">        It accepts a request logic (code that actually do the http request) and an assert logic for making sure</span>
 <span class="sd">        code is correct.&#39;&#39;&#39;</span>
 
+        <span class="n">assert_logic</span> <span class="o">=</span> <span class="n">assert_logic</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_server_started</span>
+
         <span class="n">server</span> <span class="o">=</span> <span class="n">DevServer</span><span class="p">()</span>
 
         <span class="k">def</span> <span class="nf">start_server</span><span class="p">():</span>
@@ -112,9 +115,6 @@
 
         <span class="n">thread_stop</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">assert_logic</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">assert_logic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_server_started</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_server_started</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
         <span class="n">assert_logic</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
 </div>
@@ -127,7 +127,7 @@
 <div class="viewcode-block" id="DevServerIntegration._get_server_base_url"><a class="viewcode-back" href="../../../../get_started/contribute.html#fantastico.server.tests.itest_dev_server.DevServerIntegration._get_server_base_url">[docs]</a>    <span class="k">def</span> <span class="nf">_get_server_base_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">route</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method returns the absolute url for a given relative url (route).&#39;&#39;&#39;</span>
 
-        <span class="k">return</span> <span class="s">&quot;http://localhost:12000</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">route</span></div></div>
+        <span class="k">return</span> <span class="s">&quot;http://</span><span class="si">%s</span><span class="s">:</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="n">server</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="n">route</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

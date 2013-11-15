@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.5.0-b126 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -77,7 +77,10 @@ configuration:</p>
             <span class="s">&quot;database&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico&quot;</span><span class="p">,</span>
             <span class="s">&quot;additional_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;charset&quot;</span><span class="p">:</span> <span class="s">&quot;utf8&quot;</span><span class="p">},</span>
             <span class="s">&quot;show_sql&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-            <span class="s">&quot;pool_recycle&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">}</span>
+            <span class="s">&quot;additional_engine_settings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">&quot;pool_size&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+                <span class="s">&quot;pool_recycle&quot;</span><span class="p">:</span> <span class="mi">600</span><span class="p">}</span>
+          <span class="p">}</span>
 </pre></div>
 </div>
 <p>As you can see, in your configuration you can influence many attributes used when configuring the driver / database.

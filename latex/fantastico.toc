@@ -15,7 +15,7 @@
 \contentsline {subsection}{\numberline {2.3.1}Code contribution}{6}{subsection.2.3.1}
 \contentsline {subsubsection}{Writing unit tests}{7}{subsubsection*.17}
 \contentsline {subsubsection}{Writing integration tests}{7}{subsubsection*.23}
-\contentsline {section}{\numberline {2.4}Development mode}{8}{section.2.4}
+\contentsline {section}{\numberline {2.4}Development mode}{9}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}Hot deploy}{9}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}API}{9}{subsection.2.4.2}
 \contentsline {subsection}{\numberline {2.4.3}Database config}{9}{subsection.2.4.3}
@@ -71,72 +71,72 @@
 \contentsline {subsubsection}{ROA Technical Summary}{36}{subsubsection*.140}
 \contentsline {paragraph}{Exceptions}{42}{paragraph*.212}
 \contentsline {paragraph}{API generic controller}{42}{paragraph*.217}
-\contentsline {paragraph}{API error responses}{45}{paragraph*.232}
-\contentsline {subparagraph}{10000 - Resource Collection Not Found}{45}{subparagraph*.233}
-\contentsline {subparagraph}{10010 - Resource Invalid}{45}{subparagraph*.234}
-\contentsline {subparagraph}{10020 - No body given}{46}{subparagraph*.235}
-\contentsline {subparagraph}{10030 - Unexpected database error}{46}{subparagraph*.236}
-\contentsline {subparagraph}{10040 - Resource item not found}{46}{subparagraph*.237}
+\contentsline {paragraph}{API error responses}{45}{paragraph*.233}
+\contentsline {subparagraph}{10000 - Resource Collection Not Found}{45}{subparagraph*.234}
+\contentsline {subparagraph}{10010 - Resource Invalid}{45}{subparagraph*.235}
+\contentsline {subparagraph}{10020 - No body given}{46}{subparagraph*.236}
+\contentsline {subparagraph}{10030 - Unexpected database error}{46}{subparagraph*.237}
+\contentsline {subparagraph}{10040 - Resource item not found}{46}{subparagraph*.238}
 \contentsline {section}{\numberline {3.6}OAUTH2}{46}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Fantastico security}{46}{subsection.3.6.1}
-\contentsline {subsubsection}{Example (Simple Menu API)}{47}{subsubsection*.238}
-\contentsline {paragraph}{Terminology}{47}{paragraph*.239}
-\contentsline {paragraph}{Display all menus}{47}{paragraph*.240}
-\contentsline {paragraph}{Create a new menu}{48}{paragraph*.241}
-\contentsline {paragraph}{Update an existing menu}{48}{paragraph*.242}
-\contentsline {paragraph}{Delete an existing menu}{48}{paragraph*.243}
-\contentsline {paragraph}{Cautions}{48}{paragraph*.244}
-\contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{48}{subsubsection*.245}
-\contentsline {paragraph}{Authorization code structure}{49}{paragraph*.246}
-\contentsline {paragraph}{Access token structure}{49}{paragraph*.247}
-\contentsline {paragraph}{Obtaining access tokens}{50}{paragraph*.248}
-\contentsline {subsubsection}{OAUTH2 Fantastico Tokens Storage}{51}{subsubsection*.249}
-\contentsline {paragraph}{Relational storage}{51}{paragraph*.250}
-\contentsline {subparagraph}{Clients registration}{51}{subparagraph*.251}
-\contentsline {paragraph}{NoSQL}{51}{paragraph*.252}
-\contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{52}{subsubsection*.253}
-\contentsline {paragraph}{/authorize}{52}{paragraph*.254}
-\contentsline {subsubsection}{OAUTH2 Fantastico IDP}{53}{subsubsection*.255}
-\contentsline {paragraph}{Endpoints}{53}{paragraph*.256}
-\contentsline {subparagraph}{/authenticate}{53}{subparagraph*.257}
-\contentsline {subparagraph}{/consent}{53}{subparagraph*.258}
-\contentsline {subparagraph}{/profile}{53}{subparagraph*.259}
-\contentsline {subsubsection}{ROA OAUTH2 Security}{54}{subsubsection*.260}
+\contentsline {subsubsection}{Example (Simple Menu API)}{47}{subsubsection*.239}
+\contentsline {paragraph}{Terminology}{47}{paragraph*.240}
+\contentsline {paragraph}{Display all menus}{47}{paragraph*.241}
+\contentsline {paragraph}{Create a new menu}{48}{paragraph*.242}
+\contentsline {paragraph}{Update an existing menu}{48}{paragraph*.243}
+\contentsline {paragraph}{Delete an existing menu}{48}{paragraph*.244}
+\contentsline {paragraph}{Cautions}{48}{paragraph*.245}
+\contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{48}{subsubsection*.246}
+\contentsline {paragraph}{Authorization code structure}{49}{paragraph*.247}
+\contentsline {paragraph}{Access token structure}{49}{paragraph*.248}
+\contentsline {paragraph}{Obtaining access tokens}{50}{paragraph*.249}
+\contentsline {subsubsection}{OAUTH2 Fantastico Tokens Storage}{51}{subsubsection*.250}
+\contentsline {paragraph}{Relational storage}{51}{paragraph*.251}
+\contentsline {subparagraph}{Clients registration}{51}{subparagraph*.252}
+\contentsline {paragraph}{NoSQL}{51}{paragraph*.253}
+\contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{52}{subsubsection*.254}
+\contentsline {paragraph}{/authorize}{52}{paragraph*.255}
+\contentsline {subsubsection}{OAUTH2 Fantastico IDP}{53}{subsubsection*.256}
+\contentsline {paragraph}{Endpoints}{53}{paragraph*.257}
+\contentsline {subparagraph}{/authenticate}{53}{subparagraph*.258}
+\contentsline {subparagraph}{/consent}{53}{subparagraph*.259}
+\contentsline {subparagraph}{/profile}{53}{subparagraph*.260}
+\contentsline {subsubsection}{ROA OAUTH2 Security}{54}{subsubsection*.261}
 \contentsline {section}{\numberline {3.7}SDK}{54}{section.3.7}
 \contentsline {subsection}{\numberline {3.7.1}Intro}{54}{subsection.3.7.1}
 \contentsline {subsection}{\numberline {3.7.2}Usage}{54}{subsection.3.7.2}
 \contentsline {subsection}{\numberline {3.7.3}Supported commands}{55}{subsection.3.7.3}
-\contentsline {subsubsection}{Activate extension command}{55}{subsubsection*.261}
-\contentsline {subsubsection}{Fantastico command}{55}{subsubsection*.266}
-\contentsline {subsubsection}{Syncdb command}{55}{subsubsection*.267}
-\contentsline {subsubsection}{Version command}{56}{subsubsection*.272}
+\contentsline {subsubsection}{Activate extension command}{55}{subsubsection*.262}
+\contentsline {subsubsection}{Fantastico command}{55}{subsubsection*.267}
+\contentsline {subsubsection}{Syncdb command}{55}{subsubsection*.268}
+\contentsline {subsubsection}{Version command}{56}{subsubsection*.273}
 \contentsline {subsection}{\numberline {3.7.4}Technical summary}{57}{subsection.3.7.4}
 \contentsline {section}{\numberline {3.8}Component model}{59}{section.3.8}
 \contentsline {subsection}{\numberline {3.8.1}Static folder}{60}{subsection.3.8.1}
 \contentsline {subsection}{\numberline {3.8.2}Sql folder}{60}{subsection.3.8.2}
-\contentsline {subsubsection}{Sql folder example}{60}{subsubsection*.296}
+\contentsline {subsubsection}{Sql folder example}{60}{subsubsection*.297}
 \contentsline {section}{\numberline {3.9}Component reusage}{61}{section.3.9}
 \contentsline {section}{\numberline {3.10}Built in components}{63}{section.3.10}
 \contentsline {subsection}{\numberline {3.10.1}Dynamic menu}{63}{subsection.3.10.1}
-\contentsline {subsubsection}{Integration}{63}{subsubsection*.300}
-\contentsline {paragraph}{Component files activation deprecated}{63}{paragraph*.301}
-\contentsline {paragraph}{Component files activation (SDK)}{63}{paragraph*.302}
-\contentsline {paragraph}{Component sample + db data}{63}{paragraph*.303}
-\contentsline {subsubsection}{Current limitations}{64}{subsubsection*.304}
-\contentsline {subsubsection}{Technical summary}{64}{subsubsection*.305}
+\contentsline {subsubsection}{Integration}{63}{subsubsection*.301}
+\contentsline {paragraph}{Component files activation deprecated}{63}{paragraph*.302}
+\contentsline {paragraph}{Component files activation (SDK)}{63}{paragraph*.303}
+\contentsline {paragraph}{Component sample + db data}{63}{paragraph*.304}
+\contentsline {subsubsection}{Current limitations}{64}{subsubsection*.305}
+\contentsline {subsubsection}{Technical summary}{64}{subsubsection*.306}
 \contentsline {subsection}{\numberline {3.10.2}Dynamic pages}{65}{subsection.3.10.2}
-\contentsline {subsubsection}{Integration}{65}{subsubsection*.310}
-\contentsline {subsubsection}{Current limitations}{66}{subsubsection*.311}
-\contentsline {subsubsection}{Technical summary}{66}{subsubsection*.312}
+\contentsline {subsubsection}{Integration}{65}{subsubsection*.311}
+\contentsline {subsubsection}{Current limitations}{66}{subsubsection*.312}
+\contentsline {subsubsection}{Technical summary}{66}{subsubsection*.313}
 \contentsline {subsection}{\numberline {3.10.3}Tracking codes}{68}{subsection.3.10.3}
-\contentsline {subsubsection}{Analytic solutions}{68}{subsubsection*.317}
-\contentsline {subsubsection}{Integration}{68}{subsubsection*.318}
-\contentsline {subsubsection}{Current limitations}{69}{subsubsection*.319}
-\contentsline {subsubsection}{Technical summary}{69}{subsubsection*.320}
+\contentsline {subsubsection}{Analytic solutions}{68}{subsubsection*.318}
+\contentsline {subsubsection}{Integration}{68}{subsubsection*.319}
+\contentsline {subsubsection}{Current limitations}{69}{subsubsection*.320}
+\contentsline {subsubsection}{Technical summary}{69}{subsubsection*.321}
 \contentsline {subsection}{\numberline {3.10.4}ROA Auto discovery}{69}{subsection.3.10.4}
-\contentsline {subsubsection}{Integration}{70}{subsubsection*.325}
-\contentsline {subsubsection}{Current limitations}{70}{subsubsection*.326}
-\contentsline {subsubsection}{Technical summary}{70}{subsubsection*.327}
+\contentsline {subsubsection}{Integration}{70}{subsubsection*.326}
+\contentsline {subsubsection}{Current limitations}{70}{subsubsection*.327}
+\contentsline {subsubsection}{Technical summary}{70}{subsubsection*.328}
 \contentsline {chapter}{\numberline {4}How to articles}{71}{chapter.4}
 \contentsline {section}{\numberline {4.1}MVC How to}{71}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Code the model}{71}{subsection.4.1.1}
@@ -145,14 +145,14 @@
 \contentsline {subsection}{\numberline {4.1.4}Test your application}{72}{subsection.4.1.4}
 \contentsline {section}{\numberline {4.2}Deployment how to}{72}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{73}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{74}{subsubsection*.330}
+\contentsline {subsubsection}{Setup}{74}{subsubsection*.331}
 \contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{74}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{75}{subsubsection*.331}
-\contentsline {subsubsection}{Optimization}{75}{subsubsection*.332}
-\contentsline {subsubsection}{Setup with S3}{76}{subsubsection*.333}
+\contentsline {subsubsection}{Setup}{75}{subsubsection*.332}
+\contentsline {subsubsection}{Optimization}{75}{subsubsection*.333}
+\contentsline {subsubsection}{Setup with S3}{76}{subsubsection*.334}
 \contentsline {section}{\numberline {4.3}Static assets}{76}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{76}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{77}{subsubsection*.334}
+\contentsline {subsubsection}{Favicon}{77}{subsubsection*.335}
 \contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{77}{subsection.4.3.2}
 \contentsline {section}{\numberline {4.4}Creating a new project}{77}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Create first component}{77}{subsection.4.4.1}
@@ -164,4 +164,4 @@
 \contentsline {chapter}{\numberline {6}Provide feedback}{83}{chapter.6}
 \contentsline {chapter}{\numberline {7}Build status}{85}{chapter.7}
 \contentsline {chapter}{\numberline {8}License}{87}{chapter.8}
-\contentsline {chapter}{Index}{89}{section*.335}
+\contentsline {chapter}{Index}{89}{section*.336}

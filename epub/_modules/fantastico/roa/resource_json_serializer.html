@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.5.0-b125 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.5.0-b126 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -65,15 +65,35 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_ref</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_resource_ref</span> <span class="o">=</span> <span class="n">resource_ref</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subresources_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identify_subres_attributes</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_supported_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identify_public_attrs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_resource_ref</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
 
+
+    <span class="k">def</span> <span class="nf">_identify_subres_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns all subresource attributes which must be ignored by serializer.&#39;&#39;&#39;</span>
+
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">subresources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource_ref</span><span class="o">.</span><span class="n">subresources</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">subresources</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">attrs</span>
+
+        <span class="k">for</span> <span class="n">subresource_attr</span> <span class="ow">in</span> <span class="n">subresources</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">attrs</span><span class="p">[</span><span class="n">subresource_attr</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">return</span> <span class="n">attrs</span>
+
     <span class="k">def</span> <span class="nf">_identify_public_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_cls</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;This method returns a dictionary containing all public atttributes of a given model class.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;This method returns a dictionary containing all public attributes of a given model class.&#39;&#39;&#39;</span>
 
         <span class="n">public_attrs</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="k">for</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="n">model_cls</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">attr_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;_&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">attr_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;__&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subresources_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr_name</span><span class="p">):</span>
                 <span class="k">continue</span>
 
             <span class="n">public_attrs</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
