@@ -14,7 +14,7 @@ Versions
 * v0.5.0 (Work in progress)
 
    * Added specification for auto generated API for resources.
-   * Added OAUTH2 implementation details for Fantastico.
+   * Added OAUTH2 draft implementation details for Fantastico.
    * Added Identity Provider draft specification.
    * Added REST API Standard for ROA (Resource Oriented Architecture).
    * Added REST filter parser implementation using fast ll grammar for ROA (Resource Oriented Architecture).
