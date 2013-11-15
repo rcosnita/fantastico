@@ -34,8 +34,6 @@ class DbSessionManagerTests(FantasticoUnitTestsCase):
 
     def init(self):
         '''This method setup common dependencies used within test cases.'''
-        self._old_conn_data = DbSessionManager.ConnectionData
-
         self._db_config = {"drivername": "blabla",
                           "username": "john.doe",
                           "password": "12345",
@@ -54,11 +52,6 @@ class DbSessionManagerTests(FantasticoUnitTestsCase):
         self._db_manager = DbSessionManager(self._db_config,
                                             create_engine_fn=self._create_engine_fn,
                                             create_session_fn=self._create_session_fn)
-
-    def cleanup(self):
-        '''This method restore all patched dependencies from DbSessionManager class.'''
-
-        DbSessionManager.ConnectionData = self._old_conn_data
 
     def test_wrong_dbconfig(self):
         '''This test case ensures an exception is raised whenever dbconfig is incomplete or empty.'''
@@ -90,11 +83,11 @@ class DbSessionManagerTests(FantasticoUnitTestsCase):
     def test_get_connection_close_onexception(self):
         '''This test case ensure cached session / request is closed in case an exception is raised while opening the session.'''
 
-        DbSessionManager.ConnectionData = Mock(side_effect=Exception("Unexpected error"))
+        create_session_fn = Mock(side_effect=Exception("Unexpected error"))
 
         self._db_manager = DbSessionManager(self._db_config,
                                             create_engine_fn=self._create_engine_fn,
-                                            create_session_fn=self._create_session_fn)
+                                            create_session_fn=create_session_fn)
 
         request_id = 1
 
@@ -102,7 +95,6 @@ class DbSessionManagerTests(FantasticoUnitTestsCase):
             self._db_manager.get_connection(request_id)
 
         self.assertTrue(str(ex).find("Unexpected error"))
-        self.assertEqual(1, self._session.remove.call_count)
 
     def test_close_connection_ok(self):
         '''This method test close connection behavior for an existing request identifier cached connection.'''

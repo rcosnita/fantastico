@@ -119,7 +119,7 @@ class BasicSettings(object):
                 "host": "localhost",
                 "database": "fantastico",
                 "additional_params": {"charset": "utf8"},
-                "show_sql": True,
+                "show_sql": False,
                 "additional_engine_settings": {
                     "pool_size": 20,
                     "pool_recycle": 600}

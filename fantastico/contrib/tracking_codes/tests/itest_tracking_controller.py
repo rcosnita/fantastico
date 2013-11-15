@@ -21,7 +21,6 @@ from fantastico.server.tests.itest_dev_server import DevServerIntegration
 from http.client import HTTPConnection
 from urllib.request import Request
 import json
-import time
 import urllib
 
 class TrackingControllerIntegration(DevServerIntegration):

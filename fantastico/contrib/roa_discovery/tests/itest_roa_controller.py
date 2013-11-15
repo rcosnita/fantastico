@@ -62,11 +62,7 @@ class RoaControllerIntegration(DevServerIntegration):
         self._locations_delete = []
         self._locations_subresource_delete = []
 
-        for resource_body in self._expected_resources:
-            self._response = None
-            self._exception = None
-
-            self._create_resource(resource_body)
+        self._create_resources(self._expected_resources)
 
     def cleanup(self):
         '''This method is invoked after each test case in order to delete all resources that were added in the setup of this
@@ -76,40 +72,49 @@ class RoaControllerIntegration(DevServerIntegration):
 
         self._locations_delete.extend(self._locations_subresource_delete)
 
-        for location in reversed(self._locations_delete):
-            self._response = None
-            self._exception = None
-            self._delete_resource(location)
+        self._delete_resources(self._locations_delete)
 
-    def _create_resource(self, resource_body):
-        '''This method tries to create the given resource body and asserts for successful response.'''
+    def _create_resources(self, expected_resources):
+        '''This method tries to create the given resources and asserts for successful response.'''
 
-        create_subresources = resource_body == self._expected_resources[0]
-
-        resource_body = json.dumps(resource_body).encode()
+        self._response = None
+        self._exception = None
 
         def create_resource(server):
-            request = Request(self._get_server_base_url(server, self._endpoint))
-            request.add_header("Content-Type", "application/json")
-            request.add_header("Content-Length", len(resource_body))
-            request.add_data(resource_body)
+            for resource_body in expected_resources:
+                self._response = None
+                self._exception = None
 
-            self._response = urllib.request.urlopen(request)
+                http_conn = HTTPConnection(server.hostname, server.port)
 
-            if not create_subresources:
-                return
+                create_subresources = resource_body == expected_resources[0]
 
-            location = self._response.info()["Location"]
-            resource_id = int(location.split("/")[-1])
+                resource_body = json.dumps(resource_body).encode()
 
-            for subresource_body in self._expected_subresources:
-                self._create_subresource_for_resource(subresource_body, resource_id, server)
+                http_conn.request("POST", self._endpoint, resource_body,
+                                  headers={"Content-Type": "application/json",
+                                           "Content-Length": len(resource_body)})
+                self._response = http_conn.getresponse()
+
+                http_conn.close()
+
+                location = self._response.headers["Location"]
+                self._locations_delete.append(location)
+
+                resource_id = int(location.split("/")[-1])
+                self._expected_resources[len(self._locations_delete) - 1]["id"] = resource_id
+
+                if not create_subresources:
+                    continue
+
+                for subresource_body in self._expected_subresources:
+                    self._create_subresource_for_resource(subresource_body, resource_id, server)
 
         def assert_creation(server):
             self.assertIsNotNone(self._response)
-            self.assertEqual(201, self._response.getcode())
+            self.assertEqual(201, self._response.status)
 
-            headers = self._response.info()
+            headers = self._response.headers
 
             self.assertIsNotNone(headers)
 
@@ -117,16 +122,10 @@ class RoaControllerIntegration(DevServerIntegration):
             self.assertEqual("0", headers["Content-Length"])
             self.assertTrue(headers.get("Location").startswith(self._endpoint))
 
-            location = headers["Location"]
-            self._locations_delete.append(location)
-
-            resource_id = int(location.split("/")[-1])
-            self._expected_resources[len(self._locations_delete) - 1]["id"] = resource_id
-
         self._run_test_against_dev_server(create_resource, assert_creation)
 
     def _create_subresource_for_resource(self, subresource_body, resource_id, server):
-        '''This method creates the given resource and assign it to the given resource unique identifier.'''
+        '''This method creates the given subresource and assign it to the given resource unique identifier.'''
 
         subresource_body["resource_id"] = resource_id
 
@@ -152,16 +151,21 @@ class RoaControllerIntegration(DevServerIntegration):
         subresource_id = int(location.split("/")[-1])
         subresource_body["id"] = subresource_id
 
-    def _delete_resource(self, location):
+    def _delete_resources(self, locations):
         '''This method removes the given resource by location.'''
 
         def delete_resource(server):
-            conn = http.client.HTTPConnection(host=server.hostname, port=server.port)
-            conn.request("DELETE", location)
+            http_conn = http.client.HTTPConnection(host=server.hostname, port=server.port)
 
-            self._response = conn.getresponse()
+            for location in reversed(self._locations_delete):
+                self._response = None
+                self._exception = None
 
-            conn.close()
+                http_conn.request("DELETE", location)
+
+                self._response = http_conn.getresponse()
+
+            http_conn.close()
 
         def assert_deletion(server):
             self.assertIsNotNone(self._response)

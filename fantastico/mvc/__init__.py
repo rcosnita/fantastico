@@ -34,16 +34,6 @@ class DbSessionManager(object):
     ENGINE = None
     SESSION = None
 
-    class ConnectionData(object):
-        '''This class is responsible for description the connection data descriptor.'''
-
-        @property
-        def engine(self):
-            return DbSessionManager.ENGINE
-
-        def __init__(self, session):
-            self.session = session
-
     def __init__(self, db_config, echo=False, create_engine_fn=None, create_session_fn=None):
         try:
             self._conn_props = self._build_conn_props(db_config)
@@ -73,11 +63,10 @@ class DbSessionManager(object):
     def get_connection(self, request_id):
         '''This method is responsible for retrieving an active session for the given request.'''
 
-        conn = self._cached_conns.get(request_id)
-        session = None
+        session = self._cached_conns.get(request_id)
 
-        if conn:
-            return conn.session
+        if session:
+            return session
 
         try:
             conn_data = URL(**self._conn_props)
@@ -89,15 +78,11 @@ class DbSessionManager(object):
 
             session = self._create_session_fn(DbSessionManager.SESSION, lambda: request_id)
 
-            conn = DbSessionManager.ConnectionData(session)
-
-            self._cached_conns[request_id] = conn
+            self._cached_conns[request_id] = session
 
             return session
         except Exception as ex:
-            if session:
-                session.remove()
-                session.close()
+            self.close_connection(request_id)
 
             raise FantasticoDbError(ex)
 
@@ -106,13 +91,13 @@ class DbSessionManager(object):
         once per request cycle. Fantastico framework does this automatically at the end of each request cycle so you don't have
         to call this manually.'''
 
-        conn = self._cached_conns.get(request_id)
+        session = self._cached_conns.get(request_id)
 
-        if not conn:
+        if not session:
             return
 
-        conn.session.remove()
-        conn.session.close()
+        session.remove()
+        session.close()
 
         del self._cached_conns[request_id]
 
