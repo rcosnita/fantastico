@@ -11,7 +11,11 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 Versions
 --------
 
-* v0.5.0 (Work in progress)
+* v0.6.0 (Work in progress)
+
+   * Add a tutorial for creating TODO application based on ROA.
+
+* v0.5.0 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 
    * Added specification for auto generated API for resources.
    * Added OAUTH2 draft implementation details for Fantastico.
