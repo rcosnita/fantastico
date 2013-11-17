@@ -49,6 +49,15 @@ has a corresponding branch in the github repository so you can easily skip steps
 we recommend you take 30 minutes and finish this step by step how to in order to fully understand the power of Fantastico
 framework and how easy it is to build modern web applications using it.
 
+Requirements
+------------
+
+This tutorial requires developer to have:
+
+   #. A Debian based operating system
+   #. Access to a mysql database.
+   #. Python 3.2 or newer.
+
 Next steps
 ----------
 

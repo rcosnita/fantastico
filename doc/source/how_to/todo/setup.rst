@@ -1,5 +1,5 @@
-Setup the project
-=================
+Step 0 - TODO setup
+===================
 
 Follow the steps below in order to setup todo web application project correctly:
 
