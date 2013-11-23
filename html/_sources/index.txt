@@ -6,8 +6,8 @@ Fantastico framework
    
    intro.rst
    get_started/getting_started.rst
-   features/features.rst
    how_to/how_to
+   features/features.rst
    changes
    
 Provide feedback

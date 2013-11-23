@@ -6,26 +6,27 @@
 \BOOKMARK [1][-]{section.2.2}{Fantastico settings}{chapter.2}% 6
 \BOOKMARK [1][-]{section.2.3}{Contribute}{chapter.2}% 7
 \BOOKMARK [1][-]{section.2.4}{Development mode}{chapter.2}% 8
-\BOOKMARK [0][-]{chapter.3}{Fantastico features}{}% 9
-\BOOKMARK [1][-]{section.3.1}{Exceptions hierarchy}{chapter.3}% 10
-\BOOKMARK [1][-]{section.3.2}{Request lifecycle}{chapter.3}% 11
-\BOOKMARK [1][-]{section.3.3}{Routing engine}{chapter.3}% 12
-\BOOKMARK [1][-]{section.3.4}{Model View Controller}{chapter.3}% 13
-\BOOKMARK [1][-]{section.3.5}{ROA \(Resource Oriented Architecture\)}{chapter.3}% 14
-\BOOKMARK [1][-]{section.3.6}{OAUTH2}{chapter.3}% 15
-\BOOKMARK [1][-]{section.3.7}{SDK}{chapter.3}% 16
-\BOOKMARK [1][-]{section.3.8}{Component model}{chapter.3}% 17
-\BOOKMARK [1][-]{section.3.9}{Component reusage}{chapter.3}% 18
-\BOOKMARK [1][-]{section.3.10}{Built in components}{chapter.3}% 19
-\BOOKMARK [0][-]{chapter.4}{How to articles}{}% 20
-\BOOKMARK [1][-]{section.4.1}{MVC How to}{chapter.4}% 21
-\BOOKMARK [1][-]{section.4.2}{Deployment how to}{chapter.4}% 22
-\BOOKMARK [1][-]{section.4.3}{Static assets}{chapter.4}% 23
-\BOOKMARK [1][-]{section.4.4}{Creating a new project}{chapter.4}% 24
-\BOOKMARK [0][-]{chapter.5}{Changes}{}% 25
-\BOOKMARK [1][-]{section.5.1}{Feedback}{chapter.5}% 26
-\BOOKMARK [1][-]{section.5.2}{Versions}{chapter.5}% 27
-\BOOKMARK [0][-]{chapter.6}{Provide feedback}{}% 28
-\BOOKMARK [0][-]{chapter.7}{Build status}{}% 29
-\BOOKMARK [0][-]{chapter.8}{License}{}% 30
-\BOOKMARK [0][-]{section*.336}{Index}{}% 31
+\BOOKMARK [0][-]{chapter.3}{How to articles}{}% 9
+\BOOKMARK [1][-]{section.3.1}{Creating a new project}{chapter.3}% 10
+\BOOKMARK [1][-]{section.3.2}{Creating a simple TODO application}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.3}{MVC How to}{chapter.3}% 12
+\BOOKMARK [1][-]{section.3.4}{Deployment how to}{chapter.3}% 13
+\BOOKMARK [1][-]{section.3.5}{Static assets}{chapter.3}% 14
+\BOOKMARK [0][-]{chapter.4}{Fantastico features}{}% 15
+\BOOKMARK [1][-]{section.4.1}{Exceptions hierarchy}{chapter.4}% 16
+\BOOKMARK [1][-]{section.4.2}{Request lifecycle}{chapter.4}% 17
+\BOOKMARK [1][-]{section.4.3}{Routing engine}{chapter.4}% 18
+\BOOKMARK [1][-]{section.4.4}{Model View Controller}{chapter.4}% 19
+\BOOKMARK [1][-]{section.4.5}{ROA \(Resource Oriented Architecture\)}{chapter.4}% 20
+\BOOKMARK [1][-]{section.4.6}{OAUTH2}{chapter.4}% 21
+\BOOKMARK [1][-]{section.4.7}{SDK}{chapter.4}% 22
+\BOOKMARK [1][-]{section.4.8}{Component model}{chapter.4}% 23
+\BOOKMARK [1][-]{section.4.9}{Component reusage}{chapter.4}% 24
+\BOOKMARK [1][-]{section.4.10}{Built in components}{chapter.4}% 25
+\BOOKMARK [0][-]{chapter.5}{Changes}{}% 26
+\BOOKMARK [1][-]{section.5.1}{Feedback}{chapter.5}% 27
+\BOOKMARK [1][-]{section.5.2}{Versions}{chapter.5}% 28
+\BOOKMARK [0][-]{chapter.6}{Provide feedback}{}% 29
+\BOOKMARK [0][-]{chapter.7}{Build status}{}% 30
+\BOOKMARK [0][-]{chapter.8}{License}{}% 31
+\BOOKMARK [0][-]{section*.345}{Index}{}% 32

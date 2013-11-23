@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Step 2 - TODO API endpoints &mdash; fantastico 0.5.1-b127 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5.1-b127',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.1-b127 documentation" href="../../index.html" />
+    <link rel="up" title="Creating a simple TODO application" href="index.html" />
+    <link rel="next" title="Step 3 - TODO frontend" href="step_3_create_frontend.html" />
+    <link rel="prev" title="Step 1 - TODO settings" href="step_1_settings.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="step_3_create_frontend.html" title="Step 3 - TODO frontend"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="step_1_settings.html" title="Step 1 - TODO settings"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.1-b127 documentation</a> &raquo;</li>
+          <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Creating a simple TODO application</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="step-2-todo-api-endpoints">
+<h1>Step 2 - TODO API endpoints<a class="headerlink" href="#step-2-todo-api-endpoints" title="Permalink to this headline">¶</a></h1>
+<p>In this section of <strong>TODO</strong> how to we are going to create the following API endpoints:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="10%" />
+<col width="47%" />
+<col width="32%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Endpoint</strong></td>
+<td><strong>HTTP verb</strong></td>
+<td><strong>HTTP Body</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td>/tasks</td>
+<td>GET</td>
+<td>None</td>
+<td>Retrieves available tasks in a paginated manner.</td>
+</tr>
+<tr class="row-odd"><td>/tasks</td>
+<td>POST</td>
+<td>{&#8220;name&#8221;: &#8220;Task name&#8221;, &#8220;description&#8221;: &#8220;Task description&#8221;}</td>
+<td>Creates a new task described by the given body.</td>
+</tr>
+<tr class="row-even"><td>/tasks/:task_id</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Retrieves a specific task from tasks collection.</td>
+</tr>
+<tr class="row-odd"><td>/tasks/:task_id</td>
+<td>PUT</td>
+<td>{&#8220;name&#8221;: &#8220;Task name changed&#8221;, &#8220;description&#8221;: &#8220;Task description changed&#8221;}</td>
+<td>Updates a specific task from tasks collection.</td>
+</tr>
+<tr class="row-even"><td>/tasks/:task_id</td>
+<td>DELETE</td>
+<td>None</td>
+<td>Deletes a specific task from tasks collection.</td>
+</tr>
+</tbody>
+</table>
+<p>These are going to provide support for various clients which want to provide TODO functionality:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Javascript frontend client.</li>
+<li>Mobile app client.</li>
+</ul>
+</div></blockquote>
+<div class="section" id="create-database">
+<h2>Create database<a class="headerlink" href="#create-database" title="Permalink to this headline">¶</a></h2>
+<p>Our TODO tasks are going to be persisted by the endpoints into a MySql database (already created in previous steps). Now,
+we are going to create tasks tables:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">git checkout -b step-2-create-api</p>
+</li>
+<li><p class="first">Paste the code below under fantastico-todo/todo/frontend/sql/module_setup.sql</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">tasks</span><span class="p">(</span>
+   <span class="n">task_id</span> <span class="nb">INT</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+   <span class="n">name</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+   <span class="n">description</span> <span class="nb">TEXT</span><span class="p">,</span>
+   <span class="n">status</span> <span class="nb">SMALLINT</span><span class="p">,</span>
+   <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">(</span><span class="n">task_id</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Execute the following command in order to create the table into <strong>tododb</strong> database:</p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk syncdb --db-command /usr/bin/mysql --comp-root todo
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create some sample uncompleted tasks in your database:</p>
+<ol class="arabic">
+<li><p class="first">Paste the code below in fantastico-todo/todo/frontend/sql/create_data.sql:</p>
+<div class="highlight-sql"><div class="highlight"><pre><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tasks</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="s1">&#39;Go buy some dog food.&#39;</span><span class="p">,</span> <span class="s1">&#39;It is extremely important to have this by noon.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span>
+<span class="k">WHERE</span> <span class="k">NOT</span> <span class="k">EXISTS</span><span class="p">(</span><span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">tasks</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Go buy some dog food.&#39;</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tasks</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="s1">&#39;Write some clean code.&#39;</span><span class="p">,</span> <span class="s1">&#39;You decide when to start this.&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span>
+<span class="k">WHERE</span> <span class="k">NOT</span> <span class="k">EXISTS</span><span class="p">(</span><span class="k">SELECT</span> <span class="n">name</span> <span class="k">FROM</span> <span class="n">tasks</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Write some clean code.&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Execute the following command in order to insert above mentioned tasks into <strong>tododb</strong> database:</p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk syncdb --db-command /usr/bin/mysql --comp-root todo
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="create-apis">
+<h2>Create APIs<a class="headerlink" href="#create-apis" title="Permalink to this headline">¶</a></h2>
+<p>Now that the storage is ensured and our project is configured correctly we have to create the APIs. In order to do this
+follow the steps below:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">fsdk activate-extension &#8211;name roa_discovery &#8211;comp-root todo</p>
+</li>
+<li><p class="first">Paste the code below in fantastico-todo/todo/frontend/models/tasks.py</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">fantastico.mvc</span> <span class="kn">import</span> <span class="n">BASEMODEL</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.resource_decorator</span> <span class="kn">import</span> <span class="n">Resource</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.schema</span> <span class="kn">import</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">SmallInteger</span>
+<span class="kn">from</span> <span class="nn">todo.frontend.validators.task_validator</span> <span class="kn">import</span> <span class="n">TaskValidator</span>
+
+<span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Task&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/tasks&quot;</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="n">TaskValidator</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the task model required for todo application.&#39;&#39;&#39;</span>
+
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s">&quot;tasks&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;task_id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">200</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;description&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;status&quot;</span><span class="p">,</span> <span class="n">SmallInteger</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Paste the code below in fantastico-todo/todo/frontend/validators/task_validator.py</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">fantastico.roa.resource_validator</span> <span class="kn">import</span> <span class="n">ResourceValidator</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.roa_exceptions</span> <span class="kn">import</span> <span class="n">FantasticoRoaError</span>
+
+<span class="k">class</span> <span class="nc">TaskValidator</span><span class="p">(</span><span class="n">ResourceValidator</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This is the task validator invoked automatically in create / update operations.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is invoked automatically in order to validate resource body.&#39;&#39;&#39;</span>
+
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Name attribute is mandatory.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">status</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Status attribute is mandatory.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">raise</span> <span class="n">FantasticoRoaError</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">errors</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the following command in an activate fantastico-todo virtual environment:</p>
+<div class="highlight-bash"><div class="highlight"><pre>fantastico_run_dev_server
+</pre></div>
+</div>
+</li>
+<li><p class="first">Visit <a class="reference external" href="http://localhost:12000/roa/resources">http://localhost:12000/roa/resources</a>. You should see a response similar to the one below:</p>
+<img alt="../../_images/roa_discovered_resources.png" src="../../_images/roa_discovered_resources.png" />
+</li>
+<li><p class="first">Visit <a class="reference external" href="http://localhost:12000/api/latest/tasks">http://localhost:12000/api/latest/tasks</a>. You should see a response similar to the one below:</p>
+<img alt="../../_images/roa_tasks_initial_listing.png" src="../../_images/roa_tasks_initial_listing.png" />
+</li>
+<li><p class="first">Visit <a class="reference external" href="http://localhost:12000/api/latest/tasks/1">http://localhost:12000/api/latest/tasks/1</a>. You should receive the details for the task with unique identifier 1.</p>
+</li>
+<li><p class="first">Additionally Create / Update / Delete operations are already working.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Step 2 - TODO API endpoints</a><ul>
+<li><a class="reference internal" href="#create-database">Create database</a></li>
+<li><a class="reference internal" href="#create-apis">Create APIs</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="step_1_settings.html"
+                        title="previous chapter">Step 1 - TODO settings</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="step_3_create_frontend.html"
+                        title="next chapter">Step 3 - TODO frontend</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/how_to/todo/step_2_create_api.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="step_3_create_frontend.html" title="Step 3 - TODO frontend"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="step_1_settings.html" title="Step 1 - TODO settings"
+             >previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.1-b127 documentation</a> &raquo;</li>
+          <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
+          <li><a href="index.html" >Creating a simple TODO application</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

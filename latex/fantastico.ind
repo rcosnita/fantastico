@@ -23,217 +23,217 @@
   \indexspace
   \bigletter A
   \item add\_argument() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
-		\hyperpage{39}
-  \item add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{57}
+		\hyperpage{57}
+  \item add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{75}
   \item all\_resources() (fantastico.roa.resources\_registry.ResourcesRegistry method), 
-		\hyperpage{37}
+		\hyperpage{55}
   \item available\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute), 
-		\hyperpage{37}
+		\hyperpage{55}
   \item available\_url\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute), 
-		\hyperpage{37}
+		\hyperpage{55}
 
   \indexspace
   \bigletter B
-  \item BaseController (class in fantastico.mvc.base\_controller), \hyperpage{24}
+  \item BaseController (class in fantastico.mvc.base\_controller), \hyperpage{42}
   \item BasicSettings (class in fantastico.settings), \hyperpage{4}
-  \item build() (fantastico.mvc.models.model\_filter.ModelFilter method), \hyperpage{25}
-  \item build() (fantastico.mvc.models.model\_filter.ModelFilterAbstract method), \hyperpage{24}
+  \item build() (fantastico.mvc.models.model\_filter.ModelFilter method), \hyperpage{43}
+  \item build() (fantastico.mvc.models.model\_filter.ModelFilterAbstract method), \hyperpage{42}
   \item build() (fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound method), 
-		\hyperpage{25}
-  \item build() (fantastico.mvc.models.model\_sort.ModelSort method), \hyperpage{26}
+		\hyperpage{43}
+  \item build() (fantastico.mvc.models.model\_sort.ModelSort method), \hyperpage{44}
   \item build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
-		\hyperpage{39}
+		\hyperpage{57}
   \item build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method), 
-		\hyperpage{41}
+		\hyperpage{59}
 
   \indexspace
   \bigletter C
   \item check\_original\_methods() (fantastico.tests.base\_case.FantasticoUnitTestsCase method), 
 		\hyperpage{7}
-  \item code (fantastico.locale.language.Language attribute), \hyperpage{14}
-  \item column (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{25}
-  \item column (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{26}
-  \item Component (class in fantastico.rendering.component), \hyperpage{61}
-  \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{18}
-  \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{23}
-  \item count\_records() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
-  \item create() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
+  \item code (fantastico.locale.language.Language attribute), \hyperpage{32}
+  \item column (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{43}
+  \item column (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{44}
+  \item Component (class in fantastico.rendering.component), \hyperpage{79}
+  \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{36}
+  \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{41}
+  \item count\_records() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{38}
+  \item create() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{38}
   \item create\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{43}
+		\hyperpage{61}
   \item create\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{44}
-  \item curr\_request (fantastico.mvc.base\_controller.BaseController attribute), \hyperpage{24}
+		\hyperpage{62}
+  \item curr\_request (fantastico.mvc.base\_controller.BaseController attribute), \hyperpage{42}
 
   \indexspace
   \bigletter D
   \item database\_config (fantastico.settings.BasicSettings attribute), \hyperpage{4}
-  \item delete() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{20}
+  \item delete() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{38}
   \item delete\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{44}
+		\hyperpage{62}
   \item delete\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{44}
+		\hyperpage{62}
   \item deserialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method), 
-		\hyperpage{42}
+		\hyperpage{60}
   \item dev\_server\_host (fantastico.settings.BasicSettings attribute), \hyperpage{5}
   \item dev\_server\_port (fantastico.settings.BasicSettings attribute), \hyperpage{5}
   \item DevServer (class in fantastico.server.dev\_server), \hyperpage{9}
   \item DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server), \hyperpage{8}
   \item display\_test() (fantastico.routing\_engine.dummy\_routeloader.DummyRouteLoader method), 
-		\hyperpage{17}
+		\hyperpage{35}
   \item doc\_base (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{17}
+  \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{35}
   \item DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller), 
-		\hyperpage{64}
-  \item DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{67}
-  \item DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{67}
+		\hyperpage{82}
+  \item DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{85}
+  \item DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{85}
 
   \indexspace
   \bigletter E
   \item exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{55}
-  \item exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), \hyperpage{56}
-  \item exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), \hyperpage{56}
-  \item exec() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{57}
-  \item exec() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{58}
-  \item exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{58}
+		\hyperpage{73}
+  \item exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), \hyperpage{74}
+  \item exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), \hyperpage{74}
+  \item exec() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{75}
+  \item exec() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{76}
+  \item exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{76}
 
   \indexspace
   \bigletter F
   \item fantastico\_cfg\_os\_key (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute), 
 		\hyperpage{8}
-  \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{11}
-  \item FantasticoContentTypeError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoControllerInvalidError (class in fantastico.exceptions), \hyperpage{11}
-  \item FantasticoDbError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoDbNotFoundError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoError (class in fantastico.exceptions), \hyperpage{11}
-  \item FantasticoHttpVerbNotSupported (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoIncompatibleClassError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoInsufficientArgumentsError (class in fantastico.exceptions), \hyperpage{12}
+  \item FantasticoClassNotFoundError (class in fantastico.exceptions), \hyperpage{29}
+  \item FantasticoContentTypeError (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoControllerInvalidError (class in fantastico.exceptions), \hyperpage{29}
+  \item FantasticoDbError (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoDbNotFoundError (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoDuplicateRouteError (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoError (class in fantastico.exceptions), \hyperpage{29}
+  \item FantasticoHttpVerbNotSupported (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoIncompatibleClassError (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoInsufficientArgumentsError (class in fantastico.exceptions), \hyperpage{30}
   \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{7}
   \item FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions), 
-		\hyperpage{65}
-  \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoNotSupportedError (class in fantastico.exceptions), \hyperpage{11}
-  \item FantasticoRoaDuplicateError (class in fantastico.roa.roa\_exceptions), \hyperpage{42}
-  \item FantasticoRoaError (class in fantastico.roa.roa\_exceptions), \hyperpage{42}
-  \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{12}
-  \item FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{59}
-  \item FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{59}
-  \item FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{59}
-  \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{11}
-  \item FantasticoTemplateNotFoundError (class in fantastico.exceptions), \hyperpage{12}
+		\hyperpage{83}
+  \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoNotSupportedError (class in fantastico.exceptions), \hyperpage{29}
+  \item FantasticoRoaDuplicateError (class in fantastico.roa.roa\_exceptions), \hyperpage{60}
+  \item FantasticoRoaError (class in fantastico.roa.roa\_exceptions), \hyperpage{60}
+  \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{30}
+  \item FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{77}
+  \item FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{77}
+  \item FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{77}
+  \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{29}
+  \item FantasticoTemplateNotFoundError (class in fantastico.exceptions), \hyperpage{30}
   \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{7}
-  \item FantasticoUrlInvokerError (class in fantastico.exceptions), \hyperpage{12}
+  \item FantasticoUrlInvokerError (class in fantastico.exceptions), \hyperpage{30}
   \item find\_by\_name() (fantastico.roa.resources\_registry.ResourcesRegistry method), 
-		\hyperpage{37}
-  \item find\_by\_pk() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{21}
+		\hyperpage{55}
+  \item find\_by\_pk() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{39}
   \item find\_by\_url() (fantastico.roa.resources\_registry.ResourcesRegistry method), 
-		\hyperpage{37}
-  \item fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
+		\hyperpage{55}
+  \item fn\_handler (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{37}
 
   \indexspace
   \bigletter G
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{6}
   \item get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{55}
+		\hyperpage{73}
   \item get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
-		\hyperpage{56}
-  \item get\_arguments() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{57}
-  \item get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{59}
+		\hyperpage{74}
+  \item get\_arguments() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{75}
+  \item get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{77}
   \item get\_collection() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{44}
+		\hyperpage{62}
   \item get\_collection\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{44}
-  \item get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{58}
+		\hyperpage{62}
+  \item get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{76}
   \item get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method), 
-		\hyperpage{24}
+		\hyperpage{42}
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{6}
-  \item get\_expression() (fantastico.mvc.models.model\_filter.ModelFilter method), \hyperpage{25}
+  \item get\_expression() (fantastico.mvc.models.model\_filter.ModelFilter method), \hyperpage{43}
   \item get\_expression() (fantastico.mvc.models.model\_filter.ModelFilterAbstract method), 
-		\hyperpage{24}
+		\hyperpage{42}
   \item get\_expression() (fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound method), 
-		\hyperpage{25}
-  \item get\_expression() (fantastico.mvc.models.model\_sort.ModelSort method), \hyperpage{26}
+		\hyperpage{43}
+  \item get\_expression() (fantastico.mvc.models.model\_sort.ModelSort method), \hyperpage{44}
   \item get\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
-		\hyperpage{39}
+		\hyperpage{57}
   \item get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
-		\hyperpage{39}
+		\hyperpage{57}
   \item get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
-		\hyperpage{39}
+		\hyperpage{57}
   \item get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{55}
+		\hyperpage{73}
   \item get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
-		\hyperpage{56}
+		\hyperpage{74}
   \item get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), 
-		\hyperpage{56}
-  \item get\_help() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{57}
+		\hyperpage{74}
+  \item get\_help() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{75}
   \item get\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{44}
+		\hyperpage{62}
   \item get\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{45}
-  \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{15}
-  \item get\_records\_paged() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{21}
+		\hyperpage{63}
+  \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{33}
+  \item get\_records\_paged() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{39}
   \item get\_registered\_routes() (fantastico.mvc.controller\_decorators.Controller class method), 
-		\hyperpage{19}
+		\hyperpage{37}
   \item get\_root\_folder() (fantastico.settings.SettingsFacade method), \hyperpage{6}
   \item get\_supported\_operations() (fantastico.mvc.models.model\_filter.ModelFilter static method), 
-		\hyperpage{25}
+		\hyperpage{43}
   \item get\_supported\_sort\_dirs() (fantastico.mvc.models.model\_sort.ModelSort method), 
-		\hyperpage{26}
+		\hyperpage{44}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationAnd method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryEq method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryGe method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryGt method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryIn method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLe method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLike method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLt method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationOr method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortAsc method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortDesc method), 
-		\hyperpage{41}
+		\hyperpage{59}
 
   \indexspace
   \bigletter H
   \item handle\_resource\_options() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{45}
+		\hyperpage{63}
   \item handle\_resource\_options\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{45}
-  \item handle\_route() (fantastico.routing\_engine.router.Router method), \hyperpage{16}
-  \item help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{58}
-  \item http\_code (fantastico.exceptions.FantasticoError attribute), \hyperpage{11}
-  \item http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute), \hyperpage{12}
+		\hyperpage{63}
+  \item handle\_route() (fantastico.routing\_engine.router.Router method), \hyperpage{34}
+  \item help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{76}
+  \item http\_code (fantastico.exceptions.FantasticoError attribute), \hyperpage{29}
+  \item http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute), \hyperpage{30}
 
   \indexspace
   \bigletter I
@@ -241,189 +241,189 @@
 
   \indexspace
   \bigletter L
-  \item Language (class in fantastico.locale.language), \hyperpage{14}
-  \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{14}
+  \item Language (class in fantastico.locale.language), \hyperpage{32}
+  \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{32}
   \item list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{69}
+		\hyperpage{87}
   \item list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{69}
+		\hyperpage{87}
   \item list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method), 
-		\hyperpage{38}, \hyperpage{70}
+		\hyperpage{56}, \hyperpage{88}
   \item load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method), 
-		\hyperpage{23}
+		\hyperpage{41}
   \item load\_routes() (fantastico.roa.resources\_registrator.ResourcesRegistrator method), 
-		\hyperpage{38}
+		\hyperpage{56}
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
-		\hyperpage{16}
-  \item load\_template() (fantastico.mvc.base\_controller.BaseController method), \hyperpage{24}
+		\hyperpage{34}
+  \item load\_template() (fantastico.mvc.base\_controller.BaseController method), \hyperpage{42}
 
   \indexspace
   \bigletter M
   \item max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute), 
-		\hyperpage{64}
-  \item method (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
-  \item model (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{36}
-  \item model\_cls (fantastico.mvc.model\_facade.ModelFacade attribute), \hyperpage{22}
+		\hyperpage{82}
+  \item method (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{37}
+  \item model (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{54}
+  \item model\_cls (fantastico.mvc.model\_facade.ModelFacade attribute), \hyperpage{40}
   \item model\_filters (fantastico.mvc.models.model\_filter\_compound.ModelFilterCompound attribute), 
-		\hyperpage{25}
-  \item model\_pk\_cols (fantastico.mvc.model\_facade.ModelFacade attribute), \hyperpage{22}
-  \item ModelFacade (class in fantastico.mvc.model\_facade), \hyperpage{20}
-  \item ModelFilter (class in fantastico.mvc.models.model\_filter), \hyperpage{25}
-  \item ModelFilterAbstract (class in fantastico.mvc.models.model\_filter), \hyperpage{24}
-  \item ModelFilterAnd (class in fantastico.mvc.models.model\_filter\_compound), \hyperpage{25}
+		\hyperpage{43}
+  \item model\_pk\_cols (fantastico.mvc.model\_facade.ModelFacade attribute), \hyperpage{40}
+  \item ModelFacade (class in fantastico.mvc.model\_facade), \hyperpage{38}
+  \item ModelFilter (class in fantastico.mvc.models.model\_filter), \hyperpage{43}
+  \item ModelFilterAbstract (class in fantastico.mvc.models.model\_filter), \hyperpage{42}
+  \item ModelFilterAnd (class in fantastico.mvc.models.model\_filter\_compound), \hyperpage{43}
   \item ModelFilterCompound (class in fantastico.mvc.models.model\_filter\_compound), 
-		\hyperpage{25}
-  \item ModelFilterOr (class in fantastico.mvc.models.model\_filter\_compound), \hyperpage{25}
-  \item models (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
+		\hyperpage{43}
+  \item ModelFilterOr (class in fantastico.mvc.models.model\_filter\_compound), \hyperpage{43}
+  \item models (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{37}
   \item ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware), 
-		\hyperpage{26}
-  \item ModelSort (class in fantastico.mvc.models.model\_sort), \hyperpage{26}
+		\hyperpage{44}
+  \item ModelSort (class in fantastico.mvc.models.model\_sort), \hyperpage{44}
 
   \indexspace
   \bigletter N
-  \item name (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{36}
-  \item name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{58}
-  \item new\_model() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{22}
+  \item name (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{54}
+  \item name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{76}
+  \item new\_model() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{40}
 
   \indexspace
   \bigletter O
-  \item operation (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{25}
+  \item operation (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{43}
 
   \indexspace
   \bigletter P
-  \item PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router), \hyperpage{66}
-  \item parse() (fantastico.rendering.component.Component method), \hyperpage{62}
-  \item parse\_filter() (fantastico.roa.query\_parser.QueryParser method), \hyperpage{39}
-  \item parse\_sort() (fantastico.roa.query\_parser.QueryParser method), \hyperpage{39}
+  \item PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router), \hyperpage{84}
+  \item parse() (fantastico.rendering.component.Component method), \hyperpage{80}
+  \item parse\_filter() (fantastico.roa.query\_parser.QueryParser method), \hyperpage{57}
+  \item parse\_sort() (fantastico.roa.query\_parser.QueryParser method), \hyperpage{57}
 
   \indexspace
   \bigletter Q
-  \item QueryParser (class in fantastico.roa.query\_parser), \hyperpage{38}
-  \item QueryParserOperation (class in fantastico.roa.query\_parser\_operations), \hyperpage{39}
-  \item QueryParserOperationAnd (class in fantastico.roa.query\_parser\_operations), \hyperpage{41}
+  \item QueryParser (class in fantastico.roa.query\_parser), \hyperpage{56}
+  \item QueryParserOperation (class in fantastico.roa.query\_parser\_operations), \hyperpage{57}
+  \item QueryParserOperationAnd (class in fantastico.roa.query\_parser\_operations), \hyperpage{59}
   \item QueryParserOperationBinary (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item QueryParserOperationBinaryEq (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item QueryParserOperationBinaryGe (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item QueryParserOperationBinaryGt (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item QueryParserOperationBinaryIn (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item QueryParserOperationBinaryLe (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item QueryParserOperationBinaryLike (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item QueryParserOperationBinaryLt (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item QueryParserOperationCompound (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item QueryParserOperationInvalidError (class in fantastico.roa.query\_parser\_exceptions), 
-		\hyperpage{42}
-  \item QueryParserOperationOr (class in fantastico.roa.query\_parser\_operations), \hyperpage{41}
+		\hyperpage{60}
+  \item QueryParserOperationOr (class in fantastico.roa.query\_parser\_operations), \hyperpage{59}
   \item QueryParserOperationSort (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item QueryParserOperationSortAsc (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item QueryParserOperationSortDesc (class in fantastico.roa.query\_parser\_operations), 
-		\hyperpage{41}
+		\hyperpage{59}
 
   \indexspace
   \bigletter R
-  \item RedirectResponse (class in fantastico.routing\_engine.custom\_responses), \hyperpage{14}
-  \item ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{25}
+  \item RedirectResponse (class in fantastico.routing\_engine.custom\_responses), \hyperpage{32}
+  \item ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{43}
   \item register\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method), 
-		\hyperpage{37}
+		\hyperpage{55}
   \item register\_resources() (fantastico.roa.resources\_registrator.ResourcesRegistrator method), 
-		\hyperpage{38}
-  \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{16}
-  \item render() (fantastico.rendering.component.Component method), \hyperpage{62}
-  \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{13}
-  \item RequestMiddleware (class in fantastico.middleware.request\_middleware), \hyperpage{13}
-  \item Resource (class in fantastico.roa.resource\_decorator), \hyperpage{36}
-  \item ResourceJsonSerializer (class in fantastico.roa.resource\_json\_serializer), \hyperpage{41}
+		\hyperpage{56}
+  \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{34}
+  \item render() (fantastico.rendering.component.Component method), \hyperpage{80}
+  \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{31}
+  \item RequestMiddleware (class in fantastico.middleware.request\_middleware), \hyperpage{31}
+  \item Resource (class in fantastico.roa.resource\_decorator), \hyperpage{54}
+  \item ResourceJsonSerializer (class in fantastico.roa.resource\_json\_serializer), \hyperpage{59}
   \item ResourceJsonSerializerError (class in fantastico.roa.resource\_json\_serializer\_exceptions), 
-		\hyperpage{42}
-  \item ResourcesRegistrator (class in fantastico.roa.resources\_registrator), \hyperpage{38}
-  \item ResourcesRegistry (class in fantastico.roa.resources\_registry), \hyperpage{37}
-  \item ResourceValidator (class in fantastico.roa.resource\_validator), \hyperpage{42}
+		\hyperpage{60}
+  \item ResourcesRegistrator (class in fantastico.roa.resources\_registrator), \hyperpage{56}
+  \item ResourcesRegistry (class in fantastico.roa.resources\_registry), \hyperpage{55}
+  \item ResourceValidator (class in fantastico.roa.resource\_validator), \hyperpage{60}
   \item retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method), 
-		\hyperpage{64}
+		\hyperpage{82}
   \item roa\_api (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item RoaController (class in fantastico.contrib.roa\_discovery.roa\_controller), \hyperpage{43}
+  \item RoaController (class in fantastico.contrib.roa\_discovery.roa\_controller), \hyperpage{61}
   \item RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller), 
-		\hyperpage{38}, \hyperpage{70}
-  \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{16}
-  \item Router (class in fantastico.routing\_engine.router), \hyperpage{15}
+		\hyperpage{56}, \hyperpage{88}
+  \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{34}
+  \item Router (class in fantastico.routing\_engine.router), \hyperpage{33}
   \item routes\_loaders (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item RoutingMiddleware (class in fantastico.middleware.routing\_middleware), \hyperpage{17}
+  \item RoutingMiddleware (class in fantastico.middleware.routing\_middleware), \hyperpage{35}
 
   \indexspace
   \bigletter S
   \item scanned\_folder (fantastico.mvc.controller\_registrator.ControllerRouteLoader attribute), 
-		\hyperpage{24}
-  \item SdkCommand (class in fantastico.sdk.sdk\_core), \hyperpage{58}
-  \item SdkCommand (class in fantastico.sdk.sdk\_decorators), \hyperpage{59}
-  \item SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension), 
-		\hyperpage{55}
-  \item SdkCommandArgument (class in fantastico.sdk.sdk\_core), \hyperpage{58}
-  \item SdkCommandsRegistry (class in fantastico.sdk.sdk\_core), \hyperpage{57}
-  \item SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb), \hyperpage{55}
-  \item SdkCommandVersion (class in fantastico.sdk.commands.command\_version), \hyperpage{56}
-  \item SdkCore (class in fantastico.sdk.fantastico), \hyperpage{57}
-  \item serialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method), 
 		\hyperpage{42}
+  \item SdkCommand (class in fantastico.sdk.sdk\_core), \hyperpage{76}
+  \item SdkCommand (class in fantastico.sdk.sdk\_decorators), \hyperpage{77}
+  \item SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension), 
+		\hyperpage{73}
+  \item SdkCommandArgument (class in fantastico.sdk.sdk\_core), \hyperpage{76}
+  \item SdkCommandsRegistry (class in fantastico.sdk.sdk\_core), \hyperpage{75}
+  \item SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb), \hyperpage{73}
+  \item SdkCommandVersion (class in fantastico.sdk.commands.command\_version), \hyperpage{74}
+  \item SdkCore (class in fantastico.sdk.fantastico), \hyperpage{75}
+  \item serialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method), 
+		\hyperpage{60}
   \item serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method), 
-		\hyperpage{67}
-  \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{14}
+		\hyperpage{85}
+  \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{32}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{5}
   \item setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method), 
 		\hyperpage{7}
-  \item short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{58}
-  \item sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{26}
+  \item short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{76}
+  \item sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{44}
   \item start() (fantastico.server.dev\_server.DevServer method), \hyperpage{9}
   \item started (fantastico.server.dev\_server.DevServer attribute), \hyperpage{9}
   \item stop() (fantastico.server.dev\_server.DevServer method), \hyperpage{9}
-  \item subresources (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{36}
+  \item subresources (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{54}
   \item supported\_languages (fantastico.settings.BasicSettings attribute), \hyperpage{5}
 
   \indexspace
   \bigletter T
   \item templates\_config (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{69}
+  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{87}
   \item TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller), 
-		\hyperpage{69}
-  \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{58}
+		\hyperpage{87}
+  \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{76}
 
   \indexspace
   \bigletter U
   \item unregister\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method), 
-		\hyperpage{37}
-  \item update() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{22}
+		\hyperpage{55}
+  \item update() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{40}
   \item update\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{45}
+		\hyperpage{63}
   \item update\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{45}
-  \item url (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{19}
-  \item url (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{36}
+		\hyperpage{63}
+  \item url (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{37}
+  \item url (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{54}
 
   \indexspace
   \bigletter V
   \item validate() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method), 
-		\hyperpage{40}
+		\hyperpage{58}
   \item validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method), 
-		\hyperpage{41}
+		\hyperpage{59}
   \item validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method), 
-		\hyperpage{41}
-  \item validate() (fantastico.roa.resource\_validator.ResourceValidator method), \hyperpage{43}
-  \item validator (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{37}
-  \item version (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{37}
+		\hyperpage{59}
+  \item validate() (fantastico.roa.resource\_validator.ResourceValidator method), \hyperpage{61}
+  \item validator (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{55}
+  \item version (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{55}
 
   \indexspace
   \bigletter W
-  \item wsgi\_app (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{14}
+  \item wsgi\_app (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{32}
 
 \end{theindex}

@@ -19,149 +19,164 @@
 \contentsline {subsection}{\numberline {2.4.1}Hot deploy}{9}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}API}{9}{subsection.2.4.2}
 \contentsline {subsection}{\numberline {2.4.3}Database config}{9}{subsection.2.4.3}
-\contentsline {chapter}{\numberline {3}Fantastico features}{11}{chapter.3}
-\contentsline {section}{\numberline {3.1}Exceptions hierarchy}{11}{section.3.1}
-\contentsline {section}{\numberline {3.2}Request lifecycle}{12}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Request middleware}{13}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Request context}{13}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Obtain request language}{14}{subsection.3.2.3}
-\contentsline {subsection}{\numberline {3.2.4}Obtain settings using request}{14}{subsection.3.2.4}
-\contentsline {subsection}{\numberline {3.2.5}Redirect using request}{14}{subsection.3.2.5}
-\contentsline {section}{\numberline {3.3}Routing engine}{15}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Routes loaders}{16}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}How to write a new route loader}{16}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Configuring available loaders}{17}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}DummyRouteLoader}{17}{subsection.3.3.4}
-\contentsline {subsection}{\numberline {3.3.5}Routing middleware}{17}{subsection.3.3.5}
-\contentsline {section}{\numberline {3.4}Model View Controller}{18}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Classic approach}{18}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Fantastico approach}{18}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Model}{19}{subsection.3.4.3}
-\contentsline {subsection}{\numberline {3.4.4}View}{23}{subsection.3.4.4}
-\contentsline {subsection}{\numberline {3.4.5}Controller}{23}{subsection.3.4.5}
-\contentsline {subsubsection}{Available filters}{24}{subsubsection*.97}
-\contentsline {subsection}{\numberline {3.4.6}Database session management}{26}{subsection.3.4.6}
-\contentsline {section}{\numberline {3.5}ROA (Resource Oriented Architecture)}{26}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Examples}{27}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Application settings stored in database}{27}{subsection.3.5.2}
-\contentsline {subsection}{\numberline {3.5.3}Versioning}{28}{subsection.3.5.3}
-\contentsline {subsection}{\numberline {3.5.4}Validation}{28}{subsection.3.5.4}
-\contentsline {subsection}{\numberline {3.5.5}Partial object representation}{29}{subsection.3.5.5}
-\contentsline {subsection}{\numberline {3.5.6}Resource composed attributes}{30}{subsection.3.5.6}
-\contentsline {subsection}{\numberline {3.5.7}Advantages}{31}{subsection.3.5.7}
-\contentsline {subsubsection}{REST API standard}{31}{subsubsection*.121}
-\contentsline {paragraph}{Resource collection}{31}{paragraph*.122}
-\contentsline {subparagraph}{Pagination}{32}{subparagraph*.123}
-\contentsline {subparagraph}{Sorting}{32}{subparagraph*.124}
-\contentsline {subparagraph}{Filtering}{32}{subparagraph*.125}
-\contentsline {paragraph}{Resource item}{33}{paragraph*.126}
-\contentsline {subparagraph}{Create a new item}{33}{subparagraph*.127}
-\contentsline {subparagraph}{Update an existing item}{33}{subparagraph*.128}
-\contentsline {subparagraph}{Delete an existing item}{34}{subparagraph*.129}
-\contentsline {subsubsection}{REST Responses}{34}{subsubsection*.130}
-\contentsline {paragraph}{Common responses}{34}{paragraph*.131}
-\contentsline {subparagraph}{Internal Server Error}{34}{subparagraph*.132}
-\contentsline {subparagraph}{Concrete errors}{34}{subparagraph*.133}
-\contentsline {paragraph}{Resource Item}{34}{paragraph*.134}
-\contentsline {subparagraph}{Retrieve resource item}{34}{subparagraph*.135}
-\contentsline {subparagraph}{Create a new resource item}{35}{subparagraph*.136}
-\contentsline {paragraph}{Update an existing resource}{35}{paragraph*.137}
-\contentsline {subparagraph}{Delete an existing resource}{35}{subparagraph*.138}
-\contentsline {subparagraph}{Bulk creation of items}{35}{subparagraph*.139}
-\contentsline {subsubsection}{ROA Technical Summary}{36}{subsubsection*.140}
-\contentsline {paragraph}{Exceptions}{42}{paragraph*.212}
-\contentsline {paragraph}{API generic controller}{42}{paragraph*.217}
-\contentsline {paragraph}{API error responses}{45}{paragraph*.233}
-\contentsline {subparagraph}{10000 - Resource Collection Not Found}{45}{subparagraph*.234}
-\contentsline {subparagraph}{10010 - Resource Invalid}{45}{subparagraph*.235}
-\contentsline {subparagraph}{10020 - No body given}{46}{subparagraph*.236}
-\contentsline {subparagraph}{10030 - Unexpected database error}{46}{subparagraph*.237}
-\contentsline {subparagraph}{10040 - Resource item not found}{46}{subparagraph*.238}
-\contentsline {section}{\numberline {3.6}OAUTH2}{46}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Fantastico security}{46}{subsection.3.6.1}
-\contentsline {subsubsection}{Example (Simple Menu API)}{47}{subsubsection*.239}
-\contentsline {paragraph}{Terminology}{47}{paragraph*.240}
-\contentsline {paragraph}{Display all menus}{47}{paragraph*.241}
-\contentsline {paragraph}{Create a new menu}{48}{paragraph*.242}
-\contentsline {paragraph}{Update an existing menu}{48}{paragraph*.243}
-\contentsline {paragraph}{Delete an existing menu}{48}{paragraph*.244}
-\contentsline {paragraph}{Cautions}{48}{paragraph*.245}
-\contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{48}{subsubsection*.246}
-\contentsline {paragraph}{Authorization code structure}{49}{paragraph*.247}
-\contentsline {paragraph}{Access token structure}{49}{paragraph*.248}
-\contentsline {paragraph}{Obtaining access tokens}{50}{paragraph*.249}
-\contentsline {subsubsection}{OAUTH2 Fantastico Tokens Storage}{51}{subsubsection*.250}
-\contentsline {paragraph}{Relational storage}{51}{paragraph*.251}
-\contentsline {subparagraph}{Clients registration}{51}{subparagraph*.252}
-\contentsline {paragraph}{NoSQL}{51}{paragraph*.253}
-\contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{52}{subsubsection*.254}
-\contentsline {paragraph}{/authorize}{52}{paragraph*.255}
-\contentsline {subsubsection}{OAUTH2 Fantastico IDP}{53}{subsubsection*.256}
-\contentsline {paragraph}{Endpoints}{53}{paragraph*.257}
-\contentsline {subparagraph}{/authenticate}{53}{subparagraph*.258}
-\contentsline {subparagraph}{/consent}{53}{subparagraph*.259}
-\contentsline {subparagraph}{/profile}{53}{subparagraph*.260}
-\contentsline {subsubsection}{ROA OAUTH2 Security}{54}{subsubsection*.261}
-\contentsline {section}{\numberline {3.7}SDK}{54}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}Intro}{54}{subsection.3.7.1}
-\contentsline {subsection}{\numberline {3.7.2}Usage}{54}{subsection.3.7.2}
-\contentsline {subsection}{\numberline {3.7.3}Supported commands}{55}{subsection.3.7.3}
-\contentsline {subsubsection}{Activate extension command}{55}{subsubsection*.262}
-\contentsline {subsubsection}{Fantastico command}{55}{subsubsection*.267}
-\contentsline {subsubsection}{Syncdb command}{55}{subsubsection*.268}
-\contentsline {subsubsection}{Version command}{56}{subsubsection*.273}
-\contentsline {subsection}{\numberline {3.7.4}Technical summary}{57}{subsection.3.7.4}
-\contentsline {section}{\numberline {3.8}Component model}{59}{section.3.8}
-\contentsline {subsection}{\numberline {3.8.1}Static folder}{60}{subsection.3.8.1}
-\contentsline {subsection}{\numberline {3.8.2}Sql folder}{60}{subsection.3.8.2}
-\contentsline {subsubsection}{Sql folder example}{60}{subsubsection*.297}
-\contentsline {section}{\numberline {3.9}Component reusage}{61}{section.3.9}
-\contentsline {section}{\numberline {3.10}Built in components}{63}{section.3.10}
-\contentsline {subsection}{\numberline {3.10.1}Dynamic menu}{63}{subsection.3.10.1}
-\contentsline {subsubsection}{Integration}{63}{subsubsection*.301}
-\contentsline {paragraph}{Component files activation deprecated}{63}{paragraph*.302}
-\contentsline {paragraph}{Component files activation (SDK)}{63}{paragraph*.303}
-\contentsline {paragraph}{Component sample + db data}{63}{paragraph*.304}
-\contentsline {subsubsection}{Current limitations}{64}{subsubsection*.305}
-\contentsline {subsubsection}{Technical summary}{64}{subsubsection*.306}
-\contentsline {subsection}{\numberline {3.10.2}Dynamic pages}{65}{subsection.3.10.2}
-\contentsline {subsubsection}{Integration}{65}{subsubsection*.311}
-\contentsline {subsubsection}{Current limitations}{66}{subsubsection*.312}
-\contentsline {subsubsection}{Technical summary}{66}{subsubsection*.313}
-\contentsline {subsection}{\numberline {3.10.3}Tracking codes}{68}{subsection.3.10.3}
-\contentsline {subsubsection}{Analytic solutions}{68}{subsubsection*.318}
-\contentsline {subsubsection}{Integration}{68}{subsubsection*.319}
-\contentsline {subsubsection}{Current limitations}{69}{subsubsection*.320}
-\contentsline {subsubsection}{Technical summary}{69}{subsubsection*.321}
-\contentsline {subsection}{\numberline {3.10.4}ROA Auto discovery}{69}{subsection.3.10.4}
-\contentsline {subsubsection}{Integration}{70}{subsubsection*.326}
-\contentsline {subsubsection}{Current limitations}{70}{subsubsection*.327}
-\contentsline {subsubsection}{Technical summary}{70}{subsubsection*.328}
-\contentsline {chapter}{\numberline {4}How to articles}{71}{chapter.4}
-\contentsline {section}{\numberline {4.1}MVC How to}{71}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Code the model}{71}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Code the controller}{71}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Code the view}{72}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}Test your application}{72}{subsection.4.1.4}
-\contentsline {section}{\numberline {4.2}Deployment how to}{72}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Low usage (simplest scenario)}{73}{subsection.4.2.1}
-\contentsline {subsubsection}{Setup}{74}{subsubsection*.331}
-\contentsline {subsection}{\numberline {4.2.2}Low usage AWS}{74}{subsection.4.2.2}
-\contentsline {subsubsection}{Setup}{75}{subsubsection*.332}
-\contentsline {subsubsection}{Optimization}{75}{subsubsection*.333}
-\contentsline {subsubsection}{Setup with S3}{76}{subsubsection*.334}
-\contentsline {section}{\numberline {4.3}Static assets}{76}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Static assets on dev}{76}{subsection.4.3.1}
-\contentsline {subsubsection}{Favicon}{77}{subsubsection*.335}
-\contentsline {subsection}{\numberline {4.3.2}Static assets on prod}{77}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Creating a new project}{77}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Create first component}{77}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Customize dev server}{78}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Customize uwsgi prod server}{78}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Changes}{79}{chapter.5}
-\contentsline {section}{\numberline {5.1}Feedback}{79}{section.5.1}
-\contentsline {section}{\numberline {5.2}Versions}{79}{section.5.2}
-\contentsline {chapter}{\numberline {6}Provide feedback}{83}{chapter.6}
-\contentsline {chapter}{\numberline {7}Build status}{85}{chapter.7}
-\contentsline {chapter}{\numberline {8}License}{87}{chapter.8}
-\contentsline {chapter}{Index}{89}{section*.336}
+\contentsline {chapter}{\numberline {3}How to articles}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}Creating a new project}{11}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Create first component}{11}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Customize dev server}{12}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Customize uwsgi prod server}{12}{subsection.3.1.3}
+\contentsline {section}{\numberline {3.2}Creating a simple TODO application}{12}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Functional requirements}{12}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Overview}{13}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}How to sources}{14}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Requirements}{14}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}Next steps}{14}{subsection.3.2.5}
+\contentsline {subsubsection}{Step 0 - TODO setup}{14}{subsubsection*.38}
+\contentsline {subsubsection}{Step 1 - TODO settings}{14}{subsubsection*.39}
+\contentsline {paragraph}{Explanation}{15}{paragraph*.40}
+\contentsline {subsubsection}{Step 2 - TODO API endpoints}{16}{subsubsection*.41}
+\contentsline {paragraph}{Create database}{16}{paragraph*.42}
+\contentsline {paragraph}{Create APIs}{17}{paragraph*.43}
+\contentsline {subsubsection}{Step 3 - TODO frontend}{18}{subsubsection*.44}
+\contentsline {paragraph}{Create models}{18}{paragraph*.45}
+\contentsline {subparagraph}{Models implementation notes}{21}{subparagraph*.46}
+\contentsline {section}{\numberline {3.3}MVC How to}{22}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Code the model}{22}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Code the controller}{22}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Code the view}{23}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Test your application}{23}{subsection.3.3.4}
+\contentsline {section}{\numberline {3.4}Deployment how to}{23}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Low usage (simplest scenario)}{24}{subsection.3.4.1}
+\contentsline {subsubsection}{Setup}{25}{subsubsection*.47}
+\contentsline {subsection}{\numberline {3.4.2}Low usage AWS}{25}{subsection.3.4.2}
+\contentsline {subsubsection}{Setup}{26}{subsubsection*.48}
+\contentsline {subsubsection}{Optimization}{26}{subsubsection*.49}
+\contentsline {subsubsection}{Setup with S3}{27}{subsubsection*.50}
+\contentsline {section}{\numberline {3.5}Static assets}{27}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Static assets on dev}{27}{subsection.3.5.1}
+\contentsline {subsubsection}{Favicon}{28}{subsubsection*.51}
+\contentsline {subsection}{\numberline {3.5.2}Static assets on prod}{28}{subsection.3.5.2}
+\contentsline {chapter}{\numberline {4}Fantastico features}{29}{chapter.4}
+\contentsline {section}{\numberline {4.1}Exceptions hierarchy}{29}{section.4.1}
+\contentsline {section}{\numberline {4.2}Request lifecycle}{30}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Request middleware}{31}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Request context}{31}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Obtain request language}{32}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Obtain settings using request}{32}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}Redirect using request}{32}{subsection.4.2.5}
+\contentsline {section}{\numberline {4.3}Routing engine}{33}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Routes loaders}{34}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}How to write a new route loader}{34}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Configuring available loaders}{35}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}DummyRouteLoader}{35}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}Routing middleware}{35}{subsection.4.3.5}
+\contentsline {section}{\numberline {4.4}Model View Controller}{36}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Classic approach}{36}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Fantastico approach}{36}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Model}{37}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}View}{41}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.5}Controller}{41}{subsection.4.4.5}
+\contentsline {subsubsection}{Available filters}{42}{subsubsection*.111}
+\contentsline {subsection}{\numberline {4.4.6}Database session management}{44}{subsection.4.4.6}
+\contentsline {section}{\numberline {4.5}ROA (Resource Oriented Architecture)}{44}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Examples}{45}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Application settings stored in database}{45}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}Versioning}{46}{subsection.4.5.3}
+\contentsline {subsection}{\numberline {4.5.4}Validation}{46}{subsection.4.5.4}
+\contentsline {subsection}{\numberline {4.5.5}Partial object representation}{47}{subsection.4.5.5}
+\contentsline {subsection}{\numberline {4.5.6}Resource composed attributes}{48}{subsection.4.5.6}
+\contentsline {subsection}{\numberline {4.5.7}Advantages}{49}{subsection.4.5.7}
+\contentsline {subsubsection}{REST API standard}{49}{subsubsection*.135}
+\contentsline {paragraph}{Resource collection}{49}{paragraph*.136}
+\contentsline {subparagraph}{Pagination}{50}{subparagraph*.137}
+\contentsline {subparagraph}{Sorting}{50}{subparagraph*.138}
+\contentsline {subparagraph}{Filtering}{50}{subparagraph*.139}
+\contentsline {paragraph}{Resource item}{51}{paragraph*.140}
+\contentsline {subparagraph}{Create a new item}{51}{subparagraph*.141}
+\contentsline {subparagraph}{Update an existing item}{51}{subparagraph*.142}
+\contentsline {subparagraph}{Delete an existing item}{52}{subparagraph*.143}
+\contentsline {subsubsection}{REST Responses}{52}{subsubsection*.144}
+\contentsline {paragraph}{Common responses}{52}{paragraph*.145}
+\contentsline {subparagraph}{Internal Server Error}{52}{subparagraph*.146}
+\contentsline {subparagraph}{Concrete errors}{52}{subparagraph*.147}
+\contentsline {paragraph}{Resource Item}{52}{paragraph*.148}
+\contentsline {subparagraph}{Retrieve resource item}{52}{subparagraph*.149}
+\contentsline {subparagraph}{Create a new resource item}{53}{subparagraph*.150}
+\contentsline {paragraph}{Update an existing resource}{53}{paragraph*.151}
+\contentsline {subparagraph}{Delete an existing resource}{53}{subparagraph*.152}
+\contentsline {subparagraph}{Bulk creation of items}{53}{subparagraph*.153}
+\contentsline {subsubsection}{ROA Technical Summary}{54}{subsubsection*.154}
+\contentsline {paragraph}{Exceptions}{60}{paragraph*.226}
+\contentsline {paragraph}{API generic controller}{60}{paragraph*.231}
+\contentsline {paragraph}{API error responses}{63}{paragraph*.247}
+\contentsline {subparagraph}{10000 - Resource Collection Not Found}{63}{subparagraph*.248}
+\contentsline {subparagraph}{10010 - Resource Invalid}{63}{subparagraph*.249}
+\contentsline {subparagraph}{10020 - No body given}{64}{subparagraph*.250}
+\contentsline {subparagraph}{10030 - Unexpected database error}{64}{subparagraph*.251}
+\contentsline {subparagraph}{10040 - Resource item not found}{64}{subparagraph*.252}
+\contentsline {section}{\numberline {4.6}OAUTH2}{64}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Fantastico security}{64}{subsection.4.6.1}
+\contentsline {subsubsection}{Example (Simple Menu API)}{65}{subsubsection*.253}
+\contentsline {paragraph}{Terminology}{65}{paragraph*.254}
+\contentsline {paragraph}{Display all menus}{65}{paragraph*.255}
+\contentsline {paragraph}{Create a new menu}{66}{paragraph*.256}
+\contentsline {paragraph}{Update an existing menu}{66}{paragraph*.257}
+\contentsline {paragraph}{Delete an existing menu}{66}{paragraph*.258}
+\contentsline {paragraph}{Cautions}{66}{paragraph*.259}
+\contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{66}{subsubsection*.260}
+\contentsline {paragraph}{Authorization code structure}{67}{paragraph*.261}
+\contentsline {paragraph}{Access token structure}{67}{paragraph*.262}
+\contentsline {paragraph}{Obtaining access tokens}{68}{paragraph*.263}
+\contentsline {subsubsection}{OAUTH2 Fantastico Tokens Storage}{69}{subsubsection*.264}
+\contentsline {paragraph}{Relational storage}{69}{paragraph*.265}
+\contentsline {subparagraph}{Clients registration}{69}{subparagraph*.266}
+\contentsline {paragraph}{NoSQL}{69}{paragraph*.267}
+\contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{70}{subsubsection*.268}
+\contentsline {paragraph}{/authorize}{70}{paragraph*.269}
+\contentsline {subsubsection}{OAUTH2 Fantastico IDP}{71}{subsubsection*.270}
+\contentsline {paragraph}{Endpoints}{71}{paragraph*.271}
+\contentsline {subparagraph}{/authenticate}{71}{subparagraph*.272}
+\contentsline {subparagraph}{/consent}{71}{subparagraph*.273}
+\contentsline {subparagraph}{/profile}{71}{subparagraph*.274}
+\contentsline {subsubsection}{ROA OAUTH2 Security}{72}{subsubsection*.275}
+\contentsline {section}{\numberline {4.7}SDK}{72}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}Intro}{72}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}Usage}{72}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.3}Supported commands}{73}{subsection.4.7.3}
+\contentsline {subsubsection}{Activate extension command}{73}{subsubsection*.276}
+\contentsline {subsubsection}{Fantastico command}{73}{subsubsection*.281}
+\contentsline {subsubsection}{Syncdb command}{73}{subsubsection*.282}
+\contentsline {subsubsection}{Version command}{74}{subsubsection*.287}
+\contentsline {subsection}{\numberline {4.7.4}Technical summary}{75}{subsection.4.7.4}
+\contentsline {section}{\numberline {4.8}Component model}{77}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Static folder}{78}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Sql folder}{78}{subsection.4.8.2}
+\contentsline {subsubsection}{Sql folder example}{78}{subsubsection*.311}
+\contentsline {section}{\numberline {4.9}Component reusage}{79}{section.4.9}
+\contentsline {section}{\numberline {4.10}Built in components}{81}{section.4.10}
+\contentsline {subsection}{\numberline {4.10.1}Dynamic menu}{81}{subsection.4.10.1}
+\contentsline {subsubsection}{Integration}{81}{subsubsection*.315}
+\contentsline {paragraph}{Component files activation deprecated}{81}{paragraph*.316}
+\contentsline {paragraph}{Component files activation (SDK)}{81}{paragraph*.317}
+\contentsline {paragraph}{Component sample + db data}{81}{paragraph*.318}
+\contentsline {subsubsection}{Current limitations}{82}{subsubsection*.319}
+\contentsline {subsubsection}{Technical summary}{82}{subsubsection*.320}
+\contentsline {subsection}{\numberline {4.10.2}Dynamic pages}{83}{subsection.4.10.2}
+\contentsline {subsubsection}{Integration}{83}{subsubsection*.325}
+\contentsline {subsubsection}{Current limitations}{84}{subsubsection*.326}
+\contentsline {subsubsection}{Technical summary}{84}{subsubsection*.327}
+\contentsline {subsection}{\numberline {4.10.3}Tracking codes}{86}{subsection.4.10.3}
+\contentsline {subsubsection}{Analytic solutions}{86}{subsubsection*.332}
+\contentsline {subsubsection}{Integration}{86}{subsubsection*.333}
+\contentsline {subsubsection}{Current limitations}{87}{subsubsection*.334}
+\contentsline {subsubsection}{Technical summary}{87}{subsubsection*.335}
+\contentsline {subsection}{\numberline {4.10.4}ROA Auto discovery}{87}{subsection.4.10.4}
+\contentsline {subsubsection}{Integration}{88}{subsubsection*.340}
+\contentsline {subsubsection}{Current limitations}{88}{subsubsection*.341}
+\contentsline {subsubsection}{Technical summary}{88}{subsubsection*.342}
+\contentsline {chapter}{\numberline {5}Changes}{89}{chapter.5}
+\contentsline {section}{\numberline {5.1}Feedback}{89}{section.5.1}
+\contentsline {section}{\numberline {5.2}Versions}{89}{section.5.2}
+\contentsline {chapter}{\numberline {6}Provide feedback}{93}{chapter.6}
+\contentsline {chapter}{\numberline {7}Build status}{95}{chapter.7}
+\contentsline {chapter}{\numberline {8}License}{97}{chapter.8}
+\contentsline {chapter}{Index}{99}{section*.345}

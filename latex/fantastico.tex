@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{November 15, 2013}
-\release{0.5.0-b126}
+\date{November 23, 2013}
+\release{0.5.1-b127}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -786,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4478518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5c95490\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -835,6 +835,1222 @@ sh run\_setup\_db.sh
 \textbf{run\_setup\_db.sh} create an initial fantastico database and a user called fantastico identified by \textbf{12345} password. After
 database is successfully created, it scans for all available \textbf{module\_setup.sql} files and execute them against newly created
 database.
+
+
+\chapter{How to articles}
+\label{how_to/how_to:how-to-articles}\label{how_to/how_to::doc}
+
+\section{Creating a new project}
+\label{how_to/new_project_how_to:creating-a-new-project}\label{how_to/new_project_how_to::doc}
+A new Fantastico based project can be easily setup by following this how to. In this how to we are going to create
+a project named \textbf{fantastico\_first}.
+\begin{enumerate}
+\item {} 
+cd \textasciitilde{}/
+
+\item {} 
+mkdir fantastico\_first
+
+\item {} 
+cd fantastico\_first
+
+\item {} 
+virtualenv-3.2 --distribute pip-deps
+
+\item {} 
+. pip-deps/bin/activate
+
+\item {} 
+pip install fantastico
+
+\item {} 
+fantastico\_setup\_project.sh python3.2 my\_project
+
+\end{enumerate}
+
+The last step might take a while because it will also install all fantastico dependencies (e.g sphinx, sqlalchemy, ...).
+Please make sure your replace python3.2 with the correct python version.
+In order to test the current project do the following:
+\begin{enumerate}
+\item {} 
+fantastico\_run\_dev\_server
+
+\item {} 
+Access \href{http://localhost:12000/mvc/hello-world}{http://localhost:12000/mvc/hello-world}
+
+\end{enumerate}
+
+Your newly project is setup correctly and it runs fantastico default samples project.
+
+
+\subsection{Create first component}
+\label{how_to/new_project_how_to:create-first-component}
+After the new project it's correctly setup we can create our first component.
+\begin{enumerate}
+\item {} 
+. pip-deps/bin/activate
+
+\item {} 
+export FANTASTICO\_ACTIVE\_CONFIG=my\_project.settings.BaseProfile
+
+\item {} 
+cd my\_project
+
+\item {} 
+mkdir component1
+
+\item {} 
+cd component1
+
+\item {} 
+mkdir static
+
+\item {} 
+Paste an image into static folder (e.g first\_photo.jpg)
+
+\item {} 
+touch \_\_init\_\_.py
+
+\item {} 
+touch hello\_world.py
+
+\item {} 
+Paste the code listed below into hello\_world.py
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc.base\PYGZus{}controller} \PYG{k+kn}{import} \PYG{n}{BaseController}
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc.controller\PYGZus{}decorators} \PYG{k+kn}{import} \PYG{n}{ControllerProvider}\PYG{p}{,} \PYG{n}{Controller}
+\PYG{k+kn}{from} \PYG{n+nn}{webob.response} \PYG{k+kn}{import} \PYG{n}{Response}
+
+\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{HelloWorldController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
+    \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This is a very simple controller provider.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/component1/hello}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{say\PYGZus{}hello}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This method simply returns an html hello world text.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{msg} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world from my project}\PYG{l+s}{\PYGZdq{}}
+
+        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{content\PYGZus{}type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{text/html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{text}\PYG{o}{=}\PYG{n}{msg}\PYG{p}{)}
+\end{Verbatim}
+
+\item {} 
+fantastico\_dev\_server
+
+\item {} 
+Now you can access \href{http://localhost:12000/component1/hello}{Hello route}.
+
+\item {} 
+Now you can access \href{http://localhost:12000/component1/static/first\_photo.jpg}{First photo route}.
+
+\end{enumerate}
+
+
+\subsection{Customize dev server}
+\label{how_to/new_project_how_to:customize-dev-server}
+For understanding how to customize dev server please read {\hyperref[get_started/dev_mode::doc]{\emph{Development mode}}}
+
+
+\subsection{Customize uwsgi prod server}
+\label{how_to/new_project_how_to:customize-uwsgi-prod-server}
+By design, each Fantastico project provides built in support for running it on \href{http://uwsgi-docs.readthedocs.org/en/latest/}{uWSGI server}.
+If you want to customize uwsgi parameters for your server you can follow these steps:
+\begin{enumerate}
+\item {} 
+cd \$FANTASTICO\_PROJECT\_FOLDER/deployment/conf/nginx
+
+\item {} 
+nano fantastico-uwsgi.ini
+
+\item {} 
+Change the options you want and save the file.
+
+\item {} 
+fantastico\_run\_prod\_server (for testing the production server).
+
+\item {} 
+Be aware that first you need an nginx configured and your project config file deployed (Read {\hyperref[how_to/deployment_how_to::doc]{\emph{Deployment how to}}}).
+
+\end{enumerate}
+
+
+\section{Creating a simple TODO application}
+\label{how_to/todo/index:creating-a-simple-todo-application}\label{how_to/todo/index::doc}
+In this how to article you can find information of how you can create a TODO web application using Fantastico framework. This
+tutorial works with Fantastico versions greater or equal than \href{http://pypi.python.org/pypi/fantastico/0.5.0}{0.5.0}.
+
+
+\subsection{Functional requirements}
+\label{how_to/todo/index:functional-requirements}
+The application we are going to develop must meet the following requirements:
+\begin{itemize}
+\item {} 
+User must be able to create tasks.
+
+\item {} 
+User must be able to see all tasks.
+
+\item {} 
+User must be able to quickly filter tasks.
+
+\item {} 
+User must be able to complete tasks.
+
+\item {} 
+User must be able to use an web application for managing tasks.
+
+\end{itemize}
+
+
+\subsection{Overview}
+\label{how_to/todo/index:overview}\begin{figure}[htbp]
+\centering
+\capstart
+
+\scalebox{1.000000}{\includegraphics{main_page.png}}
+\caption{TODO web application powered by Fantastico.}\end{figure}
+
+The frontend is powered by the following API endpoints:
+
+\begin{tabulary}{\linewidth}{|L|L|L|L|}
+\hline
+
+\textbf{Endpoint}
+ & 
+\textbf{HTTP verb}
+ & 
+\textbf{HTTP Body}
+ & 
+\textbf{Description}
+\\\hline
+
+/tasks
+ & 
+GET
+ & 
+None
+ & 
+Retrieves available tasks in a paginated manner.
+\\\hline
+
+/tasks
+ & 
+POST
+ & 
+\{``name'': ``Task name'', ``description'': ``Task description''\}
+ & 
+Creates a new task described by the given body.
+\\\hline
+
+/tasks/:task\_id
+ & 
+GET
+ & 
+\{``task\_id'': 1, ``name'': ``Task name'', ``description'': ``Task description''\}
+ & 
+Retrieves a specific task from tasks collection.
+\\\hline
+
+/tasks/:task\_id
+ & 
+PUT
+ & 
+\{``name'': ``Task name changed'', ``description'': ``Task description changed''\}
+ & 
+Updates a specific task from tasks collection.
+\\\hline
+
+/tasks/:task\_id
+ & 
+DELETE
+ & 
+None
+ & 
+Deletes a specific task from tasks collection.
+\\\hline
+\end{tabulary}
+
+
+
+\subsection{How to sources}
+\label{how_to/todo/index:how-to-sources}
+All tutorial source files are available on github: \href{https://github.com/rcosnita/fantastico-todo}{https://github.com/rcosnita/fantastico-todo}. Each step of the tutorial
+has a corresponding branch in the github repository so you can easily skip steps of this tutuorial. Though you can skip steps
+we recommend you take 30 minutes and finish this step by step how to in order to fully understand the power of Fantastico
+framework and how easy it is to build modern web applications using it.
+
+
+\subsection{Requirements}
+\label{how_to/todo/index:requirements}
+This tutorial requires developer to have:
+\begin{enumerate}
+\item {} 
+A Debian based operating system
+
+\item {} 
+Access to a mysql database.
+
+\item {} 
+Python 3.2 or newer.
+
+\end{enumerate}
+
+
+\subsection{Next steps}
+\label{how_to/todo/index:next-steps}
+
+\subsubsection{Step 0 - TODO setup}
+\label{how_to/todo/setup::doc}\label{how_to/todo/setup:step-0-todo-setup}
+Follow the steps below in order to setup todo web application project correctly:
+\begin{enumerate}
+\item {} 
+git clone \href{https://github.com/rcosnita/fantastico-todo.git}{https://github.com/rcosnita/fantastico-todo.git} fantastico-todo
+
+\item {} 
+cd fantastico-todo
+
+\item {} 
+virtualenv-3.2 --distribute pip-deps
+
+\item {} 
+. pip-deps/bin/activate
+
+\item {} 
+pip install fantastico
+
+\item {} 
+fantastico\_setup\_project.sh python3.2 todo
+* (this will take a couple of minutes because it installs all dependencies).
+
+\end{enumerate}
+
+At this moment you have a \textbf{Fantastico} project created and a component module holder named todo initialized.
+For more information about advanced project setup you can always read {\hyperref[how_to/new_project_how_to::doc]{\emph{Creating a new project}}}.
+
+
+\subsubsection{Step 1 - TODO settings}
+\label{how_to/todo/step_1_settings:step-1-todo-settings}\label{how_to/todo/step_1_settings::doc}
+In this section of the tutorial you can find information about how to correctly configure database parameters. Follow the steps
+below in order to have correct settings for TODO web applications:
+\begin{enumerate}
+\item {} 
+git checkout -b step-1-settings
+
+\item {} 
+Paste the code below under fantastico-todo/pip-deps/bin/activate at the end of the file.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZsh{} fantastico\PYGZhy{}todo/pip\PYGZhy{}deps/bin/activate}
+
+\PYG{n+nb}{export }\PYG{n+nv}{FANTASTICO\PYGZus{}ACTIVE\PYGZus{}CONFIG}\PYG{o}{=}todo.settings.BaseProfile
+\PYG{n+nb}{export }\PYG{n+nv}{PYTHONPATH}\PYG{o}{=}.
+\end{Verbatim}
+
+\item {} 
+Paste the code below under fantastico-todo/todo/settings.py
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZsh{} fantastico\PYGZhy{}todo/todo/settings.py}
+
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.settings} \PYG{k+kn}{import} \PYG{n}{BasicSettings}
+
+\PYG{k}{class} \PYG{n+nc}{BaseProfile}\PYG{p}{(}\PYG{n}{BasicSettings}\PYG{p}{)}\PYG{p}{:}
+    \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}todo web application base profile.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+    \PYG{n+nd}{@property}
+    \PYG{k}{def} \PYG{n+nf}{database\PYGZus{}config}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{p}{:}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This property is automatically invoked by fantastico in order to connect to database.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{db\PYGZus{}config} \PYG{o}{=} \PYG{n+nb}{super}\PYG{p}{(}\PYG{n}{BaseProfile}\PYG{p}{,} \PYG{n+nb+bp}{self}\PYG{p}{)}\PYG{o}{.}\PYG{n}{database\PYGZus{}config}
+
+        \PYG{n}{db\PYGZus{}config}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{database}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{tododb}\PYG{l+s}{\PYGZdq{}}
+        \PYG{n}{db\PYGZus{}config}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{username}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{todo\PYGZus{}user}\PYG{l+s}{\PYGZdq{}}
+        \PYG{n}{db\PYGZus{}config}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{password}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{12345}\PYG{l+s}{\PYGZdq{}}
+
+        \PYG{k}{return} \PYG{n}{db\PYGZus{}config}
+\end{Verbatim}
+
+\item {} 
+Run the command below in order to make sure sdk is working:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk \PYGZhy{}\PYGZhy{}help
+\end{Verbatim}
+
+You should see a screen similar to the one below:
+
+\scalebox{1.000000}{\includegraphics{fsdk_help.png}}
+
+\item {} 
+Execute the code below in order to create \textbf{tododb} database.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+/usr/bin/mysql \PYGZhy{}\PYGZhy{}host\PYG{o}{=}localhost \PYGZhy{}\PYGZhy{}user\PYG{o}{=}root \PYGZhy{}\PYGZhy{}password\PYG{o}{=}**** \PYGZhy{}\PYGZhy{}verbose \PYGZhy{}e \PYG{l+s+s2}{\PYGZdq{}source sql/setup\PYGZus{}database.sql\PYGZdq{}}
+\end{Verbatim}
+
+\end{enumerate}
+
+
+\paragraph{Explanation}
+\label{how_to/todo/step_1_settings:explanation}
+We have just configured our virtual development environment for \textbf{TODO} web application to use \textbf{tododb} with
+\textbf{todo\_user/12345} credentials. You can of course configure more details of your connection:
+\begin{itemize}
+\item {} 
+MySql host.
+
+\item {} 
+MySql port.
+
+\item {} 
+MySql charset.
+
+\end{itemize}
+
+For a complete list of database configuration in \textbf{Fantastico framework} please read {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
+
+In addition, we created a dedicated database for \textbf{TODO} web application.
+
+
+\subsubsection{Step 2 - TODO API endpoints}
+\label{how_to/todo/step_2_create_api:step-2-todo-api-endpoints}\label{how_to/todo/step_2_create_api::doc}
+In this section of \textbf{TODO} how to we are going to create the following API endpoints:
+
+\begin{tabulary}{\linewidth}{|L|L|L|L|}
+\hline
+
+\textbf{Endpoint}
+ & 
+\textbf{HTTP verb}
+ & 
+\textbf{HTTP Body}
+ & 
+\textbf{Description}
+\\\hline
+
+/tasks
+ & 
+GET
+ & 
+None
+ & 
+Retrieves available tasks in a paginated manner.
+\\\hline
+
+/tasks
+ & 
+POST
+ & 
+\{``name'': ``Task name'', ``description'': ``Task description''\}
+ & 
+Creates a new task described by the given body.
+\\\hline
+
+/tasks/:task\_id
+ & 
+GET
+ &  & 
+Retrieves a specific task from tasks collection.
+\\\hline
+
+/tasks/:task\_id
+ & 
+PUT
+ & 
+\{``name'': ``Task name changed'', ``description'': ``Task description changed''\}
+ & 
+Updates a specific task from tasks collection.
+\\\hline
+
+/tasks/:task\_id
+ & 
+DELETE
+ & 
+None
+ & 
+Deletes a specific task from tasks collection.
+\\\hline
+\end{tabulary}
+
+
+These are going to provide support for various clients which want to provide TODO functionality:
+\begin{itemize}
+\item {} 
+Javascript frontend client.
+
+\item {} 
+Mobile app client.
+
+\end{itemize}
+
+
+\paragraph{Create database}
+\label{how_to/todo/step_2_create_api:create-database}
+Our TODO tasks are going to be persisted by the endpoints into a MySql database (already created in previous steps). Now,
+we are going to create tasks tables:
+\begin{enumerate}
+\item {} 
+git checkout -b step-2-create-api
+
+\item {} 
+Paste the code below under fantastico-todo/todo/frontend/sql/module\_setup.sql
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{IF} \PYG{k}{NOT} \PYG{k}{EXISTS} \PYG{n}{tasks}\PYG{p}{(}
+   \PYG{n}{task\PYGZus{}id} \PYG{n+nb}{INT} \PYG{k}{NOT} \PYG{k}{NULL} \PYG{n}{AUTO\PYGZus{}INCREMENT}\PYG{p}{,}
+   \PYG{n}{name} \PYG{n+nb}{VARCHAR}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+   \PYG{n}{description} \PYG{n+nb}{TEXT}\PYG{p}{,}
+   \PYG{n}{status} \PYG{n+nb}{SMALLINT}\PYG{p}{,}
+   \PYG{k}{PRIMARY} \PYG{k}{KEY}\PYG{p}{(}\PYG{n}{task\PYGZus{}id}\PYG{p}{)}
+\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\item {} 
+Execute the following command in order to create the table into \textbf{tododb} database:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk syncdb \PYGZhy{}\PYGZhy{}db\PYGZhy{}command /usr/bin/mysql \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root todo
+\end{Verbatim}
+
+\item {} 
+Create some sample uncompleted tasks in your database:
+\begin{enumerate}
+\item {} 
+Paste the code below in fantastico-todo/todo/frontend/sql/create\_data.sql:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{tasks}\PYG{p}{(}\PYG{n}{name}\PYG{p}{,} \PYG{n}{description}\PYG{p}{,} \PYG{n}{status}\PYG{p}{)}
+\PYG{k}{SELECT} \PYG{o}{*} \PYG{k}{FROM} \PYG{p}{(}\PYG{k}{SELECT} \PYG{l+s+s1}{\PYGZsq{}Go buy some dog food.\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}It is extremely important to have this by noon.\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{k}{as} \PYG{n}{tmp}
+\PYG{k}{WHERE} \PYG{k}{NOT} \PYG{k}{EXISTS}\PYG{p}{(}\PYG{k}{SELECT} \PYG{n}{name} \PYG{k}{FROM} \PYG{n}{tasks} \PYG{k}{WHERE} \PYG{n}{name} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Go buy some dog food.\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{tasks}\PYG{p}{(}\PYG{n}{name}\PYG{p}{,} \PYG{n}{description}\PYG{p}{,} \PYG{n}{status}\PYG{p}{)}
+\PYG{k}{SELECT} \PYG{o}{*} \PYG{k}{FROM} \PYG{p}{(}\PYG{k}{SELECT} \PYG{l+s+s1}{\PYGZsq{}Write some clean code.\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}You decide when to start this.\PYGZsq{}}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{k}{as} \PYG{n}{tmp}
+\PYG{k}{WHERE} \PYG{k}{NOT} \PYG{k}{EXISTS}\PYG{p}{(}\PYG{k}{SELECT} \PYG{n}{name} \PYG{k}{FROM} \PYG{n}{tasks} \PYG{k}{WHERE} \PYG{n}{name} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Write some clean code.\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\item {} 
+Execute the following command in order to insert above mentioned tasks into \textbf{tododb} database:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk syncdb \PYGZhy{}\PYGZhy{}db\PYGZhy{}command /usr/bin/mysql \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root todo
+\end{Verbatim}
+
+\end{enumerate}
+
+\end{enumerate}
+
+
+\paragraph{Create APIs}
+\label{how_to/todo/step_2_create_api:create-apis}
+Now that the storage is ensured and our project is configured correctly we have to create the APIs. In order to do this
+follow the steps below:
+\begin{enumerate}
+\item {} 
+fsdk activate-extension --name roa\_discovery --comp-root todo
+
+\item {} 
+Paste the code below in fantastico-todo/todo/frontend/models/tasks.py
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc} \PYG{k+kn}{import} \PYG{n}{BASEMODEL}
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.roa.resource\PYGZus{}decorator} \PYG{k+kn}{import} \PYG{n}{Resource}
+\PYG{k+kn}{from} \PYG{n+nn}{sqlalchemy.schema} \PYG{k+kn}{import} \PYG{n}{Column}
+\PYG{k+kn}{from} \PYG{n+nn}{sqlalchemy.types} \PYG{k+kn}{import} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{String}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{,} \PYG{n}{SmallInteger}
+\PYG{k+kn}{from} \PYG{n+nn}{todo.frontend.validators.task\PYGZus{}validator} \PYG{k+kn}{import} \PYG{n}{TaskValidator}
+
+\PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Task}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/tasks}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{validator}\PYG{o}{=}\PYG{n}{TaskValidator}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{Task}\PYG{p}{(}\PYG{n}{BASEMODEL}\PYG{p}{)}\PYG{p}{:}
+    \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This class provides the task model required for todo application.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{tasks}\PYG{l+s}{\PYGZdq{}}
+
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{task\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+    \PYG{n}{description} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{description}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{)}
+    \PYG{n}{status} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{status}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{SmallInteger}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
+
+    \PYG{k}{def} \PYG{n+nf}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{name}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{description}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{,} \PYG{n}{status}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{name} \PYG{o}{=} \PYG{n}{name}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{description} \PYG{o}{=} \PYG{n}{description}
+        \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{status} \PYG{o}{=} \PYG{n}{status}
+\end{Verbatim}
+
+\item {} 
+Paste the code below in fantastico-todo/todo/frontend/validators/task\_validator.py
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.roa.resource\PYGZus{}validator} \PYG{k+kn}{import} \PYG{n}{ResourceValidator}
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.roa.roa\PYGZus{}exceptions} \PYG{k+kn}{import} \PYG{n}{FantasticoRoaError}
+
+\PYG{k}{class} \PYG{n+nc}{TaskValidator}\PYG{p}{(}\PYG{n}{ResourceValidator}\PYG{p}{)}\PYG{p}{:}
+    \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This is the task validator invoked automatically in create / update operations.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+    \PYG{k}{def} \PYG{n+nf}{validate}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{resource}\PYG{p}{)}\PYG{p}{:}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This method is invoked automatically in order to validate resource body.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{errors} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}
+
+        \PYG{k}{if} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{name} \PYG{o+ow}{is} \PYG{n+nb+bp}{None} \PYG{o+ow}{or} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{resource}\PYG{o}{.}\PYG{n}{name}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{n}{errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Name attribute is mandatory.}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+
+        \PYG{k}{if} \PYG{n}{resource}\PYG{o}{.}\PYG{n}{status} \PYG{o+ow}{is} \PYG{n+nb+bp}{None}\PYG{p}{:}
+            \PYG{n}{errors}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Status attribute is mandatory.}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+
+        \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{:}
+            \PYG{k}{return}
+
+        \PYG{k}{raise} \PYG{n}{FantasticoRoaError}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{(}\PYG{n}{errors}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}
+
+\item {} 
+Run the following command in an activate fantastico-todo virtual environment:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fantastico\PYGZus{}run\PYGZus{}dev\PYGZus{}server
+\end{Verbatim}
+
+\item {} 
+Visit \href{http://localhost:12000/roa/resources}{http://localhost:12000/roa/resources}. You should see a response similar to the one below:
+
+\includegraphics{roa_discovered_resources.png}
+
+\item {} 
+Visit \href{http://localhost:12000/api/latest/tasks}{http://localhost:12000/api/latest/tasks}. You should see a response similar to the one below:
+
+\includegraphics{roa_tasks_initial_listing.png}
+
+\item {} 
+Visit \href{http://localhost:12000/api/latest/tasks/1}{http://localhost:12000/api/latest/tasks/1}. You should receive the details for the task with unique identifier 1.
+
+\item {} 
+Additionally Create / Update / Delete operations are already working.
+
+\end{enumerate}
+
+
+\subsubsection{Step 3 - TODO frontend}
+\label{how_to/todo/step_3_create_frontend:step-3-todo-frontend}\label{how_to/todo/step_3_create_frontend::doc}
+In this section of this tutorial we will develop the frontend for our simple todo application. At this moment you should already
+have an API which supports tasks CRUD operations. More over your can order and filter tasks collection and you can request
+partial representation of the tasks. (you can find out more on {\hyperref[features/roa::doc]{\emph{ROA (Resource Oriented Architecture)}}} doc page).
+
+For frontend we will quickly develop an application using Backbone.js framework.
+
+
+\paragraph{Create models}
+\label{how_to/todo/step_3_create_frontend:create-models}\begin{quote}
+\begin{enumerate}
+\item {} 
+git checkout -b step-3-create-frontend
+
+\item {} 
+Paste the code below under fantastico-todo/todo/frontend/static/js/bootstrap.js
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/**}
+\PYG{c+cm}{Copyright 2013 Cosnita Radu Viorel}
+
+\PYG{c+cm}{Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated}
+\PYG{c+cm}{documentation files (the \PYGZdq{}Software\PYGZdq{}), to deal in the Software without restriction, including without limitation}
+\PYG{c+cm}{the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,}
+\PYG{c+cm}{and to permit persons to whom the Software is furnished to do so, subject to the following conditions:}
+
+\PYG{c+cm}{The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.}
+
+\PYG{c+cm}{THE SOFTWARE IS PROVIDED \PYGZdq{}AS IS\PYGZdq{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE}
+\PYG{c+cm}{WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR}
+\PYG{c+cm}{COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,}
+\PYG{c+cm}{ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.}
+\PYG{c+cm}{*/}
+
+\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{\PYGZdl{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n+nx}{Todo} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{(}\PYG{n+nx}{jQuery}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\item {} 
+Paste the code below under fantastico-todo/todo/frontend/static/js/models/resources\_registry.js
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/**}
+\PYG{c+cm}{Copyright 2013 Cosnita Radu Viorel}
+
+\PYG{c+cm}{Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated}
+\PYG{c+cm}{documentation files (the \PYGZdq{}Software\PYGZdq{}), to deal in the Software without restriction, including without limitation}
+\PYG{c+cm}{the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,}
+\PYG{c+cm}{and to permit persons to whom the Software is furnished to do so, subject to the following conditions:}
+
+\PYG{c+cm}{The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.}
+
+\PYG{c+cm}{THE SOFTWARE IS PROVIDED \PYGZdq{}AS IS\PYGZdq{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE}
+\PYG{c+cm}{WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR}
+\PYG{c+cm}{COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,}
+\PYG{c+cm}{ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.}
+\PYG{c+cm}{*/}
+
+\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{\PYGZdl{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{registry} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+        \PYG{n+nx}{endpoint} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}/roa/resources\PYGZdq{}}\PYG{p}{;}
+
+    \PYG{c+cm}{/**}
+\PYG{c+cm}{     * This model holds the object attributes of a resource. Currently it supports only fetch through collection.}
+\PYG{c+cm}{     */}
+    \PYG{n+nx}{registry}\PYG{p}{.}\PYG{n+nx}{Resource} \PYG{o}{=} \PYG{n+nx}{Backbone}\PYG{p}{.}\PYG{n+nx}{Model}\PYG{p}{.}\PYG{n+nx}{extend}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+    \PYG{c+cm}{/**}
+\PYG{c+cm}{     * This collection provides access to ROA resources registered to the current project. It is recommended to code each model}
+\PYG{c+cm}{     * against the registry so that location changes are not breaking client side code.}
+\PYG{c+cm}{     */}
+    \PYG{n+nx}{registry}\PYG{p}{.}\PYG{n+nx}{ResourceCollection} \PYG{o}{=} \PYG{n+nx}{Backbone}\PYG{p}{.}\PYG{n+nx}{Collection}\PYG{p}{.}\PYG{n+nx}{extend}\PYG{p}{(}\PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{model}\PYG{o}{:} \PYG{n+nx}{registry}\PYG{p}{.}\PYG{n+nx}{Resource}\PYG{p}{,}
+        \PYG{n+nx}{url}\PYG{o}{:} \PYG{n+nx}{endpoint}\PYG{p}{,}
+        \PYG{c+cm}{/**}
+\PYG{c+cm}{         * This method returns the resource url for a given resource name and version. If the version is omitted latest resource}
+\PYG{c+cm}{         * url is returned.}
+\PYG{c+cm}{         *}
+\PYG{c+cm}{         * @param \PYGZob{}String\PYGZcb{} name The name of the resource we want to retrieve discovery information about.}
+\PYG{c+cm}{         * @param \PYGZob{}String\PYGZcb{} version (Optional) The version of the resource we want to retrieve discovery information about.}
+\PYG{c+cm}{         * @returns The resource url extracted from ROA discovery registry (/roa/resources).}
+\PYG{c+cm}{         */}
+        \PYG{n+nx}{getResourceUrl}\PYG{o}{:} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{name}\PYG{p}{,} \PYG{n+nx}{version}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{version} \PYG{o}{=} \PYG{n+nx}{version} \PYG{o}{\textbar{}\textbar{}} \PYG{l+s+s2}{\PYGZdq{}latest\PYGZdq{}}\PYG{p}{;}
+
+            \PYG{k}{if}\PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{length} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{k}{throw} \PYG{k}{new} \PYG{n+nb}{Error}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}No ROA resources registered.\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+
+            \PYG{k+kd}{var} \PYG{n+nx}{resources} \PYG{o}{=} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{at}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{,}
+                \PYG{n+nx}{resource} \PYG{o}{=} \PYG{p}{(}\PYG{n+nx}{resources}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{name}\PYG{p}{)} \PYG{o}{\textbar{}\textbar{}} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{[}\PYG{n+nx}{version}\PYG{p}{]}\PYG{p}{;}
+
+            \PYG{k}{if}\PYG{p}{(}\PYG{o}{!}\PYG{n+nx}{resource}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{k}{throw} \PYG{k}{new} \PYG{n+nb}{Error}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Resource \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{name} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{}, version \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{version} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} is not registered.\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+
+            \PYG{k}{return} \PYG{n+nx}{resource}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+    \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Registry} \PYG{o}{=} \PYG{k}{new} \PYG{n+nx}{registry}\PYG{p}{.}\PYG{n+nx}{ResourceCollection}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Registry}\PYG{p}{.}\PYG{n+nx}{fetch}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{(}\PYG{n+nx}{jQuery}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\item {} 
+Paste the code below under fantastico-todo/todo/frontend/static/js/models/tasks.js
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/**}
+\PYG{c+cm}{Copyright 2013 Cosnita Radu Viorel}
+
+\PYG{c+cm}{Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated}
+\PYG{c+cm}{documentation files (the \PYGZdq{}Software\PYGZdq{}), to deal in the Software without restriction, including without limitation}
+\PYG{c+cm}{the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,}
+\PYG{c+cm}{and to permit persons to whom the Software is furnished to do so, subject to the following conditions:}
+
+\PYG{c+cm}{The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.}
+
+\PYG{c+cm}{THE SOFTWARE IS PROVIDED \PYGZdq{}AS IS\PYGZdq{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE}
+\PYG{c+cm}{WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR}
+\PYG{c+cm}{COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,}
+\PYG{c+cm}{ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.}
+\PYG{c+cm}{*/}
+
+\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{\PYGZdl{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kd}{var} \PYG{n+nx}{tasks} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{k+kd}{function} \PYG{n+nx}{getTasksUrl}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{return} \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Registry}\PYG{p}{.}\PYG{n+nx}{getResourceUrl}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Task\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{n+nx}{tasks}\PYG{p}{.}\PYG{n+nx}{Task} \PYG{o}{=} \PYG{n+nx}{Backbone}\PYG{p}{.}\PYG{n+nx}{Model}\PYG{p}{.}\PYG{n+nx}{extend}\PYG{p}{(}\PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{urlRoot}\PYG{o}{:} \PYG{n+nx}{getTasksUrl}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+    \PYG{n+nx}{tasks}\PYG{p}{.}\PYG{n+nx}{TaskCollection} \PYG{o}{=} \PYG{n+nx}{Backbone}\PYG{p}{.}\PYG{n+nx}{Collection}\PYG{p}{.}\PYG{n+nx}{extend}\PYG{p}{(}\PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{model}\PYG{o}{:} \PYG{n+nx}{tasks}\PYG{p}{.}\PYG{n+nx}{Task}\PYG{p}{,}
+        \PYG{c+cm}{/**}
+\PYG{c+cm}{         * This method is overriden so that it guarantees tasks are ordered alphabetically and only id and name attributes are}
+\PYG{c+cm}{         * returned for each available task (partial resource representation).}
+\PYG{c+cm}{         */}
+        \PYG{n+nx}{url}\PYG{o}{:} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kd}{var} \PYG{n+nx}{url} \PYG{o}{=} \PYG{p}{[}\PYG{n+nx}{getTasksUrl}\PYG{p}{(}\PYG{p}{)}\PYG{p}{]}\PYG{p}{;}
+            \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}?\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{k}{if}\PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}offset}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}offset=\PYGZdq{}} \PYG{o}{+} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}offset}\PYG{p}{)}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+
+            \PYG{k}{if}\PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZam{}limit=\PYGZdq{}} \PYG{o}{+} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit}\PYG{p}{)}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+
+            \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZam{}fields=id,name\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+            \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZam{}order=asc(name)\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{k}{return} \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{join}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{,}
+        \PYG{c+cm}{/**}
+\PYG{c+cm}{         * In comparison with standard backbone collection fetch, ROA collections support pagination. This is why options is}
+\PYG{c+cm}{         * parsed before actually fetching the collection.}
+\PYG{c+cm}{         */}
+        \PYG{n+nx}{fetch}\PYG{o}{:} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{options}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{options} \PYG{o}{=} \PYG{n+nx}{options} \PYG{o}{\textbar{}\textbar{}} \PYG{p}{\PYGZob{}}\PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+            \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}offset} \PYG{o}{=} \PYG{n+nx}{options}\PYG{p}{.}\PYG{n+nx}{offset}\PYG{p}{;}
+            \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit} \PYG{o}{=} \PYG{n+nx}{options}\PYG{p}{.}\PYG{n+nx}{limit}\PYG{p}{;}
+
+            \PYG{k}{return} \PYG{n+nx}{Backbone}\PYG{p}{.}\PYG{n+nx}{Collection}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{fetch}\PYG{p}{.}\PYG{n+nx}{call}\PYG{p}{(}\PYG{k}{this}\PYG{p}{,} \PYG{n+nx}{options}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{,}
+        \PYG{c+cm}{/**}
+\PYG{c+cm}{         * This method save the items returned form REST ROA api to this backbone collection. Additionally it adds the total}
+\PYG{c+cm}{         * items counter as collection property.}
+\PYG{c+cm}{         *}
+\PYG{c+cm}{         * @param \PYGZob{}Object\PYGZcb{} response The http response coming for /api/latest/tasks collection.}
+\PYG{c+cm}{         */}
+        \PYG{n+nx}{parse}\PYG{o}{:} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{response}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}totalItems\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{totalItems}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{k}{return} \PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{items}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+    \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Tasks} \PYG{o}{=} \PYG{n+nx}{tasks}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{(}\PYG{n+nx}{jQuery}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\end{enumerate}
+\begin{enumerate}
+\item {} 
+We have all models in place so we are going to implement the frontend of the application in the next section.
+
+\end{enumerate}
+\end{quote}
+
+
+\subparagraph{Models implementation notes}
+\label{how_to/todo/step_3_create_frontend:models-implementation-notes}
+In Fantastico, there is a resource registry which can be used for discovery. It is recommended to always use it to obtain your
+models api urls. This will guarantee that any change of API location on server side is automatically propagated on client side.
+
+In addition because our application is not going to use description we optimized the client side code by using ROA partial resource
+representation. More over, the resources are ordered alphabetically by name.
+
+ROA collections support pagination out of the box and tasks client side implementation shows how easily it is to provide it
+for client side code.
+
+For better understanding all the concepts used in this section you can read {\hyperref[features/roa::doc]{\emph{ROA (Resource Oriented Architecture)}}}
+
+
+\section{MVC How to}
+\label{how_to/mvc_how_to::doc}\label{how_to/mvc_how_to:mvc-how-to}
+In this article you can see how to assemble various pieces together in order to create a feature for a virtual blog application.
+If you follow this step by step guide in the end you will have a running blog which can list all posts.
+
+
+\subsection{Code the model}
+\label{how_to/mvc_how_to:code-the-model}
+Below you can find how to easily create \textbf{post} model.
+\begin{enumerate}
+\item {} 
+Create a new package called \textbf{blog}
+
+\item {} 
+Create a new package called \textbf{blog.models}
+
+\item {} 
+Create a new module called posts and paste the following code into it:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{class} \PYG{n+nc}{Post}\PYG{p}{(}\PYG{n}{BaseModel}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}
+
+    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{blog\PYGZus{}id} \PYG{o}{=}
+    \PYG{n}{title} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{title}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{150}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{tags} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{tags}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{150}\PYG{p}{)}\PYG{p}{)}
+    \PYG{n}{created\PYGZus{}date} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{registered\PYGZus{}date}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{DateTime}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{default}\PYG{o}{=}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{)}
+    \PYG{n}{content} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{content}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)}\PYG{p}{)}
+\end{Verbatim}
+\end{quote}
+
+\end{enumerate}
+
+Now you have a fully functional post model mapped over \textbf{posts} table.
+
+
+\subsection{Code the controller}
+\label{how_to/mvc_how_to:code-the-controller}\begin{enumerate}
+\item {} 
+Create a new package called \textbf{blog.controllers}
+
+\item {} 
+Create a new module called \textbf{blog\_controller} and paste the following code into it:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/(?P\PYGZlt{}blog\PYGZus{}id\PYGZgt{}}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s}{d\PYGZob{}1,\PYGZcb{})/posts/\PYGZdl{}}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.posts.Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blog\PYGZus{}posts}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{)}\PYG{p}{:}
+        \PYG{n}{Post} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Post}
+
+        \PYG{n}{blog\PYGZus{}id} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{blog\PYGZus{}id}\PYG{p}{)}
+
+        \PYG{n}{posts} \PYG{o}{=} \PYG{n}{Post}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{,}
+                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{created\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{)}\PYG{p}{,}
+                                          \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
+                               \PYG{n}{filter\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{EQ}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
+
+        \PYG{n}{response} \PYG{o}{=} \PYG{n}{Response}\PYG{p}{(}\PYG{p}{)}
+        \PYG{n}{response}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/posts\PYGZus{}listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
+                                           \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{posts}\PYG{p}{,}
+                                            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{blog\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{blog\PYGZus{}id}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{n}{response}
+\end{Verbatim}
+\end{quote}
+
+\end{enumerate}
+
+Now you have a fully functional controller that will list first 100 posts.
+
+
+\subsection{Code the view}
+\label{how_to/mvc_how_to:code-the-view}\begin{enumerate}
+\item {} 
+Create a new folder called \textbf{blog.views}
+
+\item {} 
+Create a new view under \textbf{blog.views} called \emph{posts\_listing.html} and paste the following code into it:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nt}{\PYGZlt{}html}\PYG{n+nt}{\PYGZgt{}}
+    \PYG{n+nt}{\PYGZlt{}head}\PYG{n+nt}{\PYGZgt{}}
+        \PYG{n+nt}{\PYGZlt{}title}\PYG{n+nt}{\PYGZgt{}}List all available posts from blog \PYGZob{}\PYGZob{}blog\PYGZus{}id\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/title\PYGZgt{}}
+    \PYG{n+nt}{\PYGZlt{}/head\PYGZgt{}}
+
+    \PYG{n+nt}{\PYGZlt{}body}\PYG{n+nt}{\PYGZgt{}}
+        \PYG{n+nt}{\PYGZlt{}ul}\PYG{n+nt}{\PYGZgt{}}
+        \PYGZob{}\PYGZpc{} for post in posts \PYGZpc{}\PYGZcb{}
+            \PYG{n+nt}{\PYGZlt{}li}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}post.title\PYGZcb{}\PYGZcb{} \textbar{} \PYGZob{}\PYGZob{}post.created\PYGZus{}date\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/li\PYGZgt{}}
+        \PYGZob{}\PYGZpc{} endfor \PYGZpc{}\PYGZcb{}
+        \PYG{n+nt}{\PYGZlt{}/ul\PYGZgt{}}
+    \PYG{n+nt}{\PYGZlt{}/body\PYGZgt{}}
+\PYG{n+nt}{\PYGZlt{}/html\PYGZgt{}}
+\end{Verbatim}
+\end{quote}
+
+\end{enumerate}
+
+
+\subsection{Test your application}
+\label{how_to/mvc_how_to:test-your-application}\begin{enumerate}
+\item {} 
+Start fantastico dev server by executing script \textbf{run\_dev\_server.sh} ({\hyperref[get_started/dev_mode::doc]{\emph{Development mode}}})
+
+\item {} 
+Open a browser and visit \href{http://localhost:12000/blogs/1/posts}{http://localhost:12000/blogs/1/posts}.
+
+\end{enumerate}
+
+
+\section{Deployment how to}
+\label{how_to/deployment_how_to::doc}\label{how_to/deployment_how_to:deployment-how-to}
+In this how to we guide you to Fantastico deployment to production. Below you can find various deployment scenarios
+that can be used for various needs.
+
+
+\subsection{Low usage (simplest scenario)}
+\label{how_to/deployment/low_usage_scenario::doc}\label{how_to/deployment/low_usage_scenario:low-usage-simplest-scenario}
+\includegraphics{low_usage_all_in_one.png}
+
+Above diagram described the simplest scenario for rolling out Fantastico to production. You can use this scenario
+for minimalistic web applications like:
+\begin{itemize}
+\item {} 
+Presentation website
+
+\item {} 
+Personal website
+
+\item {} 
+Blog
+
+\end{itemize}
+
+We usually recommend to start with this deployment scenario and the migrate to more complex scenarios when
+you application requires it.
+
+\begin{tabulary}{\linewidth}{|L|L|}
+\hline
+\textbf{\relax 
+Advantages
+} & \textbf{\relax 
+Disadvantages
+}\\\hline
+
+Extremely easy to deploy
+ & 
+Does not scale well for more than couple of requests / second
+\\\hline
+
+Minimal os configuration
+ & 
+All components are bundled on one node without any failover.
+\\\hline
+
+Automatic scripts for configuring the os
+ & 
+Does not support vertical scaling out of the box.
+\\\hline
+
+Easy to achieve horizontal scaling for all components at once.
+ & 
+Static files are not served from a cdn.
+\\\hline
+\end{tabulary}
+
+
+
+\subsubsection{Setup}
+\label{how_to/deployment/low_usage_scenario:setup}\begin{enumerate}
+\item {} 
+Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
+
+\item {} 
+Goto \$FANTASTICO\_ROOT
+
+\item {} 
+export ROOT\_PASSWD=\textless{}your root password\textgreater{}
+
+\item {} 
+fantastico\_setup\_low\_usage\_\textless{}os\_distribution) --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g fantastico\_setup\_low\_usage\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
+
+\item {} 
+Done.
+
+\end{enumerate}
+
+It is usually a good idea to change the number of parallel connections supported by your linux kernel:
+\begin{enumerate}
+\item {} 
+sudo nano /etc/sysctl.conf
+
+\item {} 
+Search for \textbf{net.core.somaxconn}.
+
+\item {} 
+If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the file.
+
+\item {} 
+Restart the os.
+
+\end{enumerate}
+
+
+\subsection{Low usage AWS}
+\label{how_to/deployment/aws_low_usage_scenario:low-usage-aws}\label{how_to/deployment/aws_low_usage_scenario::doc}
+\includegraphics{low_usage_aws.png}
+
+This scenario is a little bit more complex than {\hyperref[how_to/deployment/low_usage_scenario::doc]{\emph{Low usage (simplest scenario)}}} but it provides some
+advantages:
+
+\begin{tabulary}{\linewidth}{|L|L|}
+\hline
+\textbf{\relax 
+Advantages
+} & \textbf{\relax 
+Disadvantages
+}\\\hline
+
+Can be autoscaled.
+ & 
+Requires AWS EC2 instances
+\\\hline
+
+Easier crash recovery
+ & 
+Requires manual configuration
+\\\hline
+
+Very easy monitoring support (CloudWatch)
+ & 
+Requires AWS EBS.
+\\\hline
+ & 
+Requires some AWS know how.
+\\\hline
+ & 
+Static files are not served from a cdn.
+\\\hline
+\end{tabulary}
+
+
+This scenario is recommended if you want to rollout you application on AWS infrastructure. Usually it is non expensive
+to do this as it requires micro instances and low cost storage. For more information about AWS required components
+read:
+\begin{enumerate}
+\item {} 
+\href{http://aws.amazon.com/ec2/instance-types/}{AWS Instance types}.
+
+\item {} 
+\href{http://aws.amazon.com/ebs/}{AWS EBS}.
+
+\end{enumerate}
+
+
+\subsubsection{Setup}
+\label{how_to/deployment/aws_low_usage_scenario:setup}\begin{enumerate}
+\item {} 
+Create an AWS account. (\href{http://aws.amazon.com/documentation/gettingstarted/}{AWS Getting Started}).
+
+\item {} 
+Create an EC2 instance from AWS Management Console (\href{http://www.youtube.com/watch?v=WBro0TEAd7g}{EC2 setup}).
+
+\item {} 
+SSH on EC2 instance.
+
+\item {} 
+Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
+
+\item {} 
+Goto \$FANTASTICO\_ROOT
+
+\item {} 
+fantastico\_setup\_low\_usage\_\textless{}os\_distribution).sh (e.g fantastico\_setup\_low\_usage\_ubuntu.sh)
+
+\item {} 
+Done.
+
+\end{enumerate}
+
+
+\subsubsection{Optimization}
+\label{how_to/deployment/aws_low_usage_scenario:optimization}
+This scenario can be easily optimized by using \textbf{AWS S3} buckets for static files. This ensures faileover for static
+files and very easy horizontal scaling for sites. Below you can find the new diagram:
+
+\includegraphics{low_usage_s3_aws.png}
+
+You can read more about \textbf{AWS S3} storage on \href{http://aws.amazon.com/s3/}{http://aws.amazon.com/s3/}. In this version of fantastico there is no
+way to sync static module files with S3 buckets. This feature is going to be implemented in upcoming \textbf{Fantastico}
+features. As a workaround you can easily copy \textbf{static} folder content from each module on S3 using the tool
+provided from AWS Management Console.
+
+You can see how to use AWS Management Console S3 tool on \href{http://www.youtube.com/watch?v=1qrjFb0ZTm8}{http://www.youtube.com/watch?v=1qrjFb0ZTm8}
+
+
+\subsubsection{Setup with S3}
+\label{how_to/deployment/aws_low_usage_scenario:setup-with-s3}\begin{enumerate}
+\item {} 
+export ROOT\_PASSWD=\textless{}your root password\textgreater{}
+
+\item {} 
+Create an AWS account. (\href{http://aws.amazon.com/documentation/gettingstarted/}{AWS Getting Started}).
+
+\item {} 
+Create an EC2 instance from AWS Management Console (\href{http://www.youtube.com/watch?v=WBro0TEAd7g}{EC2 setup}).
+
+\item {} 
+SSH on EC2 instance.
+
+\item {} 
+Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
+
+\item {} 
+Goto \$FANTASTICO\_ROOT/deployment
+
+\item {} 
+fantastico\_setup\_low\_usage\_s3\_\textless{}os\_distribution).sh --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g fantastico\_setup\_low\_usage\_s3\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
+
+\item {} 
+Done.
+
+\end{enumerate}
+
+It is usually a good idea to change the number of parallel connections supported by your linux kernel:
+\begin{enumerate}
+\item {} 
+sudo nano /etc/sysctl.conf
+
+\item {} 
+Search for \textbf{net.core.somaxconn}.
+
+\item {} 
+If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the file.
+
+\item {} 
+Restart the os.
+
+\end{enumerate}
+
+
+\section{Static assets}
+\label{how_to/static_assets:static-assets}\label{how_to/static_assets::doc}
+By default, static assets can be any file that is publicly available. Most of the time, here you can place:
+\begin{itemize}
+\item {} 
+css files
+
+\item {} 
+png, jpg, gif files
+
+\item {} 
+downloadable pdf
+
+\item {} 
+movie files
+
+\item {} 
+any other file format you can think about
+
+\end{itemize}
+
+For Production environment, requests to these files are handled by the web server you are using. You only need to
+place them under \textbf{static} folder of your component ({\hyperref[features/component_model::doc]{\emph{Component model}}}).
+
+There are several scenario in which Fantastico projects are deployed which influence where your component static files
+are stored. I recommend you read {\hyperref[how_to/deployment_how_to::doc]{\emph{Deployment how to}}} section.
+
+
+\subsection{Static assets on dev}
+\label{how_to/static_assets:static-assets-on-dev}
+Of course, on development environment you are not required to have a web server in front of your Fantastico dev server.
+For this purpose, fantastico framework provides a special controller which can easily serve static files. Even though
+it works as expected, please do not use it in production. It does not send headers required by browser for caching
+purposes.
+
+Static assets routes are the same between \textbf{prod} and \textbf{dev} environments.
+
+
+\subsubsection{Favicon}
+\label{how_to/static_assets:favicon}
+If you want your site to also have an icon which is automatically presented by browsers, in your project root folder
+do the following:
+\begin{enumerate}
+\item {} 
+mkdir static
+
+\item {} 
+cd static
+
+\item {} 
+Copy your favicon.ico file in here.
+
+\end{enumerate}
+
+
+\subsection{Static assets on prod}
+\label{how_to/static_assets:static-assets-on-prod}
+There is no difference between static assets on dev and static assets on production from routes point of view.
+From handling requests point of view, nginx configuration for your project takes care of serving static assets
+and sending correct http caching headers.
 
 
 \chapter{Fantastico features}
@@ -1889,7 +3105,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x13d3408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2896408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -5062,7 +6278,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x18a32f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2d662f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -5607,7 +6823,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2c3b408\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x4104408\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -6269,556 +7485,6 @@ This method list all registered resources as well as a link to their entry point
 
 
 
-\chapter{How to articles}
-\label{how_to/how_to:how-to-articles}\label{how_to/how_to::doc}
-
-\section{MVC How to}
-\label{how_to/mvc_how_to::doc}\label{how_to/mvc_how_to:mvc-how-to}
-In this article you can see how to assemble various pieces together in order to create a feature for a virtual blog application.
-If you follow this step by step guide in the end you will have a running blog which can list all posts.
-
-
-\subsection{Code the model}
-\label{how_to/mvc_how_to:code-the-model}
-Below you can find how to easily create \textbf{post} model.
-\begin{enumerate}
-\item {} 
-Create a new package called \textbf{blog}
-
-\item {} 
-Create a new package called \textbf{blog.models}
-
-\item {} 
-Create a new module called posts and paste the following code into it:
-\begin{quote}
-
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k}{class} \PYG{n+nc}{Post}\PYG{p}{(}\PYG{n}{BaseModel}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}
-
-    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
-    \PYG{n}{blog\PYGZus{}id} \PYG{o}{=}
-    \PYG{n}{title} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{title}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{150}\PYG{p}{)}\PYG{p}{)}
-    \PYG{n}{tags} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{tags}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{150}\PYG{p}{)}\PYG{p}{)}
-    \PYG{n}{created\PYGZus{}date} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{registered\PYGZus{}date}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{DateTime}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,} \PYG{n}{default}\PYG{o}{=}\PYG{n}{datetime}\PYG{o}{.}\PYG{n}{now}\PYG{p}{)}
-    \PYG{n}{content} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{content}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)}\PYG{p}{)}
-\end{Verbatim}
-\end{quote}
-
-\end{enumerate}
-
-Now you have a fully functional post model mapped over \textbf{posts} table.
-
-
-\subsection{Code the controller}
-\label{how_to/mvc_how_to:code-the-controller}\begin{enumerate}
-\item {} 
-Create a new package called \textbf{blog.controllers}
-
-\item {} 
-Create a new module called \textbf{blog\_controller} and paste the following code into it:
-\begin{quote}
-
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
-\PYG{k}{class} \PYG{n+nc}{BlogsController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/blogs/(?P\PYGZlt{}blog\PYGZus{}id\PYGZgt{}}\PYG{l+s+se}{\PYGZbs{}\PYGZbs{}}\PYG{l+s}{d\PYGZob{}1,\PYGZcb{})/posts/\PYGZdl{}}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GET}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
-                \PYG{n}{models}\PYG{o}{=}\PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{fantastico.plugins.blog.models.posts.Post}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
-    \PYG{k}{def} \PYG{n+nf}{list\PYGZus{}blog\PYGZus{}posts}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{)}\PYG{p}{:}
-        \PYG{n}{Post} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{models}\PYG{o}{.}\PYG{n}{Post}
-
-        \PYG{n}{blog\PYGZus{}id} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{blog\PYGZus{}id}\PYG{p}{)}
-
-        \PYG{n}{posts} \PYG{o}{=} \PYG{n}{Post}\PYG{o}{.}\PYG{n}{get\PYGZus{}records\PYGZus{}paged}\PYG{p}{(}\PYG{n}{start\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n}{end\PYGZus{}record}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{,}
-                               \PYG{n}{sort\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{created\PYGZus{}date}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{ASC}\PYG{p}{)}\PYG{p}{,}
-                                          \PYG{n}{ModelSort}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{title}\PYG{p}{,} \PYG{n}{ModelSort}\PYG{o}{.}\PYG{n}{DESC}\PYG{p}{)}\PYG{p}{]}\PYG{p}{,}
-                               \PYG{n}{filter\PYGZus{}expr}\PYG{o}{=}\PYG{p}{[}\PYG{n}{ModelFilter}\PYG{p}{(}\PYG{n}{Post}\PYG{o}{.}\PYG{n}{model\PYGZus{}cls}\PYG{o}{.}\PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{blog\PYGZus{}id}\PYG{p}{,} \PYG{n}{ModelFilter}\PYG{o}{.}\PYG{n}{EQ}\PYG{p}{)}\PYG{p}{]}\PYG{p}{)}
-
-        \PYG{n}{response} \PYG{o}{=} \PYG{n}{Response}\PYG{p}{(}\PYG{p}{)}
-        \PYG{n}{response}\PYG{o}{.}\PYG{n}{text} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/posts\PYGZus{}listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}
-                                           \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{posts}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{posts}\PYG{p}{,}
-                                            \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{blog\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{n}{blog\PYGZus{}id}\PYG{p}{\PYGZcb{}}\PYG{p}{)}
-
-        \PYG{k}{return} \PYG{n}{response}
-\end{Verbatim}
-\end{quote}
-
-\end{enumerate}
-
-Now you have a fully functional controller that will list first 100 posts.
-
-
-\subsection{Code the view}
-\label{how_to/mvc_how_to:code-the-view}\begin{enumerate}
-\item {} 
-Create a new folder called \textbf{blog.views}
-
-\item {} 
-Create a new view under \textbf{blog.views} called \emph{posts\_listing.html} and paste the following code into it:
-\begin{quote}
-
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n+nt}{\PYGZlt{}html}\PYG{n+nt}{\PYGZgt{}}
-    \PYG{n+nt}{\PYGZlt{}head}\PYG{n+nt}{\PYGZgt{}}
-        \PYG{n+nt}{\PYGZlt{}title}\PYG{n+nt}{\PYGZgt{}}List all available posts from blog \PYGZob{}\PYGZob{}blog\PYGZus{}id\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/title\PYGZgt{}}
-    \PYG{n+nt}{\PYGZlt{}/head\PYGZgt{}}
-
-    \PYG{n+nt}{\PYGZlt{}body}\PYG{n+nt}{\PYGZgt{}}
-        \PYG{n+nt}{\PYGZlt{}ul}\PYG{n+nt}{\PYGZgt{}}
-        \PYGZob{}\PYGZpc{} for post in posts \PYGZpc{}\PYGZcb{}
-            \PYG{n+nt}{\PYGZlt{}li}\PYG{n+nt}{\PYGZgt{}}\PYGZob{}\PYGZob{}post.title\PYGZcb{}\PYGZcb{} \textbar{} \PYGZob{}\PYGZob{}post.created\PYGZus{}date\PYGZcb{}\PYGZcb{}\PYG{n+nt}{\PYGZlt{}/li\PYGZgt{}}
-        \PYGZob{}\PYGZpc{} endfor \PYGZpc{}\PYGZcb{}
-        \PYG{n+nt}{\PYGZlt{}/ul\PYGZgt{}}
-    \PYG{n+nt}{\PYGZlt{}/body\PYGZgt{}}
-\PYG{n+nt}{\PYGZlt{}/html\PYGZgt{}}
-\end{Verbatim}
-\end{quote}
-
-\end{enumerate}
-
-
-\subsection{Test your application}
-\label{how_to/mvc_how_to:test-your-application}\begin{enumerate}
-\item {} 
-Start fantastico dev server by executing script \textbf{run\_dev\_server.sh} ({\hyperref[get_started/dev_mode::doc]{\emph{Development mode}}})
-
-\item {} 
-Open a browser and visit \href{http://localhost:12000/blogs/1/posts}{http://localhost:12000/blogs/1/posts}.
-
-\end{enumerate}
-
-
-\section{Deployment how to}
-\label{how_to/deployment_how_to::doc}\label{how_to/deployment_how_to:deployment-how-to}
-In this how to we guide you to Fantastico deployment to production. Below you can find various deployment scenarios
-that can be used for various needs.
-
-
-\subsection{Low usage (simplest scenario)}
-\label{how_to/deployment/low_usage_scenario::doc}\label{how_to/deployment/low_usage_scenario:low-usage-simplest-scenario}
-\includegraphics{low_usage_all_in_one.png}
-
-Above diagram described the simplest scenario for rolling out Fantastico to production. You can use this scenario
-for minimalistic web applications like:
-\begin{itemize}
-\item {} 
-Presentation website
-
-\item {} 
-Personal website
-
-\item {} 
-Blog
-
-\end{itemize}
-
-We usually recommend to start with this deployment scenario and the migrate to more complex scenarios when
-you application requires it.
-
-\begin{tabulary}{\linewidth}{|L|L|}
-\hline
-\textbf{\relax 
-Advantages
-} & \textbf{\relax 
-Disadvantages
-}\\\hline
-
-Extremely easy to deploy
- & 
-Does not scale well for more than couple of requests / second
-\\\hline
-
-Minimal os configuration
- & 
-All components are bundled on one node without any failover.
-\\\hline
-
-Automatic scripts for configuring the os
- & 
-Does not support vertical scaling out of the box.
-\\\hline
-
-Easy to achieve horizontal scaling for all components at once.
- & 
-Static files are not served from a cdn.
-\\\hline
-\end{tabulary}
-
-
-
-\subsubsection{Setup}
-\label{how_to/deployment/low_usage_scenario:setup}\begin{enumerate}
-\item {} 
-Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
-
-\item {} 
-Goto \$FANTASTICO\_ROOT
-
-\item {} 
-export ROOT\_PASSWD=\textless{}your root password\textgreater{}
-
-\item {} 
-fantastico\_setup\_low\_usage\_\textless{}os\_distribution) --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g fantastico\_setup\_low\_usage\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
-
-\item {} 
-Done.
-
-\end{enumerate}
-
-It is usually a good idea to change the number of parallel connections supported by your linux kernel:
-\begin{enumerate}
-\item {} 
-sudo nano /etc/sysctl.conf
-
-\item {} 
-Search for \textbf{net.core.somaxconn}.
-
-\item {} 
-If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the file.
-
-\item {} 
-Restart the os.
-
-\end{enumerate}
-
-
-\subsection{Low usage AWS}
-\label{how_to/deployment/aws_low_usage_scenario:low-usage-aws}\label{how_to/deployment/aws_low_usage_scenario::doc}
-\includegraphics{low_usage_aws.png}
-
-This scenario is a little bit more complex than {\hyperref[how_to/deployment/low_usage_scenario::doc]{\emph{Low usage (simplest scenario)}}} but it provides some
-advantages:
-
-\begin{tabulary}{\linewidth}{|L|L|}
-\hline
-\textbf{\relax 
-Advantages
-} & \textbf{\relax 
-Disadvantages
-}\\\hline
-
-Can be autoscaled.
- & 
-Requires AWS EC2 instances
-\\\hline
-
-Easier crash recovery
- & 
-Requires manual configuration
-\\\hline
-
-Very easy monitoring support (CloudWatch)
- & 
-Requires AWS EBS.
-\\\hline
- & 
-Requires some AWS know how.
-\\\hline
- & 
-Static files are not served from a cdn.
-\\\hline
-\end{tabulary}
-
-
-This scenario is recommended if you want to rollout you application on AWS infrastructure. Usually it is non expensive
-to do this as it requires micro instances and low cost storage. For more information about AWS required components
-read:
-\begin{enumerate}
-\item {} 
-\href{http://aws.amazon.com/ec2/instance-types/}{AWS Instance types}.
-
-\item {} 
-\href{http://aws.amazon.com/ebs/}{AWS EBS}.
-
-\end{enumerate}
-
-
-\subsubsection{Setup}
-\label{how_to/deployment/aws_low_usage_scenario:setup}\begin{enumerate}
-\item {} 
-Create an AWS account. (\href{http://aws.amazon.com/documentation/gettingstarted/}{AWS Getting Started}).
-
-\item {} 
-Create an EC2 instance from AWS Management Console (\href{http://www.youtube.com/watch?v=WBro0TEAd7g}{EC2 setup}).
-
-\item {} 
-SSH on EC2 instance.
-
-\item {} 
-Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
-
-\item {} 
-Goto \$FANTASTICO\_ROOT
-
-\item {} 
-fantastico\_setup\_low\_usage\_\textless{}os\_distribution).sh (e.g fantastico\_setup\_low\_usage\_ubuntu.sh)
-
-\item {} 
-Done.
-
-\end{enumerate}
-
-
-\subsubsection{Optimization}
-\label{how_to/deployment/aws_low_usage_scenario:optimization}
-This scenario can be easily optimized by using \textbf{AWS S3} buckets for static files. This ensures faileover for static
-files and very easy horizontal scaling for sites. Below you can find the new diagram:
-
-\includegraphics{low_usage_s3_aws.png}
-
-You can read more about \textbf{AWS S3} storage on \href{http://aws.amazon.com/s3/}{http://aws.amazon.com/s3/}. In this version of fantastico there is no
-way to sync static module files with S3 buckets. This feature is going to be implemented in upcoming \textbf{Fantastico}
-features. As a workaround you can easily copy \textbf{static} folder content from each module on S3 using the tool
-provided from AWS Management Console.
-
-You can see how to use AWS Management Console S3 tool on \href{http://www.youtube.com/watch?v=1qrjFb0ZTm8}{http://www.youtube.com/watch?v=1qrjFb0ZTm8}
-
-
-\subsubsection{Setup with S3}
-\label{how_to/deployment/aws_low_usage_scenario:setup-with-s3}\begin{enumerate}
-\item {} 
-export ROOT\_PASSWD=\textless{}your root password\textgreater{}
-
-\item {} 
-Create an AWS account. (\href{http://aws.amazon.com/documentation/gettingstarted/}{AWS Getting Started}).
-
-\item {} 
-Create an EC2 instance from AWS Management Console (\href{http://www.youtube.com/watch?v=WBro0TEAd7g}{EC2 setup}).
-
-\item {} 
-SSH on EC2 instance.
-
-\item {} 
-Install Fantastico framework on the production machine ({\hyperref[get_started/installation::doc]{\emph{Installation manual}}}.).
-
-\item {} 
-Goto \$FANTASTICO\_ROOT/deployment
-
-\item {} 
-fantastico\_setup\_low\_usage\_s3\_\textless{}os\_distribution).sh --ipaddress \textless{}desired\_ip\textgreater{} --vhost-name \textless{}desired\_vhost\textgreater{} --uwsgi-port \textless{}uwsgi port\textgreater{} --root-folder \textless{}desired root folder\textgreater{} --modules-folder \textless{}desired modules folder\textgreater{} (e.g fantastico\_setup\_low\_usage\_s3\_ubuntu.sh --ipaddress 127.0.0.1 --vhost-name fantastico-framework.com --uwsgi-port 12090 --root-folder {}`pwd{}` --modules-folder /fantastico/samples)
-
-\item {} 
-Done.
-
-\end{enumerate}
-
-It is usually a good idea to change the number of parallel connections supported by your linux kernel:
-\begin{enumerate}
-\item {} 
-sudo nano /etc/sysctl.conf
-
-\item {} 
-Search for \textbf{net.core.somaxconn}.
-
-\item {} 
-If it does not exist you can add net.core.somaxconn = 8192 to the bottom of the file.
-
-\item {} 
-Restart the os.
-
-\end{enumerate}
-
-
-\section{Static assets}
-\label{how_to/static_assets:static-assets}\label{how_to/static_assets::doc}
-By default, static assets can be any file that is publicly available. Most of the time, here you can place:
-\begin{itemize}
-\item {} 
-css files
-
-\item {} 
-png, jpg, gif files
-
-\item {} 
-downloadable pdf
-
-\item {} 
-movie files
-
-\item {} 
-any other file format you can think about
-
-\end{itemize}
-
-For Production environment, requests to these files are handled by the web server you are using. You only need to
-place them under \textbf{static} folder of your component ({\hyperref[features/component_model::doc]{\emph{Component model}}}).
-
-There are several scenario in which Fantastico projects are deployed which influence where your component static files
-are stored. I recommend you read {\hyperref[how_to/deployment_how_to::doc]{\emph{Deployment how to}}} section.
-
-
-\subsection{Static assets on dev}
-\label{how_to/static_assets:static-assets-on-dev}
-Of course, on development environment you are not required to have a web server in front of your Fantastico dev server.
-For this purpose, fantastico framework provides a special controller which can easily serve static files. Even though
-it works as expected, please do not use it in production. It does not send headers required by browser for caching
-purposes.
-
-Static assets routes are the same between \textbf{prod} and \textbf{dev} environments.
-
-
-\subsubsection{Favicon}
-\label{how_to/static_assets:favicon}
-If you want your site to also have an icon which is automatically presented by browsers, in your project root folder
-do the following:
-\begin{enumerate}
-\item {} 
-mkdir static
-
-\item {} 
-cd static
-
-\item {} 
-Copy your favicon.ico file in here.
-
-\end{enumerate}
-
-
-\subsection{Static assets on prod}
-\label{how_to/static_assets:static-assets-on-prod}
-There is no difference between static assets on dev and static assets on production from routes point of view.
-From handling requests point of view, nginx configuration for your project takes care of serving static assets
-and sending correct http caching headers.
-
-
-\section{Creating a new project}
-\label{how_to/new_project_how_to:creating-a-new-project}\label{how_to/new_project_how_to::doc}
-A new Fantastico based project can be easily setup by following this how to. In this how to we are going to create
-a project named \textbf{fantastico\_first}.
-\begin{enumerate}
-\item {} 
-cd \textasciitilde{}/
-
-\item {} 
-mkdir fantastico\_first
-
-\item {} 
-cd fantastico\_first
-
-\item {} 
-virtualenv-3.2 --distribute pip-deps
-
-\item {} 
-. pip-deps/bin/activate
-
-\item {} 
-pip install fantastico
-
-\item {} 
-fantastico\_setup\_project.sh python3.2 my\_project
-
-\end{enumerate}
-
-The last step might take a while because it will also install all fantastico dependencies (e.g sphinx, sqlalchemy, ...).
-Please make sure your replace python3.2 with the correct python version.
-In order to test the current project do the following:
-\begin{enumerate}
-\item {} 
-fantastico\_run\_dev\_server
-
-\item {} 
-Access \href{http://localhost:12000/fantastico/samples/mvc/static/sample.jpg}{http://localhost:12000/fantastico/samples/mvc/static/sample.jpg}
-
-\item {} 
-Access \href{http://localhost:12000/mvc/hello-world}{http://localhost:12000/mvc/hello-world}
-
-\end{enumerate}
-
-Your newly project is setup correctly and it runs fantastico default samples project.
-
-
-\subsection{Create first component}
-\label{how_to/new_project_how_to:create-first-component}
-After the new project it's correctly setup we can create our first component.
-\begin{enumerate}
-\item {} 
-. pip-deps/bin/activate
-
-\item {} 
-export FANTASTICO\_ACTIVE\_CONFIG=my\_project.settings.BaseProfile
-
-\item {} 
-cd my\_project
-
-\item {} 
-mkdir component1
-
-\item {} 
-cd component1
-
-\item {} 
-mkdir static
-
-\item {} 
-Paste an image into static folder (e.g first\_photo.jpg)
-
-\item {} 
-touch \_\_init\_\_.py
-
-\item {} 
-touch hello\_world.py
-
-\item {} 
-Paste the code listed below into hello\_world.py
-
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc.base\PYGZus{}controller} \PYG{k+kn}{import} \PYG{n}{BaseController}
-\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc.controller\PYGZus{}decorators} \PYG{k+kn}{import} \PYG{n}{ControllerProvider}\PYG{p}{,} \PYG{n}{Controller}
-\PYG{k+kn}{from} \PYG{n+nn}{webob.response} \PYG{k+kn}{import} \PYG{n}{Response}
-
-\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
-\PYG{k}{class} \PYG{n+nc}{HelloWorldController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
-    \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This is a very simple controller provider.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
-
-    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/component1/hello}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
-    \PYG{k}{def} \PYG{n+nf}{say\PYGZus{}hello}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
-        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This method simply returns an html hello world text.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
-
-        \PYG{n}{msg} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Hello world from my project}\PYG{l+s}{\PYGZdq{}}
-
-        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{content\PYGZus{}type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{text/html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{text}\PYG{o}{=}\PYG{n}{msg}\PYG{p}{)}
-\end{Verbatim}
-
-\item {} 
-fantastico\_dev\_server
-
-\item {} 
-Now you can access \href{http://localhost:12000/component1/hello}{Hello route}.
-
-\item {} 
-Now you can access \href{http://localhost:12000/component1/static/first\_photo.jpg}{First photo route}.
-
-\end{enumerate}
-
-
-\subsection{Customize dev server}
-\label{how_to/new_project_how_to:customize-dev-server}
-For understanding how to customize dev server please read {\hyperref[get_started/dev_mode::doc]{\emph{Development mode}}}
-
-
-\subsection{Customize uwsgi prod server}
-\label{how_to/new_project_how_to:customize-uwsgi-prod-server}
-By design, each Fantastico project provides built in support for running it on \href{http://uwsgi-docs.readthedocs.org/en/latest/}{uWSGI server}.
-If you want to customize uwsgi parameters for your server you can follow these steps:
-\begin{enumerate}
-\item {} 
-cd \$FANTASTICO\_PROJECT\_FOLDER/deployment/conf/nginx
-
-\item {} 
-nano fantastico-uwsgi.ini
-
-\item {} 
-Change the options you want and save the file.
-
-\item {} 
-fantastico\_run\_prod\_server (for testing the production server).
-
-\item {} 
-Be aware that first you need an nginx configured and your project config file deployed (Read {\hyperref[how_to/deployment_how_to::doc]{\emph{Deployment how to}}}).
-
-\end{enumerate}
-
-
 \chapter{Changes}
 \label{changes:changes}\label{changes::doc}
 
@@ -6832,7 +7498,21 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 \section{Versions}
 \label{changes:versions}\begin{itemize}
 \item {} 
-v0.5.0 (Work in progress)
+v0.5.1 (Work in progress)
+\begin{itemize}
+\item {} 
+Add a tutorial for creating TODO application based on ROA.
+
+\item {} 
+Add fantastico sdk start server command.
+
+\item {} 
+Add ROA disovery controller documentation.
+
+\end{itemize}
+
+\item {} 
+v0.5.0 (\href{https://docs.google.com/forms/d/1tKBopU3lfDB\_w8F4h7Rl1Rn4uydAJq-nha09L\_ptJck/edit?usp=sharing}{Provide feedback})
 \begin{itemize}
 \item {} 
 Added specification for auto generated API for resources.

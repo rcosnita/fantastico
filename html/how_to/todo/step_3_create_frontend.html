@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Step 3 - TODO frontend &mdash; fantastico 0.5.1-b127 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.5.1-b127',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.5.1-b127 documentation" href="../../index.html" />
+    <link rel="up" title="Creating a simple TODO application" href="index.html" />
+    <link rel="next" title="MVC How to" href="../mvc_how_to.html" />
+    <link rel="prev" title="Step 2 - TODO API endpoints" href="step_2_create_api.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../mvc_how_to.html" title="MVC How to"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="step_2_create_api.html" title="Step 2 - TODO API endpoints"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.1-b127 documentation</a> &raquo;</li>
+          <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Creating a simple TODO application</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="step-3-todo-frontend">
+<h1>Step 3 - TODO frontend<a class="headerlink" href="#step-3-todo-frontend" title="Permalink to this headline">¶</a></h1>
+<p>In this section of this tutorial we will develop the frontend for our simple todo application. At this moment you should already
+have an API which supports tasks CRUD operations. More over your can order and filter tasks collection and you can request
+partial representation of the tasks. (you can find out more on <a class="reference internal" href="../../features/roa.html"><em>ROA (Resource Oriented Architecture)</em></a> doc page).</p>
+<p>For frontend we will quickly develop an application using Backbone.js framework.</p>
+<div class="section" id="create-models">
+<h2>Create models<a class="headerlink" href="#create-models" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">git checkout -b step-3-create-frontend</p>
+</li>
+<li><p class="first">Paste the code below under fantastico-todo/todo/frontend/static/js/bootstrap.js</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="cm">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="cm">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="cm">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="cm">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="cm">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="cm">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="cm">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="cm">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="cm">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+<span class="cm">*/</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Todo</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Paste the code below under fantastico-todo/todo/frontend/static/js/models/resources_registry.js</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="cm">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="cm">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="cm">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="cm">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="cm">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="cm">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="cm">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="cm">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="cm">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+<span class="cm">*/</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">registry</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="nx">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/roa/resources&quot;</span><span class="p">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * This model holds the object attributes of a resource. Currently it supports only fetch through collection.</span>
+<span class="cm">     */</span>
+    <span class="nx">registry</span><span class="p">.</span><span class="nx">Resource</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({});</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * This collection provides access to ROA resources registered to the current project. It is recommended to code each model</span>
+<span class="cm">     * against the registry so that location changes are not breaking client side code.</span>
+<span class="cm">     */</span>
+    <span class="nx">registry</span><span class="p">.</span><span class="nx">ResourceCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+        <span class="nx">model</span><span class="o">:</span> <span class="nx">registry</span><span class="p">.</span><span class="nx">Resource</span><span class="p">,</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="nx">endpoint</span><span class="p">,</span>
+        <span class="cm">/**</span>
+<span class="cm">         * This method returns the resource url for a given resource name and version. If the version is omitted latest resource</span>
+<span class="cm">         * url is returned.</span>
+<span class="cm">         *</span>
+<span class="cm">         * @param {String} name The name of the resource we want to retrieve discovery information about.</span>
+<span class="cm">         * @param {String} version (Optional) The version of the resource we want to retrieve discovery information about.</span>
+<span class="cm">         * @returns The resource url extracted from ROA discovery registry (/roa/resources).</span>
+<span class="cm">         */</span>
+        <span class="nx">getResourceUrl</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">version</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">version</span> <span class="o">=</span> <span class="nx">version</span> <span class="o">||</span> <span class="s2">&quot;latest&quot;</span><span class="p">;</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;No ROA resources registered.&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="kd">var</span> <span class="nx">resources</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">at</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+                <span class="nx">resource</span> <span class="o">=</span> <span class="p">(</span><span class="nx">resources</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">||</span> <span class="p">{})[</span><span class="nx">version</span><span class="p">];</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">resource</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Resource &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;, version &quot;</span> <span class="o">+</span> <span class="nx">version</span> <span class="o">+</span> <span class="s2">&quot; is not registered.&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="nx">resource</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+
+    <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Registry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">registry</span><span class="p">.</span><span class="nx">ResourceCollection</span><span class="p">();</span>
+    <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Registry</span><span class="p">.</span><span class="nx">fetch</span><span class="p">();</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Paste the code below under fantastico-todo/todo/frontend/static/js/models/tasks.js</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="cm">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="cm">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="cm">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="cm">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="cm">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="cm">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="cm">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="cm">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="cm">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+<span class="cm">*/</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">tasks</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="kd">function</span> <span class="nx">getTasksUrl</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Registry</span><span class="p">.</span><span class="nx">getResourceUrl</span><span class="p">(</span><span class="s2">&quot;Task&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nx">tasks</span><span class="p">.</span><span class="nx">Task</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+        <span class="nx">urlRoot</span><span class="o">:</span> <span class="nx">getTasksUrl</span>
+    <span class="p">});</span>
+
+    <span class="nx">tasks</span><span class="p">.</span><span class="nx">TaskCollection</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+        <span class="nx">model</span><span class="o">:</span> <span class="nx">tasks</span><span class="p">.</span><span class="nx">Task</span><span class="p">,</span>
+        <span class="cm">/**</span>
+<span class="cm">         * This method is overriden so that it guarantees tasks are ordered alphabetically and only id and name attributes are</span>
+<span class="cm">         * returned for each available task (partial resource representation).</span>
+<span class="cm">         */</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="p">[</span><span class="nx">getTasksUrl</span><span class="p">()];</span>
+            <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">);</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_offset</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;offset=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">_offset</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_limit</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&amp;limit=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">_limit</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&amp;fields=id,name&quot;</span><span class="p">);</span>
+            <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&amp;order=asc(name)&quot;</span><span class="p">);</span>
+
+            <span class="k">return</span> <span class="nx">url</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="cm">/**</span>
+<span class="cm">         * In comparison with standard backbone collection fetch, ROA collections support pagination. This is why options is</span>
+<span class="cm">         * parsed before actually fetching the collection.</span>
+<span class="cm">         */</span>
+        <span class="nx">fetch</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">options</span> <span class="o">=</span> <span class="nx">options</span> <span class="o">||</span> <span class="p">{};</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">_offset</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">offset</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_limit</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">limit</span><span class="p">;</span>
+
+            <span class="k">return</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">fetch</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+        <span class="p">},</span>
+        <span class="cm">/**</span>
+<span class="cm">         * This method save the items returned form REST ROA api to this backbone collection. Additionally it adds the total</span>
+<span class="cm">         * items counter as collection property.</span>
+<span class="cm">         *</span>
+<span class="cm">         * @param {Object} response The http response coming for /api/latest/tasks collection.</span>
+<span class="cm">         */</span>
+        <span class="nx">parse</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="s2">&quot;totalItems&quot;</span><span class="o">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">totalItems</span><span class="p">});</span>
+
+            <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">items</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+
+    <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Tasks</span> <span class="o">=</span> <span class="nx">tasks</span><span class="p">;</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><ol class="arabic simple">
+<li>We have all models in place so we are going to implement the frontend of the application in the next section.</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<div class="section" id="models-implementation-notes">
+<h3>Models implementation notes<a class="headerlink" href="#models-implementation-notes" title="Permalink to this headline">¶</a></h3>
+<p>In Fantastico, there is a resource registry which can be used for discovery. It is recommended to always use it to obtain your
+models api urls. This will guarantee that any change of API location on server side is automatically propagated on client side.</p>
+<p>In addition because our application is not going to use description we optimized the client side code by using ROA partial resource
+representation. More over, the resources are ordered alphabetically by name.</p>
+<p>ROA collections support pagination out of the box and tasks client side implementation shows how easily it is to provide it
+for client side code.</p>
+<p>For better understanding all the concepts used in this section you can read <a class="reference internal" href="../../features/roa.html"><em>ROA (Resource Oriented Architecture)</em></a></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Step 3 - TODO frontend</a><ul>
+<li><a class="reference internal" href="#create-models">Create models</a><ul>
+<li><a class="reference internal" href="#models-implementation-notes">Models implementation notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="step_2_create_api.html"
+                        title="previous chapter">Step 2 - TODO API endpoints</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../mvc_how_to.html"
+                        title="next chapter">MVC How to</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/how_to/todo/step_3_create_frontend.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../mvc_how_to.html" title="MVC How to"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="step_2_create_api.html" title="Step 2 - TODO API endpoints"
+             >previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.5.1-b127 documentation</a> &raquo;</li>
+          <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
+          <li><a href="index.html" >Creating a simple TODO application</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

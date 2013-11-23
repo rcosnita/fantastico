@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to articles &mdash; fantastico 0.5.0-b126 documentation</title>
+    <title>How to articles &mdash; fantastico 0.5.1-b127 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.0-b126',
+        VERSION:     '0.5.1-b127',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.0-b126 documentation" href="../index.html" />
-    <link rel="next" title="MVC How to" href="mvc_how_to.html" />
-    <link rel="prev" title="ROA Auto discovery" href="../features/components/roa_discovery/roa_discovery.html" /> 
+    <link rel="top" title="fantastico 0.5.1-b127 documentation" href="../index.html" />
+    <link rel="next" title="Creating a new project" href="new_project_how_to.html" />
+    <link rel="prev" title="Development mode" href="../get_started/dev_mode.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +35,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="mvc_how_to.html" title="MVC How to"
+          <a href="new_project_how_to.html" title="Creating a new project"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../features/components/roa_discovery/roa_discovery.html" title="ROA Auto discovery"
+          <a href="../get_started/dev_mode.html" title="Development mode"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b126 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">fantastico 0.5.1-b127 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,6 +53,20 @@
 <h1>How to articles<a class="headerlink" href="#how-to-articles" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="new_project_how_to.html">Creating a new project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="new_project_how_to.html#create-first-component">Create first component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="new_project_how_to.html#customize-dev-server">Customize dev server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="new_project_how_to.html#customize-uwsgi-prod-server">Customize uwsgi prod server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="todo/index.html">Creating a simple TODO application</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="todo/index.html#functional-requirements">Functional requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo/index.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo/index.html#how-to-sources">How to sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo/index.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="todo/index.html#next-steps">Next steps</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="mvc_how_to.html">MVC How to</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mvc_how_to.html#code-the-model">Code the model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mvc_how_to.html#code-the-controller">Code the controller</a></li>
@@ -70,12 +84,6 @@
 <li class="toctree-l2"><a class="reference internal" href="static_assets.html#static-assets-on-prod">Static assets on prod</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="new_project_how_to.html">Creating a new project</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="new_project_how_to.html#create-first-component">Create first component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="new_project_how_to.html#customize-dev-server">Customize dev server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="new_project_how_to.html#customize-uwsgi-prod-server">Customize uwsgi prod server</a></li>
-</ul>
-</li>
 </ul>
 </div>
 </div>
@@ -87,11 +95,11 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../features/components/roa_discovery/roa_discovery.html"
-                        title="previous chapter">ROA Auto discovery</a></p>
+  <p class="topless"><a href="../get_started/dev_mode.html"
+                        title="previous chapter">Development mode</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="mvc_how_to.html"
-                        title="next chapter">MVC How to</a></p>
+  <p class="topless"><a href="new_project_how_to.html"
+                        title="next chapter">Creating a new project</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/how_to/how_to.txt"
@@ -121,12 +129,12 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="mvc_how_to.html" title="MVC How to"
+          <a href="new_project_how_to.html" title="Creating a new project"
              >next</a> |</li>
         <li class="right" >
-          <a href="../features/components/roa_discovery/roa_discovery.html" title="ROA Auto discovery"
+          <a href="../get_started/dev_mode.html" title="Development mode"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.0-b126 documentation</a> &raquo;</li> 
+        <li><a href="../index.html">fantastico 0.5.1-b127 documentation</a> &raquo;</li> 
       </ul>
     </div>
 

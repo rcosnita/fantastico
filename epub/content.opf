@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-11-15</dc:date>
+    <dc:date>2013-11-23</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -45,6 +45,21 @@
           media-type="application/xhtml+xml" />
     <item id="how_to_new_project_how_to.html"
           href="how_to/new_project_how_to.html"
+          media-type="application/xhtml+xml" />
+    <item id="how_to_todo_step_1_settings.html"
+          href="how_to/todo/step_1_settings.html"
+          media-type="application/xhtml+xml" />
+    <item id="how_to_todo_setup.html"
+          href="how_to/todo/setup.html"
+          media-type="application/xhtml+xml" />
+    <item id="how_to_todo_index.html"
+          href="how_to/todo/index.html"
+          media-type="application/xhtml+xml" />
+    <item id="how_to_todo_step_3_create_frontend.html"
+          href="how_to/todo/step_3_create_frontend.html"
+          media-type="application/xhtml+xml" />
+    <item id="how_to_todo_step_2_create_api.html"
+          href="how_to/todo/step_2_create_api.html"
           media-type="application/xhtml+xml" />
     <item id="how_to_deployment_aws_low_usage_scenario.html"
           href="how_to/deployment/aws_low_usage_scenario.html"
@@ -271,11 +286,17 @@
     <item id="_images_tokens_storage.png"
           href="_images/tokens_storage.png"
           media-type="image/png" />
+    <item id="_images_roa_discovered_resources.png"
+          href="_images/roa_discovered_resources.png"
+          media-type="image/png" />
     <item id="_images_low_usage_aws.png"
           href="_images/low_usage_aws.png"
           media-type="image/png" />
     <item id="_images_low_usage_s3_aws.png"
           href="_images/low_usage_s3_aws.png"
+          media-type="image/png" />
+    <item id="_images_roa_tasks_initial_listing.png"
+          href="_images/roa_tasks_initial_listing.png"
           media-type="image/png" />
     <item id="_images_roa_classes.png"
           href="_images/roa_classes.png"
@@ -286,6 +307,9 @@
     <item id="_images_erd2.png"
           href="_images/erd2.png"
           media-type="image/png" />
+    <item id="_images_fsdk_help.png"
+          href="_images/fsdk_help.png"
+          media-type="image/png" />
     <item id="_images_erd.png"
           href="_images/erd.png"
           media-type="image/png" />
@@ -294,6 +318,9 @@
           media-type="image/png" />
     <item id="_images_routing_engine.png"
           href="_images/routing_engine.png"
+          media-type="image/png" />
+    <item id="_images_main_page.png"
+          href="_images/main_page.png"
           media-type="image/png" />
     <item id="_images_design.png"
           href="_images/design.png"
@@ -415,6 +442,18 @@
     <itemref idref="get_started_settings.html" />
     <itemref idref="get_started_contribute.html" />
     <itemref idref="get_started_dev_mode.html" />
+    <itemref idref="how_to_how_to.html" />
+    <itemref idref="how_to_new_project_how_to.html" />
+    <itemref idref="how_to_todo_index.html" />
+    <itemref idref="how_to_todo_setup.html" />
+    <itemref idref="how_to_todo_step_1_settings.html" />
+    <itemref idref="how_to_todo_step_2_create_api.html" />
+    <itemref idref="how_to_todo_step_3_create_frontend.html" />
+    <itemref idref="how_to_mvc_how_to.html" />
+    <itemref idref="how_to_deployment_how_to.html" />
+    <itemref idref="how_to_deployment_low_usage_scenario.html" />
+    <itemref idref="how_to_deployment_aws_low_usage_scenario.html" />
+    <itemref idref="how_to_static_assets.html" />
     <itemref idref="features_features.html" />
     <itemref idref="features_exceptions.html" />
     <itemref idref="features_request_response.html" />
@@ -448,13 +487,6 @@
     <itemref idref="features_components_dynamic_pages_dynamic_pages.html" />
     <itemref idref="features_components_tracking_codes_tracking_codes.html" />
     <itemref idref="features_components_roa_discovery_roa_discovery.html" />
-    <itemref idref="how_to_how_to.html" />
-    <itemref idref="how_to_mvc_how_to.html" />
-    <itemref idref="how_to_deployment_how_to.html" />
-    <itemref idref="how_to_deployment_low_usage_scenario.html" />
-    <itemref idref="how_to_deployment_aws_low_usage_scenario.html" />
-    <itemref idref="how_to_static_assets.html" />
-    <itemref idref="how_to_new_project_how_to.html" />
     <itemref idref="changes.html" />
     <itemref idref="genindex.html" />
   </spine>

@@ -17,7 +17,6 @@ Please make sure your replace python3.2 with the correct python version.
 In order to test the current project do the following:
 
 #. fantastico_run_dev_server
-#. Access http://localhost:12000/fantastico/samples/mvc/static/sample.jpg
 #. Access http://localhost:12000/mvc/hello-world
 
 Your newly project is setup correctly and it runs fantastico default samples project.
@@ -39,21 +38,21 @@ After the new project it's correctly setup we can create our first component.
 #. Paste the code listed below into hello_world.py
 
    .. code-block:: python
-   
+
       from fantastico.mvc.base_controller import BaseController
       from fantastico.mvc.controller_decorators import ControllerProvider, Controller
       from webob.response import Response
-      
+
       @ControllerProvider()
       class HelloWorldController(BaseController):
           '''This is a very simple controller provider.'''
-          
+
           @Controller(url="/component1/hello")
           def say_hello(self, request):
               '''This method simply returns an html hello world text.'''
-              
+
               msg = "Hello world from my project"
-              
+
               return Response(content_type="text/html", text=msg)
 
 #. fantastico_dev_server
