@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Step 3 - TODO frontend &mdash; fantastico 0.5.1-b127 documentation</title>
+    <title>Step 3 - TODO frontend &mdash; fantastico 0.5.1-b128 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.1-b127',
+        VERSION:     '0.5.1-b128',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.1-b127 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.5.1-b128 documentation" href="../../index.html" />
     <link rel="up" title="Creating a simple TODO application" href="index.html" />
     <link rel="next" title="MVC How to" href="../mvc_how_to.html" />
     <link rel="prev" title="Step 2 - TODO API endpoints" href="step_2_create_api.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="step_2_create_api.html" title="Step 2 - TODO API endpoints"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.1-b127 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.1-b128 documentation</a> &raquo;</li>
           <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Creating a simple TODO application</a> &raquo;</li> 
       </ul>
@@ -149,7 +149,7 @@ partial representation of the tasks. (you can find out more on <a class="referen
     <span class="p">});</span>
 
     <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Registry</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">registry</span><span class="p">.</span><span class="nx">ResourceCollection</span><span class="p">();</span>
-    <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Registry</span><span class="p">.</span><span class="nx">fetch</span><span class="p">();</span>
+    <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Registry</span><span class="p">.</span><span class="nx">loader</span> <span class="o">=</span> <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Registry</span><span class="p">.</span><span class="nx">fetch</span><span class="p">();</span>
 <span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -179,6 +179,7 @@ partial representation of the tasks. (you can find out more on <a class="referen
     <span class="p">}</span>
 
     <span class="nx">tasks</span><span class="p">.</span><span class="nx">Task</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+        <span class="nx">idAttribute</span><span class="o">:</span> <span class="s2">&quot;task_id&quot;</span><span class="p">,</span>
         <span class="nx">urlRoot</span><span class="o">:</span> <span class="nx">getTasksUrl</span>
     <span class="p">});</span>
 
@@ -200,7 +201,7 @@ partial representation of the tasks. (you can find out more on <a class="referen
                 <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&amp;limit=&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">_limit</span><span class="p">);</span>
             <span class="p">}</span>
 
-            <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&amp;fields=id,name&quot;</span><span class="p">);</span>
+            <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&amp;fields=task_id,name,status&quot;</span><span class="p">);</span>
             <span class="nx">url</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&amp;order=asc(name)&quot;</span><span class="p">);</span>
 
             <span class="k">return</span> <span class="nx">url</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
@@ -224,7 +225,7 @@ partial representation of the tasks. (you can find out more on <a class="referen
 <span class="cm">         * @param {Object} response The http response coming for /api/latest/tasks collection.</span>
 <span class="cm">         */</span>
         <span class="nx">parse</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="s2">&quot;totalItems&quot;</span><span class="o">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">totalItems</span><span class="p">});</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">totalItems</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">totalItems</span><span class="p">;</span>
 
             <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">items</span><span class="p">;</span>
         <span class="p">}</span>
@@ -236,12 +237,8 @@ partial representation of the tasks. (you can find out more on <a class="referen
 </div>
 </li>
 </ol>
-<blockquote>
-<div><ol class="arabic simple">
-<li>We have all models in place so we are going to implement the frontend of the application in the next section.</li>
-</ol>
 </div></blockquote>
-</div></blockquote>
+<p>We have all models in place so we are going to implement the frontend of the application in the next section.</p>
 <div class="section" id="models-implementation-notes">
 <h3>Models implementation notes<a class="headerlink" href="#models-implementation-notes" title="Permalink to this headline">¶</a></h3>
 <p>In Fantastico, there is a resource registry which can be used for discovery. It is recommended to always use it to obtain your
@@ -250,8 +247,303 @@ models api urls. This will guarantee that any change of API location on server s
 representation. More over, the resources are ordered alphabetically by name.</p>
 <p>ROA collections support pagination out of the box and tasks client side implementation shows how easily it is to provide it
 for client side code.</p>
-<p>For better understanding all the concepts used in this section you can read <a class="reference internal" href="../../features/roa.html"><em>ROA (Resource Oriented Architecture)</em></a></p>
+<p>For better understanding all the concepts used in this section you can read <a class="reference internal" href="../../features/roa.html"><em>ROA (Resource Oriented Architecture)</em></a>.</p>
+<p>In addition you probably noticed that static assets are created under a special folder named <strong>static</strong>. This allows us to easily
+serve static assets from a cache server or cdn in production. You can read more about this on <a class="reference internal" href="../static_assets.html"><em>Static assets</em></a>.</p>
 </div>
+</div>
+<div class="section" id="create-frontend">
+<h2>Create frontend<a class="headerlink" href="#create-frontend" title="Permalink to this headline">¶</a></h2>
+<p>In this section we are going to create all routes used in frontend:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>/frontend/ui/index</li>
+<li>/frontend/ui/tasks-list-menu</li>
+<li>/frontend/ui/tasks-list-content</li>
+<li>/frontend/ui/tasks-list-pager</li>
+</ol>
+</div></blockquote>
+<p>This approach allows us to have a very clear separation and control of listing components of TODO application. In order to create
+the frontend follow the steps below:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Paste the following code under fantastico-todo/todo/frontend/todo_ui.py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: todo.frontend.ui</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">ControllerProvider</span>
+<span class="kn">from</span> <span class="nn">webob.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
+<span class="nd">@ControllerProvider</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">TodoUi</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides all routes used by todo frontend application.&#39;&#39;&#39;</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/frontend/ui/index&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the index of todo ui application.&#39;&#39;&#39;</span>
+
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_template</span><span class="p">(</span><span class="s">&quot;listing.html&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/frontend/ui/tasks-list-menu&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_tasks_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method return the tasks list menu.&#39;&#39;&#39;</span>
+
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_template</span><span class="p">(</span><span class="s">&quot;listing_menu.html&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/frontend/ui/tasks-list-content&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_tasks_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the markup for tasks listing content area.&#39;&#39;&#39;</span>
+
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_template</span><span class="p">(</span><span class="s">&quot;listing_content.html&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/frontend/ui/tasks-list-pager&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">get_tasks_pager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns the markup for tasks listing pagination area.&#39;&#39;&#39;</span>
+
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_template</span><span class="p">(</span><span class="s">&quot;listing_pager.html&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+<p>The final step of this tutorial requires the creation of controller code for listing tasks and CRUD operations:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Paste the code below under fantastico-todo/todo/frontend/static/js/list_tasks.js:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="cm">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="cm">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="cm">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="cm">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="cm">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="cm">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="cm">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="cm">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="cm">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+<span class="cm">*/</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">TPL_TASK</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&lt;div class=&quot;task&quot;&gt;&#39;</span><span class="p">];</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;div class=&quot;input-group&quot;&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;span class=&quot;input-group-addon&quot;&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;input type=&quot;checkbox&quot; data-role=&quot;tasks-complete&quot; data-tid=&quot;&lt;%= task.get(\&quot;task_id\&quot;) %&gt;&quot; /&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;/span&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;% if(task.get(&quot;status&quot;) === 0) { %&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;h3 class=&quot;form-control&quot;&gt;&lt;%= task.get(\&quot;name\&quot;) %&gt;&lt;/h3&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;% } else { %&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;h3 class=&quot;form-control task-completed&quot;&gt;&lt;%= task.get(\&quot;name\&quot;) %&gt;&lt;/h3&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;&lt;% } %&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&lt;/div&gt;&quot;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&lt;hr/&gt;&quot;</span><span class="p">);</span>
+    <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&lt;/div&gt;&quot;</span><span class="p">);</span>
+
+    <span class="nx">TPL_TASK</span> <span class="o">=</span> <span class="nx">TPL_TASK</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+
+    <span class="kd">function</span> <span class="nx">ListingController</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Tasks</span><span class="p">.</span><span class="nx">TaskCollection</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_limit</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_fetchMoreSize</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">start</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tfNewTask</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#txt-new-task&quot;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_btnComplete</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#btn-complete-task&quot;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_btnRemove</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#btn-remove-task&quot;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tasksArea</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.tasks-area&quot;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_pagerText</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.tasks-pager&quot;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_btnPagerFetch</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;.tasks-pager&quot;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">);</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_initEvents</span><span class="p">();</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_getSelectedTasks</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">ids</span> <span class="o">=</span> <span class="p">[],</span>
+            <span class="nx">tasksChk</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_tasksArea</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">&quot;input[data-role=&#39;tasks-complete&#39;]&quot;</span><span class="p">);</span>
+
+        <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">tasksChk</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">item</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">item</span><span class="p">.</span><span class="nx">is</span><span class="p">(</span><span class="s2">&quot;:checked&quot;</span><span class="p">))</span> <span class="p">{</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nx">ids</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;data-tid&quot;</span><span class="p">)));</span>
+        <span class="p">});</span>
+
+        <span class="k">return</span> <span class="nx">ids</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_initEvents</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tfNewTask</span><span class="p">.</span><span class="nx">keyup</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">==</span> <span class="mi">13</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">self</span><span class="p">.</span><span class="nx">_createTask</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">_tfNewTask</span><span class="p">.</span><span class="nx">val</span><span class="p">());</span>
+
+                <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_btnRemove</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">ids</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_getSelectedTasks</span><span class="p">();</span>
+
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_deleteTasks</span><span class="p">(</span><span class="nx">ids</span><span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_btnComplete</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">ids</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_getSelectedTasks</span><span class="p">();</span>
+
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_completeTasks</span><span class="p">(</span><span class="nx">ids</span><span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_btnPagerFetch</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_fetchMoreTasks</span><span class="p">();</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_tasksArea</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_fetchTasks</span><span class="p">();</span>
+        <span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_pagerText</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_fetchTasks</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">fetch</span><span class="p">({</span><span class="s2">&quot;offset&quot;</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">_offset</span><span class="p">,</span>
+                                          <span class="s2">&quot;limit&quot;</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">_limit</span><span class="p">}),</span>
+            <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="nx">response</span><span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">task</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">self</span><span class="p">.</span><span class="nx">_renderTask</span><span class="p">(</span><span class="nx">task</span><span class="p">);</span>
+            <span class="p">});</span>
+
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_showPageText</span><span class="p">();</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_renderTask</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">task</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">taskUi</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="nx">TPL_TASK</span><span class="p">),</span>
+            <span class="nx">model</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;task&quot;</span><span class="o">:</span> <span class="nx">task</span><span class="p">},</span>
+            <span class="nx">taskHtml</span> <span class="o">=</span> <span class="nx">taskUi</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tasksArea</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">taskHtml</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_createTask</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">taskName</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">});</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_showPageText</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">totalItems</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">totalItems</span><span class="p">,</span>
+            <span class="nx">displayedItems</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_limit</span><span class="p">,</span> <span class="nx">totalItems</span><span class="p">),</span>
+            <span class="nx">pagesText</span> <span class="o">=</span> <span class="nx">displayedItems</span> <span class="o">+</span> <span class="s2">&quot; out of &quot;</span> <span class="o">+</span> <span class="nx">totalItems</span><span class="p">;</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_pagerText</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">pagesText</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_deleteTasks</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskIds</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_btnRemove</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s2">&quot;loading&quot;</span><span class="p">);</span>
+
+        <span class="nx">taskIds</span> <span class="o">=</span> <span class="nx">taskIds</span> <span class="o">||</span> <span class="p">[];</span>
+
+        <span class="kd">var</span> <span class="nx">deletePromises</span> <span class="o">=</span> <span class="p">[],</span>
+            <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">taskIds</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskId</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Tasks</span><span class="p">.</span><span class="nx">Task</span><span class="p">({</span><span class="s2">&quot;task_id&quot;</span><span class="o">:</span> <span class="nx">taskId</span><span class="p">}).</span><span class="nx">destroy</span><span class="p">();</span>
+
+            <span class="nx">taskIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+        <span class="p">});</span>
+
+        <span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">deletePromises</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_btnRemove</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">);</span>
+
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_completeTasks</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskIds</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_btnComplete</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s2">&quot;loading&quot;</span><span class="p">);</span>
+
+        <span class="nx">taskIds</span> <span class="o">=</span> <span class="nx">taskIds</span> <span class="o">||</span> <span class="p">[];</span>
+
+        <span class="kd">var</span> <span class="nx">updatePromises</span> <span class="o">=</span> <span class="p">[],</span>
+            <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">taskIds</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskId</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">task</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
+
+            <span class="nx">task</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="s2">&quot;status&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
+
+            <span class="nx">updatePromises</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">task</span><span class="p">.</span><span class="nx">save</span><span class="p">());</span>
+        <span class="p">});</span>
+
+        <span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">updatePromises</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_btnComplete</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">);</span>
+
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+        <span class="p">});</span>
+    <span class="p">};</span>
+
+    <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_fetchMoreTasks</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">newLimit</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_limit</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">_fetchMoreSize</span><span class="p">;</span>
+
+        <span class="nx">newLimit</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">newLimit</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">totalItems</span><span class="p">);</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="nx">newLimit</span> <span class="o">&gt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">totalItems</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_btnPagerFetch</span><span class="p">.</span><span class="nx">hide</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_limit</span> <span class="o">=</span> <span class="nx">newLimit</span><span class="p">;</span>
+
+        <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+    <span class="p">};</span>
+
+    <span class="nx">Todo</span><span class="p">.</span><span class="nx">Controllers</span><span class="p">.</span><span class="nx">ListingController</span> <span class="o">=</span> <span class="nx">ListingController</span><span class="p">;</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Done. Now you have a fully functional todo application. Access <a class="reference external" href="http://localhost:12000/frontend/ui/index">http://localhost:12000/frontend/ui/index</a> for seeing the results.</p>
+</li>
+</ol>
+</div></blockquote>
 </div>
 </div>
 
@@ -268,6 +560,7 @@ for client side code.</p>
 <li><a class="reference internal" href="#models-implementation-notes">Models implementation notes</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#create-frontend">Create frontend</a></li>
 </ul>
 </li>
 </ul>
@@ -312,7 +605,7 @@ for client side code.</p>
         <li class="right" >
           <a href="step_2_create_api.html" title="Step 2 - TODO API endpoints"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.1-b127 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.1-b128 documentation</a> &raquo;</li>
           <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
           <li><a href="index.html" >Creating a simple TODO application</a> &raquo;</li> 
       </ul>

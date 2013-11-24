@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{November 23, 2013}
-\release{0.5.1-b127}
+\date{November 24, 2013}
+\release{0.5.1-b128}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -786,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5c95490\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4ef7518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1047,7 +1047,7 @@ Creates a new task described by the given body.
  & 
 GET
  & 
-\{``task\_id'': 1, ``name'': ``Task name'', ``description'': ``Task description''\}
+None
  & 
 Retrieves a specific task from tasks collection.
 \\\hline
@@ -1365,7 +1365,7 @@ Paste the code below in fantastico-todo/todo/frontend/models/tasks.py
 
     \PYG{n}{\PYGZus{}\PYGZus{}tablename\PYGZus{}\PYGZus{}} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{tasks}\PYG{l+s}{\PYGZdq{}}
 
-    \PYG{n+nb}{id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{task\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
+    \PYG{n}{task\PYGZus{}id} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{task\PYGZus{}id}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Integer}\PYG{p}{,} \PYG{n}{primary\PYGZus{}key}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{,} \PYG{n}{autoincrement}\PYG{o}{=}\PYG{n+nb+bp}{True}\PYG{p}{)}
     \PYG{n}{name} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{name}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{String}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{)}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
     \PYG{n}{description} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{description}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{Text}\PYG{p}{)}
     \PYG{n}{status} \PYG{o}{=} \PYG{n}{Column}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{status}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{SmallInteger}\PYG{p}{,} \PYG{n}{nullable}\PYG{o}{=}\PYG{n+nb+bp}{False}\PYG{p}{)}
@@ -1439,8 +1439,7 @@ For frontend we will quickly develop an application using Backbone.js framework.
 
 
 \paragraph{Create models}
-\label{how_to/todo/step_3_create_frontend:create-models}\begin{quote}
-\begin{enumerate}
+\label{how_to/todo/step_3_create_frontend:create-models}\begin{enumerate}
 \item {} 
 git checkout -b step-3-create-frontend
 
@@ -1534,7 +1533,7 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/models/resour
     \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
 
     \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Registry} \PYG{o}{=} \PYG{k}{new} \PYG{n+nx}{registry}\PYG{p}{.}\PYG{n+nx}{ResourceCollection}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
-    \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Registry}\PYG{p}{.}\PYG{n+nx}{fetch}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Registry}\PYG{p}{.}\PYG{n+nx}{loader} \PYG{o}{=} \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Registry}\PYG{p}{.}\PYG{n+nx}{fetch}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
 \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{(}\PYG{n+nx}{jQuery}\PYG{p}{)}\PYG{p}{;}
 \end{Verbatim}
 
@@ -1566,6 +1565,7 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/models/tasks.
     \PYG{p}{\PYGZcb{}}
 
     \PYG{n+nx}{tasks}\PYG{p}{.}\PYG{n+nx}{Task} \PYG{o}{=} \PYG{n+nx}{Backbone}\PYG{p}{.}\PYG{n+nx}{Model}\PYG{p}{.}\PYG{n+nx}{extend}\PYG{p}{(}\PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{idAttribute}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}task\PYGZus{}id\PYGZdq{}}\PYG{p}{,}
         \PYG{n+nx}{urlRoot}\PYG{o}{:} \PYG{n+nx}{getTasksUrl}
     \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
 
@@ -1587,7 +1587,7 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/models/tasks.
                 \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZam{}limit=\PYGZdq{}} \PYG{o}{+} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit}\PYG{p}{)}\PYG{p}{;}
             \PYG{p}{\PYGZcb{}}
 
-            \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZam{}fields=id,name\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+            \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZam{}fields=task\PYGZus{}id,name,status\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
             \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZam{}order=asc(name)\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
 
             \PYG{k}{return} \PYG{n+nx}{url}\PYG{p}{.}\PYG{n+nx}{join}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
@@ -1611,7 +1611,7 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/models/tasks.
 \PYG{c+cm}{         * @param \PYGZob{}Object\PYGZcb{} response The http response coming for /api/latest/tasks collection.}
 \PYG{c+cm}{         */}
         \PYG{n+nx}{parse}\PYG{o}{:} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{response}\PYG{p}{)} \PYG{p}{\PYGZob{}}
-            \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}totalItems\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{totalItems}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+            \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{totalItems} \PYG{o}{=} \PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{totalItems}\PYG{p}{;}
 
             \PYG{k}{return} \PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{items}\PYG{p}{;}
         \PYG{p}{\PYGZcb{}}
@@ -1622,12 +1622,8 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/models/tasks.
 \end{Verbatim}
 
 \end{enumerate}
-\begin{enumerate}
-\item {} 
-We have all models in place so we are going to implement the frontend of the application in the next section.
 
-\end{enumerate}
-\end{quote}
+We have all models in place so we are going to implement the frontend of the application in the next section.
 
 
 \subparagraph{Models implementation notes}
@@ -1641,7 +1637,313 @@ representation. More over, the resources are ordered alphabetically by name.
 ROA collections support pagination out of the box and tasks client side implementation shows how easily it is to provide it
 for client side code.
 
-For better understanding all the concepts used in this section you can read {\hyperref[features/roa::doc]{\emph{ROA (Resource Oriented Architecture)}}}
+For better understanding all the concepts used in this section you can read {\hyperref[features/roa::doc]{\emph{ROA (Resource Oriented Architecture)}}}.
+
+In addition you probably noticed that static assets are created under a special folder named \textbf{static}. This allows us to easily
+serve static assets from a cache server or cdn in production. You can read more about this on {\hyperref[how_to/static_assets::doc]{\emph{Static assets}}}.
+
+
+\paragraph{Create frontend}
+\label{how_to/todo/step_3_create_frontend:create-frontend}
+In this section we are going to create all routes used in frontend:
+\begin{enumerate}
+\item {} 
+/frontend/ui/index
+
+\item {} 
+/frontend/ui/tasks-list-menu
+
+\item {} 
+/frontend/ui/tasks-list-content
+
+\item {} 
+/frontend/ui/tasks-list-pager
+
+\end{enumerate}
+
+This approach allows us to have a very clear separation and control of listing components of TODO application. In order to create
+the frontend follow the steps below:
+\begin{enumerate}
+\item {} 
+Paste the following code under fantastico-todo/todo/frontend/todo\_ui.py:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+sd}{Copyright 2013 Cosnita Radu Viorel}
+
+\PYG{l+s+sd}{Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated}
+\PYG{l+s+sd}{documentation files (the \PYGZdq{}Software\PYGZdq{}), to deal in the Software without restriction, including without limitation}
+\PYG{l+s+sd}{the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,}
+\PYG{l+s+sd}{and to permit persons to whom the Software is furnished to do so, subject to the following conditions:}
+
+\PYG{l+s+sd}{The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.}
+
+\PYG{l+s+sd}{THE SOFTWARE IS PROVIDED \PYGZdq{}AS IS\PYGZdq{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE}
+\PYG{l+s+sd}{WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR}
+\PYG{l+s+sd}{COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,}
+\PYG{l+s+sd}{ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.}
+
+\PYG{l+s+sd}{.. codeauthor:: Radu Viorel Cosnita \PYGZlt{}radu.cosnita@gmail.com\PYGZgt{}}
+\PYG{l+s+sd}{.. py:module:: todo.frontend.ui}
+\PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc.base\PYGZus{}controller} \PYG{k+kn}{import} \PYG{n}{BaseController}
+\PYG{k+kn}{from} \PYG{n+nn}{fantastico.mvc.controller\PYGZus{}decorators} \PYG{k+kn}{import} \PYG{n}{Controller}\PYG{p}{,} \PYG{n}{ControllerProvider}
+\PYG{k+kn}{from} \PYG{n+nn}{webob.response} \PYG{k+kn}{import} \PYG{n}{Response}
+
+\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{TodoUi}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
+    \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This class provides all routes used by todo frontend application.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/frontend/ui/index}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}index}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This method returns the index of todo ui application.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{content} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{listing.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{content}\PYG{p}{)}
+
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/frontend/ui/tasks\PYGZhy{}list\PYGZhy{}menu}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}tasks\PYGZus{}menu}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This method return the tasks list menu.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{content} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{listing\PYGZus{}menu.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{content}\PYG{p}{)}
+
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/frontend/ui/tasks\PYGZhy{}list\PYGZhy{}content}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}tasks\PYGZus{}content}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This method returns the markup for tasks listing content area.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{content} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{listing\PYGZus{}content.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{content}\PYG{p}{)}
+
+    \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/frontend/ui/tasks\PYGZhy{}list\PYGZhy{}pager}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}tasks\PYGZus{}pager}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}This method returns the markup for tasks listing pagination area.\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{content} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{load\PYGZus{}template}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{listing\PYGZus{}pager.html}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{n}{Response}\PYG{p}{(}\PYG{n}{content}\PYG{p}{)}
+\end{Verbatim}
+
+\end{enumerate}
+
+The final step of this tutorial requires the creation of controller code for listing tasks and CRUD operations:
+\begin{enumerate}
+\item {} 
+Paste the code below under fantastico-todo/todo/frontend/static/js/list\_tasks.js:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/**}
+\PYG{c+cm}{Copyright 2013 Cosnita Radu Viorel}
+
+\PYG{c+cm}{Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated}
+\PYG{c+cm}{documentation files (the \PYGZdq{}Software\PYGZdq{}), to deal in the Software without restriction, including without limitation}
+\PYG{c+cm}{the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,}
+\PYG{c+cm}{and to permit persons to whom the Software is furnished to do so, subject to the following conditions:}
+
+\PYG{c+cm}{The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.}
+
+\PYG{c+cm}{THE SOFTWARE IS PROVIDED \PYGZdq{}AS IS\PYGZdq{}, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE}
+\PYG{c+cm}{WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR}
+\PYG{c+cm}{COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,}
+\PYG{c+cm}{ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.}
+\PYG{c+cm}{*/}
+
+\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{\PYGZdl{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n+nx}{TPL\PYGZus{}TASK} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}div class=\PYGZdq{}task\PYGZdq{}\PYGZgt{}\PYGZsq{}}\PYG{p}{]}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}div class=\PYGZdq{}input\PYGZhy{}group\PYGZdq{}\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}span class=\PYGZdq{}input\PYGZhy{}group\PYGZhy{}addon\PYGZdq{}\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}input type=\PYGZdq{}checkbox\PYGZdq{} data\PYGZhy{}role=\PYGZdq{}tasks\PYGZhy{}complete\PYGZdq{} data\PYGZhy{}tid=\PYGZdq{}\PYGZlt{}\PYGZpc{}= task.get(\PYGZbs{}\PYGZdq{}task\PYGZus{}id\PYGZbs{}\PYGZdq{}) \PYGZpc{}\PYGZgt{}\PYGZdq{} /\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}/span\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}\PYGZpc{} if(task.get(\PYGZdq{}status\PYGZdq{}) === 0) \PYGZob{} \PYGZpc{}\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}h3 class=\PYGZdq{}form\PYGZhy{}control\PYGZdq{}\PYGZgt{}\PYGZlt{}\PYGZpc{}= task.get(\PYGZbs{}\PYGZdq{}name\PYGZbs{}\PYGZdq{}) \PYGZpc{}\PYGZgt{}\PYGZlt{}/h3\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}\PYGZpc{} \PYGZcb{} else \PYGZob{} \PYGZpc{}\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}h3 class=\PYGZdq{}form\PYGZhy{}control task\PYGZhy{}completed\PYGZdq{}\PYGZgt{}\PYGZlt{}\PYGZpc{}= task.get(\PYGZbs{}\PYGZdq{}name\PYGZbs{}\PYGZdq{}) \PYGZpc{}\PYGZgt{}\PYGZlt{}/h3\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZlt{}\PYGZpc{} \PYGZcb{} \PYGZpc{}\PYGZgt{}\PYGZsq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}/div\PYGZgt{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}hr/\PYGZgt{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}/div\PYGZgt{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+    \PYG{n+nx}{TPL\PYGZus{}TASK} \PYG{o}{=} \PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{.}\PYG{n+nx}{join}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+    \PYG{k+kd}{function} \PYG{n+nx}{ListingController}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks} \PYG{o}{=} \PYG{k}{new} \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Tasks}\PYG{p}{.}\PYG{n+nx}{TaskCollection}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}offset} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit} \PYG{o}{=} \PYG{l+m+mi}{10}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}fetchMoreSize} \PYG{o}{=} \PYG{l+m+mi}{5}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{start} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tfNewTask} \PYG{o}{=} \PYG{n+nx}{\PYGZdl{}}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZsh{}txt\PYGZhy{}new\PYGZhy{}task\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnComplete} \PYG{o}{=} \PYG{n+nx}{\PYGZdl{}}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZsh{}btn\PYGZhy{}complete\PYGZhy{}task\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnRemove} \PYG{o}{=} \PYG{n+nx}{\PYGZdl{}}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZsh{}btn\PYGZhy{}remove\PYGZhy{}task\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasksArea} \PYG{o}{=} \PYG{n+nx}{\PYGZdl{}}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}.tasks\PYGZhy{}area\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}pagerText} \PYG{o}{=} \PYG{n+nx}{\PYGZdl{}}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}.tasks\PYGZhy{}pager\PYGZdq{}}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{find}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}p\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnPagerFetch} \PYG{o}{=} \PYG{n+nx}{\PYGZdl{}}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}.tasks\PYGZhy{}pager\PYGZdq{}}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{find}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}button\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}initEvents}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}getSelectedTasks} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{ids} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}\PYG{p}{,}
+            \PYG{n+nx}{tasksChk} \PYG{o}{=} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasksArea}\PYG{p}{.}\PYG{n+nx}{find}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}input[data\PYGZhy{}role=\PYGZsq{}tasks\PYGZhy{}complete\PYGZsq{}]\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{n+nx}{\PYGZus{}}\PYG{p}{.}\PYG{n+nx}{each}\PYG{p}{(}\PYG{n+nx}{tasksChk}\PYG{p}{,} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{item}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{item} \PYG{o}{=} \PYG{n+nx}{\PYGZdl{}}\PYG{p}{(}\PYG{n+nx}{item}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{k}{if}\PYG{p}{(}\PYG{o}{!}\PYG{n+nx}{item}\PYG{p}{.}\PYG{n+nx}{is}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}:checked\PYGZdq{}}\PYG{p}{)}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{k}{return}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+
+            \PYG{n+nx}{ids}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nb}{parseInt}\PYG{p}{(}\PYG{n+nx}{item}\PYG{p}{.}\PYG{n+nx}{attr}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}data\PYGZhy{}tid\PYGZdq{}}\PYG{p}{)}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{return} \PYG{n+nx}{ids}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}initEvents} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{self} \PYG{o}{=} \PYG{k}{this}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tfNewTask}\PYG{p}{.}\PYG{n+nx}{keyup}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{evt}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{evt}\PYG{p}{.}\PYG{n+nx}{keyCode} \PYG{o}{==} \PYG{l+m+mi}{13}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}createTask}\PYG{p}{(}\PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tfNewTask}\PYG{p}{.}\PYG{n+nx}{val}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+
+                \PYG{k}{return} \PYG{k+kc}{false}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+
+            \PYG{k}{return} \PYG{k+kc}{true}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnRemove}\PYG{p}{.}\PYG{n+nx}{click}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kd}{var} \PYG{n+nx}{ids} \PYG{o}{=} \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}getSelectedTasks}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}deleteTasks}\PYG{p}{(}\PYG{n+nx}{ids}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnComplete}\PYG{p}{.}\PYG{n+nx}{click}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kd}{var} \PYG{n+nx}{ids} \PYG{o}{=} \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}getSelectedTasks}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}completeTasks}\PYG{p}{(}\PYG{n+nx}{ids}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnPagerFetch}\PYG{p}{.}\PYG{n+nx}{click}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}fetchMoreTasks}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{on}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}reset\PYGZdq{}}\PYG{p}{,} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasksArea}\PYG{p}{.}\PYG{n+nx}{html}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}fetchTasks}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}pagerText}\PYG{p}{.}\PYG{n+nx}{html}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}fetchTasks} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{response} \PYG{o}{=} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{fetch}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}offset\PYGZdq{}}\PYG{o}{:} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}offset}\PYG{p}{,}
+                                          \PYG{l+s+s2}{\PYGZdq{}limit\PYGZdq{}}\PYG{o}{:} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{,}
+            \PYG{n+nx}{self} \PYG{o}{=} \PYG{k}{this}\PYG{p}{;}
+
+        \PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{done}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{each}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{task}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}renderTask}\PYG{p}{(}\PYG{n+nx}{task}\PYG{p}{)}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}showPageText}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}renderTask} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{task}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{taskUi} \PYG{o}{=} \PYG{n+nx}{\PYGZus{}}\PYG{p}{.}\PYG{n+nx}{template}\PYG{p}{(}\PYG{n+nx}{TPL\PYGZus{}TASK}\PYG{p}{)}\PYG{p}{,}
+            \PYG{n+nx}{model} \PYG{o}{=} \PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}task\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{task}\PYG{p}{\PYGZcb{}}\PYG{p}{,}
+            \PYG{n+nx}{taskHtml} \PYG{o}{=} \PYG{n+nx}{taskUi}\PYG{p}{(}\PYG{n+nx}{model}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasksArea}\PYG{p}{.}\PYG{n+nx}{append}\PYG{p}{(}\PYG{n+nx}{taskHtml}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}createTask} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskName}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{create}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}name\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{taskName}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}status\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}showPageText} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{totalItems} \PYG{o}{=} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{totalItems}\PYG{p}{,}
+            \PYG{n+nx}{displayedItems} \PYG{o}{=} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{min}\PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit}\PYG{p}{,} \PYG{n+nx}{totalItems}\PYG{p}{)}\PYG{p}{,}
+            \PYG{n+nx}{pagesText} \PYG{o}{=} \PYG{n+nx}{displayedItems} \PYG{o}{+} \PYG{l+s+s2}{\PYGZdq{} out of \PYGZdq{}} \PYG{o}{+} \PYG{n+nx}{totalItems}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}pagerText}\PYG{p}{.}\PYG{n+nx}{html}\PYG{p}{(}\PYG{n+nx}{pagesText}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}deleteTasks} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskIds}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnRemove}\PYG{p}{.}\PYG{n+nx}{button}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}loading\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{n+nx}{taskIds} \PYG{o}{=} \PYG{n+nx}{taskIds} \PYG{o}{\textbar{}\textbar{}} \PYG{p}{[}\PYG{p}{]}\PYG{p}{;}
+
+        \PYG{k+kd}{var} \PYG{n+nx}{deletePromises} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}\PYG{p}{,}
+            \PYG{n+nx}{self} \PYG{o}{=} \PYG{k}{this}\PYG{p}{;}
+
+        \PYG{n+nx}{\PYGZus{}}\PYG{p}{.}\PYG{n+nx}{each}\PYG{p}{(}\PYG{n+nx}{taskIds}\PYG{p}{,} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskId}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kd}{var} \PYG{n+nx}{response} \PYG{o}{=} \PYG{k}{new} \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Tasks}\PYG{p}{.}\PYG{n+nx}{Task}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}task\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{taskId}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{destroy}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{taskIds}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{response}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{n+nx}{\PYGZdl{}}\PYG{p}{.}\PYG{n+nx}{when}\PYG{p}{.}\PYG{n+nx}{apply}\PYG{p}{(}\PYG{n+nx}{\PYGZdl{}}\PYG{p}{,} \PYG{n+nx}{deletePromises}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{done}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnRemove}\PYG{p}{.}\PYG{n+nx}{button}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}reset\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}completeTasks} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskIds}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnComplete}\PYG{p}{.}\PYG{n+nx}{button}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}loading\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{n+nx}{taskIds} \PYG{o}{=} \PYG{n+nx}{taskIds} \PYG{o}{\textbar{}\textbar{}} \PYG{p}{[}\PYG{p}{]}\PYG{p}{;}
+
+        \PYG{k+kd}{var} \PYG{n+nx}{updatePromises} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}\PYG{p}{,}
+            \PYG{n+nx}{self} \PYG{o}{=} \PYG{k}{this}\PYG{p}{;}
+
+        \PYG{n+nx}{\PYGZus{}}\PYG{p}{.}\PYG{n+nx}{each}\PYG{p}{(}\PYG{n+nx}{taskIds}\PYG{p}{,} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskId}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k+kd}{var} \PYG{n+nx}{task} \PYG{o}{=} \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{taskId}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{task}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}status\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{updatePromises}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{task}\PYG{p}{.}\PYG{n+nx}{save}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{n+nx}{\PYGZdl{}}\PYG{p}{.}\PYG{n+nx}{when}\PYG{p}{.}\PYG{n+nx}{apply}\PYG{p}{(}\PYG{n+nx}{\PYGZdl{}}\PYG{p}{,} \PYG{n+nx}{updatePromises}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{done}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnComplete}\PYG{p}{.}\PYG{n+nx}{button}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}reset\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}fetchMoreTasks} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k+kd}{var} \PYG{n+nx}{newLimit} \PYG{o}{=} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit} \PYG{o}{+} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}fetchMoreSize}\PYG{p}{;}
+
+        \PYG{n+nx}{newLimit} \PYG{o}{=} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{min}\PYG{p}{(}\PYG{n+nx}{newLimit}\PYG{p}{,} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{totalItems}\PYG{p}{)}\PYG{p}{;}
+
+        \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{newLimit} \PYG{o}{\PYGZgt{}=} \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{totalItems}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnPagerFetch}\PYG{p}{.}\PYG{n+nx}{hide}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}limit} \PYG{o}{=} \PYG{n+nx}{newLimit}\PYG{p}{;}
+
+        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}\PYG{p}{;}
+
+    \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Controllers}\PYG{p}{.}\PYG{n+nx}{ListingController} \PYG{o}{=} \PYG{n+nx}{ListingController}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{(}\PYG{n+nx}{jQuery}\PYG{p}{)}\PYG{p}{;}
+\end{Verbatim}
+
+\item {} 
+Done. Now you have a fully functional todo application. Access \href{http://localhost:12000/frontend/ui/index}{http://localhost:12000/frontend/ui/index} for seeing the results.
+
+\end{enumerate}
 
 
 \section{MVC How to}
@@ -3105,7 +3407,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2896408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1d2c408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -6278,7 +6580,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2d662f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x21fc2f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -6823,7 +7125,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x4104408\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x359b408\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -7505,9 +7807,6 @@ Add a tutorial for creating TODO application based on ROA.
 
 \item {} 
 Add fantastico sdk start server command.
-
-\item {} 
-Add ROA disovery controller documentation.
 
 \end{itemize}
 
