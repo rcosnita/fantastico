@@ -15,7 +15,6 @@ Versions
 
    * Add a tutorial for creating TODO application based on ROA.
    * Add fantastico sdk start server command.
-   * Add ROA disovery controller documentation.
 
 * v0.5.0 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 

@@ -34,7 +34,7 @@ The frontend is powered by the following API endpoints:
 +-----------------+---------------+--------------------------------------------------------------------------+--------------------------------------------------+
 | /tasks          | POST          | {"name": "Task name", "description": "Task description"}                 | Creates a new task described by the given body.  |
 +-----------------+---------------+--------------------------------------------------------------------------+--------------------------------------------------+
-| /tasks/:task_id | GET           | {"task_id": 1, "name": "Task name", "description": "Task description"}   | Retrieves a specific task from tasks collection. |
+| /tasks/:task_id | GET           | None                                                                     | Retrieves a specific task from tasks collection. |
 +-----------------+---------------+--------------------------------------------------------------------------+--------------------------------------------------+
 | /tasks/:task_id | PUT           | {"name": "Task name changed", "description": "Task description changed"} | Updates a specific task from tasks collection.   |
 +-----------------+---------------+--------------------------------------------------------------------------+--------------------------------------------------+
