@@ -20,7 +20,7 @@
 #
 ##############################################################################################################################
 
-CREATE TABLE sample_resources(
+CREATE TABLE IF NOT EXISTS sample_resources(
 	id INTEGER AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL,
 	description TEXT,
@@ -29,7 +29,7 @@ CREATE TABLE sample_resources(
 	PRIMARY KEY(id)
 );
 
-CREATE TABLE sample_resource_subresources(
+CREATE TABLE IF NOT EXISTS sample_resource_subresources(
 	id INTEGER AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL,
 	description TEXT,

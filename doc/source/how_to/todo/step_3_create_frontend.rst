@@ -490,4 +490,6 @@ The final step of this tutorial requires the creation of controller code for lis
              Todo.Controllers.ListingController = ListingController;
          })(jQuery);
 
+   #. . pip-deps/bin/activate
+   #. fantastico_run_dev_server
    #. Done. Now you have a fully functional todo application. Access http://localhost:12000/frontend/ui/index for seeing the results.
