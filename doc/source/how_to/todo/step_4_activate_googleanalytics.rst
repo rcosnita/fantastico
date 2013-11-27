@@ -27,6 +27,8 @@ which does not require any code redeployment is presented below:
          # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          ##############################################################################################################################
 
+         DELETE FROM tracking_codes WHERE provider = 'Google Analytics';
+
          INSERT INTO tracking_codes(provider, script)
          SELECT 'Google Analytics', '
              <script type="text/javascript">
@@ -39,9 +41,7 @@ which does not require any code redeployment is presented below:
                     ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
                     var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
                   })();
-             </script>'
-         FROM tracking_codes
-         WHERE NOT EXISTS(SELECT 1 FROM tracking_codes WHERE provider = 'Google Analytics');
+             </script>';
 
    #. fsdk syncdb -d /usr/bin/mysql -p todo
    #. Paste the following code at the end of fantastico-todo/todo/frontend/views/listing.html (before </body> tag):
@@ -53,3 +53,21 @@ which does not require any code redeployment is presented below:
    #. . pip-deps/bin/activate
    #. fantastico_run_dev_server
    #. Done. Access http://localhost:12000/frontend/ui/index and view page source. You should be able to see the tracking code from above.
+
+Explanation
+-----------
+
+By default, Fantastico framework provides an extension which can easily integrate tracking codes into components. The real advantage
+of using this component comes from the fact that you can easily have one or multiple tracking scripts for multiple providers. Moreover,
+you can manage tracking scripts at database level meaning you will never have to redeploy your code for tracking changes.
+
+You can read more about tracking codes extension on :doc:`/features/components/tracking_codes/tracking_codes`.
+
+Known issues
+------------
+
+If you are using a Fantastico version prior to 0.5.1 you will run into problems when running **fdsk syncdb** command. In order to fix this,
+you must manually drop from your database the following tables:
+
+   * sample_resource_subresources
+   * sample_resources
