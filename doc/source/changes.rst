@@ -15,6 +15,7 @@ Versions
 
    * Add a tutorial for creating TODO application based on ROA.
    * Add fantastico sdk start server command.
+   * Fix roa discovery component fsdk syncdb bug on subsequent runs.
 
 * v0.5.0 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 
