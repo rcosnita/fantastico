@@ -13,7 +13,7 @@ Versions
 
 * v0.5.1 (Work in progress)
 
-   * Add a tutorial for creating TODO application based on ROA.
+   * Add a tutorial for creating TODO application based on ROA. (`<http://rcosnita.github.io/fantastico/html/how_to/todo/index.html>`_)
    * Fix roa discovery component fsdk syncdb bug on subsequent runs.
    * Fix roa api cors support.
 

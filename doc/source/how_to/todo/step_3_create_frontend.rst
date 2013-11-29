@@ -385,7 +385,6 @@ The final step of this tutorial requires the creation of controller code for lis
                  });
 
                  this._tasks.on("reset", function() {
-                     self._tasksArea.html("");
                      self._fetchTasks();
                  });
 
@@ -399,6 +398,8 @@ The final step of this tutorial requires the creation of controller code for lis
                      self = this;
 
                  response.done(function() {
+                     self._tasksArea.html("");
+
                      self._tasks.each(function(task) {
                          self._renderTask(task);
                      });
@@ -416,9 +417,12 @@ The final step of this tutorial requires the creation of controller code for lis
              };
 
              ListingController.prototype._createTask = function(taskName) {
-                 this._tasks.create({"name": taskName, "status": 0});
+                 var task = new Todo.Models.Tasks.Task({"name": taskName, "status": 0}),
+                     self = this;
 
-                 this._tasks.reset();
+                 task.save().always(function() {
+                     self._fetchTasks();
+                 });
              };
 
              ListingController.prototype._showPageText = function() {
