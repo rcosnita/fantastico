@@ -24,4 +24,5 @@ Resources
 ---------
 
 It is recommended to read Fantastico documentation in order to get full details about each concept which was presented in this
-tutorial. You can see the application from this tutorial together with user session improvements deployed on: http://todo.fantastico.scrum-expert.ro/
+tutorial. You can see the application from this tutorial together with user session improvements
+and separation of api from application domain deployed on: `<http://todo.fantastico.scrum-expert.ro/frontend/ui/index>`
