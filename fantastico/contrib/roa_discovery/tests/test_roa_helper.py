@@ -57,7 +57,7 @@ class RoaHelperTests(FantasticoUnitTestsCase):
 
         roa_api = "https://api.fantastico.com"
 
-        self.assertEqual("/", roa_helper.normalize_absolute_roa_uri(roa_api))
+        self.assertEqual("", roa_helper.normalize_absolute_roa_uri(roa_api))
 
     def test_normalize_absolute_roa_uri_withpath(self):
         '''This test case ensures an absolute uri which also contains a path is transformed correctly to a relative uri by

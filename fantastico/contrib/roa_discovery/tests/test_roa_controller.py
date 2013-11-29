@@ -91,6 +91,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(response)
         self.assertEqual(200, response.status_code)
         self.assertEqual("application/json", response.content_type)
+        self._assert_cors_headers(response)
 
         self.assertIsNotNone(response.body)
 
@@ -103,6 +104,12 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                                                                      filter_expr=expected_filter,
                                                                      sort_expr=expected_sort)
         self._model_facade.count_records.assert_called_once_with(filter_expr=expected_filter)
+
+    def _assert_cors_headers(self, response):
+        '''This method checks response for cors headers.'''
+
+        self.assertEqual("*", response.headers["Access-Control-Allow-Origin"])
+        self.assertEqual("OPTIONS,GET,POST,PUT,DELETE", response.headers["Access-Control-Allow-Methods"])
 
     def test_get_collection_default_values_emptyresult(self):
         '''This test case ensures get collection works as expected without any query parameters passed. It ensures
@@ -195,6 +202,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(response)
         self.assertEqual(http_code, response.status_code)
         self.assertEqual("application/json", response.content_type)
+        self._assert_cors_headers(response)
 
         self.assertIsNotNone(response.body)
 
@@ -353,6 +361,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(resource)
         self.assertEqual(201, response.status_code)
         self.assertEqual("application/json", response.content_type)
+        self._assert_cors_headers(response)
         self.assertEqual("0", response.headers["Content-Length"])
         self.assertEqual("/api/%s%s/%s" % (resource.version, resource.url, expected_id),
                          response.headers["Location"])
@@ -464,6 +473,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(response)
         self.assertEqual(200, response.status_code)
         self.assertEqual("application/json", response.content_type)
+        self._assert_cors_headers(response)
 
         self.assertIsNotNone(response.body)
         body = json.loads(response.body.decode())
@@ -666,6 +676,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(response)
         self.assertEqual(204, response.status_code)
         self.assertEqual("application/json", response.content_type)
+        self._assert_cors_headers(response)
         self.assertEqual("0", response.headers["Content-Length"])
 
         self.assertEqual(0, len(response.body))
@@ -767,6 +778,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(response)
         self.assertEqual(204, response.status_code)
         self.assertEqual("application/json", response.content_type)
+        self._assert_cors_headers(response)
         self.assertEqual("0", response.headers["Content-Length"])
 
         self.assertEqual(0, len(response.body))

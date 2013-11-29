@@ -38,6 +38,6 @@ def normalize_absolute_roa_uri(roa_api):
     segments = roa_api.split("/")
 
     if len(segments) < 4:
-        return "/"
+        return ""
 
     return "/%s" % "/".join(segments[3:])

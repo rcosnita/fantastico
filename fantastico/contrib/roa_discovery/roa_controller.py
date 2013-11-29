@@ -86,7 +86,10 @@ class RoaController(BaseController):
                  "error_description": error_description,
                  "error_details": error_details}
 
-        return Response(text=json.dumps(error), status_code=http_code, content_type="application/json")
+        response = Response(text=json.dumps(error), status_code=http_code, content_type="application/json")
+        self._add_cors_headers(response)
+
+        return response
 
     def _handle_resource_notfound(self, version, url):
         '''This method build a resource not found response which is sent to the client. You can find more information about error
@@ -160,6 +163,12 @@ class RoaController(BaseController):
 
         return resource_url
 
+    def _add_cors_headers(self, response):
+        '''This method add cors headers to a given respones.'''
+
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"
+
     @Controller(url=BASE_URL + "$", method="GET")
     def get_collection(self, request, version, resource_url):
         '''This method provides the route for accessing a resource collection. :doc:`/features/roa/rest_standard` for collections
@@ -208,7 +217,11 @@ class RoaController(BaseController):
         body = {"items": items,
                 "totalItems": models_count}
 
-        return Response(text=json.dumps(body), content_type="application/json", status_code=200)
+        response = Response(text=json.dumps(body), content_type="application/json", status_code=200)
+
+        self._add_cors_headers(response)
+
+        return response
 
     @Controller(url=BASE_LATEST_URL + "$", method="GET")
     def get_collection_latest(self, request, resource_url):
@@ -317,7 +330,10 @@ class RoaController(BaseController):
         resource_body = json_serializer.serialize(model, fields)
         resource_body = json.dumps(resource_body)
 
-        return Response(body=resource_body.encode(), content_type="application/json", status_code=200)
+        response = Response(body=resource_body.encode(), content_type="application/json", status_code=200)
+        self._add_cors_headers(response)
+
+        return response
 
     @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)$", method="GET")
     def get_item_latest(self, request, resource_url, resource_id):
@@ -370,6 +386,7 @@ class RoaController(BaseController):
         model_location += "/%s" % model_id
 
         response = Response(status_code=201, content_type="application/json")
+        self._add_cors_headers(response)
         response.headers["Location"] = model_location
 
         return response
@@ -430,7 +447,10 @@ class RoaController(BaseController):
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(resource.version, resource.url, dbex)
 
-        return Response(content_type="application/json", status_code=204)
+        response = Response(content_type="application/json", status_code=204)
+        self._add_cors_headers(response)
+
+        return response
 
     @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)$", method="PUT")
     def update_item_latest(self, request, resource_url, resource_id):
@@ -478,7 +498,10 @@ class RoaController(BaseController):
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(version, resource_url, dbex)
 
-        return Response(content_type="application/json", status_code=204)
+        response = Response(content_type="application/json", status_code=204)
+        self._add_cors_headers(response)
+
+        return response
 
     @Controller(url=BASE_LATEST_URL + "/(?P<resource_id>.*?)$", method="DELETE")
     def delete_item_latest(self, request, resource_url, resource_id):
