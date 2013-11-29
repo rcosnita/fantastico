@@ -399,6 +399,7 @@ The final step of this tutorial requires the creation of controller code for lis
 
                  response.done(function() {
                      self._tasksArea.html("");
+                     self._tfNewTask.val("");
 
                      self._tasks.each(function(task) {
                          self._renderTask(task);
@@ -438,19 +439,27 @@ The final step of this tutorial requires the creation of controller code for lis
 
                  taskIds = taskIds || [];
 
-                 var deletePromises = [],
+                 var onGoing = 0,
                      self = this;
 
-                 _.each(taskIds, function(taskId) {
-                     var response = new Todo.Models.Tasks.Task({"task_id": taskId}).destroy();
+                 function deleteWhenAllDone() {
+                     onGoing--;
 
-                     taskIds.push(response);
-                 });
+                     if(onGoing > 0) {
+                         return;
+                     }
 
-                 $.when.apply($, deletePromises).done(function() {
                      self._btnRemove.button("reset");
 
                      self._tasks.reset();
+                 }
+
+                 _.each(taskIds, function(taskId) {
+                     onGoing++;
+
+                     var response = new Todo.Models.Tasks.Task({"task_id": taskId}).destroy().always(deleteWhenAllDone);
+
+                     taskIds.push(response);
                  });
              };
 
@@ -459,21 +468,28 @@ The final step of this tutorial requires the creation of controller code for lis
 
                  taskIds = taskIds || [];
 
-                 var updatePromises = [],
+                 var onGoing = 0,
                      self = this;
+
+                 function completeWhenAllDone() {
+                     onGoing--;
+
+                     if(onGoing > 0) {
+                         return;
+                     }
+
+                     self._btnComplete.button("reset");
+
+                     self._tasks.reset();
+                 }
+
 
                  _.each(taskIds, function(taskId) {
                      var task = self._tasks.get(taskId);
 
                      task.set({"status": 1});
 
-                     updatePromises.push(task.save());
-                 });
-
-                 $.when.apply($, updatePromises).done(function() {
-                     self._btnComplete.button("reset");
-
-                     self._tasks.reset();
+                     task.save().always(completeWhenAllDone);
                  });
              };
 
