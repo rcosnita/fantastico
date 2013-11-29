@@ -236,14 +236,6 @@ class RoaController(BaseController):
 
         kwargs = kwargs or {}
 
-        if version != "latest":
-            version = float(version)
-
-        resource = self._resources_registry.find_by_url(resource_url, version)
-
-        if not resource:
-            return self._handle_resource_notfound(version, resource_url)
-
         response = Response(content_type="application/json", status_code=200)
         response.headers["Content-Length"] = "0"
         response.headers["Cache-Control"] = "private"
