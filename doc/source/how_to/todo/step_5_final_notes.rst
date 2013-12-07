@@ -16,8 +16,8 @@ It is recommended to first take the challenges below before implementing your re
    #. Send a uniquely generated cookie for uniquely identify the user session.
    #. Make tasks belong to a unique user (identified by the cookie from previous step).
    #. Add a category resource and try to make tasks belong to one or more categories. Be aware, that GET collection and GET item
-      from collection ROA APIs can works perfect with relationships.
-   #. Separate ROA APIs domain from application domain.
+      from collection ROA APIs works perfectly with relationships.
+   #. Separate ROA APIs domain from application domain. (e.g `http://api.todo.com`_).
    #. You are ready to rock.
 
 Resources
@@ -25,4 +25,4 @@ Resources
 
 It is recommended to read Fantastico documentation in order to get full details about each concept which was presented in this
 tutorial. You can see the application from this tutorial together with user session improvements
-and separation of api from application domain deployed on: `<http://todo.fantastico.scrum-expert.ro/frontend/ui/index>`
+and separation of api from application domain deployed on: `<http://todo.fantastico.scrum-expert.ro/frontend/ui/index>`_.
