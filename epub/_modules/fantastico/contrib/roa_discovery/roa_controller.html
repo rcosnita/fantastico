@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.5.1-b130 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.5.1-b131 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -260,7 +260,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">))</span>
 </div>
-    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="p">[</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;$&quot;</span><span class="p">,</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)$&quot;</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;OPTIONS&quot;</span><span class="p">)</span>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="p">[</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;$&quot;</span><span class="p">,</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)$&quot;</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;OPTIONS&quot;</span><span class="p">)</span> <span class="c"># pylint: disable=W0613</span>
 <div class="viewcode-block" id="RoaController.handle_resource_options"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options">[docs]</a>    <span class="k">def</span> <span class="nf">handle_resource_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different</span>
 <span class="sd">        domains than project host.&#39;&#39;&#39;</span>
