@@ -14,4 +14,11 @@ The easiest way to get started using fantastico is to read our just in time gene
 * [Ebook friendly documentation](http://rcosnita.github.io/fantastico/epub/)
 * [PDF documentation](http://rcosnita.github.io/fantastico/latex/fantastico.pdf)
 
+Tutorials
+---------
+
+* [Install Fantastico](http://rcosnita.github.io/fantastico/html/get_started/installation.html)
+* [Create TODO web application](http://rcosnita.github.io/fantastico/html/how_to/todo/index.html)
+* [Deployment](http://rcosnita.github.io/fantastico/html/how_to/deployment_how_to.html)
+
 Have fun.
