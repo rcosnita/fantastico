@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.contrib.roa_discovery.roa_controller &mdash; fantastico 0.5.1-b128 documentation</title>
+    <title>fantastico.contrib.roa_discovery.roa_controller &mdash; fantastico 0.5.1-b129 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.5.1-b128',
+        VERSION:     '0.5.1-b129',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.1-b128 documentation" href="../../../../index.html" />
+    <link rel="top" title="fantastico 0.5.1-b129 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.5.1-b128 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.5.1-b129 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -132,7 +132,10 @@
                  <span class="s">&quot;error_description&quot;</span><span class="p">:</span> <span class="n">error_description</span><span class="p">,</span>
                  <span class="s">&quot;error_details&quot;</span><span class="p">:</span> <span class="n">error_details</span><span class="p">}</span>
 
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="n">status_code</span><span class="o">=</span><span class="n">http_code</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="n">status_code</span><span class="o">=</span><span class="n">http_code</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_cors_headers</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span>
 
     <span class="k">def</span> <span class="nf">_handle_resource_notfound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method build a resource not found response which is sent to the client. You can find more information about error</span>
@@ -206,6 +209,12 @@
 
         <span class="k">return</span> <span class="n">resource_url</span>
 
+    <span class="k">def</span> <span class="nf">_add_cors_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method add cors headers to a given respones.&#39;&#39;&#39;</span>
+
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Origin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Methods&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OPTIONS,GET,POST,PUT,DELETE&quot;</span>
+
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="RoaController.get_collection"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.get_collection">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method provides the route for accessing a resource collection. :doc:`/features/roa/rest_standard` for collections</span>
@@ -254,7 +263,11 @@
         <span class="n">body</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;items&quot;</span><span class="p">:</span> <span class="n">items</span><span class="p">,</span>
                 <span class="s">&quot;totalItems&quot;</span><span class="p">:</span> <span class="n">models_count</span><span class="p">}</span>
 
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_cors_headers</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span>
 </div>
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="RoaController.get_collection_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.get_collection_latest">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">):</span>
@@ -268,14 +281,6 @@
 <span class="sd">        domains than project host.&#39;&#39;&#39;</span>
 
         <span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="p">{}</span>
-
-        <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="s">&quot;latest&quot;</span><span class="p">:</span>
-            <span class="n">version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
-
-        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resources_registry</span><span class="o">.</span><span class="n">find_by_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">)</span>
 
         <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
         <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;0&quot;</span>
@@ -363,7 +368,10 @@
         <span class="n">resource_body</span> <span class="o">=</span> <span class="n">json_serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
         <span class="n">resource_body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">resource_body</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">resource_body</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">resource_body</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_cors_headers</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span>
 </div>
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;GET&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="RoaController.get_item_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.get_item_latest">[docs]</a>    <span class="k">def</span> <span class="nf">get_item_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
@@ -416,6 +424,7 @@
         <span class="n">model_location</span> <span class="o">+=</span> <span class="s">&quot;/</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">model_id</span>
 
         <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">201</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_cors_headers</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
         <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Location&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_location</span>
 
         <span class="k">return</span> <span class="n">response</span>
@@ -476,7 +485,10 @@
         <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">204</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">204</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_cors_headers</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span>
 </div>
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;PUT&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="RoaController.update_item_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.update_item_latest">[docs]</a>    <span class="k">def</span> <span class="nf">update_item_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
@@ -524,7 +536,10 @@
         <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">204</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">204</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_cors_headers</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span>
 </div>
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;DELETE&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="RoaController.delete_item_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.delete_item_latest">[docs]</a>    <span class="k">def</span> <span class="nf">delete_item_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">):</span>
@@ -614,7 +629,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.5.1-b128 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.5.1-b129 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

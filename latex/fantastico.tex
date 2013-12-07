@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{November 24, 2013}
-\release{0.5.1-b128}
+\date{December 07, 2013}
+\release{0.5.1-b129}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -786,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x4ef7518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x55a3518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -1834,7 +1834,6 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/list\_tasks.j
         \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
 
         \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{on}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}reset\PYGZdq{}}\PYG{p}{,} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
-            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasksArea}\PYG{p}{.}\PYG{n+nx}{html}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
             \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}fetchTasks}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
         \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
 
@@ -1848,6 +1847,9 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/list\_tasks.j
             \PYG{n+nx}{self} \PYG{o}{=} \PYG{k}{this}\PYG{p}{;}
 
         \PYG{n+nx}{response}\PYG{p}{.}\PYG{n+nx}{done}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasksArea}\PYG{p}{.}\PYG{n+nx}{html}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tfNewTask}\PYG{p}{.}\PYG{n+nx}{val}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
             \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{each}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{task}\PYG{p}{)} \PYG{p}{\PYGZob{}}
                 \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}renderTask}\PYG{p}{(}\PYG{n+nx}{task}\PYG{p}{)}\PYG{p}{;}
             \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
@@ -1865,9 +1867,12 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/list\_tasks.j
     \PYG{p}{\PYGZcb{}}\PYG{p}{;}
 
     \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}createTask} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskName}\PYG{p}{)} \PYG{p}{\PYGZob{}}
-        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{create}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}name\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{taskName}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}status\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k+kd}{var} \PYG{n+nx}{task} \PYG{o}{=} \PYG{k}{new} \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Tasks}\PYG{p}{.}\PYG{n+nx}{Task}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}name\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{taskName}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}status\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{0}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{,}
+            \PYG{n+nx}{self} \PYG{o}{=} \PYG{k}{this}\PYG{p}{;}
 
-        \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{n+nx}{task}\PYG{p}{.}\PYG{n+nx}{save}\PYG{p}{(}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{always}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}fetchTasks}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
     \PYG{p}{\PYGZcb{}}\PYG{p}{;}
 
     \PYG{n+nx}{ListingController}\PYG{p}{.}\PYG{n+nx}{prototype}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}showPageText} \PYG{o}{=} \PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
@@ -1883,19 +1888,27 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/list\_tasks.j
 
         \PYG{n+nx}{taskIds} \PYG{o}{=} \PYG{n+nx}{taskIds} \PYG{o}{\textbar{}\textbar{}} \PYG{p}{[}\PYG{p}{]}\PYG{p}{;}
 
-        \PYG{k+kd}{var} \PYG{n+nx}{deletePromises} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}\PYG{p}{,}
+        \PYG{k+kd}{var} \PYG{n+nx}{onGoing} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,}
             \PYG{n+nx}{self} \PYG{o}{=} \PYG{k}{this}\PYG{p}{;}
 
-        \PYG{n+nx}{\PYGZus{}}\PYG{p}{.}\PYG{n+nx}{each}\PYG{p}{(}\PYG{n+nx}{taskIds}\PYG{p}{,} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskId}\PYG{p}{)} \PYG{p}{\PYGZob{}}
-            \PYG{k+kd}{var} \PYG{n+nx}{response} \PYG{o}{=} \PYG{k}{new} \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Tasks}\PYG{p}{.}\PYG{n+nx}{Task}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}task\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{taskId}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{destroy}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{k+kd}{function} \PYG{n+nx}{deleteWhenAllDone}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{onGoing}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{;}
 
-            \PYG{n+nx}{taskIds}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{response}\PYG{p}{)}\PYG{p}{;}
-        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
+            \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{onGoing} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{k}{return}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
 
-        \PYG{n+nx}{\PYGZdl{}}\PYG{p}{.}\PYG{n+nx}{when}\PYG{p}{.}\PYG{n+nx}{apply}\PYG{p}{(}\PYG{n+nx}{\PYGZdl{}}\PYG{p}{,} \PYG{n+nx}{deletePromises}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{done}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
             \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnRemove}\PYG{p}{.}\PYG{n+nx}{button}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}reset\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
 
             \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+
+        \PYG{n+nx}{\PYGZus{}}\PYG{p}{.}\PYG{n+nx}{each}\PYG{p}{(}\PYG{n+nx}{taskIds}\PYG{p}{,} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskId}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{onGoing}\PYG{o}{++}\PYG{p}{;}
+
+            \PYG{k+kd}{var} \PYG{n+nx}{response} \PYG{o}{=} \PYG{k}{new} \PYG{n+nx}{Todo}\PYG{p}{.}\PYG{n+nx}{Models}\PYG{p}{.}\PYG{n+nx}{Tasks}\PYG{p}{.}\PYG{n+nx}{Task}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}task\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{n+nx}{taskId}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{destroy}\PYG{p}{(}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{always}\PYG{p}{(}\PYG{n+nx}{deleteWhenAllDone}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{taskIds}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{response}\PYG{p}{)}\PYG{p}{;}
         \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
     \PYG{p}{\PYGZcb{}}\PYG{p}{;}
 
@@ -1904,21 +1917,28 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/list\_tasks.j
 
         \PYG{n+nx}{taskIds} \PYG{o}{=} \PYG{n+nx}{taskIds} \PYG{o}{\textbar{}\textbar{}} \PYG{p}{[}\PYG{p}{]}\PYG{p}{;}
 
-        \PYG{k+kd}{var} \PYG{n+nx}{updatePromises} \PYG{o}{=} \PYG{p}{[}\PYG{p}{]}\PYG{p}{,}
+        \PYG{k+kd}{var} \PYG{n+nx}{onGoing} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,}
             \PYG{n+nx}{self} \PYG{o}{=} \PYG{k}{this}\PYG{p}{;}
+
+        \PYG{k+kd}{function} \PYG{n+nx}{completeWhenAllDone}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nx}{onGoing}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{;}
+
+            \PYG{k}{if}\PYG{p}{(}\PYG{n+nx}{onGoing} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{k}{return}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnComplete}\PYG{p}{.}\PYG{n+nx}{button}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}reset\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+
+            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+        \PYG{p}{\PYGZcb{}}
+
 
         \PYG{n+nx}{\PYGZus{}}\PYG{p}{.}\PYG{n+nx}{each}\PYG{p}{(}\PYG{n+nx}{taskIds}\PYG{p}{,} \PYG{k+kd}{function}\PYG{p}{(}\PYG{n+nx}{taskId}\PYG{p}{)} \PYG{p}{\PYGZob{}}
             \PYG{k+kd}{var} \PYG{n+nx}{task} \PYG{o}{=} \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{n+nx}{taskId}\PYG{p}{)}\PYG{p}{;}
 
             \PYG{n+nx}{task}\PYG{p}{.}\PYG{n+nx}{set}\PYG{p}{(}\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}status\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
 
-            \PYG{n+nx}{updatePromises}\PYG{p}{.}\PYG{n+nx}{push}\PYG{p}{(}\PYG{n+nx}{task}\PYG{p}{.}\PYG{n+nx}{save}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
-        \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
-
-        \PYG{n+nx}{\PYGZdl{}}\PYG{p}{.}\PYG{n+nx}{when}\PYG{p}{.}\PYG{n+nx}{apply}\PYG{p}{(}\PYG{n+nx}{\PYGZdl{}}\PYG{p}{,} \PYG{n+nx}{updatePromises}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{done}\PYG{p}{(}\PYG{k+kd}{function}\PYG{p}{(}\PYG{p}{)} \PYG{p}{\PYGZob{}}
-            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}btnComplete}\PYG{p}{.}\PYG{n+nx}{button}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}reset\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
-
-            \PYG{n+nx}{self}\PYG{p}{.}\PYG{n+nx}{\PYGZus{}tasks}\PYG{p}{.}\PYG{n+nx}{reset}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+            \PYG{n+nx}{task}\PYG{p}{.}\PYG{n+nx}{save}\PYG{p}{(}\PYG{p}{)}\PYG{p}{.}\PYG{n+nx}{always}\PYG{p}{(}\PYG{n+nx}{completeWhenAllDone}\PYG{p}{)}\PYG{p}{;}
         \PYG{p}{\PYGZcb{}}\PYG{p}{)}\PYG{p}{;}
     \PYG{p}{\PYGZcb{}}\PYG{p}{;}
 
@@ -1941,9 +1961,149 @@ Paste the code below under fantastico-todo/todo/frontend/static/js/list\_tasks.j
 \end{Verbatim}
 
 \item {} 
+. pip-deps/bin/activate
+
+\item {} 
+fantastico\_run\_dev\_server
+
+\item {} 
 Done. Now you have a fully functional todo application. Access \href{http://localhost:12000/frontend/ui/index}{http://localhost:12000/frontend/ui/index} for seeing the results.
 
 \end{enumerate}
+
+
+\subsubsection{Step 4 - TODO activate google analytics}
+\label{how_to/todo/step_4_activate_googleanalytics:step-4-todo-activate-google-analytics}\label{how_to/todo/step_4_activate_googleanalytics::doc}
+In this step of the tutorial we are going to activate frontend tracking solution for our newly created \textbf{TODO} application.
+One solution would be to create a template page and included in your other pages using \{\% component \%\} tag. A more elegant solution
+which does not require any code redeployment is presented below:
+\begin{enumerate}
+\item {} 
+git checkout -b step-4-activate-googleanalytics
+
+\item {} 
+fsdk activate-extension --name tracking\_codes --comp-root todo
+
+\item {} 
+Paste the following code under fantastico-todo/todo/sql/create\_data.sql:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{Copyright} \PYG{l+m+mi}{2013} \PYG{n}{Cosnita} \PYG{n}{Radu} \PYG{n}{Viorel}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{Permission} \PYG{k}{is} \PYG{n}{hereby} \PYG{k}{granted}\PYG{p}{,} \PYG{k}{free} \PYG{k}{of} \PYG{n}{charge}\PYG{p}{,} \PYG{k}{to} \PYG{k}{any} \PYG{n}{person} \PYG{n}{obtaining} \PYG{n}{a} \PYG{k}{copy} \PYG{k}{of} \PYG{n}{this} \PYG{n}{software} \PYG{k}{and} \PYG{n}{associated}
+\PYG{o}{\PYGZsh{}} \PYG{n}{documentation} \PYG{n}{files} \PYG{p}{(}\PYG{n}{the} \PYG{l+s+ss}{\PYGZdq{}Software\PYGZdq{}}\PYG{p}{)}\PYG{p}{,} \PYG{k}{to} \PYG{n}{deal} \PYG{k}{in} \PYG{n}{the} \PYG{n}{Software} \PYG{k}{without} \PYG{n}{restriction}\PYG{p}{,} \PYG{k}{including} \PYG{k}{without} \PYG{n}{limitation}
+\PYG{o}{\PYGZsh{}} \PYG{n}{the} \PYG{n}{rights} \PYG{k}{to} \PYG{n}{use}\PYG{p}{,} \PYG{k}{copy}\PYG{p}{,} \PYG{k}{modify}\PYG{p}{,} \PYG{n}{merge}\PYG{p}{,} \PYG{n}{publish}\PYG{p}{,} \PYG{n}{distribute}\PYG{p}{,} \PYG{n}{sublicense}\PYG{p}{,} \PYG{k}{and}\PYG{o}{/}\PYG{k}{or} \PYG{n}{sell} \PYG{n}{copies} \PYG{k}{of} \PYG{n}{the} \PYG{n}{Software}\PYG{p}{,}
+\PYG{o}{\PYGZsh{}} \PYG{k}{and} \PYG{k}{to} \PYG{n}{permit} \PYG{n}{persons} \PYG{k}{to} \PYG{n}{whom} \PYG{n}{the} \PYG{n}{Software} \PYG{k}{is} \PYG{n}{furnished} \PYG{k}{to} \PYG{k}{do} \PYG{n}{so}\PYG{p}{,} \PYG{n}{subject} \PYG{k}{to} \PYG{n}{the} \PYG{n}{following} \PYG{n}{conditions}\PYG{p}{:}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{The} \PYG{n}{above} \PYG{n}{copyright} \PYG{n}{notice} \PYG{k}{and} \PYG{n}{this} \PYG{n}{permission} \PYG{n}{notice} \PYG{n}{shall} \PYG{n}{be} \PYG{n}{included} \PYG{k}{in} \PYG{k}{all} \PYG{n}{copies} \PYG{k}{or} \PYG{n}{substantial} \PYG{n}{portions} \PYG{k}{of} \PYG{n}{the} \PYG{n}{Software}\PYG{p}{.}
+\PYG{o}{\PYGZsh{}}
+\PYG{o}{\PYGZsh{}} \PYG{n}{THE} \PYG{n}{SOFTWARE} \PYG{k}{IS} \PYG{n}{PROVIDED} \PYG{l+s+ss}{\PYGZdq{}AS IS\PYGZdq{}}\PYG{p}{,} \PYG{k}{WITHOUT} \PYG{n}{WARRANTY} \PYG{k}{OF} \PYG{k}{ANY} \PYG{n}{KIND}\PYG{p}{,} \PYG{n}{EXPRESS} \PYG{k}{OR} \PYG{n}{IMPLIED}\PYG{p}{,} \PYG{k}{INCLUDING} \PYG{n}{BUT} \PYG{k}{NOT} \PYG{n}{LIMITED} \PYG{k}{TO} \PYG{n}{THE}
+\PYG{o}{\PYGZsh{}} \PYG{n}{WARRANTIES} \PYG{k}{OF} \PYG{n}{MERCHANTABILITY}\PYG{p}{,} \PYG{n}{FITNESS} \PYG{k}{FOR} \PYG{n}{A} \PYG{n}{PARTICULAR} \PYG{n}{PURPOSE} \PYG{k}{AND} \PYG{n}{NONINFRINGEMENT}\PYG{p}{.} \PYG{k}{IN} \PYG{k}{NO} \PYG{n}{EVENT} \PYG{n}{SHALL} \PYG{n}{THE} \PYG{n}{AUTHORS} \PYG{k}{OR}
+\PYG{o}{\PYGZsh{}} \PYG{n}{COPYRIGHT} \PYG{n}{HOLDERS} \PYG{n}{BE} \PYG{n}{LIABLE} \PYG{k}{FOR} \PYG{k}{ANY} \PYG{n}{CLAIM}\PYG{p}{,} \PYG{n}{DAMAGES} \PYG{k}{OR} \PYG{n}{OTHER} \PYG{n}{LIABILITY}\PYG{p}{,} \PYG{n}{WHETHER} \PYG{k}{IN} \PYG{n}{AN} \PYG{n}{ACTION} \PYG{k}{OF} \PYG{n}{CONTRACT}\PYG{p}{,} \PYG{n}{TORT} \PYG{k}{OR} \PYG{n}{OTHERWISE}\PYG{p}{,}
+\PYG{o}{\PYGZsh{}} \PYG{n}{ARISING} \PYG{k}{FROM}\PYG{p}{,} \PYG{k}{OUT} \PYG{k}{OF} \PYG{k}{OR} \PYG{k}{IN} \PYG{k}{CONNECTION} \PYG{k}{WITH} \PYG{n}{THE} \PYG{n}{SOFTWARE} \PYG{k}{OR} \PYG{n}{THE} \PYG{n}{USE} \PYG{k}{OR} \PYG{n}{OTHER} \PYG{n}{DEALINGS} \PYG{k}{IN} \PYG{n}{THE} \PYG{n}{SOFTWARE}\PYG{p}{.}
+\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}\PYG{o}{\PYGZsh{}}
+
+\PYG{k}{DELETE} \PYG{k}{FROM} \PYG{n}{tracking\PYGZus{}codes} \PYG{k}{WHERE} \PYG{n}{provider} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Google Analytics\PYGZsq{}}\PYG{p}{;}
+
+\PYG{k}{INSERT} \PYG{k}{INTO} \PYG{n}{tracking\PYGZus{}codes}\PYG{p}{(}\PYG{n}{provider}\PYG{p}{,} \PYG{n}{script}\PYG{p}{)}
+\PYG{k}{SELECT} \PYG{l+s+s1}{\PYGZsq{}Google Analytics\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}}
+\PYG{l+s+s1}{    \PYGZlt{}script type=\PYGZdq{}text/javascript\PYGZdq{}\PYGZgt{}}
+\PYG{l+s+s1}{         var \PYGZus{}gaq = \PYGZus{}gaq \textbar{}\textbar{} [];}
+\PYG{l+s+s1}{         \PYGZus{}gaq.push([\PYGZdq{}\PYGZus{}setAccount\PYGZdq{}, \PYGZdq{}UA\PYGZhy{}XXXXX\PYGZhy{}X\PYGZdq{}]);}
+\PYG{l+s+s1}{         \PYGZus{}gaq.push([\PYGZdq{}\PYGZus{}trackPageview\PYGZdq{}]);}
+
+\PYG{l+s+s1}{         (function() \PYGZob{}}
+\PYG{l+s+s1}{           var ga = document.createElement(\PYGZdq{}script\PYGZdq{}); ga.type = \PYGZdq{}text/javascript\PYGZdq{}; ga.async = true;}
+\PYG{l+s+s1}{           ga.src = (\PYGZdq{}https:\PYGZdq{} == document.location.protocol ? \PYGZdq{}https://ssl\PYGZdq{} : \PYGZdq{}http://www\PYGZdq{}) + \PYGZdq{}.google\PYGZhy{}analytics.com/ga.js\PYGZdq{};}
+\PYG{l+s+s1}{           var s = document.getElementsByTagName(\PYGZdq{}script\PYGZdq{})[0]; s.parentNode.insertBefore(ga, s);}
+\PYG{l+s+s1}{         \PYGZcb{})();}
+\PYG{l+s+s1}{    \PYGZlt{}/script\PYGZgt{}\PYGZsq{}}\PYG{p}{;}
+\end{Verbatim}
+
+\item {} 
+fsdk syncdb -d /usr/bin/mysql -p todo
+
+\item {} 
+Paste the following code at the end of fantastico-todo/todo/frontend/views/listing.html (before \textless{}/body\textgreater{} tag):
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZob{}\PYGZpc{} component url=\PYGZdq{}/tracking\PYGZhy{}codes/ui/codes/\PYGZdq{} \PYGZpc{}\PYGZcb{}\PYGZob{}\PYGZpc{} endcomponent \PYGZpc{}\PYGZcb{}
+\end{Verbatim}
+
+\item {} 
+. pip-deps/bin/activate
+
+\item {} 
+fantastico\_run\_dev\_server
+
+\item {} 
+Done. Access \href{http://localhost:12000/frontend/ui/index}{http://localhost:12000/frontend/ui/index} and view page source. You should be able to see the tracking code from above.
+
+\end{enumerate}
+
+
+\paragraph{Explanation}
+\label{how_to/todo/step_4_activate_googleanalytics:explanation}
+By default, Fantastico framework provides an extension which can easily integrate tracking codes into components. The real advantage
+of using this component comes from the fact that you can easily have one or multiple tracking scripts for multiple providers. Moreover,
+you can manage tracking scripts at database level meaning you will never have to redeploy your code for tracking changes.
+
+You can read more about tracking codes extension on {\hyperref[features/components/tracking_codes/tracking_codes::doc]{\emph{Tracking codes}}}.
+
+
+\paragraph{Known issues}
+\label{how_to/todo/step_4_activate_googleanalytics:known-issues}
+If you are using a Fantastico version prior to 0.5.1 you will run into problems when running \textbf{fdsk syncdb} command. In order to fix this,
+you must manually drop from your database the following tables:
+\begin{itemize}
+\item {} 
+sample\_resource\_subresources
+
+\item {} 
+sample\_resources
+
+\end{itemize}
+
+
+\subsubsection{Step 5 - TODO final notes}
+\label{how_to/todo/step_5_final_notes:step-5-todo-final-notes}\label{how_to/todo/step_5_final_notes::doc}
+During the last 30 minutes you have created a \textbf{TODO} web application using \textbf{Fantastico} framework. You have already noticed
+how easily it is to create resources and REST apis in a declarative manner without actually writing any line of code for
+pagination, filtering and sorting.
+
+Moreover, you have seen how you can keep clean markup in your projects by using \textbf{Fantastico} components. In the end you added
+Google Analytics for tracking the performance of your \textbf{TODO} web application.
+
+
+\paragraph{What's next?}
+\label{how_to/todo/step_5_final_notes:what-s-next}
+It is recommended to first take the challenges below before implementing your real life \textbf{Fantastico} project:
+\begin{enumerate}
+\item {} 
+Send a uniquely generated cookie for uniquely identify the user session.
+
+\item {} 
+Make tasks belong to a unique user (identified by the cookie from previous step).
+
+\item {} 
+Add a category resource and try to make tasks belong to one or more categories. Be aware, that GET collection and GET item
+from collection ROA APIs works perfectly with relationships.
+
+\item {} 
+Separate ROA APIs domain from application domain. (e.g {\color{red}\bfseries{}{}`http://api.todo.com{}`\_}).
+
+\item {} 
+You are ready to rock.
+
+\end{enumerate}
+
+
+\paragraph{Resources}
+\label{how_to/todo/step_5_final_notes:resources}
+It is recommended to read Fantastico documentation in order to get full details about each concept which was presented in this
+tutorial. You can see the application from this tutorial together with user session improvements
+and separation of api from application domain deployed on: \href{http://todo.fantastico.scrum-expert.ro/frontend/ui/index}{http://todo.fantastico.scrum-expert.ro/frontend/ui/index}.
 
 
 \section{MVC How to}
@@ -3407,7 +3567,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1d2c408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x21fd408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -6580,7 +6740,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x21fc2f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x26cd2f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -7125,7 +7285,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x359b408\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3ac5408\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -7800,13 +7960,16 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 \section{Versions}
 \label{changes:versions}\begin{itemize}
 \item {} 
-v0.5.1 (Work in progress)
+v0.5.1 (\href{https://docs.google.com/forms/d/1tKBopU3lfDB\_w8F4h7Rl1Rn4uydAJq-nha09L\_ptJck/edit?usp=sharing}{Provide feedback})
 \begin{itemize}
 \item {} 
-Add a tutorial for creating TODO application based on ROA.
+Add a tutorial for creating TODO application based on ROA. (\href{http://rcosnita.github.io/fantastico/html/how\_to/todo/index.html}{http://rcosnita.github.io/fantastico/html/how\_to/todo/index.html})
 
 \item {} 
-Add fantastico sdk start server command.
+Fix roa discovery component fsdk syncdb bug on subsequent runs.
+
+\item {} 
+Fix roa api cors support.
 
 \end{itemize}
 

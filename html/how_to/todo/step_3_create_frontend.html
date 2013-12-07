@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Step 3 - TODO frontend &mdash; fantastico 0.5.1-b128 documentation</title>
+    <title>Step 3 - TODO frontend &mdash; fantastico 0.5.1-b129 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.1-b128',
+        VERSION:     '0.5.1-b129',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.1-b128 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.5.1-b129 documentation" href="../../index.html" />
     <link rel="up" title="Creating a simple TODO application" href="index.html" />
-    <link rel="next" title="MVC How to" href="../mvc_how_to.html" />
+    <link rel="next" title="Step 4 - TODO activate google analytics" href="step_4_activate_googleanalytics.html" />
     <link rel="prev" title="Step 2 - TODO API endpoints" href="step_2_create_api.html" /> 
   </head>
   <body>
@@ -36,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../mvc_how_to.html" title="MVC How to"
+          <a href="step_4_activate_googleanalytics.html" title="Step 4 - TODO activate google analytics"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="step_2_create_api.html" title="Step 2 - TODO API endpoints"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.1-b128 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.1-b129 documentation</a> &raquo;</li>
           <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Creating a simple TODO application</a> &raquo;</li> 
       </ul>
@@ -433,7 +433,6 @@ the frontend follow the steps below:</p>
         <span class="p">});</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">self</span><span class="p">.</span><span class="nx">_tasksArea</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
             <span class="nx">self</span><span class="p">.</span><span class="nx">_fetchTasks</span><span class="p">();</span>
         <span class="p">});</span>
 
@@ -447,6 +446,9 @@ the frontend follow the steps below:</p>
             <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
         <span class="nx">response</span><span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_tasksArea</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_tfNewTask</span><span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+
             <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">task</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">self</span><span class="p">.</span><span class="nx">_renderTask</span><span class="p">(</span><span class="nx">task</span><span class="p">);</span>
             <span class="p">});</span>
@@ -464,9 +466,12 @@ the frontend follow the steps below:</p>
     <span class="p">};</span>
 
     <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_createTask</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskName</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">taskName</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">});</span>
+        <span class="kd">var</span> <span class="nx">task</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Tasks</span><span class="p">.</span><span class="nx">Task</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">taskName</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">}),</span>
+            <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
-        <span class="k">this</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+        <span class="nx">task</span><span class="p">.</span><span class="nx">save</span><span class="p">().</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_fetchTasks</span><span class="p">();</span>
+        <span class="p">});</span>
     <span class="p">};</span>
 
     <span class="nx">ListingController</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_showPageText</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -482,19 +487,27 @@ the frontend follow the steps below:</p>
 
         <span class="nx">taskIds</span> <span class="o">=</span> <span class="nx">taskIds</span> <span class="o">||</span> <span class="p">[];</span>
 
-        <span class="kd">var</span> <span class="nx">deletePromises</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="kd">var</span> <span class="nx">onGoing</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
             <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 
-        <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">taskIds</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskId</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Tasks</span><span class="p">.</span><span class="nx">Task</span><span class="p">({</span><span class="s2">&quot;task_id&quot;</span><span class="o">:</span> <span class="nx">taskId</span><span class="p">}).</span><span class="nx">destroy</span><span class="p">();</span>
+        <span class="kd">function</span> <span class="nx">deleteWhenAllDone</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">onGoing</span><span class="o">--</span><span class="p">;</span>
 
-            <span class="nx">taskIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
-        <span class="p">});</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">onGoing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
 
-        <span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">deletePromises</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
             <span class="nx">self</span><span class="p">.</span><span class="nx">_btnRemove</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">);</span>
 
             <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">taskIds</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskId</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">onGoing</span><span class="o">++</span><span class="p">;</span>
+
+            <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Todo</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Tasks</span><span class="p">.</span><span class="nx">Task</span><span class="p">({</span><span class="s2">&quot;task_id&quot;</span><span class="o">:</span> <span class="nx">taskId</span><span class="p">}).</span><span class="nx">destroy</span><span class="p">().</span><span class="nx">always</span><span class="p">(</span><span class="nx">deleteWhenAllDone</span><span class="p">);</span>
+
+            <span class="nx">taskIds</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
         <span class="p">});</span>
     <span class="p">};</span>
 
@@ -503,21 +516,28 @@ the frontend follow the steps below:</p>
 
         <span class="nx">taskIds</span> <span class="o">=</span> <span class="nx">taskIds</span> <span class="o">||</span> <span class="p">[];</span>
 
-        <span class="kd">var</span> <span class="nx">updatePromises</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="kd">var</span> <span class="nx">onGoing</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
             <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="kd">function</span> <span class="nx">completeWhenAllDone</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">onGoing</span><span class="o">--</span><span class="p">;</span>
+
+            <span class="k">if</span><span class="p">(</span><span class="nx">onGoing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_btnComplete</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">);</span>
+
+            <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+        <span class="p">}</span>
+
 
         <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">taskIds</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">taskId</span><span class="p">)</span> <span class="p">{</span>
             <span class="kd">var</span> <span class="nx">task</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">taskId</span><span class="p">);</span>
 
             <span class="nx">task</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span><span class="s2">&quot;status&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
 
-            <span class="nx">updatePromises</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">task</span><span class="p">.</span><span class="nx">save</span><span class="p">());</span>
-        <span class="p">});</span>
-
-        <span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">updatePromises</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">self</span><span class="p">.</span><span class="nx">_btnComplete</span><span class="p">.</span><span class="nx">button</span><span class="p">(</span><span class="s2">&quot;reset&quot;</span><span class="p">);</span>
-
-            <span class="nx">self</span><span class="p">.</span><span class="nx">_tasks</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+            <span class="nx">task</span><span class="p">.</span><span class="nx">save</span><span class="p">().</span><span class="nx">always</span><span class="p">(</span><span class="nx">completeWhenAllDone</span><span class="p">);</span>
         <span class="p">});</span>
     <span class="p">};</span>
 
@@ -539,6 +559,10 @@ the frontend follow the steps below:</p>
 <span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">. pip-deps/bin/activate</p>
+</li>
+<li><p class="first">fantastico_run_dev_server</p>
 </li>
 <li><p class="first">Done. Now you have a fully functional todo application. Access <a class="reference external" href="http://localhost:12000/frontend/ui/index">http://localhost:12000/frontend/ui/index</a> for seeing the results.</p>
 </li>
@@ -569,8 +593,8 @@ the frontend follow the steps below:</p>
   <p class="topless"><a href="step_2_create_api.html"
                         title="previous chapter">Step 2 - TODO API endpoints</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../mvc_how_to.html"
-                        title="next chapter">MVC How to</a></p>
+  <p class="topless"><a href="step_4_activate_googleanalytics.html"
+                        title="next chapter">Step 4 - TODO activate google analytics</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/how_to/todo/step_3_create_frontend.txt"
@@ -600,12 +624,12 @@ the frontend follow the steps below:</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../mvc_how_to.html" title="MVC How to"
+          <a href="step_4_activate_googleanalytics.html" title="Step 4 - TODO activate google analytics"
              >next</a> |</li>
         <li class="right" >
           <a href="step_2_create_api.html" title="Step 2 - TODO API endpoints"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.1-b128 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.5.1-b129 documentation</a> &raquo;</li>
           <li><a href="../how_to.html" >How to articles</a> &raquo;</li>
           <li><a href="index.html" >Creating a simple TODO application</a> &raquo;</li> 
       </ul>
