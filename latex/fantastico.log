@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  7 DEC 2013 06:57
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.4.27)  7 DEC 2013 07:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -987,7 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 783--783
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 789--789
-[]\T1/ptm/m/it/10 build_server=<function make_server at 0x55a3518>\T1/ptm/m/n/1
+[]\T1/ptm/m/it/10 build_server=<function make_server at 0x5b42490>\T1/ptm/m/n/1
 0 , \T1/ptm/m/it/10 app=<class `fan-tas-
  []
 
@@ -3416,15 +3416,15 @@ xt
  []
 
 [112])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 8230.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 8230.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 8233.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 8233.
  (./fantastico.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 8230.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 8230.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 8233.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 8233.
 
 Package rerunfilecheck Info: File `fantastico.out' has not changed.
 (rerunfilecheck)             Checksum: E8CC2B24017EE92099EEA165C8509E07;1909.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 8230.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 8233.
  ) 
 Here is how much of TeX's memory you used:
  10371 strings out of 493485
@@ -3443,7 +3443,7 @@ uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb>
 texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmri8a.pfb>
-Output written on fantastico.pdf (116 pages, 913114 bytes).
+Output written on fantastico.pdf (116 pages, 913090 bytes).
 PDF statistics:
  2016 PDF objects out of 2073 (max. 8388607)
  1841 compressed objects within 19 object streams
