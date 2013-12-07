@@ -229,7 +229,7 @@ class RoaController(BaseController):
 
         return self.get_collection(request, "latest", self._trim_resource_url(resource_url))
 
-    @Controller(url=[BASE_URL + "$", BASE_URL + "/(?P<resource_id>.*?)$"], method="OPTIONS")
+    @Controller(url=[BASE_URL + "$", BASE_URL + "/(?P<resource_id>.*?)$"], method="OPTIONS") # pylint: disable=W0613
     def handle_resource_options(self, request, version, resource_url, kwargs=None):
         '''This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different
         domains than project host.'''
