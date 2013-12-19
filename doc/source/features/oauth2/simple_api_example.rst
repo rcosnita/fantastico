@@ -58,25 +58,26 @@ user agent capable of supporting HTTP protocol. Below you can find the http call
          GET - /simple-menus/ui/index?state=abcdsxadsa
 
    #. Fantastico filter detects the route requires permissions (scopes).
+
       #. It checks to see if user is authenticated or not.
-   #. Unauthenticated user is redirected to Fantastico IDP login page.
+      #. Unauthenticated user is redirected to Fantastico IDP login page.
 
-      .. code-block:: html
+         .. code-block:: html
 
-         GET - /oauth/idp/login?client_id=simple-menus&return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
+            GET - /oauth/idp/login?client_id=simple-menus&return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
 
-   #. User authenticates successfully.
+      #. User authenticates successfully.
 
-      .. code-block:: html
+         .. code-block:: html
 
-         GET - /oauth/authorize?client_id=simple-menus&return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
+            GET - /oauth/authorize?client_id=simple-menus&return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
 
-   #. Authorization server correctly authorizes the client and generates an access token.
+      #. Authorization server correctly authorizes the client and generates an access token.
 
-      .. code-block:: html
+         .. code-block:: html
 
-         HTTP/1.1 302 Found
-         Location: /simple-menus/ui/index#access_token=2YotnFZFEjr1zCsicMWpAA&state=abcdsxadsa&token_type=bearer&expires_in=3600
+            HTTP/1.1 302 Found
+            Location: /simple-menus/ui/index#access_token=2YotnFZFEjr1zCsicMWpAA&state=abcdsxadsa&token_type=bearer&expires_in=3600
 
    #. Menus management application start page stores the access token into the application space (session storage might be used for this).
       It is recommended to validate received state in order to ensure it corresponds to the initial request.

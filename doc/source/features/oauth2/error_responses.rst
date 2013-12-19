@@ -19,7 +19,7 @@ Below attributes are appended as query parameters or sent as json object to the 
 
       * unsupported_response_type
 
-         The authorization server does not support obtaining an authorization code using this method.
+         The authorization server does not support obtaining an authorization / access token code using this method.
 
       * invalid_scope
 
@@ -29,7 +29,7 @@ Below attributes are appended as query parameters or sent as json object to the 
 
       * unauthorized_client
 
-         The client is not authorized to request an authorization code using this method.
+         The client is not authorized to request an authorization code / access token using this method.
 
    * **403 Forbidden**
 
