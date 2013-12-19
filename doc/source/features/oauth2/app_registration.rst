@@ -1,4 +1,4 @@
-OAuth2 Fantastico App registration
+OAUTH2 Fantastico App registration
 ==================================
 
 In order to be able to develop secure applications on Fantastico, you must first register them in order to be able to obtain
@@ -28,6 +28,14 @@ Summarizing the diagram above, a client is described by:
    * **scopes**
 
       This is a list of scopes this application is authorized to use.
+
+   * **token_iv**
+
+      A 128 bits initialization vector specific to this client used to initialize AES algorithm.
+
+   * **token_key**
+
+      A (128 / 192 / 256) bits key used for AES algorithm.
 
 App registration extension
 --------------------------
