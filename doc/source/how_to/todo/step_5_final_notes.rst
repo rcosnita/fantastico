@@ -17,7 +17,7 @@ It is recommended to first take the challenges below before implementing your re
    #. Make tasks belong to a unique user (identified by the cookie from previous step).
    #. Add a category resource and try to make tasks belong to one or more categories. Be aware, that GET collection and GET item
       from collection ROA APIs works perfectly with relationships.
-   #. Separate ROA APIs domain from application domain. (e.g `http://api.todo.com`_).
+   #. Separate ROA APIs domain from application domain. (e.g `<http://api.todo.com>`_).
    #. You are ready to rock.
 
 Resources

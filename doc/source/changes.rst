@@ -11,10 +11,17 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 Versions
 --------
 
+* v0.6.0 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
+
+   * Add implicit grant type implementation.
+   * Add registration frontend for new clients.
+   * Add security support for endpoints / controllers.
+   * Add Fantastico identity provider.
+
 * v0.5.1 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 
    * Add a tutorial for creating TODO application based on ROA. (`<http://rcosnita.github.io/fantastico/html/how_to/todo/index.html>`_)
-   * Deployed TODO web application on a public accessible server. (`<http://todo.fantastico.scrum-expert.ro/frontend/ui/index`_)
+   * Deployed TODO web application on a public accessible server. (`<http://todo.fantastico.scrum-expert.ro/frontend/ui/index>`_)
    * Fix roa discovery component fsdk syncdb bug on subsequent runs.
    * Fix roa api cors support.
 
