@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../oauth2.html" title="OAUTH2"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.1-b131 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -87,8 +87,8 @@
 are granted at least one scope required by the resource:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Everyone has anonymous access to the menu</li>
-<li>Everyone granted <strong>simple_menus.create</strong>,**simple_menus.update** or <strong>simple_menus.delete</strong> permissions is Resource Owner.</li>
+<li>Everyone has anonymous (read) access to the menus.</li>
+<li>Everyone granted <strong>simple_menus.create</strong>,**simple_menus.update** or <strong>simple_menus.delete</strong> can manage (CRUD) existing menus.</li>
 </ul>
 </div></blockquote>
 <p>It is important to understand that permissions are called <strong>scopes</strong> in OAUTH2 specification.</p>
@@ -96,40 +96,48 @@ are granted at least one scope required by the resource:</p>
 <div class="section" id="display-all-menus">
 <h2>Display all menus</h2>
 <img alt="../../_images/simple_menu_read.png" src="../../_images/simple_menu_read.png" />
-<p>As you can see in the above example, each <strong>Fantastico</strong> project will benefit from an <strong>Anonymous</strong> user. This user is considered
-the <strong>Resource owner</strong> for all public accessible resources. This mean, that each visitor of a Fantastico application will not
-be forced to authenticate when it is not necessary (<strong>e.g display website menubar</strong>).</p>
+<p>As you can see in the above example read access is pretty straightforward because the read endpoint (route) does not require
+authorization (specific scopes).</p>
 </div>
-<div class="section" id="create-a-new-menu">
-<span id="oauth-create-new-menu"></span><h2>Create a new menu</h2>
+<div class="section" id="managing-menus">
+<span id="oauth-create-new-menu"></span><h2>Managing menus.</h2>
 <img alt="../../_images/simple_menu_create.png" src="../../_images/simple_menu_create.png" />
-<p>The above diagram specifies only the standard steps from OAUTH2 specification. In reality, when authorize endpoint is reached
-<strong>End user</strong> browser is redirected to a login screen. Once logged in, <strong>End user</strong> browser is redirected back to <strong>/authorize</strong>
-url from where he is granted an authorization code.</p>
-<p>Once the user is granted an authorization code, he will exchange the authorization code for an access_token. With the newly
-obtained access token he can easily create a new simple menu.</p>
-</div>
-<div class="section" id="update-an-existing-menu">
-<h2>Update an existing menu</h2>
-<p>It is similar to <a class="reference internal" href="#oauth-create-new-menu"><em>Create a new menu</em></a> with the only difference that the final API called is
-<strong>PUT /api/1.0/simple-menus/:id</strong>.</p>
-</div>
-<div class="section" id="delete-an-existing-menu">
-<h2>Delete an existing menu</h2>
-<p>It is similar to <a class="reference internal" href="#oauth-create-new-menu"><em>Create a new menu</em></a> with the only difference that the final API called is
-<strong>DELETE /api/1.0/simple-menus/:id</strong>.</p>
-</div>
-<div class="section" id="cautions">
-<h2>Cautions</h2>
-<p>You must understand the following steps are one time:</p>
+<p>The above diagram assumes an application exists for managing <strong>menus</strong>. This application (extension) consist of a set of frontend
+controllers which renders only markup and a set of <strong>REST APIs</strong> described above. The above diagram assumes <strong>End user</strong> uses an
+user agent capable of supporting HTTP protocol. Below you can find the http calls made:</p>
 <blockquote>
-<div><ol class="arabic simple">
-<li>Authenticate user</li>
-<li>Obtain authorization code</li>
-<li>Obtain access token</li>
+<div><ol class="arabic">
+<li><p class="first">Unauthenticated user requests:</p>
+<div class="highlight-html"><div class="highlight"><pre>GET - /simple-menus/ui/index?state=abcdsxadsa
+</pre></div>
+</div>
+</li>
+<li><p class="first">Fantastico filter detects the route requires permissions (scopes).</p>
+<ol class="arabic">
+<li><p class="first">It checks to see if user is authenticated or not.</p>
+</li>
+<li><p class="first">Unauthenticated user is redirected to Fantastico IDP login page.</p>
+<div class="highlight-html"><pre>GET - /oauth/idp/login?client_id=simple-menus&amp;return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa</pre>
+</div>
+</li>
+<li><p class="first">User authenticates successfully.</p>
+<div class="highlight-html"><pre>GET - /oauth/authorize?client_id=simple-menus&amp;return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa</pre>
+</div>
+</li>
+<li><p class="first">Authorization server correctly authorizes the client and generates an access token.</p>
+<div class="highlight-html"><pre>HTTP/1.1 302 Found
+Location: /simple-menus/ui/index#access_token=2YotnFZFEjr1zCsicMWpAA&amp;state=abcdsxadsa&amp;token_type=bearer&amp;expires_in=3600</pre>
+</div>
+</li>
+</ol>
+</li>
+<li><p class="first">Menus management application start page stores the access token into the application space (session storage might be used for this).
+It is recommended to validate received state in order to ensure it corresponds to the initial request.</p>
+</li>
 </ol>
 </div></blockquote>
-<p>Once the token expires, the flow will start again from step <strong>1.1</strong>.</p>
+<p>This is it. Using the access token, end user can easily access desired functionality. Moreover, using the access token,
+menus management application can easily invoke apis.</p>
 </div>
 </div>
 

@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-12-07</dc:date>
+    <dc:date>2013-12-21</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -289,14 +289,14 @@
     <item id="_images_exceptions1.png"
           href="_images/exceptions1.png"
           media-type="image/png" />
-    <item id="_images_tokens_storage.png"
-          href="_images/tokens_storage.png"
-          media-type="image/png" />
     <item id="_images_roa_discovered_resources.png"
           href="_images/roa_discovered_resources.png"
           media-type="image/png" />
     <item id="_images_low_usage_aws.png"
           href="_images/low_usage_aws.png"
+          media-type="image/png" />
+    <item id="_images_view_apps.png"
+          href="_images/view_apps.png"
           media-type="image/png" />
     <item id="_images_low_usage_s3_aws.png"
           href="_images/low_usage_s3_aws.png"
@@ -307,11 +307,17 @@
     <item id="_images_roa_classes.png"
           href="_images/roa_classes.png"
           media-type="image/png" />
+    <item id="_images_edit_app.png"
+          href="_images/edit_app.png"
+          media-type="image/png" />
     <item id="_images_simple_menu_read.png"
           href="_images/simple_menu_read.png"
           media-type="image/png" />
     <item id="_images_erd2.png"
           href="_images/erd2.png"
+          media-type="image/png" />
+    <item id="_images_clients_storage.png"
+          href="_images/clients_storage.png"
           media-type="image/png" />
     <item id="_images_fsdk_help.png"
           href="_images/fsdk_help.png"
@@ -373,23 +379,23 @@
     <item id="features_oauth2.html"
           href="features/oauth2.html"
           media-type="application/xhtml+xml" />
-    <item id="features_oauth2_tokens_storage.html"
-          href="features/oauth2/tokens_storage.html"
-          media-type="application/xhtml+xml" />
     <item id="features_oauth2_roa_security.html"
           href="features/oauth2/roa_security.html"
           media-type="application/xhtml+xml" />
-    <item id="features_oauth2_compatible_idp.html"
-          href="features/oauth2/compatible_idp.html"
-          media-type="application/xhtml+xml" />
     <item id="features_oauth2_error_responses.html"
           href="features/oauth2/error_responses.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_app_registration.html"
+          href="features/oauth2/app_registration.html"
           media-type="application/xhtml+xml" />
     <item id="features_oauth2_tokens_format.html"
           href="features/oauth2/tokens_format.html"
           media-type="application/xhtml+xml" />
     <item id="features_oauth2_simple_api_example.html"
           href="features/oauth2/simple_api_example.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_components_oauth2_app_registration_index.html"
+          href="features/components/oauth2/app_registration/index.html"
           media-type="application/xhtml+xml" />
     <item id="features_components_dynamic_pages_dynamic_pages.html"
           href="features/components/dynamic_pages/dynamic_pages.html"
@@ -479,9 +485,8 @@
     <itemref idref="features_oauth2.html" />
     <itemref idref="features_oauth2_simple_api_example.html" />
     <itemref idref="features_oauth2_tokens_format.html" />
-    <itemref idref="features_oauth2_tokens_storage.html" />
     <itemref idref="features_oauth2_error_responses.html" />
-    <itemref idref="features_oauth2_compatible_idp.html" />
+    <itemref idref="features_oauth2_app_registration.html" />
     <itemref idref="features_oauth2_roa_security.html" />
     <itemref idref="features_sdk.html" />
     <itemref idref="features_sdk_command_activate_extension.html" />

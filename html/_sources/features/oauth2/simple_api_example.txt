@@ -27,8 +27,8 @@ In OAUTH, we always talk about three concepts:
 In the above example, Simple Menu is a resource owned by a system (global resource). Resource owners are all persons who
 are granted at least one scope required by the resource:
 
-   * Everyone has anonymous access to the menu
-   * Everyone granted **simple_menus.create**,**simple_menus.update** or **simple_menus.delete** permissions is Resource Owner.
+   * Everyone has anonymous (read) access to the menus.
+   * Everyone granted **simple_menus.create**,**simple_menus.update** or **simple_menus.delete** can manage (CRUD) existing menus.
 
 It is important to understand that permissions are called **scopes** in OAUTH2 specification.
 
@@ -37,43 +37,50 @@ Display all menus
 
 .. image:: /images/oauth2/simple_menu_read.png
 
-As you can see in the above example, each **Fantastico** project will benefit from an **Anonymous** user. This user is considered
-the **Resource owner** for all public accessible resources. This mean, that each visitor of a Fantastico application will not
-be forced to authenticate when it is not necessary (**e.g display website menubar**).
+As you can see in the above example read access is pretty straightforward because the read endpoint (route) does not require
+authorization (specific scopes).
 
 .. _oauth_create_new_menu:
 
-Create a new menu
------------------
+Managing menus.
+---------------
 
 .. image:: /images/oauth2/simple_menu_create.png
 
-The above diagram specifies only the standard steps from OAUTH2 specification. In reality, when authorize endpoint is reached
-**End user** browser is redirected to a login screen. Once logged in, **End user** browser is redirected back to **/authorize**
-url from where he is granted an authorization code.
+The above diagram assumes an application exists for managing **menus**. This application (extension) consist of a set of frontend
+controllers which renders only markup and a set of **REST APIs** described above. The above diagram assumes **End user** uses an
+user agent capable of supporting HTTP protocol. Below you can find the http calls made:
 
-Once the user is granted an authorization code, he will exchange the authorization code for an access_token. With the newly
-obtained access token he can easily create a new simple menu.
+   #. Unauthenticated user requests:
 
-Update an existing menu
------------------------
+      .. code-block:: html
 
-It is similar to :ref:`oauth_create_new_menu` with the only difference that the final API called is
-**PUT /api/1.0/simple-menus/:id**.
+         GET - /simple-menus/ui/index?state=abcdsxadsa
 
-Delete an existing menu
------------------------
+   #. Fantastico filter detects the route requires permissions (scopes).
 
-It is similar to :ref:`oauth_create_new_menu` with the only difference that the final API called is
-**DELETE /api/1.0/simple-menus/:id**.
+      #. It checks to see if user is authenticated or not.
+      #. Unauthenticated user is redirected to Fantastico IDP login page.
 
-Cautions
---------
+         .. code-block:: html
 
-You must understand the following steps are one time:
+            GET - /oauth/idp/login?client_id=simple-menus&return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
 
-   #. Authenticate user
-   #. Obtain authorization code
-   #. Obtain access token
+      #. User authenticates successfully.
 
-Once the token expires, the flow will start again from step **1.1**.
+         .. code-block:: html
+
+            GET - /oauth/authorize?client_id=simple-menus&return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
+
+      #. Authorization server correctly authorizes the client and generates an access token.
+
+         .. code-block:: html
+
+            HTTP/1.1 302 Found
+            Location: /simple-menus/ui/index#access_token=2YotnFZFEjr1zCsicMWpAA&state=abcdsxadsa&token_type=bearer&expires_in=3600
+
+   #. Menus management application start page stores the access token into the application space (session storage might be used for this).
+      It is recommended to validate received state in order to ensure it corresponds to the initial request.
+
+This is it. Using the access token, end user can easily access desired functionality. Moreover, using the access token,
+menus management application can easily invoke apis.

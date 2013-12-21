@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OAUTH2 &mdash; fantastico 0.5.1-b131 documentation</title>
+    <title>OAUTH2 &mdash; fantastico 0.6.0-b132 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5.1-b131',
+        VERSION:     '0.6.0-b132',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.5.1-b131 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b132 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
     <link rel="next" title="Example (Simple Menu API)" href="oauth2/simple_api_example.html" />
     <link rel="prev" title="10040 - Resource item not found" href="roa/errors/error_10040.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="roa/errors/error_10040.html" title="10040 - Resource item not found"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.1-b131 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>  
@@ -74,13 +74,12 @@
 documentation.</p>
 <div class="section" id="fantastico-security">
 <h2>Fantastico security<a class="headerlink" href="#fantastico-security" title="Permalink to this headline">¶</a></h2>
-<p>In order to keep things as simple as possible, in Fantastico we currently support only <strong>authorization code grant</strong>. Moreover,
+<p>In order to keep things as simple as possible, in Fantastico we currently support only <strong>implicit grant</strong>. Moreover,
 you can find some particularities of Fantastico implementation:</p>
 <blockquote>
 <div><ul class="simple">
-<li>We only support <strong>Authorization code grant</strong> (for all use cases where protected resources are involved).</li>
-<li>We only support <strong>Resource owner password credentials grant</strong> for Anonymous access to resources.</li>
-<li>We fully support scopes</li>
+<li>We only support <strong>Implicit grant</strong> (for all use cases where protected resources are involved).</li>
+<li>We fully support scopes.</li>
 <li>We support state parameter for avoiding Cross Site Request Forgery</li>
 </ul>
 </div></blockquote>
@@ -89,37 +88,17 @@ you can find some particularities of Fantastico implementation:</p>
 <li class="toctree-l1"><a class="reference internal" href="oauth2/simple_api_example.html">Example (Simple Menu API)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#terminology">Terminology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#display-all-menus">Display all menus</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#create-a-new-menu">Create a new menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#update-an-existing-menu">Update an existing menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#delete-an-existing-menu">Delete an existing menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#cautions">Cautions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/simple_api_example.html#managing-menus">Managing menus.</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="oauth2/tokens_format.html">OAUTH2 Fantastico Tokens</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_format.html#authorization-code-structure">Authorization code structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_format.html#access-token-structure">Access token structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_format.html#obtaining-access-tokens">Obtaining access tokens</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="oauth2/tokens_storage.html">OAUTH2 Fantastico Tokens Storage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_storage.html#relational-storage">Relational storage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="oauth2/tokens_storage.html#clients-registration">Clients registration</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/tokens_storage.html#nosql">NoSQL</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="oauth2/tokens_format.html">OAUTH2 Fantastico Tokens</a></li>
 <li class="toctree-l1"><a class="reference internal" href="oauth2/error_responses.html">OAUTH2 Fantastico Error Responses</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="oauth2/error_responses.html#authorize">/authorize</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="oauth2/compatible_idp.html">OAUTH2 Fantastico IDP</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="oauth2/compatible_idp.html#endpoints">Endpoints</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="oauth2/compatible_idp.html#authenticate">/authenticate</a></li>
-<li class="toctree-l3"><a class="reference internal" href="oauth2/compatible_idp.html#consent">/consent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="oauth2/compatible_idp.html#profile">/profile</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="oauth2/app_registration.html">OAUTH2 Fantastico App registration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/app_registration.html#app-registration-extension">App registration extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oauth2/app_registration.html#manual-registration">Manual registration</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="oauth2/roa_security.html">ROA OAUTH2 Security</a></li>
@@ -184,7 +163,7 @@ you can find some particularities of Fantastico implementation:</p>
         <li class="right" >
           <a href="roa/errors/error_10040.html" title="10040 - Resource item not found"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.5.1-b131 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li>
           <li><a href="features.html" >Fantastico features</a> &raquo;</li> 
       </ul>
     </div>

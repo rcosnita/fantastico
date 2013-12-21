@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{December 07, 2013}
-\release{0.5.1-b131}
+\date{December 21, 2013}
+\release{0.6.0-b132}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -786,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5b37490\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x6b8c9e0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -2091,7 +2091,7 @@ Add a category resource and try to make tasks belong to one or more categories. 
 from collection ROA APIs works perfectly with relationships.
 
 \item {} 
-Separate ROA APIs domain from application domain. (e.g {\color{red}\bfseries{}{}`http://api.todo.com{}`\_}).
+Separate ROA APIs domain from application domain. (e.g \href{http://api.todo.com}{http://api.todo.com}).
 
 \item {} 
 You are ready to rock.
@@ -3567,7 +3567,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x27ee408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x3125408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -5935,17 +5935,14 @@ documentation.
 
 \subsection{Fantastico security}
 \label{features/oauth2:fantastico-security}
-In order to keep things as simple as possible, in Fantastico we currently support only \textbf{authorization code grant}. Moreover,
+In order to keep things as simple as possible, in Fantastico we currently support only \textbf{implicit grant}. Moreover,
 you can find some particularities of Fantastico implementation:
 \begin{itemize}
 \item {} 
-We only support \textbf{Authorization code grant} (for all use cases where protected resources are involved).
+We only support \textbf{Implicit grant} (for all use cases where protected resources are involved).
 
 \item {} 
-We only support \textbf{Resource owner password credentials grant} for Anonymous access to resources.
-
-\item {} 
-We fully support scopes
+We fully support scopes.
 
 \item {} 
 We support state parameter for avoiding Cross Site Request Forgery
@@ -6025,10 +6022,10 @@ In the above example, Simple Menu is a resource owned by a system (global resour
 are granted at least one scope required by the resource:
 \begin{itemize}
 \item {} 
-Everyone has anonymous access to the menu
+Everyone has anonymous (read) access to the menus.
 
 \item {} 
-Everyone granted \textbf{simple\_menus.create},**simple\_menus.update** or \textbf{simple\_menus.delete} permissions is Resource Owner.
+Everyone granted \textbf{simple\_menus.create},**simple\_menus.update** or \textbf{simple\_menus.delete} can manage (CRUD) existing menus.
 
 \end{itemize}
 
@@ -6039,378 +6036,112 @@ It is important to understand that permissions are called \textbf{scopes} in OAU
 \label{features/oauth2/simple_api_example:display-all-menus}
 \includegraphics{simple_menu_read.png}
 
-As you can see in the above example, each \textbf{Fantastico} project will benefit from an \textbf{Anonymous} user. This user is considered
-the \textbf{Resource owner} for all public accessible resources. This mean, that each visitor of a Fantastico application will not
-be forced to authenticate when it is not necessary (\textbf{e.g display website menubar}).
+As you can see in the above example read access is pretty straightforward because the read endpoint (route) does not require
+authorization (specific scopes).
 
 
-\paragraph{Create a new menu}
-\label{features/oauth2/simple_api_example:create-a-new-menu}\label{features/oauth2/simple_api_example:oauth-create-new-menu}
+\paragraph{Managing menus.}
+\label{features/oauth2/simple_api_example:oauth-create-new-menu}\label{features/oauth2/simple_api_example:managing-menus}
 \includegraphics{simple_menu_create.png}
 
-The above diagram specifies only the standard steps from OAUTH2 specification. In reality, when authorize endpoint is reached
-\textbf{End user} browser is redirected to a login screen. Once logged in, \textbf{End user} browser is redirected back to \textbf{/authorize}
-url from where he is granted an authorization code.
-
-Once the user is granted an authorization code, he will exchange the authorization code for an access\_token. With the newly
-obtained access token he can easily create a new simple menu.
-
-
-\paragraph{Update an existing menu}
-\label{features/oauth2/simple_api_example:update-an-existing-menu}
-It is similar to {\hyperref[features/oauth2/simple_api_example:oauth-create-new-menu]{\emph{Create a new menu}}} with the only difference that the final API called is
-\textbf{PUT /api/1.0/simple-menus/:id}.
-
-
-\paragraph{Delete an existing menu}
-\label{features/oauth2/simple_api_example:delete-an-existing-menu}
-It is similar to {\hyperref[features/oauth2/simple_api_example:oauth-create-new-menu]{\emph{Create a new menu}}} with the only difference that the final API called is
-\textbf{DELETE /api/1.0/simple-menus/:id}.
-
-
-\paragraph{Cautions}
-\label{features/oauth2/simple_api_example:cautions}
-You must understand the following steps are one time:
+The above diagram assumes an application exists for managing \textbf{menus}. This application (extension) consist of a set of frontend
+controllers which renders only markup and a set of \textbf{REST APIs} described above. The above diagram assumes \textbf{End user} uses an
+user agent capable of supporting HTTP protocol. Below you can find the http calls made:
 \begin{enumerate}
 \item {} 
-Authenticate user
+Unauthenticated user requests:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+GET \PYGZhy{} /simple\PYGZhy{}menus/ui/index?state=abcdsxadsa
+\end{Verbatim}
 
 \item {} 
-Obtain authorization code
+Fantastico filter detects the route requires permissions (scopes).
+\begin{enumerate}
+\item {} 
+It checks to see if user is authenticated or not.
 
 \item {} 
-Obtain access token
+Unauthenticated user is redirected to Fantastico IDP login page.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+GET - /oauth/idp/login?client\_id=simple-menus\&return\_url=\%2Fsimple-menus\%2Fui\%2Findex\%26state\%3Dabcdsxadsa
+\end{Verbatim}
+
+\item {} 
+User authenticates successfully.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+GET - /oauth/authorize?client\_id=simple-menus\&return\_url=\%2Fsimple-menus\%2Fui\%2Findex\%26state\%3Dabcdsxadsa
+\end{Verbatim}
+
+\item {} 
+Authorization server correctly authorizes the client and generates an access token.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+HTTP/1.1 302 Found
+Location: /simple-menus/ui/index\#access\_token=2YotnFZFEjr1zCsicMWpAA\&state=abcdsxadsa\&token\_type=bearer\&expires\_in=3600
+\end{Verbatim}
 
 \end{enumerate}
 
-Once the token expires, the flow will start again from step \textbf{1.1}.
+\item {} 
+Menus management application start page stores the access token into the application space (session storage might be used for this).
+It is recommended to validate received state in order to ensure it corresponds to the initial request.
+
+\end{enumerate}
+
+This is it. Using the access token, end user can easily access desired functionality. Moreover, using the access token,
+menus management application can easily invoke apis.
 
 
 \subsubsection{OAUTH2 Fantastico Tokens}
 \label{features/oauth2/tokens_format:oauth2-fantastico-tokens}\label{features/oauth2/tokens_format::doc}
-In Fantastico, authorization codes and access tokens are opaque values for all humans (encrypted). They contain information into
-them used for easily invalidating them and expiring them. In addition, they do not require a persistent store and allows
-endpoint authorization without storage calls (increased performance and response time).
+In Fantastico framework there are currently two type of supported tokens:
+\begin{itemize}
+\item {} 
+Authenticated user token.
+\begin{quote}
 
-
-\paragraph{Authorization code structure}
-\label{features/oauth2/tokens_format:authorization-code-structure}
-Authorization codes are opaque values for humans with the following structure (encrypted):
+An opaque value used to prove the requester (end user) is indeed authenticated. This token is set once by the Fantastico IDP
+login page and lives a long time (couple of weeks). The structure of this opaque value as seen on server side is presented
+below:
 \begin{quote}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{p}{\PYGZob{}}
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}user\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}creation\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137651\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}expiration\PYGZus{}tim\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380163800\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+\end{quote}
+\end{quote}
+
+\item {} 
+Access token
+\begin{quote}
+
+An opaque value used to allow applications to access resource owner resources (images, documents, menus, etc). Below you can
+find the access token structure, as seen on server side:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}client\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZhy{}menus\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}encrypted\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}
+   \PYG{l+s+s2}{\PYGZdq{}client\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZhy{}menus\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}user\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
    \PYG{l+s+s2}{\PYGZdq{}scopes\PYGZdq{}}\PYG{o}{:} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.create\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.update\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.delete\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
-   \PYG{l+s+s2}{\PYGZdq{}userid\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
-   \PYG{l+s+s2}{\PYGZdq{}state\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}unique generated value\PYGZdq{}}\PYG{p}{,}
-   \PYG{l+s+s2}{\PYGZdq{}creation\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137542\PYGZdq{}}\PYG{p}{,}
-   \PYG{l+s+s2}{\PYGZdq{}expiration\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137651\PYGZdq{}}
+   \PYG{l+s+s2}{\PYGZdq{}creation\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137651\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}expiration\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380163800\PYGZdq{}}
+ \PYG{p}{\PYGZcb{}}
 \PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 \end{quote}
-
-Each authorization code from Fantastico OAUTH2 implementation contains the following fields:
-\begin{enumerate}
-\item {} 
-scopes
-\begin{itemize}
-\item {} 
-A JSON list of scopes for which this token was generated. (this will be transmitted to the access token)
-
-\end{itemize}
-
-\item {} 
-user id
-\begin{itemize}
-\item {} 
-user unique identifier (possibly email address) which can be used to obtain additional information about the user.
-
-\end{itemize}
-
-\item {} 
-state
-\begin{itemize}
-\item {} 
-A key uniquely generated and hard to guess.
-
-\item {} 
-It is used to protect against \textbf{Cross Site Request Forgery (CSRF)}.
-
-\end{itemize}
-
-\item {} 
-creation\_time
-\begin{itemize}
-\item {} 
-The timestamp when this token was generated.
-
-\end{itemize}
-
-\item {} 
-expiration\_time
-\begin{itemize}
-\item {} 
-The timestamp when this token expires (must be a really short period - 1min).
-
-\end{itemize}
-
-\end{enumerate}
-
-
-\paragraph{Access token structure}
-\label{features/oauth2/tokens_format:access-token-structure}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYGZob{}
-   "code": "\textless{}authorization code used for obtaining the token\textgreater{}",
-   "scopes": ["simple\_menus.create", "simple\_menus.update", "simple\_menus.delete"],
-   "user": \PYGZob{}
-      "id": 1,
-      "email: "john.doe@gmail.com",
-      "first\_name": "John",
-      "last\_name": "Doe"
-   \PYGZcb{},
-   "state": "unique generated value",
-   "creation\_time": "1380137651",
-   "expiration\_time": "1380163800"
-\PYGZcb{}
-\end{Verbatim}
-
-Each access token from Fantastico OAUTH2 implementation contains the following fields:
-\begin{enumerate}
-\item {} 
-code
-\begin{itemize}
-\item {} 
-The authorization code used for obtaining this access token. It only applies for authorization code grant type.
-
-\end{itemize}
-
-\item {} 
-scopes
-\begin{itemize}
-\item {} 
-A JSON list of scopes for which this token was generated. (used for endpoint authorization).
-
-\end{itemize}
-
-\item {} 
-user id
-\begin{itemize}
-\item {} 
-User unique identifier (used for obtaining additional information about an user).
-
-\end{itemize}
-
-\item {} 
-user email address
-\begin{itemize}
-\item {} 
-User email address (as stored in his profile).
-
-\end{itemize}
-
-\item {} 
-user first name
-\begin{itemize}
-\item {} 
-Might be used in certain secure components.
-
-\end{itemize}
-
-\item {} 
-user last name
-\begin{itemize}
-\item {} 
-Might be used in certain secure components.
-
-\end{itemize}
-
-\item {} 
-state
-\begin{itemize}
-\item {} 
-A key uniquely generated and hard to guess.
-
-\item {} 
-It is used to protect against \textbf{Cross Site Request Forgery (CSRF)}.
-
-\end{itemize}
-
-\item {} 
-creation\_time
-\begin{itemize}
-\item {} 
-A timestamp indicating the date when this token was generated.
-
-\end{itemize}
-
-\item {} 
-expiration\_time
-\begin{itemize}
-\item {} 
-A timestamp indicating the date when this token is going to expire.
-
-\end{itemize}
-
-\end{enumerate}
-
-
-\paragraph{Obtaining access tokens}
-\label{features/oauth2/tokens_format:obtaining-access-tokens}
-In order to obtain an access token which can be used for calling \textbf{Fantastico} APIs requires the following:
-\begin{enumerate}
-\item {} 
-Obtain an authorization code
-
-\begin{Verbatim}[commandchars=\\\{\}]
-GET /authorize?response\_type=code\&client\_id=s6BhdRkqt3\&state=xyz\&redirect\_uri=https\%3A\%2F\%2Fclient\%2fantasticoproject\%2Ecom\%2Fcb\&scopes=simple\_menus.create\%20simple\_menus.update\%20simple\_menus.delete HTTP/1.1
-Host: oauth2.fantasticoproject.com
-\end{Verbatim}
-
-\item {} 
-client.fantasticoproject.com/cb?code=\textless{}unique one time only code\textgreater{}\&state=\textless{}unique generated state\textgreater{}
-\begin{itemize}
-\item {} 
-Automatically obtain an access token starting from the given autorization code.
-\begin{quote}
-
-\begin{Verbatim}[commandchars=\\\{\}]
-POST /token HTTP/1.1
-Host: client.fantasticoproject.com
-Content\PYGZhy{}Type: application/json
-
-\PYGZob{}
-    \PYGZdq{}grant\PYGZus{}type\PYGZdq{}: \PYGZdq{}authorization\PYGZus{}code\PYGZdq{},
-    \PYGZdq{}code\PYGZdq{}: \PYG{n+nt}{\PYGZlt{}unique} \PYG{n+na}{one} \PYG{n+na}{time} \PYG{n+na}{only} \PYG{n+na}{code}\PYG{n+nt}{\PYGZgt{}},
-    \PYGZdq{}redirect\PYGZus{}uri\PYGZdq{}: \PYGZdq{}https\PYGZpc{}3A\PYGZpc{}2F\PYGZpc{}2Fclient\PYGZpc{}2Eexample\PYGZpc{}2Ecom\PYGZpc{}2Fcb\PYGZdq{},
-    \PYGZdq{}state\PYGZdq{}: \PYGZdq{}unique generated value\PYGZdq{}
-\PYGZcb{}
-\end{Verbatim}
 \end{quote}
 
 \end{itemize}
 
-\item {} 
-provide access token for client usage
-
-\begin{Verbatim}[commandchars=\\\{\}]
-\PYG{p}{\PYGZob{}}
-   \PYG{l+s+s2}{\PYGZdq{}access\PYGZus{}token\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}encrypted token containing all specified information\PYGZdq{}}\PYG{p}{,}
-   \PYG{l+s+s2}{\PYGZdq{}token\PYGZus{}type\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}bearer\PYGZdq{}}\PYG{p}{,}
-   \PYG{l+s+s2}{\PYGZdq{}expires\PYGZus{}in\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{900}
-\PYG{p}{\PYGZcb{}}
-\end{Verbatim}
-
-\end{enumerate}
-
-
-\subsubsection{OAUTH2 Fantastico Tokens Storage}
-\label{features/oauth2/tokens_storage::doc}\label{features/oauth2/tokens_storage:oauth2-fantastico-tokens-storage}
-For OAUTH2, we need a Relational storage as well as a NoSQL.
-
-
-\paragraph{Relational storage}
-\label{features/oauth2/tokens_storage:relational-storage}
-In the relational storage we will hold all information describing registered clients as well as their configuration. Each client
-is described by the following attributes:
-\begin{enumerate}
-\item {} 
-client\_id
-\begin{itemize}
-\item {} 
-Client unique identifier.
-
-\end{itemize}
-
-\item {} 
-client\_name
-\begin{itemize}
-\item {} 
-A user friendly client\_name: e.g (fantastico\_admin)
-
-\end{itemize}
-
-\item {} 
-client\_secret
-\begin{itemize}
-\item {} 
-A client secret key used for signing every authorization code and every token type.
-
-\end{itemize}
-
-\item {} 
-required\_scopes
-\begin{itemize}
-\item {} 
-Holds a list of all required scopes of this client.
-
-\end{itemize}
-
-\item {} 
-grant\_type
-\begin{itemize}
-\item {} 
-Holds the supported grant type for this client.
-
-\item {} 
-Only \textbf{authorization\_code} and \textbf{password} are valid values.
-
-\end{itemize}
-
-\item {} 
-idp
-\begin{itemize}
-\item {} 
-Holds the Identity Provider Identifier which can authenticate users for this client.
-
-\end{itemize}
-
-\item {} 
-otp\_expiration\_interval
-\begin{itemize}
-\item {} 
-Holds the number of seconds for which a one time token is valid (e.g \textbf{60}).
-
-\end{itemize}
-
-\item {} 
-access\_expiration\_time
-\begin{itemize}
-\item {} 
-Holds the number of seconds for which access tokens are valid (e.g \textbf{3600})
-
-\end{itemize}
-
-\end{enumerate}
-
-
-\subparagraph{Clients registration}
-\label{features/oauth2/tokens_storage:clients-registration}
-Clients registration in \textbf{Fantastico} is done manually by inserting new records into \textbf{clients} table.
-
-
-\paragraph{NoSQL}
-\label{features/oauth2/tokens_storage:nosql}
-All available authorization codes and tokens are available into a NoSQL (in memory) storage.
-
-\includegraphics{tokens_storage.png}
-
-Initially only \textbf{MemoryStore} will be supported but the storage can be easily changed with other implementations. Ideally,
-Fantastico OAUTH2 implementation will provide the following tokens storage:
-\begin{itemize}
-\item {} 
-Amazon DynamoDb tokens storage.
-
-\item {} 
-Memcache tokens storage.
-
-\item {} 
-MongoDB tokens storage.
-
-\item {} 
-Redis tokens storage.
-
-\end{itemize}
+All supported tokens are symmetrical encrypted by Fantastico on server side and though become opaque for the user agent. Currently,
+AES-256 is used for encryption.
 
 
 \subsubsection{OAUTH2 Fantastico Error Responses}
@@ -6440,7 +6171,7 @@ or is otherwise malformed.
 unsupported\_response\_type
 \begin{quote}
 
-The authorization server does not support obtaining an authorization code using this method.
+The authorization server does not support obtaining an authorization / access token code using this method.
 \end{quote}
 
 \item {} 
@@ -6459,7 +6190,7 @@ The requested scope is invalid, unknown, or malformed.
 unauthorized\_client
 \begin{quote}
 
-The client is not authorized to request an authorization code using this method.
+The client is not authorized to request an authorization code / access token using this method.
 \end{quote}
 
 \end{itemize}
@@ -6497,80 +6228,106 @@ with additional information about the error.
 \end{itemize}
 
 
-\subsubsection{OAUTH2 Fantastico IDP}
-\label{features/oauth2/compatible_idp:oauth2-fantastico-idp}\label{features/oauth2/compatible_idp::doc}
-In this document you can find information about the requirements for an OAUTH2 Fantastico Identity Provider.
+\subsubsection{OAUTH2 Fantastico App registration}
+\label{features/oauth2/app_registration::doc}\label{features/oauth2/app_registration:oauth2-fantastico-app-registration}
+In order to be able to develop secure applications on Fantastico, you must first register them in order to be able to obtain
+access tokens. Before moving forward to see supported ways to register applications into a project it is important to understand
+the data structure presented below:
 
+\includegraphics{clients_storage.png}
 
-\paragraph{Endpoints}
-\label{features/oauth2/compatible_idp:endpoints}
-
-\subparagraph{/authenticate}
-\label{features/oauth2/compatible_idp:authenticate}
-This endpoint is responsible for authenticating a resource owner. Optionally, it can ask the user to accept terms of use and
-to grant required permissions to the application. Consent given for an application will contain all scopes for which it was
-signed.
-
-Below you can find an authenticate request initiated by OAUTH2 Fantastico authorization server:
+Summarizing the diagram above, a client is described by:
+\begin{itemize}
+\item {} 
+\textbf{client\_id}
 \begin{quote}
 
-\begin{Verbatim}[commandchars=\\\{\}]
-GET /authenticate?client\_id=s6BhdRkqt\&state=xyz\&redirect\_uri=https\%3A\%2F\%2Fclient\%2fantasticoproject\%2Ecom\%2Fcb\%3Fclient\_id\%3Ds6BhdRkqt\%26state\%3D\&scopes=simple\_menus.create\%20simple\_menus.update\%20simple\_menus.delete HTTP/1.1
-Host: idp.fantasticoproject.com
-Referrer: http://oauth2.fantasticoproject.com/authorize
-\end{Verbatim}
+A global unique identifier for the application within a Fantastico project.
 \end{quote}
 
-Once the authenticate endpoint authenticate an user and obtain his consent for client required permissions the following redirect
-is done:
+\item {} 
+\textbf{name}
 \begin{quote}
 
-\begin{Verbatim}[commandchars=\\\{\}]
-HTTP/1.1 302 Found
-Location: http://oauth2.fantasticoproject.com/authorize?client\_id=s6BhdRkqt\&state=xyz\&redirect\_uri=https\%3A\%2F\%2Fclient\%2fantasticoproject\%2Ecom\%2Fcb\%3Fclient\_id\%3Ds6BhdRkqt\%26state\%3D\&scopes=simple\_menus.create\%20simple\_menus.update\%20simple\_menus.delete\&response\_type=code\&userid=123
-\end{Verbatim}
+A friendly name which accurately describes what is the purpose of this application.
 \end{quote}
 
-Now the authorize endpoint will obtain an authorization code ({\hyperref[features/oauth2/tokens_format::doc]{\emph{OAUTH2 Fantastico Tokens}}}). Based on the userid,
-the endpoint will double check user consent with the idp in order to avoid attacks.
-
-
-\subparagraph{/consent}
-\label{features/oauth2/compatible_idp:consent}
-This endpoint supports the following operations:
-\begin{itemize}
 \item {} 
-GET /consents/:userid?scopes=:scopes HTTP/1.1
-\begin{itemize}
-\item {} 
-This operation can response with 204 if consent was given or 403 if the consent was not given by resource owner.
+\textbf{description}
+\begin{quote}
+
+(Optional) A human readable text detailing the benefits of this application.
+\end{quote}
 
 \item {} 
-In addition it can return 400 if the scopes query parameter is not given.
+\textbf{grant\_types}
+\begin{quote}
+
+A comma separated list of values describing what OAuth 2 grant types this client can use in order to obtain an access token.
+\end{quote}
+
+\item {} 
+\textbf{scopes}
+\begin{quote}
+
+This is a list of scopes this application is authorized to use.
+\end{quote}
+
+\item {} 
+\textbf{token\_iv}
+\begin{quote}
+
+A 128 bits initialization vector specific to this client used to initialize AES algorithm.
+\end{quote}
+
+\item {} 
+\textbf{token\_key}
+\begin{quote}
+
+A (128 / 192 / 256) bits key used for AES algorithm.
+\end{quote}
 
 \end{itemize}
 
-\end{itemize}
 
-
-\subparagraph{/profile}
-\label{features/oauth2/compatible_idp:profile}
-This endpoint supports the following operations:
-\begin{itemize}
+\paragraph{App registration extension}
+\label{features/oauth2/app_registration:app-registration-extension}
+This is a Fantastico extension used to allow new apps registration into an existing project. In order to enable this extension
+in your project follow the steps below:
+\begin{enumerate}
 \item {} 
-GET /profiles/:userid HTTP/1.1
-\begin{itemize}
-\item {} 
-This operation returns given user profile.
+Activate the extension.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk activate\PYGZhy{}extenstion \PYGZhy{}\PYGZhy{}name oauth2\PYGZhy{}registration \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}your components root folder\PYGZgt{}
+\end{Verbatim}
 
 \item {} 
-It needs a valid access token.
+Synchronize database.
 
-\end{itemize}
+\begin{Verbatim}[commandchars=\\\{\}]
+fsdk syncdb \PYGZhy{}\PYGZhy{}db\PYGZhy{}command /usr/bin/mysql \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}your components root folder\PYGZgt{}
+\end{Verbatim}
 
-\end{itemize}
+\item {} 
+Start your development server.
 
-At the moment, users are manually created and there is no API provided.
+\item {} 
+Access \href{http://localhost:12000/oauth/oauth2-registration/index}{http://localhost:12000/oauth/oauth2-registration/index}
+
+\end{enumerate}
+
+You can find more information about this extension on \code{/features/components/oauth2/app\_registration/index}.
+
+
+\paragraph{Manual registration}
+\label{features/oauth2/app_registration:manual-registration}
+Even if it's really easy to use the frontend for registering applications, when you will migrate your project to production
+you will definitely want to automatically register the applications using a script. The easiest way is to dump \textbf{RegisteredClients}
+table content into a \textbf{create\_data.sql} script placed under your main component.
+
+By doing this, next time you sync your database in production using {\hyperref[features/sdk::doc]{\emph{SDK}}} it will preregister all necessary
+applications. Please make sure you do not include \textbf{oauth2-registration} client id. This is automatically added by the extension.
 
 
 \subsubsection{ROA OAUTH2 Security}
@@ -6740,7 +6497,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x2cbe2f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x35f52f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -7285,7 +7042,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x40bc408\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x49e4628\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -7960,13 +7717,30 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 \section{Versions}
 \label{changes:versions}\begin{itemize}
 \item {} 
+v0.6.0 (\href{https://docs.google.com/forms/d/1tKBopU3lfDB\_w8F4h7Rl1Rn4uydAJq-nha09L\_ptJck/edit?usp=sharing}{Provide feedback})
+\begin{itemize}
+\item {} 
+Add implicit grant type implementation.
+
+\item {} 
+Add registration frontend for new clients.
+
+\item {} 
+Add security support for endpoints / controllers.
+
+\item {} 
+Add Fantastico identity provider.
+
+\end{itemize}
+
+\item {} 
 v0.5.1 (\href{https://docs.google.com/forms/d/1tKBopU3lfDB\_w8F4h7Rl1Rn4uydAJq-nha09L\_ptJck/edit?usp=sharing}{Provide feedback})
 \begin{itemize}
 \item {} 
 Add a tutorial for creating TODO application based on ROA. (\href{http://rcosnita.github.io/fantastico/html/how\_to/todo/index.html}{http://rcosnita.github.io/fantastico/html/how\_to/todo/index.html})
 
 \item {} 
-Deployed TODO web application on a public accessible server. ({\color{red}\bfseries{}{}`\textless{}http://todo.fantastico.scrum-expert.ro/frontend/ui/index{}`\_})
+Deployed TODO web application on a public accessible server. (\href{http://todo.fantastico.scrum-expert.ro/frontend/ui/index}{http://todo.fantastico.scrum-expert.ro/frontend/ui/index})
 
 \item {} 
 Fix roa discovery component fsdk syncdb bug on subsequent runs.

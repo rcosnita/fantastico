@@ -125,65 +125,53 @@
 \contentsline {subsubsection}{Example (Simple Menu API)}{73}{subsubsection*.260}
 \contentsline {paragraph}{Terminology}{73}{paragraph*.261}
 \contentsline {paragraph}{Display all menus}{73}{paragraph*.262}
-\contentsline {paragraph}{Create a new menu}{74}{paragraph*.263}
-\contentsline {paragraph}{Update an existing menu}{74}{paragraph*.264}
-\contentsline {paragraph}{Delete an existing menu}{74}{paragraph*.265}
-\contentsline {paragraph}{Cautions}{74}{paragraph*.266}
-\contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{74}{subsubsection*.267}
-\contentsline {paragraph}{Authorization code structure}{75}{paragraph*.268}
-\contentsline {paragraph}{Access token structure}{75}{paragraph*.269}
-\contentsline {paragraph}{Obtaining access tokens}{76}{paragraph*.270}
-\contentsline {subsubsection}{OAUTH2 Fantastico Tokens Storage}{77}{subsubsection*.271}
-\contentsline {paragraph}{Relational storage}{77}{paragraph*.272}
-\contentsline {subparagraph}{Clients registration}{77}{subparagraph*.273}
-\contentsline {paragraph}{NoSQL}{77}{paragraph*.274}
-\contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{78}{subsubsection*.275}
-\contentsline {paragraph}{/authorize}{78}{paragraph*.276}
-\contentsline {subsubsection}{OAUTH2 Fantastico IDP}{79}{subsubsection*.277}
-\contentsline {paragraph}{Endpoints}{79}{paragraph*.278}
-\contentsline {subparagraph}{/authenticate}{79}{subparagraph*.279}
-\contentsline {subparagraph}{/consent}{79}{subparagraph*.280}
-\contentsline {subparagraph}{/profile}{79}{subparagraph*.281}
-\contentsline {subsubsection}{ROA OAUTH2 Security}{80}{subsubsection*.282}
-\contentsline {section}{\numberline {4.7}SDK}{80}{section.4.7}
-\contentsline {subsection}{\numberline {4.7.1}Intro}{80}{subsection.4.7.1}
-\contentsline {subsection}{\numberline {4.7.2}Usage}{80}{subsection.4.7.2}
-\contentsline {subsection}{\numberline {4.7.3}Supported commands}{81}{subsection.4.7.3}
-\contentsline {subsubsection}{Activate extension command}{81}{subsubsection*.283}
-\contentsline {subsubsection}{Fantastico command}{81}{subsubsection*.288}
-\contentsline {subsubsection}{Syncdb command}{81}{subsubsection*.289}
-\contentsline {subsubsection}{Version command}{82}{subsubsection*.294}
-\contentsline {subsection}{\numberline {4.7.4}Technical summary}{83}{subsection.4.7.4}
-\contentsline {section}{\numberline {4.8}Component model}{85}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}Static folder}{86}{subsection.4.8.1}
-\contentsline {subsection}{\numberline {4.8.2}Sql folder}{86}{subsection.4.8.2}
-\contentsline {subsubsection}{Sql folder example}{86}{subsubsection*.318}
-\contentsline {section}{\numberline {4.9}Component reusage}{87}{section.4.9}
-\contentsline {section}{\numberline {4.10}Built in components}{89}{section.4.10}
-\contentsline {subsection}{\numberline {4.10.1}Dynamic menu}{89}{subsection.4.10.1}
-\contentsline {subsubsection}{Integration}{89}{subsubsection*.322}
-\contentsline {paragraph}{Component files activation deprecated}{89}{paragraph*.323}
-\contentsline {paragraph}{Component files activation (SDK)}{89}{paragraph*.324}
-\contentsline {paragraph}{Component sample + db data}{89}{paragraph*.325}
-\contentsline {subsubsection}{Current limitations}{90}{subsubsection*.326}
-\contentsline {subsubsection}{Technical summary}{90}{subsubsection*.327}
-\contentsline {subsection}{\numberline {4.10.2}Dynamic pages}{91}{subsection.4.10.2}
-\contentsline {subsubsection}{Integration}{91}{subsubsection*.332}
-\contentsline {subsubsection}{Current limitations}{92}{subsubsection*.333}
-\contentsline {subsubsection}{Technical summary}{92}{subsubsection*.334}
-\contentsline {subsection}{\numberline {4.10.3}Tracking codes}{94}{subsection.4.10.3}
-\contentsline {subsubsection}{Analytic solutions}{94}{subsubsection*.339}
-\contentsline {subsubsection}{Integration}{94}{subsubsection*.340}
-\contentsline {subsubsection}{Current limitations}{95}{subsubsection*.341}
-\contentsline {subsubsection}{Technical summary}{95}{subsubsection*.342}
-\contentsline {subsection}{\numberline {4.10.4}ROA Auto discovery}{95}{subsection.4.10.4}
-\contentsline {subsubsection}{Integration}{96}{subsubsection*.347}
-\contentsline {subsubsection}{Current limitations}{96}{subsubsection*.348}
-\contentsline {subsubsection}{Technical summary}{96}{subsubsection*.349}
-\contentsline {chapter}{\numberline {5}Changes}{97}{chapter.5}
-\contentsline {section}{\numberline {5.1}Feedback}{97}{section.5.1}
-\contentsline {section}{\numberline {5.2}Versions}{97}{section.5.2}
-\contentsline {chapter}{\numberline {6}Provide feedback}{101}{chapter.6}
-\contentsline {chapter}{\numberline {7}Build status}{103}{chapter.7}
-\contentsline {chapter}{\numberline {8}License}{105}{chapter.8}
-\contentsline {chapter}{Index}{107}{section*.352}
+\contentsline {paragraph}{Managing menus.}{74}{paragraph*.263}
+\contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{74}{subsubsection*.264}
+\contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{75}{subsubsection*.265}
+\contentsline {paragraph}{/authorize}{75}{paragraph*.266}
+\contentsline {subsubsection}{OAUTH2 Fantastico App registration}{76}{subsubsection*.267}
+\contentsline {paragraph}{App registration extension}{77}{paragraph*.268}
+\contentsline {paragraph}{Manual registration}{77}{paragraph*.269}
+\contentsline {subsubsection}{ROA OAUTH2 Security}{77}{subsubsection*.270}
+\contentsline {section}{\numberline {4.7}SDK}{78}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}Intro}{78}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}Usage}{78}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.3}Supported commands}{78}{subsection.4.7.3}
+\contentsline {subsubsection}{Activate extension command}{78}{subsubsection*.271}
+\contentsline {subsubsection}{Fantastico command}{79}{subsubsection*.276}
+\contentsline {subsubsection}{Syncdb command}{79}{subsubsection*.277}
+\contentsline {subsubsection}{Version command}{80}{subsubsection*.282}
+\contentsline {subsection}{\numberline {4.7.4}Technical summary}{80}{subsection.4.7.4}
+\contentsline {section}{\numberline {4.8}Component model}{83}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Static folder}{84}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Sql folder}{84}{subsection.4.8.2}
+\contentsline {subsubsection}{Sql folder example}{84}{subsubsection*.306}
+\contentsline {section}{\numberline {4.9}Component reusage}{85}{section.4.9}
+\contentsline {section}{\numberline {4.10}Built in components}{87}{section.4.10}
+\contentsline {subsection}{\numberline {4.10.1}Dynamic menu}{87}{subsection.4.10.1}
+\contentsline {subsubsection}{Integration}{87}{subsubsection*.310}
+\contentsline {paragraph}{Component files activation deprecated}{87}{paragraph*.311}
+\contentsline {paragraph}{Component files activation (SDK)}{87}{paragraph*.312}
+\contentsline {paragraph}{Component sample + db data}{87}{paragraph*.313}
+\contentsline {subsubsection}{Current limitations}{88}{subsubsection*.314}
+\contentsline {subsubsection}{Technical summary}{88}{subsubsection*.315}
+\contentsline {subsection}{\numberline {4.10.2}Dynamic pages}{89}{subsection.4.10.2}
+\contentsline {subsubsection}{Integration}{89}{subsubsection*.320}
+\contentsline {subsubsection}{Current limitations}{90}{subsubsection*.321}
+\contentsline {subsubsection}{Technical summary}{90}{subsubsection*.322}
+\contentsline {subsection}{\numberline {4.10.3}Tracking codes}{91}{subsection.4.10.3}
+\contentsline {subsubsection}{Analytic solutions}{92}{subsubsection*.327}
+\contentsline {subsubsection}{Integration}{92}{subsubsection*.328}
+\contentsline {subsubsection}{Current limitations}{93}{subsubsection*.329}
+\contentsline {subsubsection}{Technical summary}{93}{subsubsection*.330}
+\contentsline {subsection}{\numberline {4.10.4}ROA Auto discovery}{93}{subsection.4.10.4}
+\contentsline {subsubsection}{Integration}{93}{subsubsection*.335}
+\contentsline {subsubsection}{Current limitations}{94}{subsubsection*.336}
+\contentsline {subsubsection}{Technical summary}{94}{subsubsection*.337}
+\contentsline {chapter}{\numberline {5}Changes}{95}{chapter.5}
+\contentsline {section}{\numberline {5.1}Feedback}{95}{section.5.1}
+\contentsline {section}{\numberline {5.2}Versions}{95}{section.5.2}
+\contentsline {chapter}{\numberline {6}Provide feedback}{99}{chapter.6}
+\contentsline {chapter}{\numberline {7}Build status}{101}{chapter.7}
+\contentsline {chapter}{\numberline {8}License}{103}{chapter.8}
+\contentsline {chapter}{Index}{105}{section*.340}

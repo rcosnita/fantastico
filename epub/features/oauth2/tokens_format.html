@@ -20,12 +20,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="tokens_storage.html" title="OAUTH2 Fantastico Tokens Storage"
+          <a href="error_responses.html" title="OAUTH2 Fantastico Error Responses"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="simple_api_example.html" title="Example (Simple Menu API)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.5.1-b131 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -37,151 +37,46 @@
             
   <div class="section" id="oauth2-fantastico-tokens">
 <h1>OAUTH2 Fantastico Tokens</h1>
-<p>In Fantastico, authorization codes and access tokens are opaque values for all humans (encrypted). They contain information into
-them used for easily invalidating them and expiring them. In addition, they do not require a persistent store and allows
-endpoint authorization without storage calls (increased performance and response time).</p>
-<div class="section" id="authorization-code-structure">
-<h2>Authorization code structure</h2>
-<p>Authorization codes are opaque values for humans with the following structure (encrypted):</p>
+<p>In Fantastico framework there are currently two type of supported tokens:</p>
 <blockquote>
-<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+<div><ul>
+<li><p class="first">Authenticated user token.</p>
+<blockquote>
+<div><p>An opaque value used to prove the requester (end user) is indeed authenticated. This token is set once by the Fantastico IDP
+login page and lives a long time (couple of weeks). The structure of this opaque value as seen on server side is presented
+below:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span><span class="s2">&quot;user_id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+ <span class="s2">&quot;creation_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137651&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;expiration_tim&quot;</span><span class="o">:</span> <span class="s2">&quot;1380163800&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first">Access token</p>
+<blockquote>
+<div><p>An opaque value used to allow applications to access resource owner resources (images, documents, menus, etc). Below you can
+find the access token structure, as seen on server side:</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span><span class="s2">&quot;client_id&quot;</span><span class="o">:</span> <span class="s2">&quot;simple-menus&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;encrypted&quot;</span><span class="o">:</span> <span class="p">{</span>
+   <span class="s2">&quot;client_id&quot;</span><span class="o">:</span> <span class="s2">&quot;simple-menus&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;user_id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
    <span class="s2">&quot;scopes&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;simple_menus.create&quot;</span><span class="p">,</span> <span class="s2">&quot;simple_menus.update&quot;</span><span class="p">,</span> <span class="s2">&quot;simple_menus.delete&quot;</span><span class="p">],</span>
-   <span class="s2">&quot;userid&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s2">&quot;state&quot;</span><span class="o">:</span> <span class="s2">&quot;unique generated value&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;creation_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137542&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;expiration_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137651&quot;</span>
+   <span class="s2">&quot;creation_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137651&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;expiration_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380163800&quot;</span>
+ <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div></blockquote>
-<p>Each authorization code from Fantastico OAUTH2 implementation contains the following fields:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>scopes<ul>
-<li>A JSON list of scopes for which this token was generated. (this will be transmitted to the access token)</li>
-</ul>
-</li>
-<li>user id<ul>
-<li>user unique identifier (possibly email address) which can be used to obtain additional information about the user.</li>
-</ul>
-</li>
-<li>state<ul>
-<li>A key uniquely generated and hard to guess.</li>
-<li>It is used to protect against <strong>Cross Site Request Forgery (CSRF)</strong>.</li>
-</ul>
-</li>
-<li>creation_time<ul>
-<li>The timestamp when this token was generated.</li>
-</ul>
-</li>
-<li>expiration_time<ul>
-<li>The timestamp when this token expires (must be a really short period - 1min).</li>
-</ul>
-</li>
-</ol>
-</div></blockquote>
-</div>
-<div class="section" id="access-token-structure">
-<h2>Access token structure</h2>
-<div class="highlight-javascript"><pre>{
-   &quot;code&quot;: &quot;&lt;authorization code used for obtaining the token&gt;&quot;,
-   &quot;scopes&quot;: [&quot;simple_menus.create&quot;, &quot;simple_menus.update&quot;, &quot;simple_menus.delete&quot;],
-   &quot;user&quot;: {
-      &quot;id&quot;: 1,
-      &quot;email: &quot;john.doe@gmail.com&quot;,
-      &quot;first_name&quot;: &quot;John&quot;,
-      &quot;last_name&quot;: &quot;Doe&quot;
-   },
-   &quot;state&quot;: &quot;unique generated value&quot;,
-   &quot;creation_time&quot;: &quot;1380137651&quot;,
-   &quot;expiration_time&quot;: &quot;1380163800&quot;
-}</pre>
-</div>
-<p>Each access token from Fantastico OAUTH2 implementation contains the following fields:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li>code<ul>
-<li>The authorization code used for obtaining this access token. It only applies for authorization code grant type.</li>
-</ul>
-</li>
-<li>scopes<ul>
-<li>A JSON list of scopes for which this token was generated. (used for endpoint authorization).</li>
-</ul>
-</li>
-<li>user id<ul>
-<li>User unique identifier (used for obtaining additional information about an user).</li>
-</ul>
-</li>
-<li>user email address<ul>
-<li>User email address (as stored in his profile).</li>
-</ul>
-</li>
-<li>user first name<ul>
-<li>Might be used in certain secure components.</li>
-</ul>
-</li>
-<li>user last name<ul>
-<li>Might be used in certain secure components.</li>
-</ul>
-</li>
-<li>state<ul>
-<li>A key uniquely generated and hard to guess.</li>
-<li>It is used to protect against <strong>Cross Site Request Forgery (CSRF)</strong>.</li>
-</ul>
-</li>
-<li>creation_time<ul>
-<li>A timestamp indicating the date when this token was generated.</li>
-</ul>
-</li>
-<li>expiration_time<ul>
-<li>A timestamp indicating the date when this token is going to expire.</li>
-</ul>
-</li>
-</ol>
-</div></blockquote>
-</div>
-<div class="section" id="obtaining-access-tokens">
-<h2>Obtaining access tokens</h2>
-<p>In order to obtain an access token which can be used for calling <strong>Fantastico</strong> APIs requires the following:</p>
-<blockquote>
-<div><ol class="arabic">
-<li><p class="first">Obtain an authorization code</p>
-<div class="highlight-html"><pre>GET /authorize?response_type=code&amp;client_id=s6BhdRkqt3&amp;state=xyz&amp;redirect_uri=https%3A%2F%2Fclient%2fantasticoproject%2Ecom%2Fcb&amp;scopes=simple_menus.create%20simple_menus.update%20simple_menus.delete HTTP/1.1
-Host: oauth2.fantasticoproject.com</pre>
-</div>
-</li>
-<li><p class="first">client.fantasticoproject.com/cb?code=&lt;unique one time only code&gt;&amp;state=&lt;unique generated state&gt;</p>
-<ul>
-<li><p class="first">Automatically obtain an access token starting from the given autorization code.</p>
-<blockquote>
-<div><div class="highlight-html"><div class="highlight"><pre>POST /token HTTP/1.1
-Host: client.fantasticoproject.com
-Content-Type: application/json
-
-{
-    &quot;grant_type&quot;: &quot;authorization_code&quot;,
-    &quot;code&quot;: <span class="nt">&lt;unique</span> <span class="na">one</span> <span class="na">time</span> <span class="na">only</span> <span class="na">code</span><span class="nt">&gt;</span>,
-    &quot;redirect_uri&quot;: &quot;https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb&quot;,
-    &quot;state&quot;: &quot;unique generated value&quot;
-}
-</pre></div>
-</div>
 </div></blockquote>
 </li>
 </ul>
-</li>
-<li><p class="first">provide access token for client usage</p>
-<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
-   <span class="s2">&quot;access_token&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;encrypted token containing all specified information&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;token_type&quot;</span><span class="o">:</span> <span class="s2">&quot;bearer&quot;</span><span class="p">,</span>
-   <span class="s2">&quot;expires_in&quot;</span><span class="o">:</span> <span class="mi">900</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</li>
-</ol>
 </div></blockquote>
-</div>
+<p>All supported tokens are symmetrical encrypted by Fantastico on server side and though become opaque for the user agent. Currently,
+AES-256 is used for encryption.</p>
 </div>
 
 

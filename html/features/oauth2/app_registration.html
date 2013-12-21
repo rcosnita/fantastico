@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>OAUTH2 Fantastico App registration &mdash; fantastico 0.6.0-b132 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.6.0-b132',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="fantastico 0.6.0-b132 documentation" href="../../index.html" />
+    <link rel="up" title="OAUTH2" href="../oauth2.html" />
+    <link rel="next" title="ROA OAUTH2 Security" href="roa_security.html" />
+    <link rel="prev" title="OAUTH2 Fantastico Error Responses" href="error_responses.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="roa_security.html" title="ROA OAUTH2 Security"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="error_responses.html" title="OAUTH2 Fantastico Error Responses"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="oauth2-fantastico-app-registration">
+<h1>OAUTH2 Fantastico App registration<a class="headerlink" href="#oauth2-fantastico-app-registration" title="Permalink to this headline">¶</a></h1>
+<p>In order to be able to develop secure applications on Fantastico, you must first register them in order to be able to obtain
+access tokens. Before moving forward to see supported ways to register applications into a project it is important to understand
+the data structure presented below:</p>
+<img alt="../../_images/clients_storage.png" src="../../_images/clients_storage.png" />
+<p>Summarizing the diagram above, a client is described by:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>client_id</strong></p>
+<blockquote>
+<div><p>A global unique identifier for the application within a Fantastico project.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>name</strong></p>
+<blockquote>
+<div><p>A friendly name which accurately describes what is the purpose of this application.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>description</strong></p>
+<blockquote>
+<div><p>(Optional) A human readable text detailing the benefits of this application.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>grant_types</strong></p>
+<blockquote>
+<div><p>A comma separated list of values describing what OAuth 2 grant types this client can use in order to obtain an access token.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>scopes</strong></p>
+<blockquote>
+<div><p>This is a list of scopes this application is authorized to use.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>token_iv</strong></p>
+<blockquote>
+<div><p>A 128 bits initialization vector specific to this client used to initialize AES algorithm.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>token_key</strong></p>
+<blockquote>
+<div><p>A (128 / 192 / 256) bits key used for AES algorithm.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="app-registration-extension">
+<h2>App registration extension<a class="headerlink" href="#app-registration-extension" title="Permalink to this headline">¶</a></h2>
+<p>This is a Fantastico extension used to allow new apps registration into an existing project. In order to enable this extension
+in your project follow the steps below:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Activate the extension.</p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk activate-extenstion --name oauth2-registration --comp-root &lt;your components root folder&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Synchronize database.</p>
+<div class="highlight-bash"><div class="highlight"><pre>fsdk syncdb --db-command /usr/bin/mysql --comp-root &lt;your components root folder&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Start your development server.</p>
+</li>
+<li><p class="first">Access <a class="reference external" href="http://localhost:12000/oauth/oauth2-registration/index">http://localhost:12000/oauth/oauth2-registration/index</a></p>
+</li>
+</ol>
+</div></blockquote>
+<p>You can find more information about this extension on <a class="reference internal" href="../components/oauth2/app_registration/index.html"><em>OAUTH2 application registration</em></a>.</p>
+</div>
+<div class="section" id="manual-registration">
+<h2>Manual registration<a class="headerlink" href="#manual-registration" title="Permalink to this headline">¶</a></h2>
+<p>Even if it&#8217;s really easy to use the frontend for registering applications, when you will migrate your project to production
+you will definitely want to automatically register the applications using a script. The easiest way is to dump <strong>RegisteredClients</strong>
+table content into a <strong>create_data.sql</strong> script placed under your main component.</p>
+<p>By doing this, next time you sync your database in production using <a class="reference internal" href="../sdk.html"><em>SDK</em></a> it will preregister all necessary
+applications. Please make sure you do not include <strong>oauth2-registration</strong> client id. This is automatically added by the extension.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OAUTH2 Fantastico App registration</a><ul>
+<li><a class="reference internal" href="#app-registration-extension">App registration extension</a></li>
+<li><a class="reference internal" href="#manual-registration">Manual registration</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="error_responses.html"
+                        title="previous chapter">OAUTH2 Fantastico Error Responses</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="roa_security.html"
+                        title="next chapter">ROA OAUTH2 Security</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/features/oauth2/app_registration.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="roa_security.html" title="ROA OAUTH2 Security"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="error_responses.html" title="OAUTH2 Fantastico Error Responses"
+             >previous</a> |</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li>
+          <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
+          <li><a href="../oauth2.html" >OAUTH2</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

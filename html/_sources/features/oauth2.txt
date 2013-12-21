@@ -20,12 +20,11 @@ documentation.
 Fantastico security
 -------------------
 
-In order to keep things as simple as possible, in Fantastico we currently support only **authorization code grant**. Moreover,
+In order to keep things as simple as possible, in Fantastico we currently support only **implicit grant**. Moreover,
 you can find some particularities of Fantastico implementation:
 
-   * We only support **Authorization code grant** (for all use cases where protected resources are involved).
-   * We only support **Resource owner password credentials grant** for Anonymous access to resources.
-   * We fully support scopes
+   * We only support **Implicit grant** (for all use cases where protected resources are involved).
+   * We fully support scopes.
    * We support state parameter for avoiding Cross Site Request Forgery
 
 .. toctree::
@@ -33,7 +32,6 @@ you can find some particularities of Fantastico implementation:
    
    oauth2/simple_api_example
    oauth2/tokens_format
-   oauth2/tokens_storage
    oauth2/error_responses
-   oauth2/compatible_idp
+   oauth2/app_registration
    oauth2/roa_security
