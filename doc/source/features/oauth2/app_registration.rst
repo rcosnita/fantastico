@@ -37,6 +37,10 @@ Summarizing the diagram above, a client is described by:
 
       A (128 / 192 / 256) bits key used for AES algorithm.
 
+   * **return_urls**
+
+      A list of return urls which Fantastico OAauth 2 authorize is allowed to redirect user agent of end user.
+
 App registration extension
 --------------------------
 
