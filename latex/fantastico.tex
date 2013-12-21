@@ -15,7 +15,7 @@
 
 \title{fantastico Documentation}
 \date{December 21, 2013}
-\release{0.6.0-b132}
+\release{0.6.0-b133}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -786,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x6b8c9e0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x48ef518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -3567,7 +3567,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x3125408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x16e3408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -6287,6 +6287,13 @@ A 128 bits initialization vector specific to this client used to initialize AES 
 A (128 / 192 / 256) bits key used for AES algorithm.
 \end{quote}
 
+\item {} 
+\textbf{return\_urls}
+\begin{quote}
+
+A list of return urls which Fantastico OAauth 2 authorize is allowed to redirect user agent of end user.
+\end{quote}
+
 \end{itemize}
 
 
@@ -6330,10 +6337,32 @@ By doing this, next time you sync your database in production using {\hyperref[f
 applications. Please make sure you do not include \textbf{oauth2-registration} client id. This is automatically added by the extension.
 
 
-\subsubsection{ROA OAUTH2 Security}
-\label{features/oauth2/roa_security::doc}\label{features/oauth2/roa_security:roa-oauth2-security}
-In this document we continue the discussion about Resource Oriented Architecture encouraged by Fantastico. Here you can
-find how to secure your resources.
+\subsubsection{Controllers security}
+\label{features/oauth2/controllers_security:controllers-security}\label{features/oauth2/controllers_security::doc}
+
+\paragraph{Regular controllers security}
+\label{features/oauth2/controllers_security:regular-controllers-security}
+In general, you will want to secure your controllers ({\hyperref[how_to/mvc_how_to::doc]{\emph{MVC How to}}}) using OAuth2. In addition, for some controllers
+(e.g UI Controllers) you will want to tell Fantastico to redirect automatically to login screen rather than returning an
+\textbf{401 Unauthorized} error. Below you can find a very simple example of a ui controller which automatically redirects user to
+login screen in order to obtain access:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{class} \PYG{n+nc}{SecuredController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
+   \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/secured\PYGZhy{}controller/ui/index}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+   \PYG{n+nd}{@RequiredScopes}\PYG{p}{(}\PYG{n}{scopes}\PYG{o}{=}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{greet.verbose}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{greet.read}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+   \PYG{n+nd}{@AutoIdpRedirect}\PYG{p}{(}\PYG{p}{)}
+   \PYG{k}{def} \PYG{n+nf}{say\PYGZus{}hello}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+      \PYG{k}{return} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{\PYGZlt{}html\PYGZgt{}\PYGZlt{}body\PYGZgt{}\PYGZlt{}h1\PYGZgt{}Hello world\PYGZlt{}/body\PYGZgt{}\PYGZlt{}/html\PYGZgt{}}\PYG{l+s}{\PYGZdq{}}
+\end{Verbatim}
+
+The order in which decorators are chained is extremely important. Please follow it as presented above.
+
+
+\paragraph{ROA OAUTH2 Security}
+\label{features/oauth2/controllers_security:roa-oauth2-security}
+ROA ({\hyperref[features/roa::doc]{\emph{ROA (Resource Oriented Architecture)}}}) resource can be easily secured using OAuth2 as shown below:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n+nd}{@Resource}\PYG{p}{(}\PYG{n}{name}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{app\PYGZhy{}setting}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/app\PYGZhy{}settings}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{version}\PYG{o}{=}\PYG{l+m+mf}{1.0}\PYG{p}{)}
@@ -6355,6 +6384,13 @@ This is an extremely convenient way to secure a resource. In addition, each argu
 For instance, if read is not given any scope then everyone can read \textbf{AppSetting} resources.
 
 Fantastico will autodiscover endpoints / resources which require scopes and preauthorize every call to them.
+
+The order in which decorators are chained is extremely important. Please follow it as presented above.
+
+
+\subsubsection{OAUTH2 Fantastico IDP}
+\label{features/oauth2/idp:oauth2-fantastico-idp}\label{features/oauth2/idp::doc}
+TBD.
 
 
 \section{SDK}
@@ -6497,7 +6533,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x35f52f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x1bb22f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -7042,7 +7078,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x49e4628\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2fa1628\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OAUTH2 application registration &mdash; fantastico 0.6.0-b132 documentation</title>
+    <title>OAUTH2 application registration &mdash; fantastico 0.6.0-b133 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.6.0-b132',
+        VERSION:     '0.6.0-b133',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b132 documentation" href="../../../../index.html" /> 
+    <link rel="top" title="fantastico 0.6.0-b133 documentation" href="../../../../index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -32,7 +32,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li> 
+        <li><a href="../../../../index.html">fantastico 0.6.0-b133 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -49,11 +49,27 @@ Of course this application is also secured using OAUTH2 so no unauthorized users
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="view-apps">
 <h3>View apps<a class="headerlink" href="#view-apps" title="Permalink to this headline">¶</a></h3>
+<p><strong>/oauth/oauth2-registration/ui/view-apps?token=1/fFAGRNJru1FTz70BzhT3Zg</strong></p>
+<div class="figure">
 <img alt="../../../../_images/view_apps.png" src="../../../../_images/view_apps.png" />
+</div>
 </div>
 <div class="section" id="edit-existing-app">
 <h3>Edit existing app<a class="headerlink" href="#edit-existing-app" title="Permalink to this headline">¶</a></h3>
+<p><strong>/oauth/oauth2-registration/ui/edit-app/1?token=1/fFAGRNJru1FTz70BzhT3Zg</strong></p>
+<div class="figure">
 <img alt="../../../../_images/edit_app.png" src="../../../../_images/edit_app.png" />
+</div>
+</div>
+<div class="section" id="register-new-app">
+<h3>Register new app<a class="headerlink" href="#register-new-app" title="Permalink to this headline">¶</a></h3>
+<p><strong>/oauth/oauth2-registration/ui/register-app?token=1/fFAGRNJru1FTz70BzhT3Zg</strong></p>
+<div class="figure">
+<img alt="../../../../_images/edit_app.png" src="../../../../_images/edit_app.png" />
+</div>
+<p>As you can see, <strong>oauth2-registration</strong> application is also secured with OAuth2. When you try to access any url mentioned above
+without providing an access token you will be redirected to login screen (default behavior). From there, you can login and obtain
+a correct access token.</p>
 </div>
 </div>
 </div>
@@ -70,6 +86,7 @@ Of course this application is also secured using OAUTH2 so no unauthorized users
 <li><a class="reference internal" href="#overview">Overview</a><ul>
 <li><a class="reference internal" href="#view-apps">View apps</a></li>
 <li><a class="reference internal" href="#edit-existing-app">Edit existing app</a></li>
+<li><a class="reference internal" href="#register-new-app">Register new app</a></li>
 </ul>
 </li>
 </ul>
@@ -104,7 +121,7 @@ Of course this application is also secured using OAUTH2 so no unauthorized users
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li> 
+        <li><a href="../../../../index.html">fantastico 0.6.0-b133 documentation</a> &raquo;</li> 
       </ul>
     </div>
 

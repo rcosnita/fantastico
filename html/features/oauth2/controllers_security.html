@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ROA OAUTH2 Security &mdash; fantastico 0.6.0-b132 documentation</title>
+    <title>Controllers security &mdash; fantastico 0.6.0-b133 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.6.0-b132',
+        VERSION:     '0.6.0-b133',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b132 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b133 documentation" href="../../index.html" />
     <link rel="up" title="OAUTH2" href="../oauth2.html" />
-    <link rel="next" title="SDK" href="../sdk.html" />
+    <link rel="next" title="OAUTH2 Fantastico IDP" href="idp.html" />
     <link rel="prev" title="OAUTH2 Fantastico App registration" href="app_registration.html" /> 
   </head>
   <body>
@@ -36,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../sdk.html" title="SDK"
+          <a href="idp.html" title="OAUTH2 Fantastico IDP"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="app_registration.html" title="OAUTH2 Fantastico App registration"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b133 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -52,10 +52,28 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="roa-oauth2-security">
-<h1>ROA OAUTH2 Security<a class="headerlink" href="#roa-oauth2-security" title="Permalink to this headline">¶</a></h1>
-<p>In this document we continue the discussion about Resource Oriented Architecture encouraged by Fantastico. Here you can
-find how to secure your resources.</p>
+  <div class="section" id="controllers-security">
+<h1>Controllers security<a class="headerlink" href="#controllers-security" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="regular-controllers-security">
+<h2>Regular controllers security<a class="headerlink" href="#regular-controllers-security" title="Permalink to this headline">¶</a></h2>
+<p>In general, you will want to secure your controllers (<a class="reference internal" href="../../how_to/mvc_how_to.html"><em>MVC How to</em></a>) using OAuth2. In addition, for some controllers
+(e.g UI Controllers) you will want to tell Fantastico to redirect automatically to login screen rather than returning an
+<strong>401 Unauthorized</strong> error. Below you can find a very simple example of a ui controller which automatically redirects user to
+login screen in order to obtain access:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">SecuredController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
+   <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/secured-controller/ui/index&quot;</span><span class="p">)</span>
+   <span class="nd">@RequiredScopes</span><span class="p">(</span><span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;greet.verbose&quot;</span><span class="p">,</span> <span class="s">&quot;greet.read&quot;</span><span class="p">])</span>
+   <span class="nd">@AutoIdpRedirect</span><span class="p">()</span>
+   <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+      <span class="k">return</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world&lt;/body&gt;&lt;/html&gt;&quot;</span>
+</pre></div>
+</div>
+<p>The order in which decorators are chained is extremely important. Please follow it as presented above.</p>
+</div>
+<div class="section" id="roa-oauth2-security">
+<h2>ROA OAUTH2 Security<a class="headerlink" href="#roa-oauth2-security" title="Permalink to this headline">¶</a></h2>
+<p>ROA (<a class="reference internal" href="../roa.html"><em>ROA (Resource Oriented Architecture)</em></a>) resource can be easily secured using OAuth2 as shown below:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="nd">@RequiredScopes</span><span class="p">(</span><span class="n">create</span><span class="o">=</span><span class="s">&quot;app_setting.create&quot;</span><span class="p">,</span>
                 <span class="n">read</span><span class="o">=</span><span class="s">&quot;app_setting.read&quot;</span><span class="p">,</span>
@@ -74,6 +92,8 @@ find how to secure your resources.</p>
 <p>This is an extremely convenient way to secure a resource. In addition, each argument from <strong>&#64;Resource</strong> constructor is optional.
 For instance, if read is not given any scope then everyone can read <strong>AppSetting</strong> resources.</p>
 <p>Fantastico will autodiscover endpoints / resources which require scopes and preauthorize every call to them.</p>
+<p>The order in which decorators are chained is extremely important. Please follow it as presented above.</p>
+</div>
 </div>
 
 
@@ -82,15 +102,24 @@ For instance, if read is not given any scope then everyone can read <strong>AppS
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Controllers security</a><ul>
+<li><a class="reference internal" href="#regular-controllers-security">Regular controllers security</a></li>
+<li><a class="reference internal" href="#roa-oauth2-security">ROA OAUTH2 Security</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="app_registration.html"
                         title="previous chapter">OAUTH2 Fantastico App registration</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../sdk.html"
-                        title="next chapter">SDK</a></p>
+  <p class="topless"><a href="idp.html"
+                        title="next chapter">OAUTH2 Fantastico IDP</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../../_sources/features/oauth2/roa_security.txt"
+    <li><a href="../../_sources/features/oauth2/controllers_security.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -117,12 +146,12 @@ For instance, if read is not given any scope then everyone can read <strong>AppS
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../sdk.html" title="SDK"
+          <a href="idp.html" title="OAUTH2 Fantastico IDP"
              >next</a> |</li>
         <li class="right" >
           <a href="app_registration.html" title="OAUTH2 Fantastico App registration"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b132 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b133 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" >OAUTH2</a> &raquo;</li> 
       </ul>
