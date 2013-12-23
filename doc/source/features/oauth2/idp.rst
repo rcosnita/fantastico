@@ -10,13 +10,13 @@ APIs
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
 | **URI**                                      | **Verb** | **Required scopes** | **Description**                                 |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
-| **/oauth/idp/profile**                       | GET      | user.profile.read   | Retrieves information about authenticated user. |
+| **/oauth/idp/profile?token=...**             | GET      | user.profile.read   | Retrieves information about authenticated user. |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
-| **/oauth/idp/profile**                       | POST     |                     | Creates a new user profile.                     |
+| **/oauth/idp/profile?token=...**             | POST     |                     | Creates a new user profile.                     |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
-| **/oauth/idp/profile**                       | PUT      | user.profile.update | Updates an existing user profile.               |
+| **/oauth/idp/profile?token=...**             | PUT      | user.profile.update | Updates an existing user profile.               |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
-| **/oauth/idp/profile**                       | DELETE   | user.profile.delete | Updates an existing user profiler.              |
+| **/oauth/idp/profile?token=...**             | DELETE   | user.profile.delete | Updates an existing user profiler.              |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
 | **/oauth/idp/ui/login?return_url=/test-url** | DELETE   | user.profile.delete | Updates an existing user profiler.              |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
