@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{December 21, 2013}
-\release{0.6.0-b133}
+\date{December 23, 2013}
+\release{0.6.0-b134}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -786,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x48ef518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x6807518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -3567,7 +3567,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x16e3408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2f40408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -6390,7 +6390,97 @@ The order in which decorators are chained is extremely important. Please follow 
 
 \subsubsection{OAUTH2 Fantastico IDP}
 \label{features/oauth2/idp:oauth2-fantastico-idp}\label{features/oauth2/idp::doc}
-TBD.
+Fantastico provides a default Identity provider which provides required APIs for managing users. As other Fantastico
+extensions the APIs are secured with OAUTH2 tokens.
+
+
+\paragraph{APIs}
+\label{features/oauth2/idp:apis}
+\begin{tabulary}{\linewidth}{|L|L|L|L|}
+\hline
+
+\textbf{URI}
+ & 
+\textbf{Verb}
+ & 
+\textbf{Required scopes}
+ & 
+\textbf{Description}
+\\\hline
+
+\textbf{/oauth/idp/profile}
+ & 
+GET
+ & 
+user.profile.read
+ & 
+Retrieves information about authenticated user.
+\\\hline
+
+\textbf{/oauth/idp/profile}
+ & 
+POST
+ &  & 
+Creates a new user profile.
+\\\hline
+
+\textbf{/oauth/idp/profile}
+ & 
+PUT
+ & 
+user.profile.update
+ & 
+Updates an existing user profile.
+\\\hline
+
+\textbf{/oauth/idp/profile}
+ & 
+DELETE
+ & 
+user.profile.delete
+ & 
+Updates an existing user profiler.
+\\\hline
+
+\textbf{/oauth/idp/ui/login?return\_url=/test-url}
+ & 
+DELETE
+ & 
+user.profile.delete
+ & 
+Updates an existing user profiler.
+\\\hline
+\end{tabulary}
+
+
+
+\paragraph{User profile data}
+\label{features/oauth2/idp:user-profile-data}
+\includegraphics{idp_profiles.png}
+
+
+\paragraph{Login frontend}
+\label{features/oauth2/idp:login-frontend}
+\includegraphics{idp_login.png}
+
+Fantastico provides the secure process for login and account recovery. Developers can easily customize the login screen by providing
+a template which must be applied to login screen. A typical custom login template is presented below:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZob{}\PYGZpc{} block head \PYGZpc{}\PYGZcb{}
+   \PYG{n+nt}{\PYGZlt{}title}\PYG{n+nt}{\PYGZgt{}}Simple login template\PYG{n+nt}{\PYGZlt{}/title\PYGZgt{}}
+\PYGZob{}\PYGZpc{} endblock \PYGZpc{}\PYGZcb{}
+
+\PYGZob{}\PYGZpc{} block body\PYGZus{}header \PYGZpc{}\PYGZcb{}
+   \PYG{n+nt}{\PYGZlt{}h1}\PYG{n+nt}{\PYGZgt{}}Login screen\PYG{n+nt}{\PYGZlt{}/h1\PYGZgt{}}
+\PYGZob{}\PYGZpc{} endblock \PYGZpc{}\PYGZcb{}
+
+\PYGZob{}\PYGZpc{} block body\PYGZus{}footer \PYGZpc{}\PYGZcb{}
+   \PYG{n+nt}{\PYGZlt{}h6}\PYG{n+nt}{\PYGZgt{}}A tiny little footer.\PYG{n+nt}{\PYGZlt{}/h6\PYGZgt{}}
+\PYGZob{}\PYGZpc{} endblock \PYGZpc{}\PYGZcb{}
+\end{Verbatim}
+
+You can find documentation on how to configure custom login template on {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
 
 
 \section{SDK}
@@ -6533,7 +6623,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x1bb22f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x340f2f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -7078,7 +7168,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2fa1628\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x47fe628\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

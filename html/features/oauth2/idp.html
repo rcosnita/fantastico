@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OAUTH2 Fantastico IDP &mdash; fantastico 0.6.0-b133 documentation</title>
+    <title>OAUTH2 Fantastico IDP &mdash; fantastico 0.6.0-b134 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.6.0-b133',
+        VERSION:     '0.6.0-b134',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b133 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b134 documentation" href="../../index.html" />
     <link rel="up" title="OAUTH2" href="../oauth2.html" />
     <link rel="next" title="SDK" href="../sdk.html" />
     <link rel="prev" title="Controllers security" href="controllers_security.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="controllers_security.html" title="Controllers security"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b133 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b134 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -54,7 +54,75 @@
             
   <div class="section" id="oauth2-fantastico-idp">
 <h1>OAUTH2 Fantastico IDP<a class="headerlink" href="#oauth2-fantastico-idp" title="Permalink to this headline">¶</a></h1>
-<p>TBD.</p>
+<p>Fantastico provides a default Identity provider which provides required APIs for managing users. As other Fantastico
+extensions the APIs are secured with OAUTH2 tokens.</p>
+<div class="section" id="apis">
+<h2>APIs<a class="headerlink" href="#apis" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="8%" />
+<col width="17%" />
+<col width="39%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>URI</strong></td>
+<td><strong>Verb</strong></td>
+<td><strong>Required scopes</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr class="row-even"><td><strong>/oauth/idp/profile</strong></td>
+<td>GET</td>
+<td>user.profile.read</td>
+<td>Retrieves information about authenticated user.</td>
+</tr>
+<tr class="row-odd"><td><strong>/oauth/idp/profile</strong></td>
+<td>POST</td>
+<td>&nbsp;</td>
+<td>Creates a new user profile.</td>
+</tr>
+<tr class="row-even"><td><strong>/oauth/idp/profile</strong></td>
+<td>PUT</td>
+<td>user.profile.update</td>
+<td>Updates an existing user profile.</td>
+</tr>
+<tr class="row-odd"><td><strong>/oauth/idp/profile</strong></td>
+<td>DELETE</td>
+<td>user.profile.delete</td>
+<td>Updates an existing user profiler.</td>
+</tr>
+<tr class="row-even"><td><strong>/oauth/idp/ui/login?return_url=/test-url</strong></td>
+<td>DELETE</td>
+<td>user.profile.delete</td>
+<td>Updates an existing user profiler.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="user-profile-data">
+<h2>User profile data<a class="headerlink" href="#user-profile-data" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/idp_profiles.png" src="../../_images/idp_profiles.png" />
+</div>
+<div class="section" id="login-frontend">
+<h2>Login frontend<a class="headerlink" href="#login-frontend" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/idp_login.png" src="../../_images/idp_login.png" />
+<p>Fantastico provides the secure process for login and account recovery. Developers can easily customize the login screen by providing
+a template which must be applied to login screen. A typical custom login template is presented below:</p>
+<div class="highlight-html"><div class="highlight"><pre>{% block head %}
+   <span class="nt">&lt;title&gt;</span>Simple login template<span class="nt">&lt;/title&gt;</span>
+{% endblock %}
+
+{% block body_header %}
+   <span class="nt">&lt;h1&gt;</span>Login screen<span class="nt">&lt;/h1&gt;</span>
+{% endblock %}
+
+{% block body_footer %}
+   <span class="nt">&lt;h6&gt;</span>A tiny little footer.<span class="nt">&lt;/h6&gt;</span>
+{% endblock %}
+</pre></div>
+</div>
+<p>You can find documentation on how to configure custom login template on <a class="reference internal" href="../../get_started/settings.html"><em>Fantastico settings</em></a>.</p>
+</div>
 </div>
 
 
@@ -63,6 +131,16 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">OAUTH2 Fantastico IDP</a><ul>
+<li><a class="reference internal" href="#apis">APIs</a></li>
+<li><a class="reference internal" href="#user-profile-data">User profile data</a></li>
+<li><a class="reference internal" href="#login-frontend">Login frontend</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="controllers_security.html"
                         title="previous chapter">Controllers security</a></p>
@@ -103,7 +181,7 @@
         <li class="right" >
           <a href="controllers_security.html" title="Controllers security"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b133 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b134 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" >OAUTH2</a> &raquo;</li> 
       </ul>
