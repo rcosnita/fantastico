@@ -36,3 +36,4 @@ you can find some particularities of Fantastico implementation:
    oauth2/app_registration
    oauth2/controllers_security
    oauth2/idp
+   oauth2/technical_summary
