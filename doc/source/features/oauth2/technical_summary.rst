@@ -35,7 +35,7 @@ can be obtained in a secure context.
          # use profile endpoint to obtain additional information.
 
 Obtain current granted scopes
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is common to want to access currently granted scopes for a given request. In order to do this use the following code snippet:
 
@@ -48,3 +48,12 @@ It is common to want to access currently granted scopes for a given request. In 
          scopes = access_token.encrypted.scopes
 
          # validate scopes
+
+Supported token generators
+--------------------------
+
+.. autoclass:: fantastico.oauth2.token.Token
+   :members:
+
+.. autoclass:: fantastico.oauth2.token_generator.TokenGenerator
+   :members:
