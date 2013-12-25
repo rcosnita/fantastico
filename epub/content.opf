@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-12-23</dc:date>
+    <dc:date>2013-12-25</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -151,6 +151,18 @@
     <item id="_modules_fantastico_middleware_request_context.html"
           href="_modules/fantastico/middleware/request_context.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_token_generator.html"
+          href="_modules/fantastico/oauth2/token_generator.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_security_context.html"
+          href="_modules/fantastico/oauth2/security_context.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_oauth2_controller.html"
+          href="_modules/fantastico/oauth2/oauth2_controller.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_token.html"
+          href="_modules/fantastico/oauth2/token.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_rendering_component.html"
           href="_modules/fantastico/rendering/component.html"
           media-type="application/xhtml+xml" />
@@ -283,6 +295,9 @@
     <item id="_images_request_response_sd.png"
           href="_images/request_response_sd.png"
           media-type="image/png" />
+    <item id="_images_oauth2_overview.png"
+          href="_images/oauth2_overview.png"
+          media-type="image/png" />
     <item id="_images_exceptions.png"
           href="_images/exceptions.png"
           media-type="image/png" />
@@ -384,6 +399,9 @@
           media-type="application/xhtml+xml" />
     <item id="features_oauth2.html"
           href="features/oauth2.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_technical_summary.html"
+          href="features/oauth2/technical_summary.html"
           media-type="application/xhtml+xml" />
     <item id="features_oauth2_error_responses.html"
           href="features/oauth2/error_responses.html"
@@ -498,6 +516,7 @@
     <itemref idref="features_oauth2_app_registration.html" />
     <itemref idref="features_oauth2_controllers_security.html" />
     <itemref idref="features_oauth2_idp.html" />
+    <itemref idref="features_oauth2_technical_summary.html" />
     <itemref idref="features_sdk.html" />
     <itemref idref="features_sdk_command_activate_extension.html" />
     <itemref idref="features_sdk_command_fantastico.html" />

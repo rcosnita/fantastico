@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OAUTH2 Fantastico Tokens &mdash; fantastico 0.6.0-b134 documentation</title>
+    <title>OAUTH2 Fantastico Tokens &mdash; fantastico 0.6.0-b135 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.6.0-b134',
+        VERSION:     '0.6.0-b135',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b134 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b135 documentation" href="../../index.html" />
     <link rel="up" title="OAUTH2" href="../oauth2.html" />
     <link rel="next" title="OAUTH2 Fantastico Error Responses" href="error_responses.html" />
     <link rel="prev" title="Example (Simple Menu API)" href="simple_api_example.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="simple_api_example.html" title="Example (Simple Menu API)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b134 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b135 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -63,9 +63,16 @@
 login page and lives a long time (couple of weeks). The structure of this opaque value as seen on server side is presented
 below:</p>
 <blockquote>
-<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span><span class="s2">&quot;user_id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
- <span class="s2">&quot;creation_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137651&quot;</span><span class="p">,</span>
- <span class="s2">&quot;expiration_tim&quot;</span><span class="o">:</span> <span class="s2">&quot;1380163800&quot;</span><span class="p">}</span>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span><span class="s2">&quot;client_id&quot;</span><span class="o">:</span> <span class="s2">&quot;fantastico-idp&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;login&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;encrypted&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;client_id&quot;</span><span class="o">:</span> <span class="s2">&quot;fantastico-idp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;login&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;user_id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;creation_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137651&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;expiration_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380163800&quot;</span><span class="p">,</span>
+ <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -77,8 +84,10 @@ below:</p>
 find the access token structure, as seen on server side:</p>
 <blockquote>
 <div><div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span><span class="s2">&quot;client_id&quot;</span><span class="o">:</span> <span class="s2">&quot;simple-menus&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;access&quot;</span><span class="p">,</span>
  <span class="s2">&quot;encrypted&quot;</span><span class="o">:</span> <span class="p">{</span>
    <span class="s2">&quot;client_id&quot;</span><span class="o">:</span> <span class="s2">&quot;simple-menus&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;access&quot;</span><span class="p">,</span>
    <span class="s2">&quot;user_id&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
    <span class="s2">&quot;scopes&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;simple_menus.create&quot;</span><span class="p">,</span> <span class="s2">&quot;simple_menus.update&quot;</span><span class="p">,</span> <span class="s2">&quot;simple_menus.delete&quot;</span><span class="p">],</span>
    <span class="s2">&quot;creation_time&quot;</span><span class="o">:</span> <span class="s2">&quot;1380137651&quot;</span><span class="p">,</span>
@@ -142,7 +151,7 @@ AES-256 is used for encryption.</p>
         <li class="right" >
           <a href="simple_api_example.html" title="Example (Simple Menu API)"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b134 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b135 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" >OAUTH2</a> &raquo;</li> 
       </ul>

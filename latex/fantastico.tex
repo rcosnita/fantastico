@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{December 23, 2013}
-\release{0.6.0-b134}
+\date{December 25, 2013}
+\release{0.6.0-b135}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -786,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x6807518\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5402f30\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -3567,7 +3567,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2f40408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1686408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -6109,9 +6109,16 @@ below:
 \begin{quote}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}user\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
- \PYG{l+s+s2}{\PYGZdq{}creation\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137651\PYGZdq{}}\PYG{p}{,}
- \PYG{l+s+s2}{\PYGZdq{}expiration\PYGZus{}tim\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380163800\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}client\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}fantastico\PYGZhy{}idp\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}type\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}login\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}encrypted\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}
+    \PYG{l+s+s2}{\PYGZdq{}client\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}fantastico\PYGZhy{}idp\PYGZdq{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}type\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}login\PYGZdq{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}user\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}creation\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137651\PYGZdq{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}expiration\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380163800\PYGZdq{}}\PYG{p}{,}
+ \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
 \end{Verbatim}
 \end{quote}
 \end{quote}
@@ -6126,8 +6133,10 @@ find the access token structure, as seen on server side:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{p}{\PYGZob{}}\PYG{l+s+s2}{\PYGZdq{}client\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZhy{}menus\PYGZdq{}}\PYG{p}{,}
+ \PYG{l+s+s2}{\PYGZdq{}type\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}access\PYGZdq{}}\PYG{p}{,}
  \PYG{l+s+s2}{\PYGZdq{}encrypted\PYGZdq{}}\PYG{o}{:} \PYG{p}{\PYGZob{}}
    \PYG{l+s+s2}{\PYGZdq{}client\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZhy{}menus\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}type\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}access\PYGZdq{}}\PYG{p}{,}
    \PYG{l+s+s2}{\PYGZdq{}user\PYGZus{}id\PYGZdq{}}\PYG{o}{:} \PYG{l+m+mi}{1}\PYG{p}{,}
    \PYG{l+s+s2}{\PYGZdq{}scopes\PYGZdq{}}\PYG{o}{:} \PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.create\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.update\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}simple\PYGZus{}menus.delete\PYGZdq{}}\PYG{p}{]}\PYG{p}{,}
    \PYG{l+s+s2}{\PYGZdq{}creation\PYGZus{}time\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}1380137651\PYGZdq{}}\PYG{p}{,}
@@ -6408,7 +6417,7 @@ extensions the APIs are secured with OAUTH2 tokens.
 \textbf{Description}
 \\\hline
 
-\textbf{/oauth/idp/profile}
+\textbf{/oauth/idp/profile?token=...}
  & 
 GET
  & 
@@ -6417,14 +6426,14 @@ user.profile.read
 Retrieves information about authenticated user.
 \\\hline
 
-\textbf{/oauth/idp/profile}
+\textbf{/oauth/idp/profile?token=...}
  & 
 POST
  &  & 
 Creates a new user profile.
 \\\hline
 
-\textbf{/oauth/idp/profile}
+\textbf{/oauth/idp/profile?token=...}
  & 
 PUT
  & 
@@ -6433,7 +6442,7 @@ user.profile.update
 Updates an existing user profile.
 \\\hline
 
-\textbf{/oauth/idp/profile}
+\textbf{/oauth/idp/profile?token=...}
  & 
 DELETE
  & 
@@ -6481,6 +6490,194 @@ a template which must be applied to login screen. A typical custom login templat
 \end{Verbatim}
 
 You can find documentation on how to configure custom login template on {\hyperref[get_started/settings::doc]{\emph{Fantastico settings}}}.
+
+
+\subsubsection{OAUTH2 Technical Summary}
+\label{features/oauth2/technical_summary:oauth2-technical-summary}\label{features/oauth2/technical_summary::doc}
+In this document you can find out information about OAUTH2 implementation in Fantastico framework. It is important to have read
+the previous sections before actually deep diving into technical details.
+
+
+\paragraph{Overview}
+\label{features/oauth2/technical_summary:overview}\index{OAuth2Controller (class in fantastico.oauth2.oauth2\_controller)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.oauth2_controller.OAuth2Controller}\pysiglinewithargsret{\strong{class }\code{fantastico.oauth2.oauth2\_controller.}\bfcode{OAuth2Controller}}{\emph{settings\_facade}}{}
+This class provides the routes specified in OAUTH 2 specification (\href{http://tools.ietf.org/html/rfc6749}{RFC6479}). A
+technical overview of OAuth2 implementation in Fantastico is presented below:
+
+\includegraphics{oauth2_overview.png}
+\index{handle\_authorize() (fantastico.oauth2.oauth2\_controller.OAuth2Controller method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.oauth2_controller.OAuth2Controller.handle_authorize}\pysiglinewithargsret{\bfcode{handle\_authorize}}{\emph{request}}{}
+This method provides the /authorize endpoint compliant with \href{http://tools.ietf.org/html/rfc6749}{RFC6479} standard.
+Authorize endpoint provides an API for obtaining an access token or an authorization code dependin on the grant type.
+
+\end{fulllineitems}
+
+\index{handle\_token() (fantastico.oauth2.oauth2\_controller.OAuth2Controller method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.oauth2_controller.OAuth2Controller.handle_token}\pysiglinewithargsret{\bfcode{handle\_token}}{\emph{request}}{}
+This method provides the /token endpoint compliant with \href{http://tools.ietf.org/html/rfc6749}{RFC6479}.
+Token endpoint provides an API for obtaining access tokens.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\paragraph{Security context}
+\label{features/oauth2/technical_summary:security-context}\index{SecurityContext (class in fantastico.oauth2.security\_context)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.security_context.SecurityContext}\pysigline{\strong{class }\code{fantastico.oauth2.security\_context.}\bfcode{SecurityContext}}
+This class provides the OAuth2 security context. Security context is available for each request and can be accessed
+using the following code snippet:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/test/controller}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf}{handle\PYGZus{}request}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{security\PYGZus{}ctx} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{context}\PYG{o}{.}\PYG{n}{security}
+
+    \PYG{c}{\PYGZsh{} do something with security context}
+\end{Verbatim}
+\index{access\_token (fantastico.oauth2.security\_context.SecurityContext attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.security_context.SecurityContext.access_token}\pysigline{\bfcode{access\_token}}
+This property returns the current access token passed to the current http request. Access token is already decoded
+as documented in {\hyperref[features/oauth2/tokens_format::doc]{\emph{OAUTH2 Fantastico Tokens}}} (encrypted section).
+
+\end{fulllineitems}
+
+\index{login\_token (fantastico.oauth2.security\_context.SecurityContext attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.security_context.SecurityContext.login_token}\pysigline{\bfcode{login\_token}}
+This property returns the current login token passed to the current http request. Login token is already decoded
+as documented in {\hyperref[features/oauth2/tokens_format::doc]{\emph{OAUTH2 Fantastico Tokens}}} (encrypted section).
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\paragraph{Common tokens usage}
+\label{features/oauth2/technical_summary:common-tokens-usage}
+
+\subparagraph{Obtain authenticated user id}
+\label{features/oauth2/technical_summary:obtain-authenticated-user-id}
+It is common in web applications to want to obtain the current authenticated user unique identifier so that additional information
+can be obtained in a secure context.
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{\PYGZca{}/users/ui/show\PYGZhy{}profile\PYGZdl{}}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf}{show\PYGZus{}profile}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+   \PYG{n}{security\PYGZus{}ctx} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{context}\PYG{o}{.}\PYG{n}{security}
+   \PYG{n}{user\PYGZus{}id} \PYG{o}{=} \PYG{n}{security\PYGZus{}ctx}\PYG{o}{.}\PYG{n}{login\PYGZus{}token}\PYG{o}{.}\PYG{n}{user\PYGZus{}id}
+
+   \PYG{c}{\PYGZsh{} use profile endpoint to obtain additional information.}
+\end{Verbatim}
+\end{quote}
+
+
+\subparagraph{Obtain current granted scopes}
+\label{features/oauth2/technical_summary:obtain-current-granted-scopes}
+It is common to want to access currently granted scopes for a given request. In order to do this use the following code snippet:
+\begin{quote}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{\PYGZca{}/sample\PYGZhy{}controller\PYGZdl{}}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{n+nd}{@RequiredScopes}\PYG{p}{(}\PYG{n}{scopes}\PYG{o}{=}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{custom\PYGZus{}scope1.read}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf}{handle\PYGZus{}request}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+   \PYG{n}{access\PYGZus{}token} \PYG{o}{=} \PYG{n}{request}\PYG{o}{.}\PYG{n}{context}\PYG{o}{.}\PYG{n}{security}\PYG{o}{.}\PYG{n}{access\PYGZus{}token}
+   \PYG{n}{scopes} \PYG{o}{=} \PYG{n}{access\PYGZus{}token}\PYG{o}{.}\PYG{n}{encrypted}\PYG{o}{.}\PYG{n}{scopes}
+
+   \PYG{c}{\PYGZsh{} validate scopes}
+\end{Verbatim}
+\end{quote}
+
+
+\paragraph{Supported token generators}
+\label{features/oauth2/technical_summary:supported-token-generators}\index{Token (class in fantastico.oauth2.token)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.token.Token}\pysiglinewithargsret{\strong{class }\code{fantastico.oauth2.token.}\bfcode{Token}}{\emph{members}}{}
+This class provides a token model which can be built from a generic dictionary. All dictionary keys become token
+members.
+
+\end{fulllineitems}
+
+\index{TokenGenerator (class in fantastico.oauth2.token\_generator)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.token_generator.TokenGenerator}\pysigline{\strong{class }\code{fantastico.oauth2.token\_generator.}\bfcode{TokenGenerator}}
+This class provides an abstract contract which must be provided by each concrete token generator. A token generator
+must provide the following functionality:
+\begin{itemize}
+\item {} 
+generate a new token
+
+\item {} 
+validate a given token
+
+\item {} 
+invalidate a given token
+
+\end{itemize}
+\index{generate() (fantastico.oauth2.token\_generator.TokenGenerator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.token_generator.TokenGenerator.generate}\pysiglinewithargsret{\bfcode{generate}}{\emph{token\_desc}}{}
+This method must be overriden so that it builds a correct token from the given descriptor. Descriptor is a free
+form object.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{token\_desc} (\emph{dict}) -- A dictionary containing all keys required for generating a new token.
+
+\item[{Returns}] \leavevmode
+A new token object.
+
+\item[{Return type}] \leavevmode
+{\hyperref[features/oauth2/technical_summary:fantastico.oauth2.token.Token]{\code{fantastico.oauth2.token.Token}}}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{invalidate() (fantastico.oauth2.token\_generator.TokenGenerator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.token_generator.TokenGenerator.invalidate}\pysiglinewithargsret{\bfcode{invalidate}}{\emph{token}}{}
+This method must be overriden if the given token supports invalidation (e.g: authorization code). In many cases
+this is not necessary so this is a nop.
+
+\end{fulllineitems}
+
+\index{validate() (fantastico.oauth2.token\_generator.TokenGenerator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.token_generator.TokenGenerator.validate}\pysiglinewithargsret{\bfcode{validate}}{\emph{token}}{}
+This method must be overriden so that it validates the given token. Usually, if the token is not valid a concrete
+exception must be raised.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{token} ({\hyperref[features/oauth2/technical_summary:fantastico.oauth2.token.Token]{\code{fantastico.oauth2.token.Token}}}) -- The token object we want to validate.
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
 
 
 \section{SDK}
@@ -6623,7 +6820,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x340f2f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x1b562f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -7168,7 +7365,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x47fe628\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2f45738\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

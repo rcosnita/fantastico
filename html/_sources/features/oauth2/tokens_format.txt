@@ -11,9 +11,16 @@ In Fantastico framework there are currently two type of supported tokens:
 
          .. code-block:: javascript
 
-            {"user_id": 1,
-             "creation_time": "1380137651",
-             "expiration_tim": "1380163800"}
+            {"client_id": "fantastico-idp",
+             "type": "login",
+             "encrypted": {
+                "client_id": "fantastico-idp",
+                "type": "login",
+                "user_id": 1,
+                "creation_time": "1380137651",
+                "expiration_time": "1380163800",
+             }
+            }
 
    * Access token
 
@@ -23,8 +30,10 @@ In Fantastico framework there are currently two type of supported tokens:
          .. code-block:: javascript
 
             {"client_id": "simple-menus",
+             "type": "access",
              "encrypted": {
                "client_id": "simple-menus",
+               "type": "access",
                "user_id": 1,
                "scopes": ["simple_menus.create", "simple_menus.update", "simple_menus.delete"],
                "creation_time": "1380137651",
