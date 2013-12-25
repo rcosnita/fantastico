@@ -18,7 +18,7 @@ In Fantastico framework there are currently two type of supported tokens:
                 "type": "login",
                 "user_id": 1,
                 "creation_time": "1380137651",
-                "expiration_tim": "1380163800",
+                "expiration_time": "1380163800",
              }
             }
 
