@@ -1,5 +1,5 @@
 #!/bin/bash
-PATH=/usr/bin:/usr/local/bin:/usr/sbin
+PATH=/bin:/usr/bin:/usr/local/bin:/usr/sbin
 
 . pip-deps/bin/activate
 pip install nose
