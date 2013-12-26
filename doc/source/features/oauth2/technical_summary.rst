@@ -60,3 +60,18 @@ Supported token generators
 
 .. autoclass:: fantastico.oauth2.logintoken_generator.LoginTokenGenerator
    :members:
+
+Concrete exceptions
+-------------------
+
+.. autoclass:: fantastico.oauth2.exceptions.OAuth2Error
+   :members:
+
+.. autoclass:: fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError
+   :members:
+
+.. autoclass:: fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError
+   :members:
+
+.. autoclass:: fantastico.oauth2.exceptions.OAuth2TokenExpiredError
+   :members:
