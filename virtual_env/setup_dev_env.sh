@@ -14,3 +14,4 @@ pip-3.2 install virtual_env/libs/mysql-connector
 pip-3.2 install sqlalchemy
 pip-3.2 install mock
 pip-3.2 install uwsgi
+pip-3.2 install "pycrypto>=2.6"
