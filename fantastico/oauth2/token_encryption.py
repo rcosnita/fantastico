@@ -17,7 +17,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.token_encryption
 '''
 
-from Crypto import Random
 from Crypto.Cipher import AES
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
 from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError
