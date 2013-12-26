@@ -57,3 +57,6 @@ Supported token generators
 
 .. autoclass:: fantastico.oauth2.token_generator.TokenGenerator
    :members:
+
+.. autoclass:: fantastico.oauth2.logintoken_generator.LoginTokenGenerator
+   :members:
