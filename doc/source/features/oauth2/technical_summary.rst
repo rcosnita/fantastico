@@ -73,6 +73,8 @@ AES implementation:
 .. autoclass:: fantastico.oauth2.token_encryption.TokenEncryption
    :members:
 
+.. autoclass:: fantastico.oauth2.token_encryption.AesTokenEncryption
+   :members:
 
 Concrete exceptions
 -------------------

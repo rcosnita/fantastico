@@ -17,10 +17,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.token_encryption
 '''
 
-from abc import ABCMeta # pylint: disable=W0611
-from abc import abstractmethod
+from Crypto import Random
+from Crypto.Cipher import AES
+from abc import abstractmethod, ABCMeta # pylint: disable=W0611
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError
+from fantastico.oauth2.token import Token
+import json
 
-class TokenEncryption(metaclass=ABCMeta):
+class TokenEncryption(object, metaclass=ABCMeta):
     '''This class provides an abstract model for token encryption providers. A token encryption provider must be able
     to encrypt / decrypt a :py:class:`fantastico.oauth2.token.Token` objects.'''
 
@@ -52,3 +56,46 @@ class TokenEncryption(metaclass=ABCMeta):
         :type token_key: byte[]
         :return: Decrypted token object.
         :rtype: :py:class:`fantastico.oauth2.token.Token`'''
+
+class AesTokenEncryption(TokenEncryption):
+    '''This class provides a generic AES token encryption provider. It allows developers to specify the number of bits used
+    for AES (128 / 192 / 256 bits).'''
+
+    def encrypt_token(self, token, token_iv, token_key):
+        '''This method uses AES for encrypting the given token. Internally it transform the token into a JSON string and
+        encrypt it using given token_iv and token_key.'''
+
+        if not token:
+            raise OAuth2InvalidTokenDescriptorError("token")
+
+        if not token_iv:
+            raise OAuth2InvalidTokenDescriptorError("token_iv")
+
+        if not token_key:
+            raise OAuth2InvalidTokenDescriptorError("token_key")
+
+        text = json.dumps(token.dictionary)
+
+        cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
+
+        return cipher.encrypt(text)
+
+    def decrypt_token(self, encrypted_str, token_iv, token_key):
+        '''This method uses AES for decrypting the given string. Internally, decrypted string is converted into a dictionary and
+        then into a concrete token object.'''
+
+        if not encrypted_str:
+            raise OAuth2InvalidTokenDescriptorError("encrypted_str")
+
+        if not token_iv:
+            raise OAuth2InvalidTokenDescriptorError("token_iv")
+
+        if not token_key:
+            raise OAuth2InvalidTokenDescriptorError("token_key")
+
+        cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
+
+        decrypted_text = cipher.decrypt(encrypted_str).decode()
+        token_descriptor = json.loads(decrypted_text)
+
+        return Token(token_descriptor)
