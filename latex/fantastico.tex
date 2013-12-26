@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{December 25, 2013}
-\release{0.6.0-b135}
+\date{December 26, 2013}
+\release{0.6.0-b136}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -786,7 +786,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x5402f30\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x6dc06b0\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -3567,7 +3567,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1686408\textgreater{}}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x2fa1408\textgreater{}}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -6678,6 +6678,114 @@ exception must be raised.
 
 \end{fulllineitems}
 
+\index{LoginTokenGenerator (class in fantastico.oauth2.logintoken\_generator)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.logintoken_generator.LoginTokenGenerator}\pysigline{\strong{class }\code{fantastico.oauth2.logintoken\_generator.}\bfcode{LoginTokenGenerator}}
+This class provides support for generating and working with login tokens. A login token is used for proving that a user
+is authenticated correctly. For more information, read {\hyperref[features/oauth2/tokens_format::doc]{\emph{OAUTH2 Fantastico Tokens}}}.
+\index{generate() (fantastico.oauth2.logintoken\_generator.LoginTokenGenerator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.logintoken_generator.LoginTokenGenerator.generate}\pysiglinewithargsret{\bfcode{generate}}{\emph{token\_desc}, \emph{time\_provider=\textless{}module `time' (built-in)\textgreater{}}}{}
+This method generates a login token. In order to succeed token descriptor must contain the following keys:
+\begin{itemize}
+\item {} 
+client\_id - a unique identifier for the idp which generated the token.
+
+\item {} 
+user\_id - idp user unique identifier.
+
+\item {} 
+expires\_in - an integer value in seconds determining the maximum validity of the token.
+
+\end{itemize}
+
+If any of the above keys are missing an oauth 2 exception is raised.
+
+\end{fulllineitems}
+
+\index{validate() (fantastico.oauth2.logintoken\_generator.LoginTokenGenerator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.logintoken_generator.LoginTokenGenerator.validate}\pysiglinewithargsret{\bfcode{validate}}{\emph{token}}{}
+This method checks the given login token for:
+\begin{itemize}
+\item {} 
+correct type (login).
+
+\item {} 
+expiration time.
+
+\end{itemize}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
+
+\paragraph{Concrete exceptions}
+\label{features/oauth2/technical_summary:concrete-exceptions}\index{OAuth2Error (class in fantastico.oauth2.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.exceptions.OAuth2Error}\pysiglinewithargsret{\strong{class }\code{fantastico.oauth2.exceptions.}\bfcode{OAuth2Error}}{\emph{error\_code=12000}, \emph{msg=None}, \emph{http\_code=400}}{}
+This class provides the base class for OAuth2 exceptions. In order to be compliant with
+\href{http://tools.ietf.org/html/rfc6749}{OAuth2 spec} each oauth error is described by a status code, an error code and a
+friendly description.
+\index{error\_code (fantastico.oauth2.exceptions.OAuth2Error attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.exceptions.OAuth2Error.error_code}\pysigline{\bfcode{error\_code}}
+This property returns the exception error code.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{OAuth2InvalidTokenDescriptorError (class in fantastico.oauth2.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError}\pysiglinewithargsret{\strong{class }\code{fantastico.oauth2.exceptions.}\bfcode{OAuth2InvalidTokenDescriptorError}}{\emph{attr\_name}}{}
+This class provides a concrete exception used to notify a missing attribute from a token descriptor.
+\index{attr\_name (fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError.attr_name}\pysigline{\bfcode{attr\_name}}
+This property returns the missing attribute name.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{OAuth2InvalidTokenTypeError (class in fantastico.oauth2.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError}\pysiglinewithargsret{\strong{class }\code{fantastico.oauth2.exceptions.}\bfcode{OAuth2InvalidTokenTypeError}}{\emph{token\_type}, \emph{msg}}{}
+This class provides a concrete exception used to notify that a token has been seen to a token generator which does not
+support it.
+\index{token\_type (fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError.token_type}\pysigline{\bfcode{token\_type}}
+This property returns the invalid token type.
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{OAuth2TokenExpiredError (class in fantastico.oauth2.exceptions)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.exceptions.OAuth2TokenExpiredError}\pysiglinewithargsret{\strong{class }\code{fantastico.oauth2.exceptions.}\bfcode{OAuth2TokenExpiredError}}{\emph{msg=None}}{}
+This class provides a concrete exception used to notify that a token is expired.
+
+\end{fulllineitems}
+
 
 
 \section{SDK}
@@ -6820,7 +6928,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x1b562f8\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x34712f8\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -7365,7 +7473,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2f45738\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x4862738\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}

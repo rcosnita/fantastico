@@ -146,45 +146,46 @@
 \contentsline {subparagraph}{Obtain authenticated user id}{81}{subparagraph*.287}
 \contentsline {subparagraph}{Obtain current granted scopes}{81}{subparagraph*.288}
 \contentsline {paragraph}{Supported token generators}{81}{paragraph*.289}
-\contentsline {section}{\numberline {4.7}SDK}{82}{section.4.7}
-\contentsline {subsection}{\numberline {4.7.1}Intro}{82}{subsection.4.7.1}
-\contentsline {subsection}{\numberline {4.7.2}Usage}{82}{subsection.4.7.2}
-\contentsline {subsection}{\numberline {4.7.3}Supported commands}{82}{subsection.4.7.3}
-\contentsline {subsubsection}{Activate extension command}{82}{subsubsection*.295}
-\contentsline {subsubsection}{Fantastico command}{83}{subsubsection*.300}
-\contentsline {subsubsection}{Syncdb command}{83}{subsubsection*.301}
-\contentsline {subsubsection}{Version command}{84}{subsubsection*.306}
-\contentsline {subsection}{\numberline {4.7.4}Technical summary}{84}{subsection.4.7.4}
-\contentsline {section}{\numberline {4.8}Component model}{87}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}Static folder}{88}{subsection.4.8.1}
-\contentsline {subsection}{\numberline {4.8.2}Sql folder}{88}{subsection.4.8.2}
-\contentsline {subsubsection}{Sql folder example}{88}{subsubsection*.330}
-\contentsline {section}{\numberline {4.9}Component reusage}{89}{section.4.9}
-\contentsline {section}{\numberline {4.10}Built in components}{91}{section.4.10}
-\contentsline {subsection}{\numberline {4.10.1}Dynamic menu}{91}{subsection.4.10.1}
-\contentsline {subsubsection}{Integration}{91}{subsubsection*.334}
-\contentsline {paragraph}{Component files activation deprecated}{91}{paragraph*.335}
-\contentsline {paragraph}{Component files activation (SDK)}{91}{paragraph*.336}
-\contentsline {paragraph}{Component sample + db data}{91}{paragraph*.337}
-\contentsline {subsubsection}{Current limitations}{92}{subsubsection*.338}
-\contentsline {subsubsection}{Technical summary}{92}{subsubsection*.339}
-\contentsline {subsection}{\numberline {4.10.2}Dynamic pages}{93}{subsection.4.10.2}
-\contentsline {subsubsection}{Integration}{93}{subsubsection*.344}
-\contentsline {subsubsection}{Current limitations}{94}{subsubsection*.345}
-\contentsline {subsubsection}{Technical summary}{94}{subsubsection*.346}
-\contentsline {subsection}{\numberline {4.10.3}Tracking codes}{95}{subsection.4.10.3}
-\contentsline {subsubsection}{Analytic solutions}{96}{subsubsection*.351}
-\contentsline {subsubsection}{Integration}{96}{subsubsection*.352}
-\contentsline {subsubsection}{Current limitations}{97}{subsubsection*.353}
-\contentsline {subsubsection}{Technical summary}{97}{subsubsection*.354}
-\contentsline {subsection}{\numberline {4.10.4}ROA Auto discovery}{97}{subsection.4.10.4}
-\contentsline {subsubsection}{Integration}{97}{subsubsection*.359}
-\contentsline {subsubsection}{Current limitations}{98}{subsubsection*.360}
-\contentsline {subsubsection}{Technical summary}{98}{subsubsection*.361}
-\contentsline {chapter}{\numberline {5}Changes}{99}{chapter.5}
-\contentsline {section}{\numberline {5.1}Feedback}{99}{section.5.1}
-\contentsline {section}{\numberline {5.2}Versions}{99}{section.5.2}
-\contentsline {chapter}{\numberline {6}Provide feedback}{103}{chapter.6}
-\contentsline {chapter}{\numberline {7}Build status}{105}{chapter.7}
-\contentsline {chapter}{\numberline {8}License}{107}{chapter.8}
-\contentsline {chapter}{Index}{109}{section*.364}
+\contentsline {paragraph}{Concrete exceptions}{82}{paragraph*.298}
+\contentsline {section}{\numberline {4.7}SDK}{83}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}Intro}{83}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}Usage}{83}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.3}Supported commands}{83}{subsection.4.7.3}
+\contentsline {subsubsection}{Activate extension command}{83}{subsubsection*.306}
+\contentsline {subsubsection}{Fantastico command}{84}{subsubsection*.311}
+\contentsline {subsubsection}{Syncdb command}{84}{subsubsection*.312}
+\contentsline {subsubsection}{Version command}{85}{subsubsection*.317}
+\contentsline {subsection}{\numberline {4.7.4}Technical summary}{85}{subsection.4.7.4}
+\contentsline {section}{\numberline {4.8}Component model}{88}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Static folder}{89}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Sql folder}{89}{subsection.4.8.2}
+\contentsline {subsubsection}{Sql folder example}{89}{subsubsection*.341}
+\contentsline {section}{\numberline {4.9}Component reusage}{90}{section.4.9}
+\contentsline {section}{\numberline {4.10}Built in components}{92}{section.4.10}
+\contentsline {subsection}{\numberline {4.10.1}Dynamic menu}{92}{subsection.4.10.1}
+\contentsline {subsubsection}{Integration}{92}{subsubsection*.345}
+\contentsline {paragraph}{Component files activation deprecated}{92}{paragraph*.346}
+\contentsline {paragraph}{Component files activation (SDK)}{92}{paragraph*.347}
+\contentsline {paragraph}{Component sample + db data}{92}{paragraph*.348}
+\contentsline {subsubsection}{Current limitations}{93}{subsubsection*.349}
+\contentsline {subsubsection}{Technical summary}{93}{subsubsection*.350}
+\contentsline {subsection}{\numberline {4.10.2}Dynamic pages}{94}{subsection.4.10.2}
+\contentsline {subsubsection}{Integration}{94}{subsubsection*.355}
+\contentsline {subsubsection}{Current limitations}{95}{subsubsection*.356}
+\contentsline {subsubsection}{Technical summary}{95}{subsubsection*.357}
+\contentsline {subsection}{\numberline {4.10.3}Tracking codes}{96}{subsection.4.10.3}
+\contentsline {subsubsection}{Analytic solutions}{97}{subsubsection*.362}
+\contentsline {subsubsection}{Integration}{97}{subsubsection*.363}
+\contentsline {subsubsection}{Current limitations}{98}{subsubsection*.364}
+\contentsline {subsubsection}{Technical summary}{98}{subsubsection*.365}
+\contentsline {subsection}{\numberline {4.10.4}ROA Auto discovery}{98}{subsection.4.10.4}
+\contentsline {subsubsection}{Integration}{98}{subsubsection*.370}
+\contentsline {subsubsection}{Current limitations}{99}{subsubsection*.371}
+\contentsline {subsubsection}{Technical summary}{99}{subsubsection*.372}
+\contentsline {chapter}{\numberline {5}Changes}{101}{chapter.5}
+\contentsline {section}{\numberline {5.1}Feedback}{101}{section.5.1}
+\contentsline {section}{\numberline {5.2}Versions}{101}{section.5.2}
+\contentsline {chapter}{\numberline {6}Provide feedback}{105}{chapter.6}
+\contentsline {chapter}{\numberline {7}Build status}{107}{chapter.7}
+\contentsline {chapter}{\numberline {8}License}{109}{chapter.8}
+\contentsline {chapter}{Index}{111}{section*.375}

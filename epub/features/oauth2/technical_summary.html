@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="idp.html" title="OAUTH2 Fantastico IDP"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b135 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -190,6 +190,85 @@ exception must be raised.</p>
 </table>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.logintoken_generator.LoginTokenGenerator">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.logintoken_generator.</tt><tt class="descname">LoginTokenGenerator</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/logintoken_generator.html#LoginTokenGenerator"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides support for generating and working with login tokens. A login token is used for proving that a user
+is authenticated correctly. For more information, read <a class="reference internal" href="tokens_format.html"><em>OAUTH2 Fantastico Tokens</em></a>.</p>
+<dl class="method">
+<dt id="fantastico.oauth2.logintoken_generator.LoginTokenGenerator.generate">
+<tt class="descname">generate</tt><big>(</big><em>token_desc</em>, <em>time_provider=&lt;module 'time' (built-in)&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/logintoken_generator.html#LoginTokenGenerator.generate"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method generates a login token. In order to succeed token descriptor must contain the following keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li>client_id - a unique identifier for the idp which generated the token.</li>
+<li>user_id - idp user unique identifier.</li>
+<li>expires_in - an integer value in seconds determining the maximum validity of the token.</li>
+</ul>
+</div></blockquote>
+<p>If any of the above keys are missing an oauth 2 exception is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.logintoken_generator.LoginTokenGenerator.validate">
+<tt class="descname">validate</tt><big>(</big><em>token</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/logintoken_generator.html#LoginTokenGenerator.validate"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method checks the given login token for:</p>
+<ul class="simple">
+<li>correct type (login).</li>
+<li>expiration time.</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="concrete-exceptions">
+<h2>Concrete exceptions</h2>
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2Error">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2Error</tt><big>(</big><em>error_code=12000</em>, <em>msg=None</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2Error"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the base class for OAuth2 exceptions. In order to be compliant with
+<a class="reference external" href="http://tools.ietf.org/html/rfc6749">OAuth2 spec</a><span class="link-target"> [http://tools.ietf.org/html/rfc6749]</span> each oauth error is described by a status code, an error code and a
+friendly description.</p>
+<dl class="attribute">
+<dt id="fantastico.oauth2.exceptions.OAuth2Error.error_code">
+<tt class="descname">error_code</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2Error.error_code"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property returns the exception error code.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2InvalidTokenDescriptorError</tt><big>(</big><em>attr_name</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2InvalidTokenDescriptorError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides a concrete exception used to notify a missing attribute from a token descriptor.</p>
+<dl class="attribute">
+<dt id="fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError.attr_name">
+<tt class="descname">attr_name</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2InvalidTokenDescriptorError.attr_name"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property returns the missing attribute name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2InvalidTokenTypeError</tt><big>(</big><em>token_type</em>, <em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2InvalidTokenTypeError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides a concrete exception used to notify that a token has been seen to a token generator which does not
+support it.</p>
+<dl class="attribute">
+<dt id="fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError.token_type">
+<tt class="descname">token_type</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2InvalidTokenTypeError.token_type"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property returns the invalid token type.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2TokenExpiredError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2TokenExpiredError</tt><big>(</big><em>msg=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2TokenExpiredError"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides a concrete exception used to notify that a token is expired.</p>
 </dd></dl>
 
 </div>
