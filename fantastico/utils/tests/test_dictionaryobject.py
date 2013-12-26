@@ -56,6 +56,16 @@ class DictionaryObjectTests(FantasticoUnitTestsCase):
 
         self.assertRaises(AttributeError, add_name, obj)
 
+    def test_dictionaryobject_get_dict(self):
+        '''This test case ensures a token dictionary representation can be retrieved correctly.'''
+
+        descriptor = {"attr1": "test attr1",
+                      "attr2": "test attr2"}
+
+        obj = MockDictionaryObject(descriptor)
+
+        self.assertEqual(descriptor, obj.dictionary)
+
 class MockDictionaryObject(DictionaryObject):
     '''A very simple mock object used for testing dictionary object.'''
 

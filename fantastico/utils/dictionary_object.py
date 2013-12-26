@@ -30,6 +30,12 @@ class DictionaryObject(object):
 
         print(obj.first_name)'''
 
+    @property
+    def dictionary(self):
+        '''This property returns a dictionary representation of this object.'''
+
+        return self._members
+
     def __init__(self, members):
         self.__setattr__("_members", members or {}, True)
 
