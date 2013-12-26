@@ -64,6 +64,16 @@ Supported token generators
 .. autoclass:: fantastico.oauth2.logintoken_generator.LoginTokenGenerator
    :members:
 
+Encryption / decryption
+-----------------------
+
+In Fantastico OAuth2, tokens are encrypted / decrypted using AES symmetric encryption. Below you can find the classes which provides
+AES implementation:
+
+.. autoclass:: fantastico.oauth2.token_encryption.TokenEncryption
+   :members:
+
+
 Concrete exceptions
 -------------------
 
