@@ -36,7 +36,7 @@ class OAuth2Error(FantasticoError):
 
         self._error_code = error_code
 
-class OAuth2InvalidTokenDescriptorError(FantasticoError):
+class OAuth2InvalidTokenDescriptorError(OAuth2Error):
     '''This class provides a concrete exception used to notify a missing attribute from a token descriptor.'''
 
     ERROR_CODE = 12010
@@ -53,3 +53,28 @@ class OAuth2InvalidTokenDescriptorError(FantasticoError):
         msg = "Token descriptor misses attribute %s." % attr_name
 
         super(OAuth2InvalidTokenDescriptorError, self).__init__(self.ERROR_CODE, msg)
+
+class OAuth2InvalidTokenTypeError(OAuth2Error):
+    '''This class provides a concrete exception used to notify that a token has been seen to a token generator which does not
+    support it.'''
+
+    ERROR_CODE = 12020
+
+    @property
+    def token_type(self):
+        '''This property returns the invalid token type.'''
+
+        return self._token_type
+
+    def __init__(self, token_type, msg):
+        self._token_type = token_type
+
+        super(OAuth2InvalidTokenTypeError, self).__init__(self.ERROR_CODE, msg)
+
+class OAuth2TokenExpiredError(OAuth2Error):
+    '''This class provides a concrete exception used to notify that a token is expired.'''
+
+    ERROR_CODE = 12030
+
+    def __init__(self, msg=None):
+        super(OAuth2TokenExpiredError, self).__init__(self.ERROR_CODE, msg)
