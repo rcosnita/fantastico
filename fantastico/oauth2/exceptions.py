@@ -55,8 +55,8 @@ class OAuth2InvalidTokenDescriptorError(OAuth2Error):
         super(OAuth2InvalidTokenDescriptorError, self).__init__(self.ERROR_CODE, msg)
 
 class OAuth2InvalidTokenTypeError(OAuth2Error):
-    '''This class provides a concrete exception used to notify that a token has been seen to a token generator which does not
-    support it.'''
+    '''This class provides a concrete exception used to notify that a token has been sent to a token generator which does not
+    support it or the token type is unknown.'''
 
     ERROR_CODE = 12020
 
