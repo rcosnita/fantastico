@@ -78,3 +78,11 @@ class OAuth2TokenExpiredError(OAuth2Error):
 
     def __init__(self, msg=None):
         super(OAuth2TokenExpiredError, self).__init__(self.ERROR_CODE, msg)
+
+class OAuth2TokenEncryptionError(OAuth2Error):
+    '''This class provides a concrete exception used to notify an error during encrypt / decrypt token operations.'''
+
+    ERROR_CODE = 12040
+
+    def __init__(self, msg):
+        super(OAuth2TokenEncryptionError, self).__init__(self.ERROR_CODE, msg)

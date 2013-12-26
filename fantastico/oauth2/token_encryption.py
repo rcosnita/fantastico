@@ -20,7 +20,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from Crypto import Random
 from Crypto.Cipher import AES
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError
 from fantastico.oauth2.token import Token
 import json
 
@@ -74,11 +74,14 @@ class AesTokenEncryption(TokenEncryption):
         if not token_key:
             raise OAuth2InvalidTokenDescriptorError("token_key")
 
-        text = json.dumps(token.dictionary)
+        try:
+            text = json.dumps(token.dictionary)
 
-        cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
+            cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
 
-        return cipher.encrypt(text)
+            return cipher.encrypt(text)
+        except Exception as ex:
+            raise OAuth2TokenEncryptionError(str(ex))
 
     def decrypt_token(self, encrypted_str, token_iv, token_key):
         '''This method uses AES for decrypting the given string. Internally, decrypted string is converted into a dictionary and
@@ -93,9 +96,12 @@ class AesTokenEncryption(TokenEncryption):
         if not token_key:
             raise OAuth2InvalidTokenDescriptorError("token_key")
 
-        cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
+        try:
+            cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
 
-        decrypted_text = cipher.decrypt(encrypted_str).decode()
-        token_descriptor = json.loads(decrypted_text)
+            decrypted_text = cipher.decrypt(encrypted_str).decode()
+            token_descriptor = json.loads(decrypted_text)
 
-        return Token(token_descriptor)
+            return Token(token_descriptor)
+        except Exception as ex:
+            raise OAuth2TokenEncryptionError(str(ex))

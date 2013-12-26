@@ -18,10 +18,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from Crypto import Random
 from Crypto.Cipher import AES
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.token_encryption import AesTokenEncryption
 from fantastico.tests.base_case import FantasticoUnitTestsCase
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError
 
 class AesTokenEncryptionTests(FantasticoUnitTestsCase):
     '''This class provides tests suite for AES token encryption provider from fantastico.'''
@@ -81,6 +81,14 @@ class AesTokenEncryptionTests(FantasticoUnitTestsCase):
 
         self.assertEqual("token_key", ctx.exception.attr_name)
 
+    def test_aes_encrypt_unexpected_error(self):
+        '''This test case ensures all unexpected exceptions from encrypt are converted correctly into OAuth2 encryption errors.'''
+
+        aes_provider = AesTokenEncryption()
+
+        with self.assertRaises(OAuth2TokenEncryptionError):
+            aes_provider.encrypt_token(Token({}), "Simple IV", "Simple Key")
+
     def test_aes_decrypt_notoken(self):
         '''This test case ensures aes decrypt fails if no token is given.'''
 
@@ -110,3 +118,11 @@ class AesTokenEncryptionTests(FantasticoUnitTestsCase):
             aes_provider.decrypt_token(Token({}), "simple key", None)
 
         self.assertEqual("token_key", ctx.exception.attr_name)
+
+    def test_aes_decrypt_unexpected_error(self):
+        '''This test case ensures all unexpected exceptions from decrypt are converted correctly into OAuth2 encryption errors.'''
+
+        aes_provider = AesTokenEncryption()
+
+        with self.assertRaises(OAuth2TokenEncryptionError):
+            aes_provider.decrypt_token(Token({}), "Simple IV", "Simple Key")
