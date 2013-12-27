@@ -16,10 +16,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.models.clients
 '''
+
 from fantastico.mvc import BASEMODEL
 from sqlalchemy.orm import relationship
-from sqlalchemy.schema import Column
-from sqlalchemy.types import String
+from sqlalchemy.schema import Column, Table, ForeignKey
+from sqlalchemy.types import String, Boolean, Text, Integer
+
+client_scopes_assoc = Table("oauth2_client_scopes", BASEMODEL.metadata,
+                            Column("client_id", Integer, ForeignKey("oauth2_clients.client_id")),
+                            Column("scope_id", Integer, ForeignKey("oauth2_scopes.scope_id")))
 
 class Client(BASEMODEL):
     '''This class provides the model for oauth2 clients.'''
@@ -27,4 +32,22 @@ class Client(BASEMODEL):
     __tablename__ = "oauth2_clients"
 
     client_id = Column("client_id", String(32), primary_key=True)
+    name = Column("name", String(100), nullable=False)
+    description = Column("description", Text, nullable=False)
+    grant_types = Column("grant_types", String(200), nullable=False)
+    token_iv = Column("token_iv", String(256), nullable=False)
+    token_key = Column("token_key", String(256), nullable=False)
+    revoked = Column("revoked", Boolean, nullable=False)
+
     return_urls = relationship("ClientReturnUrl")
+    scopes = relationship("Scope", secondary="oauth2_client_scopes")
+
+    def __init__(self, client_id=None, name=None, description=None, grant_types=None, token_iv=None, token_key=None,
+                 revoked=None):
+        self.client_id = client_id
+        self.name = name
+        self.description = description
+        self.grant_types = grant_types
+        self.token_iv = token_iv
+        self.token_key = token_key
+        self.revoked = revoked
