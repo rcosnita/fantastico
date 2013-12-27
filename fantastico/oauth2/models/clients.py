@@ -14,31 +14,17 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.oauth2.models.tests.test_scopes
+.. py:module:: fantastico.oauth2.models.clients
 '''
-from fantastico.oauth2.models.scopes import Scope
-from fantastico.tests.base_case import FantasticoUnitTestsCase
+from fantastico.mvc import BASEMODEL
+from sqlalchemy.orm import relationship
+from sqlalchemy.schema import Column
+from sqlalchemy.types import String
 
-class ScopeTests(FantasticoUnitTestsCase):
-    '''This class provides the tests suite for Scope entity.'''
+class Client(BASEMODEL):
+    '''This class provides the model for oauth2 clients.'''
 
-    def test_init_ok(self):
-        '''This test case ensures scope entity can be instantiated.'''
+    __tablename__ = "oauth2_clients"
 
-        scope_name = "simple name"
-        scope_desc = "simple description"
-
-        scope = Scope(scope_name, scope_desc)
-
-        self.assertIsNone(scope.scope_id)
-        self.assertEqual(scope_name, scope.name)
-        self.assertEqual(scope_desc, scope.description)
-
-    def test_init_noargs(self):
-        '''This test case ensures scope entity can be instantiated without arguments.'''
-
-        scope = Scope()
-
-        self.assertIsNone(scope.scope_id)
-        self.assertIsNone(scope.name)
-        self.assertIsNone(scope.description)
+    client_id = Column("client_id", String(32), primary_key=True)
+    return_urls = relationship("ClientReturnUrl")

@@ -14,31 +14,32 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.oauth2.models.tests.test_scopes
+.. py:module:: fantastico.oauth2.models.tests.test_returnurls
 '''
-from fantastico.oauth2.models.scopes import Scope
+from fantastico.oauth2.models.return_urls import ClientReturnUrl
 from fantastico.tests.base_case import FantasticoUnitTestsCase
+import uuid
 
-class ScopeTests(FantasticoUnitTestsCase):
-    '''This class provides the tests suite for Scope entity.'''
-
-    def test_init_ok(self):
-        '''This test case ensures scope entity can be instantiated.'''
-
-        scope_name = "simple name"
-        scope_desc = "simple description"
-
-        scope = Scope(scope_name, scope_desc)
-
-        self.assertIsNone(scope.scope_id)
-        self.assertEqual(scope_name, scope.name)
-        self.assertEqual(scope_desc, scope.description)
+class ClientReturnUrlTests(FantasticoUnitTestsCase):
+    '''This class provides the tests suite for client return url model.'''
 
     def test_init_noargs(self):
-        '''This test case ensures scope entity can be instantiated without arguments.'''
+        '''This test case ensures the model can be instantiated without arguments.'''
 
-        scope = Scope()
+        obj = ClientReturnUrl()
 
-        self.assertIsNone(scope.scope_id)
-        self.assertIsNone(scope.name)
-        self.assertIsNone(scope.description)
+        self.assertIsNone(obj.url_id)
+        self.assertIsNone(obj.client_id)
+        self.assertIsNone(obj.return_url)
+
+    def test_init_ok(self):
+        '''This test case ensures the model can be instantiated with arguments specified.'''
+
+        client_id = str(uuid.uuid4())
+        return_url = "http://simple-test"
+
+        obj = ClientReturnUrl(client_id, return_url)
+
+        self.assertIsNone(obj.url_id)
+        self.assertEqual(client_id, obj.client_id)
+        self.assertEqual(return_url, obj.return_url)

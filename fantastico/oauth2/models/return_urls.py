@@ -14,31 +14,24 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.oauth2.models.tests.test_scopes
+.. py:module:: fantastico.oauth2.models.return_urls
 '''
-from fantastico.oauth2.models.scopes import Scope
-from fantastico.tests.base_case import FantasticoUnitTestsCase
+from fantastico.mvc import BASEMODEL
+from fantastico.oauth2.models.clients import Client
+from sqlalchemy.orm import relationship
+from sqlalchemy.schema import Column, ForeignKey
+from sqlalchemy.types import Integer, String
 
-class ScopeTests(FantasticoUnitTestsCase):
-    '''This class provides the tests suite for Scope entity.'''
+class ClientReturnUrl(BASEMODEL):
+    '''This class provides the return urls entity used to describe valid return urls of a client.'''
 
-    def test_init_ok(self):
-        '''This test case ensures scope entity can be instantiated.'''
+    __tablename__ = "oauth2_client_returnurls"
 
-        scope_name = "simple name"
-        scope_desc = "simple description"
+    url_id = Column("url_id", Integer, primary_key=True, autoincrement=True)
+    client_id = Column("client_id", String(32), ForeignKey("oauth2_clients.client_id"))
+    client = relationship(Client, primaryjoin=client_id == Client.client_id)
+    return_url = Column("return_url", String(255), nullable=False)
 
-        scope = Scope(scope_name, scope_desc)
-
-        self.assertIsNone(scope.scope_id)
-        self.assertEqual(scope_name, scope.name)
-        self.assertEqual(scope_desc, scope.description)
-
-    def test_init_noargs(self):
-        '''This test case ensures scope entity can be instantiated without arguments.'''
-
-        scope = Scope()
-
-        self.assertIsNone(scope.scope_id)
-        self.assertIsNone(scope.name)
-        self.assertIsNone(scope.description)
+    def __init__(self, client_id=None, return_url=None):
+        self.client_id = client_id
+        self.return_url = return_url
