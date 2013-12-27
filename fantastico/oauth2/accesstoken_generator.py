@@ -19,7 +19,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.token_generator import TokenGenerator
 import time
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError
 
 class AccessTokenGenerator(TokenGenerator):
     '''This class provides the methods for working with access tokens: (generate and validate).'''
@@ -38,21 +37,10 @@ class AccessTokenGenerator(TokenGenerator):
 
         token_desc = token_desc or {}
 
-        client_id = token_desc.get("client_id")
-        if not client_id:
-            raise OAuth2InvalidTokenDescriptorError("client_id")
-
-        user_id = token_desc.get("user_id")
-        if not user_id:
-            raise OAuth2InvalidTokenDescriptorError("user_id")
-
-        scopes = token_desc.get("scopes")
-        if not scopes:
-            raise OAuth2InvalidTokenDescriptorError("scopes")
-
-        expires_in = token_desc.get("expires_in")
-        if not expires_in:
-            raise OAuth2InvalidTokenDescriptorError("expires_in")
+        client_id = self._validate_missing_attr("client_id", token_desc)
+        user_id = self._validate_missing_attr("user_id", token_desc)
+        scopes = self._validate_missing_attr("scopes", token_desc)
+        expires_in = self._validate_missing_attr("expires_in", token_desc)
 
         creation_time = time_provider.time()
 

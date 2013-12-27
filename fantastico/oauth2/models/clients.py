@@ -22,7 +22,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, Table, ForeignKey
 from sqlalchemy.types import String, Boolean, Text, Integer
 
-client_scopes_assoc = Table("oauth2_client_scopes", BASEMODEL.metadata,
+CLIENT_SCOPES_ASSOC = Table("oauth2_client_scopes", BASEMODEL.metadata,
                             Column("client_id", Integer, ForeignKey("oauth2_clients.client_id")),
                             Column("scope_id", Integer, ForeignKey("oauth2_scopes.scope_id")))
 

@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.logintoken_generator
 '''
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidTokenTypeError, OAuth2TokenExpiredError
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenTypeError, OAuth2TokenExpiredError
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.token_generator import TokenGenerator
 import time
@@ -39,19 +39,12 @@ class LoginTokenGenerator(TokenGenerator):
 
         token_desc = token_desc or {}
 
-        client_id = token_desc.get("client_id")
-        if not client_id:
-            raise OAuth2InvalidTokenDescriptorError("client_id")
-
-        user_id = token_desc.get("user_id", 0)
-        if not user_id:
-            raise OAuth2InvalidTokenDescriptorError("user_id")
+        client_id = self._validate_missing_attr("client_id", token_desc)
+        user_id = self._validate_missing_attr("user_id", token_desc)
 
         creation_time = int(time_provider.time())
 
-        expires_in = token_desc.get("expires_in", 0)
-        if not expires_in:
-            raise OAuth2InvalidTokenDescriptorError("expires_in")
+        expires_in = self._validate_missing_attr("expires_in", token_desc)
 
         expiration_time = creation_time + expires_in
 

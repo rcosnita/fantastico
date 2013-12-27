@@ -17,6 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.token_generator
 '''
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError
 
 class TokenGenerator(object, metaclass=ABCMeta):
     '''This class provides an abstract contract which must be provided by each concrete token generator. A token generator
@@ -51,3 +52,13 @@ class TokenGenerator(object, metaclass=ABCMeta):
         this is not necessary so this is a nop.'''
 
         pass
+
+    def _validate_missing_attr(self, attr_name, token_desc):
+        '''This method checks if a specified attribute is missing from token descriptor or not. If it's missing a concrete
+        OAuth2 exception is raised. Otherwise, the attribute value is returned.'''
+
+        ret_value = token_desc.get(attr_name)
+        if not ret_value:
+            raise OAuth2InvalidTokenDescriptorError(attr_name)
+
+        return ret_value
