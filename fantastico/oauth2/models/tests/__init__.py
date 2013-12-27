@@ -14,21 +14,5 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.oauth2.models.scopes
+.. py:module:: fantastico.oauth2.models.tests
 '''
-from fantastico.mvc import BASEMODEL
-from sqlalchemy.schema import Column
-from sqlalchemy.types import Integer, String, Text
-
-class Scope(BASEMODEL):
-    '''This class provides the entity for modeling OAuth2 scopes.'''
-
-    __tablename__ = "oauth2_scopes"
-
-    scope_id = Column("scope_id", Integer, primary_key=True, autoincrement=True)
-    name = Column("name", String(100), nullable=False)
-    description = Column("description", Text)
-
-    def __init__(self, name=None, description=None):
-        self.name = name
-        self.description = description
