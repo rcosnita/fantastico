@@ -21,6 +21,7 @@ from fantastico.oauth2.logintoken_generator import LoginTokenGenerator
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
+from fantastico.oauth2.accesstoken_generator import AccessTokenGenerator
 
 class TokenGeneratoryFactoryTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for token generator factory.'''
@@ -36,9 +37,12 @@ class TokenGeneratoryFactoryTests(FantasticoUnitTestsCase):
         '''This test case ensures the tokens generator factory can correctly instantiate a login token generator.'''
 
         login_generator = self._factory.get_generator(TokenGeneratorFactory.LOGIN_TOKEN, Mock())
+        access_generator = self._factory.get_generator(TokenGeneratorFactory.ACCESS_TOKEN, Mock())
 
         self.assertIsNotNone(login_generator)
+        self.assertIsNotNone(access_generator)
         self.assertIsInstance(login_generator, LoginTokenGenerator)
+        self.assertIsInstance(access_generator, AccessTokenGenerator)
 
     def test_unknonwgenerator_get_exception(self):
         '''This test case ensures a concrete exception is raised if the requested token generator is not supported.'''

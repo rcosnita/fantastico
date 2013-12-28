@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.tokengenerator_factory
 '''
+from fantastico.oauth2.accesstoken_generator import AccessTokenGenerator
 from fantastico.oauth2.exceptions import OAuth2InvalidTokenTypeError
 from fantastico.oauth2.logintoken_generator import LoginTokenGenerator
 
@@ -27,10 +28,12 @@ class TokenGeneratorFactory(object):
 
         login_generator = TokenGeneratorFactory().get_generator(TokenGeneratorFactory.LOGIN_TOKEN)'''
 
+    ACCESS_TOKEN = AccessTokenGenerator.TOKEN_TYPE
     LOGIN_TOKEN = LoginTokenGenerator.TOKEN_TYPE
 
     def __init__(self):
-        self._supported_generators = {self.LOGIN_TOKEN: LoginTokenGenerator}
+        self._supported_generators = {self.ACCESS_TOKEN: AccessTokenGenerator,
+                                      self.LOGIN_TOKEN: LoginTokenGenerator}
 
     def get_generator(self, token_type, db_conn):
         '''This method returns an instance of a token generator which can handel requested token type.
