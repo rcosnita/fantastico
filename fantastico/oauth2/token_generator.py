@@ -17,7 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.token_generator
 '''
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError
+from fantastico.exceptions import FantasticoDbNotFoundError
+from fantastico.mvc.model_facade import ModelFacade
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError
+from fantastico.oauth2.models.clients import Client
 
 class TokenGenerator(object, metaclass=ABCMeta):
     '''This class provides an abstract contract which must be provided by each concrete token generator. A token generator
@@ -26,6 +29,10 @@ class TokenGenerator(object, metaclass=ABCMeta):
         * generate a new token
         * validate a given token
         * invalidate a given token'''
+
+    def __init__(self, db_conn, model_facade_cls=ModelFacade):
+        self._db_conn = db_conn
+        self._model_facade_cls = model_facade_cls
 
     @abstractmethod
     def generate(self, token_desc):
@@ -62,3 +69,21 @@ class TokenGenerator(object, metaclass=ABCMeta):
             raise OAuth2InvalidTokenDescriptorError(attr_name)
 
         return ret_value
+
+    def _validate_client(self, client_id):
+        '''Thie mthod validates the client descriptor (from database) and if valid returns the descriptor.'''
+
+
+        model_facade = self._model_facade_cls(Client, self._db_conn)
+
+        result = None
+
+        try:
+            result = model_facade.find_by_pk({Client.client_id: client_id})
+        except FantasticoDbNotFoundError as ex:
+            raise OAuth2InvalidClientError("Client %s does not exist: %s" % (client_id, str(ex)))
+
+        if result.revoked:
+            raise OAuth2InvalidClientError("Client %s is revoked." % client_id)
+
+        return result

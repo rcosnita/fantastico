@@ -17,20 +17,29 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.tests.test_accesstoken_generator
 '''
 from fantastico.oauth2.accesstoken_generator import AccessTokenGenerator
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError
+from fantastico.oauth2.models.clients import Client
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 import time
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError
+import uuid
+from fantastico.exceptions import FantasticoDbNotFoundError
 
 class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for access tokens generator.'''
 
-    _generator = AccessTokenGenerator()
+    _db_conn = None
+    _model_facade = None
+    _generator = None
 
     def init(self):
         '''This method is invoked in order to set up common dependencies for every test case.'''
 
-        self._generator = AccessTokenGenerator()
+        self._db_conn = Mock()
+        self._model_facade = Mock()
+        model_facade_cls = Mock(return_value=self._model_facade)
+
+        self._generator = AccessTokenGenerator(self._db_conn, model_facade_cls=model_facade_cls)
 
     def test_generate_ok(self):
         '''This test case ensures an access token can be correctly generated.'''
@@ -44,6 +53,8 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
                       "user_id": 123,
                       "scopes": "scope1 scope2 scope3 scope4",
                       "expires_in": 3600}
+
+        self._mock_client_search(Client())
 
         token = self._generator.generate(token_desc, time_provider)
 
@@ -94,3 +105,53 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
             self._generator.generate(token_desc)
 
         self.assertEqual(attr_name, ctx.exception.attr_name)
+
+    def test_generate_client_revoked(self):
+        '''This test case ensures a token can not be generated for a client which is revoked.'''
+
+        from fantastico.oauth2.models.return_urls import ClientReturnUrl # pylint: disable=W0611
+
+        client_id = str(uuid.uuid4())
+
+        token_desc = {"client_id": client_id,
+                      "user_id": 1,
+                      "scopes": "scope1 scope2",
+                      "expires_in": 3600}
+
+        expected_client = Client(client_id, name="simple app", revoked=True)
+
+        self._mock_client_search(expected_client)
+
+        with self.assertRaises(OAuth2InvalidClientError):
+            self._generator.generate(token_desc)
+
+        self._model_facade.find_by_pk.assert_called_once_with({Client.client_id: client_id})
+
+    def test_generate_client_notfound(self):
+        '''This test case ensures an exception is raised if the client specified in descriptor is not found.'''
+
+        from fantastico.oauth2.models.return_urls import ClientReturnUrl # pylint: disable=W0611
+
+        client_id = str(uuid.uuid4())
+
+        token_desc = {"client_id": client_id,
+                      "user_id": 1,
+                      "scopes": "scope1 scope2",
+                      "expires_in": 3600}
+
+        self._mock_client_search(None)
+
+        with self.assertRaises(OAuth2InvalidClientError):
+            self._generator.generate(token_desc)
+
+        self._model_facade.find_by_pk.assert_called_once_with({Client.client_id: client_id})
+
+
+    def _mock_client_search(self, expected_client):
+        '''This method provides the mock for client search by client_id. It returns a mock model facade which returns
+        expected_client when invoked.'''
+
+        if expected_client:
+            self._model_facade.find_by_pk = Mock(return_value=expected_client)
+        else:
+            self._model_facade.find_by_pk = Mock(side_effect=FantasticoDbNotFoundError("Client not found."))

@@ -86,3 +86,11 @@ class OAuth2TokenEncryptionError(OAuth2Error):
 
     def __init__(self, msg):
         super(OAuth2TokenEncryptionError, self).__init__(self.ERROR_CODE, msg)
+
+class OAuth2InvalidClientError(OAuth2Error):
+    '''This class provides a concrete exception used to notify an invalid client (not found or revoked).'''
+
+    ERROR_CODE = 12050
+
+    def __init__(self, msg):
+        super(OAuth2InvalidClientError, self).__init__(self.ERROR_CODE, msg)

@@ -18,6 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.mvc import BASEMODEL
+from fantastico.oauth2.models.scopes import Scope
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, Table, ForeignKey
 from sqlalchemy.types import String, Boolean, Text, Integer
@@ -40,7 +41,7 @@ class Client(BASEMODEL):
     revoked = Column("revoked", Boolean, nullable=False)
 
     return_urls = relationship("ClientReturnUrl")
-    scopes = relationship("Scope", secondary="oauth2_client_scopes")
+    scopes = relationship(Scope, secondary="oauth2_client_scopes")
 
     def __init__(self, client_id=None, name=None, description=None, grant_types=None, token_iv=None, token_key=None,
                  revoked=None):

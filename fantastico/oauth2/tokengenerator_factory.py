@@ -32,11 +32,12 @@ class TokenGeneratorFactory(object):
     def __init__(self):
         self._supported_generators = {self.LOGIN_TOKEN: LoginTokenGenerator}
 
-    def get_generator(self, token_type):
+    def get_generator(self, token_type, db_conn):
         '''This method returns an instance of a token generator which can handel requested token type.
 
         :param token_type: A unique token type.
         :type token_type: string
+        :param db_conn: An existing database connection (sql alchemy object) used when working with client context.
         :return: An instance of a concrete token generator which is compatible with the request token type.
         :rtype: :py:class:`fantastico.oauth2.token_generator.TokenGenerator`
         '''
@@ -46,4 +47,4 @@ class TokenGeneratorFactory(object):
         if not generator_cls:
             raise OAuth2InvalidTokenTypeError(token_type, "%s token type is not supported." % token_type)
 
-        return generator_cls()
+        return generator_cls(db_conn)

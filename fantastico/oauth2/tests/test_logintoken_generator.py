@@ -27,11 +27,14 @@ class LoginTokenGeneratorTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for login token generator.'''
 
     _generator = None
+    _db_conn = None
 
     def init(self):
         '''This method is invoked automatically in order to set common test cases dependencies.'''
 
-        self._generator = LoginTokenGenerator()
+        self._db_conn = Mock()
+
+        self._generator = LoginTokenGenerator(self._db_conn)
 
     def test_generate_ok(self):
         '''This test case ensures a login token can be correctly generated from a descriptor.'''
