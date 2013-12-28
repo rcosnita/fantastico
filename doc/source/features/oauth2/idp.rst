@@ -16,9 +16,9 @@ APIs
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
 | **/oauth/idp/profile?token=...**             | PUT      | user.profile.update | Updates an existing user profile.               |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
-| **/oauth/idp/profile?token=...**             | DELETE   | user.profile.delete | Updates an existing user profiler.              |
+| **/oauth/idp/profile?token=...**             | DELETE   | user.profile.delete | Updates an existing user profile.               |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
-| **/oauth/idp/ui/login?return_url=/test-url** | DELETE   | user.profile.delete | Updates an existing user profiler.              |
+| **/oauth/idp/ui/login?return_url=/test-url** | GET      |                     | Returns the markup for login screen.            |
 +----------------------------------------------+----------+---------------------+-------------------------------------------------+
 
 User profile data
