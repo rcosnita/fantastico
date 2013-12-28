@@ -18,8 +18,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.exceptions import FantasticoDbNotFoundError
 from fantastico.oauth2.accesstoken_generator import AccessTokenGenerator
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError, OAuth2InvalidScopesError
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError, OAuth2InvalidScopesError, \
+    OAuth2InvalidTokenTypeError, OAuth2TokenExpiredError
 from fantastico.oauth2.models.clients import Client
+from fantastico.oauth2.token import Token
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 import time
@@ -179,3 +181,70 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
             self._model_facade.find_by_pk = Mock(return_value=expected_client)
         else:
             self._model_facade.find_by_pk = Mock(side_effect=FantasticoDbNotFoundError("Client not found."))
+
+    def test_validate_ok(self):
+        '''This test case ensures a valid token passes validation.'''
+
+        creation_time = int(time.time())
+        expiration_time = creation_time + 3600
+
+        token = Token({"client_id": "sample-app",
+                       "type": "access",
+                       "user_id": 1,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        expected_client = Client(client_id=token.client_id, revoked=False)
+        self._mock_client_search(expected_client)
+
+        self.assertTrue(self._generator.validate(token))
+
+    def test_validate_invalidtype(self):
+        '''This test case ensures an exception is raised when the token type is not compatible with generator.'''
+
+        creation_time = int(time.time())
+        expiration_time = creation_time + 3600
+
+        token = Token({"client_id": "sample-app",
+                       "type": "unknown",
+                       "user_id": 1,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        with self.assertRaises(OAuth2InvalidTokenTypeError) as ctx:
+            self._generator.validate(token)
+
+        self.assertEqual(token.type, ctx.exception.token_type)
+
+    def test_validate_tokenexpired(self):
+        '''This test case ensures an exception is raised if the token is expired.'''
+
+        creation_time = int(time.time() - 7200)
+        expiration_time = int(time.time() - 3600)
+
+        token = Token({"client_id": "sample-app",
+                       "type": "access",
+                       "user_id": 1,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        with self.assertRaises(OAuth2TokenExpiredError):
+            self._generator.validate(token)
+
+    def test_validate_token_clientrevoked(self):
+        '''This test case ensures an expection is raised if the token client is not valid.'''
+
+        creation_time = int(time.time())
+        expiration_time = creation_time + 3600
+
+        token = Token({"client_id": "sample-app",
+                       "type": "access",
+                       "user_id": 1,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        expected_client = Client(client_id=token.client_id, revoked=True)
+        self._mock_client_search(expected_client)
+
+        with self.assertRaises(OAuth2InvalidClientError):
+            self._generator.validate(token)

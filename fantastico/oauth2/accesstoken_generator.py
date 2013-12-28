@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.token_generator import TokenGenerator
 import time
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenTypeError, OAuth2TokenExpiredError
 
 class AccessTokenGenerator(TokenGenerator):
     '''This class provides the methods for working with access tokens: (generate and validate).'''
@@ -66,4 +67,12 @@ class AccessTokenGenerator(TokenGenerator):
             * token not expired
         '''
 
-        pass
+        if self.TOKEN_TYPE != token.type:
+            raise OAuth2InvalidTokenTypeError(token.type, "Token type %s not supported." % token.type)
+
+        if token.expiration_time < time.time():
+            raise OAuth2TokenExpiredError("Access token is expired.")
+
+        self._validate_client(token.client_id)
+
+        return True

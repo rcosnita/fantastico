@@ -66,7 +66,7 @@ class LoginTokenGenerator(TokenGenerator):
         if token.type != self.TOKEN_TYPE:
             raise OAuth2InvalidTokenTypeError(token.type, "Login token generator does not support %s tokens." % token.type)
 
-        if token.expiration_time - token.creation_time < 0:
+        if token.expiration_time < time.time():
             raise OAuth2TokenExpiredError("Token is expired.")
 
         return True

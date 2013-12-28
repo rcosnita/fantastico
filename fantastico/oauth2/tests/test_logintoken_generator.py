@@ -116,7 +116,7 @@ class LoginTokenGeneratorTests(FantasticoUnitTestsCase):
     def test_validate_token_expired(self):
         '''This test case ensures a token which is expired fails validation of login token generator.'''
 
-        creation_time = time.time()
+        creation_time = int(time.time() - 7200)
         expiration_time = int(creation_time - 300)
 
         token = Token({"client_id": "test-idp",
