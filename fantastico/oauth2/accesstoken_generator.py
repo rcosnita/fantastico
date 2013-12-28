@@ -39,10 +39,11 @@ class AccessTokenGenerator(TokenGenerator):
 
         client_id = self._validate_missing_attr("client_id", token_desc)
         user_id = self._validate_missing_attr("user_id", token_desc)
-        scopes = self._validate_missing_attr("scopes", token_desc)
+        scopes = self._validate_missing_attr("scopes", token_desc).split(" ")
         expires_in = self._validate_missing_attr("expires_in", token_desc)
 
-        self._validate_client(client_id)
+        client = self._validate_client(client_id)
+        self._validate_client_scopes(client.scopes, scopes)
 
         creation_time = time_provider.time()
 
@@ -51,7 +52,7 @@ class AccessTokenGenerator(TokenGenerator):
         token = Token({"client_id": client_id,
                        "type": "access",
                        "user_id": user_id,
-                       "scopes": scopes.split(" "),
+                       "scopes": scopes,
                        "creation_time": int(creation_time),
                        "expiration_time": expiration_time})
 

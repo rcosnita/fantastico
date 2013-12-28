@@ -97,5 +97,8 @@ Concrete exceptions
 .. autoclass:: fantastico.oauth2.exceptions.OAuth2InvalidClientError
    :members:
 
+.. autoclass:: fantastico.oauth2.exceptions.OAuth2InvalidScopesError
+   :members:
+
 .. autoclass:: fantastico.oauth2.exceptions.OAuth2TokenEncryptionError
    :members:

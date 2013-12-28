@@ -94,3 +94,11 @@ class OAuth2InvalidClientError(OAuth2Error):
 
     def __init__(self, msg):
         super(OAuth2InvalidClientError, self).__init__(self.ERROR_CODE, msg)
+
+class OAuth2InvalidScopesError(OAuth2Error):
+    '''This class provides a concrete exception used to notify that a client is not allowed to use a request set of scopes.'''
+
+    ERROR_CODE = 12060
+
+    def __init__(self, msg):
+        super(OAuth2InvalidScopesError, self).__init__(self.ERROR_CODE, msg)

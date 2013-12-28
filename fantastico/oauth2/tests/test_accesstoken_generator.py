@@ -16,14 +16,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.tests.test_accesstoken_generator
 '''
+from fantastico.exceptions import FantasticoDbNotFoundError
 from fantastico.oauth2.accesstoken_generator import AccessTokenGenerator
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError, OAuth2InvalidScopesError
 from fantastico.oauth2.models.clients import Client
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 import time
 import uuid
-from fantastico.exceptions import FantasticoDbNotFoundError
 
 class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for access tokens generator.'''
@@ -54,7 +54,10 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
                       "scopes": "scope1 scope2 scope3 scope4",
                       "expires_in": 3600}
 
-        self._mock_client_search(Client())
+        expected_client = Client()
+        expected_client.scopes = token_desc["scopes"].split(" ")
+
+        self._mock_client_search(expected_client)
 
         token = self._generator.generate(token_desc, time_provider)
 
@@ -146,6 +149,27 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
 
         self._model_facade.find_by_pk.assert_called_once_with({Client.client_id: client_id})
 
+    def test_generate_client_invalidscopes(self):
+        '''This test case ensures an exception is raised if the client is not allowed to used requested scopes.'''
+
+        from fantastico.oauth2.models.return_urls import ClientReturnUrl # pylint: disable=W0611
+
+        client_id = str(uuid.uuid4())
+
+        token_desc = {"client_id": client_id,
+                      "user_id": 1,
+                      "scopes": "scope1 scope2",
+                      "expires_in": 3600}
+
+        expected_client = Client(client_id, name="simple app", revoked=False)
+        expected_client.scopes = []
+
+        self._mock_client_search(expected_client)
+
+        with self.assertRaises(OAuth2InvalidScopesError):
+            self._generator.generate(token_desc)
+
+        self._model_facade.find_by_pk.assert_called_once_with({Client.client_id: client_id})
 
     def _mock_client_search(self, expected_client):
         '''This method provides the mock for client search by client_id. It returns a mock model facade which returns

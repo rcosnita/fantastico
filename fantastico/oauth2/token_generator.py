@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
 from fantastico.exceptions import FantasticoDbNotFoundError
 from fantastico.mvc.model_facade import ModelFacade
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError, OAuth2InvalidScopesError
 from fantastico.oauth2.models.clients import Client
 
 class TokenGenerator(object, metaclass=ABCMeta):
@@ -87,3 +87,11 @@ class TokenGenerator(object, metaclass=ABCMeta):
             raise OAuth2InvalidClientError("Client %s is revoked." % client_id)
 
         return result
+
+    def _validate_client_scopes(self, client_scopes, requested_scopes):
+        '''This method ensures requested scopes list are allowed for the client (client_scopes). If this is not true a concrete
+        OAuth2 exception is raised.'''
+
+        for scope in requested_scopes:
+            if scope not in client_scopes:
+                raise OAuth2InvalidScopesError("Requested scopes %s are not allowed." % requested_scopes)
