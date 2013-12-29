@@ -130,4 +130,12 @@ class PublicTokenEncryption(TokenEncryption):
     def decrypt_token(self, encrypted_str, token_iv, token_key):
         '''This methods receives a public token representation and returns a concrete token object.'''
 
-        pass
+        raw_token = base64.b64decode(encrypted_str.encode())
+
+        raw_dict = json.loads(raw_token.decode())
+
+        encrypted_part = raw_dict.get("encrypted")
+
+        token = self._symmetric_encryptor.decrypt_token(encrypted_part, token_iv, token_key)
+
+        return token

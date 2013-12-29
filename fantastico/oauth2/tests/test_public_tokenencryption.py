@@ -63,3 +63,25 @@ class PublicTokenEncryptionTests(FantasticoUnitTestsCase):
         self.assertEqual("test", public_token.get("encrypted"))
 
         self._symmetric_encryptor.encrypt_token.assert_called_once_with(token, self._token_iv, self._token_key)
+
+    def test_decrypt_token_ok(self):
+        '''This test case ensures a given token can be decrypted correctly by public token provider.'''
+
+        encrypted_token_desc = {"client_id": "abc",
+                                "type": "access",
+                                "attr1": "attr test"}
+        token_desc = {"client_id": "abc",
+                      "type": "access",
+                      "encrypted": "abc"}
+
+        encrypted_str = base64.b64encode(json.dumps(token_desc).encode())
+        encrypted_token = Token(encrypted_token_desc)
+
+        self._symmetric_encryptor.decrypt_token = Mock(return_value=encrypted_token)
+
+        token = self._public_encryptor.decrypt_token(encrypted_str.decode(), self._token_iv, self._token_key)
+
+        self.assertIsNotNone(token)
+        self.assertEqual(encrypted_token, token)
+
+        self._symmetric_encryptor.decrypt_token.assert_called_once_with("abc", self._token_iv, self._token_key)
