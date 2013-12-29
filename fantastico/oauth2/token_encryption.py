@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from Crypto.Cipher import AES
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError, OAuth2Error
 from fantastico.oauth2.token import Token
 import base64
 import json
@@ -57,6 +57,15 @@ class TokenEncryption(object, metaclass=ABCMeta):
         :return: Decrypted token object.
         :rtype: :py:class:`fantastico.oauth2.token.Token`'''
 
+    def _validate_encryption_args(self, token_iv, token_key):
+        '''This method provides the validation code for symmetric encryption keys.'''
+
+        if not token_iv:
+            raise OAuth2InvalidTokenDescriptorError("token_iv")
+
+        if not token_key:
+            raise OAuth2InvalidTokenDescriptorError("token_key")
+
 class AesTokenEncryption(TokenEncryption):
     '''This class provides a generic AES token encryption provider. It allows developers to specify the number of bits used
     for AES (128 / 192 / 256 bits).'''
@@ -68,11 +77,7 @@ class AesTokenEncryption(TokenEncryption):
         if not token:
             raise OAuth2InvalidTokenDescriptorError("token")
 
-        if not token_iv:
-            raise OAuth2InvalidTokenDescriptorError("token_iv")
-
-        if not token_key:
-            raise OAuth2InvalidTokenDescriptorError("token_key")
+        self._validate_encryption_args(token_iv, token_key)
 
         try:
             text = json.dumps(token.dictionary)
@@ -90,11 +95,7 @@ class AesTokenEncryption(TokenEncryption):
         if not encrypted_str:
             raise OAuth2InvalidTokenDescriptorError("encrypted_str")
 
-        if not token_iv:
-            raise OAuth2InvalidTokenDescriptorError("token_iv")
-
-        if not token_key:
-            raise OAuth2InvalidTokenDescriptorError("token_key")
+        self._validate_encryption_args(token_iv, token_key)
 
         try:
             cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
@@ -114,18 +115,27 @@ class PublicTokenEncryption(TokenEncryption):
     def __init__(self, symmetric_encryptor):
         self._symmetric_encryptor = symmetric_encryptor
 
-
     def encrypt_token(self, token, token_iv, token_key):
         '''This method takes a concrete token object and returns a base64 representation of the token.'''
 
-        encrypted_str = self._symmetric_encryptor.encrypt_token(token, token_iv, token_key)
-        ret_value = {"client_id": token.client_id,
-                     "type": token.type,
-                     "encrypted": encrypted_str}
+        if not token:
+            raise OAuth2InvalidTokenDescriptorError("token")
 
-        ret_value = base64.b64encode(json.dumps(ret_value).encode())
+        self._validate_encryption_args(token_iv, token_key)
 
-        return ret_value.decode()
+        try:
+            encrypted_str = self._symmetric_encryptor.encrypt_token(token, token_iv, token_key)
+            ret_value = {"client_id": token.client_id,
+                         "type": token.type,
+                         "encrypted": encrypted_str}
+
+            ret_value = base64.b64encode(json.dumps(ret_value).encode())
+
+            return ret_value.decode()
+        except OAuth2Error:
+            raise
+        except Exception as ex:
+            raise OAuth2TokenEncryptionError(msg="Unexpected symmetric error: %s" % str(ex))
 
     def decrypt_token(self, encrypted_str, token_iv, token_key):
         '''This methods receives a public token representation and returns a concrete token object.'''
