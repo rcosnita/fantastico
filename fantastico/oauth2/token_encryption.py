@@ -21,6 +21,7 @@ from Crypto.Cipher import AES
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
 from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError
 from fantastico.oauth2.token import Token
+import base64
 import json
 
 class TokenEncryption(object, metaclass=ABCMeta):
@@ -104,3 +105,29 @@ class AesTokenEncryption(TokenEncryption):
             return Token(token_descriptor)
         except Exception as ex:
             raise OAuth2TokenEncryptionError(str(ex))
+
+class PublicTokenEncryption(TokenEncryption):
+    '''This class provides a special token encryption: a mix of base64 encoded and symmetrical encrypted token. We need
+    this mix because client_id is required for every operation involving oauth2 tokens.
+    '''
+
+    def __init__(self, symmetric_encryptor):
+        self._symmetric_encryptor = symmetric_encryptor
+
+
+    def encrypt_token(self, token, token_iv, token_key):
+        '''This method takes a concrete token object and returns a base64 representation of the token.'''
+
+        encrypted_str = self._symmetric_encryptor.encrypt_token(token, token_iv, token_key)
+        ret_value = {"client_id": token.client_id,
+                     "type": token.type,
+                     "encrypted": encrypted_str}
+
+        ret_value = base64.b64encode(json.dumps(ret_value).encode())
+
+        return ret_value.decode()
+
+    def decrypt_token(self, encrypted_str, token_iv, token_key):
+        '''This methods receives a public token representation and returns a concrete token object.'''
+
+        pass

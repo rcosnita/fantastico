@@ -79,3 +79,8 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                 self._idp_controller.show_login(request)
 
             self.assertEqual("return_url", ctx.exception.param_name)
+
+    def test_authenticate_ok(self):
+        '''This test case ensures a correct login token is generated during authentication phase. It also checks for correct
+        redirect response.'''
+
