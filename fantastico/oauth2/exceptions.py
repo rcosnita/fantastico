@@ -102,3 +102,21 @@ class OAuth2InvalidScopesError(OAuth2Error):
 
     def __init__(self, msg):
         super(OAuth2InvalidScopesError, self).__init__(self.ERROR_CODE, msg)
+
+class OAuth2MissingQueryParamError(OAuth2Error):
+    '''This class provides a concrete exception used to notify a missing query parameter from an OAuth2 endpoint.'''
+
+    ERROR_CODE = 12070
+
+    @property
+    def param_name(self):
+        '''This property return the name of the query parameter which is missing.'''
+
+        return self._param_name
+
+    def __init__(self, param_name):
+        self._param_name = param_name
+
+        msg = "Query parameter %s is missing." % param_name
+
+        super(OAuth2MissingQueryParamError, self).__init__(self.ERROR_CODE, msg)

@@ -14,11 +14,12 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.contrib.idp.idp_controller
+.. py:module:: fantastico.contrib.oauth2_idp.idp_controller
 '''
 
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from webob.response import Response
 import urllib
 
@@ -38,6 +39,9 @@ class IdpController(BaseController):
         '''This method returns the login page for Fantastico.'''
 
         return_url = request.params.get("return_url")
+
+        if not return_url or len(return_url.strip()) == 0:
+            raise OAuth2MissingQueryParamError("return_url")
 
         content = self.load_template(self._login_tpl,
                                      {"return_url": urllib.parse.quote(return_url)})
