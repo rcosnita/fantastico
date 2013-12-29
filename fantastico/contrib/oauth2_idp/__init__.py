@@ -15,5 +15,3 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 '''
-
-__version__ = "0.6"

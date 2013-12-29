@@ -138,6 +138,22 @@ class BasicSettings(object):
 
         return "/api"
 
+    @property
+    def oauth2_idp(self):
+        '''This property holds the configuration for Fantastico default Identity Provider. In most cases you will change the
+        template applied to login screen in order to customize it to your needs. If you want to change
+        the template for login screen make sure your provide relative path to your components root folder
+        (e.g /components/frontend/views/custom_login.html).
+
+        .. code-block:: python
+
+            return {"client_id": "11111111-1111-1111-1111-111111111111",
+                    "template": "/components/frontend/views/custom_login.html"}
+        '''
+
+        return {"client_id": "11111111-1111-1111-1111-111111111111",
+                "template": "login.html"}
+
 class AwsStageSettings(BasicSettings):
     '''This class provides the configuration profile for Aws Stage environment integration.'''
 
