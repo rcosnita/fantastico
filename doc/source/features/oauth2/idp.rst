@@ -51,3 +51,15 @@ a template which must be applied to login screen. A typical custom login templat
    {% endblock %}
 
 You can find documentation on how to configure custom login template on :doc:`/get_started/settings`.
+
+Technical summary
+-----------------
+
+Password storage
+~~~~~~~~~~~~~~~~
+
+It is recommend that each identity provider holds hashes of passwords instead of plain text passwords. Foreasily development of
+new Identity Providers, Fantastico provides a contract for easily hashing passwords.
+
+.. autoclass:: fantastico.oauth2.passwords_hasher.PasswordsHasher
+   :members:

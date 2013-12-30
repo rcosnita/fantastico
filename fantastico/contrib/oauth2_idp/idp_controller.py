@@ -53,4 +53,4 @@ class IdpController(BaseController):
         '''This method receives a request to authenticate a user. It validates the username and password against a list of
         registered users.'''
 
-        return Response("Authenticating user.")
+        pass

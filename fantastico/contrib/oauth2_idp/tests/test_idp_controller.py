@@ -17,9 +17,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.oauth2_idp.tests.test_idp_controller
 '''
 
+from fantastico.contrib.oauth2_idp.models.users import User
+from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
+import base64
+import hashlib
 import urllib
 
 class IdpControllerTests(FantasticoUnitTestsCase):
@@ -84,3 +88,26 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         '''This test case ensures a correct login token is generated during authentication phase. It also checks for correct
         redirect response.'''
 
+        request = Mock()
+
+        user_id = 123
+        password = "12345"
+        hashed_password = base64.b64encode(hashlib.sha512((password + str(user_id)).encode()).hexdigest().encode()).decode()
+
+        user = User("john.doe@email.com", hashed_password, 5)
+        user.user_id = 123
+
+        model_facade = Mock()
+        model_facade_cls = Mock(return_value=model_facade)
+
+        model_facade.get_records_paged = Mock(return_value=user)
+
+        self._idp_controller.authenticate(request)
+
+        model_facade_cls.assert_called_once_with(User)
+        model_facade.get_records_paged.assert_called_with(
+                                            start_record=0, end_record=1,
+                                            filter_expr=ModelFilter(User.username, user.username, ModelFilter.EQ))
+        model_facade.get_records_paged.assert_called_with(
+                                            start_record=0, end_record=1,
+                                            filter_expr=ModelFilter(User.password, hashed_password, ModelFilter.EQ))
