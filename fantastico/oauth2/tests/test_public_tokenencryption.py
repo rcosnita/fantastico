@@ -16,7 +16,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.tests.test_public_tokenencryption
 '''
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2Error, OAuth2TokenEncryptionError
+from fantastico.exceptions import FantasticoDbNotFoundError, FantasticoDbError
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2Error, OAuth2TokenEncryptionError, \
+    OAuth2InvalidClientError
+from fantastico.oauth2.models.clients import Client
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.token_encryption import PublicTokenEncryption
 from fantastico.tests.base_case import FantasticoUnitTestsCase
@@ -136,3 +139,151 @@ class PublicTokenEncryptionTests(FantasticoUnitTestsCase):
         self.assertEqual(encrypted_token, token)
 
         self._symmetric_encryptor.decrypt_token.assert_called_once_with("abc", self._token_iv, self._token_key)
+
+    def test_decrypt_token_missingdesc(self):
+        '''This test case ensures a given token can not be decrypted by public token provider if it's null or empty.'''
+
+        for encrypted_str in [None, "", "     "]:
+            with self.assertRaises(OAuth2InvalidTokenDescriptorError) as ctx:
+                self._public_encryptor.decrypt_token(encrypted_str, self._token_iv, self._token_key)
+
+            self.assertEqual("encrypted_str", ctx.exception.attr_name)
+
+    def test_decrypt_token_noaesargs(self):
+        '''This test case ensures a given token can be decrypted even though aes iv and key arguments are None. They are lazy
+        obtained from client descriptor persisted into database.'''
+
+        from fantastico.oauth2.models.return_urls import ClientReturnUrl
+
+        token_iv = "token iv".encode()
+        token_key = "token key".encode()
+
+        client = Client(client_id="abcd", token_iv=base64.b64encode(token_iv),
+                        token_key=base64.b64encode(token_key))
+
+        public_desc = {"client_id": "abcd",
+                       "type": "access",
+                       "encrypted": "abc"}
+
+        encrypted_desc = {"client_id": "abcd",
+                          "type": "access",
+                          "attr1": "test attr"}
+
+        encrypted_token = Token(encrypted_desc)
+
+        encrypted_str = base64.b64encode(json.dumps(public_desc).encode()).decode()
+
+        model_facade = Mock()
+        model_facade_cls = Mock(return_value=model_facade)
+
+        model_facade.find_by_pk = Mock(return_value=client)
+
+        self._symmetric_encryptor.decrypt_token = Mock(return_value=encrypted_token)
+
+        token = self._public_encryptor.decrypt_token(encrypted_str, model_facade=model_facade_cls)
+
+        self.assertEqual(encrypted_token, token)
+
+        model_facade_cls.assert_called_once_with(Client)
+        model_facade.find_by_pk.assert_called_once_with({Client.client_id: public_desc["client_id"]})
+
+        self._symmetric_encryptor.decrypt_token.assert_called_once_with(public_desc["encrypted"], token_iv, token_key)
+
+    def test_decrypt_token_invalidclient(self):
+        '''This test case ensures a concrete exception is raised if the client id from public token is not found.'''
+
+        from fantastico.oauth2.models.return_urls import ClientReturnUrl
+
+        token_iv = "token iv".encode()
+        token_key = "token key".encode()
+
+        client = Client(client_id="abcd", token_iv=base64.b64encode(token_iv),
+                        token_key=base64.b64encode(token_key))
+
+        public_desc = {"client_id": "abcd",
+                       "type": "access",
+                       "encrypted": "abc"}
+
+        encrypted_str = base64.b64encode(json.dumps(public_desc).encode()).decode()
+
+        model_facade = Mock()
+        model_facade_cls = Mock(return_value=model_facade)
+
+        ex = FantasticoDbNotFoundError("Unexpected client %s" % client.client_id)
+
+        model_facade.find_by_pk = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2InvalidClientError):
+            self._public_encryptor.decrypt_token(encrypted_str, model_facade=model_facade_cls)
+
+        model_facade_cls.assert_called_once_with(Client)
+        model_facade.find_by_pk.assert_called_once_with({Client.client_id: public_desc["client_id"]})
+
+    def test_decrypt_token_dberror(self):
+        '''This test case ensures an oauth2 exception is raised if client descriptor search fails.'''
+
+        from fantastico.oauth2.models.return_urls import ClientReturnUrl
+
+        token_iv = "token iv".encode()
+        token_key = "token key".encode()
+
+        client = Client(client_id="abcd", token_iv=base64.b64encode(token_iv),
+                        token_key=base64.b64encode(token_key))
+
+        public_desc = {"client_id": "abcd",
+                       "type": "access",
+                       "encrypted": "abc"}
+
+        encrypted_str = base64.b64encode(json.dumps(public_desc).encode()).decode()
+
+        model_facade = Mock()
+        model_facade_cls = Mock(return_value=model_facade)
+
+        ex = FantasticoDbError("Unexpected client %s" % client.client_id)
+
+        model_facade.find_by_pk = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2InvalidClientError):
+            self._public_encryptor.decrypt_token(encrypted_str, model_facade=model_facade_cls)
+
+        model_facade_cls.assert_called_once_with(Client)
+        model_facade.find_by_pk.assert_called_once_with({Client.client_id: public_desc["client_id"]})
+
+    def test_decrypt_symmetric_oauth2ex(self):
+        '''This test case ensures all oauth2 exception caused by symmetric provider are bubbled up.'''
+
+        public_token_desc = {"client_id": "abc",
+                             "type": "access",
+                             "encrypted": "long encrypted token"}
+
+        encrypted_str = base64.b64encode(json.dumps(public_token_desc).encode()).decode()
+
+        ex = OAuth2Error(error_code= -1, msg="Unexpected error")
+        self._symmetric_encryptor.decrypt_token = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._public_encryptor.decrypt_token(encrypted_str, self._token_iv, self._token_key)
+
+        self.assertEqual(ex, ctx.exception)
+
+        self._symmetric_encryptor.decrypt_token.assert_called_once_with(public_token_desc["encrypted"], self._token_iv,
+                                                                        self._token_key)
+
+    def test_decrypt_symmetric_ex(self):
+        '''This test case ensures all unexpected exceptions (non oauth2) raised by symmetric encryptor are correctly converted
+        to concrete oauth2 exceptions.'''
+
+        public_token_desc = {"client_id": "abc",
+                             "type": "access",
+                             "encrypted": "long encrypted token"}
+
+        encrypted_str = base64.b64encode(json.dumps(public_token_desc).encode()).decode()
+
+        ex = Exception("Unexpected exception.")
+        self._symmetric_encryptor.decrypt_token = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2TokenEncryptionError):
+            self._public_encryptor.decrypt_token(encrypted_str, self._token_iv, self._token_key)
+
+        self._symmetric_encryptor.decrypt_token.assert_called_once_with(public_token_desc["encrypted"], self._token_iv,
+                                                                        self._token_key)

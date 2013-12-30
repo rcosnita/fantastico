@@ -19,10 +19,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from Crypto.Cipher import AES
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError, OAuth2Error
+from fantastico.mvc.model_facade import ModelFacade
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError, OAuth2Error, \
+    OAuth2InvalidClientError
+from fantastico.oauth2.models.clients import Client
 from fantastico.oauth2.token import Token
 import base64
 import json
+from fantastico.exceptions import FantasticoDbError, FantasticoDbNotFoundError
 
 class TokenEncryption(object, metaclass=ABCMeta):
     '''This class provides an abstract model for token encryption providers. A token encryption provider must be able
@@ -137,15 +141,41 @@ class PublicTokenEncryption(TokenEncryption):
         except Exception as ex:
             raise OAuth2TokenEncryptionError(msg="Unexpected symmetric error: %s" % str(ex))
 
-    def decrypt_token(self, encrypted_str, token_iv, token_key):
-        '''This methods receives a public token representation and returns a concrete token object.'''
+    def decrypt_token(self, encrypted_str, token_iv=None, token_key=None, model_facade=ModelFacade):
+        '''This methods receives a public token representation and returns a concrete token object. If symmetric encryption
+        vectors are not passed, they are obtained from client descriptor persisted into database.'''
+
+        if not encrypted_str or len(encrypted_str.strip()) == 0:
+            raise OAuth2InvalidTokenDescriptorError("encrypted_str")
 
         raw_token = base64.b64decode(encrypted_str.encode())
-
         raw_dict = json.loads(raw_token.decode())
+
+        if not token_iv and not token_key:
+            token_iv, token_key = self._load_aes_args_from_client(raw_dict["client_id"], model_facade)
 
         encrypted_part = raw_dict.get("encrypted")
 
-        token = self._symmetric_encryptor.decrypt_token(encrypted_part, token_iv, token_key)
+        try:
+            token = self._symmetric_encryptor.decrypt_token(encrypted_part, token_iv, token_key)
 
-        return token
+            return token
+        except OAuth2Error:
+            raise
+        except Exception as ex:
+            raise OAuth2TokenEncryptionError("Unexpected symmetric encryption error: %s" % str(ex))
+
+    def _load_aes_args_from_client(self, client_id, model_facade=ModelFacade):
+        '''This method returns a tuple (token_iv, token_key) from the client descriptor persisted into database.'''
+
+        try:
+            client = model_facade(Client).find_by_pk({Client.client_id: client_id})
+
+            token_iv = base64.b64decode(client.token_iv)
+            token_key = base64.b64decode(client.token_key)
+
+            return (token_iv, token_key)
+        except FantasticoDbNotFoundError as ex:
+            raise OAuth2InvalidClientError("Client %s does not exist: %s" % (client_id, str(ex)))
+        except FantasticoDbError as ex:
+            raise OAuth2InvalidClientError("Client %s loading failed: %s" % (client_id, str(ex)))
