@@ -63,3 +63,9 @@ new Identity Providers, Fantastico provides a contract for easily hashing passwo
 
 .. autoclass:: fantastico.oauth2.passwords_hasher.PasswordsHasher
    :members:
+
+.. autoclass:: fantastico.oauth2.sha512salt_passwords_hasher.Sha512SaltPasswordsHasher
+   :members:
+
+.. autoclass:: fantastico.oauth2.passwords_hasher_factory.PasswordsHasherFactory
+   :members:

@@ -22,7 +22,13 @@ import hashlib
 from fantastico.oauth2.exceptions import OAuth2TokenEncryptionError
 
 class Sha512SaltPasswordsHasher(PasswordsHasher):
-    '''This class provides the sha512salt implementation for password hashing. In addition, the result is encoded using base64.'''
+    '''This class provides the sha512salt implementation for password hashing. In addition, the result is encoded using base64.
+    In order to use this hasher try the code snippet below:
+
+    .. code-block:: python
+
+        sha512_hasher = PasswordsHasherFactory().get_hasher(PasswordsHasherFactory.SHA512_SALT)
+        hashed_passwd = sha512_hasher.hash_password("abcd", DictionaryObject({"salt": 123}))'''
 
     def hash_password(self, plain_passwd, hash_ctx=None):
         '''This method provides the sha512 with salt algorithm for a given plain password. In addition, the hash is base64
