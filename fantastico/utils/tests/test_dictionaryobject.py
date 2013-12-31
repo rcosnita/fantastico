@@ -66,6 +66,44 @@ class DictionaryObjectTests(FantasticoUnitTestsCase):
 
         self.assertEqual(descriptor, obj.dictionary)
 
+    def test_dictionary_eq_ok(self):
+        '''This test case ensures two dictionary objects built using two equal dictionaries are equal.'''
+
+        desc = {"attr1": "abc",
+                "attr2": "abcd"}
+
+        desc2 = {"attr1": "abc",
+                 "attr2": "abcd"}
+
+        obj1 = MockDictionaryObject(desc)
+        obj2 = MockDictionaryObject(desc2)
+
+        self.assertEqual(obj1, obj2)
+        self.assertEqual(hash(obj1), hash(obj2))
+
+    def test_dictionary_eq_differentdicts(self):
+        '''This test case ensures two dictionary objects build using different dictionaries are not equal.'''
+
+        desc = {"attr1": "abc"}
+
+        desc2 = {"attr1": "abcd"}
+
+        obj1 = MockDictionaryObject(desc)
+        obj2 = MockDictionaryObject(desc2)
+
+        self.assertNotEqual(obj1, obj2)
+        self.assertNotEqual(hash(obj1), hash(obj2))
+
+    def test_dictionary_eq_differenttype(self):
+        '''This test case ensures dictionary objects equality comparison fails when the term checked for equality is not of type
+        DictionaryObject.'''
+
+        obj1 = MockDictionaryObject({"attr1": "abcd"})
+        obj2 = object()
+
+        self.assertNotEqual(obj1, obj2)
+        self.assertNotEqual(hash(obj1), hash(obj2))
+
 class MockDictionaryObject(DictionaryObject):
     '''A very simple mock object used for testing dictionary object.'''
 

@@ -40,6 +40,12 @@ class ModelFacade(object):
 
         return self._model_pk
 
+    @property
+    def session(self):
+        '''This property returns the current sqlalchemy session used to access database.'''
+
+        return self._session
+
     def __init__(self, model_cls, session):
         '''
         :raises fantastico.exceptions.FantasticoIncompatibleClassError: It raises this exception if the underlining

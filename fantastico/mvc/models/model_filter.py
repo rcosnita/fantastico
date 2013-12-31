@@ -144,3 +144,17 @@ class ModelFilter(ModelFilterAbstract):
             self._cached_expr = self.column.in_(self.ref_value)
 
         return self._cached_expr
+
+    def __eq__(self, comp_obj):
+        '''This method is overriden in order to allow easily comparison of filters.'''
+
+        if not isinstance(comp_obj, ModelFilter):
+            return False
+
+        return comp_obj.column == self.column and comp_obj.ref_value == self.ref_value and\
+                comp_obj.operation == self._operation
+
+    def __hash__(self):
+        '''This method is overriden in order to fulfill general requirement when(a == b then hash(a) == hash(b).'''
+
+        return hash(self.column) ^ hash(self.ref_value) ^ hash(self.operation)

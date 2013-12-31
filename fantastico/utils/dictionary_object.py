@@ -59,3 +59,22 @@ class DictionaryObject(object):
             raise AttributeError("DictionaryObject is immutable. You can not set attribute %s" % attr_name)
 
         super(DictionaryObject, self).__setattr__(attr_name, value)
+
+    def __eq__(self, obj):
+        '''This method is overriden in order to correctly provide equality of dictionary objects.'''
+
+        if not isinstance(obj, type(self)):
+            return False
+
+        return obj.dictionary == self.dictionary
+
+    def __hash__(self):
+        '''This method is overriden so that it correctly generates hash codes for dictionary objects.'''
+
+        result = 0
+
+        for key in self.dictionary.keys():
+            result ^= hash(key)
+            result ^= hash(self.dictionary[key])
+
+        return result
