@@ -32,7 +32,7 @@ class Client(BASEMODEL):
 
     __tablename__ = "oauth2_clients"
 
-    client_id = Column("client_id", String(32), primary_key=True)
+    client_id = Column("client_id", String(36), primary_key=True)
     name = Column("name", String(100), nullable=False)
     description = Column("description", Text, nullable=False)
     grant_types = Column("grant_types", String(200), nullable=False)

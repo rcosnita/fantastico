@@ -246,3 +246,4 @@ class TokensServiceTests(FantasticoUnitTestsCase):
 
         with self.assertRaises(OAuth2InvalidTokenTypeError):
             self._tokens_service.invalidate(token)
+

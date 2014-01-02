@@ -22,7 +22,6 @@ from fantastico.mvc.controller_decorators import Controller, ControllerProvider
 from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
-from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.oauth2.tokens_service import TokensService
 from fantastico.utils.dictionary_object import DictionaryObject
 from webob.response import Response
