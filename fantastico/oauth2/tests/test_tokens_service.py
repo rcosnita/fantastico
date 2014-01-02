@@ -16,11 +16,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.tests.test_tokens_service.TokensService
 '''
-from fantastico.oauth2.exceptions import OAuth2Error, OAuth2InvalidTokenTypeError
+from fantastico.oauth2.exceptions import OAuth2Error, OAuth2InvalidTokenTypeError, OAuth2InvalidClientError
+from fantastico.oauth2.models.clients import Client
+from fantastico.oauth2.models.return_urls import ClientReturnUrl
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.tokens_service import TokensService
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
+import base64
 
 class TokensServiceTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for tokens service implementation.'''
@@ -29,6 +32,8 @@ class TokensServiceTests(FantasticoUnitTestsCase):
 
     _tokens_generator = None
     _tokens_factory = None
+    _client_repo = None
+    _encryptor = None
     _db_conn = None
 
     def init(self):
@@ -42,9 +47,16 @@ class TokensServiceTests(FantasticoUnitTestsCase):
 
         factory_cls = Mock(return_value=self._tokens_factory)
 
-        self._tokens_service = TokensService(self._db_conn, factory_cls)
+        self._client_repo = Mock()
+        client_repo_cls = Mock(return_value=self._client_repo)
+
+        self._encryptor = Mock()
+        encryptor_cls = Mock(return_value=self._encryptor)
+
+        self._tokens_service = TokensService(self._db_conn, factory_cls, client_repo_cls, encryptor_cls=encryptor_cls)
 
         factory_cls.assert_called_once_with()
+        client_repo_cls.assert_called_once_with(self._db_conn)
 
     def test_generate_ok(self):
         '''This test case ensures tokens service can generate a token starting from a given dictionary.'''
@@ -247,3 +259,81 @@ class TokensServiceTests(FantasticoUnitTestsCase):
         with self.assertRaises(OAuth2InvalidTokenTypeError):
             self._tokens_service.invalidate(token)
 
+    def test_encrypt_ok(self):
+        '''This test case ensures a token can be correctly encrypted.'''
+
+        client_id = "mock client"
+        token_iv = "token iv".encode()
+        token_key = "token_key".encode()
+
+        token = Token({})
+        encrypted_str = "abcd"
+
+        client = Client(token_iv=base64.b64encode(token_iv).decode(),
+                        token_key=base64.b64encode(token_key).decode())
+
+        self._client_repo.load = Mock(return_value=client)
+        self._encryptor.encrypt_token = Mock(return_value=encrypted_str)
+
+        result = self._tokens_service.encrypt(token, client_id)
+
+        self.assertEqual(encrypted_str, result)
+
+        self._client_repo.load.assert_called_once_with(client_id)
+        self._encryptor.encrypt_token.assert_called_once_with(token, token_iv, token_key)
+
+    def test_encrypt_invalidclient(self):
+        '''This test case ensures all exceptions occuring during client load are converted to oauth2 invalid client exceptions.'''
+
+        self._client_repo.load = Mock(side_effect=Exception("Unexpected exception."))
+
+        with self.assertRaises(OAuth2InvalidClientError):
+            self._tokens_service.encrypt(Token({}), "mock-client")
+
+    def test_encrypt_ex(self):
+        '''This test case ensures all encryption exceptions are bubbled up.'''
+
+        client_id = "mock client"
+        token_iv = "token iv".encode()
+        token_key = "token_key".encode()
+
+        token = Token({})
+
+        client = Client(token_iv=base64.b64encode(token_iv).decode(),
+                        token_key=base64.b64encode(token_key).decode())
+
+        ex = Exception("Unexpected exception.")
+
+        self._client_repo.load = Mock(return_value=client)
+        self._encryptor.encrypt_token = Mock(side_effect=ex)
+
+        with self.assertRaises(Exception) as ctx:
+            self._tokens_service.encrypt(token, client_id)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def test_decrypt_ok(self):
+        '''This test case ensures an encrypted string can be correctly decrypted.'''
+
+        encrypted_str = "abcd"
+        decrypted_str = "decryption succeeded."
+
+        self._encryptor.decrypt_token = Mock(return_value=decrypted_str)
+
+        result = self._tokens_service.decrypt(encrypted_str)
+
+        self.assertEqual(decrypted_str, result)
+
+        self._encryptor.decrypt_token.assert_called_once_with(encrypted_str)
+
+    def test_decrypt_ex(self):
+        '''This test case ensures all decrypt exceptions are bubbled up.'''
+
+        ex = Exception("Unexpected exception.")
+
+        self._encryptor.decrypt_token = Mock(side_effect=ex)
+
+        with self.assertRaises(Exception) as ctx:
+            self._tokens_service.decrypt("encrypted text.")
+
+        self.assertEqual(ex, ctx.exception)

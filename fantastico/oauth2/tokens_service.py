@@ -16,17 +16,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.tokens_service
 '''
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenTypeError, OAuth2Error
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenTypeError, OAuth2Error, OAuth2InvalidClientError
+from fantastico.oauth2.models.client_repository import ClientRepository
+from fantastico.oauth2.token_encryption import PublicTokenEncryption, AesTokenEncryption
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
+import base64
 
 class TokensService(object):
     '''This class provides an abstraction for working with all supported token types. Internally it uses
     :py:class:`fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory` for obtaining a correct token generator. Then,
     it delegates all calls to that token generator.'''
 
-    def __init__(self, db_conn, factory_cls=TokenGeneratorFactory):
+    def __init__(self, db_conn, factory_cls=TokenGeneratorFactory, client_repo_cls=ClientRepository,
+                 encryptor_cls=PublicTokenEncryption):
         self._db_conn = db_conn
         self._tokens_factory = factory_cls()
+        self._client_repo = client_repo_cls(self._db_conn)
+        self._encryptor = encryptor_cls(AesTokenEncryption())
 
     def generate(self, token_desc, token_type):
         '''This method generates a concrete token from the given token descriptor. It uses token_type in order to choose the right
@@ -100,3 +106,22 @@ class TokensService(object):
             raise
         except Exception as ex:
             raise OAuth2InvalidTokenTypeError(token.type, "Unable to invalidate token: %s" % str(ex))
+
+    def encrypt(self, token, client_id=None):
+        '''This method encrypts a given token and returns the encrypted string representation. Client id is required in order
+        to obtain the encryption keys.'''
+
+        try:
+            client = self._client_repo.load(client_id)
+        except Exception as ex:
+            raise OAuth2InvalidClientError("Client %s can not be loaded: %s" % (client_id, str(ex)))
+
+        token_iv = base64.b64decode(client.token_iv.encode())
+        token_key = base64.b64decode(client.token_key.encode())
+
+        return self._encryptor.encrypt_token(token, token_iv, token_key)
+
+    def decrypt(self, encrypted_str):
+        '''This method decrypts a given string and returns a concrete token object.'''
+
+        return self._encryptor.decrypt_token(encrypted_str)

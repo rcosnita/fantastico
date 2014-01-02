@@ -19,14 +19,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from Crypto.Cipher import AES
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
-from fantastico.mvc.model_facade import ModelFacade
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError, OAuth2Error, \
-    OAuth2InvalidClientError
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError, OAuth2Error
 from fantastico.oauth2.models.clients import Client
 from fantastico.oauth2.token import Token
 import base64
 import json
-from fantastico.exceptions import FantasticoDbError, FantasticoDbNotFoundError
 
 class TokenEncryption(object, metaclass=ABCMeta):
     '''This class provides an abstract model for token encryption providers. A token encryption provider must be able
@@ -141,7 +138,7 @@ class PublicTokenEncryption(TokenEncryption):
         except Exception as ex:
             raise OAuth2TokenEncryptionError(msg="Unexpected symmetric error: %s" % str(ex))
 
-    def decrypt_token(self, encrypted_str, token_iv=None, token_key=None):
+    def decrypt_token(self, encrypted_str, token_iv, token_key):
         '''This methods receives a public token representation and returns a concrete token object. '''
 
         if not encrypted_str or len(encrypted_str.strip()) == 0:
