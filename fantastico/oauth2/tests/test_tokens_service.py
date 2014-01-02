@@ -115,3 +115,134 @@ class TokensServiceTests(FantasticoUnitTestsCase):
 
         with self.assertRaises(OAuth2InvalidTokenTypeError):
             self._tokens_service.generate(token_desc, token_type)
+
+    def test_validate_ok(self):
+        '''This test case ensures token validation works correctly for a given token.'''
+
+        token_desc = {"client_id": "abc",
+                      "type": "mock-type",
+                      "attr": "test-attr"}
+        token = Token(token_desc)
+
+        self._tokens_generator.validate = Mock(return_value=True)
+
+        self.assertTrue(self._tokens_service.validate(token))
+
+        self._tokens_factory.get_generator.assert_called_once_with(token.type, self._db_conn)
+        self._tokens_generator.validate.assert_called_once_with(token)
+
+    def test_validate_factory_oauth2ex(self):
+        '''This test case ensures factory oauth2 exceptions are bubbled up.'''
+
+        token = Token({"type": "mock-type"})
+
+        ex = OAuth2Error(error_code= -1)
+
+        self._tokens_factory.get_generator = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._tokens_service.validate(token)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def test_validate_factory_ex(self):
+        '''This test case ensures factory unexpected errors are converted to oauth2 concrete exceptions.'''
+
+        token = Token({"type": "mock-type"})
+
+        ex = Exception("Unexpected exception.")
+
+        self._tokens_factory.get_generator = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2InvalidTokenTypeError):
+            self._tokens_service.validate(token)
+
+    def test_validate_generator_oauth2ex(self):
+        '''This test case ensures generator oauth2 exceptions are bubbled up.'''
+
+        token = Token({"type": "mock-type"})
+
+        ex = OAuth2Error(error_code= -1)
+
+        self._tokens_generator.validate = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._tokens_service.validate(token)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def test_validate_generator_ex(self):
+        '''This test case ensures generator unexpected exceptions are converted to oauth2 concrete exceptions.'''
+
+        token = Token({"type": "mock-type"})
+
+        ex = Exception("Unexpected exception.")
+
+        self._tokens_generator.validate = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2InvalidTokenTypeError):
+            self._tokens_service.validate(token)
+
+    def test_invalidate_ok(self):
+        '''This test case ensures tokens can be invalidated successfully.'''
+
+        token = Token({"type": "mock-type"})
+
+        self._tokens_generator.invalidate = Mock()
+
+        self.assertIsNone(self._tokens_service.invalidate(token))
+
+        self._tokens_factory.get_generator.assert_called_once_with(token.type, self._db_conn)
+        self._tokens_generator.invalidate.assert_called_once_with(token)
+
+    def test_invalidate_factory_oauth2ex(self):
+        '''This test case ensures factory oauth2 exceptions are bubbled up.'''
+
+        token = Token({"type": "mock-type"})
+
+        ex = OAuth2Error(error_code= -1)
+
+        self._tokens_factory.get_generator = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._tokens_service.invalidate(token)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def test_invalidate_factory_ex(self):
+        '''This test case ensures factory unexpected exceptions are converted to oauth2 concrete exceptions.'''
+
+        token = Token({"type": "mock-type"})
+
+        ex = Exception("Unexpected exception.")
+
+        self._tokens_factory.get_generator = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2InvalidTokenTypeError):
+            self._tokens_service.invalidate(token)
+
+    def test_invalidate_generator_oauth2ex(self):
+        '''This test case ensures generator oauth2 exceptions are bubbled up.'''
+
+        token = Token({"type": "mock-type"})
+
+        ex = OAuth2Error(error_code= -1)
+
+        self._tokens_generator.invalidate = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._tokens_service.invalidate(token)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def test_invalidate_generator_ex(self):
+        '''This test case ensures generator unexpected exceptions are converted to oauth2 concrete exceptions.'''
+
+        token = Token({"type": "mock-type"})
+
+        ex = Exception("Unexpected exception.")
+
+        self._tokens_generator.invalidate = Mock(side_effect=ex)
+
+        with self.assertRaises(OAuth2InvalidTokenTypeError):
+            self._tokens_service.invalidate(token)

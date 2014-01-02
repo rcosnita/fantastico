@@ -30,7 +30,20 @@ class TokensService(object):
 
     def generate(self, token_desc, token_type):
         '''This method generates a concrete token from the given token descriptor. It uses token_type in order to choose the right
-        token generator.'''
+        token generator.
+
+        .. code-block:: python
+
+            # extract db_conn from one of your controller injected facade models.
+
+            # generate a new access token
+            tokens_service = TokensService(db_conn)
+
+            token_desc = {"client_id": "sample-client",
+                          "user_id": 123,
+                          "scopes": "scope1 scope2 scope3",
+                          "expires_in": 3600}
+            access_token = tokens_service.generate(token_desc, TokenGeneratorFactory.ACCESS_TOKEN)'''
 
         try:
             generator = self._tokens_factory.get_generator(token_type, self._db_conn)
@@ -43,3 +56,47 @@ class TokensService(object):
         except Exception as ex:
             raise OAuth2InvalidTokenTypeError(token_type, "An exception occured while generating token %s: %s" % \
                                               (token_type, str(ex)))
+
+    def validate(self, token):
+        '''This method validates a given token object. Internally, a generator is selected to validate the given token based on
+        the given token type.
+
+        .. code-block:: python
+
+            # extract db_conn from one of your controller injected facade models.
+            # extract token from request or instantiate a new token.
+
+            tokens_service = TokensService(db_conn)
+            tokens_service.validate(token)
+        '''
+
+        try:
+            generator = self._tokens_factory.get_generator(token.type, self._db_conn)
+
+            return generator.validate(token)
+        except OAuth2Error:
+            raise
+        except Exception as ex:
+            raise OAuth2InvalidTokenTypeError(token.type, "Unable to validate token: %s" % str(ex))
+
+    def invalidate(self, token):
+        '''This method invalidates a given token object. For instance, authorization codes can be invalidated. In order to
+        invalidate a token you can use the code snippet below:
+
+        .. code-block:: python
+
+            # extract db_conn from one of your controller injected facade models.
+            # extract token from request or instantiate a new token.
+
+            tokens_service = TokensService(db_conn)
+            tokens_service.invalidate(token)
+        '''
+
+        try:
+            generator = self._tokens_factory.get_generator(token.type, self._db_conn)
+
+            generator.invalidate(token)
+        except OAuth2Error:
+            raise
+        except Exception as ex:
+            raise OAuth2InvalidTokenTypeError(token.type, "Unable to invalidate token: %s" % str(ex))
