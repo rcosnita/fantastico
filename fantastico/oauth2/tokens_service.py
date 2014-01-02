@@ -124,4 +124,4 @@ class TokensService(object):
     def decrypt(self, encrypted_str):
         '''This method decrypts a given string and returns a concrete token object.'''
 
-        return self._encryptor.decrypt_token(encrypted_str)
+        return self._encryptor.decrypt_token(encrypted_str, client_repo=self._client_repo)

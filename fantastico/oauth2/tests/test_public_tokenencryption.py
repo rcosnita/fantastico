@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.tests.test_public_tokenencryption
 '''
-from fantastico.exceptions import FantasticoDbNotFoundError, FantasticoDbError
+
 from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2Error, OAuth2TokenEncryptionError, \
     OAuth2InvalidClientError
 from fantastico.oauth2.models.clients import Client
@@ -187,3 +187,50 @@ class PublicTokenEncryptionTests(FantasticoUnitTestsCase):
 
         self._symmetric_encryptor.decrypt_token.assert_called_once_with(public_token_desc["encrypted"], self._token_iv,
                                                                         self._token_key)
+
+    def test_decrypt_client_repo_ok(self):
+        '''This test case ensures decrypt works ok without specified token encryption vectors.'''
+
+        token_iv = "token iv".encode()
+        token_key = "token_key".encode()
+
+        encrypted_token_desc = {"client_id": "abc",
+                                "type": "access",
+                                "attr1": "attr test"}
+        token_desc = {"client_id": "abc",
+                      "type": "access",
+                      "encrypted": "abc"}
+
+        encrypted_str = base64.b64encode(json.dumps(token_desc).encode())
+        encrypted_token = Token(encrypted_token_desc)
+
+        client = Client(token_iv=base64.b64encode(token_iv).decode(),
+                        token_key=base64.b64encode(token_key).decode())
+
+        client_repo = Mock()
+        client_repo.load = Mock(return_value=client)
+
+        self._symmetric_encryptor.decrypt_token = Mock(return_value=encrypted_token)
+
+        token = self._public_encryptor.decrypt_token(encrypted_str.decode(), client_repo=client_repo)
+
+        self.assertIsNotNone(token)
+        self.assertEqual(encrypted_token, token)
+
+        client_repo.load.assert_called_once_with(token_desc["client_id"])
+        self._symmetric_encryptor.decrypt_token.assert_called_once_with("abc", token_iv, token_key)
+
+    def test_decrypt_client_repo_ex(self):
+        '''This test case ensures all exceptions from client repository are casted to oauth2 concrete exceptions.'''
+
+        token_desc = {"client_id": "abc",
+                      "type": "access",
+                      "encrypted": "abc"}
+
+        encrypted_str = base64.b64encode(json.dumps(token_desc).encode()).decode()
+
+        client_repo = Mock()
+        client_repo.load = Mock(side_effect=Exception("Unexpected exception."))
+
+        with self.assertRaises(OAuth2InvalidClientError):
+            self._public_encryptor.decrypt_token(encrypted_str, client_repo=client_repo)

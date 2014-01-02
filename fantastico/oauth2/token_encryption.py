@@ -19,7 +19,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from Crypto.Cipher import AES
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
-from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError, OAuth2Error
+from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError, OAuth2Error, \
+    OAuth2InvalidClientError
 from fantastico.oauth2.models.clients import Client
 from fantastico.oauth2.token import Token
 import base64
@@ -138,14 +139,26 @@ class PublicTokenEncryption(TokenEncryption):
         except Exception as ex:
             raise OAuth2TokenEncryptionError(msg="Unexpected symmetric error: %s" % str(ex))
 
-    def decrypt_token(self, encrypted_str, token_iv, token_key):
-        '''This methods receives a public token representation and returns a concrete token object. '''
+    def decrypt_token(self, encrypted_str, token_iv=None, token_key=None, client_repo=None):
+        '''This methods receives a public token representation and returns a concrete token object. In many cases token_iv and
+        token_key will not be known so they will obtained from the public part of the token using client_id descriptor
+        persisted in database.'''
 
         if not encrypted_str or len(encrypted_str.strip()) == 0:
             raise OAuth2InvalidTokenDescriptorError("encrypted_str")
 
         raw_token = base64.b64decode(encrypted_str.encode())
         raw_dict = json.loads(raw_token.decode())
+        client_id = raw_dict["client_id"]
+
+        if not token_iv or not token_key:
+            try:
+                client = client_repo.load(client_id)
+            except Exception as ex:
+                raise OAuth2InvalidClientError("Client %s is not valid: %s" % (client_id, str(ex)))
+
+            token_iv = base64.b64decode(client.token_iv.encode())
+            token_key = base64.b64decode(client.token_key.encode())
 
         encrypted_part = raw_dict.get("encrypted")
 

@@ -324,7 +324,7 @@ class TokensServiceTests(FantasticoUnitTestsCase):
 
         self.assertEqual(decrypted_str, result)
 
-        self._encryptor.decrypt_token.assert_called_once_with(encrypted_str)
+        self._encryptor.decrypt_token.assert_called_once_with(encrypted_str, client_repo=self._client_repo)
 
     def test_decrypt_ex(self):
         '''This test case ensures all decrypt exceptions are bubbled up.'''
