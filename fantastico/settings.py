@@ -143,16 +143,19 @@ class BasicSettings(object):
         '''This property holds the configuration for Fantastico default Identity Provider. In most cases you will change the
         template applied to login screen in order to customize it to your needs. If you want to change
         the template for login screen make sure your provide relative path to your components root folder
-        (e.g /components/frontend/views/custom_login.html).
+        (e.g /components/frontend/views/custom_login.html). Moreover, you can also specify the login token validity period (in
+        seconds). It is recommended to set a high value (e.g 2 weeks).
 
         .. code-block:: python
 
             return {"client_id": "11111111-1111-1111-1111-111111111111",
-                    "template": "/components/frontend/views/custom_login.html"}
+                    "template": "/components/frontend/views/custom_login.html",
+                    "expires_in": 1209600}
         '''
 
         return {"client_id": "11111111-1111-1111-1111-111111111111",
-                "template": "login.html"}
+                "template": "login.html",
+                "expires_in": 1209600}
 
 class AwsStageSettings(BasicSettings):
     '''This class provides the configuration profile for Aws Stage environment integration.'''

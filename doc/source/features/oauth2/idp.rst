@@ -52,6 +52,18 @@ a template which must be applied to login screen. A typical custom login templat
 
 You can find documentation on how to configure custom login template on :doc:`/get_started/settings`.
 
+Administrator account
+~~~~~~~~~~~~~~~~~~~~~
+
+When you first activate the extension and you syncdb an administrator account is created:
+
+.. code-block:: bash
+
+   username = "admin@fantastico.com"
+   password = "1234567890"
+
+This account can be used to access various applications provided by various Fantastico extensions.
+
 Technical summary
 -----------------
 

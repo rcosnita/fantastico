@@ -21,7 +21,6 @@ from Crypto.Cipher import AES
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
 from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2TokenEncryptionError, OAuth2Error, \
     OAuth2InvalidClientError
-from fantastico.oauth2.models.clients import Client
 from fantastico.oauth2.token import Token
 import base64
 import json
@@ -86,7 +85,7 @@ class AesTokenEncryption(TokenEncryption):
 
             cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
 
-            return cipher.encrypt(text)
+            return base64.b64encode(cipher.encrypt(text)).decode()
         except Exception as ex:
             raise OAuth2TokenEncryptionError(str(ex))
 
@@ -102,6 +101,7 @@ class AesTokenEncryption(TokenEncryption):
         try:
             cipher = AES.new(token_key, AES.MODE_CFB, token_iv)
 
+            encrypted_str = base64.b64decode(encrypted_str.encode())
             decrypted_text = cipher.decrypt(encrypted_str).decode()
             token_descriptor = json.loads(decrypted_text)
 

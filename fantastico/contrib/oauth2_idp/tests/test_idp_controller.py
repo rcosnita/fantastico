@@ -17,10 +17,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.oauth2_idp.tests.test_idp_controller
 '''
 
+from fantastico.contrib.oauth2_idp.models.users import User
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
+from fantastico.oauth2.token import Token
+from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
+from fantastico.routing_engine.custom_responses import RedirectResponse
 from fantastico.tests.base_case import FantasticoUnitTestsCase
+from fantastico.utils.dictionary_object import DictionaryObject
 from mock import Mock
+import time
 import urllib
 
 class IdpControllerTests(FantasticoUnitTestsCase):
@@ -28,6 +34,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
 
     _IDP_CLIENTID = "11111111-1111-1111-1111-111111111111"
     _TPL_LOGIN = "/mock/location/views/login.html"
+    _EXPIRES_IN = 3600
 
     _idp_controller = None
     _hasher = None
@@ -41,7 +48,8 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         from fantastico.contrib.oauth2_idp.idp_controller import IdpController
 
         oauth2_idp = {"client_id": self._IDP_CLIENTID,
-                      "template": self._TPL_LOGIN}
+                      "template": self._TPL_LOGIN,
+                      "expires_in": self._EXPIRES_IN}
 
         self._hasher = Mock()
         self._hasher.get_hasher = Mock(return_value=self._hasher)
@@ -99,10 +107,60 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         '''This test case ensures a correct login token is generated during authentication phase. It also checks for correct
         redirect response.'''
 
-        user_id = 123
+        from fantastico.oauth2.models.return_urls import ClientReturnUrl
+
+        user = User(username="john.doe@gmail.com",
+                    password="12345",
+                    person_id=1)
+        user.user_id = 123
+        user.session = Mock()
+
+        creation_time = int(time.time())
+        expiration_time = creation_time + self._EXPIRES_IN
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
 
         request = Mock()
-        request.params = {"username": "john.doe@gmail.com",
-                          "password": "12345",
+        request.params = {"username": user.username,
+                          "password": user.password,
                           "return_url": "http://expected-url.com/cb"}
+        request.models = Mock()
+        request.models.User = user
+        request.redirect = lambda destination: RedirectResponse(destination)
 
+        expected_url = "http://expected-url.com/cb?login_token=123"
+
+        user_repo = Mock()
+        user_repo.load_by_username = Mock(return_value=user)
+        user_repo_cls = Mock(return_value=user_repo)
+
+        self._hasher.hash_password = Mock(return_value=user.password)
+
+        tokens_service = Mock()
+        tokens_service_cls = Mock(return_value=tokens_service)
+
+        tokens_service.generate = Mock(return_value=token)
+        tokens_service.encrypt = Mock(return_value="123")
+
+        response = self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls,
+                                                     user_repo_cls=user_repo_cls)
+
+        self.assertIsNotNone(response)
+        self.assertEqual(301, response.status_code)
+
+        location = response.headers.get("Location")
+
+        self.assertEqual(expected_url, location)
+
+        user_repo.load_by_username.assert_called_once_with(user.username)
+        self._hasher.hash_password.assert_called_once_with(user.password, DictionaryObject({"salt": user.user_id}))
+
+        tokens_service_cls.assert_called_once_with(user.session)
+        tokens_service.generate.assert_called_once_with({"client_id": self._IDP_CLIENTID,
+                                                         "user_id": user.user_id,
+                                                         "expires_in": self._EXPIRES_IN}, TokenGeneratorFactory.LOGIN_TOKEN)
+        tokens_service.encrypt.assert_called_once_with(token, token.client_id)

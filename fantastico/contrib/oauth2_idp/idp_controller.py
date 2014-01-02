@@ -17,15 +17,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.oauth2_idp.idp_controller
 '''
 
+from fantastico.contrib.oauth2_idp.models.user_repository import UserRepository
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
-from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
+from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.oauth2.tokens_service import TokensService
 from fantastico.utils.dictionary_object import DictionaryObject
 from webob.response import Response
-import time
 import urllib
 
 @ControllerProvider()
@@ -37,6 +37,7 @@ class IdpController(BaseController):
 
         self._idp_config = self._settings_facade.get("oauth2_idp")
         self._idp_client_id = self._idp_config["client_id"]
+        self._idp_expires_in = self._idp_config["expires_in"]
         self._login_tpl = self._idp_config["template"]
         self._passwords_hasher = passwords_hasher_cls().get_hasher(PasswordsHasherFactory.SHA512_SALT)
 
@@ -56,7 +57,7 @@ class IdpController(BaseController):
 
     @Controller(url="^/oauth/idp/login$", method="POST",
                 models={"User": "fantastico.contrib.oauth2_idp.models.users.User"})
-    def authenticate(self, request, tokens_service_cls=TokensService, time_provider=time):
+    def authenticate(self, request, tokens_service_cls=TokensService, user_repo_cls=UserRepository):
         '''This method receives a request to authenticate a user. It validates the username and password against a list of
         registered users.'''
 
@@ -64,7 +65,37 @@ class IdpController(BaseController):
         password = request.params.get("password")
         return_url = request.params.get("return_url")
 
-    def _validate_user(self, username, password, user_facade):
+        db_conn = request.models.User.session
+
+        user_repo = user_repo_cls(db_conn)
+        user = self._validate_user(username, password, user_repo)
+
+        tokens_service = tokens_service_cls(db_conn)
+        token = self._generate_token(user.user_id, tokens_service)
+
+        encrypted_str = tokens_service.encrypt(token, token.client_id)
+        return_url += "?login_token=%s" % encrypted_str
+
+        return request.redirect(return_url)
+
+    def _validate_user(self, username, password, user_repo):
         '''This method validates the given username and password against the record found in database. If no user is found or
         password does not match an exception is raised.'''
 
+        user = user_repo.load_by_username(username)
+
+        password_hash = self._passwords_hasher.hash_password(password, DictionaryObject({"salt": user.user_id}))
+
+        if password_hash != user.password:
+            raise Exception("Invalid user.")
+
+        return user
+
+    def _generate_token(self, user_id, tokens_service):
+        '''This method generates a login token using the given user_id and tokens_service.'''
+
+        token_desc = {"client_id": self._idp_client_id,
+                      "user_id": user_id,
+                      "expires_in": self._idp_expires_in}
+
+        return tokens_service.generate(token_desc, TokenGeneratorFactory.LOGIN_TOKEN)

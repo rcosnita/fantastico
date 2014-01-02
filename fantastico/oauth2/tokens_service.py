@@ -107,7 +107,7 @@ class TokensService(object):
         except Exception as ex:
             raise OAuth2InvalidTokenTypeError(token.type, "Unable to invalidate token: %s" % str(ex))
 
-    def encrypt(self, token, client_id=None):
+    def encrypt(self, token, client_id):
         '''This method encrypts a given token and returns the encrypted string representation. Client id is required in order
         to obtain the encryption keys.'''
 
