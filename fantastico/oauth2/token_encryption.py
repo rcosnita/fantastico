@@ -117,11 +117,15 @@ class PublicTokenEncryption(TokenEncryption):
     def __init__(self, symmetric_encryptor):
         self._symmetric_encryptor = symmetric_encryptor
 
-    def encrypt_token(self, token, token_iv, token_key):
-        '''This method takes a concrete token object and returns a base64 representation of the token.'''
+    def encrypt_token(self, token, token_iv=None, token_key=None, client_repo=None):
+        '''This method takes a concrete token object and returns a base64 representation of the token. In the rare cases where
+        the encryption vectors are not known client_repo is used to read client descriptor and lazy obtain the vectors.'''
 
         if not token:
             raise OAuth2InvalidTokenDescriptorError("token")
+
+        if (not token_iv or not token_key) and client_repo:
+            token_iv, token_key = self._load_encryption_keys(token.client_id, client_repo)
 
         self._validate_encryption_args(token_iv, token_key)
 
@@ -152,13 +156,7 @@ class PublicTokenEncryption(TokenEncryption):
         client_id = raw_dict["client_id"]
 
         if not token_iv or not token_key:
-            try:
-                client = client_repo.load(client_id)
-            except Exception as ex:
-                raise OAuth2InvalidClientError("Client %s is not valid: %s" % (client_id, str(ex)))
-
-            token_iv = base64.b64decode(client.token_iv.encode())
-            token_key = base64.b64decode(client.token_key.encode())
+            token_iv, token_key = self._load_encryption_keys(client_id, client_repo)
 
         encrypted_part = raw_dict.get("encrypted")
 
@@ -170,3 +168,16 @@ class PublicTokenEncryption(TokenEncryption):
             raise
         except Exception as ex:
             raise OAuth2TokenEncryptionError("Unexpected symmetric encryption error: %s" % str(ex))
+
+    def _load_encryption_keys(self, client_id, client_repo):
+        '''This method is used to load the encryption keys for the specified client using the given repo.'''
+
+        try:
+            client = client_repo.load(client_id)
+        except Exception as ex:
+            raise OAuth2InvalidClientError("Client %s is not valid: %s" % (client_id, str(ex)))
+
+        token_iv = base64.b64decode(client.token_iv.encode())
+        token_key = base64.b64decode(client.token_key.encode())
+
+        return (token_iv, token_key)
