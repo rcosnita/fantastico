@@ -141,18 +141,14 @@ class PublicTokenEncryption(TokenEncryption):
         except Exception as ex:
             raise OAuth2TokenEncryptionError(msg="Unexpected symmetric error: %s" % str(ex))
 
-    def decrypt_token(self, encrypted_str, token_iv=None, token_key=None, model_facade=ModelFacade):
-        '''This methods receives a public token representation and returns a concrete token object. If symmetric encryption
-        vectors are not passed, they are obtained from client descriptor persisted into database.'''
+    def decrypt_token(self, encrypted_str, token_iv=None, token_key=None):
+        '''This methods receives a public token representation and returns a concrete token object. '''
 
         if not encrypted_str or len(encrypted_str.strip()) == 0:
             raise OAuth2InvalidTokenDescriptorError("encrypted_str")
 
         raw_token = base64.b64decode(encrypted_str.encode())
         raw_dict = json.loads(raw_token.decode())
-
-        if not token_iv and not token_key:
-            token_iv, token_key = self._load_aes_args_from_client(raw_dict["client_id"], model_facade)
 
         encrypted_part = raw_dict.get("encrypted")
 
@@ -164,18 +160,3 @@ class PublicTokenEncryption(TokenEncryption):
             raise
         except Exception as ex:
             raise OAuth2TokenEncryptionError("Unexpected symmetric encryption error: %s" % str(ex))
-
-    def _load_aes_args_from_client(self, client_id, model_facade=ModelFacade):
-        '''This method returns a tuple (token_iv, token_key) from the client descriptor persisted into database.'''
-
-        try:
-            client = model_facade(Client).find_by_pk({Client.client_id: client_id})
-
-            token_iv = base64.b64decode(client.token_iv)
-            token_key = base64.b64decode(client.token_key)
-
-            return (token_iv, token_key)
-        except FantasticoDbNotFoundError as ex:
-            raise OAuth2InvalidClientError("Client %s does not exist: %s" % (client_id, str(ex)))
-        except FantasticoDbError as ex:
-            raise OAuth2InvalidClientError("Client %s loading failed: %s" % (client_id, str(ex)))

@@ -22,24 +22,24 @@ from fantastico.mvc.controller_decorators import Controller, ControllerProvider
 from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
+from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
+from fantastico.oauth2.tokens_service import TokensService
 from fantastico.utils.dictionary_object import DictionaryObject
 from webob.response import Response
+import time
 import urllib
-from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 
 @ControllerProvider()
 class IdpController(BaseController):
     '''This class provides the controller for all routes / APIs provided by oauth2 default Fantastico Identity Provider.'''
 
-    def __init__(self, settings_facade, passwords_hasher_cls=PasswordsHasherFactory,
-                 generators_factory_cls=TokenGeneratorFactory):
+    def __init__(self, settings_facade, passwords_hasher_cls=PasswordsHasherFactory):
         super(IdpController, self).__init__(settings_facade)
 
         self._idp_config = self._settings_facade.get("oauth2_idp")
         self._idp_client_id = self._idp_config["client_id"]
         self._login_tpl = self._idp_config["template"]
         self._passwords_hasher = passwords_hasher_cls().get_hasher(PasswordsHasherFactory.SHA512_SALT)
-        # self._login_generator = generators_factory_cls().get_generator(TokenGeneratorFactory.LOGIN_TOKEN, self.)
 
     @Controller(url="^/oauth/idp/ui/login$")
     def show_login(self, request):
@@ -57,7 +57,7 @@ class IdpController(BaseController):
 
     @Controller(url="^/oauth/idp/login$", method="POST",
                 models={"User": "fantastico.contrib.oauth2_idp.models.users.User"})
-    def authenticate(self, request, tokens_factory_cls=TokenGeneratorFactory):
+    def authenticate(self, request, tokens_service_cls=TokensService, time_provider=time):
         '''This method receives a request to authenticate a user. It validates the username and password against a list of
         registered users.'''
 

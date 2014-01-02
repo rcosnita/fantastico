@@ -28,6 +28,7 @@ from fantastico.utils.dictionary_object import DictionaryObject
 from mock import Mock
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String
+import time
 import urllib
 
 class IdpControllerTests(FantasticoUnitTestsCase):
@@ -38,6 +39,9 @@ class IdpControllerTests(FantasticoUnitTestsCase):
 
     _idp_controller = None
     _hasher = None
+
+    _tokens_service = None
+    _tokens_service_cls = None
 
     def init(self):
         '''This method is invoked automatically in order to setup dependencies common to all test cases.'''
@@ -62,6 +66,9 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         settings_facade.get.assert_called_once_with("oauth2_idp")
         hasher_cls.assert_called_once_with()
         self._hasher.get_hasher.assert_called_once_with(PasswordsHasherFactory.SHA512_SALT)
+
+        self._tokens_service = Mock()
+        self._tokens_service_cls = Mock(return_value=self._tokens_service)
 
     def test_show_login_ok(self):
         '''This test case ensures login screen is displayed correctly when all required parameters are passed.'''
@@ -108,6 +115,12 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         password = "12345"
         return_url = "/test/url?abc=1"
 
+        creation_time = time.time()
+        expiration_time = creation_time + 3600
+
+        time_provider = Mock()
+        time_provider.time = Mock(return_value=creation_time)
+
         hashed_password = "hashed_password"
         self._hasher.hash_password = Mock(return_value=hashed_password)
 
@@ -127,18 +140,18 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         request.models = Mock()
         request.models.User = user_facade
 
+        token_desc = {"client_id": self._IDP_CLIENTID,
+                      "type": TokenGeneratorFactory.LOGIN_TOKEN,
+                      "user_id": user_id}
+
         request.redirect = lambda destination: RedirectResponse(destination)
 
         user_facade.get_records_paged = Mock(return_value=[user])
 
-        login_generator = Mock()
-        login_generator.generate = Mock(return_value=Token({}))
+        self._tokens_service.generate = Mock(return_value=Token(token_desc))
 
-        tokens_factory = Mock()
-        tokens_factory.get_generator = Mock(return_value=login_generator)
-        tokens_factory_cls = Mock(return_value=tokens_factory)
-
-        response = self._idp_controller.authenticate(request, tokens_factory_cls)
+        response = self._idp_controller.authenticate(request, tokens_service_cls=self._tokens_service_cls,
+                                                     time_provider=time_provider)
 
         self.assertIsNotNone(response)
         self.assertEqual(301, response.status_code)
@@ -149,4 +162,4 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                                             start_record=0, end_record=1,
                                             filter_expr=ModelFilter(user_facade.username, user.username, ModelFilter.EQ))
         self._hasher.hash_password.assert_called_once_with(password, DictionaryObject({"salt": user_id}))
-        tokens_factory.get_generator.assert_called_once_with(TokenGeneratorFactory.LOGIN_TOKEN, user_facade.session)
+        self._tokens_service_cls.assert_called_once_with(user_facade.session)
