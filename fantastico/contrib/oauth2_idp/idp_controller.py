@@ -64,22 +64,7 @@ class IdpController(BaseController):
         password = request.params.get("password")
         return_url = request.params.get("return_url")
 
-        user = self._validate_user(username, password, request.models.User)
-
-        return_url = "%s#login_token=%s" % (return_url, "abcd")
-
-        return request.redirect(return_url)
-
     def _validate_user(self, username, password, user_facade):
         '''This method validates the given username and password against the record found in database. If no user is found or
         password does not match an exception is raised.'''
 
-        records = user_facade.get_records_paged(
-                                            start_record=0, end_record=1,
-                                            filter_expr=ModelFilter(user_facade.username, username, ModelFilter.EQ))
-
-        user = records[0]
-
-        hashed_password = self._passwords_hasher.hash_password(password, DictionaryObject({"salt": user.user_id}))
-
-        return user

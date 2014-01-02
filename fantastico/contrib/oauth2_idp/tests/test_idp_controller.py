@@ -17,18 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.oauth2_idp.tests.test_idp_controller
 '''
 
-from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
-from fantastico.oauth2.token import Token
-from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
-from fantastico.routing_engine.custom_responses import RedirectResponse
 from fantastico.tests.base_case import FantasticoUnitTestsCase
-from fantastico.utils.dictionary_object import DictionaryObject
 from mock import Mock
-from sqlalchemy.schema import Column
-from sqlalchemy.types import String
-import time
 import urllib
 
 class IdpControllerTests(FantasticoUnitTestsCase):
@@ -57,9 +49,6 @@ class IdpControllerTests(FantasticoUnitTestsCase):
 
         settings_facade = Mock()
         settings_facade.get = Mock(return_value=oauth2_idp)
-
-        self._generators_factory = Mock()
-        self._generators_factory.get_generator = Mock()
 
         self._idp_controller = IdpController(settings_facade, passwords_hasher_cls=hasher_cls)
 
@@ -111,55 +100,9 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         redirect response.'''
 
         user_id = 123
-        username = "john.doe@email.com"
-        password = "12345"
-        return_url = "/test/url?abc=1"
-
-        creation_time = time.time()
-        expiration_time = creation_time + 3600
-
-        time_provider = Mock()
-        time_provider.time = Mock(return_value=creation_time)
-
-        hashed_password = "hashed_password"
-        self._hasher.hash_password = Mock(return_value=hashed_password)
-
-        user = DictionaryObject({"user_id": user_id,
-                                 "username": username,
-                                 "password": hashed_password,
-                                 "person_id": 5})
-
-        user_facade = Mock()
-        user_facade.session = Mock()
-        user_facade.username = Column("username", String(100))
 
         request = Mock()
-        request.params = {"username": username,
-                          "password": password,
-                          "return_url": return_url}
-        request.models = Mock()
-        request.models.User = user_facade
+        request.params = {"username": "john.doe@gmail.com",
+                          "password": "12345",
+                          "return_url": "http://expected-url.com/cb"}
 
-        token_desc = {"client_id": self._IDP_CLIENTID,
-                      "type": TokenGeneratorFactory.LOGIN_TOKEN,
-                      "user_id": user_id}
-
-        request.redirect = lambda destination: RedirectResponse(destination)
-
-        user_facade.get_records_paged = Mock(return_value=[user])
-
-        self._tokens_service.generate = Mock(return_value=Token(token_desc))
-
-        response = self._idp_controller.authenticate(request, tokens_service_cls=self._tokens_service_cls,
-                                                     time_provider=time_provider)
-
-        self.assertIsNotNone(response)
-        self.assertEqual(301, response.status_code)
-        self.assertEqual("%s#login_token=abcd" % (return_url),
-                         response.headers.get("Location"))
-
-        user_facade.get_records_paged.assert_called_with(
-                                            start_record=0, end_record=1,
-                                            filter_expr=ModelFilter(user_facade.username, user.username, ModelFilter.EQ))
-        self._hasher.hash_password.assert_called_once_with(password, DictionaryObject({"salt": user_id}))
-        self._tokens_service_cls.assert_called_once_with(user_facade.session)
