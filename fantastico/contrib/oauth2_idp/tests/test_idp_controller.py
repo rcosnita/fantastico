@@ -148,7 +148,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                                                      user_repo_cls=user_repo_cls)
 
         self.assertIsNotNone(response)
-        self.assertEqual(301, response.status_code)
+        self.assertEqual(302, response.status_code)
 
         location = response.headers.get("Location")
 

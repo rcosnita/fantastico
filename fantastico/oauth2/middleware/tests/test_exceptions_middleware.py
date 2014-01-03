@@ -23,13 +23,14 @@ from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from webob.util import status_reasons
 import json
+import urllib
 
 class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for OAuth2 exceptions handler.'''
 
     _DOC_BASE = "/test/documentation/"
 
-    def test_invalid_request(self):
+    def test_invalid_request_json(self):
         '''This test case ensures the correct json response is built when a mandatory parameter is missing.'''
 
         ex = OAuth2MissingQueryParamError("username")
@@ -41,7 +42,43 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
                                     uri=self._calculate_expected_uri(ex.error_code),
                                     body=body)
 
-    def test_access_denied(self):
+    def test_invalid_request_form(self):
+        '''This test ensures the correct redirect is done when an exception occurs.'''
+
+        ex = OAuth2MissingQueryParamError("username")
+
+        return_url = "/example/cb#triplex=abcd"
+
+        self._test_exception_form(ex,
+                                  error="invalid_request",
+                                  description="username query parameter is mandatory.",
+                                  uri=self._calculate_expected_uri(ex.error_code),
+                                  return_url=return_url)
+
+    def test_invalid_request_form_nohash(self):
+        '''This test ensures that hash part of error redirect is correctly appended when return url does not have an existing
+        hash.'''
+
+        ex = OAuth2MissingQueryParamError("username")
+
+        return_url = "/example/cb"
+
+        error = "invalid_request"
+        description = "username query parameter is mandatory."
+        uri = self._calculate_expected_uri(ex.error_code)
+
+        expected_url = "%s#error=%s&error_description=%s&error_uri=%s" % \
+                            (return_url, error, description, urllib.parse.quote(uri))
+
+
+        self._test_exception_form(ex,
+                                  error=error,
+                                  description=description,
+                                  uri=uri,
+                                  return_url=return_url,
+                                  expected_url=expected_url)
+
+    def test_access_denied_json(self):
         '''This test case ensures oauth2 authentication exceptions are correctly converted to access denied responses.'''
 
         ex = OAuth2AuthenticationError("Username or password are not correct.")
@@ -53,8 +90,19 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
                                     uri=self._calculate_expected_uri(ex.error_code),
                                     body=body)
 
-    def test_invalid_client(self):
-        '''This test case ensures oauth2 invalid client exceptions are correctly converted to access denied responses.'''
+    def test_access_denied_form(self):
+        '''This test case ensures oauth2 authentication exceptions are correctly converted to redirect response when necessary.'''
+
+        ex = OAuth2AuthenticationError("Username or password are not correct.")
+
+        self._test_exception_form(ex,
+                                  error="access_denied",
+                                  description=str(ex),
+                                  uri=self._calculate_expected_uri(ex.error_code),
+                                  return_url="/example/cb#triplex=abcd")
+
+    def test_invalid_client_json(self):
+        '''This test case ensures oauth2 invalid client exceptions are correctly converted to invalid client responses.'''
 
         ex = OAuth2InvalidClientError("Invalid client error.")
 
@@ -65,7 +113,18 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
                                     uri=self._calculate_expected_uri(ex.error_code),
                                     body=body)
 
-    def test_server_error(self):
+    def test_invalid_client_form(self):
+        '''This test case ensures oauth2 invalid client exceptions are correctly converted to invalid client redirect.'''
+
+        ex = OAuth2InvalidClientError("Invalid client error.")
+
+        self._test_exception_form(ex,
+                                  error="invalid_client",
+                                  description=str(ex),
+                                  uri=self._calculate_expected_uri(ex.error_code),
+                                  return_url="/example/cb#triplex=abcd")
+
+    def test_server_error_json(self):
         '''This test case ensures generic oauth2 errors are casted to internal server error.'''
 
         ex = OAuth2Error(error_code=232, msg="Unexpected error", http_code=500)
@@ -77,8 +136,19 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
                                     uri=self._calculate_expected_uri(ex.error_code),
                                     body=body)
 
+    def test_server_error_form(self):
+        '''This test case ensures generic oauth2 errors are casted to internal server redirect responses.'''
 
-    def test_generic_exception(self):
+        ex = OAuth2Error(error_code=232, msg="Unexpected error", http_code=500)
+
+        self._test_exception_form(ex,
+                                  error="server_error",
+                                  description=str(ex),
+                                  uri=self._calculate_expected_uri(ex.error_code),
+                                  return_url="/example/cb#triplex=abcd")
+
+
+    def test_generic_exception_json(self):
         '''This test case ensures non oauth2 exceptions are bubbled up.'''
 
         ex = Exception("Unexpected exception")
@@ -130,6 +200,33 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
                                                            ("Content-Length", str(content_length))])
 
         return body
+
+    def _test_exception_form(self, ex, error, description, uri, return_url, expected_url=None):
+        '''This method provides a test case template for application/x-www-form-urlencoded exception handling.'''
+
+        if not expected_url:
+            expected_url = "%s&error=%s&error_description=%s&error_uri=%s" % \
+                            (return_url, error, description, urllib.parse.quote(uri))
+
+        request = Mock()
+        request.content_type = "application/x-www-form-urlencoded"
+        request.params = {"return_url": return_url}
+
+        environ = {"fantastico.request": request}
+        start_response = Mock()
+        app = Mock(side_effect=ex)
+        middleware = OAuth2ExceptionsMiddleware(app, settings_facade_cls=self._mock_settings_facade())
+
+        body = middleware(environ, start_response)
+
+        self.assertIsNotNone(body)
+        self.assertEqual(b'', body[0])
+
+        app.assert_called_once_with(environ, start_response)
+
+        start_response.assert_called_once_with("302 Found", [("Location", expected_url),
+                                                             ('Content-Type', 'text/html'),
+                                                             ('Content-Length', '0')])
 
     def _mock_settings_facade(self):
         '''This method mocks settings facade.'''

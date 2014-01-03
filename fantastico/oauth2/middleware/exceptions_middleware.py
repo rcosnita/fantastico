@@ -18,9 +18,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2InvalidClientError, \
     OAuth2Error
+from fantastico.routing_engine.custom_responses import RedirectResponse
 from fantastico.settings import SettingsFacade
 from webob.response import Response
 import json
+import urllib
 
 class OAuth2ExceptionsMiddleware(object):
     '''This class provides the support for dynamically casting OAuth2 errors into concrete error responses. At the moment
@@ -83,7 +85,7 @@ class OAuth2ExceptionsMiddleware(object):
         curr_request = environ["fantastico.request"]
 
         if curr_request.content_type.find("application/x-www-form-urlencoded") > -1:
-            raise Exception("Not supported.")
+            return self._build_form_response(curr_request, body)
 
         return self._build_json_response(body, http_code)
 
@@ -95,3 +97,18 @@ class OAuth2ExceptionsMiddleware(object):
         response.status_code = http_code
 
         return response
+
+    def _build_form_response(self, request, body):
+        '''This method builds a redirect response for urlencoded form requests.'''
+
+        return_url = request.params.get("return_url")
+
+        if return_url.find("#") > -1:
+            return_url += "&"
+        else:
+            return_url += "#"
+
+        return_url += "error=%s&error_description=%s&error_uri=%s" % (body.get("error"), body.get("error_description"),
+                                                                       urllib.parse.quote(body.get("error_uri")))
+
+        return RedirectResponse(destination=return_url)
