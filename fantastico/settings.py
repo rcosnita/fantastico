@@ -40,7 +40,8 @@ class BasicSettings(object):
 
         return ["fantastico.middleware.request_middleware.RequestMiddleware",
                 "fantastico.middleware.model_session_middleware.ModelSessionMiddleware",
-                "fantastico.middleware.routing_middleware.RoutingMiddleware"]
+                "fantastico.middleware.routing_middleware.RoutingMiddleware",
+                "fantastico.oauth2.middleware.exceptions_middleware.OAuth2ExceptionsMiddleware"]
 
     @property
     def supported_languages(self):

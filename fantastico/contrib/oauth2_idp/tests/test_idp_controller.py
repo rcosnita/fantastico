@@ -18,8 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.contrib.oauth2_idp.models.users import User
-from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2Error, \
-    OAuth2TokenEncryptionError
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2Error
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
