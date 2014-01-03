@@ -22,6 +22,7 @@ from urllib.request import Request
 import copy
 import http
 import json
+import threading
 import urllib
 
 class RoaControllerIntegration(DevServerIntegration):
@@ -49,9 +50,6 @@ class RoaControllerIntegration(DevServerIntegration):
     _locations_delete = None
     _locations_subresource_delete = None
 
-    _response = None
-    _exception = None
-
     _endpoint = "/api/1.0/sample-resources"
     _endpoint_latest = "/api/latest/sample-resources"
     _endpoint_subresource_latest = "/api/latest/sample-subresources"
@@ -77,13 +75,11 @@ class RoaControllerIntegration(DevServerIntegration):
     def _create_resources(self, expected_resources):
         '''This method tries to create the given resources and asserts for successful response.'''
 
-        self._response = None
-        self._exception = None
+        results = {"response": None}
 
         def create_resource(server):
             for resource_body in expected_resources:
-                self._response = None
-                self._exception = None
+                results["response"] = None
 
                 http_conn = HTTPConnection(server.hostname, server.port)
 
@@ -94,11 +90,11 @@ class RoaControllerIntegration(DevServerIntegration):
                 http_conn.request("POST", self._endpoint, resource_body,
                                   headers={"Content-Type": "application/json",
                                            "Content-Length": len(resource_body)})
-                self._response = http_conn.getresponse()
+                results["response"] = http_conn.getresponse()
 
                 http_conn.close()
 
-                location = self._response.headers["Location"]
+                location = results["response"].headers["Location"]
                 self._locations_delete.append(location)
 
                 resource_id = int(location.split("/")[-1])
@@ -111,10 +107,12 @@ class RoaControllerIntegration(DevServerIntegration):
                     self._create_subresource_for_resource(subresource_body, resource_id, server)
 
         def assert_creation(server):
-            self.assertIsNotNone(self._response)
-            self.assertEqual(201, self._response.status)
+            response = results["response"]
 
-            headers = self._response.headers
+            self.assertIsNotNone(response)
+            self.assertEqual(201, response.status)
+
+            headers = response.headers
 
             self.assertIsNotNone(headers)
 
@@ -154,24 +152,27 @@ class RoaControllerIntegration(DevServerIntegration):
     def _delete_resources(self, locations):
         '''This method removes the given resource by location.'''
 
+        results = {"response": None}
+
         def delete_resource(server):
             http_conn = http.client.HTTPConnection(host=server.hostname, port=server.port)
 
             for location in reversed(self._locations_delete):
-                self._response = None
-                self._exception = None
+                results["response"] = None
 
                 http_conn.request("DELETE", location)
 
-                self._response = http_conn.getresponse()
+                results["response"] = http_conn.getresponse()
 
             http_conn.close()
 
         def assert_deletion(server):
-            self.assertIsNotNone(self._response)
-            self.assertEqual(204, self._response.status)
-            self.assertEqual("application/json; charset=UTF-8", self._response.getheader("Content-Type"))
-            self.assertEqual("0", self._response.getheader("Content-Length"))
+            response = results["response"]
+
+            self.assertIsNotNone(response)
+            self.assertEqual(204, response.status)
+            self.assertEqual("application/json; charset=UTF-8", response.getheader("Content-Type"))
+            self.assertEqual("0", response.getheader("Content-Length"))
 
         self._run_test_against_dev_server(delete_resource, assert_deletion)
 
@@ -181,6 +182,8 @@ class RoaControllerIntegration(DevServerIntegration):
 
         total_items = total_items or len(self._expected_resources)
         fields = fields or []
+
+        results = {"response": None}
 
         def get_resources(server):
             url = "%s?offset=%s&limit=%s" % \
@@ -198,18 +201,20 @@ class RoaControllerIntegration(DevServerIntegration):
 
             request = urllib.request.Request(url)
 
-            self._response = urllib.request.urlopen(request)
+            results["response"] = urllib.request.urlopen(request)
 
         def assert_resources(server):
-            self.assertIsNotNone(self._response)
-            self.assertEqual(200, self._response.getcode())
+            response = results["response"]
 
-            headers = self._response.info()
+            self.assertIsNotNone(response)
+            self.assertEqual(200, response.getcode())
+
+            headers = response.info()
 
             self.assertIsNotNone(headers)
             self.assertEqual("application/json; charset=UTF-8", headers["Content-Type"])
 
-            body = self._response.read().decode()
+            body = response.read().decode()
 
             self.assertGreater(len(body), 0)
 
@@ -273,18 +278,21 @@ class RoaControllerIntegration(DevServerIntegration):
         '''This test case covers scenario of individual item retrieval from a given collection.'''
 
         endpoint = self._locations_delete[-1]
+        results = {"response": None}
 
         def retrieve_item(server):
             request = Request(self._get_server_base_url(server, endpoint))
 
-            self._response = urllib.request.urlopen(request)
+            results["response"] = urllib.request.urlopen(request)
 
         def assert_item(server):
-            self.assertIsNotNone(self._response)
-            self.assertEqual(200, self._response.status)
-            self.assertEqual("application/json; charset=UTF-8", self._response.info()["Content-Type"])
+            response = results["response"]
 
-            body = self._response.read()
+            self.assertIsNotNone(response)
+            self.assertEqual(200, response.status)
+            self.assertEqual("application/json; charset=UTF-8", response.info()["Content-Type"])
+
+            body = response.read()
 
             self.assertIsNotNone(body)
 
@@ -304,26 +312,30 @@ class RoaControllerIntegration(DevServerIntegration):
         expected_body["total"] = 12.99
         expected_body["vat"] = 0.05
 
+        results = {"response": None}
+
         def update_item(server):
             http_conn = HTTPConnection(server.hostname, server.port)
             http_conn.connect()
 
             http_conn.request("PUT", endpoint, json.dumps(expected_body).encode(), {"Content-Type": "application/json"})
 
-            self._response = http_conn.getresponse()
+            results["response"] = http_conn.getresponse()
 
             http_conn.request("GET", endpoint, headers={"Content-Type": "application/json"})
 
-            self._response = http_conn.getresponse()
+            results["response"] = http_conn.getresponse()
 
             http_conn.close()
 
         def assert_update(server):
-            self.assertIsNotNone(self._response)
-            self.assertEqual(200, self._response.status)
-            self.assertEqual("application/json; charset=UTF-8", self._response.headers["Content-Type"])
+            response = results["response"]
 
-            body = self._response.read()
+            self.assertIsNotNone(response)
+            self.assertEqual(200, response.status)
+            self.assertEqual("application/json; charset=UTF-8", response.headers["Content-Type"])
+
+            body = response.read()
 
             self.assertIsNotNone(body)
 
@@ -338,23 +350,27 @@ class RoaControllerIntegration(DevServerIntegration):
 
         endpoint = self._endpoint_latest
 
+        results = {"response": None}
+
         def request_options(server):
             http_conn = HTTPConnection(server.hostname, server.port)
 
             http_conn.request("OPTIONS", endpoint, headers={"Access-Control-Request-Headers": "Header2"})
-            self._response = http_conn.getresponse()
+            results["response"] = http_conn.getresponse()
 
             http_conn.close()
 
         def assert_options(server):
-            self.assertIsNotNone(self._response)
-            self.assertEqual(200, self._response.status)
-            self.assertEqual("application/json; charset=UTF-8", self._response.headers["Content-Type"])
-            self.assertEqual("0", self._response.headers["Content-Length"])
-            self.assertEqual("private", self._response.headers["Cache-Control"])
-            self.assertEqual("*", self._response.headers["Access-Control-Allow-Origin"])
-            self.assertEqual("OPTIONS,GET,POST,PUT,DELETE", self._response.headers["Access-Control-Allow-Methods"])
-            self.assertEqual("Header2", self._response.headers["Access-Control-Allow-Headers"])
+            response = results["response"]
+
+            self.assertIsNotNone(response)
+            self.assertEqual(200, response.status)
+            self.assertEqual("application/json; charset=UTF-8", response.headers["Content-Type"])
+            self.assertEqual("0", response.headers["Content-Length"])
+            self.assertEqual("private", response.headers["Cache-Control"])
+            self.assertEqual("*", response.headers["Access-Control-Allow-Origin"])
+            self.assertEqual("OPTIONS,GET,POST,PUT,DELETE", response.headers["Access-Control-Allow-Methods"])
+            self.assertEqual("Header2", response.headers["Access-Control-Allow-Headers"])
 
         self._run_test_against_dev_server(request_options, assert_options)
 
@@ -362,21 +378,24 @@ class RoaControllerIntegration(DevServerIntegration):
         '''This test case ensures retrieve collection can correctly fetch subresources.'''
 
         endpoint = "/api/latest/sample-resources?offset=0&limit=1&fields=id,name,description,total,vat,subresources(id,name)"
+        results = {"response": None}
 
         def retrieve_resources(server):
             http_conn = HTTPConnection(server.hostname, server.port)
 
             http_conn.request("GET", endpoint, headers={"Content-Type": "application/json"})
-            self._response = http_conn.getresponse()
+            results["response"] = http_conn.getresponse()
 
             http_conn.close()
 
         def assert_resources(server):
-            self.assertIsNotNone(self._response)
-            self.assertEqual(200, self._response.status)
-            self.assertEqual("application/json; charset=UTF-8", self._response.headers["Content-Type"])
+            response = results["response"]
 
-            body = self._response.read()
+            self.assertIsNotNone(response)
+            self.assertEqual(200, response.status)
+            self.assertEqual("application/json; charset=UTF-8", response.headers["Content-Type"])
+
+            body = response.read()
 
             self.assertIsNotNone(body)
 
