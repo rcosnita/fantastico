@@ -107,6 +107,24 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         '''This test case ensures a correct login token is generated during authentication phase. It also checks for correct
         redirect response.'''
 
+        return_url = "http://expected-url.com/cb"
+        expected_url = "http://expected-url.com/cb?login_token=123"
+
+        self._test_authenticate_ok(return_url, expected_url)
+
+    def test_authenticate_returnwithparams_ok(self):
+        '''This test case ensures a correct login token is generated during authentication phase. It also checks that return_url
+        receives login_token as an additional query parameter. Moreover, this test case ensures that original return_url query
+        parameters are kept.'''
+
+        return_url = "http://expected-url.com/cb?state=xyz"
+        expected_url = "http://expected-url.com/cb?state=xyz&login_token=123"
+
+        self._test_authenticate_ok(return_url, expected_url)
+
+    def _test_authenticate_ok(self, return_url, expected_url):
+        '''This method provides a template test case for ensuring authenticate succeeds for various return_url values.'''
+
         user = User(username="john.doe@gmail.com",
                     password="12345",
                     person_id=1)
@@ -120,9 +138,6 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "user_id": user.user_id,
                        "creation_time": creation_time,
                        "expiration_time": expiration_time})
-
-        return_url = "http://expected-url.com/cb"
-        expected_url = "http://expected-url.com/cb?login_token=123"
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
             tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
@@ -145,6 +160,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                                                          "user_id": user.user_id,
                                                          "expires_in": self._EXPIRES_IN}, TokenGeneratorFactory.LOGIN_TOKEN)
         tokens_service.encrypt.assert_called_once_with(token, token.client_id)
+
 
     def test_authenticate_missing_username(self):
         '''This test case ensures an exception is raised when the username is not posted.'''

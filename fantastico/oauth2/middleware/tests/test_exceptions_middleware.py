@@ -16,7 +16,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.middleware.tests.test_exceptions_middleware
 '''
-from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2InvalidClientError, \
+    OAuth2Error
 from fantastico.oauth2.middleware.exceptions_middleware import OAuth2ExceptionsMiddleware
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
@@ -52,9 +53,40 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
                                     uri=self._calculate_expected_uri(ex.error_code),
                                     body=body)
 
-
-    def test_unauthorized_client(self):
+    def test_invalid_client(self):
         '''This test case ensures oauth2 invalid client exceptions are correctly converted to access denied responses.'''
+
+        ex = OAuth2InvalidClientError("Invalid client error.")
+
+        body = self._test_exception_json(ex)
+
+        self._assert_error_response(error="invalid_client",
+                                    description=str(ex),
+                                    uri=self._calculate_expected_uri(ex.error_code),
+                                    body=body)
+
+    def test_server_error(self):
+        '''This test case ensures generic oauth2 errors are casted to internal server error.'''
+
+        ex = OAuth2Error(error_code=232, msg="Unexpected error", http_code=500)
+
+        body = self._test_exception_json(ex)
+
+        self._assert_error_response(error="server_error",
+                                    description=str(ex),
+                                    uri=self._calculate_expected_uri(ex.error_code),
+                                    body=body)
+
+
+    def test_generic_exception(self):
+        '''This test case ensures non oauth2 exceptions are bubbled up.'''
+
+        ex = Exception("Unexpected exception")
+
+        with self.assertRaises(Exception) as ctx:
+            self._test_exception_json(ex)
+
+        self.assertEqual(ex, ctx.exception)
 
     def _assert_error_response(self, error, description, uri, body):
         '''This method assert correct exception format response for the given body.'''
@@ -87,7 +119,13 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
         body = json.loads(body[0].decode())
 
         app.assert_called_once_with(environ, start_response)
-        http_code = "%s %s" % (ex.http_code, status_reasons[ex.http_code])
+
+        http_code = ex.http_code
+
+        if http_code >= 500:
+            http_code = 400
+
+        http_code = "%s %s" % (http_code, status_reasons[http_code])
         start_response.assert_called_once_with(http_code, [("Content-Type", "application/json; charset=UTF-8"),
                                                            ("Content-Length", str(content_length))])
 

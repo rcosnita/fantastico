@@ -16,7 +16,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.middleware.exceptions_middleware
 '''
-from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2InvalidClientError, \
+    OAuth2Error
 from fantastico.settings import SettingsFacade
 from webob.response import Response
 import json
@@ -48,6 +49,21 @@ class OAuth2ExceptionsMiddleware(object):
                     "error_uri": self._get_error_uri(ex.error_code)}
 
             http_code = ex.http_code
+        except OAuth2InvalidClientError as ex:
+            body = {"error": "invalid_client",
+                    "error_description": str(ex),
+                    "error_uri": self._get_error_uri(ex.error_code)}
+
+            http_code = ex.http_code
+        except OAuth2Error as ex:
+            body = {"error": "server_error",
+                    "error_description": str(ex),
+                    "error_uri": self._get_error_uri(ex.error_code)}
+
+            if ex.http_code >= 500:
+                http_code = 400
+            else:
+                http_code = ex.http_code
 
         response = self._build_response(environ, body, http_code)
 

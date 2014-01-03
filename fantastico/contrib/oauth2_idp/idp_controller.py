@@ -75,7 +75,11 @@ class IdpController(BaseController):
             token = self._generate_token(user.user_id, tokens_service)
 
             encrypted_str = tokens_service.encrypt(token, token.client_id)
-            return_url += "?login_token=%s" % encrypted_str
+
+            if return_url.find("?") == -1:
+                return_url += "?login_token=%s" % encrypted_str
+            else:
+                return_url += "&login_token=%s" % encrypted_str
 
             return request.redirect(return_url)
         except OAuth2Error:
