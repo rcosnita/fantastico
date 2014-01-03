@@ -38,3 +38,11 @@ SELECT '11111111-1111-1111-1111-111111111111', 'Fantastico OAuth2 IDP',
 	   False
 FROM dual
 WHERE '11111111-1111-1111-1111-111111111111' NOT IN (SELECT client_id FROM oauth2_clients WHERE client_id = '11111111-1111-1111-1111-111111111111');
+
+INSERT INTO oauth2_client_returnurls (client_id, return_url)
+SELECT '11111111-1111-1111-1111-111111111111', '/oauth/authorize'
+FROM dual
+WHERE NOT EXISTS(SELECT 1 
+				 FROM oauth2_client_returnurls 
+				 WHERE client_id = '11111111-1111-1111-1111-111111111111' AND
+					   return_url = '/oauth/authorize');

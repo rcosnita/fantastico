@@ -55,6 +55,31 @@ class ModelFilterCompound(ModelFilterAbstract):
 
         return self._operation(*[model_filter.get_expression() for model_filter in self._model_filters])
 
+    def __eq__(self, obj):
+        '''This method is overriden in order to correctly evaluate equality of two compound model filters.'''
+
+        if type(self) != type(obj):
+            return False
+
+        if len(obj.model_filters) != len(self.model_filters):
+            return False
+
+        for idx in range(0, len(self.model_filters)):
+            if self.model_filters[idx] != obj.model_filters[idx]:
+                return False
+
+        return True
+
+    def __hash__(self):
+        '''This method generates a hash code for compound model filters.'''
+
+        result = hash(self.model_filters[0])
+
+        for idx in range(1, len(self.model_filters)):
+            result ^= hash(self.model_filters[idx])
+
+        return result
+
 class ModelFilterAnd(ModelFilterCompound):
     '''This class provides a compound filter that allows **and** conditions against models. Below you can find a simple example:
 

@@ -18,7 +18,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.contrib.oauth2_idp.models.users import User
+from fantastico.mvc.models.model_filter import ModelFilter
+from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2Error
+from fantastico.oauth2.models.return_urls import ClientReturnUrl
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
@@ -129,7 +132,6 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                     password="12345",
                     person_id=1)
         user.user_id = 123
-        user.session = Mock()
 
         creation_time, expiration_time = self._mock_creationexpiration_time()
 
@@ -140,7 +142,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "expiration_time": expiration_time})
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
-            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
 
         response = self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls,
                                                      user_repo_cls=user_repo_cls)
@@ -155,7 +157,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         user_repo.load_by_username.assert_called_once_with(user.username)
         self._hasher.hash_password.assert_called_once_with(user.password, DictionaryObject({"salt": user.user_id}))
 
-        tokens_service_cls.assert_called_once_with(user.session)
+        tokens_service_cls.assert_called_once_with(clienturl_facade.session)
         tokens_service.generate.assert_called_once_with({"client_id": self._IDP_CLIENTID,
                                                          "user_id": user.user_id,
                                                          "expires_in": self._EXPIRES_IN}, TokenGeneratorFactory.LOGIN_TOKEN)
@@ -183,6 +185,37 @@ class IdpControllerTests(FantasticoUnitTestsCase):
 
         self._test_authenticate_missing_param(user, None, "return_url")
 
+    def test_authenticate_invalid_returnurl(self):
+        '''This test case ensures an exception is raised when the return url query parameter is not accepted by idp.'''
+
+        creation_time, expiration_time = self._mock_creationexpiration_time()
+
+        user = User(username="john.doe@gmail.com", password="12345")
+        user.session = Mock()
+
+        return_url = "/test/url?state=xyz"
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
+
+        clienturl_facade.get_records_paged = Mock(return_value=[])
+
+        with self.assertRaises(OAuth2MissingQueryParamError):
+            self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
+
+        return_url = return_url[:return_url.find("?")]
+        clienturl_facade.get_records_paged.assert_called_once_with(
+                                    start_record=0, end_record=1,
+                                    filter_expr=ModelFilterAnd(
+                                                    ModelFilter(ClientReturnUrl.client_id, self._IDP_CLIENTID, ModelFilter.EQ),
+                                                    ModelFilter(ClientReturnUrl.return_url, return_url, ModelFilter.EQ)))
+
     def _test_authenticate_missing_param(self, user, return_url, param_name):
         '''This method provides a template test case for checking missing required query parameters tests.'''
 
@@ -195,7 +228,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "expiration_time": expiration_time})
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
-            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
 
         with self.assertRaises(OAuth2MissingQueryParamError) as ctx:
             self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
@@ -219,7 +252,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "expiration_time": expiration_time})
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
-            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
 
         user_repo.load_by_username = Mock(return_value=None)
 
@@ -245,7 +278,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "expiration_time": expiration_time})
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
-            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
 
         with self.assertRaises(OAuth2AuthenticationError):
             self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
@@ -283,7 +316,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "expiration_time": expiration_time})
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
-            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
 
         user_repo.load_by_username = Mock(side_effect=ex)
 
@@ -322,7 +355,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "expiration_time": expiration_time})
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
-            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
 
         self._hasher.hash_password = Mock(side_effect=ex)
 
@@ -361,7 +394,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "expiration_time": expiration_time})
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
-            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
 
         tokens_service.generate = Mock(side_effect=ex)
 
@@ -400,21 +433,37 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "expiration_time": expiration_time})
 
         request, user_repo_cls, user_repo, tokens_service_cls, \
-            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+            tokens_service, clienturl_facade = self._mock_authenticate_dependencies(token, user, return_url)
 
         tokens_service.encrypt = Mock(side_effect=ex)
 
         self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
 
+    def test_authenticate_unsupportedreturn_url(self):
+        '''This test case ensures return url value is defined in the list of supported return urls accepted by Fantastico
+        OAuth2 IDP.'''
+
     def _mock_authenticate_dependencies(self, token, user, return_url):
         '''This method mocks authenticate dependencies and returns them as a tuple object.'''
+
+        if return_url:
+            return_url_base = return_url
+
+            if return_url_base.find("?") > -1:
+                return_url_base = return_url_base[:return_url_base.find("?")]
+
+        clienturl_facade = Mock()
+
+        if return_url:
+            clienturl_facade.get_records_paged = Mock(return_value=[return_url_base])
+        clienturl_facade.session = Mock()
 
         request = Mock()
         request.params = {"username": user.username,
                           "password": user.password,
                           "return_url": return_url}
         request.models = Mock()
-        request.models.User = user
+        request.models.ClientReturnUrl = clienturl_facade
         request.redirect = lambda destination: RedirectResponse(destination)
 
         user_repo = Mock()
@@ -429,7 +478,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         tokens_service.generate = Mock(return_value=token)
         tokens_service.encrypt = Mock(return_value="123")
 
-        return (request, user_repo_cls, user_repo, tokens_service_cls, tokens_service)
+        return (request, user_repo_cls, user_repo, tokens_service_cls, tokens_service, clienturl_facade)
 
     def _mock_creationexpiration_time(self):
         '''This method calculates creation and expiration time values.'''

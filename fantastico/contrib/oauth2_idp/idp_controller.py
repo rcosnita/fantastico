@@ -20,7 +20,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.contrib.oauth2_idp.models.user_repository import UserRepository
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from fantastico.mvc.models.model_filter import ModelFilter
+from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2Error
+from fantastico.oauth2.models.return_urls import ClientReturnUrl
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.oauth2.tokens_service import TokensService
@@ -56,7 +59,7 @@ class IdpController(BaseController):
         return Response(content)
 
     @Controller(url="^/oauth/idp/login$", method="POST",
-                models={"User": "fantastico.contrib.oauth2_idp.models.users.User"})
+                models={"ClientReturnUrl": "fantastico.oauth2.models.return_urls.ClientReturnUrl"})
     def authenticate(self, request, tokens_service_cls=TokensService, user_repo_cls=UserRepository):
         '''This method receives a request to authenticate a user. It validates the username and password against a list of
         registered users.'''
@@ -65,7 +68,10 @@ class IdpController(BaseController):
         password = self._validate_missing_param(request, "password")
         return_url = self._validate_missing_param(request, "return_url")
 
-        db_conn = request.models.User.session
+        clienturls_facade = request.models.ClientReturnUrl
+        self._validate_return_url(clienturls_facade, return_url)
+
+        db_conn = clienturls_facade.session
 
         try:
             user_repo = user_repo_cls(db_conn)
@@ -86,6 +92,23 @@ class IdpController(BaseController):
             raise
         except Exception as ex:
             raise OAuth2AuthenticationError("Unexpected error occured: %s" % str(ex))
+
+    def _validate_return_url(self, clienturls_facade, return_url):
+        '''This test case checks the existence of return url in the list of supported return urls for idp.'''
+
+        qmark_pos = return_url.find("?")
+
+        if qmark_pos > -1:
+            return_url = return_url[:qmark_pos]
+
+        client_urls = clienturls_facade.get_records_paged(
+                                    start_record=0, end_record=1,
+                                    filter_expr=ModelFilterAnd(
+                                                    ModelFilter(ClientReturnUrl.client_id, self._idp_client_id, ModelFilter.EQ),
+                                                    ModelFilter(ClientReturnUrl.return_url, return_url, ModelFilter.EQ)))
+
+        if len(client_urls) != 1:
+            raise OAuth2MissingQueryParamError("return_url")
 
     def _validate_user(self, username, password, user_repo):
         '''This method validates the given username and password against the record found in database. If no user is found or

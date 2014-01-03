@@ -50,3 +50,12 @@ CREATE TABLE IF NOT EXISTS oauth2_clients(
 	PRIMARY KEY(client_id),
 	CONSTRAINT unq_clients_name UNIQUE(name)
 );
+
+CREATE TABLE IF NOT EXISTS oauth2_client_returnurls(
+	url_id INTEGER NOT NULL AUTO_INCREMENT,
+	client_id VARCHAR(36) NOT NULL,
+	return_url VARCHAR(255) NOT NULL,
+	PRIMARY KEY(url_id),
+	CONSTRAINT unq_clientreturnurls_clienturl UNIQUE(client_id, return_url),
+	CONSTRAINT fk_clientreturnurls_client FOREIGN KEY(client_id) REFERENCES oauth2_clients(client_id)
+);
