@@ -51,7 +51,7 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
 
         self._test_exception_form(ex,
                                   error="invalid_request",
-                                  description="username query parameter is mandatory.",
+                                  description=urllib.parse.quote("username query parameter is mandatory."),
                                   uri=self._calculate_expected_uri(ex.error_code),
                                   return_url=return_url)
 
@@ -64,11 +64,11 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
         return_url = "/example/cb"
 
         error = "invalid_request"
-        description = "username query parameter is mandatory."
-        uri = self._calculate_expected_uri(ex.error_code)
+        description = urllib.parse.quote("username query parameter is mandatory.")
+        uri = urllib.parse.quote(self._calculate_expected_uri(ex.error_code))
 
         expected_url = "%s#error=%s&error_description=%s&error_uri=%s" % \
-                            (return_url, error, description, urllib.parse.quote(uri))
+                            (return_url, error, description, uri)
 
 
         self._test_exception_form(ex,
@@ -97,7 +97,7 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
 
         self._test_exception_form(ex,
                                   error="access_denied",
-                                  description=str(ex),
+                                  description=urllib.parse.quote(str(ex)),
                                   uri=self._calculate_expected_uri(ex.error_code),
                                   return_url="/example/cb#triplex=abcd")
 
@@ -120,7 +120,7 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
 
         self._test_exception_form(ex,
                                   error="invalid_client",
-                                  description=str(ex),
+                                  description=urllib.parse.quote(str(ex)),
                                   uri=self._calculate_expected_uri(ex.error_code),
                                   return_url="/example/cb#triplex=abcd")
 
@@ -143,7 +143,7 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
 
         self._test_exception_form(ex,
                                   error="server_error",
-                                  description=str(ex),
+                                  description=urllib.parse.quote(str(ex)),
                                   uri=self._calculate_expected_uri(ex.error_code),
                                   return_url="/example/cb#triplex=abcd")
 

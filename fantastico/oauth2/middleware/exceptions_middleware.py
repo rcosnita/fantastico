@@ -108,7 +108,8 @@ class OAuth2ExceptionsMiddleware(object):
         else:
             return_url += "#"
 
-        return_url += "error=%s&error_description=%s&error_uri=%s" % (body.get("error"), body.get("error_description"),
-                                                                       urllib.parse.quote(body.get("error_uri")))
+        return_url += "error=%s&error_description=%s&error_uri=%s" % (body.get("error"),
+                                                                      urllib.parse.quote(body.get("error_description")),
+                                                                      urllib.parse.quote(body.get("error_uri")))
 
         return RedirectResponse(destination=return_url)
