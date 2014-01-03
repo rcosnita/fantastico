@@ -114,8 +114,6 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
     def test_generate_client_revoked(self):
         '''This test case ensures a token can not be generated for a client which is revoked.'''
 
-        from fantastico.oauth2.models.return_urls import ClientReturnUrl # pylint: disable=W0611
-
         client_id = str(uuid.uuid4())
 
         token_desc = {"client_id": client_id,
@@ -135,8 +133,6 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
     def test_generate_client_notfound(self):
         '''This test case ensures an exception is raised if the client specified in descriptor is not found.'''
 
-        from fantastico.oauth2.models.return_urls import ClientReturnUrl # pylint: disable=W0611
-
         client_id = str(uuid.uuid4())
 
         token_desc = {"client_id": client_id,
@@ -153,8 +149,6 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
 
     def test_generate_client_invalidscopes(self):
         '''This test case ensures an exception is raised if the client is not allowed to used requested scopes.'''
-
-        from fantastico.oauth2.models.return_urls import ClientReturnUrl # pylint: disable=W0611
 
         client_id = str(uuid.uuid4())
 

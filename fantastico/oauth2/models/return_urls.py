@@ -29,7 +29,7 @@ class ClientReturnUrl(BASEMODEL):
 
     url_id = Column("url_id", Integer, primary_key=True, autoincrement=True)
     client_id = Column("client_id", String(32), ForeignKey("oauth2_clients.client_id"))
-    client = relationship(Client, primaryjoin=client_id == Client.client_id)
+    client = relationship(Client, primaryjoin=client_id == Client.client_id, backref="return_urls")
     return_url = Column("return_url", String(255), nullable=False)
 
     def __init__(self, client_id=None, return_url=None):

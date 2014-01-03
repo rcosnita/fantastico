@@ -40,7 +40,6 @@ class Client(BASEMODEL):
     token_key = Column("token_key", String(256), nullable=False)
     revoked = Column("revoked", Boolean, nullable=False)
 
-    return_urls = relationship("ClientReturnUrl")
     scopes = relationship(Scope, secondary="oauth2_client_scopes")
 
     def __init__(self, client_id=None, name=None, description=None, grant_types=None, token_iv=None, token_key=None,

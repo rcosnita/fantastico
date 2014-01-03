@@ -32,8 +32,6 @@ class ClientRepositoryTests(FantasticoUnitTestsCase):
     def init(self):
         '''This method is invoked automatically in order to set common dependencies for all test cases.'''
 
-        from fantastico.oauth2.models.return_urls import ClientReturnUrl
-
         self._client_facade = Mock()
         model_facade_cls = Mock(return_value=self._client_facade)
 

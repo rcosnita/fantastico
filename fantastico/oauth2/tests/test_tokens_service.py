@@ -18,7 +18,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.oauth2.exceptions import OAuth2Error, OAuth2InvalidTokenTypeError, OAuth2InvalidClientError
 from fantastico.oauth2.models.clients import Client
-from fantastico.oauth2.models.return_urls import ClientReturnUrl
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.tokens_service import TokensService
 from fantastico.tests.base_case import FantasticoUnitTestsCase

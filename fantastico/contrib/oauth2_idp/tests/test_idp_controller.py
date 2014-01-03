@@ -107,8 +107,6 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         '''This test case ensures a correct login token is generated during authentication phase. It also checks for correct
         redirect response.'''
 
-        from fantastico.oauth2.models.return_urls import ClientReturnUrl
-
         user = User(username="john.doe@gmail.com",
                     password="12345",
                     person_id=1)
