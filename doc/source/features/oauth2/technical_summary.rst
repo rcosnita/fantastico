@@ -111,3 +111,6 @@ Concrete exceptions
 
 .. autoclass:: fantastico.oauth2.exceptions.OAuth2TokenEncryptionError
    :members:
+   
+.. autoclass:: fantastico.oauth2.exceptions.OAuth2AuthenticationError
+   :members:

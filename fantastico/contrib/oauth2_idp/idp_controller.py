@@ -20,7 +20,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.contrib.oauth2_idp.models.user_repository import UserRepository
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
-from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2Error
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.oauth2.tokens_service import TokensService
@@ -61,33 +61,40 @@ class IdpController(BaseController):
         '''This method receives a request to authenticate a user. It validates the username and password against a list of
         registered users.'''
 
-        username = request.params.get("username")
-        password = request.params.get("password")
-        return_url = request.params.get("return_url")
+        username = self._validate_missing_param(request, "username")
+        password = self._validate_missing_param(request, "password")
+        return_url = self._validate_missing_param(request, "return_url")
 
         db_conn = request.models.User.session
 
-        user_repo = user_repo_cls(db_conn)
-        user = self._validate_user(username, password, user_repo)
+        try:
+            user_repo = user_repo_cls(db_conn)
+            user = self._validate_user(username, password, user_repo)
 
-        tokens_service = tokens_service_cls(db_conn)
-        token = self._generate_token(user.user_id, tokens_service)
+            tokens_service = tokens_service_cls(db_conn)
+            token = self._generate_token(user.user_id, tokens_service)
 
-        encrypted_str = tokens_service.encrypt(token, token.client_id)
-        return_url += "?login_token=%s" % encrypted_str
+            encrypted_str = tokens_service.encrypt(token, token.client_id)
+            return_url += "?login_token=%s" % encrypted_str
 
-        return request.redirect(return_url)
+            return request.redirect(return_url)
+        except OAuth2Error:
+            raise
+        except Exception as ex:
+            raise OAuth2AuthenticationError("Unexpected error occured: %s" % str(ex))
 
     def _validate_user(self, username, password, user_repo):
         '''This method validates the given username and password against the record found in database. If no user is found or
         password does not match an exception is raised.'''
 
         user = user_repo.load_by_username(username)
+        if not user:
+            raise OAuth2AuthenticationError("Username or password do not match.")
 
         password_hash = self._passwords_hasher.hash_password(password, DictionaryObject({"salt": user.user_id}))
 
         if password_hash != user.password:
-            raise Exception("Invalid user.")
+            raise OAuth2AuthenticationError("Username or password do not match.")
 
         return user
 
@@ -99,3 +106,13 @@ class IdpController(BaseController):
                       "expires_in": self._idp_expires_in}
 
         return tokens_service.generate(token_desc, TokenGeneratorFactory.LOGIN_TOKEN)
+
+    def _validate_missing_param(self, request, param_name):
+        '''This method ensures a param is found into the given request. If it is not found a concrete exception is raised.'''
+
+        param = request.params.get(param_name)
+
+        if not param:
+            raise OAuth2MissingQueryParamError(param_name)
+
+        return param

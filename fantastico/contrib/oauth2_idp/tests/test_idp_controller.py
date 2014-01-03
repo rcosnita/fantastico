@@ -18,7 +18,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.contrib.oauth2_idp.models.users import User
-from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2Error, \
+    OAuth2TokenEncryptionError
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
@@ -113,8 +114,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         user.user_id = 123
         user.session = Mock()
 
-        creation_time = int(time.time())
-        expiration_time = creation_time + self._EXPIRES_IN
+        creation_time, expiration_time = self._mock_creationexpiration_time()
 
         token = Token({"client_id": self._IDP_CLIENTID,
                        "type": "login",
@@ -122,27 +122,11 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                        "creation_time": creation_time,
                        "expiration_time": expiration_time})
 
-        request = Mock()
-        request.params = {"username": user.username,
-                          "password": user.password,
-                          "return_url": "http://expected-url.com/cb"}
-        request.models = Mock()
-        request.models.User = user
-        request.redirect = lambda destination: RedirectResponse(destination)
-
+        return_url = "http://expected-url.com/cb"
         expected_url = "http://expected-url.com/cb?login_token=123"
 
-        user_repo = Mock()
-        user_repo.load_by_username = Mock(return_value=user)
-        user_repo_cls = Mock(return_value=user_repo)
-
-        self._hasher.hash_password = Mock(return_value=user.password)
-
-        tokens_service = Mock()
-        tokens_service_cls = Mock(return_value=tokens_service)
-
-        tokens_service.generate = Mock(return_value=token)
-        tokens_service.encrypt = Mock(return_value="123")
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
 
         response = self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls,
                                                      user_repo_cls=user_repo_cls)
@@ -162,3 +146,280 @@ class IdpControllerTests(FantasticoUnitTestsCase):
                                                          "user_id": user.user_id,
                                                          "expires_in": self._EXPIRES_IN}, TokenGeneratorFactory.LOGIN_TOKEN)
         tokens_service.encrypt.assert_called_once_with(token, token.client_id)
+
+    def test_authenticate_missing_username(self):
+        '''This test case ensures an exception is raised when the username is not posted.'''
+
+        user = User()
+
+        self._test_authenticate_missing_param(user, None, "username")
+
+    def test_authenticate_missing_password(self):
+        '''This test case ensures an exception is raised when the password is not posted.'''
+
+        user = User(username="john.doe")
+
+        self._test_authenticate_missing_param(user, None, "password")
+
+    def test_authenticate_missing_returnurl(self):
+        '''This test case ensures an exception is raised when the return url query parameter is missing.'''
+
+        user = User(username="john.doe", password="12345")
+
+        self._test_authenticate_missing_param(user, None, "return_url")
+
+    def _test_authenticate_missing_param(self, user, return_url, param_name):
+        '''This method provides a template test case for checking missing required query parameters tests.'''
+
+        creation_time, expiration_time = self._mock_creationexpiration_time()
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+
+        with self.assertRaises(OAuth2MissingQueryParamError) as ctx:
+            self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
+
+        self.assertEqual(param_name, ctx.exception.param_name)
+
+    def test_authenticate_usernotfound(self):
+        '''This test case ensures a concrete exception is raised when user is not found.'''
+
+        creation_time, expiration_time = self._mock_creationexpiration_time()
+
+        user = User(username="john.doe@gmail.com", password="123456")
+        user.session = Mock()
+
+        return_url = "/test/url"
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+
+        user_repo.load_by_username = Mock(return_value=None)
+
+        with self.assertRaises(OAuth2AuthenticationError):
+            self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
+
+        user_repo.load_by_username.assert_called_once_with(user.username)
+
+    def test_authenticate_different_passwords(self):
+        '''This test case ensures an exception is raised when passwords do not match.'''
+
+        creation_time, expiration_time = self._mock_creationexpiration_time()
+
+        user = User(username="john.doe@gmail.com", password="123456")
+        user.session = Mock()
+
+        return_url = "/test/url"
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+
+        with self.assertRaises(OAuth2AuthenticationError):
+            self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
+
+    def test_authenticate_user_repoex(self):
+        '''This test case ensures unexpected exceptions raised by user repo are casted to concrete oauth2 exceptions.'''
+
+        with self.assertRaises(OAuth2AuthenticationError):
+            self._test_authenticate_userrepo_ex(Exception("Unexpected error."))
+
+    def test_authenticate_user_repooauth2ex(self):
+        '''This test case ensures oauth2 exceptions raised by user repo are bubbled up.'''
+
+        ex = OAuth2Error(error_code= -1)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._test_authenticate_userrepo_ex(ex)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def _test_authenticate_userrepo_ex(self, ex):
+        '''This method provides a template test case which allows user_repo dependencies to throw various exceptions.'''
+
+        creation_time, expiration_time = self._mock_creationexpiration_time()
+
+        user = User(username="john.doe@gmail.com", password="12345")
+        user.session = Mock()
+
+        return_url = "/test/url"
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+
+        user_repo.load_by_username = Mock(side_effect=ex)
+
+        self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
+
+    def test_authenticate_passwordhasher_ex(self):
+        '''This test case ensures unexpected exceptions raised by password hasher are casted to concrete oauth2 exceptions.'''
+
+        with self.assertRaises(OAuth2AuthenticationError):
+            self._test_authenticate_passwordhasher_ex(Exception("Unexpected exception."))
+
+    def test_authenticate_passwordhasher_oauth2ex(self):
+        '''This test case ensures oauth2 exceptions raised by password hasher are bubbled up.'''
+
+        ex = OAuth2Error(error_code= -1)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._test_authenticate_passwordhasher_ex(ex)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def _test_authenticate_passwordhasher_ex(self, ex):
+        '''This method provides a template test case which allows password hasher to raise various exceptions.'''
+
+        creation_time, expiration_time = self._mock_creationexpiration_time()
+
+        user = User(username="john.doe@gmail.com", password="12345")
+        user.session = Mock()
+
+        return_url = "/test/url"
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+
+        self._hasher.hash_password = Mock(side_effect=ex)
+
+        self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
+
+    def test_authenticate_generatetoken_ex(self):
+        '''This test case ensures unexpected exceptions raised during token generation are casted to concrete oauth2 exceptions.'''
+
+        with self.assertRaises(OAuth2Error):
+            self._test_authenticate_generatetoken_ex(Exception("Unexpected exception."))
+
+    def test_authenticate_generatetoken_oauth2ex(self):
+        '''This test case ensures oauth2 exceptions raised during token generation are bubbled up.'''
+
+        ex = OAuth2Error(error_code= -1)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._test_authenticate_generatetoken_ex(ex)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def _test_authenticate_generatetoken_ex(self, ex):
+        '''This method provides a template test case which allows tokens service generate method to raise various exceptions.'''
+
+        creation_time, expiration_time = self._mock_creationexpiration_time()
+
+        user = User(username="john.doe@gmail.com", password="12345")
+        user.session = Mock()
+
+        return_url = "/test/url"
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+
+        tokens_service.generate = Mock(side_effect=ex)
+
+        self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
+
+    def test_authenticate_encrypt_ex(self):
+        '''This test case ensures unexpected exceptions raised during token encryption are casted to oauth2 exceptions.'''
+
+        with self.assertRaises(OAuth2AuthenticationError):
+            self._test_authenticate_encrypt_ex(Exception("Unexpected exception."))
+
+    def test_authenticate_encrypt_oauth2ex(self):
+        '''This test case ensures oauth2 exceptions raised during token encryption are bubbled up.'''
+
+        ex = OAuth2Error(error_code= -1)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._test_authenticate_encrypt_ex(ex)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def _test_authenticate_encrypt_ex(self, ex):
+        '''This method provides a template test case which allows token encrypt method to raise various exceptions.'''
+
+        creation_time, expiration_time = self._mock_creationexpiration_time()
+
+        user = User(username="john.doe@gmail.com", password="12345")
+        user.session = Mock()
+
+        return_url = "/test/url"
+
+        token = Token({"client_id": self._IDP_CLIENTID,
+                       "type": "login",
+                       "user_id": user.user_id,
+                       "creation_time": creation_time,
+                       "expiration_time": expiration_time})
+
+        request, user_repo_cls, user_repo, tokens_service_cls, \
+            tokens_service = self._mock_authenticate_dependencies(token, user, return_url)
+
+        tokens_service.encrypt = Mock(side_effect=ex)
+
+        self._idp_controller.authenticate(request, tokens_service_cls=tokens_service_cls, user_repo_cls=user_repo_cls)
+
+    def _mock_authenticate_dependencies(self, token, user, return_url):
+        '''This method mocks authenticate dependencies and returns them as a tuple object.'''
+
+        request = Mock()
+        request.params = {"username": user.username,
+                          "password": user.password,
+                          "return_url": return_url}
+        request.models = Mock()
+        request.models.User = user
+        request.redirect = lambda destination: RedirectResponse(destination)
+
+        user_repo = Mock()
+        user_repo.load_by_username = Mock(return_value=user)
+        user_repo_cls = Mock(return_value=user_repo)
+
+        self._hasher.hash_password = Mock(return_value="12345")
+
+        tokens_service = Mock()
+        tokens_service_cls = Mock(return_value=tokens_service)
+
+        tokens_service.generate = Mock(return_value=token)
+        tokens_service.encrypt = Mock(return_value="123")
+
+        return (request, user_repo_cls, user_repo, tokens_service_cls, tokens_service)
+
+    def _mock_creationexpiration_time(self):
+        '''This method calculates creation and expiration time values.'''
+
+        creation_time = int(time.time())
+        expiration_time = creation_time + self._EXPIRES_IN
+
+        return creation_time, expiration_time

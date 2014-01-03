@@ -120,3 +120,11 @@ class OAuth2MissingQueryParamError(OAuth2Error):
         msg = "Query parameter %s is missing." % param_name
 
         super(OAuth2MissingQueryParamError, self).__init__(self.ERROR_CODE, msg)
+
+class OAuth2AuthenticationError(OAuth2Error):
+    '''This class provides a concrete exception used to notify a failed authentication attempt from an OAuth2 IDP.'''
+
+    ERROR_CODE = 12100
+
+    def __init__(self, msg, http_code=401):
+        super(OAuth2AuthenticationError, self).__init__(self.ERROR_CODE, msg, http_code)
