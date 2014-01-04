@@ -17,12 +17,43 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.implicit_grant_handler
 '''
 from fantastico.oauth2.grant_handler import GrantHandler
+from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
+from fantastico.routing_engine.custom_responses import RedirectResponse
 
 class ImplicitGrantHandler(GrantHandler):
     '''This class provides the implementation for implicit grant type described in
     `RFC6749 <http://tools.ietf.org/html/rfc6749>`_. Implementation of this grant type is fully compliant with OAuth2 spec.'''
 
+    def __init__(self, tokens_service, settings_facade):
+        super(ImplicitGrantHandler, self).__init__(tokens_service, settings_facade)
+
+        self._expires_in = self._settings_facade.get("access_token_validity")
+
     def handle_grant(self, request):
         '''This method provides the algorithm for implementing implicit grant type handler. Internally it will use TokensService
         in order to generate a new access token.'''
 
+        client_id = self._validate_missing_param(request, "client_id")
+        redirect_uri = self._validate_missing_param(request, "redirect_uri")
+        state = self._validate_missing_param(request, "state")
+        scopes = self._validate_missing_param(request, "scope")
+
+        encrypted_login = request.params.get("login_token")
+
+        login_token = self._tokens_service.decrypt(encrypted_login)
+
+        access_token = self._tokens_service.generate({"client_id": client_id,
+                                                      "user_id": login_token.user_id,
+                                                      "scopes": scopes,
+                                                      "expires_in": self._expires_in}, TokenGeneratorFactory.ACCESS_TOKEN)
+
+        encrypted_access = self._tokens_service.encrypt(access_token, client_id)
+
+        prefix_sign = "#"
+        if redirect_uri.find("#") > -1:
+            prefix_sign = "&"
+
+        return_url = "%s%saccess_token=%s&state=%s&token_type=%s&expires_in=%s" % \
+                        (redirect_uri, prefix_sign, encrypted_access, state, access_token.type, self._expires_in)
+
+        return RedirectResponse(return_url)

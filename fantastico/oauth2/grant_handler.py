@@ -18,16 +18,27 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from abc import abstractmethod, ABCMeta # pylint: disable=W0611
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 
 class GrantHandler(object, metaclass=ABCMeta):
     '''This class provides the abstract contract of a handler. Each concrete handler must implement this contract in order to
     correctly extend Fantastico OAuth2 supported handlers.'''
 
-    def __init__(self, tokens_service):
+    def __init__(self, tokens_service, settings_facade):
         self._tokens_service = tokens_service
+        self._settings_facade = settings_facade
 
     @abstractmethod
     def handle_grant(self, request):
         '''This method must be overriden in order to correctly implement grant logic. It receives the current http request
         and return a http response.'''
 
+    def _validate_missing_param(self, request, param_name):
+        '''This method tries to obtain the param_name from the current request. If parameter is not found an
+        oauth2 exception is raised.'''
+
+        value = request.params.get(param_name)
+        if not value:
+            raise OAuth2MissingQueryParamError(param_name)
+
+        return value

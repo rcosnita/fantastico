@@ -28,6 +28,7 @@ class GrantHandlerFactoryTests(FantasticoUnitTestsCase):
 
     _tokens_service = None
     _tokens_service_cls = None
+    _settings_facade = None
     _factory = None
 
     def init(self):
@@ -35,7 +36,14 @@ class GrantHandlerFactoryTests(FantasticoUnitTestsCase):
 
         self._tokens_service = Mock()
         self._tokens_service_cls = Mock(return_value=self._tokens_service)
-        self._factory = GrantHandlerFactory(tokens_service_cls=self._tokens_service_cls)
+
+        self._settings_facade = Mock()
+
+        settings_facade_cls = Mock(return_value=self._settings_facade)
+
+        self._factory = GrantHandlerFactory(tokens_service_cls=self._tokens_service_cls, settings_facade_cls=settings_facade_cls)
+
+        settings_facade_cls.assert_called_once_with()
 
     def test_get_handler_ok(self):
         '''This test case ensures a correct instance of a grant handler can be obtained using the factory.'''

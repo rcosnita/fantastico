@@ -16,9 +16,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.grant_handler_factory
 '''
+from fantastico.oauth2.exceptions import OAuth2UnsupportedGrantError
 from fantastico.oauth2.implicit_grant_handler import ImplicitGrantHandler
 from fantastico.oauth2.tokens_service import TokensService
-from fantastico.oauth2.exceptions import OAuth2UnsupportedGrantError
+from fantastico.settings import SettingsFacade
 
 class GrantHandlerFactory(object):
     '''This class provides a factory which can be used to obtain a concrete grant handler. Below you can find a code snippet for
@@ -30,9 +31,10 @@ class GrantHandlerFactory(object):
 
     IMPLICIT_GRANT = "token"
 
-    def __init__(self, tokens_service_cls=TokensService):
+    def __init__(self, tokens_service_cls=TokensService, settings_facade_cls=SettingsFacade):
         self._supported_grants = {self.IMPLICIT_GRANT: ImplicitGrantHandler}
         self._tokens_service_cls = tokens_service_cls
+        self._settings_facade = settings_facade_cls()
 
     def get_handler(self, handler_type, db_conn):
         '''This method builds a grant handler which matches requested handler_type.
@@ -52,4 +54,4 @@ class GrantHandlerFactory(object):
 
         tokens_service = self._tokens_service_cls(db_conn)
 
-        return handler_cls(tokens_service)
+        return handler_cls(tokens_service, self._settings_facade)

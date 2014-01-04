@@ -158,6 +158,13 @@ class BasicSettings(object):
                 "template": "login.html",
                 "expires_in": 1209600}
 
+    @property
+    def access_token_validity(self):
+        '''This property defines the validity of an access token in seconds. By default, this property is set
+        to 1h = 3600 seconds.'''
+
+        return 3600
+
 class AwsStageSettings(BasicSettings):
     '''This class provides the configuration profile for Aws Stage environment integration.'''
 
