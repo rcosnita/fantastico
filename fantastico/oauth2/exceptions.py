@@ -122,10 +122,14 @@ class OAuth2MissingQueryParamError(OAuth2Error):
         super(OAuth2MissingQueryParamError, self).__init__(self.ERROR_CODE, msg)
 
 class OAuth2UnsupportedGrantError(OAuth2Error):
+    '''This class provides a concrete exception for notifying unsupport oauth2 grant type.'''
+
     ERROR_CODE = 12080
 
     @property
     def handler_type(self):
+        '''This property holds the unsupported grant type name.'''
+
         return self._handler_type
 
     def __init__(self, handler_type):
