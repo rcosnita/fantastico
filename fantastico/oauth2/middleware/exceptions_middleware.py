@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.middleware.exceptions_middleware
 '''
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2InvalidClientError, \
-    OAuth2Error
+    OAuth2Error, OAuth2UnsupportedGrantError
 from fantastico.routing_engine.custom_responses import RedirectResponse
 from fantastico.settings import SettingsFacade
 from webob.response import Response
@@ -57,6 +57,10 @@ class OAuth2ExceptionsMiddleware(object):
                     "error_uri": self._get_error_uri(ex.error_code)}
 
             http_code = ex.http_code
+        except OAuth2UnsupportedGrantError as ex:
+            body = {"error": "unsupported_grant_type",
+                    "error_description": str(ex),
+                    "error_uri": self._get_error_uri(ex.error_code)}
         except OAuth2Error as ex:
             body = {"error": "server_error",
                     "error_description": str(ex),

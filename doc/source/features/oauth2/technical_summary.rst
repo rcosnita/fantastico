@@ -85,6 +85,18 @@ AES implementation:
 .. autoclass:: fantastico.oauth2.token_encryption.PublicTokenEncryption
    :members:
 
+Suported grant types
+--------------------
+
+.. autoclass:: fantastico.oauth2.grant_handler.GrantHandler
+   :members:
+
+.. autoclass:: fantastico.oauth2.grant_handler_factory.GrantHandlerFactory
+   :members:
+
+.. autoclass:: fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler
+   :members:
+
 Concrete exceptions
 -------------------
 
@@ -110,6 +122,9 @@ Concrete exceptions
    :members:
 
 .. autoclass:: fantastico.oauth2.exceptions.OAuth2TokenEncryptionError
+   :members:
+
+.. autoclass:: fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError
    :members:
    
 .. autoclass:: fantastico.oauth2.exceptions.OAuth2AuthenticationError

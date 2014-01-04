@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.middleware.tests.test_exceptions_middleware
 '''
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2InvalidClientError, \
-    OAuth2Error
+    OAuth2Error, OAuth2UnsupportedGrantError
 from fantastico.oauth2.middleware.exceptions_middleware import OAuth2ExceptionsMiddleware
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
@@ -120,6 +120,30 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
 
         self._test_exception_form(ex,
                                   error="invalid_client",
+                                  description=urllib.parse.quote(str(ex)),
+                                  uri=self._calculate_expected_uri(ex.error_code),
+                                  return_url="/example/cb#triplex=abcd")
+
+    def test_unsupported_grant_json(self):
+        '''This test case ensures oauth unsupported grant exceptions are correctly converted to unsupported_grant_type
+        redirect.'''
+
+        ex = OAuth2UnsupportedGrantError("cool grant")
+
+        self._test_exception_form(ex,
+                                  error="unsupported_grant_type",
+                                  description=urllib.parse.quote(str(ex)),
+                                  uri=self._calculate_expected_uri(ex.error_code),
+                                  return_url="/example/cb#triplex=abcd")
+
+    def test_unsupported_grant_form(self):
+        '''This test case ensures oauth2 unsupported grant exceptions are correctly converted to url encoded redirect
+        when necessary.'''
+
+        ex = OAuth2UnsupportedGrantError("cool grant")
+
+        self._test_exception_form(ex,
+                                  error="unsupported_grant_type",
                                   description=urllib.parse.quote(str(ex)),
                                   uri=self._calculate_expected_uri(ex.error_code),
                                   return_url="/example/cb#triplex=abcd")

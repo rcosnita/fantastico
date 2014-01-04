@@ -121,10 +121,24 @@ class OAuth2MissingQueryParamError(OAuth2Error):
 
         super(OAuth2MissingQueryParamError, self).__init__(self.ERROR_CODE, msg)
 
+class OAuth2UnsupportedGrantError(OAuth2Error):
+    ERROR_CODE = 12080
+
+    @property
+    def handler_type(self):
+        return self._handler_type
+
+    def __init__(self, handler_type):
+        self._handler_type = handler_type
+
+        msg = "Handler type %s is not supported" % handler_type
+
+        super(OAuth2UnsupportedGrantError, self).__init__(self.ERROR_CODE, msg)
+
 class OAuth2AuthenticationError(OAuth2Error):
     '''This class provides a concrete exception used to notify a failed authentication attempt from an OAuth2 IDP.'''
 
-    ERROR_CODE = 12100
+    ERROR_CODE = 12200
 
     def __init__(self, msg, http_code=401):
         super(OAuth2AuthenticationError, self).__init__(self.ERROR_CODE, msg, http_code)
