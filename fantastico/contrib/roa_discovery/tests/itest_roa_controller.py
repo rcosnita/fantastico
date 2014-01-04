@@ -22,7 +22,7 @@ from urllib.request import Request
 import copy
 import http
 import json
-import threading
+import time
 import urllib
 
 class RoaControllerIntegration(DevServerIntegration):
@@ -281,16 +281,21 @@ class RoaControllerIntegration(DevServerIntegration):
         results = {"response": None}
 
         def retrieve_item(server):
-            request = Request(self._get_server_base_url(server, endpoint))
+            http_conn = HTTPConnection(server.hostname, server.port)
+            http_conn.connect()
 
-            results["response"] = urllib.request.urlopen(request)
+            http_conn.request("GET", endpoint, headers={"Content-Type": "application/json"})
+
+            results["response"] = http_conn.getresponse()
+
+            http_conn.close()
 
         def assert_item(server):
             response = results["response"]
 
             self.assertIsNotNone(response)
             self.assertEqual(200, response.status)
-            self.assertEqual("application/json; charset=UTF-8", response.info()["Content-Type"])
+            self.assertEqual("application/json; charset=UTF-8", response.headers["Content-Type"])
 
             body = response.read()
 

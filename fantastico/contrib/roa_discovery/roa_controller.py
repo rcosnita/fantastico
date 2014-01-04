@@ -37,8 +37,8 @@ class RoaController(BaseController):
 
     SETTINGS_FACADE = SettingsFacade()
     ROA_API = roa_helper.normalize_absolute_roa_uri(SETTINGS_FACADE.get("roa_api"))
-    BASE_URL = r"%s/(?P<version>\d{1,}\.\d{1,})(?P<resource_url>/.*?)" % ROA_API
-    BASE_LATEST_URL = "%s/latest(?P<resource_url>/.*?)" % ROA_API
+    BASE_URL = r"%s/(?P<version>\d{1,}\.\d{1,})(?P<resource_url>/[^/]*?)" % ROA_API
+    BASE_LATEST_URL = "%s/latest(?P<resource_url>/[^/]*?)" % ROA_API
 
     OFFSET_DEFAULT = 0
     LIMIT_DEFAULT = 100
