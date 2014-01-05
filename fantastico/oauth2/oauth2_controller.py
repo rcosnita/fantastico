@@ -18,6 +18,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import ControllerProvider, Controller
+from fantastico.oauth2.grant_handler_factory import GrantHandlerFactory
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 
 @ControllerProvider()
 class OAuth2Controller(BaseController):
@@ -27,15 +29,36 @@ class OAuth2Controller(BaseController):
     .. image:: /images/oauth2/oauth2_overview.png
     '''
 
-    @Controller(url="^/oauth/authorize$")
+    def __init__(self, settings_facade, handler_factory_cls=GrantHandlerFactory):
+        super(OAuth2Controller, self).__init__(settings_facade)
+
+        self._handler_factory = handler_factory_cls()
+
+    @Controller(url="^/oauth/authorize$",
+                models={"Client": "fantastico.oauth2.models.clients.Client"})
     def handle_authorize(self, request):
         '''This method provides the /authorize endpoint compliant with `RFC6479 <http://tools.ietf.org/html/rfc6749>`_ standard.
         Authorize endpoint provides an API for obtaining an access token or an authorization code dependin on the grant type.'''
 
-        raise NotImplementedError()
+        db_conn = request.models.Client.session
+        grant_type = self._validate_missing_param(request, "response_type")
+
+        grant_handler = self._handler_factory.get_handler(grant_type, db_conn)
+
+        return grant_handler.handle_grant(request)
 
     def handle_token(self, request):
         '''This method provides the /token endpoint compliant with `RFC6479 <http://tools.ietf.org/html/rfc6749>`_.
         Token endpoint provides an API for obtaining access tokens.'''
 
         raise NotImplementedError()
+
+    def _validate_missing_param(self, request, param_name):
+        '''This method tries to obtain param_name from the given request. If the parameter is not found an oauth2 exception is
+        raised.'''
+
+        value = request.params.get(param_name)
+        if not value:
+            raise OAuth2MissingQueryParamError(param_name)
+
+        return value

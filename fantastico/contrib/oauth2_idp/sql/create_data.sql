@@ -46,3 +46,16 @@ WHERE NOT EXISTS(SELECT 1
 				 FROM oauth2_client_returnurls 
 				 WHERE client_id = '11111111-1111-1111-1111-111111111111' AND
 					   return_url = '/oauth/authorize');
+
+INSERT INTO oauth2_scopes(scope_id, `name`)
+SELECT 1, 'scope1'
+FROM dual
+WHERE NOT EXISTS(SELECT 1 FROM oauth2_scopes WHERE scope_id = 1);
+
+INSERT INTO oauth2_client_scopes(client_id, scope_id)
+SELECT '11111111-1111-1111-1111-111111111111', 1
+FROM dual
+WHERE NOT EXISTS(SELECT 1 
+				 FROM oauth2_client_scopes
+				 WHERE client_id = '11111111-1111-1111-1111-111111111111' AND
+					   scope_id = 1);

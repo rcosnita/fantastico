@@ -92,6 +92,8 @@ class TokenGenerator(object, metaclass=ABCMeta):
         '''This method ensures requested scopes list are allowed for the client (client_scopes). If this is not true a concrete
         OAuth2 exception is raised.'''
 
+        client_scopes = [scope.name for scope in client_scopes]
+
         for scope in requested_scopes:
             if scope not in client_scopes:
                 raise OAuth2InvalidScopesError("Requested scopes %s are not allowed." % requested_scopes)

@@ -59,3 +59,19 @@ CREATE TABLE IF NOT EXISTS oauth2_client_returnurls(
 	CONSTRAINT unq_clientreturnurls_clienturl UNIQUE(client_id, return_url),
 	CONSTRAINT fk_clientreturnurls_client FOREIGN KEY(client_id) REFERENCES oauth2_clients(client_id)
 );
+
+CREATE TABLE IF NOT EXISTS oauth2_scopes(
+	scope_id INTEGER AUTO_INCREMENT NOT NULL,
+	`name` VARCHAR(100) NOT NULL,
+	description LONGTEXT,
+	PRIMARY KEY(scope_id),
+	CONSTRAINT unq_oauth2scopes_name UNIQUE(`name`)
+);
+
+CREATE TABLE IF NOT EXISTS oauth2_client_scopes(
+	client_id VARCHAR(36) NOT NULL,
+	scope_id INTEGER NOT NULL,
+	PRIMARY KEY(client_id, scope_id),
+	CONSTRAINT fk_oauth2clientscopes_client FOREIGN KEY(client_id) REFERENCES oauth2_clients(client_id),
+	CONSTRAINT fk_oauth2clientscopes_scope FOREIGN KEY(scope_id) REFERENCES oauth2_scopes(scope_id)
+);

@@ -21,6 +21,7 @@ from fantastico.oauth2.accesstoken_generator import AccessTokenGenerator
 from fantastico.oauth2.exceptions import OAuth2InvalidTokenDescriptorError, OAuth2InvalidClientError, OAuth2InvalidScopesError, \
     OAuth2InvalidTokenTypeError, OAuth2TokenExpiredError
 from fantastico.oauth2.models.clients import Client
+from fantastico.oauth2.models.scopes import Scope
 from fantastico.oauth2.token import Token
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
@@ -57,7 +58,7 @@ class AccessTokenGeneratorTests(FantasticoUnitTestsCase):
                       "expires_in": 3600}
 
         expected_client = Client()
-        expected_client.scopes = token_desc["scopes"].split(" ")
+        expected_client.scopes = [Scope(name=scope) for scope in token_desc["scopes"].split(" ")]
 
         self._mock_client_search(expected_client)
 
