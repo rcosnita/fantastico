@@ -58,6 +58,14 @@ class BasicSettings(object):
                 "fantastico.roa.resources_registrator.ResourcesRegistrator"]
 
     @property
+    def mvc_additional_paths(self):
+        '''This property defines additional packages which must be scanned for controllers. You can use this in order to specify
+        custom mvc controllers location which are not found in custom components. For instance, OAuth2 controller resides
+        in core packages of Fantastico.'''
+
+        return ["fantastico.oauth2"]
+
+    @property
     def dev_server_port(self):
         '''This property holds development server port. By default this is 12000.'''
 

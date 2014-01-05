@@ -20,6 +20,9 @@ from fantastico.mvc.controller_decorators import Controller
 from fantastico.routing_engine.routing_loaders import RouteLoader
 from fantastico.settings import SettingsFacade
 from fantastico.utils import instantiator
+import importlib
+import inspect
+import os
 
 class ControllerRouteLoader(RouteLoader):
     '''This class provides a route loader that is capable of scanning the disk and registering only the routes that
@@ -27,16 +30,37 @@ class ControllerRouteLoader(RouteLoader):
     it ignores tests subfolder as well as test_* / itest_* modules.'''
 
     @property
-    def scanned_folder(self):
+    def scanned_folders(self):
         '''This property returns the currently scanned folder from where mvc routes are collected.'''
 
-        return self._scanned_folder
+        return self._folders
 
     def __init__(self, settings_facade=SettingsFacade, scanned_folder=None, ignore_prefix=None):
         super(ControllerRouteLoader, self).__init__(settings_facade)
 
         self._scanned_folder = scanned_folder or instantiator.get_class_abslocation(self._settings_facade.get_config().__class__)
+
+        custom_packages = self._settings_facade.get("mvc_additional_paths")
+
+        folders = self._get_custom_packages_filelist(custom_packages)
+        folders.add(self._scanned_folder)
+
+        self._folders = list(folders)
+
         self._ignore_prefix = ignore_prefix or ["__init__", "__pycache__", "tests", "test", "itest"]
+
+    def _get_custom_packages_filelist(self, custom_packages):
+        '''This method returns all filenames where the given custom packages reside on disk.'''
+
+        folders = set()
+
+        for custom_package in custom_packages:
+            package = importlib.import_module(custom_package)
+            filename = inspect.getabsfile(package)
+
+            folders.add(filename[:filename.rfind(os.path.sep)])
+
+        return folders
 
     def _is_ignored_file(self, filename):
         '''This method determines if a filename is ignored or not.'''
@@ -58,7 +82,8 @@ class ControllerRouteLoader(RouteLoader):
         '''This method is used for loading all routes that are mapped through
         :py:class:`fantastico.mvc.controller_decorators.Controller` decorator.'''
 
-        self._register_from_folder(self._scanned_folder)
+        for scanned_folder in self._folders:
+            self._register_from_folder(scanned_folder)
 
         controller_routes = Controller.get_registered_routes()
         routes = {}

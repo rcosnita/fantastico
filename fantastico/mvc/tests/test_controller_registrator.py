@@ -39,9 +39,12 @@ class ControllerRouteLoaderTests(FantasticoUnitTestsCase):
 
         self._settings_facade = Mock()
         self._settings_facade.get_config = Mock(return_value=settings.BasicSettings())
+        self._settings_facade.get = Mock(return_value=["fantastico.locale"])
 
         self._route_loader = ControllerRouteLoader(settings_facade=self._settings_facade,
                                                    scanned_folder=instantiator.get_class_abslocation(ControllerRouteLoaderTests))
+
+        self._settings_facade.get.assert_called_once_with("mvc_additional_paths")
 
     def test_route_loading_ok(self):
         '''Test case that ensure routes mapped through Controller decorator are registered ok. It also makes sure
@@ -67,10 +70,11 @@ class ControllerRouteLoaderTests(FantasticoUnitTestsCase):
 
         settings_facade = Mock()
         settings_facade.get_config = Mock(return_value=TestProfileNotUsed())
+        settings_facade.get = Mock(return_value=[])
 
         loader = ControllerRouteLoader(settings_facade)
 
-        self.assertTrue(loader.scanned_folder.endswith("fantastico/mvc/tests/"))
+        self.assertTrue(loader.scanned_folders[0].endswith("fantastico/mvc/tests/"))
 
 class TestProfileNotUsed(settings.BasicSettings):
     '''This profile is used for testing purposes only.'''

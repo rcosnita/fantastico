@@ -36,9 +36,14 @@ class ImplicitGrantHandler(GrantHandler):
         client_id = self._validate_missing_param(request, "client_id")
         redirect_uri = self._validate_missing_param(request, "redirect_uri")
         state = self._validate_missing_param(request, "state")
+
+        error_redirect = self._get_error_redirect(request, redirect_uri, state)
+        if error_redirect:
+            return error_redirect
+
         scopes = self._validate_missing_param(request, "scope")
 
-        encrypted_login = request.params.get("login_token")
+        encrypted_login = self._validate_missing_param(request, "login_token")
 
         login_token = self._tokens_service.decrypt(encrypted_login)
 
@@ -57,3 +62,19 @@ class ImplicitGrantHandler(GrantHandler):
                         (redirect_uri, prefix_sign, encrypted_access, state, access_token.type, self._expires_in)
 
         return RedirectResponse(return_url)
+
+    def _get_error_redirect(self, request, redirect_uri, state):
+        '''This method builds an error redirect response if the request has query parameters indicating error case.'''
+
+        error = request.params.get("error")
+
+        if not error:
+            return
+
+        error_description = request.params.get("error_description", "")
+        error_uri = request.params.get("error_uri")
+
+        redirect_uri = "%s#error=%s&error_description=%s&error_uri=%s&state=%s" % \
+                                (redirect_uri, error, error_description, error_uri, state)
+
+        return RedirectResponse(redirect_uri)

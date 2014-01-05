@@ -106,6 +106,37 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
 
         self.assertEqual("scope", ctx.exception.param_name)
 
+    def test_handle_missing_login(self):
+        '''This test case ensures a missing query parameter exception is raisend when login_token is missing.'''
+
+        with self.assertRaises(OAuth2MissingQueryParamError) as ctx:
+            self._test_handle_missingparam(client_id="sample", redirect_uri="/example/cb", state="xyz", scope="scope1",
+                                           encrypted_login=None)
+
+        self.assertEqual("login_token", ctx.exception.param_name)
+
+    def test_error_redirect(self):
+        '''This test case ensures a redirect response is sent if the implicit handler request contains error query parameter.
+        This case occurs only when authentication fails.'''
+
+        request = Mock()
+        request.params = {"client_id": "sample-app",
+                          "redirect_uri": "/sample/cb",
+                          "state": "xyz",
+                          "error": "access_denied",
+                          "error_description": "Simple error.",
+                          "error_uri": "/sample/uri/122.html"}
+
+        response = self._handler.handle_grant(request)
+
+        self.assertIsInstance(response, RedirectResponse)
+
+        expected_redirect = "%s#error=%s&error_description=%s&error_uri=%s&state=%s" % \
+                                (request.params["redirect_uri"], request.params["error"], request.params["error_description"],
+                                 request.params["error_uri"], request.params["state"])
+
+        self.assertEqual(expected_redirect, response.headers["Location"])
+
     def _test_handle_missingparam(self, client_id=None, redirect_uri=None, scope=None, state=None, encrypted_login=None):
         '''This method provides a template for testing handle_grant method from implicit provider when mandatory query
         parameters are missing.'''

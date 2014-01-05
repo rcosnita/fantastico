@@ -17,7 +17,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.oauth2_controller
 '''
 from fantastico.mvc.base_controller import BaseController
+from fantastico.mvc.controller_decorators import ControllerProvider, Controller
 
+@ControllerProvider()
 class OAuth2Controller(BaseController):
     '''This class provides the routes specified in OAUTH 2 specification (`RFC6479 <http://tools.ietf.org/html/rfc6749>`_). A
     technical overview of OAuth2 implementation in Fantastico is presented below:
@@ -25,6 +27,7 @@ class OAuth2Controller(BaseController):
     .. image:: /images/oauth2/oauth2_overview.png
     '''
 
+    @Controller(url="^/oauth/authorize$")
     def handle_authorize(self, request):
         '''This method provides the /authorize endpoint compliant with `RFC6479 <http://tools.ietf.org/html/rfc6749>`_ standard.
         Authorize endpoint provides an API for obtaining an access token or an authorization code dependin on the grant type.'''

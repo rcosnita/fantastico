@@ -18,6 +18,7 @@ Versions
    * Add security support for endpoints / controllers.
    * Add Fantastico identity provider.
    * Fix a bug in ROA APIs (on some python 3 compilers get_item operations were failing with resource not found).
+   * Added support for MVC Controllers into custom packages (not residing in components root folder).
 
 * v0.5.1 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 
