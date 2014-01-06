@@ -22,7 +22,6 @@ from fantastico.routing_engine.custom_responses import RedirectResponse
 from fantastico.settings import SettingsFacade
 from webob.response import Response
 import json
-import urllib
 from fantastico.exception_formatters import ExceptionFormattersFactory
 
 class OAuth2ExceptionsMiddleware(object):

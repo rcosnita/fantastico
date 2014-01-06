@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import ControllerProvider, Controller
 from fantastico.oauth2.grant_handler_factory import GrantHandlerFactory
-from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2UnsupportedGrantError
 
 @ControllerProvider()
 class OAuth2Controller(BaseController):
@@ -51,7 +51,9 @@ class OAuth2Controller(BaseController):
         '''This method provides the /token endpoint compliant with `RFC6479 <http://tools.ietf.org/html/rfc6749>`_.
         Token endpoint provides an API for obtaining access tokens.'''
 
-        raise NotImplementedError()
+        grant_type = request.params.get("grant_type", "refresh_token")
+
+        raise OAuth2UnsupportedGrantError(grant_type)
 
     def _validate_param(self, request, param_name):
         '''This method tries to obtain param_name from the given request. If the parameter is not found an oauth2 exception is
