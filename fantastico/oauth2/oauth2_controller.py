@@ -41,7 +41,7 @@ class OAuth2Controller(BaseController):
         Authorize endpoint provides an API for obtaining an access token or an authorization code dependin on the grant type.'''
 
         db_conn = request.models.Client.session
-        grant_type = self._validate_missing_param(request, "response_type")
+        grant_type = self._validate_param(request, "response_type")
 
         grant_handler = self._handler_factory.get_handler(grant_type, db_conn)
 
@@ -53,7 +53,7 @@ class OAuth2Controller(BaseController):
 
         raise NotImplementedError()
 
-    def _validate_missing_param(self, request, param_name):
+    def _validate_param(self, request, param_name):
         '''This method tries to obtain param_name from the given request. If the parameter is not found an oauth2 exception is
         raised.'''
 
