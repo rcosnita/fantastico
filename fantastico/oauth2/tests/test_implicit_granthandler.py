@@ -16,13 +16,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.tests.test_implicit_granthandler
 '''
+from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from fantastico.oauth2.implicit_grant_handler import ImplicitGrantHandler
 from fantastico.oauth2.token import Token
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.routing_engine.custom_responses import RedirectResponse
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
-from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
+from webob.request import Request
+import urllib
 
 class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for implicit grant handler.'''
@@ -32,19 +34,35 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
     _settings_facade = None
     _tokens_service = None
     _handler = None
+    _oauth2_idp = None
 
     def init(self):
         '''This method is invoked automatically in order to setup common dependencies for all test cases.'''
+
+        self._oauth2_idp = {"client_id": "11111111-1111-1111-1111-111111111111",
+                            "template": "/components/frontend/views/custom_login.html",
+                            "expires_in": 1209600,
+                            "idp_index": "/oauth/idp/ui/login"}
 
         self._tokens_service = Mock()
         self._tokens_service.validate = Mock(return_value=None)
 
         self._settings_facade = Mock()
-        self._settings_facade.get = Mock(return_value=self._EXPIRES_IN)
+
+        self._settings_facade.get = self._mock_get_setting
 
         self._handler = ImplicitGrantHandler(self._tokens_service, self._settings_facade)
 
-        self._settings_facade.get.assert_called_once_with("access_token_validity")
+    def _mock_get_setting(self, setting_name):
+        '''This method mocks settings_facade get for expected settings used in implicit grant handler.'''
+
+        if setting_name == "access_token_validity":
+            return self._EXPIRES_IN
+
+        if setting_name == "oauth2_idp":
+            return self._oauth2_idp
+
+        raise ValueError("Setting %s must not be accessed." % setting_name)
 
     def test_handle_ok(self):
         '''This test case ensures implicit grant works as expected when all prerequisites are fulfilled.'''
@@ -109,13 +127,18 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
         self.assertEqual("scope", ctx.exception.param_name)
 
     def test_handle_missing_login(self):
-        '''This test case ensures a missing query parameter exception is raisend when login_token is missing.'''
+        '''This test case ensures a redirect response to idp is received if login_token query parameter is missing.'''
 
-        with self.assertRaises(OAuth2MissingQueryParamError) as ctx:
-            self._test_handle_missingparam(client_id="sample", redirect_uri="/example/cb", state="xyz", scope="scope1",
-                                           encrypted_login=None)
+        request_url = "/oauth/authorize?response_type=token&state=xyz&error_format=hash&client_id=11111111-1111-1111-1111-111111111111&scope=scope1&redirect_uri=%2Fexample%2Fcb"
+        expected_url = "%s?redirect_uri=%s" % (self._oauth2_idp["idp_index"], urllib.parse.quote(request_url))
 
-        self.assertEqual("login_token", ctx.exception.param_name)
+        request = Request.blank(request_url)
+        request.redirect = lambda url: RedirectResponse(url)
+
+        response = self._handler.handle_grant(request)
+
+        self.assertIsInstance(response, RedirectResponse)
+        self.assertEqual(expected_url, response.headers["Location"])
 
     def test_error_redirect(self):
         '''This test case ensures a redirect response is sent if the implicit handler request contains error query parameter.
@@ -134,8 +157,10 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
         self.assertIsInstance(response, RedirectResponse)
 
         expected_redirect = "%s#error=%s&error_description=%s&error_uri=%s&state=%s" % \
-                                (request.params["redirect_uri"], request.params["error"], request.params["error_description"],
-                                 request.params["error_uri"], request.params["state"])
+                                (request.params["redirect_uri"],
+                                 request.params["error"],
+                                 urllib.parse.quote(request.params["error_description"]),
+                                 urllib.parse.quote(request.params["error_uri"]), request.params["state"])
 
         self.assertEqual(expected_redirect, response.headers["Location"])
 

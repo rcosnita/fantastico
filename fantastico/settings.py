@@ -155,16 +155,21 @@ class BasicSettings(object):
         (e.g /components/frontend/views/custom_login.html). Moreover, you can also specify the login token validity period (in
         seconds). It is recommended to set a high value (e.g 2 weeks).
 
+        Additionaly, you can control default idp index page. Usually, Fantastico OAuth2 identity provider login page should be
+        good enough.
+
         .. code-block:: python
 
             return {"client_id": "11111111-1111-1111-1111-111111111111",
                     "template": "/components/frontend/views/custom_login.html",
-                    "expires_in": 1209600}
+                    "expires_in": 1209600,
+                    "idp_index": "/oauth/idp/ui/login"}
         '''
 
         return {"client_id": "11111111-1111-1111-1111-111111111111",
                 "template": "login.html",
-                "expires_in": 1209600}
+                "expires_in": 1209600,
+                "idp_index": "/oauth/idp/ui/login"}
 
     @property
     def access_token_validity(self):

@@ -40,10 +40,19 @@ class GrantHandlerFactoryTests(FantasticoUnitTestsCase):
         self._settings_facade = Mock()
 
         settings_facade_cls = Mock(return_value=self._settings_facade)
+        self._settings_facade.get = self._mock_get_setting
 
         self._factory = GrantHandlerFactory(tokens_service_cls=self._tokens_service_cls, settings_facade_cls=settings_facade_cls)
 
         settings_facade_cls.assert_called_once_with()
+
+    def _mock_get_setting(self, setting_name):
+        '''This method mocks get from settings_facade instance.'''
+
+        if setting_name == "oauth2_idp":
+            return {"idp_index": "/oauth/idp/ui/login"}
+
+        return Mock()
 
     def test_get_handler_ok(self):
         '''This test case ensures a correct instance of a grant handler can be obtained using the factory.'''
