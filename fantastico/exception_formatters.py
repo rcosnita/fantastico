@@ -104,6 +104,32 @@ class HashUrlEncodedExceptionFormatter(ExceptionFormatter):
     def format_ex(self, ex_desc, ctx=None):
         '''This method transform ex_desc into a hash section of redirect_uri specified in ctx.'''
 
+        ex_desc = ex_desc or {}
+        ctx = ctx or {}
+
+        redirect_uri = ctx["redirect_uri"]
+
+        if len(ex_desc.keys()) == 0:
+            return redirect_uri
+
+        keys = sorted(ex_desc.keys())
+
+        result = [redirect_uri]
+
+        if redirect_uri.rfind("#") == -1:
+            result.append("#")
+        else:
+            result.append("&")
+
+        for key in keys:
+            result.append("%s=%s" % (key, ex_desc[key]))
+            result.append("&")
+
+        if result[-1] == "&":
+            del result[-1]
+
+        return "".join(result)
+
 class DummyExceptionFormatter(ExceptionFormatter):
     '''This class provides a very simple formatter which transform exception descriptors into empty strings. You should not use
     this formatter directly. It is designed for internal Fantastico usage.'''
