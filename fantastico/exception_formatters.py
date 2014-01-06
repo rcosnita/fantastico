@@ -1,0 +1,75 @@
+'''
+Copyright 2013 Cosnita Radu Viorel
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+.. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
+.. py:module:: fantastico.exception_formatters
+'''
+
+from abc import ABCMeta, abstractmethod # pylint: disable=W0611
+
+class ExceptionFormatter(object, metaclass=ABCMeta):
+    '''This class provides a contract for formatting dictionary representation of an exception to a string.'''
+
+    @abstractmethod
+    def format_ex(self, ex_desc, ctx=None):
+        '''This method must be overriden in order to transform the given exception descriptor into a suitable string.
+
+        :param ex_desc: A dictionary containing various information about exception.
+        :type ex_desc: dict
+        :param ctx: A dictionary containing additional information useful for transforming exception descriptor to string.
+        :type ctx: dict
+        :returns: A string representation of the given dictionary.
+        :rtype: string'''
+
+class ExceptionFormattersFactory(object):
+    '''This class provides the factory for obtaining a suitable exception formatter for a requested exception format.'''
+
+    JSON = "json_ex_formatter"
+    FORM_URL_ENCODED = "form_url_encoded_formatter"
+
+    def __init__(self):
+        self._supported_formatters = {self.JSON: JsonExceptionFormatter,
+                                      self.FORM_URL_ENCODED: FormUrlEncodedExceptionFormatter}
+
+    def get_formatter(self, ex_format):
+        '''This method returns a concrete exception formatter matching ex_format. If no suitable formatter is found an exception
+        is raised.'''
+
+        formatter_cls = self._supported_formatters.get(ex_format, DummyExceptionFormatter)
+
+        return formatter_cls()
+
+class JsonExceptionFormatter(ExceptionFormatter):
+    '''This class provides a concrete formatter which transforms exception descriptors into json strings.'''
+
+    def format_ex(self, ex_desc):
+        '''This method converts the given dictionary into a json representation.'''
+
+        raise NotImplementedError()
+
+class FormUrlEncodedExceptionFormatter(ExceptionFormatter):
+    '''This class provides a formatter which tranform exception descriptors into url encoded query parameters.'''
+
+    def format_ex(self, ex_desc, ctx=None):
+        '''This method transform the given exception descriptor into query parameters appended to redirect uri from ctx.'''
+
+class DummyExceptionFormatter(ExceptionFormatter):
+    '''This class provides a very simple formatter which transform exception descriptors into empty strings. You should not use
+    this formatter directly. It is designed for internal Fantastico usage.'''
+
+    def format_ex(self, ex_desc, ctx=None):
+        '''This method simply returns an empty string.'''
+
+        return ""
