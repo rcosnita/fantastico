@@ -35,6 +35,8 @@ import urllib
 class IdpController(BaseController):
     '''This class provides the controller for all routes / APIs provided by oauth2 default Fantastico Identity Provider.'''
 
+    REDIRECT_PARAM = "redirect_uri"
+
     def __init__(self, settings_facade, passwords_hasher_cls=PasswordsHasherFactory):
         super(IdpController, self).__init__(settings_facade)
 
@@ -48,13 +50,13 @@ class IdpController(BaseController):
     def show_login(self, request):
         '''This method returns the login page for Fantastico.'''
 
-        return_url = request.params.get("return_url")
+        return_url = request.params.get(self.REDIRECT_PARAM)
 
         if not return_url or len(return_url.strip()) == 0:
-            raise OAuth2MissingQueryParamError("return_url")
+            raise OAuth2MissingQueryParamError(self.REDIRECT_PARAM)
 
         content = self.load_template(self._login_tpl,
-                                     {"return_url": urllib.parse.quote(return_url)})
+                                     {self.REDIRECT_PARAM: urllib.parse.quote(return_url)})
 
         return Response(content)
 
@@ -66,7 +68,7 @@ class IdpController(BaseController):
 
         username = self._validate_missing_param(request, "username")
         password = self._validate_missing_param(request, "password")
-        return_url = self._validate_missing_param(request, "return_url")
+        return_url = self._validate_missing_param(request, self.REDIRECT_PARAM)
 
         clienturls_facade = request.models.ClientReturnUrl
         self._validate_return_url(clienturls_facade, return_url)

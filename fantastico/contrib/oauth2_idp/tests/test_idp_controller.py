@@ -73,8 +73,10 @@ class IdpControllerTests(FantasticoUnitTestsCase):
     def test_show_login_ok(self):
         '''This test case ensures login screen is displayed correctly when all required parameters are passed.'''
 
+        redirect_param_name = self._idp_controller.REDIRECT_PARAM
+
         request = Mock()
-        request.params = {"return_url": "/simple/test"}
+        request.params = {redirect_param_name: "/simple/test"}
 
         self._idp_controller.load_template = Mock(return_value="cool result")
 
@@ -90,7 +92,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
 
         self._idp_controller.load_template.assert_called_once_with(
                                         self._TPL_LOGIN,
-                                        {"return_url": urllib.parse.quote(request.params["return_url"])})
+                                        {redirect_param_name: urllib.parse.quote(request.params[redirect_param_name])})
 
     def test_show_login_missingreturn(self):
         '''This test case ensures login screen is not displayed if return_url query parameter is not provided.'''
@@ -99,12 +101,12 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         request.params = {}
 
         for return_url in [None, "", "    "]:
-            request.params["return_url"] = return_url
+            request.params[self._idp_controller.REDIRECT_PARAM] = return_url
 
             with self.assertRaises(OAuth2MissingQueryParamError) as ctx:
                 self._idp_controller.show_login(request)
 
-            self.assertEqual("return_url", ctx.exception.param_name)
+            self.assertEqual(self._idp_controller.REDIRECT_PARAM, ctx.exception.param_name)
 
     def test_authenticate_ok(self):
         '''This test case ensures a correct login token is generated during authentication phase. It also checks for correct
@@ -178,14 +180,14 @@ class IdpControllerTests(FantasticoUnitTestsCase):
 
         self._test_authenticate_missing_param(user, None, "password")
 
-    def test_authenticate_missing_returnurl(self):
+    def test_authenticate_missing_redirecturi(self):
         '''This test case ensures an exception is raised when the return url query parameter is missing.'''
 
         user = User(username="john.doe", password="12345")
 
-        self._test_authenticate_missing_param(user, None, "return_url")
+        self._test_authenticate_missing_param(user, None, self._idp_controller.REDIRECT_PARAM)
 
-    def test_authenticate_invalid_returnurl(self):
+    def test_authenticate_invalid_redirecturi(self):
         '''This test case ensures an exception is raised when the return url query parameter is not accepted by idp.'''
 
         creation_time, expiration_time = self._mock_creationexpiration_time()
@@ -461,7 +463,7 @@ class IdpControllerTests(FantasticoUnitTestsCase):
         request = Mock()
         request.params = {"username": user.username,
                           "password": user.password,
-                          "return_url": return_url}
+                          self._idp_controller.REDIRECT_PARAM: return_url}
         request.models = Mock()
         request.models.ClientReturnUrl = clienturl_facade
         request.redirect = lambda destination: RedirectResponse(destination)
