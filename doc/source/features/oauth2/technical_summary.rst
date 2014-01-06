@@ -16,6 +16,12 @@ Security context
 .. autoclass:: fantastico.oauth2.security_context.SecurityContext
    :members:
 
+Enforcing authorization
+-----------------------
+
+.. autoclass:: fantastico.oauth2.oauth2_decorators.RequiredScopes
+   :members:
+
 Common tokens usage
 -------------------
 
@@ -30,7 +36,7 @@ can be obtained in a secure context.
       @Controller(url="^/users/ui/show-profile$")
       def show_profile(self, request):
          security_ctx = request.context.security
-         user_id = security_ctx.login_token.user_id
+         user_id = security_ctx.access_token.user_id
 
          # use profile endpoint to obtain additional information.
 
@@ -45,7 +51,7 @@ It is common to want to access currently granted scopes for a given request. In 
       @RequiredScopes(scopes=["custom_scope1.read"])
       def handle_request(self, request):
          access_token = request.context.security.access_token
-         scopes = access_token.encrypted.scopes
+         scopes = access_token.scopes
 
          # validate scopes
 

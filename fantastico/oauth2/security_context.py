@@ -35,12 +35,14 @@ class SecurityContext(object):
         '''This property returns the current access token passed to the current http request. Access token is already decoded
         as documented in :doc:`/features/oauth2/tokens_format` (encrypted section).'''
 
-        pass
+        return self._access_token
 
     @property
-    def login_token(self):
-        '''This property returns the current login token passed to the current http request. Login token is already decoded
-        as documented in :doc:`/features/oauth2/tokens_format` (encrypted section).'''
+    def required_scopes(self):
+        '''This property returns the current required scopes for http request. Required scopes are only available at runtime.'''
 
-    def __init__(self):
-        pass
+        return self._required_scopes
+
+    def __init__(self, access_token, required_scopes=None):
+        self._access_token = access_token
+        self._required_scopes = required_scopes

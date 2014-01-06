@@ -185,7 +185,7 @@ class Controller(object):
 
         new_handler.__name__ = orig_fn.__name__
         new_handler.__doc__ = orig_fn.__doc__
-        new_handler.__module = orig_fn.__module__
+        new_handler.__module__ = orig_fn.__module__
         setattr(new_handler, "orig_fn", orig_fn)
 
         self._fn_handler = new_handler
