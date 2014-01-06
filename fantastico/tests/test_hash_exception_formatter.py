@@ -18,6 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.exception_formatters import HashUrlEncodedExceptionFormatter
 from fantastico.tests.base_case import FantasticoUnitTestsCase
+import urllib
 
 class HashUrlEncodedExceptionFormatterTests(FantasticoUnitTestsCase):
     '''This class provides tests suite for HashUrlEncodedExceptionFormatter class.'''
@@ -33,10 +34,10 @@ class HashUrlEncodedExceptionFormatterTests(FantasticoUnitTestsCase):
         '''This test case ensures the correct string is returned when redirect uri does not have query parameters or
         hash section.'''
 
-        ex_desc = {"attr2": "value", "attr1": "sample"}
+        ex_desc = {"attr2": "value", "attr1": "sample cool"}
         ctx = {"redirect_uri": "/example/cb"}
 
-        expected_url = "/example/cb#attr1=sample&attr2=value"
+        expected_url = "/example/cb#attr1=%s&attr2=%s" % (urllib.parse.quote(ex_desc["attr1"]), ex_desc["attr2"])
 
         self.assertEqual(expected_url, self._formatter.format_ex(ex_desc, ctx))
 

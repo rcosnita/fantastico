@@ -40,14 +40,14 @@ class ExceptionFormattersFactoryTests(FantasticoUnitTestsCase):
     def test_get_formatter_urlencoded(self):
         '''This test case ensures an url encoded exception formatter can be built using the factory of formatters.'''
 
-        result = self._factory.get_formatter(ExceptionFormattersFactory.FORM_URL_ENCODED)
+        result = self._factory.get_formatter(ExceptionFormattersFactory.FORM)
 
         self.assertIsInstance(result, FormUrlEncodedExceptionFormatter)
 
     def test_get_formatter_hashencoded(self):
         '''This test case ensures an hash encoded exception formatter can be built using the factory of formatters.'''
 
-        result = self._factory.get_formatter(ExceptionFormattersFactory.HASH_URL_ENCODED)
+        result = self._factory.get_formatter(ExceptionFormattersFactory.HASH)
 
         self.assertIsInstance(result, HashUrlEncodedExceptionFormatter)
 

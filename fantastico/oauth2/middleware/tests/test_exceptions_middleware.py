@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.middleware.tests.test_exceptions_middleware
 '''
+from fantastico.exception_formatters import ExceptionFormattersFactory
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2InvalidClientError, \
     OAuth2Error, OAuth2UnsupportedGrantError
 from fantastico.oauth2.middleware.exceptions_middleware import OAuth2ExceptionsMiddleware
@@ -41,19 +42,6 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
                                     description="username query parameter is mandatory.",
                                     uri=self._calculate_expected_uri(ex.error_code),
                                     body=body)
-
-    def test_invalid_request_form(self):
-        '''This test ensures the correct redirect is done when an exception occurs.'''
-
-        ex = OAuth2MissingQueryParamError("username")
-
-        return_url = "/example/cb#triplex=abcd"
-
-        self._test_exception_form(ex,
-                                  error="invalid_request",
-                                  description=urllib.parse.quote("username query parameter is mandatory."),
-                                  uri=self._calculate_expected_uri(ex.error_code),
-                                  return_url=return_url)
 
     def test_invalid_request_form_nohash(self):
         '''This test ensures that hash part of error redirect is correctly appended when return url does not have an existing
@@ -130,11 +118,12 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
 
         ex = OAuth2UnsupportedGrantError("cool grant")
 
-        self._test_exception_form(ex,
-                                  error="unsupported_grant_type",
-                                  description=urllib.parse.quote(str(ex)),
-                                  uri=self._calculate_expected_uri(ex.error_code),
-                                  return_url="/example/cb#triplex=abcd")
+        body = self._test_exception_json(ex)
+
+        self._assert_error_response(error="unsupported_grant_type",
+                                    description=str(ex),
+                                    uri=self._calculate_expected_uri(ex.error_code),
+                                    body=body)
 
     def test_unsupported_grant_form(self):
         '''This test case ensures oauth2 unsupported grant exceptions are correctly converted to url encoded redirect
@@ -185,6 +174,8 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
     def _assert_error_response(self, error, description, uri, body):
         '''This method assert correct exception format response for the given body.'''
 
+        body = json.loads(body)
+
         self.assertEqual(error, body.get("error"))
         self.assertEqual(description, body.get("error_description"))
         self.assertEqual(uri, body.get("error_uri"))
@@ -198,7 +189,7 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
         '''This method provides a template test case for ensuring invalid request error response is correctly built.'''
 
         request = Mock()
-        request.content_type = "text/plain"
+        request.params = {}
 
         environ = {"fantastico.request": request}
         start_response = Mock()
@@ -233,8 +224,8 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
                             (return_url, error, description, urllib.parse.quote(uri))
 
         request = Mock()
-        request.content_type = "application/x-www-form-urlencoded"
-        request.params = {"return_url": return_url}
+        request.params = {"error_format": ExceptionFormattersFactory.HASH,
+                          "redirect_uri": return_url}
 
         environ = {"fantastico.request": request}
         start_response = Mock()

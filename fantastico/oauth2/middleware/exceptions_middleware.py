@@ -23,15 +23,17 @@ from fantastico.settings import SettingsFacade
 from webob.response import Response
 import json
 import urllib
+from fantastico.exception_formatters import ExceptionFormattersFactory
 
 class OAuth2ExceptionsMiddleware(object):
     '''This class provides the support for dynamically casting OAuth2 errors into concrete error responses. At the moment
     responses are returned only in english and have the format specified in RFC6749. Mainly, at each intercepted OAuth2
     exceptions a json response is returned to the client.'''
 
-    def __init__(self, app, settings_facade_cls=SettingsFacade):
+    def __init__(self, app, settings_facade_cls=SettingsFacade, exceptions_factory_cls=ExceptionFormattersFactory):
         self._app = app
         self._doc_base = settings_facade_cls().get("doc_base")
+        self._exceptions_factory = exceptions_factory_cls()
 
     def __call__(self, environ, start_response):
         body = None
@@ -61,6 +63,8 @@ class OAuth2ExceptionsMiddleware(object):
             body = {"error": "unsupported_grant_type",
                     "error_description": str(ex),
                     "error_uri": self._get_error_uri(ex.error_code)}
+
+            http_code = ex.http_code
         except OAuth2Error as ex:
             body = {"error": "server_error",
                     "error_description": str(ex),
@@ -87,33 +91,14 @@ class OAuth2ExceptionsMiddleware(object):
         '''This method builds transforms the given body into a wsgi response object.'''
 
         curr_request = environ["fantastico.request"]
+        redirect_uri = curr_request.params.get("redirect_uri")
 
-        if curr_request.content_type.find("application/x-www-form-urlencoded") > -1:
-            return self._build_form_response(curr_request, body)
+        ex_format = curr_request.params.get("error_format", ExceptionFormattersFactory.JSON)
+        ex_formatter = self._exceptions_factory.get_formatter(ex_format)
 
-        return self._build_json_response(body, http_code)
+        response = ex_formatter.format_ex(body, ctx={"redirect_uri": redirect_uri})
 
-    def _build_json_response(self, body, http_code):
-        '''This method builds a json response starting from the given body and using the given http_code.'''
+        if ex_format == ExceptionFormattersFactory.JSON:
+            return Response(body=json.dumps(response).encode(), content_type="application/json; charset=UTF-8", status=http_code)
 
-        body = json.dumps(body).encode()
-        response = Response(body=body, content_type="application/json; charset=UTF-8")
-        response.status_code = http_code
-
-        return response
-
-    def _build_form_response(self, request, body):
-        '''This method builds a redirect response for urlencoded form requests.'''
-
-        return_url = request.params.get("return_url")
-
-        if return_url.find("#") > -1:
-            return_url += "&"
-        else:
-            return_url += "#"
-
-        return_url += "error=%s&error_description=%s&error_uri=%s" % (body.get("error"),
-                                                                      urllib.parse.quote(body.get("error_description")),
-                                                                      urllib.parse.quote(body.get("error_uri")))
-
-        return RedirectResponse(destination=return_url)
+        return RedirectResponse(response)

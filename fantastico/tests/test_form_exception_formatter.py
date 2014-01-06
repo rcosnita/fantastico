@@ -16,8 +16,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.tests.test_form_exception_formatter
 '''
-from fantastico.tests.base_case import FantasticoUnitTestsCase
 from fantastico.exception_formatters import FormUrlEncodedExceptionFormatter
+from fantastico.tests.base_case import FantasticoUnitTestsCase
+import urllib
 
 class FormUrlEncodedExceptionFormatterTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for FormUrlEncodedExceptionFormatter.'''
@@ -32,10 +33,11 @@ class FormUrlEncodedExceptionFormatterTests(FantasticoUnitTestsCase):
     def test_format_ex_ok(self):
         '''This test case ensures a given exception descriptor is correctly formatted.'''
 
-        ex_desc = {"attr1": "sample", "attr2": "value"}
+        ex_desc = {"attr1": "sample", "attr2": "value cool"}
         ctx = {"redirect_uri": "/example/cb"}
 
-        expected_response = "%s?attr1=%s&attr2=%s" % (ctx["redirect_uri"], ex_desc["attr1"], ex_desc["attr2"])
+        expected_response = "%s?attr1=%s&attr2=%s" % (ctx["redirect_uri"], ex_desc["attr1"],
+                                                      urllib.parse.quote(ex_desc["attr2"]))
 
         self.assertEqual(expected_response, self._formatter.format_ex(ex_desc, ctx))
 

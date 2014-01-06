@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from abc import ABCMeta, abstractmethod # pylint: disable=W0611
 import json
+import urllib
 
 class ExceptionFormatter(object, metaclass=ABCMeta):
     '''This class provides a contract for formatting dictionary representation of an exception to a string.'''
@@ -38,13 +39,13 @@ class ExceptionFormattersFactory(object):
     '''This class provides the factory for obtaining a suitable exception formatter for a requested exception format.'''
 
     JSON = "json"
-    FORM_URL_ENCODED = "form"
-    HASH_URL_ENCODED = "hash"
+    FORM = "form"
+    HASH = "hash"
 
     def __init__(self):
         self._supported_formatters = {self.JSON: JsonExceptionFormatter,
-                                      self.FORM_URL_ENCODED: FormUrlEncodedExceptionFormatter,
-                                      self.HASH_URL_ENCODED: HashUrlEncodedExceptionFormatter}
+                                      self.FORM: FormUrlEncodedExceptionFormatter,
+                                      self.HASH: HashUrlEncodedExceptionFormatter}
 
     def get_formatter(self, ex_format):
         '''This method returns a concrete exception formatter matching ex_format. If no suitable formatter is found an exception
@@ -87,7 +88,7 @@ class FormUrlEncodedExceptionFormatter(ExceptionFormatter):
             result.append("?")
 
         for key in keys:
-            result.append("%s=%s" % (key, ex_desc[key]))
+            result.append("%s=%s" % (key, urllib.parse.quote(ex_desc[key])))
             result.append("&")
 
         if result[-1] == "&":
@@ -122,7 +123,7 @@ class HashUrlEncodedExceptionFormatter(ExceptionFormatter):
             result.append("&")
 
         for key in keys:
-            result.append("%s=%s" % (key, ex_desc[key]))
+            result.append("%s=%s" % (key, urllib.parse.quote(ex_desc[key])))
             result.append("&")
 
         if result[-1] == "&":
