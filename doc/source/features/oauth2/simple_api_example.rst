@@ -55,32 +55,14 @@ user agent capable of supporting HTTP protocol. Below you can find the http call
 
       .. code-block:: html
 
-         GET - /simple-menus/ui/index?state=abcdsxadsa
+         GET - /authorize?response_type=token&client_id=sample-menus&state=xyz&error_format=hash&redirect_uri=/simple-menus/ui/index&scopes=simple_menus.create%20simple_menus.update%20simple_menus.delete
 
-   #. Fantastico filter detects the route requires permissions (scopes).
-
-      #. It checks to see if user is authenticated or not.
-      #. Unauthenticated user is redirected to Fantastico IDP login page.
-
-         .. code-block:: html
-
-            GET - /oauth/idp/login?client_id=simple-menus&redirect_uri=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
-
-      #. User authenticates successfully.
-
-         .. code-block:: html
-
-            GET - /oauth/authorize?client_id=simple-menus&redirect_uri=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
-
-      #. Authorization server correctly authorizes the client and generates an access token.
-
-         .. code-block:: html
-
-            HTTP/1.1 302 Found
-            Location: /simple-menus/ui/index#access_token=2YotnFZFEjr1zCsicMWpAA&state=abcdsxadsa&token_type=bearer&expires_in=3600
-
+   #. Fantastico /authorize endpoint detects that user is not authenticated and redirects the user agent to login screen.
+   #. If authentication is successful user agent is redirected back to /authorize.
+   #. At this point an access token is generated and user agent is redirected back to simple menus ui index page with an access token in hash.
    #. Menus management application start page stores the access token into the application space (session storage might be used for this).
-      It is recommended to validate received state in order to ensure it corresponds to the initial request.
+      It is recommended to validate received state in order to ensure it corresponds to the initial request state. Application must decide
+      how to generate state and keep it consistent before request and response.
 
 This is it. Using the access token, end user can easily access desired functionality. Moreover, using the access token,
 menus management application can easily invoke apis.

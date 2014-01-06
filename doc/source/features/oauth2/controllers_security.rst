@@ -15,11 +15,11 @@ login screen in order to obtain access:
    class SecuredController(BaseController):
       @Controller(url="/secured-controller/ui/index")
       @RequiredScopes(scopes=["greet.verbose", "greet.read"])
-      @AutoIdpRedirect()
       def say_hello(self, request):
          return "<html><body><h1>Hello world</body></html>"
 
-The order in which decorators are chained is extremely important. Please follow it as presented above.
+The order in which decorators are chained is extremely important becauase **@Controller** injects the request while
+**@RequiredScopes** decorator uses it.
 
 ROA OAUTH2 Security
 -------------------
@@ -47,4 +47,4 @@ For instance, if read is not given any scope then everyone can read **AppSetting
 
 Fantastico will autodiscover endpoints / resources which require scopes and preauthorize every call to them.
 
-The order in which decorators are chained is extremely important. Please follow it as presented above.
+The order in which decorators are chained is extremely important.
