@@ -37,9 +37,9 @@ class ExceptionFormatter(object, metaclass=ABCMeta):
 class ExceptionFormattersFactory(object):
     '''This class provides the factory for obtaining a suitable exception formatter for a requested exception format.'''
 
-    JSON = "json_ex_formatter"
-    FORM_URL_ENCODED = "form_url_encoded_formatter"
-    HASH_URL_ENCODED = "hash_encoded_formatter"
+    JSON = "json"
+    FORM_URL_ENCODED = "form"
+    HASH_URL_ENCODED = "hash"
 
     def __init__(self):
         self._supported_formatters = {self.JSON: JsonExceptionFormatter,
@@ -69,6 +69,33 @@ class FormUrlEncodedExceptionFormatter(ExceptionFormatter):
 
     def format_ex(self, ex_desc, ctx=None):
         '''This method transform the given exception descriptor into query parameters appended to redirect uri from ctx.'''
+
+        ex_desc = ex_desc or {}
+        ctx = ctx or {}
+
+        redirect_uri = ctx["redirect_uri"]
+        keys = sorted(ex_desc.keys())
+
+        hash_pos = redirect_uri.rfind("#")
+
+        if hash_pos == -1:
+            hash_pos = len(redirect_uri)
+
+        result = [redirect_uri[:hash_pos]]
+
+        if result[-1].find("?") == -1:
+            result.append("?")
+
+        for key in keys:
+            result.append("%s=%s" % (key, ex_desc[key]))
+            result.append("&")
+
+        if result[-1] == "&":
+            del result[-1]
+
+        result.append(redirect_uri[hash_pos:])
+
+        return "".join(result)
 
 class HashUrlEncodedExceptionFormatter(ExceptionFormatter):
     '''This class provides a formatter similar to :py:class:`FormUrlEncodedExceptionFormatter` with the only difference that
