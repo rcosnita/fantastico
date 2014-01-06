@@ -58,7 +58,7 @@ class FormUrlEncodedExceptionFormatterTests(FantasticoUnitTestsCase):
         ex_desc = {"attr1": "sample", "attr2": "value"}
         ctx = {"redirect_uri": "/example/cb?existing_param=q1"}
 
-        expected_response = "%sattr1=%s&attr2=%s" % (ctx["redirect_uri"], ex_desc["attr1"], ex_desc["attr2"])
+        expected_response = "%s&attr1=%s&attr2=%s" % (ctx["redirect_uri"], ex_desc["attr1"], ex_desc["attr2"])
 
         self.assertEqual(expected_response, self._formatter.format_ex(ex_desc, ctx))
 

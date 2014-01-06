@@ -64,13 +64,13 @@ user agent capable of supporting HTTP protocol. Below you can find the http call
 
          .. code-block:: html
 
-            GET - /oauth/idp/login?client_id=simple-menus&return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
+            GET - /oauth/idp/login?client_id=simple-menus&redirect_uri=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
 
       #. User authenticates successfully.
 
          .. code-block:: html
 
-            GET - /oauth/authorize?client_id=simple-menus&return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
+            GET - /oauth/authorize?client_id=simple-menus&redirect_uri=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa
 
       #. Authorization server correctly authorizes the client and generates an access token.
 

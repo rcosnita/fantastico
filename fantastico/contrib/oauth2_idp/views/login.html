@@ -28,7 +28,7 @@
         </div>
         <div class="panel-body">
             <form role="form" class="form-horizontal" id="fantastico-login" 
-                    action="/oauth/idp/login?return_url={{return_url}}" method="post">
+                    action="/oauth/idp/login?redirect_uri={{redirect_uri}}&error_format=form" method="post">
                 <div class="form-group">
                     <input type="text" id="username" name="username" class="form-control" placeholder="johndoe@email.com" />
                 </div>

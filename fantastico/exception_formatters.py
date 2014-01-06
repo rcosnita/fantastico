@@ -86,6 +86,8 @@ class FormUrlEncodedExceptionFormatter(ExceptionFormatter):
 
         if result[-1].find("?") == -1:
             result.append("?")
+        else:
+            result.append("&")
 
         for key in keys:
             result.append("%s=%s" % (key, urllib.parse.quote(ex_desc[key])))
