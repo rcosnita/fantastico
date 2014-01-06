@@ -47,6 +47,8 @@ class ImplicitGrantHandler(GrantHandler):
 
         login_token = self._tokens_service.decrypt(encrypted_login)
 
+        self._tokens_service.validate(login_token)
+
         access_token = self._tokens_service.generate({"client_id": client_id,
                                                       "user_id": login_token.user_id,
                                                       "scopes": scopes,

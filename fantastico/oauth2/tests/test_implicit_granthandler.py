@@ -37,6 +37,8 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
         '''This method is invoked automatically in order to setup common dependencies for all test cases.'''
 
         self._tokens_service = Mock()
+        self._tokens_service.validate = Mock(return_value=None)
+
         self._settings_facade = Mock()
         self._settings_facade.get = Mock(return_value=self._EXPIRES_IN)
 
@@ -175,6 +177,7 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
         self.assertEqual(expected_redirect, response.headers.get("Location"))
 
         self._tokens_service.decrypt.assert_called_once_with(encrypted_login)
+        self._tokens_service.validate.assert_called_once_with(login_token)
         self._tokens_service.generate.assert_called_once_with({"client_id": client_id,
                                                                "user_id": login_token.user_id,
                                                                "scopes": scope,
