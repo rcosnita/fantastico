@@ -18,6 +18,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from abc import ABCMeta, abstractmethod # pylint: disable=W0611
+import json
 
 class ExceptionFormatter(object, metaclass=ABCMeta):
     '''This class provides a contract for formatting dictionary representation of an exception to a string.'''
@@ -38,10 +39,12 @@ class ExceptionFormattersFactory(object):
 
     JSON = "json_ex_formatter"
     FORM_URL_ENCODED = "form_url_encoded_formatter"
+    HASH_URL_ENCODED = "hash_encoded_formatter"
 
     def __init__(self):
         self._supported_formatters = {self.JSON: JsonExceptionFormatter,
-                                      self.FORM_URL_ENCODED: FormUrlEncodedExceptionFormatter}
+                                      self.FORM_URL_ENCODED: FormUrlEncodedExceptionFormatter,
+                                      self.HASH_URL_ENCODED: HashUrlEncodedExceptionFormatter}
 
     def get_formatter(self, ex_format):
         '''This method returns a concrete exception formatter matching ex_format. If no suitable formatter is found an exception
@@ -54,16 +57,25 @@ class ExceptionFormattersFactory(object):
 class JsonExceptionFormatter(ExceptionFormatter):
     '''This class provides a concrete formatter which transforms exception descriptors into json strings.'''
 
-    def format_ex(self, ex_desc):
+    def format_ex(self, ex_desc, ctx=None):
         '''This method converts the given dictionary into a json representation.'''
 
-        raise NotImplementedError()
+        ex_desc = ex_desc or "{}"
+
+        return json.dumps(ex_desc)
 
 class FormUrlEncodedExceptionFormatter(ExceptionFormatter):
     '''This class provides a formatter which tranform exception descriptors into url encoded query parameters.'''
 
     def format_ex(self, ex_desc, ctx=None):
         '''This method transform the given exception descriptor into query parameters appended to redirect uri from ctx.'''
+
+class HashUrlEncodedExceptionFormatter(ExceptionFormatter):
+    '''This class provides a formatter similar to :py:class:`FormUrlEncodedExceptionFormatter` with the only difference that
+    query parameters are added into hash section rather than http query parameters section of redirect uri.'''
+
+    def format_ex(self, ex_desc, ctx=None):
+        '''This method transform ex_desc into a hash section of redirect_uri specified in ctx.'''
 
 class DummyExceptionFormatter(ExceptionFormatter):
     '''This class provides a very simple formatter which transform exception descriptors into empty strings. You should not use

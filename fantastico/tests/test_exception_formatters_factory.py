@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.exception_formatters.test_exception_formatter_factory
 '''
 from fantastico.exception_formatters import ExceptionFormattersFactory, JsonExceptionFormatter, FormUrlEncodedExceptionFormatter, \
-    DummyExceptionFormatter
+    DummyExceptionFormatter, HashUrlEncodedExceptionFormatter
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 
 class ExceptionFormattersFactoryTests(FantasticoUnitTestsCase):
@@ -43,6 +43,13 @@ class ExceptionFormattersFactoryTests(FantasticoUnitTestsCase):
         result = self._factory.get_formatter(ExceptionFormattersFactory.FORM_URL_ENCODED)
 
         self.assertIsInstance(result, FormUrlEncodedExceptionFormatter)
+
+    def test_get_formatter_hashencoded(self):
+        '''This test case ensures an hash encoded exception formatter can be built using the factory of formatters.'''
+
+        result = self._factory.get_formatter(ExceptionFormattersFactory.HASH_URL_ENCODED)
+
+        self.assertIsInstance(result, HashUrlEncodedExceptionFormatter)
 
     def test_get_formatter_unknown(self):
         '''This test case ensures a dummy formatter is returned when a formatter type is not supported by exception formatters
