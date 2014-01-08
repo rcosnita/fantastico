@@ -151,16 +151,17 @@ class PublicTokenEncryption(TokenEncryption):
         if not encrypted_str or len(encrypted_str.strip()) == 0:
             raise OAuth2InvalidTokenDescriptorError("encrypted_str")
 
-        raw_token = base64.b64decode(encrypted_str.encode())
-        raw_dict = json.loads(raw_token.decode())
-        client_id = raw_dict["client_id"]
-
-        if not token_iv or not token_key:
-            token_iv, token_key = self._load_encryption_keys(client_id, client_repo)
-
-        encrypted_part = raw_dict.get("encrypted")
-
         try:
+            raw_token = base64.b64decode(encrypted_str.encode())
+            raw_dict = json.loads(raw_token.decode())
+            client_id = raw_dict["client_id"]
+
+            if not token_iv or not token_key:
+                token_iv, token_key = self._load_encryption_keys(client_id, client_repo)
+
+            encrypted_part = raw_dict.get("encrypted")
+
+
             token = self._symmetric_encryptor.decrypt_token(encrypted_part, token_iv, token_key)
 
             return token

@@ -52,7 +52,8 @@ class TokensMiddlewareTests(FantasticoUnitTestsCase):
 
         self._db_conn = Mock()
         self._conn_manager = Mock()
-        self._conn_manager.get_connection = Mock(return_value=self._db_conn)
+        self._conn_manager.CONN_MANAGER = Mock()
+        self._conn_manager.CONN_MANAGER.get_connection = Mock(return_value=self._db_conn)
 
         self._app = Mock()
         self._middleware = OAuth2TokensMiddleware(self._app, tokens_service_cls=self._tokens_service_cls)
@@ -78,7 +79,7 @@ class TokensMiddlewareTests(FantasticoUnitTestsCase):
         self.assertIsInstance(security_ctx, SecurityContext)
         self.assertEqual(security_ctx.access_token, token)
 
-        self._conn_manager.get_connection.assert_called_once_with(self._request.request_id)
+        self._conn_manager.CONN_MANAGER.get_connection.assert_called_once_with(self._request.request_id)
         self._tokens_service_cls.assert_called_once_with(self._db_conn)
         self._tokens_service.decrypt.assert_called_once_with(qparam_token)
         self._tokens_service.validate.assert_called_once_with(token)
@@ -93,7 +94,8 @@ class TokensMiddlewareTests(FantasticoUnitTestsCase):
     def test_middleware_noconnection(self):
         '''This test case ensures a Fantastico concrete exception is raised if model session middleware did not execute.'''
 
-        conn_manager = None
+        conn_manager = Mock()
+        conn_manager.CONN_MANAGER = None
 
         with self.assertRaises(FantasticoDbError):
             self._middleware(self._environ, Mock(), conn_manager=conn_manager)

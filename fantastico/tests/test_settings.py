@@ -67,7 +67,8 @@ class TestSettingsFacadeSuite(FantasticoUnitTestsCase):
         self.assertEqual(["fantastico.middleware.request_middleware.RequestMiddleware",
                           "fantastico.middleware.model_session_middleware.ModelSessionMiddleware",
                           "fantastico.middleware.routing_middleware.RoutingMiddleware",
-                          "fantastico.oauth2.middleware.exceptions_middleware.OAuth2ExceptionsMiddleware"], installed_middleware)
+                          "fantastico.oauth2.middleware.exceptions_middleware.OAuth2ExceptionsMiddleware",
+                          "fantastico.oauth2.middleware.tokens_middleware.OAuth2TokensMiddleware"], installed_middleware)
 
     def test_get_setting_unavailable(self):
         '''Test case that ensures an exception is thrown whenever we try to get a setting that is not

@@ -34,7 +34,7 @@ class OAuth2TokensMiddleware(object):
         self._app = app
         self._tokens_service_cls = tokens_service_cls
 
-    def __call__(self, environ, start_response, conn_manager=mvc.CONN_MANAGER):
+    def __call__(self, environ, start_response, conn_manager=mvc):
         '''This method is invoked automatically during middleware pipeline execution. For tokens middleware, this is the place
         where oauth2 access tokens are decrypted and validated.'''
 
@@ -42,10 +42,10 @@ class OAuth2TokensMiddleware(object):
         if not request:
             raise FantasticoNoRequestError("OAuth2TokensMiddleware must execute after RequestMiddleware.")
 
-        if not conn_manager:
+        if not conn_manager.CONN_MANAGER:
             raise FantasticoDbError(msg="OAuth2TokensMiddleware must execute after ModelSessionMiddleware.")
 
-        db_conn = conn_manager.get_connection(request.request_id)
+        db_conn = conn_manager.CONN_MANAGER.get_connection(request.request_id)
 
         encrypted_token = request.params.get(self.TOKEN_QPARAM)
         if not encrypted_token:
