@@ -18,11 +18,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.server.tests.itest_dev_server import DevServerIntegration
 from http.client import HTTPConnection
-from urllib.request import Request
 import copy
 import http
 import json
-import time
 import urllib
 
 class RoaControllerIntegration(DevServerIntegration):

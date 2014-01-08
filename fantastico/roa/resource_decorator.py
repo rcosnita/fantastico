@@ -31,9 +31,29 @@ class Resource(object):
             name = Column("name", String(50), unique=True, nullable=False)
             value = Column("value", Text, nullable=False)
 
-            def __init__(self, name, value):
+            def __init__(self, name=None, value=None):
                self.name = name
                self.value = value
+
+    Starting from **Fantastico** version 0.6 ROA resources support OAuth2 authorization. Because of this, resources can now be
+    user dependent or user independent. In order for authorization to work as expected for resources which are available only
+    to certain users you can use the following code snippet:
+
+    .. code-block:: python
+
+        @Resource(name="app-setting", url="/app-settings", user_dependent=true)
+        class AppSetting(BASEMODEL):
+            id = Column("id", Integer, primary_key=True, autoincrement=True)
+            name = Column("name", String(50), unique=True, nullable=False)
+            value = Column("value", Text, nullable=False)
+            user_id = Column("user_id", Integer, nullable=False)
+
+            def __init__(self, name=None, value=None, user_id=None):
+               self.name = name
+               self.value = value
+               self.user_id = user_id
+
+    If you do not define a user_id property for user dependent resources a runtime exception is raised.
     '''
 
     @property
@@ -59,6 +79,12 @@ class Resource(object):
         '''This read only property holds the model of the resource.'''
 
         return self._model
+
+    @property
+    def user_dependent(self):
+        '''This read only property returns True if user is owned only by one resource and False otherwise.'''
+
+        return self._user_dependent
 
     @property
     def subresources(self):
@@ -92,13 +118,14 @@ class Resource(object):
 
         return self._validator
 
-    def __init__(self, name, url, version=1.0, subresources=None, validator=None):
+    def __init__(self, name, url, version=1.0, subresources=None, validator=None, user_dependent=False):
         self._name = name
         self._url = url
         self._version = float(version)
         self._model = None
         self._subresources = subresources or {}
         self._validator = validator
+        self._user_dependent = user_dependent
 
     def __call__(self, model_cls, resources_registry=None):
         '''This method is invoked when the model class is first imported into python virtual machine.'''

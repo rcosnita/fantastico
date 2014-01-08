@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 from fantastico.exceptions import FantasticoDbError
 from fantastico.oauth2.exceptions import OAuth2UnauthorizedError, OAuth2Error
+from fantastico.oauth2.token import Token
 from fantastico.roa.resource_decorator import Resource
 from fantastico.roa.resource_validator import ResourceValidator
 from fantastico.roa.roa_exceptions import FantasticoRoaError
@@ -40,6 +41,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     _query_parser_cls = None
     _query_parser = None
     _controller = None
+    _doc_base = None
 
     def init(self):
         '''This method setup all test cases common dependencies.'''
@@ -129,6 +131,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         request.params = {}
 
         resource = Mock()
+        resource.user_dependent = False
         resource.model = Mock()
 
         self._mock_model_facade(records=expected_records, records_count=expected_records_count)
@@ -169,6 +172,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                           "fields": expected_fields}
 
         resource = Mock()
+        resource.user_dependent = False
         resource.model = Mock()
 
         self._query_parser.parse_filter = Mock(return_value=expected_filter)
@@ -832,6 +836,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     def _test_validate_security_context_template(self, valid=None, side_effect=None):
         '''This method provides a template for checking various behaviors of validate_security_context method.'''
 
+        access_token = Token({})
+
         kwargs = {}
 
         if side_effect:
@@ -842,12 +848,12 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         request = Mock()
         request.context = Mock()
         request.context.security = Mock()
+        request.context.security.access_token = access_token
         request.context.security.validate_context = Mock(**kwargs)
 
-        self.assertIsNone(self._controller.validate_security_context(request, attr_scope="scopes"))
+        self.assertEqual(access_token, self._controller.validate_security_context(request, attr_scope="scopes"))
 
         request.context.security.validate_context.assert_called_once_with("scopes")
-
 
 class MockSimpleResourceRoa(object):
     '''This class provides a very simple used in tests.'''
