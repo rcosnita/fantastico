@@ -53,7 +53,8 @@ class Resource(object):
                self.value = value
                self.user_id = user_id
 
-    If you do not define a user_id property for user dependent resources a runtime exception is raised.
+    If you do not define a user_id property for user dependent resources a runtime exception is raised. In order to find out more
+    about OAuth2 authorization implemented into fantastico please read: :doc:`/features/oauth2`.
     '''
 
     @property
