@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.mvc.base_controller import BaseController
 from fantastico.oauth2.oauth2_decorators import RequiredScopes
 from fantastico.oauth2.security_context import SecurityContext
+from fantastico.oauth2.token import Token
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 
@@ -80,7 +81,7 @@ class RequiredScopesTests(FantasticoUnitTestsCase):
 
         expected_scopes = sorted(expected_scopes)
 
-        access_token = "abcd"
+        access_token = Token({"scopes": expected_scopes})
 
         request = Mock()
         request.context = Mock()
