@@ -211,9 +211,6 @@ class Controller(object):
         '''This method triggers security request validation. Security context is always present (being injected by oauth2
         tokens middleware).'''
 
-        if not hasattr(request.context, "security"):
-            return
-
         security_ctx = request.context.security
 
         try:

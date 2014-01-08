@@ -195,21 +195,6 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
 
         self.assertEqual(ex, ctx.exception)
 
-    def test_controller_validatesecurity_nosecurityctx(self):
-        '''This test case ensures that no exception is raised if no security context is available into a given context.'''
-
-        conn_manager = Mock()
-
-        @controller_decorators.Controller(url="/simple/controller",
-                                          conn_manager=conn_manager)
-        def do_stuff(request):
-            self.assertIsNotNone(request)
-
-        request = Mock()
-        request.context = RequestContext(Mock(), "ro-RO")
-
-        do_stuff(request)
-
     def _test_controller_validatesecurity_template(self, valid=None, side_effect=None):
         '''This method provides a template for checking controller security context validation behavior.'''
 

@@ -49,6 +49,7 @@ class OAuth2TokensMiddleware(object):
 
         encrypted_token = request.params.get(self.TOKEN_QPARAM)
         if not encrypted_token:
+            request.context.security = SecurityContext(None)
             return self._app(environ, start_response)
 
         request.context.security = self._build_security_context(encrypted_token, db_conn)

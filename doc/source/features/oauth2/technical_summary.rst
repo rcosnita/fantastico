@@ -58,6 +58,8 @@ It is common to want to access currently granted scopes for a given request. In 
 
          # validate scopes
 
+If you try to use access token property of security context when no access token is expected this will be None.
+
 Supported token generators
 --------------------------
 

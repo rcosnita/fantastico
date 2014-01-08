@@ -111,6 +111,8 @@ class TokensMiddlewareTests(FantasticoUnitTestsCase):
         result = middleware(self._environ, start_response, conn_manager=self._conn_manager)
 
         self.assertIsNotNone(result)
+        self.assertTrue(hasattr(self._request.context, "security"))
+        self.assertIsNone(self._request.context.security.access_token)
 
         self._app.assert_called_once_with(self._environ, start_response)
 
