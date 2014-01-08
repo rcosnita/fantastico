@@ -18,7 +18,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 
 from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoControllerInvalidError
+from fantastico.middleware.request_context import RequestContext
 from fantastico.mvc import controller_decorators
+from fantastico.oauth2.exceptions import OAuth2UnauthorizedError
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from webob.response import Response
@@ -159,3 +161,67 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
                 http_method = "None"
 
             self.assertTrue(str(cm.exception).find(http_method) > -1)
+
+    def test_controller_validatesecurity(self):
+        '''This test case ensures that security context is validated before executing the actual method.'''
+
+        valid = True
+
+        self._test_controller_validatesecurity_template(valid)
+
+    def test_controller_validatesecurity_unauthorized(self):
+        '''This test case ensures that an invalid security context generates an unauthorize exception.'''
+
+        for valid in [None, False]:
+            with self.assertRaises(OAuth2UnauthorizedError):
+                self._test_controller_validatesecurity_template(valid)
+
+    def test_controller_validatesecurity_exhandled(self):
+        '''This test case ensures that an unexpected exception raised during validation of security context is casted to an
+        unauthorized error.'''
+
+        ex = Exception("Unexpected exception.")
+
+        with self.assertRaises(OAuth2UnauthorizedError):
+            self._test_controller_validatesecurity_template(side_effect=ex)
+
+    def test_controller_validatesecurity_nosecurityctx(self):
+        '''This test case ensures that no exception is raised if no security context is available into a given context.'''
+
+        conn_manager = Mock()
+
+        @controller_decorators.Controller(url="/simple/controller",
+                                          conn_manager=conn_manager)
+        def do_stuff(request):
+            self.assertIsNotNone(request)
+
+        request = Mock()
+        request.context = RequestContext(Mock(), "ro-RO")
+
+        do_stuff(request)
+
+    def _test_controller_validatesecurity_template(self, valid=None, side_effect=None):
+        '''This method provides a template for checking controller security context validation behavior.'''
+
+        conn_manager = Mock()
+
+        @controller_decorators.Controller(url="/simple/controller",
+                                          conn_manager=conn_manager)
+        def do_stuff(request):
+            self.assertIsNotNone(request)
+
+        kwargs = {}
+        if not side_effect:
+            kwargs["return_value"] = valid
+        else:
+            kwargs["side_effect"] = side_effect
+
+        request = Mock()
+        request.context = Mock()
+        request.context.security = Mock()
+        request.context.security.validate_context = Mock(**kwargs)
+
+        self.assertIsNone(do_stuff(request))
+
+        request.context.security.validate_context.assert_called_once_with()
+

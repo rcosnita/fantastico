@@ -135,8 +135,11 @@ class RequiredScopes(object):
         required scopes.'''
 
         def new_fn(*args, **kwargs):
+            '''This method replaces the original decorated method and it first injects security scopes into security context and
+            then it executes the original method.'''
+
             request = self._get_request_from_args(args)
-            self._inject_scopes_in_security(request)
+            self.inject_scopes_in_security(request)
 
             return orig_fn(*args, **kwargs)
 
@@ -159,7 +162,7 @@ class RequiredScopes(object):
 
         return request
 
-    def _inject_scopes_in_security(self, request):
+    def inject_scopes_in_security(self, request):
         '''This method injects the request scopes into request security context.'''
 
         security_ctx = request.context.security

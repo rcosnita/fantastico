@@ -22,6 +22,7 @@ from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.utils import instantiator
 import inspect
+from fantastico.oauth2.exceptions import OAuth2UnauthorizedError
 
 class ModelsHolder(dict):
     '''This class is used for holding all models injected into a controller.'''
@@ -165,21 +166,14 @@ class Controller(object):
         def new_handler(*args, **kwargs):
             '''This method is the one that replaces the original decorated method.'''
 
-            request = None
+            request = self._get_request_from_args(args)
 
-            try:
-                request = args[0]
-
-                if isinstance(request, BaseController):
-                    contr = request
-                    request = args[1]
-
-                    contr.curr_request = request
-            except IndexError as ex:
-                raise FantasticoControllerInvalidError(ex)
+            self._validate_security_context(request)
 
             conn_manager = self._conn_manager or mvc.CONN_MANAGER
-            self._inject_models(request, conn_manager.get_connection(request.request_id))
+            db_conn = conn_manager.get_connection(request.request_id)
+
+            self._inject_models(request, db_conn)
 
             return orig_fn(*args, **kwargs)
 
@@ -193,6 +187,40 @@ class Controller(object):
         self.get_registered_routes().append(self)
 
         return self._fn_handler
+
+    def _get_request_from_args(self, args):
+        '''This method extract the current request from arguments array. It is possible to raise an exception when the method
+        does not have the correct signature (request argument not present).'''
+
+        request = None
+
+        try:
+            request = args[0]
+
+            if isinstance(request, BaseController):
+                contr = request
+                request = args[1]
+
+                contr.curr_request = request
+        except IndexError as ex:
+            raise FantasticoControllerInvalidError(ex)
+
+        return request
+
+    def _validate_security_context(self, request):
+        '''This method triggers security request validation. Security context is always present (being injected by oauth2
+        tokens middleware).'''
+
+        if not hasattr(request.context, "security"):
+            return
+
+        security_ctx = request.context.security
+
+        try:
+            if not security_ctx.validate_context():
+                raise OAuth2UnauthorizedError(msg="Security context insufficient scopes.")
+        except Exception as ex:
+            raise OAuth2UnauthorizedError(msg="Security context validation exception: %s" % str(ex))
 
 class ControllerProvider(object):
     '''This class marks a class as being a controller provider. It means that some of the methods from decorated class
