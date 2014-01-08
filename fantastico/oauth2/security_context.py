@@ -45,4 +45,15 @@ class SecurityContext(object):
 
     def __init__(self, access_token, required_scopes=None):
         self._access_token = access_token
-        self._required_scopes = required_scopes
+        self._required_scopes = required_scopes or []
+        self._access_token_scopes = {scope: True for scope in self._access_token.scopes}
+
+    def validate_context(self):
+        '''This method tries to validate the current security context using the current access token and required scopes.
+        Internally, the method simply ensures required scopes are present in access token granted scopes.'''
+
+        for scope in self._required_scopes:
+            if not self._access_token_scopes.get(scope):
+                return False
+
+        return True
