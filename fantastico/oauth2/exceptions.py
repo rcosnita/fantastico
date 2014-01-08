@@ -139,10 +139,18 @@ class OAuth2UnsupportedGrantError(OAuth2Error):
 
         super(OAuth2UnsupportedGrantError, self).__init__(self.ERROR_CODE, msg)
 
+class OAuth2UnauthorizedError(OAuth2Error):
+    '''This class provides a concrete exception for notifying unauthorized access to oauth2 protected resources.'''
+
+    ERROR_CODE = 12100
+
+    def __init__(self, msg):
+        super(OAuth2UnauthorizedError, self).__init__(msg)
+
 class OAuth2AuthenticationError(OAuth2Error):
     '''This class provides a concrete exception used to notify a failed authentication attempt from an OAuth2 IDP.'''
 
     ERROR_CODE = 12200
 
-    def __init__(self, msg, http_code=401):
+    def __init__(self, msg, http_code=403):
         super(OAuth2AuthenticationError, self).__init__(self.ERROR_CODE, msg, http_code)

@@ -10,8 +10,11 @@ Overview
 .. autoclass:: fantastico.oauth2.oauth2_controller.OAuth2Controller
    :members:
 
-Security context
-----------------
+.. autoclass:: fantastico.oauth2.middleware.tokens_middleware.OAuth2TokensMiddleware
+   :members:
+
+.. autoclass:: fantastico.oauth2.middleware.exceptions_middleware.OAuth2ExceptionsMiddleware
+   :members:
 
 .. autoclass:: fantastico.oauth2.security_context.SecurityContext
    :members:
@@ -132,6 +135,9 @@ Concrete exceptions
 
 .. autoclass:: fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError
    :members:
-   
+
+.. autoclass:: fantastico.oauth2.exceptions.OAuth2UnauthorizedError
+   :members:
+
 .. autoclass:: fantastico.oauth2.exceptions.OAuth2AuthenticationError
    :members:
