@@ -47,15 +47,24 @@ WHERE NOT EXISTS(SELECT 1
 				 WHERE client_id = '11111111-1111-1111-1111-111111111111' AND
 					   return_url = '/oauth/authorize');
 
-INSERT INTO oauth2_scopes(scope_id, `name`)
-SELECT 1, 'scope1'
+INSERT INTO oauth2_scopes(`name`)
+SELECT 'user.profile.read'
 FROM dual
-WHERE NOT EXISTS(SELECT 1 FROM oauth2_scopes WHERE scope_id = 1);
+WHERE NOT EXISTS(SELECT 1 FROM oauth2_scopes WHERE `name` = 'user.profile.read');
+
+INSERT INTO oauth2_scopes(`name`)
+SELECT 'user.profile.update'
+FROM dual
+WHERE NOT EXISTS(SELECT 1 FROM oauth2_scopes WHERE `name` = 'user.profile.update');
+
+INSERT INTO oauth2_scopes(`name`)
+SELECT 'user.profile.delete'
+FROM dual
+WHERE NOT EXISTS(SELECT 1 FROM oauth2_scopes WHERE `name` = 'user.profile.delete');
 
 INSERT INTO oauth2_client_scopes(client_id, scope_id)
-SELECT '11111111-1111-1111-1111-111111111111', 1
-FROM dual
-WHERE NOT EXISTS(SELECT 1 
-				 FROM oauth2_client_scopes
+SELECT '11111111-1111-1111-1111-111111111111', ref_scopes.scope_id
+FROM oauth2_scopes ref_scopes
+WHERE NOT EXISTS(SELECT 1 FROM oauth2_client_scopes
 				 WHERE client_id = '11111111-1111-1111-1111-111111111111' AND
-					   scope_id = 1);
+				       scope_id = ref_scopes.scope_id);
