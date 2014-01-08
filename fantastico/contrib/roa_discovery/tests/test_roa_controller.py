@@ -17,6 +17,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.roa_discovery.tests.test_roa_controller
 '''
 
+from fantastico.exceptions import FantasticoDbError
+from fantastico.oauth2.exceptions import OAuth2UnauthorizedError, OAuth2Error
 from fantastico.roa.resource_decorator import Resource
 from fantastico.roa.resource_validator import ResourceValidator
 from fantastico.roa.roa_exceptions import FantasticoRoaError
@@ -25,7 +27,6 @@ from mock import Mock
 from sqlalchemy.schema import Column
 from sqlalchemy.types import Integer, String, Text
 import json
-from fantastico.exceptions import FantasticoDbError
 
 class RoaControllerTests(FantasticoUnitTestsCase):
     '''This class provides the test cases for roa controller.'''
@@ -83,7 +84,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._model_facade.get_records_paged = Mock(return_value=records)
         self._model_facade.count_records = Mock(return_value=records_count)
 
-    def _assert_get_collection_response(self, response, records, records_count, offset, limit,
+    def _assert_get_collection_response(self, request, response, records, records_count, offset, limit,
                                         expected_filter=None,
                                         expected_sort=None):
         '''This test case assert the given response against expected values.'''
@@ -104,6 +105,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
                                                                      filter_expr=expected_filter,
                                                                      sort_expr=expected_sort)
         self._model_facade.count_records.assert_called_once_with(filter_expr=expected_filter)
+        self._controller.validate_security_context.assert_called_once_with(request, "read")
 
     def _assert_cors_headers(self, response):
         '''This method checks response for cors headers.'''
@@ -114,6 +116,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     def test_get_collection_default_values_emptyresult(self):
         '''This test case ensures get collection works as expected without any query parameters passed. It ensures
         empty items returns correct '''
+
+        self._controller.validate_security_context = Mock(return_value=None)
 
         expected_records = []
         expected_records_count = 0
@@ -133,7 +137,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         response = self._controller.get_collection(request, version, resource_url)
 
-        self._assert_get_collection_response(response,
+        self._assert_get_collection_response(request, response,
                                              records=expected_records,
                                              records_count=expected_records_count,
                                              offset=self._controller.OFFSET_DEFAULT,
@@ -145,6 +149,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     def test_get_collection_first_page(self):
         '''This test case ensures get collection can return first page populated with items. In addition it ensures
         filtering and sorting is supported.'''
+
+        self._controller.validate_security_context = Mock(return_value=None)
 
         expected_fields = "name,description"
         expected_records = [{"name": "Resource 1", "description": ""},
@@ -183,7 +189,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
 
         response = self._controller.get_collection(request, version, resource_url)
 
-        self._assert_get_collection_response(response,
+        self._assert_get_collection_response(request, response,
                                              records=expected_records,
                                              records_count=expected_records_count,
                                              offset=0,
@@ -251,7 +257,6 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self.assertEqual(request.headers["Access-Control-Request-Headers"], response.headers["Access-Control-Allow-Headers"])
 
         self.assertEqual(0, len(response.body))
-
 
     def test_roa_cors_support(self):
         '''This test case ensures CORS is enabled on all ROA dynamic generated apis.'''
@@ -331,6 +336,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     def test_create_item_ok(self):
         '''This test case ensures a valid resource can be created correctly.'''
 
+        self._controller.validate_security_context = Mock(return_value=None)
+
         resource = Resource(name="Mock Simple Resource", url="/mock-simple-resources",
                             version=1.0)
         resource(MockSimpleResourceRoa, self._resources_registry)
@@ -363,6 +370,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._resources_registry.find_by_url.assert_called_once_with(resource.url, resource.version)
         self._json_serializer.deserialize.assert_called_once_with(request.body.decode())
         self._model_facade.create.assert_called_once_with(expected_model)
+
+        self._controller.validate_security_context.assert_called_once_with(request, "create")
 
     def test_create_item_dbexception(self):
         '''This test case ensures an error response is received if an unexpected db error occurs when creating the resource.'''
@@ -436,6 +445,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     def test_get_item_ok(self):
         '''This test case ensures an item can be correctly retrieved from collection.'''
 
+        self._controller.validate_security_context = Mock(return_value=None)
+
         url = "/simple-resources"
         version = "1.0"
         fields = "id,name,description"
@@ -478,6 +489,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
         self._json_serializer_cls.assert_called_once_with(resource)
         self._json_serializer.serialize(model, fields)
+        self._controller.validate_security_context.assert_called_once_with(request, "read")
 
     def test_get_item_unexpected_dbex(self):
         '''This test case ensures an exception response is received whenever a database exception occurs.'''
@@ -642,6 +654,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     def test_update_item_ok(self):
         '''This test case covers scenario when an item can be updated successfully.'''
 
+        self._controller.validate_security_context = Mock(return_value=None)
+
         expected_body = {"name": "cool name",
                          "description": "incredible simple description"}
         url = "/simple-resources"
@@ -682,6 +696,7 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._json_serializer_cls.assert_called_once_with(resource)
         self._json_serializer.deserialize.assert_called_once_with(json.dumps(expected_body))
         self._model_facade.update.assert_called_once_with(model)
+        self._controller.validate_security_context.assert_called_once_with(request, "update")
 
     def test_delete_item_resource_unknown(self):
         '''This test case ensures an existing item can not be deleted from an unknown collection.'''
@@ -751,6 +766,8 @@ class RoaControllerTests(FantasticoUnitTestsCase):
     def test_delete_item_ok(self):
         '''This test case ensures an existing item can be deleted successfully.'''
 
+        self._controller.validate_security_context = Mock(return_value=None)
+
         url = "/simple-resources"
         version = "1.0"
         resource_id = "12345"
@@ -780,6 +797,57 @@ class RoaControllerTests(FantasticoUnitTestsCase):
         self._resources_registry.find_by_url.assert_called_once_with(url, float(version))
         self._model_facade.find_by_pk.assert_called_once_with({MockSimpleResourceRoa.id: resource_id})
         self._model_facade.delete.assert_called_once_with(model)
+        self._controller.validate_security_context.assert_called_once_with(request, "delete")
+
+    def test_validate_security_context_ok(self):
+        '''This test case ensures that security context validation works as expected.'''
+
+        self._test_validate_security_context_template(valid=True)
+
+    def test_validate_security_context_invalid(self):
+        '''This test case ensures that security context validation raises an unauthorized exception if context is not valid.'''
+
+        with self.assertRaises(OAuth2UnauthorizedError):
+            self._test_validate_security_context_template(valid=False)
+
+    def test_validate_security_context_oauth2ex(self):
+        '''This test case ensures that security context validation oauth2 errors are bubbled up.'''
+
+        ex = OAuth2Error(error_code= -1)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._test_validate_security_context_template(side_effect=ex)
+
+        self.assertEqual(ex, ctx.exception)
+
+    def test_validate_security_context_ex(self):
+        '''This test case ensures security context validation unexpected exceptions are converted to oauth2
+        unauthorized errors.'''
+
+        ex = Exception("Unexpected error.")
+
+        with self.assertRaises(OAuth2Error):
+            self._test_validate_security_context_template(side_effect=ex)
+
+    def _test_validate_security_context_template(self, valid=None, side_effect=None):
+        '''This method provides a template for checking various behaviors of validate_security_context method.'''
+
+        kwargs = {}
+
+        if side_effect:
+            kwargs["side_effect"] = side_effect
+        else:
+            kwargs["return_value"] = valid
+
+        request = Mock()
+        request.context = Mock()
+        request.context.security = Mock()
+        request.context.security.validate_context = Mock(**kwargs)
+
+        self.assertIsNone(self._controller.validate_security_context(request, attr_scope="scopes"))
+
+        request.context.security.validate_context.assert_called_once_with("scopes")
+
 
 class MockSimpleResourceRoa(object):
     '''This class provides a very simple used in tests.'''

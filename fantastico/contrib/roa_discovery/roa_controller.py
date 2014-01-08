@@ -18,9 +18,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico import mvc
 from fantastico.contrib.roa_discovery import roa_helper
+from fantastico.exceptions import FantasticoDbError
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import ControllerProvider, Controller
 from fantastico.mvc.model_facade import ModelFacade
+from fantastico.oauth2.exceptions import OAuth2UnauthorizedError, OAuth2Error
 from fantastico.roa.query_parser import QueryParser
 from fantastico.roa.resource_json_serializer import ResourceJsonSerializer
 from fantastico.roa.resources_registry import ResourcesRegistry
@@ -28,7 +30,6 @@ from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.settings import SettingsFacade
 from webob.response import Response
 import json
-from fantastico.exceptions import FantasticoDbError
 
 @ControllerProvider()
 class RoaController(BaseController):
@@ -200,6 +201,9 @@ class RoaController(BaseController):
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
 
+        self._inject_security_context(request, resource.model)
+        self.validate_security_context(request, "read")
+
         json_serializer = self._json_serializer_cls(resource)
 
         filter_expr = self._parse_filter(params.filter_expr, resource.model)
@@ -307,6 +311,9 @@ class RoaController(BaseController):
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
 
+        self._inject_security_context(request, resource.model)
+        self.validate_security_context(request, "read")
+
         model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
 
         try:
@@ -362,6 +369,9 @@ class RoaController(BaseController):
 
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
+
+        self._inject_security_context(request, resource.model)
+        self.validate_security_context(request, "create")
 
         model = self._validate_resource(resource, request.body)
 
@@ -424,6 +434,9 @@ class RoaController(BaseController):
         if isinstance(model, Response):
             return model
 
+        self._inject_security_context(request, model)
+        self.validate_security_context(request, "update")
+
         model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
         pk_col = model_facade.model_pk_cols[0]
 
@@ -477,6 +490,9 @@ class RoaController(BaseController):
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
 
+        self._inject_security_context(request, resource.model)
+        self.validate_security_context(request, "delete")
+
         try:
             model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
             pk_col = model_facade.model_pk_cols[0]
@@ -500,6 +516,32 @@ class RoaController(BaseController):
         '''This method provides the functionality for delete item latest version api route.'''
 
         return self.delete_item(request, "latest", self._trim_resource_url(resource_url), resource_id)
+
+    def validate_security_context(self, request, attr_scope):
+        '''This method triggers security context validation and converts unexpected exceptions to OAuth2UnauthorizedError.'''
+
+        security_ctx = request.context.security
+
+        if not attr_scope:
+            return
+
+        try:
+            if not security_ctx.validate_context(attr_scope):
+                raise OAuth2UnauthorizedError("Security context insufficient scopes.")
+        except OAuth2Error:
+            raise
+        except Exception as ex:
+            raise OAuth2UnauthorizedError("Security context validation failed: %s" % str(ex))
+
+    def _inject_security_context(self, request, resource_model):
+        '''This method enrich the current security context with required scopes (if necessary).'''
+
+        if not hasattr(resource_model, "get_required_scopes"):
+            return
+
+        required_scopes_obj = resource_model.get_required_scopes()
+
+        required_scopes_obj.inject_scopes_in_security(request)
 
 class CollectionParams(object):
     '''This object defines the structure for get_collection supported query parameters.'''

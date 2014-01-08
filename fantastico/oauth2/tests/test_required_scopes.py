@@ -65,7 +65,7 @@ class RequiredScopesTests(FantasticoUnitTestsCase):
 
         resource = MockRoaResource()
 
-        required_scopes = resource.get_required_scopes()
+        required_scopes = MockRoaResource.get_required_scopes()
 
         self.assertIsInstance(required_scopes, RequiredScopes)
         self.assertEqual(expected_scopes, required_scopes.scopes)
@@ -74,6 +74,8 @@ class RequiredScopesTests(FantasticoUnitTestsCase):
         self.assertEqual(["sample.update"], required_scopes.update_scopes)
         self.assertEqual(["sample.delete"], required_scopes.delete_scopes)
         self.assertIsInstance(resource, MockRoaResource)
+
+        self.assertEqual(required_scopes, resource.get_required_scopes())
 
     def _test_required_scopes_method(self, method, expected_scopes):
         '''This method provides a template test case for invoking and asserting result of a method decorated with

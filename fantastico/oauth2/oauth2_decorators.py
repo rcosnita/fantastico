@@ -126,7 +126,7 @@ class RequiredScopes(object):
         '''This method appends get_required_scopes method to the given class in order to make it aware of mandatory scopes
         which must be available when invoked.'''
 
-        orig_class.get_required_scopes = lambda inst: self
+        orig_class.get_required_scopes = lambda inst = None: self
 
         return orig_class
 

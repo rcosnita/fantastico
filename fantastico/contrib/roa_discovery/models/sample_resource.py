@@ -23,6 +23,7 @@ from fantastico.roa.roa_exceptions import FantasticoRoaError
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import Integer, String, Text, Float
+from fantastico.oauth2.oauth2_decorators import RequiredScopes
 
 class SampleResourceValidator(ResourceValidator):
     '''This class provides the validation logic for sample resource model.'''
