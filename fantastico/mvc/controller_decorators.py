@@ -20,9 +20,9 @@ from fantastico import mvc
 from fantastico.exceptions import FantasticoControllerInvalidError
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.model_facade import ModelFacade
+from fantastico.oauth2.exceptions import OAuth2UnauthorizedError, OAuth2Error
 from fantastico.utils import instantiator
 import inspect
-from fantastico.oauth2.exceptions import OAuth2UnauthorizedError
 
 class ModelsHolder(dict):
     '''This class is used for holding all models injected into a controller.'''
@@ -219,6 +219,8 @@ class Controller(object):
         try:
             if not security_ctx.validate_context():
                 raise OAuth2UnauthorizedError(msg="Security context insufficient scopes.")
+        except OAuth2Error:
+            raise
         except Exception as ex:
             raise OAuth2UnauthorizedError(msg="Security context validation exception: %s" % str(ex))
 

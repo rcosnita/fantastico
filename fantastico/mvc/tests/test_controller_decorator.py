@@ -20,7 +20,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoControllerInvalidError
 from fantastico.middleware.request_context import RequestContext
 from fantastico.mvc import controller_decorators
-from fantastico.oauth2.exceptions import OAuth2UnauthorizedError
+from fantastico.oauth2.exceptions import OAuth2UnauthorizedError, OAuth2Error
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from webob.response import Response
@@ -184,6 +184,16 @@ class ControllerDecoratorTests(FantasticoUnitTestsCase):
 
         with self.assertRaises(OAuth2UnauthorizedError):
             self._test_controller_validatesecurity_template(side_effect=ex)
+
+    def test_controller_validatesecurity_oauth2ex(self):
+        '''This test case ensures that oauth 2 exceptions occuring during context validation are bubbled up.'''
+
+        ex = OAuth2Error(error_code= -1)
+
+        with self.assertRaises(OAuth2Error) as ctx:
+            self._test_controller_validatesecurity_template(side_effect=ex)
+
+        self.assertEqual(ex, ctx.exception)
 
     def test_controller_validatesecurity_nosecurityctx(self):
         '''This test case ensures that no exception is raised if no security context is available into a given context.'''
