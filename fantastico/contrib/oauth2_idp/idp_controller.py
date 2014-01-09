@@ -110,7 +110,7 @@ class IdpController(BaseController):
                                                     ModelFilter(ClientReturnUrl.return_url, return_url, ModelFilter.EQ)))
 
         if len(client_urls) != 1:
-            raise OAuth2MissingQueryParamError("return_url")
+            raise OAuth2MissingQueryParamError(self.REDIRECT_PARAM)
 
     def _validate_user(self, username, password, user_repo):
         '''This method validates the given username and password against the record found in database. If no user is found or

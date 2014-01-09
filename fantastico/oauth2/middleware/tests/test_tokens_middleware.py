@@ -58,14 +58,32 @@ class TokensMiddlewareTests(FantasticoUnitTestsCase):
         self._app = Mock()
         self._middleware = OAuth2TokensMiddleware(self._app, tokens_service_cls=self._tokens_service_cls)
 
-    def test_middleware_ok(self):
+    def test_middleware_ok_query(self):
         '''This test case ensures OAuth2TokensMiddleware executes correctly when configured according to spec (runs after all native
-        Fantastico middlewares executed).'''
+        Fantastico middlewares executed) and access token is sent in query parameter **token**.'''
 
-        qparam_token = "encrypted token value"
+        param_token = "encrypted token value"
         token = Token({"scopes": ["scope1", "scope2"]})
 
-        self._request.params = {OAuth2TokensMiddleware.TOKEN_QPARAM: qparam_token}
+        self._request.params = {OAuth2TokensMiddleware.TOKEN_QPARAM: param_token}
+        self._request.headers = {}
+
+        self._test_middleware_template(param_token, token)
+
+    def test_middleware_ok_header(self):
+        '''This test case ensures OAuth2TokensMiddleware executes correctly when configured according to spec (runs after all native
+        Fantastico middlewares executed) and access token is sent in header **Authorization**.'''
+
+        param_token = "encrypted token value"
+        token = Token({"scopes": ["scope1", "scope2"]})
+
+        self._request.params = {}
+        self._request.headers = {"Authorization": "Bearer %s" % param_token}
+
+        self._test_middleware_template(param_token, token)
+
+    def _test_middleware_template(self, param_token, token):
+        '''This method provides a template for testing middleware template correct behavior.'''
 
         self._tokens_service.decrypt = Mock(return_value=token)
         self._tokens_service.validate = Mock(return_value=True)
@@ -81,7 +99,7 @@ class TokensMiddlewareTests(FantasticoUnitTestsCase):
 
         self._conn_manager.CONN_MANAGER.get_connection.assert_called_once_with(self._request.request_id)
         self._tokens_service_cls.assert_called_once_with(self._db_conn)
-        self._tokens_service.decrypt.assert_called_once_with(qparam_token)
+        self._tokens_service.decrypt.assert_called_once_with(param_token)
         self._tokens_service.validate.assert_called_once_with(token)
         self._app.assert_called_once_with(self._environ, start_response)
 
@@ -107,6 +125,7 @@ class TokensMiddlewareTests(FantasticoUnitTestsCase):
 
         start_response = Mock()
         self._request.params = {}
+        self._request.headers = {"Authorization": "Unknown_token_type "}
 
         result = middleware(self._environ, start_response, conn_manager=self._conn_manager)
 

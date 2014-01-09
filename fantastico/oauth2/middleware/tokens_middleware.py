@@ -29,6 +29,7 @@ class OAuth2TokensMiddleware(object):
     it needs a valid request and connection manager saved in the current pipeline execution.'''
 
     TOKEN_QPARAM = "token"
+    AUTHORIZATION_FORMAT = "Bearer %s"
 
     def __init__(self, app, tokens_service_cls=TokensService):
         self._app = app
@@ -47,7 +48,7 @@ class OAuth2TokensMiddleware(object):
 
         db_conn = conn_manager.CONN_MANAGER.get_connection(request.request_id)
 
-        encrypted_token = request.params.get(self.TOKEN_QPARAM)
+        encrypted_token = request.params.get(self.TOKEN_QPARAM, self._get_token_from_header(request))
         if not encrypted_token:
             request.context.security = SecurityContext(None)
             return self._app(environ, start_response)
@@ -64,3 +65,18 @@ class OAuth2TokensMiddleware(object):
         tokens_service.validate(token)
 
         return SecurityContext(token)
+
+    def _get_token_from_header(self, request):
+        '''This method retrieves the oauth2 bearer token from request. If the token is not found None is returned.'''
+
+        authorization = request.headers.get("Authorization")
+
+        if not authorization:
+            return
+
+        auth_parts = authorization.split(" ")
+
+        if len(auth_parts) < 2 or auth_parts[0] != "Bearer":
+            return None
+
+        return " ".join(auth_parts[1:])
