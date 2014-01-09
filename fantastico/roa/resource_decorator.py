@@ -41,7 +41,7 @@ class Resource(object):
 
     .. code-block:: python
 
-        @Resource(name="app-setting", url="/app-settings", user_dependent=true)
+        @Resource(name="app-setting", url="/app-settings", user_dependent=True)
         class AppSetting(BASEMODEL):
             id = Column("id", Integer, primary_key=True, autoincrement=True)
             name = Column("name", String(50), unique=True, nullable=False)
@@ -83,7 +83,15 @@ class Resource(object):
 
     @property
     def user_dependent(self):
-        '''This read only property returns True if user is owned only by one resource and False otherwise.'''
+        '''This read only property returns True if user is owned only by one resource and False otherwise. It is really important
+        to understand the impact of the property when set to True:
+
+        #. Every GET on resource root url will also receive a filter user_id from access_token == resource.model.user_id
+        #. Every GET on a specific resource id will be validated also on user_id field.
+        #. Every POST for creating a new resource will automatically assign resource to user_id found in access_token. There is an
+            exception when the resource does not require create scopes.
+        #. Every PUT on a specific resource id will also check to ensure the user from the access_token owns the resource.
+        #. Every DELETE on a specific resource id will also check to ensure the user from the access_token owns the resource.'''
 
         return self._user_dependent
 

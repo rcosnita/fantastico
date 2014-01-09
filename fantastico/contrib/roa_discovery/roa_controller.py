@@ -388,7 +388,7 @@ class RoaController(BaseController):
             return model
 
         try:
-            if resource.user_dependent:
+            if resource.user_dependent and access_token:
                 model.user_id = access_token.user_id
 
             model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
