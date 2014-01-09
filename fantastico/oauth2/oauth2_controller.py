@@ -38,7 +38,7 @@ class OAuth2Controller(BaseController):
                 models={"Client": "fantastico.oauth2.models.clients.Client"})
     def handle_authorize(self, request):
         '''This method provides the /authorize endpoint compliant with `RFC6479 <http://tools.ietf.org/html/rfc6749>`_ standard.
-        Authorize endpoint provides an API for obtaining an access token or an authorization code dependin on the grant type.'''
+        Authorize endpoint provides an API for obtaining an access token or an authorization code depending on the grant type.'''
 
         db_conn = request.models.Client.session
         grant_type = self._validate_param(request, "response_type")
