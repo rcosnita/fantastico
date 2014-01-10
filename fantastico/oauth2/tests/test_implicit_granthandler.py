@@ -25,6 +25,7 @@ from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from webob.request import Request
 import urllib
+from fantastico.oauth2.models.return_urls import ClientReturnUrl
 
 class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for implicit grant handler.'''
@@ -35,6 +36,7 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
     _tokens_service = None
     _handler = None
     _oauth2_idp = None
+    _client_repo = None
 
     def init(self):
         '''This method is invoked automatically in order to setup common dependencies for all test cases.'''
@@ -44,14 +46,20 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
                             "expires_in": 1209600,
                             "idp_index": "/oauth/idp/ui/login"}
 
+        self._client_repo = Mock()
+        client_repo_cls = Mock(return_value=self._client_repo)
+
         self._tokens_service = Mock()
+        self._tokens_service.db_conn = Mock()
         self._tokens_service.validate = Mock(return_value=None)
 
         self._settings_facade = Mock()
 
         self._settings_facade.get = self._mock_get_setting
 
-        self._handler = ImplicitGrantHandler(self._tokens_service, self._settings_facade)
+        self._handler = ImplicitGrantHandler(self._tokens_service, self._settings_facade, client_repo_cls=client_repo_cls)
+
+        client_repo_cls.assert_called_once_with(self._tokens_service.db_conn)
 
     def _mock_get_setting(self, setting_name):
         '''This method mocks settings_facade get for expected settings used in implicit grant handler.'''
@@ -139,6 +147,28 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
 
         self.assertIsInstance(response, RedirectResponse)
         self.assertEqual(expected_url, response.headers["Location"])
+
+    def test_handle_grant_invalidredirect(self):
+        '''This test case ensures an exception is raised if the given redirect uri is not supported by the current client.'''
+
+        client_id = "abcd"
+        redirect_uri = "/abcduri"
+
+        request = Mock()
+        request.params = {"client_id": client_id,
+                          "redirect_uri": redirect_uri,
+                          "state": "xyz",
+                          "scope": "a b c"}
+
+        self._client_repo.load_client_by_returnurl = Mock(return_value=None)
+
+        response = self._handler.handle_grant(request)
+
+        self.assertIsNotNone(response)
+        self.assertEqual(401, response.status_code)
+        self.assertTrue(response.body.decode().find(redirect_uri) > -1)
+
+        self._client_repo.load_client_by_returnurl.assert_called_once_with(redirect_uri)
 
     def test_error_redirect(self):
         '''This test case ensures a redirect response is sent if the implicit handler request contains error query parameter.

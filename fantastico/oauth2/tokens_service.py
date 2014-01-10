@@ -34,6 +34,12 @@ class TokensService(object):
         self._client_repo = client_repo_cls(self._db_conn)
         self._encryptor = encryptor_cls(AesTokenEncryption())
 
+    @property
+    def db_conn(self):
+        '''This property returns the database connection used by this token service.'''
+
+        return self._db_conn
+
     def generate(self, token_desc, token_type):
         '''This method generates a concrete token from the given token descriptor. It uses token_type in order to choose the right
         token generator.

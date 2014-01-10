@@ -18,20 +18,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.exception_formatters import ExceptionFormattersFactory
 from fantastico.oauth2.grant_handler import GrantHandler
+from fantastico.oauth2.models.client_repository import ClientRepository
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.routing_engine.custom_responses import RedirectResponse
+from webob.response import Response
 import urllib
 
 class ImplicitGrantHandler(GrantHandler):
     '''This class provides the implementation for implicit grant type described in
     `RFC6749 <http://tools.ietf.org/html/rfc6749>`_. Implementation of this grant type is fully compliant with OAuth2 spec.'''
 
-    def __init__(self, tokens_service, settings_facade, exception_formatters_cls=ExceptionFormattersFactory):
+    def __init__(self, tokens_service, settings_facade, exception_formatters_cls=ExceptionFormattersFactory,
+                 client_repo_cls=ClientRepository):
         super(ImplicitGrantHandler, self).__init__(tokens_service, settings_facade)
 
         self._expires_in = self._settings_facade.get("access_token_validity")
         self._idp_url = self._settings_facade.get("oauth2_idp")["idp_index"]
         self._exception_formatter = exception_formatters_cls().get_formatter(ExceptionFormattersFactory.HASH)
+        self._client_repo = client_repo_cls(tokens_service.db_conn)
 
     def handle_grant(self, request):
         '''This method provides the algorithm for implementing implicit grant type handler. Internally it will use TokensService
@@ -46,6 +50,10 @@ class ImplicitGrantHandler(GrantHandler):
             return error_redirect
 
         scopes = self._validate_missing_param(request, "scope")
+
+        invalid_redirect = self._validate_redirect_uri(redirect_uri)
+        if invalid_redirect:
+            return invalid_redirect
 
         encrypted_login = request.params.get("login_token")
         if not encrypted_login:
@@ -98,3 +106,16 @@ class ImplicitGrantHandler(GrantHandler):
         redirect_url = "%s?redirect_uri=%s" % (self._idp_url, urllib.parse.quote(request_url))
 
         return request.redirect(redirect_url)
+
+    def _validate_redirect_uri(self, redirect_uri):
+        '''This method ensures the given redirect uri is valid for specified client. If this is not the case a 401 response
+        object is returned.'''
+
+        client = self._client_repo.load_client_by_returnurl(redirect_uri)
+
+        if client:
+            return None
+
+        msg = "%s redirect_uri is not supported by any registered client." % redirect_uri
+
+        return Response(body=msg.encode(), status_code=401)

@@ -17,7 +17,10 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.oauth2.models.client_repository
 '''
 from fantastico.mvc.model_facade import ModelFacade
+from fantastico.mvc.models.model_filter import ModelFilter
+from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
 from fantastico.oauth2.models.clients import Client
+from fantastico.oauth2.models.return_urls import ClientReturnUrl
 
 class ClientRepository(object):
     '''This class provides data access methods which can be used when working with Client objects.'''
@@ -25,6 +28,7 @@ class ClientRepository(object):
     def __init__(self, db_conn, model_facade_cls=ModelFacade):
         self._db_conn = db_conn
         self._client_facade = model_facade_cls(Client, self._db_conn)
+        self._url_facade = model_facade_cls(ClientReturnUrl, self._db_conn)
 
     def load(self, client_id):
         '''This method is used to load a client by primary key.'''
@@ -32,3 +36,22 @@ class ClientRepository(object):
         client = self._client_facade.find_by_pk({Client.client_id: client_id})
 
         return client
+
+    def load_client_by_returnurl(self, return_url):
+        '''This method load the first available client descriptor which has the specified return url. Please make sure
+        return url is decoded before invoking this method or it will not work otherwise.'''
+
+        qmark_pos = return_url.find("?")
+        if qmark_pos == -1:
+            qmark_pos = len(return_url)
+
+        return_url = return_url[:qmark_pos]
+
+        results = self._url_facade.get_records_paged(
+                                    start_record=0, end_record=1,
+                                    filter_expr=ModelFilter(ClientReturnUrl.return_url, return_url, ModelFilter.EQ))
+
+        if not results:
+            return None
+
+        return results[0].client
