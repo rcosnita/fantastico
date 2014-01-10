@@ -36,6 +36,12 @@ class ResourceValidator(object):
                     return
 
                 raise FantasticoRoaError(errors)
+
+            def format_collection(self, resources):
+                # we can safely retrieve the full collection of resources so nothing has to be done here.
+
+            def format_resource(self, resource):
+                # we can safely retrieve the resource so nothing has to be done here.
     '''
 
     def validate(self, resource):
@@ -48,3 +54,23 @@ class ResourceValidator(object):
             return False
 
         return True
+
+    def format_collection(self, resources):
+        '''This method must be overriden by each subclass in order to provide custom logic which must be executed after
+        a collection is fetched from database. By default, this method simply iterates over the list of available resources and
+        invoke format_resource.
+
+        Usually you will want to override this method in order to suppress sensitive data to be sent to clients.'''
+
+        resources = resources or []
+
+        for resource in resources:
+            self.format_resource(resource)
+
+    def format_resource(self, resource):
+        '''This method must be overriden by each subclass in order to provide custom logic which must be executed after a resource
+        is fetched.
+
+        Usually you will want to override this method in order to suppress sensitive data to be sent to clients.'''
+
+        pass

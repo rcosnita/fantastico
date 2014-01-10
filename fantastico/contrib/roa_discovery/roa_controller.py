@@ -220,6 +220,10 @@ class RoaController(BaseController):
         models = model_facade.get_records_paged(start_record=params.offset, end_record=params.offset + params.limit,
                                                 filter_expr=filter_expr,
                                                 sort_expr=sort_expr)
+
+        if resource.validator:
+            resource.validator().format_collection(models)
+
         items = [json_serializer.serialize(model, params.fields) for model in models]
 
         models_count = model_facade.count_records(filter_expr=filter_expr)
@@ -327,6 +331,9 @@ class RoaController(BaseController):
 
             if not self._is_model_owned_by(model, access_token, resource):
                 model = None
+
+            if resource.validator and model:
+                resource.validator().format_resource(model)
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(version, resource_url, dbex)
 

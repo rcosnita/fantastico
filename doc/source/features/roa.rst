@@ -168,6 +168,18 @@ We are aware that there are some common validation cases which can be reused:
 All common validation cases  are provided out of the box as methods part of ResourceValidator class. You can easily use them into
 your resource validator.
 
+There are some rare cases when a resource contains sensitive data (e.g user passwords / credit card numbers). In order to alter or
+suppress such sensitive data you can simply override **format_resource** method. Below you can find a simple example of user
+data retrieval where password is never sent back to client even if requested:
+
+.. code-block:: python
+
+   class UserValidator(ResourceValidator):
+      def format_resource(self, user):
+         user.password = None
+
+With the above example, whenever you request GET on /users or GET on /user/:userid password will be suppressed.
+
 .. _partial-object-representation:
 
 Partial object representation
