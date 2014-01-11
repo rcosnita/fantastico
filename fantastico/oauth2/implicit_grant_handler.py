@@ -74,8 +74,8 @@ class ImplicitGrantHandler(GrantHandler):
         if redirect_uri.find("#") > -1:
             prefix_sign = "&"
 
-        return_url = "%s%saccess_token=%s&state=%s&token_type=%s&expires_in=%s" % \
-                        (redirect_uri, prefix_sign, encrypted_access, state, access_token.type, self._expires_in)
+        return_url = "%s%saccess_token=%s&state=%s&token_type=%s&expires_in=%s&scope=%s" % \
+                        (redirect_uri, prefix_sign, encrypted_access, state, access_token.type, self._expires_in, scopes)
 
         return RedirectResponse(return_url)
 

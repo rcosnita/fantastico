@@ -210,7 +210,26 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env
 
     def _get_oauth2_token(self, client_id, user_id, scopes):
-        '''This method generates an oauth2 access token which can be used in api calls.'''
+        '''This method generates an oauth2 access token which can be used in integration tests.'''
+
+        token_desc = {"client_id": client_id,
+                      "user_id": user_id,
+                      "scopes": scopes,
+                      "expires_in": 60}
+
+        return self._get_token(TokenGeneratorFactory.ACCESS_TOKEN, token_desc)
+
+    def _get_oauth2_logintoken(self, client_id, user_id):
+        '''This methods generates an oauth2 login token which can be used in integration tests.'''
+
+        token_desc = {"client_id": client_id,
+                      "user_id": user_id,
+                      "expires_in": 60}
+
+        return self._get_token(TokenGeneratorFactory.LOGIN_TOKEN, token_desc)
+
+    def _get_token(self, token_type, token_desc):
+        '''This method provides a generic token generation method which can be used in integration tests.'''
 
         settings = SettingsFacade()
         db_config = settings.get("database_config")
@@ -222,16 +241,11 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         try:
             db_conn = conn_manager.get_connection(-50)
 
-            token_desc = {"client_id": client_id,
-                          "user_id": user_id,
-                          "scopes": scopes,
-                          "expires_in": 60}
-
             tokens_service = TokensService(db_conn)
 
-            token = tokens_service.generate(token_desc, TokenGeneratorFactory.ACCESS_TOKEN)
+            token = tokens_service.generate(token_desc, token_type)
 
-            return tokens_service.encrypt(token, client_id)
+            return tokens_service.encrypt(token, token_desc["client_id"])
         finally:
             if db_conn != None:
                 db_conn.close()
