@@ -30,6 +30,7 @@ from fantastico.roa.resource_json_serializer import ResourceJsonSerializer
 from fantastico.roa.resources_registry import ResourcesRegistry
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.settings import SettingsFacade
+from fantastico.utils.dictionary_object import DictionaryObject
 from webob.response import Response
 import json
 
@@ -211,7 +212,10 @@ class RoaController(BaseController):
         filter_expr = self._parse_filter(params.filter_expr, resource.model)
 
         if resource.user_dependent:
-            filter_expr = ModelFilterAnd(filter_expr, ModelFilter(resource.model.user_id, access_token.user_id, ModelFilter.EQ))
+            if filter_expr:
+                filter_expr = ModelFilterAnd(filter_expr, ModelFilter(resource.model.user_id, access_token.user_id, ModelFilter.EQ))
+            else:
+                filter_expr = ModelFilter(resource.model.user_id, access_token.user_id, ModelFilter.EQ)
 
         sort_expr = self._parse_sort(params.order_expr, resource.model)
 
@@ -220,11 +224,10 @@ class RoaController(BaseController):
         models = model_facade.get_records_paged(start_record=params.offset, end_record=params.offset + params.limit,
                                                 filter_expr=filter_expr,
                                                 sort_expr=sort_expr)
+        items = [json_serializer.serialize(model, params.fields) for model in models]
 
         if resource.validator:
-            resource.validator().format_collection(models)
-
-        items = [json_serializer.serialize(model, params.fields) for model in models]
+            resource.validator().format_collection(items)
 
         models_count = model_facade.count_records(filter_expr=filter_expr)
 
@@ -331,9 +334,6 @@ class RoaController(BaseController):
 
             if not self._is_model_owned_by(model, access_token, resource):
                 model = None
-
-            if resource.validator and model:
-                resource.validator().format_resource(model)
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(version, resource_url, dbex)
 
@@ -343,6 +343,10 @@ class RoaController(BaseController):
         json_serializer = self._json_serializer_cls(resource)
 
         resource_body = json_serializer.serialize(model, fields)
+
+        if resource.validator and model:
+            resource.validator().format_resource(DictionaryObject(resource_body, immutable=False))
+
         resource_body = json.dumps(resource_body)
 
         response = Response(body=resource_body.encode(), content_type="application/json", status_code=200)

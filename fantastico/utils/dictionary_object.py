@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.utils.dictionary_object
 '''
+import copy
 
 class DictionaryObject(object):
     '''This class provides a model for giving a dictionary support for attributes like keys access. This is an immutable read
@@ -34,31 +35,69 @@ class DictionaryObject(object):
     def dictionary(self):
         '''This property returns a dictionary representation of this object.'''
 
-        return self._members
+        return self._dictionary
 
-    def __init__(self, members):
-        self.__setattr__("_members", members or {}, True)
+    def __init__(self, desc, immutable=True):
+        if desc is None:
+            desc = {}
+
+        self.__setattr__("_internals", set(), internal=True)
+        self.__setattr__("_immutable", immutable, internal=True)
+        self.__setattr__("_dictionary", desc, internal=True)
+        self.__setattr__("_internal_data", self._build_internal_structure(desc), internal=True)
+
+    def _build_internal_structure(self, dictionary):
+        '''This method recursively build an hierarchical data structure starting from a complex dictionary. When a value
+        from dictionary is of type dictionary this is automatically converted to a DictionaryObject.'''
+
+        result = {}
+
+        for key in dictionary.keys():
+            value = dictionary[key]
+
+            if isinstance(value, dict):
+                result[key] = DictionaryObject(value, self._immutable)
+            else:
+                result[key] = value
+
+        return result
 
     def __getattr__(self, attr_name):
-        '''This method search attribute name into _members dictionary.'''
+        '''This method returns the attr_name value if found. Otherwise it throws an AttributeError exception.'''
 
-        member = self._members.get(attr_name)
+        if attr_name == "_internals" or attr_name in self._internals:
+            return super(DictionaryObject, self).__getattribute__(attr_name)
 
-        if member is None:
-            raise AttributeError("DictionaryObject does not have attribute %s" % attr_name)
+        try:
+            return self._internal_data[attr_name]
+        except KeyError:
+            raise AttributeError("Attribute %s is not found." % attr_name)
 
-        if isinstance(member, dict):
-            return DictionaryObject(member)
+    def __setattr__(self, attr_name, attr_value, internal=False):
+        '''This method set the attr_name with the given value either on the underlining dictionary or  on the current object
+        instance.'''
 
-        return member
+        if internal:
+            super(DictionaryObject, self).__setattr__(attr_name, attr_value)
 
-    def __setattr__(self, attr_name, value, inner=False):
-        '''Thie method raises an exception every time is called because dictionary object is immutable.'''
+            return
 
-        if not inner:
-            raise AttributeError("DictionaryObject is immutable. You can not set attribute %s" % attr_name)
+        if self._immutable:
+            raise AttributeError("DictionaryObject is immutable so you can not set %s attribute." % attr_name)
 
-        super(DictionaryObject, self).__setattr__(attr_name, value)
+        internal_data = self._internal_data
+        dictionary = self._dictionary
+
+        if attr_value is None:
+            if not attr_name in internal_data:
+                return
+
+            del internal_data[attr_name]
+            del dictionary[attr_name]
+
+        internal_data[attr_name] = attr_value
+        if attr_name in dictionary:
+            dictionary[attr_name] = attr_value
 
     def __eq__(self, obj):
         '''This method is overriden in order to correctly provide equality of dictionary objects.'''

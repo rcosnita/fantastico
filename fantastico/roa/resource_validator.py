@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.roa.resource_validator
 '''
+from fantastico.utils.dictionary_object import DictionaryObject
 
 class ResourceValidator(object):
     '''This class provides the base for all validators which can be used for resources.
@@ -65,7 +66,7 @@ class ResourceValidator(object):
         resources = resources or []
 
         for resource in resources:
-            self.format_resource(resource)
+            self.format_resource(DictionaryObject(resource, immutable=False))
 
     def format_resource(self, resource):
         '''This method must be overriden by each subclass in order to provide custom logic which must be executed after a resource

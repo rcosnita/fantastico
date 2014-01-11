@@ -38,6 +38,8 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
 
         FantasticoUnitTestsCase.setup_once()
 
+        InvoiceMock.get_required_scopes = lambda inst = None: None
+
         resource = Resource(name="Invoice", url="/invoices", subresources={"items": []})
         resource._model = InvoiceMock
         cls.resource_ref = resource
@@ -95,6 +97,8 @@ class ResourceJsonSerializerTests(FantasticoUnitTestsCase):
         self.assertEqual(json_obj["vat_percent"], model.vat_percent)
         self.assertEqual(json_obj["vat"], model.vat)
         self.assertIsNone(json_obj.get("items"))
+        self.assertIsNone(json_obj.get("get_required_scopes"))
+        self.assertIsNone(json_obj.get("do_stuff"))
 
     def test_serialize_mainresource_partial_ok(self):
         '''This test case ensures a resource partial serialization work as expected.'''
@@ -246,3 +250,6 @@ class InvoiceLineItemMock(BASEMODEL):
         self.name = name
         self.quantity = quantity
         self.price = price
+
+    def do_stuff(self):
+        '''A method for ensuring that methods are not serialized.'''

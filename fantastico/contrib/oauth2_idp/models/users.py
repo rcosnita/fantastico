@@ -17,11 +17,20 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.oauth2_idp.models.users
 '''
 from fantastico.contrib.oauth2_idp.models.persons import Person
+from fantastico.contrib.oauth2_idp.models.validators.user_validator import UserValidator
 from fantastico.mvc import BASEMODEL
+from fantastico.oauth2.oauth2_decorators import RequiredScopes
+from fantastico.roa.resource_decorator import Resource
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import Integer, String
 
+@Resource(name="User", url="/oauth-idp-profile", version=1.0, user_dependent=True,
+          subresources={"person": ["person_id"]},
+          validator=UserValidator)
+@RequiredScopes(read=["user.profile.read"],
+                update=["user.profile.update"],
+                delete=["user.profile.delete"])
 class User(BASEMODEL):
     '''This class provides the entity for describing a user supported by OAuth2 default Identity provider. A user is assigned
     complements information found in person entity.'''

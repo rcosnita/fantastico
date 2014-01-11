@@ -161,7 +161,6 @@ class PublicTokenEncryption(TokenEncryption):
 
             encrypted_part = raw_dict.get("encrypted")
 
-
             token = self._symmetric_encryptor.decrypt_token(encrypted_part, token_iv, token_key)
 
             return token

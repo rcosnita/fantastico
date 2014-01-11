@@ -29,13 +29,17 @@ class DictionaryObjectTests(FantasticoUnitTestsCase):
                     "last_name": "Doe",
                     "address": {"street": "17, Dreams Street"}}
 
-        obj = MockDictionaryObject(dict_obj)
+        new_street = "street changed"
+
+        obj = MockDictionaryObject(dict_obj, immutable=False)
 
         self.assertEqual(dict_obj["first_name"], obj.first_name)
         self.assertEqual(dict_obj["last_name"], obj.last_name)
 
         address = obj.address
         self.assertIsInstance(address, DictionaryObject)
+
+        address.street = new_street
         self.assertEqual(dict_obj["address"]["street"], address.street)
 
     def test_dictionaryobject_get_notfound(self):
@@ -80,6 +84,39 @@ class DictionaryObjectTests(FantasticoUnitTestsCase):
 
         self.assertEqual(obj1, obj2)
         self.assertEqual(hash(obj1), hash(obj2))
+
+    def test_dictionary_notimmutable(self):
+        '''This test case ensures a dictionary object can be built so that his attributes and underlining dictionaries can be
+        changed at runtime.'''
+
+        new_attr2 = "abc_altered"
+
+        desc = {"attr1": "abcd",
+                "attr2": "abc"}
+
+        obj = DictionaryObject(desc, immutable=False)
+
+        self.assertEqual(desc["attr1"], obj.attr1)
+        self.assertEqual(desc["attr2"], obj.attr2)
+
+        obj.attr2 = new_attr2
+        obj.new_attr2 = new_attr2
+
+        self.assertEqual(new_attr2, desc["attr2"])
+        self.assertEqual(new_attr2, obj.attr2)
+        self.assertEqual(new_attr2, obj.new_attr2)
+
+    def test_dictionary_setnone_deletekey(self):
+        '''This test case ensures that None values set on non immutable objects trigger a delete of the specified key.'''
+
+        desc = {"attr1": "test",
+                "attr2": "value"}
+
+        obj = DictionaryObject(desc, immutable=False)
+
+        obj.attr1 = None
+
+        self.assertFalse("attr1" in desc)
 
     def test_dictionary_eq_differentdicts(self):
         '''This test case ensures two dictionary objects build using different dictionaries are not equal.'''

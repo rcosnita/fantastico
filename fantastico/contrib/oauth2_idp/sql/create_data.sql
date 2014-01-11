@@ -47,6 +47,14 @@ WHERE NOT EXISTS(SELECT 1
 				 WHERE client_id = '11111111-1111-1111-1111-111111111111' AND
 					   return_url = '/oauth/authorize');
 
+INSERT INTO oauth2_client_returnurls (client_id, return_url)
+SELECT '11111111-1111-1111-1111-111111111111', '/oauth/idp/ui/cb'
+FROM dual
+WHERE NOT EXISTS(SELECT 1 
+				 FROM oauth2_client_returnurls 
+				 WHERE client_id = '11111111-1111-1111-1111-111111111111' AND
+					   return_url = '/oauth/idp/ui/cb');
+
 INSERT INTO oauth2_scopes(`name`)
 SELECT 'user.profile.read'
 FROM dual
