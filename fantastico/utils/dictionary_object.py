@@ -16,7 +16,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.utils.dictionary_object
 '''
-import copy
 
 class DictionaryObject(object):
     '''This class provides a model for giving a dictionary support for attributes like keys access. This is an immutable read

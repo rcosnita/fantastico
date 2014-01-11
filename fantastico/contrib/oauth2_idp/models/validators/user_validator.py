@@ -21,6 +21,10 @@ from fantastico.roa.resource_validator import ResourceValidator
 class UserValidator(ResourceValidator):
     '''This class provides the user validator logic.'''
 
+    def validate(self, resource):
+        '''This method provides the validation logic for a submitted user representation. Additionally it hashes the
+        sent password.'''
+
     def format_resource(self, resource):
         '''This method suppress user password from being sent to GET calls.'''
 

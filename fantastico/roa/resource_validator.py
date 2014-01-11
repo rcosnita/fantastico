@@ -24,7 +24,7 @@ class ResourceValidator(object):
     .. code-block:: python
 
         class AppSettingValidator(ResourceValidator):
-            def validate(self, resource):
+            def validate(self, resource, request):
                 errors = []
 
                 if resource.name == "unsupported":
@@ -38,14 +38,17 @@ class ResourceValidator(object):
 
                 raise FantasticoRoaError(errors)
 
-            def format_collection(self, resources):
+            def format_collection(self, resources, request):
                 # we can safely retrieve the full collection of resources so nothing has to be done here.
 
-            def format_resource(self, resource):
+            def format_resource(self, resource, request):
                 # we can safely retrieve the resource so nothing has to be done here.
+
+    Every method from validator receives the current http request in order to give access to resource validators to security
+    context and other contexts which might be necessary.
     '''
 
-    def validate(self, resource):
+    def validate(self, resource, request):
         '''This method must be overriden by each subclass in order to provide the validation logic required for the given
         resource. The resource received as an argument represents an instance of the model used to describe the resource.
         This method can raise unexpected exceptions. It is recommended to use
@@ -56,7 +59,7 @@ class ResourceValidator(object):
 
         return True
 
-    def format_collection(self, resources):
+    def format_collection(self, resources, request):
         '''This method must be overriden by each subclass in order to provide custom logic which must be executed after
         a collection is fetched from database. By default, this method simply iterates over the list of available resources and
         invoke format_resource.
@@ -66,9 +69,9 @@ class ResourceValidator(object):
         resources = resources or []
 
         for resource in resources:
-            self.format_resource(DictionaryObject(resource, immutable=False))
+            self.format_resource(DictionaryObject(resource, immutable=False), request)
 
-    def format_resource(self, resource):
+    def format_resource(self, resource, request):
         '''This method must be overriden by each subclass in order to provide custom logic which must be executed after a resource
         is fetched.
 

@@ -18,7 +18,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.mvc.models.model_filter import ModelFilter
-from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
 from fantastico.oauth2.models.clients import Client
 from fantastico.oauth2.models.return_urls import ClientReturnUrl
 

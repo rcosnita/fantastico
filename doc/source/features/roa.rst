@@ -127,7 +127,7 @@ so in Fantastico for each defined resource you can define a validator which will
 .. code-block:: python
 
    class AppSettingValidator(ResourceValidator):
-       def validate(self, resource):
+       def validate(self, resource, request):
            errors = []
          
            if resource.name == "unsupported":
@@ -175,7 +175,7 @@ data retrieval where password is never sent back to client even if requested:
 .. code-block:: python
 
    class UserValidator(ResourceValidator):
-      def format_resource(self, user):
+      def format_resource(self, user, request):
          user.password = None
 
 With the above example, whenever you request GET on /users or GET on /user/:userid password will be suppressed.

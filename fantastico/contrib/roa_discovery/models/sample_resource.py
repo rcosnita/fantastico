@@ -27,7 +27,7 @@ from sqlalchemy.types import Integer, String, Text, Float
 class SampleResourceValidator(ResourceValidator):
     '''This class provides the validation logic for sample resource model.'''
 
-    def validate(self, resource):
+    def validate(self, resource, request):
         '''This method ensures sample resource name is not empty.'''
 
         errors = []

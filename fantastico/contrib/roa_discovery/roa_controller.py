@@ -213,7 +213,8 @@ class RoaController(BaseController):
 
         if resource.user_dependent:
             if filter_expr:
-                filter_expr = ModelFilterAnd(filter_expr, ModelFilter(resource.model.user_id, access_token.user_id, ModelFilter.EQ))
+                filter_expr = ModelFilterAnd(filter_expr, ModelFilter(resource.model.user_id, access_token.user_id,
+                                                                      ModelFilter.EQ))
             else:
                 filter_expr = ModelFilter(resource.model.user_id, access_token.user_id, ModelFilter.EQ)
 
@@ -227,7 +228,7 @@ class RoaController(BaseController):
         items = [json_serializer.serialize(model, params.fields) for model in models]
 
         if resource.validator:
-            resource.validator().format_collection(items)
+            resource.validator().format_collection(items, request)
 
         models_count = model_facade.count_records(filter_expr=filter_expr)
 
@@ -268,7 +269,7 @@ class RoaController(BaseController):
 
         return self.handle_resource_options(request, "latest", self._trim_resource_url(resource_url), kwargs)
 
-    def _validate_resource(self, resource, request_body):
+    def _validate_resource(self, resource, request, request_body):
         '''This method is used to validate the resource. If the resource validation fails an error response is sent. Otherwise
         the newly validated model is returned.'''
 
@@ -281,7 +282,7 @@ class RoaController(BaseController):
             return model
 
         try:
-            resource.validator().validate(model)
+            resource.validator().validate(model, request)
         except FantasticoRoaError as ex:
             return self._handle_resource_invalid(resource.version, resource.url, ex)
 
@@ -345,7 +346,7 @@ class RoaController(BaseController):
         resource_body = json_serializer.serialize(model, fields)
 
         if resource.validator and model:
-            resource.validator().format_resource(DictionaryObject(resource_body, immutable=False))
+            resource.validator().format_resource(DictionaryObject(resource_body, immutable=False), request)
 
         resource_body = json.dumps(resource_body)
 
@@ -393,7 +394,7 @@ class RoaController(BaseController):
         self._inject_security_context(request, resource.model)
         access_token = self.validate_security_context(request, "create")
 
-        model = self._validate_resource(resource, request.body)
+        model = self._validate_resource(resource, request, request.body)
 
         if isinstance(model, Response):
             return model
@@ -452,7 +453,7 @@ class RoaController(BaseController):
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
 
-        model = self._validate_resource(resource, request.body)
+        model = self._validate_resource(resource, request, request.body)
 
         if isinstance(model, Response):
             return model

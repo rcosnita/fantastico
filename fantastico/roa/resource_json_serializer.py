@@ -17,7 +17,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.roa.resource_json_serializer
 '''
 from fantastico.roa.resource_json_serializer_exceptions import ResourceJsonSerializerError
-from sqlalchemy.schema import Column
 import inspect
 import json
 import re
