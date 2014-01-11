@@ -25,7 +25,6 @@ from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from webob.request import Request
 import urllib
-from fantastico.oauth2.models.return_urls import ClientReturnUrl
 
 class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for implicit grant handler.'''
@@ -95,8 +94,10 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
         encrypted_login = "abcd"
 
         encrypted_access = "abcd"
-        expected_redirect = "%s&access_token=%s&state=%s&token_type=access&expires_in=%s" % \
-                                    (redirect_uri, encrypted_access, state, self._EXPIRES_IN)
+        expected_redirect = "%s&access_token=%s&state=%s&token_type=access&expires_in=%s&scope=%s" % \
+                                    (redirect_uri, encrypted_access,
+                                     urllib.parse.quote(state), self._EXPIRES_IN,
+                                     urllib.parse.quote(scope))
 
         self._test_handle_template(client_id, redirect_uri, scope, state, encrypted_login,
                                    expected_redirect=expected_redirect,
@@ -208,8 +209,12 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
             encrypted_access = "encrypted access token"
 
         if not expected_redirect:
-            expected_redirect = "%s#access_token=%s&state=%s&token_type=access&expires_in=%s" % \
-                                    (redirect_uri, encrypted_access, state, self._EXPIRES_IN)
+            scope = scope or ""
+            state = state or ""
+            expected_redirect = "%s#access_token=%s&state=%s&token_type=access&expires_in=%s&scope=%s" % \
+                                    (redirect_uri, encrypted_access,
+                                     urllib.parse.quote(state), self._EXPIRES_IN,
+                                     urllib.parse.quote(scope))
 
         login_token = Token({"user_id": 1})
 

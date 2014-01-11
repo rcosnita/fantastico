@@ -32,10 +32,13 @@ class OAuth2ControllerIntegrationTests(DevServerIntegration):
     def test_implicit_grant(self):
         '''This test case ensures implicit grant type success scenario works as expected.'''
 
+        state = "abcd xyz&abc"
         redirect_uri = "/oauth/idp/ui/cb"
         login_token = self._get_oauth2_logintoken(self.DEFAULT_CLIENT_ID, self.DEFAULT_USER_ID)
-        endpoint = "/oauth/authorize?response_type=token&client_id=%s&login_token=%s&state=xyz&scope=%s&redirect_uri=%s" % \
-                    (self.DEFAULT_CLIENT_ID, login_token, urllib.parse.quote(self.DEFAULT_SCOPES),
+        endpoint = "/oauth/authorize?response_type=token&client_id=%s&login_token=%s&state=%s&scope=%s&redirect_uri=%s" % \
+                    (self.DEFAULT_CLIENT_ID, login_token,
+                     urllib.parse.quote(state),
+                     urllib.parse.quote(self.DEFAULT_SCOPES),
                      urllib.parse.quote(redirect_uri))
         results = {}
 
@@ -60,8 +63,8 @@ class OAuth2ControllerIntegrationTests(DevServerIntegration):
             self.assertIsNotNone(location)
             self.assertTrue(location.startswith("%s#access_token=" % redirect_uri))
             self.assertTrue(location.find("&expires_in=%s" % self.TOKEN_VALIDITY) > -1)
-            self.assertTrue(location.find("&state=xyz") > -1)
-            self.assertTrue(location.find("&scope=%s" % self.DEFAULT_SCOPES) > -1)
+            self.assertTrue(location.find("&state=%s" % urllib.parse.quote(state)) > -1)
+            self.assertTrue(location.find("&scope=%s" % urllib.parse.quote(self.DEFAULT_SCOPES)) > -1)
 
             location = location.replace("%s#access_token=" % redirect_uri, "")
             access_token = location[:location.find("&")]
