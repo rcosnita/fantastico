@@ -123,7 +123,11 @@ class IdpController(BaseController):
         password_hash = self._passwords_hasher.hash_password(password, DictionaryObject({"salt": user.user_id}))
 
         if password_hash != user.password:
-            raise OAuth2AuthenticationError("Username or password do not match.")
+            # when the account is created for the first time there is no user_id available so a default salt is used.
+            password_hash_default = self._passwords_hasher.hash_password(password)
+
+            if password_hash_default != user.password:
+                raise OAuth2AuthenticationError("Username or password do not match.")
 
         return user
 

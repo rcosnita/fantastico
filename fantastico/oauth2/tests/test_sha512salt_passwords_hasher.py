@@ -58,5 +58,5 @@ class Sha512SaltPasswordsHasherTests(FantasticoUnitTestsCase):
         entry.'''
 
         for hash_ctx in [None, {}, {"unknown_attr": "sample value"}]:
-            with self.assertRaises(OAuth2TokenEncryptionError):
-                self._hasher.hash_password("123", DictionaryObject(hash_ctx))
+            passwd = self._hasher.hash_password("123", DictionaryObject(hash_ctx))
+            self.assertEqual(passwd, self._hasher.hash_password("123", DictionaryObject({"salt": 9999})))

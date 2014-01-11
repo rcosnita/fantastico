@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.oauth2.passwords_hasher import PasswordsHasher
 import base64
 import hashlib
-from fantastico.oauth2.exceptions import OAuth2TokenEncryptionError
+from fantastico.utils.dictionary_object import DictionaryObject
 
 class Sha512SaltPasswordsHasher(PasswordsHasher):
     '''This class provides the sha512salt implementation for password hashing. In addition, the result is encoded using base64.
@@ -30,12 +30,14 @@ class Sha512SaltPasswordsHasher(PasswordsHasher):
         sha512_hasher = PasswordsHasherFactory().get_hasher(PasswordsHasherFactory.SHA512_SALT)
         hashed_passwd = sha512_hasher.hash_password("abcd", DictionaryObject({"salt": 123}))'''
 
+    _DEFAULT_SALT = 9999
+
     def hash_password(self, plain_passwd, hash_ctx=None):
         '''This method provides the sha512 with salt algorithm for a given plain password. In addition, the hash is base64
         encoded.'''
 
         if not hash_ctx or not hash_ctx.dictionary.get("salt"):
-            raise OAuth2TokenEncryptionError("You must provide a hash context containing salt for hashing passwords.")
+            hash_ctx = DictionaryObject({"salt": self._DEFAULT_SALT})
 
         plain_passwd = (plain_passwd or "").strip()
 
