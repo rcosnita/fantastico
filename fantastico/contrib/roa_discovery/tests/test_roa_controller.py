@@ -869,7 +869,7 @@ class MockSimpleResourceRoa(object):
 class MockSimpleResourceValidator(ResourceValidator):
     '''This is a very simple validator used for testing purposes.'''
 
-    def validate(self, resource):
+    def validate(self, resource, request):
         if not resource.name:
             raise FantasticoRoaError("Name must be provided.")
 

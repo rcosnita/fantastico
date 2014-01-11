@@ -145,7 +145,7 @@ class OAuth2UnauthorizedError(OAuth2Error):
     ERROR_CODE = 12100
 
     def __init__(self, msg):
-        super(OAuth2UnauthorizedError, self).__init__(self.ERROR_CODE, msg)
+        super(OAuth2UnauthorizedError, self).__init__(self.ERROR_CODE, msg, http_code=401)
 
 class OAuth2AuthenticationError(OAuth2Error):
     '''This class provides a concrete exception used to notify a failed authentication attempt from an OAuth2 IDP.'''

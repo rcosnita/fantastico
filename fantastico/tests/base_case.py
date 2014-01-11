@@ -17,8 +17,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.tests.base_case
 '''
+from fantastico import mvc
 from fantastico.middleware.fantastico_app import FantasticoApp
-from fantastico.mvc import controller_decorators
+from fantastico.mvc import controller_decorators, DbSessionManager
+from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
+from fantastico.oauth2.tokens_service import TokensService
 from fantastico.settings import BasicSettings, SettingsFacade, AwsStageSettings
 from fantastico.utils import instantiator
 import inspect
@@ -205,3 +208,30 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
                     old_env = ""
 
                 os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env
+
+    def _get_oauth2_token(self, client_id, user_id, scopes):
+        '''This method generates an oauth2 access token which can be used in api calls.'''
+
+        settings = SettingsFacade()
+        db_config = settings.get("database_config")
+
+        conn_manager = mvc.init_dm_db_engine(db_config)
+
+        db_conn = None
+
+        try:
+            db_conn = conn_manager.get_connection(-50)
+
+            token_desc = {"client_id": client_id,
+                          "user_id": user_id,
+                          "scopes": scopes,
+                          "expires_in": 60}
+
+            tokens_service = TokensService(db_conn)
+
+            token = tokens_service.generate(token_desc, TokenGeneratorFactory.ACCESS_TOKEN)
+
+            return tokens_service.encrypt(token, client_id)
+        finally:
+            if db_conn != None:
+                db_conn.close()

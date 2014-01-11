@@ -48,7 +48,7 @@ class ResourceValidator(object):
     context and other contexts which might be necessary.
     '''
 
-    def validate(self, resource, request):
+    def validate(self, resource, request): # pylint: disable=W0613
         '''This method must be overriden by each subclass in order to provide the validation logic required for the given
         resource. The resource received as an argument represents an instance of the model used to describe the resource.
         This method can raise unexpected exceptions. It is recommended to use
@@ -59,7 +59,7 @@ class ResourceValidator(object):
 
         return True
 
-    def format_collection(self, resources, request):
+    def format_collection(self, resources, request): # pylint: disable=W0613
         '''This method must be overriden by each subclass in order to provide custom logic which must be executed after
         a collection is fetched from database. By default, this method simply iterates over the list of available resources and
         invoke format_resource.
@@ -71,7 +71,7 @@ class ResourceValidator(object):
         for resource in resources:
             self.format_resource(DictionaryObject(resource, immutable=False), request)
 
-    def format_resource(self, resource, request):
+    def format_resource(self, resource, request): # pylint: disable=W0613
         '''This method must be overriden by each subclass in order to provide custom logic which must be executed after a resource
         is fetched.
 

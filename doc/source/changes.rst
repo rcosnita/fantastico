@@ -20,6 +20,7 @@ Versions
    * Added support for MVC Controllers into custom packages (not residing in components root folder).
    * Added ROA resources dependent on user (integrated with OAuth2 access tokens).
    * Added ROA resources OAuth2 authorization.
+   * !!!!! ROA ResourceValidator base class now adds two more methods for formatting resources and is backward compatible with Fantastico version 0.5.1
 
 * v0.5.1 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 

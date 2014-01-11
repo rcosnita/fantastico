@@ -14,18 +14,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
-.. py:module:: fantastico.contrib.oauth2_idp.models.validators.user_validator
 '''
-from fantastico.roa.resource_validator import ResourceValidator
-
-class UserValidator(ResourceValidator):
-    '''This class provides the user validator logic.'''
-
-    def validate(self, resource, request):
-        '''This method provides the validation logic for a submitted user representation. Additionally it hashes the
-        sent password.'''
-
-    def format_resource(self, resource, request):
-        '''This method suppress user password from being sent to GET calls.'''
-
-        resource.password = None

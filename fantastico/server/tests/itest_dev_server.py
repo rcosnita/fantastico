@@ -18,7 +18,6 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico.server.dev_server import DevServer
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
-from fantastico import mvc
 import threading
 import time
 
