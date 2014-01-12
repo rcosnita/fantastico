@@ -25,16 +25,19 @@ class UserResourceIntegrationTests(DevServerIntegration):
     '''This class provides the integration tests which ensures that CRUD operations work as expected on user resource. We do this
     because we also want to validate oauth2 roa validation.'''
 
-    DEFAULT_CLIENT_ID = SettingsFacade().get("oauth2_idp")["client_id"]
+    DEFAULT_CLIENT_ID = None
     DEFAULT_USER_ID = 1
     SCOPES = "user.profile.read user.profile.update user.profile.delete"
 
     _access_token = None
+    _settings_facade = None
 
     def init(self):
         '''This method is invoked before executing each test case. It generates an access_token which is authorized to access user
         api.'''
 
+        self._settings_facade = SettingsFacade()
+        self.DEFAULT_CLIENT_ID = self._settings_facade.get("oauth2_idp")["client_id"]
         self._access_token = self._get_oauth2_token(self.DEFAULT_CLIENT_ID, self.DEFAULT_USER_ID, self.SCOPES)
 
     def cleanup(self):

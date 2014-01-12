@@ -24,10 +24,20 @@ import urllib
 class OAuth2ControllerIntegrationTests(DevServerIntegration):
     '''This class provides the integration tests suite for ensuring oauth2 controller works as expected.'''
 
-    DEFAULT_CLIENT_ID = SettingsFacade().get("oauth2_idp")["client_id"]
+    DEFAULT_CLIENT_ID = None
     DEFAULT_USER_ID = 1
     DEFAULT_SCOPES = "user.profile.read user.profile.update user.profile.delete"
-    TOKEN_VALIDITY = SettingsFacade().get("access_token_validity")
+    TOKEN_VALIDITY = None
+
+    _settings_facade = None
+
+    def init(self):
+        '''This method is invoked in order to set all common dependencies for test cases.'''
+
+        self._settings_facade = SettingsFacade()
+
+        self.DEFAULT_CLIENT_ID = self._settings_facade.get("oauth2_idp")["client_id"]
+        self.TOKEN_VALIDITY = self._settings_facade.get("access_token_validity")
 
     def test_implicit_grant(self):
         '''This test case ensures implicit grant type success scenario works as expected.'''
