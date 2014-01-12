@@ -18,6 +18,8 @@ APIs
 +------------------------------------------------+----------+---------------------+------------------------------------------------------------------------------------------+--------------------------------------+
 | **/api/latest/oauth-idp-profile**              | DELETE   | user.profile.delete | Updates an existing user profile.                                                        | Authorization: Bearer <oauth2_token> |
 +------------------------------------------------+----------+---------------------+------------------------------------------------------------------------------------------+--------------------------------------+
+| **/api/latest/oauth-idp-person/:person_id**    | PUT      | user.profile.update | Updates existing person details .                                                        | Authorization: Bearer <oauth2_token> |
++------------------------------------------------+----------+---------------------+------------------------------------------------------------------------------------------+--------------------------------------+
 | **/oauth/idp/ui/login?redirect_uri=/test-url** | GET      |                     | Returns the markup for login screen.                                                     |                                      |
 +------------------------------------------------+----------+---------------------+------------------------------------------------------------------------------------------+--------------------------------------+
 | **/oauth/idp/login?redirect_uri=/test-url**    | POST     |                     | Authenticate the user, generates a token and passes it to redirect uri.                  |                                      |
@@ -86,6 +88,14 @@ When you first activate the extension and you syncdb an administrator account is
    password = "1234567890"
 
 This account can be used to access various applications provided by various Fantastico extensions.
+
+Users and persons
+~~~~~~~~~~~~~~~~~
+
+At the current moment a person can only have one user associated. Person details must be retrieved using oauth-idp-profile complex
+representation (see: :doc:`/features/roa`). Moreover, when a new user is created a new person is created automatically and
+assigned to that user. Initially created person has some default values in order to allow very smooth account creation in various
+applications.
 
 Technical summary
 -----------------

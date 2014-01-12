@@ -19,7 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 '''
 from fantastico import mvc
 from fantastico.middleware.fantastico_app import FantasticoApp
-from fantastico.mvc import controller_decorators, DbSessionManager
+from fantastico.mvc import controller_decorators
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.oauth2.tokens_service import TokensService
 from fantastico.settings import BasicSettings, SettingsFacade, AwsStageSettings
