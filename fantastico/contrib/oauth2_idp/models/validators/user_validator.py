@@ -16,17 +16,24 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.contrib.oauth2_idp.models.validators.user_validator
 '''
+from fantastico import mvc
+from fantastico.contrib.oauth2_idp.models.persons import Person
+from fantastico.mvc.model_facade import ModelFacade
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.roa.resource_validator import ResourceValidator
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.utils.dictionary_object import DictionaryObject
 from validate_email import validate_email
+from fantastico.exceptions import FantasticoDbError
 
 class UserValidator(ResourceValidator):
     '''This class provides the user validator logic.'''
 
-    def __init__(self, password_hasher_factory=PasswordsHasherFactory):
+    def __init__(self, password_hasher_factory=PasswordsHasherFactory, model_facade_cls=ModelFacade,
+                 conn_manager=None):
         self._passwd_hasher = password_hasher_factory().get_hasher(PasswordsHasherFactory.SHA512_SALT)
+        self._model_facade_cls = model_facade_cls
+        self._conn_manager = conn_manager or mvc.CONN_MANAGER
 
     def validate(self, resource, request):
         '''This method provides the validation logic for a submitted user representation. Additionally it hashes the
@@ -35,6 +42,8 @@ class UserValidator(ResourceValidator):
         self._validate_username(resource)
 
         self._validate_password(resource, request)
+
+        self._validate_person(resource, request)
 
     def format_resource(self, resource, request):
         '''This method suppress user password from being sent to GET calls.'''
@@ -68,3 +77,22 @@ class UserValidator(ResourceValidator):
 
         hash_ctx = {"salt": resource.user_id}
         resource.password = self._passwd_hasher.hash_password(resource.password, DictionaryObject(hash_ctx))
+
+    def _validate_person(self, resource, request):
+        '''This method ensures person_id attribute is not set for resource. Additionally if the resource is new a default person
+        gets created.'''
+
+        if resource.person_id:
+            raise FantasticoRoaError("person_id can not be specified when creating / updating an user.")
+
+        if request.method.lower() != "post":
+            return
+
+        try:
+            person_facade = self._model_facade_cls(Person, self._conn_manager.get_connection(request.request_id))
+            person = person_facade.new_model(first_name="-", last_name="-", email_address=resource.username)
+            person_id = person_facade.create(person)
+
+            resource.person_id = person_id[0]
+        except FantasticoDbError as ex:
+            raise FantasticoRoaError("Unable to create default person: %s" % str(ex))

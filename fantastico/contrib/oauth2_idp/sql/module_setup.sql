@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS oauth2_idp_persons(
 	cell_number VARCHAR(30),
 	phone_number VARCHAR(30),
 	PRIMARY KEY(person_id),
-	CONSTRAINT unq_firstlast_name UNIQUE(first_name, last_name)
+	CONSTRAINT unq_firstlast_name_email UNIQUE(first_name, last_name, email_address)
 );
 
 CREATE TABLE IF NOT EXISTS oauth2_idp_users(

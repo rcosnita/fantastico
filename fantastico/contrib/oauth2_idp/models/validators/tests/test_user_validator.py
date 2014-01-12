@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2_idp.models.tests.test_user_validator
 '''
+from fantastico.contrib.oauth2_idp.models.persons import Person
 from fantastico.contrib.oauth2_idp.models.users import User
 from fantastico.contrib.oauth2_idp.models.validators.user_validator import UserValidator
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
@@ -30,13 +31,25 @@ class UserValidatorTests(FantasticoUnitTestsCase):
 
     _validator = None
     _hasher = None
+    _model_facade_cls = None
+    _person_facade = None
+    _conn_manager = None
+    _db_conn = None
 
     def init(self):
         self._hasher = Mock()
         self._hasher.get_hasher = Mock(return_value=self._hasher)
         hasher_factory = Mock(return_value=self._hasher)
 
-        self._validator = UserValidator(password_hasher_factory=hasher_factory)
+        self._person_facade = Mock()
+        self._model_facade_cls = Mock(return_value=self._person_facade)
+
+        self._conn_manager = Mock()
+        self._db_conn = Mock()
+        self._conn_manager.get_connection = Mock(return_value=self._db_conn)
+
+        self._validator = UserValidator(password_hasher_factory=hasher_factory, model_facade_cls=self._model_facade_cls,
+                                        conn_manager=self._conn_manager)
 
         hasher_factory.assert_called_once_with()
         self._hasher.get_hasher.assert_called_once_with(PasswordsHasherFactory.SHA512_SALT)
@@ -132,8 +145,28 @@ class UserValidatorTests(FantasticoUnitTestsCase):
 
             self.assertTrue(str(ctx.exception).find("password") > -1, "Password not found in exception text.")
 
+    def test_validate_personid_error(self):
+        '''This test case ensures that an exception is raised if for create / update operations body contains person id.'''
+
+        request = Request.blank("/test", {})
+
+        for method in ["POST", "PUT"]:
+            resource = User(username="john.doe@gmail.com", password="123456", person_id=5)
+
+            request.method = method
+
+            with self.assertRaises(FantasticoRoaError) as ctx:
+                self._validator.validate(resource, request)
+
+            self.assertTrue(str(ctx.exception).find("person_id") > -1)
+
     def _test_validate_user_template(self, resource, request):
         '''This method provides a template for validate user test cases.'''
+
+        request.request_id = 9876
+
+        default_person = Person(first_name="-", last_name="-", email_address=resource.username)
+        person_id = 1
 
         plain_passwd = resource.password
         user_id = resource.user_id
@@ -142,7 +175,19 @@ class UserValidatorTests(FantasticoUnitTestsCase):
 
         self._hasher.hash_password = Mock(return_value=hashed_passwd)
 
+        if request.method.lower() == "post":
+            self._person_facade.new_model = Mock(return_value=default_person)
+            self._person_facade.create = Mock(return_value=[person_id])
+
         self._validator.validate(resource, request)
 
         self.assertEqual(hashed_passwd, resource.password)
         self._hasher.hash_password.assert_called_once_with(plain_passwd, DictionaryObject({"salt": user_id}))
+
+        if request.method.lower() == "post":
+            self.assertEqual(person_id, resource.person_id)
+
+            self._model_facade_cls.assert_called_once_with(Person, self._db_conn)
+            self._conn_manager.get_connection.assert_called_once_with(request.request_id)
+            self._person_facade.new_model.assert_called_once_with(first_name="-", last_name="-", email_address=resource.username)
+            self._person_facade.create.assert_called_once_with(default_person)

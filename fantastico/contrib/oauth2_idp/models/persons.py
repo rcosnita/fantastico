@@ -28,7 +28,7 @@ class Person(BASEMODEL):
 
     person_id = Column("person_id", Integer, primary_key=True, autoincrement=True)
     first_name = Column("first_name", String(100), nullable=False)
-    last_name = Column("first_name", String(50), nullable=False)
+    last_name = Column("last_name", String(50), nullable=False)
     email_address = Column("email_address", String(100), nullable=False)
     cell_number = Column("cell_number", String(30))
     phone_number = Column("phone_number", String(30))
