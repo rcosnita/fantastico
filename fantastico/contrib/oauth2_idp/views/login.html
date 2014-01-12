@@ -18,36 +18,36 @@
 {% block body_header %}
 <div class="row" align="center">
     <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {% block panel_header %}
+                <h1>Login to fantastico</h1>
+                {% endblock %}
+            </div>
 {% endblock %}
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            {% block panel_header %}
-            <h1>Login to fantastico</h1>
-            {% endblock %}
-        </div>
-        <div class="panel-body">
-            <form role="form" class="form-horizontal" id="fantastico-login" 
-                    action="/oauth/idp/login?redirect_uri={{redirect_uri}}&error_format=form" method="post">
-                <div class="form-group">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="johndoe@email.com" />
-                </div>
-                
-                <div class="form-group">
-                    <input type="password" id="password" name="password" class="form-control" />
-                </div>
-                
-                <div class="form-group">
-                    <button type="submit" class="form-control btn btn-primary btn-lg" id="btn-login">Login</button>
-                </div>
-            </form>
-        </div>
-        <div class="panel-footer">
-            <h4>Created by Radu Viorel Cosnita</h4>
-        </div>
-    </div>
+            <div class="panel-body">
+                <form role="form" class="form-horizontal" id="fantastico-login" 
+                        action="/oauth/idp/login?redirect_uri={{redirect_uri}}&error_format=form" method="post">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="johndoe@email.com" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="password" id="password" name="password" class="form-control" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="form-control btn btn-primary btn-lg" id="btn-login">Login</button>
+                    </div>
+                </form>
+            </div>
 
 {% block body_footer %}
+            <div class="panel-footer">
+                <h4>Created by Radu Viorel Cosnita</h4>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

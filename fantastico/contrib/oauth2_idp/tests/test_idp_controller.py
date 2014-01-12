@@ -92,7 +92,8 @@ class IdpControllerTests(FantasticoUnitTestsCase):
 
         self._idp_controller.load_template.assert_called_once_with(
                                         self._TPL_LOGIN,
-                                        {redirect_param_name: urllib.parse.quote(request.params[redirect_param_name])})
+                                        {redirect_param_name: urllib.parse.quote(request.params[redirect_param_name])},
+                                        enable_global_folder=True)
 
     def test_show_login_missingreturn(self):
         '''This test case ensures login screen is not displayed if return_url query parameter is not provided.'''

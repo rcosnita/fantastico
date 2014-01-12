@@ -17,12 +17,14 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 
 .. py:module:: fantastico.mvc.base_controller
 '''
-from fantastico.exceptions import FantasticoTemplateNotFoundError, \
-    FantasticoError
+from fantastico.exceptions import FantasticoTemplateNotFoundError, FantasticoError
 from fantastico.utils import instantiator
 from jinja2.environment import Environment
 from jinja2.exceptions import TemplateNotFound
 from jinja2.loaders import FileSystemLoader
+import inspect
+import os
+from fantastico.settings import BasicSettings
 
 class BaseController(object):
     '''This class provides common methods useful for every concrete controller. Even if no type checking is done in
@@ -66,7 +68,7 @@ class BaseController(object):
 
         return instantiator.get_component_path_data(self.__class__, root_folder)[0]
 
-    def load_template(self, tpl_name, model_data=None, get_template=Environment.get_template):
+    def load_template(self, tpl_name, model_data=None, get_template=Environment.get_template, enable_global_folder=False):
         '''This method is responsible for loading a template from disk and render it using the given model data.
 
         .. code-block:: python
@@ -84,6 +86,16 @@ class BaseController(object):
             self.__init_jinja_context()
 
         model_data = model_data or {}
+
+        if enable_global_folder:
+            config_cls = self._settings_facade.get_config().__class__
+            parent_path = instantiator.get_class_abslocation(config_cls)
+
+            if config_cls != BasicSettings:
+                parent_path = os.path.abspath("%s../" % parent_path)
+
+            if parent_path not in self._tpl_loader.searchpath:
+                self._tpl_loader.searchpath.append(parent_path)
 
         try:
             return get_template(self._tpl_env, tpl_name).render(model_data)

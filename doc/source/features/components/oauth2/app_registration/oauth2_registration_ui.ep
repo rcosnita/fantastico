@@ -538,9 +538,4 @@
             </defs>
             <rect width="486" height="40" rx="3" ry="3" x="0.5" y="0.5" style="fill: url(&quot;#f0ad0cce649b4eff8fc1b8bbac21e32b&quot;) none; stroke: rgb(161, 150, 133); stroke-width: 1; stroke-linejoin: round; stroke-opacity: 1;" p:name="rect" id="17fe339e1798471e8f087f7356c52528"/>
             <text x="31.5" y="17.25" style="font-size: 18px; font-style: normal; font-weight: bold; text-align: left; text-anchor: start; dominant-baseline: central; fill: rgb(0, 0, 0); font-family: Liberation Sans; fill-opacity: 1; text-decoration: none;" xml:space="preserve" p:name="text" id="24d4360dd2d24b18800de5e3e68a8ec5" transform="translate(188,3)">Login</text>
-        </g><g xmlns="http://www.w3.org/2000/svg" p:type="Shape" xmlns:p="http://www.evolus.vn/Namespace/Pencil" p:def="Evolus.BasicWebElements:htmlLink" id="38871357dee3498598e052f66096b7f4" transform="matrix(1,0,0,1,646,275)"><p:metadata><p:property name="textContent"><![CDATA[Can login? Recover]]></p:property><p:property name="textFont"><![CDATA["Liberation Sans",Arial,sans-serif|normal|normal|14px|none]]></p:property><p:property name="textColor"><![CDATA[#0000FFFF]]></p:property><p:property name="customStyle"><![CDATA[]]></p:property></p:metadata>
-
-            <foreignObject x="0" y="0" width="125" height="16" p:name="htmlObject" id="d4910a6f60074902a32f343a118a323a" style="color: rgb(0, 0, 255); opacity: 1; font-family: &quot;Liberation Sans&quot;,Arial,sans-serif; font-size: 14px; font-weight: normal; font-style: normal; text-decoration: none;">
-                <div xmlns="http://www.w3.org/1999/xhtml" p:name="textDiv" id="2e2650ed95bc4cfcbe09fc44534683fe" style="white-space: nowrap; text-decoration: underline; display: inline-block !important; "><div xmlns="http://www.w3.org/1999/xhtml">Can login? Recover</div></div>
-            </foreignObject>
         </g></Content></Page></Pages></Document>

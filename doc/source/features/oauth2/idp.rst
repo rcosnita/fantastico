@@ -35,21 +35,42 @@ Login frontend
 
 .. image:: /images/oauth2/idp_login.png
 
-Fantastico provides the secure process for login and account recovery. Developers can easily customize the login screen by providing
-a template which must be applied to login screen. A typical custom login template is presented below:
+Developers can easily customize the login screen by providing a template which must be applied to login screen. A typical custom
+login template is presented below:
 
 .. code-block:: html
 
+   {% extends "login.html" %}
+
    {% block head %}
-      <title>Simple login template</title>
+       <title>Fantastico IDP default login</title>
+
+       <!-- Latest compiled and minified CSS -->
+       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+       <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+       <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
    {% endblock %}
-   
+
    {% block body_header %}
-      <h1>Login screen</h1>
+   <div class="row" align="center">
+       <div class="col-md-4">
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                   {% block panel_header %}
+                   <h1>Login to fantastico</h1>
+                   {% endblock %}
+               </div>
    {% endblock %}
-   
+
    {% block body_footer %}
-      <h6>A tiny little footer.</h6>
+               <div class="panel-footer">
+                   <h4>Created by Radu Viorel Cosnita</h4>
+               </div>
+           </div>
+       </div>
+   </div>
    {% endblock %}
 
 You can find documentation on how to configure custom login template on :doc:`/get_started/settings`.

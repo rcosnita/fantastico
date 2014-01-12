@@ -56,7 +56,8 @@ class IdpController(BaseController):
             raise OAuth2MissingQueryParamError(self.REDIRECT_PARAM)
 
         content = self.load_template(self._login_tpl,
-                                     {self.REDIRECT_PARAM: urllib.parse.quote(return_url)})
+                                     {self.REDIRECT_PARAM: urllib.parse.quote(return_url)},
+                                     enable_global_folder=True)
 
         return Response(content)
 
