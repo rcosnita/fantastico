@@ -22,7 +22,6 @@ from fantastico.utils import instantiator
 from jinja2.environment import Environment
 from jinja2.exceptions import TemplateNotFound
 from jinja2.loaders import FileSystemLoader
-import inspect
 import os
 from fantastico.settings import BasicSettings
 
