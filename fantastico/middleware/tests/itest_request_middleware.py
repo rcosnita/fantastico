@@ -48,7 +48,7 @@ class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
         self._middleware = RequestMiddleware(Mock())
 
     def test_context_initialization(self):
-        '''Test case that ensures context is correctly initialized.'''
+        '''This test case ensures context is correctly initialized.'''
 
         def exec_test(env, settings_cls):
             self._middleware(self._environ, Mock())

@@ -162,6 +162,8 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         return self.FANTASTICO_CFG_OS_KEY
 
     def setUp(self):
+        self._active_config = os.environ.get("FANTASTICO_ACTIVE_CONFIG")
+
         self.__envs = [("fantastico.settings.BasicSettings", BasicSettings),
                        ("fantastico.settings.AwsStageSettings", AwsStageSettings)]
         self.__old_middlewares_call = []
@@ -171,6 +173,11 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
         super(FantasticoIntegrationTestCase, self).setUp()
 
     def tearDown(self):
+        if self._active_config:
+            os.environ["FANTASTICO_ACTIVE_CONFIG"] = self._active_config
+
+        SettingsFacade()._cached_config = None
+
         self._restore_call_methods()
 
         super(FantasticoIntegrationTestCase, self).tearDown()
