@@ -16,6 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.roa.resource_validator
 '''
+from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.utils.dictionary_object import DictionaryObject
 
 class ResourceValidator(object):
@@ -78,3 +79,14 @@ class ResourceValidator(object):
         Usually you will want to override this method in order to suppress sensitive data to be sent to clients.'''
 
         pass
+
+    def validate_missing_attr(self, resource, attr_name):
+        '''This method provides a simple validation for ensuring given attr_name exists and it's not empty into the specified
+        resource.'''
+
+        if not resource or not hasattr(resource, attr_name):
+            raise FantasticoRoaError("%s attribute is mandatory. Please provide it." % attr_name)
+
+        attr_value = getattr(resource, attr_name)
+        if not attr_value or not str(attr_value).strip():
+            raise FantasticoRoaError("%s attribute is mandatory. Please provide it." % attr_name)

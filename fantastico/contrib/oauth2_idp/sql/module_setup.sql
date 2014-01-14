@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS oauth2_idp_persons(
 	person_id INTEGER NOT NULL AUTO_INCREMENT,
 	first_name VARCHAR(100) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
-	email_address VARCHAR(100),
+	email_address VARCHAR(100) NOT NULL,
 	cell_number VARCHAR(30),
 	phone_number VARCHAR(30),
 	PRIMARY KEY(person_id),
