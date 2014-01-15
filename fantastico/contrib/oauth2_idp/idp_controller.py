@@ -61,6 +61,15 @@ class IdpController(BaseController):
 
         return Response(content)
 
+    @Controller(url="^/oauth/idp/ui/cb$")
+    def show_oauth_idpcallback(self, request):
+        '''This method loads the idp callback page which contains the client side code for extracting the current generated
+        token.'''
+
+        content = self.load_template("authorize_cb.html")
+
+        return Response(content)
+
     @Controller(url="^/oauth/idp/login$", method="POST",
                 models={"ClientReturnUrl": "fantastico.oauth2.models.return_urls.ClientReturnUrl"})
     def authenticate(self, request, tokens_service_cls=TokensService, user_repo_cls=UserRepository):

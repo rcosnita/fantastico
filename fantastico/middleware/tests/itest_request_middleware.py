@@ -18,13 +18,17 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.middleware.tests.itest_request_middleware
 '''
 from fantastico.middleware.request_middleware import RequestMiddleware
+from fantastico.routing_engine.custom_responses import RedirectResponse
+from fantastico.settings import SettingsFacade
 from fantastico.tests.base_case import FantasticoIntegrationTestCase
 from mock import Mock
-from fantastico.routing_engine.custom_responses import RedirectResponse
 
 class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
     '''Test suite that ensures requqest middleware is working properly into it's native running environment (no mocked essential
     dependencies). It ensures integration all available environments configuration.'''
+
+    _environ = None
+    _middleware = None
 
     def init(self):
         self._environ = {"CONTENT_TYPE": "application/json",
@@ -50,40 +54,38 @@ class RequestMiddlewareIntegration(FantasticoIntegrationTestCase):
     def test_context_initialization(self):
         '''This test case ensures context is correctly initialized.'''
 
-        def exec_test(env, settings_cls):
-            self._middleware(self._environ, Mock())
+        settings_cls = SettingsFacade().get_config().__class__
 
-            request = self._environ.get("fantastico.request")
+        self._middleware(self._environ, Mock())
 
-            self.assertIsNotNone(request)
-            self.assertIsNotNone(request.request_id)
-            self.assertEqual("GET", request.method)
-            self.assertEqual("application/json", request.content_type)
-            self.assertEqual("123", request.headers.get("oauth_bearer"))
-            self.assertEqual(1, int(request.params.get("id")))
+        request = self._environ.get("fantastico.request")
 
-            self.assertEqual(settings_cls().installed_middleware, request.context.settings.get("installed_middleware"))
-            self.assertEqual(settings_cls().supported_languages, request.context.settings.get("supported_languages"))
+        self.assertIsNotNone(request)
+        self.assertIsNotNone(request.request_id)
+        self.assertEqual("GET", request.method)
+        self.assertEqual("application/json", request.content_type)
+        self.assertEqual("123", request.headers.get("oauth_bearer"))
+        self.assertEqual(1, int(request.params.get("id")))
 
-            self.assertEqual("en_us", request.context.language.code)
+        self.assertEqual(settings_cls().installed_middleware, request.context.settings.get("installed_middleware"))
+        self.assertEqual(settings_cls().supported_languages, request.context.settings.get("supported_languages"))
 
-        self._run_test_all_envs(exec_test)
+        self.assertEqual("en_us", request.context.language.code)
+
 
     def test_redirect_ok(self):
         '''This test case ensures request redirection works as expected.'''
 
-        def exec_test(env, settings_cls):
-            self._middleware(self._environ, Mock())
+        self._middleware(self._environ, Mock())
 
-            request = self._environ.get("fantastico.request")
+        request = self._environ.get("fantastico.request")
 
-            self.assertIsNotNone(request)
+        self.assertIsNotNone(request)
 
-            response = request.redirect("/test/url", [("p1", "hello"), ("p2", "world")])
+        response = request.redirect("/test/url", [("p1", "hello"), ("p2", "world")])
 
-            self.assertIsNotNone(response)
-            self.assertIsInstance(response, RedirectResponse)
-            self.assertEqual(302, response.status_code)
-            self.assertEqual("/test/url?p1=hello&p2=world", response.headers["Location"])
+        self.assertIsNotNone(response)
+        self.assertIsInstance(response, RedirectResponse)
+        self.assertEqual(302, response.status_code)
+        self.assertEqual("/test/url?p1=hello&p2=world", response.headers["Location"])
 
-        self._run_test_all_envs(exec_test)

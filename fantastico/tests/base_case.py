@@ -129,22 +129,6 @@ class FantasticoUnitTestsCase(FantasticoBaseTestCase):
 
 class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     '''This is the base class that must be inherited by each integration test written for fantastico.
-
-    .. code-block:: python
-
-        class SimpleIntegration(FantasticoIntegrationTestCase):
-            def init(self):
-                self.simple_class = {}
-
-            def cleanup(self):
-                self.simple_class = None
-
-            def test_simple_ok(self):
-                def do_stuff(env, env_cls):
-                    self.assertEqual(simple_class[env], env_cls)
-
-                self._run_test_all_envs(do_stuff)
-
     If you used this class you don't have to mind about restoring call methods from each middleware once they are wrapped
     by fantastico app. This is a must because otherwise you will crash other tests.
     '''
@@ -201,24 +185,6 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
 
         for middleware in self.__old_middlewares_call:
             middleware[0].__call__ = middleware[1]
-
-    def _run_test_all_envs(self, callable_obj):
-        '''This method is used to execute a callable block of code on all environments. This is extremely useful for
-        avoid boiler plate code duplication and executing test logic against all environments.
-        '''
-
-        old_env = os.environ.get("FANTASTICO_ACTIVE_CONFIG") or 'fantastico.settings.BasicSettings'
-
-        for env, settings_cls in self._envs:
-            try:
-                os.environ["FANTASTICO_ACTIVE_CONFIG"] = env
-
-                callable_obj(env, settings_cls)
-            finally:
-                if old_env is None:
-                    old_env = ""
-
-                os.environ["FANTASTICO_ACTIVE_CONFIG"] = old_env
 
     def _get_oauth2_token(self, client_id, user_id, scopes):
         '''This method generates an oauth2 access token which can be used in integration tests.'''
