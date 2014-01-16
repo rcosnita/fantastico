@@ -208,15 +208,12 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
     def _get_token(self, token_type, token_desc):
         '''This method provides a generic token generation method which can be used in integration tests.'''
 
-        settings = SettingsFacade()
-        db_config = settings.get("database_config")
-
-        conn_manager = mvc.init_dm_db_engine(db_config)
-
         db_conn = None
+        conn_manager = None
+        request_id = None
 
         try:
-            db_conn = conn_manager.get_connection(-50)
+            conn_manager, request_id, db_conn = self._get_db_conn()
 
             tokens_service = TokensService(db_conn)
 
@@ -225,4 +222,16 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
             return tokens_service.encrypt(token, token_desc["client_id"])
         finally:
             if db_conn != None:
-                db_conn.close()
+                conn_manager.close_connection(request_id)
+
+    def _get_db_conn(self):
+        '''This method opens a db connection and returns it to for usage.'''
+
+        settings = SettingsFacade()
+        db_config = settings.get("database_config")
+
+        conn_manager = mvc.init_dm_db_engine(db_config)
+
+        db_conn = conn_manager.get_connection(-50)
+
+        return (conn_manager, -50, db_conn)

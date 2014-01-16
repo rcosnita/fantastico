@@ -35,7 +35,7 @@ class UserValidator(ResourceValidator):
         self._model_facade_cls = model_facade_cls
         self._conn_manager = conn_manager or mvc.CONN_MANAGER
 
-    def validate(self, resource, request):
+    def validate(self, resource, request, existing_resource_id=None):
         '''This method provides the validation logic for a submitted user representation. Additionally it hashes the
         sent password.'''
 
