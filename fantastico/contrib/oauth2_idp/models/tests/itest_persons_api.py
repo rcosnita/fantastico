@@ -16,21 +16,23 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.contrib.oauth2_idp.models.tests.itest_persons_api
 '''
+from fantastico.oauth2.token import Token
+from fantastico.server.tests.itest_dev_server import DevServerIntegration
 from fantastico.settings import SettingsFacade
 import http
 import json
-from fantastico.server.tests.itest_dev_server import DevServerIntegration
 
 class PersonResourceIntegrationTests(DevServerIntegration):
     '''This class provides the integration tests required for person resource.'''
 
     _access_token = None
+    _oauth2_idp = None
 
     def init(self):
         '''This method is invoked automatically before each test case.'''
 
-        oauth2_idp = SettingsFacade().get("oauth2_idp")
-        self._access_token = self._get_oauth2_token(client_id=oauth2_idp["client_id"], user_id=1,
+        self._oauth2_idp = SettingsFacade().get("oauth2_idp")
+        self._access_token = self._get_oauth2_token(client_id=self._oauth2_idp["client_id"], user_id=1,
                                                     scopes="user.profile.update user.profile.delete user.profile.read")
 
     def test_create_person_unauthorized(self):
@@ -78,3 +80,43 @@ class PersonResourceIntegrationTests(DevServerIntegration):
             self.assertEqual(401, response.status)
 
         self._run_test_against_dev_server(create_person, assert_unauthorized)
+
+    def test_validate_person_update_rejected(self):
+        '''This test case ensures person update is rejected because of invalid token.'''
+
+        access_token = self._get_oauth2_token(client_id=self._oauth2_idp["client_id"], user_id=1, scopes="user.profile.update")
+
+        endpoint = "/api/latest/oauth-idp-person/2"
+
+        results = {}
+
+        person = {"first_name": "John", "last_name": "Doe", "email_address": "john.doe@mail.com"}
+
+        def update_person(server):
+            '''This method tries to update an existing person which does not have the user associated with.'''
+
+            http_conn = http.client.HTTPConnection(server.hostname, server.port)
+
+            http_conn.request("PUT", endpoint, body=json.dumps(person),
+                              headers={"Authorization": "Bearer %s" % access_token})
+
+            results["response"] = http_conn.getresponse()
+
+            http_conn.close()
+
+        def assert_unauthorized_update(server):
+            '''This method ensures the update is rejected with unauthorized error code.'''
+
+            response = results.get("response")
+
+            self.assertIsNotNone(response)
+
+            self.assertEqual(401, response.status)
+
+            body = response.read()
+
+            self.assertIsNotNone(body)
+
+            body = json.loads(body.decode())
+
+        self._run_test_against_dev_server(update_person, assert_unauthorized_update)

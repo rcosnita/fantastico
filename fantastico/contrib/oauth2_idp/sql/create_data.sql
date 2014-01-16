@@ -23,6 +23,12 @@ SELECT 1, 'Fantastico', 'Admin', 'admin@fantastico.com'
 FROM dual
 WHERE 1 NOT IN (SELECT person_id FROM oauth2_idp_persons WHERE person_id = 1);
 
+INSERT INTO oauth2_idp_persons(person_id, first_name, last_name, email_address)
+SELECT 2, 'Test', 'Person', 'test.person@fantastico.com'
+FROM dual
+WHERE 2 NOT IN (SELECT person_id FROM oauth2_idp_persons WHERE person_id = 2);
+
+
 INSERT INTO oauth2_idp_users(user_id, username, `password`, person_id)
 SELECT 1, 'admin@fantastico.com', 'ZjY5ZWVjOTNhZGNmOWExYWE5ZGE5YjAxNTRjMDJjN2Y5YjNmNjY4ZWQ0ZDA3MTVmMjMxZTAzNTQ1NDQ5YWI5MjA1NjhhYTEyMDkxYmIyZjJlNjE4OGUwMTg1MWFlNmJjZjkwMDVhOGZjZjJmZDEyZjRmMzAxYTdhYTFjMmNlNzg=',
 	1

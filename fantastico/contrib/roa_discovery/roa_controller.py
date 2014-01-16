@@ -269,7 +269,7 @@ class RoaController(BaseController):
 
         return self.handle_resource_options(request, "latest", self._trim_resource_url(resource_url), kwargs)
 
-    def _validate_resource(self, resource, request, request_body):
+    def _validate_resource(self, resource, request, request_body, existing_resource_id=None):
         '''This method is used to validate the resource. If the resource validation fails an error response is sent. Otherwise
         the newly validated model is returned.'''
 
@@ -282,7 +282,7 @@ class RoaController(BaseController):
             return model
 
         try:
-            resource.validator().validate(model, request)
+            resource.validator().validate(model, request, existing_resource_id)
         except FantasticoRoaError as ex:
             return self._handle_resource_invalid(resource.version, resource.url, ex)
 
@@ -453,7 +453,7 @@ class RoaController(BaseController):
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
 
-        model = self._validate_resource(resource, request, request.body)
+        model = self._validate_resource(resource, request, request.body, resource_id)
 
         if isinstance(model, Response):
             return model

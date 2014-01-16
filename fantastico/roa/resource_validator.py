@@ -25,7 +25,7 @@ class ResourceValidator(object):
     .. code-block:: python
 
         class AppSettingValidator(ResourceValidator):
-            def validate(self, resource, request):
+            def validate(self, resource, request, existing_resource_id=None):
                 errors = []
 
                 if resource.name == "unsupported":
@@ -49,11 +49,14 @@ class ResourceValidator(object):
     context and other contexts which might be necessary.
     '''
 
-    def validate(self, resource, request): # pylint: disable=W0613
+    def validate(self, resource, request, existing_resource_id=None): # pylint: disable=W0613
         '''This method must be overriden by each subclass in order to provide the validation logic required for the given
         resource. The resource received as an argument represents an instance of the model used to describe the resource.
         This method can raise unexpected exceptions. It is recommended to use
-        :py:class:`fantastico.roa.roa_exceptions.FantasticoRoaError`.'''
+        :py:class:`fantastico.roa.roa_exceptions.FantasticoRoaError`
+
+        Moreover, there are special cases when you need the existing resource id. The easiest way to achieve this is to look at
+        existing_resource_id argument..'''
 
         if not resource:
             return False

@@ -21,7 +21,7 @@ from fantastico import mvc
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.oauth2.exceptions import OAuth2UnauthorizedError
 from fantastico.roa.resource_validator import ResourceValidator
-from fantastico.roa.roa_exceptions import FantasticoRoaMethodNotSupportedError
+from fantastico.roa.roa_exceptions import FantasticoRoaMethodNotSupportedError, FantasticoRoaError
 
 class PersonValidator(ResourceValidator):
     '''This class provides the validation logic for person objects submitted through API. Moreover, it raises Method not allowed
@@ -31,7 +31,7 @@ class PersonValidator(ResourceValidator):
         self._model_facade_cls = model_facade_cls
         self._conn_manager = conn_manager or mvc.CONN_MANAGER
 
-    def validate(self, resource, request):
+    def validate(self, resource, request, existing_resource_id=None):
         '''This method validates the given resource to ensure it has all mandatory fields and that it belongs to the currently
         logged in user.'''
 
@@ -42,9 +42,12 @@ class PersonValidator(ResourceValidator):
         self.validate_missing_attr(resource, "last_name")
         self.validate_missing_attr(resource, "email_address")
 
-        self._is_owned_by(resource, request.context.security.access_token.user_id, request.request_id)
+        if resource.person_id:
+            raise FantasticoRoaError("You can not specify person_id for update operations.")
 
-    def _is_owned_by(self, resource, user_id, request_id):
+        self._is_owned_by(request.context.security.access_token.user_id, existing_resource_id, request.request_id)
+
+    def _is_owned_by(self, user_id, existing_resource_id, request_id):
         '''This method raises an exception if the resource is not owned by the expected user id.'''
 
         from fantastico.contrib.oauth2_idp.models.users import User
@@ -53,7 +56,7 @@ class PersonValidator(ResourceValidator):
 
         user = user_facade.find_by_pk({User.user_id: user_id})
 
-        if user.person_id != resource.person_id:
+        if user.person_id != int(existing_resource_id):
             raise OAuth2UnauthorizedError("Insufficient privileges to update person.")
 
     def format_resource(self, resource, request):

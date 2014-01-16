@@ -127,7 +127,7 @@ so in Fantastico for each defined resource you can define a validator which will
 .. code-block:: python
 
    class AppSettingValidator(ResourceValidator):
-       def validate(self, resource, request):
+       def validate(self, resource, request, existing_resource_id=None):
            errors = []
          
            if resource.name == "unsupported":

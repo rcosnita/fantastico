@@ -87,7 +87,6 @@ class PersonValidatorTests(FantasticoUnitTestsCase):
         it.'''
 
         resource = Person(first_name="John", last_name="Doe", email_address="john.doe@gmail.com")
-        resource.person_id = 1
 
         with self.assertRaises(OAuth2UnauthorizedError):
             self._test_validate_owned_by_user(resource, 1, person_id=10)
@@ -97,7 +96,6 @@ class PersonValidatorTests(FantasticoUnitTestsCase):
         associated to it.'''
 
         resource = Person(first_name="John", last_name="Doe", email_address="john.doe@gmail.com")
-        resource.person_id = 1
 
         self._test_validate_owned_by_user(resource, 1, person_id=1)
 
@@ -112,9 +110,9 @@ class PersonValidatorTests(FantasticoUnitTestsCase):
         request.context = Mock()
         request.context.security = SecurityContext(token)
 
-        self._model_facade.find_by_pk = Mock(return_value=User(person_id=person_id))
+        self._model_facade.find_by_pk = Mock(return_value=User(person_id=1))
 
-        self._validator.validate(resource, request)
+        self._validator.validate(resource, request, person_id)
 
         self._conn_manager.get_connection.assert_called_once_with(request.request_id)
         self._model_facade_cls.assert_called_once_with(User, self._db_conn)
