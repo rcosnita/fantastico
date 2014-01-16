@@ -294,6 +294,12 @@ Composed attributes usage is limited to below mentioned operations:
 
 We do not support update / create of multiple resources using one single request.
 
+Security
+--------
+
+Fantastico provides a compliant OAuth 2 RFC implementation which is also integrated with ROA. For more information about enabling
+OAuth 2 authorization on ROA please read :doc:`/features/oauth2/controllers_security`.
+
 Advantages
 ----------
 
