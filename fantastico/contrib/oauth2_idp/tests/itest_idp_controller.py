@@ -67,3 +67,36 @@ class IdpControllerIntegrationTests(DevServerIntegration):
             self.assertGreater(len(login_token), 300)
 
         self._run_test_against_dev_server(authenticate_user, assert_authentication)
+
+    def test_idp_loginscreen_ok(self):
+        '''This test case ensures the login screen can be correctly displayed.'''
+
+        endpoint = "/oauth/idp/ui/login?redirect_uri=/example/cb"
+
+        results = {}
+
+        def access_loginscreen(server):
+            '''This method tries to do a successful get on login screen.'''
+
+            http_conn = http.client.HTTPConnection(server.hostname, server.port)
+
+            http_conn.request("GET", endpoint)
+
+            results["response"] = http_conn.getresponse()
+
+            http_conn.close()
+
+        def assert_displayed_ok(server):
+            '''This method asserts the output to ensure login screen was loaded successfully.'''
+
+            response = results.get("response")
+
+            self.assertIsNotNone(response)
+            self.assertEqual(200, response.status)
+
+            body = response.read()
+
+            self.assertIsNotNone(body)
+            self.assertGreater(len(body), 0)
+
+        self._run_test_against_dev_server(access_loginscreen, assert_displayed_ok)
