@@ -19,6 +19,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 from fantastico.server.tests.itest_dev_server import DevServerIntegration
 from fantastico.settings import SettingsFacade
 import http
+import re
 import urllib
 
 class OAuth2ControllerIntegrationTests(DevServerIntegration):
@@ -82,3 +83,56 @@ class OAuth2ControllerIntegrationTests(DevServerIntegration):
             self.assertGreater(len(access_token), 400)
 
         self._run_test_against_dev_server(trigger_implicit_flow, assert_success)
+
+    def test_authorize_implicit_missing_param_form(self):
+        '''This test case ensures error, error_uri and error_description query parameters are appended to redirect_uri passed
+        for implicit grant type.'''
+
+        self._test_error_handling_implicit_graceful("form", "?")
+
+    def test_authorize_implicit_missing_param_hash(self):
+        '''This test case ensures error, error_uri and error_description query parameters are appended to redirect_uri passed
+        for implicit grant type (into hash section).'''
+
+        self._test_error_handling_implicit_graceful("hash", "#")
+
+    def _test_error_handling_implicit_graceful(self, format, delimiter):
+        '''This method provides a template for ensuring error handling method types which describe error through redirect
+        and query or hash strings work as expected.'''
+
+        endpoint = "/oauth/authorize?error_format=%s&redirect_uri=/example/cb" % format
+
+        results = {}
+
+        def invoke_implicit(server):
+            '''This method tries to retrieve login screen.'''
+
+            http_conn = http.client.HTTPConnection(server.hostname, server.port)
+
+            http_conn.request("GET", endpoint)
+            results["response"] = http_conn.getresponse()
+
+            http_conn.close()
+
+        def assert_error_graceful(server):
+            '''This method asserts that error was gracefully handled by OAuth2 exceptions middleware.'''
+
+            response = results.get("response")
+
+            self.assertIsNotNone(response)
+            self.assertEqual(302, response.status)
+
+            location = response.headers.get("Location")
+            self.assertIsNotNone(location)
+
+            self.assertTrue(location.startswith("/example/cb%s" % delimiter))
+            self.assertTrue(location.find("error=invalid_request") > -1, "%s does not contain error query param." % location)
+
+            result = re.findall(r"error_description=(.*)&", location)
+            self.assertEqual(1, len(result), "%s does not contain error_description query param." % location)
+
+            result = re.findall(r"error_uri=(.*)", location)
+            self.assertEqual(1, len(result), "%s does not contain error_uri query param." % location)
+
+
+        self._run_test_against_dev_server(invoke_implicit, assert_error_graceful)
