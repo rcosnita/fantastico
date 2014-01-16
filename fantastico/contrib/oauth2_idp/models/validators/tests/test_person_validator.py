@@ -82,6 +82,17 @@ class PersonValidatorTests(FantasticoUnitTestsCase):
                          Person(first_name="John", last_name="    ")]:
             self._validate_missing_attr("last_name", resource)
 
+    def test_validate_personid_given(self):
+        '''This test case ensures an exception is raised if person id attribut is specified in resource.'''
+
+        resource = Person(first_name="John", last_name="Doe", email_address="john.doe@mail.com")
+        resource.person_id = 1
+
+        with self.assertRaises(FantasticoRoaError) as ctx:
+            self._validator.validate(resource, Mock(), existing_resource_id=5)
+
+        self.assertTrue(str(ctx.exception).find("person_id") > -1, "person_id is expected in exception message.")
+
     def test_validate_notowned_by(self):
         '''This test case ensures validate fails if the current person does not have the current logged in user associated with
         it.'''
