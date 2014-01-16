@@ -196,6 +196,9 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
 
         return self._get_token(TokenGeneratorFactory.ACCESS_TOKEN, token_desc)
 
+    def _invalidate_oauth2_token(self, token):
+        '''This method invalidates the given token automatically.'''
+
     def _get_oauth2_logintoken(self, client_id, user_id):
         '''This methods generates an oauth2 login token which can be used in integration tests.'''
 
@@ -220,6 +223,24 @@ class FantasticoIntegrationTestCase(FantasticoBaseTestCase):
             token = tokens_service.generate(token_desc, token_type)
 
             return tokens_service.encrypt(token, token_desc["client_id"])
+        finally:
+            if db_conn != None:
+                conn_manager.close_connection(request_id)
+
+    def _invalidate_encrypted_token(self, encrypted_token):
+        '''This method invalidates a given encrypted token using tokens service implementation.'''
+
+        db_conn = None
+        conn_manager = None
+        request_id = None
+
+        try:
+            conn_manager, request_id, db_conn = self._get_db_conn()
+
+            tokens_service = TokensService(db_conn)
+            token = tokens_service.decrypt(encrypted_token)
+
+            tokens_service.invalidate(token)
         finally:
             if db_conn != None:
                 conn_manager.close_connection(request_id)

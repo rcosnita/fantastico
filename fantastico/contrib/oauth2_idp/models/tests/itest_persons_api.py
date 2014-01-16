@@ -16,7 +16,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.contrib.oauth2_idp.models.tests.itest_persons_api
 '''
-from fantastico.oauth2.token import Token
+
 from fantastico.server.tests.itest_dev_server import DevServerIntegration
 from fantastico.settings import SettingsFacade
 import http
@@ -34,6 +34,11 @@ class PersonResourceIntegrationTests(DevServerIntegration):
         self._oauth2_idp = SettingsFacade().get("oauth2_idp")
         self._access_token = self._get_oauth2_token(client_id=self._oauth2_idp["client_id"], user_id=1,
                                                     scopes="user.profile.update user.profile.delete user.profile.read")
+
+    def cleanup(self):
+        '''This method cleans all dependencies before running a new test case.'''
+
+        self._invalidate_encrypted_token(self._access_token)
 
     def test_create_person_unauthorized(self):
         '''This test case ensures a person can not be created through persons api.'''

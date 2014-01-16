@@ -44,6 +44,7 @@ class UserResourceIntegrationTests(DevServerIntegration):
         self._access_token = self._get_oauth2_token(self.DEFAULT_CLIENT_ID, self.DEFAULT_USER_ID, self.SCOPES)
 
     def cleanup(self):
+        self._invalidate_oauth2_token(self._access_token)
         self._access_token = None
 
     def _create_user(self, hostname, port):

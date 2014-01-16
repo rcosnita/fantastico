@@ -278,6 +278,13 @@ class RoaController(BaseController):
 
         model = self._json_serializer_cls(resource).deserialize(request_body.decode())
 
+        action = "create"
+        if existing_resource_id:
+            action = "update"
+
+        self._inject_security_context(request, model)
+        self.validate_security_context(request, action)
+
         if not resource.validator:
             return model
 
@@ -391,10 +398,8 @@ class RoaController(BaseController):
         if not resource:
             return self._handle_resource_notfound(version, resource_url)
 
-        self._inject_security_context(request, resource.model)
-        access_token = self.validate_security_context(request, "create")
-
         model = self._validate_resource(resource, request, request.body)
+        access_token = request.context.security.access_token
 
         if isinstance(model, Response):
             return model
@@ -458,8 +463,7 @@ class RoaController(BaseController):
         if isinstance(model, Response):
             return model
 
-        self._inject_security_context(request, model)
-        access_token = self.validate_security_context(request, "update")
+        access_token = request.context.security.access_token
 
         model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
         pk_col = model_facade.model_pk_cols[0]

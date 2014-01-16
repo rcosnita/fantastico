@@ -26,7 +26,7 @@ from fantastico.contrib.oauth2_idp.models.validators.person_validator import Per
 @Resource(url="/oauth-idp-person", name="Person", validator=PersonValidator)
 @RequiredScopes(create=["user.profile.create", "user.profile.create.person"],
                 read=["user.profile.read", "user.profile.read.person"],
-                update=["user.profile.update"],
+                update="user.profile.update",
                 delete=["user.profile.delete", "user.profile.delete.person"])
 class Person(BASEMODEL):
     '''This class provides the entity for a person supported by the OAuth2 default Identity provider. A person can have one or

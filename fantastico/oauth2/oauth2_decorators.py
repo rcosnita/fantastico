@@ -114,6 +114,7 @@ class RequiredScopes(object):
             return [param_value]
 
         raise ValueError("param value %s is not supported for scopes." % param_value)
+
     def __call__(self, orig_fn):
         '''This method is invoked once when decorated function is wrapped.'''
 
