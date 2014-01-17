@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.oauth2.tokens_service</title>
+    
+    <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.oauth2.tokens_service</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.oauth2.tokens_service</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2InvalidTokenTypeError</span><span class="p">,</span> <span class="n">OAuth2Error</span><span class="p">,</span> <span class="n">OAuth2InvalidClientError</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.models.client_repository</span> <span class="kn">import</span> <span class="n">ClientRepository</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.token_encryption</span> <span class="kn">import</span> <span class="n">PublicTokenEncryption</span><span class="p">,</span> <span class="n">AesTokenEncryption</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.tokengenerator_factory</span> <span class="kn">import</span> <span class="n">TokenGeneratorFactory</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<div class="viewcode-block" id="TokensService"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.tokens_service.TokensService">[docs]</a><span class="k">class</span> <span class="nc">TokensService</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides an abstraction for working with all supported token types. Internally it uses</span>
+<span class="sd">    :py:class:`fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory` for obtaining a correct token generator. Then,</span>
+<span class="sd">    it delegates all calls to that token generator.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_conn</span><span class="p">,</span> <span class="n">factory_cls</span><span class="o">=</span><span class="n">TokenGeneratorFactory</span><span class="p">,</span> <span class="n">client_repo_cls</span><span class="o">=</span><span class="n">ClientRepository</span><span class="p">,</span>
+                 <span class="n">encryptor_cls</span><span class="o">=</span><span class="n">PublicTokenEncryption</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db_conn</span> <span class="o">=</span> <span class="n">db_conn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_factory</span> <span class="o">=</span> <span class="n">factory_cls</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_repo</span> <span class="o">=</span> <span class="n">client_repo_cls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_db_conn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_encryptor</span> <span class="o">=</span> <span class="n">encryptor_cls</span><span class="p">(</span><span class="n">AesTokenEncryption</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="TokensService.db_conn"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.tokens_service.TokensService.db_conn">[docs]</a>    <span class="k">def</span> <span class="nf">db_conn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property returns the database connection used by this token service.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_conn</span>
+</div>
+<div class="viewcode-block" id="TokensService.generate"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.tokens_service.TokensService.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_desc</span><span class="p">,</span> <span class="n">token_type</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method generates a concrete token from the given token descriptor. It uses token_type in order to choose the right</span>
+<span class="sd">        token generator.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # extract db_conn from one of your controller injected facade models.</span>
+
+<span class="sd">            # generate a new access token</span>
+<span class="sd">            tokens_service = TokensService(db_conn)</span>
+
+<span class="sd">            token_desc = {&quot;client_id&quot;: &quot;sample-client&quot;,</span>
+<span class="sd">                          &quot;user_id&quot;: 123,</span>
+<span class="sd">                          &quot;scopes&quot;: &quot;scope1 scope2 scope3&quot;,</span>
+<span class="sd">                          &quot;expires_in&quot;: 3600}</span>
+<span class="sd">            access_token = tokens_service.generate(token_desc, TokenGeneratorFactory.ACCESS_TOKEN)&#39;&#39;&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_factory</span><span class="o">.</span><span class="n">get_generator</span><span class="p">(</span><span class="n">token_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_conn</span><span class="p">)</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">token_desc</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">token</span>
+        <span class="k">except</span> <span class="n">OAuth2Error</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenTypeError</span><span class="p">(</span><span class="n">token_type</span><span class="p">,</span> <span class="s">&quot;An exception occured while generating token </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> \
+                                              <span class="p">(</span><span class="n">token_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
+</div>
+<div class="viewcode-block" id="TokensService.validate"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.tokens_service.TokensService.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method validates a given token object. Internally, a generator is selected to validate the given token based on</span>
+<span class="sd">        the given token type.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # extract db_conn from one of your controller injected facade models.</span>
+<span class="sd">            # extract token from request or instantiate a new token.</span>
+
+<span class="sd">            tokens_service = TokensService(db_conn)</span>
+<span class="sd">            tokens_service.validate(token)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_factory</span><span class="o">.</span><span class="n">get_generator</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_conn</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">generator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">OAuth2Error</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenTypeError</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s">&quot;Unable to validate token: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="TokensService.invalidate"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.tokens_service.TokensService.invalidate">[docs]</a>    <span class="k">def</span> <span class="nf">invalidate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method invalidates a given token object. For instance, authorization codes can be invalidated. In order to</span>
+<span class="sd">        invalidate a token you can use the code snippet below:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            # extract db_conn from one of your controller injected facade models.</span>
+<span class="sd">            # extract token from request or instantiate a new token.</span>
+
+<span class="sd">            tokens_service = TokensService(db_conn)</span>
+<span class="sd">            tokens_service.invalidate(token)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">generator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokens_factory</span><span class="o">.</span><span class="n">get_generator</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_conn</span><span class="p">)</span>
+
+            <span class="n">generator</span><span class="o">.</span><span class="n">invalidate</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">OAuth2Error</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenTypeError</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s">&quot;Unable to invalidate token: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="TokensService.encrypt"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.tokens_service.TokensService.encrypt">[docs]</a>    <span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">client_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method encrypts a given token and returns the encrypted string representation. Client id is required in order</span>
+<span class="sd">        to obtain the encryption keys.&#39;&#39;&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_repo</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">client_id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidClientError</span><span class="p">(</span><span class="s">&quot;Client </span><span class="si">%s</span><span class="s"> can not be loaded: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
+
+        <span class="n">token_iv</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">token_iv</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="n">token_key</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">token_key</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encryptor</span><span class="o">.</span><span class="n">encrypt_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TokensService.decrypt"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.tokens_service.TokensService.decrypt">[docs]</a>    <span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encrypted_str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method decrypts a given string and returns a concrete token object.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encryptor</span><span class="o">.</span><span class="n">decrypt_token</span><span class="p">(</span><span class="n">encrypted_str</span><span class="p">,</span> <span class="n">client_repo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_client_repo</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

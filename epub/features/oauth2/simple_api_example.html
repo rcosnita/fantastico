@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="../oauth2.html" title="OAUTH2"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -108,31 +108,18 @@ user agent capable of supporting HTTP protocol. Below you can find the http call
 <blockquote>
 <div><ol class="arabic">
 <li><p class="first">Unauthenticated user requests:</p>
-<div class="highlight-html"><div class="highlight"><pre>GET - /simple-menus/ui/index?state=abcdsxadsa
-</pre></div>
+<div class="highlight-html"><pre>GET - /authorize?response_type=token&amp;client_id=sample-menus&amp;state=xyz&amp;error_format=hash&amp;redirect_uri=/simple-menus/ui/index&amp;scopes=simple_menus.create%20simple_menus.update%20simple_menus.delete</pre>
 </div>
 </li>
-<li><p class="first">Fantastico filter detects the route requires permissions (scopes).</p>
-<ol class="arabic">
-<li><p class="first">It checks to see if user is authenticated or not.</p>
+<li><p class="first">Fantastico /authorize endpoint detects that user is not authenticated and redirects the user agent to login screen.</p>
 </li>
-<li><p class="first">Unauthenticated user is redirected to Fantastico IDP login page.</p>
-<div class="highlight-html"><pre>GET - /oauth/idp/login?client_id=simple-menus&amp;return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa</pre>
-</div>
+<li><p class="first">If authentication is successful user agent is redirected back to /authorize.</p>
 </li>
-<li><p class="first">User authenticates successfully.</p>
-<div class="highlight-html"><pre>GET - /oauth/authorize?client_id=simple-menus&amp;return_url=%2Fsimple-menus%2Fui%2Findex%26state%3Dabcdsxadsa</pre>
-</div>
-</li>
-<li><p class="first">Authorization server correctly authorizes the client and generates an access token.</p>
-<div class="highlight-html"><pre>HTTP/1.1 302 Found
-Location: /simple-menus/ui/index#access_token=2YotnFZFEjr1zCsicMWpAA&amp;state=abcdsxadsa&amp;token_type=bearer&amp;expires_in=3600</pre>
-</div>
-</li>
-</ol>
+<li><p class="first">At this point an access token is generated and user agent is redirected back to simple menus ui index page with an access token in hash.</p>
 </li>
 <li><p class="first">Menus management application start page stores the access token into the application space (session storage might be used for this).
-It is recommended to validate received state in order to ensure it corresponds to the initial request.</p>
+It is recommended to validate received state in order to ensure it corresponds to the initial request state. Application must decide
+how to generate state and keep it consistent before request and response.</p>
 </li>
 </ol>
 </div></blockquote>

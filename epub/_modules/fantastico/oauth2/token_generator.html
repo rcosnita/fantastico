@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -48,6 +48,10 @@
 <span class="sd">.. py:module:: fantastico.oauth2.token_generator</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">ABCMeta</span> <span class="c"># pylint: disable=W0611</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoDbNotFoundError</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.model_facade</span> <span class="kn">import</span> <span class="n">ModelFacade</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">,</span> <span class="n">OAuth2InvalidClientError</span><span class="p">,</span> <span class="n">OAuth2InvalidScopesError</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.models.clients</span> <span class="kn">import</span> <span class="n">Client</span>
 
 <div class="viewcode-block" id="TokenGenerator"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_generator.TokenGenerator">[docs]</a><span class="k">class</span> <span class="nc">TokenGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides an abstract contract which must be provided by each concrete token generator. A token generator</span>
@@ -56,6 +60,10 @@
 <span class="sd">        * generate a new token</span>
 <span class="sd">        * validate a given token</span>
 <span class="sd">        * invalidate a given token&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">db_conn</span><span class="p">,</span> <span class="n">model_facade_cls</span><span class="o">=</span><span class="n">ModelFacade</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_db_conn</span> <span class="o">=</span> <span class="n">db_conn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span> <span class="o">=</span> <span class="n">model_facade_cls</span>
 
     <span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="TokenGenerator.generate"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_generator.TokenGenerator.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_desc</span><span class="p">):</span>
@@ -81,7 +89,45 @@
         <span class="sd">&#39;&#39;&#39;This method must be overriden if the given token supports invalidation (e.g: authorization code). In many cases</span>
 <span class="sd">        this is not necessary so this is a nop.&#39;&#39;&#39;</span>
 
-        <span class="k">pass</span></div></div>
+        <span class="k">pass</span>
+</div>
+    <span class="k">def</span> <span class="nf">_validate_missing_attr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">token_desc</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method checks if a specified attribute is missing from token descriptor or not. If it&#39;s missing a concrete</span>
+<span class="sd">        OAuth2 exception is raised. Otherwise, the attribute value is returned.&#39;&#39;&#39;</span>
+
+        <span class="n">ret_value</span> <span class="o">=</span> <span class="n">token_desc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret_value</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ret_value</span>
+
+    <span class="k">def</span> <span class="nf">_validate_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Thie mthod validates the client descriptor (from database) and if valid returns the descriptor.&#39;&#39;&#39;</span>
+
+
+        <span class="n">model_facade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span><span class="p">(</span><span class="n">Client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_conn</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">find_by_pk</span><span class="p">({</span><span class="n">Client</span><span class="o">.</span><span class="n">client_id</span><span class="p">:</span> <span class="n">client_id</span><span class="p">})</span>
+        <span class="k">except</span> <span class="n">FantasticoDbNotFoundError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidClientError</span><span class="p">(</span><span class="s">&quot;Client </span><span class="si">%s</span><span class="s"> does not exist: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">revoked</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidClientError</span><span class="p">(</span><span class="s">&quot;Client </span><span class="si">%s</span><span class="s"> is revoked.&quot;</span> <span class="o">%</span> <span class="n">client_id</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="nf">_validate_client_scopes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_scopes</span><span class="p">,</span> <span class="n">requested_scopes</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method ensures requested scopes list are allowed for the client (client_scopes). If this is not true a concrete</span>
+<span class="sd">        OAuth2 exception is raised.&#39;&#39;&#39;</span>
+
+        <span class="n">client_scopes</span> <span class="o">=</span> <span class="p">[</span><span class="n">scope</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">scope</span> <span class="ow">in</span> <span class="n">client_scopes</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">scope</span> <span class="ow">in</span> <span class="n">requested_scopes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">scope</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">client_scopes</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">OAuth2InvalidScopesError</span><span class="p">(</span><span class="s">&quot;Requested scopes </span><span class="si">%s</span><span class="s"> are not allowed.&quot;</span> <span class="o">%</span> <span class="n">requested_scopes</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

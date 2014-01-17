@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="controllers_security.html" title="Controllers security"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -43,41 +43,66 @@ extensions the APIs are secured with OAUTH2 tokens.</p>
 <h2>APIs</h2>
 <table border="1" class="docutils">
 <colgroup>
-<col width="37%" />
-<col width="8%" />
-<col width="17%" />
-<col width="39%" />
+<col width="23%" />
+<col width="5%" />
+<col width="10%" />
+<col width="43%" />
+<col width="18%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>URI</strong></td>
 <td><strong>Verb</strong></td>
 <td><strong>Required scopes</strong></td>
 <td><strong>Description</strong></td>
+<td><strong>Headers</strong></td>
 </tr>
-<tr class="row-even"><td><strong>/oauth/idp/profile?token=...</strong></td>
+<tr class="row-even"><td><strong>/api/latest/oauth-idp-profile</strong></td>
 <td>GET</td>
 <td>user.profile.read</td>
 <td>Retrieves information about authenticated user.</td>
+<td>Authorization: Bearer &lt;oauth2_token&gt;</td>
 </tr>
-<tr class="row-odd"><td><strong>/oauth/idp/profile?token=...</strong></td>
+<tr class="row-odd"><td><strong>/api/latest/oauth-idp-profile</strong></td>
 <td>POST</td>
 <td>&nbsp;</td>
 <td>Creates a new user profile.</td>
+<td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td><strong>/oauth/idp/profile?token=...</strong></td>
+<tr class="row-even"><td><strong>/api/latest/oauth-idp-profile</strong></td>
 <td>PUT</td>
 <td>user.profile.update</td>
 <td>Updates an existing user profile.</td>
+<td>Authorization: Bearer &lt;oauth2_token&gt;</td>
 </tr>
-<tr class="row-odd"><td><strong>/oauth/idp/profile?token=...</strong></td>
+<tr class="row-odd"><td><strong>/api/latest/oauth-idp-profile</strong></td>
 <td>DELETE</td>
 <td>user.profile.delete</td>
-<td>Updates an existing user profiler.</td>
+<td>Updates an existing user profile.</td>
+<td>Authorization: Bearer &lt;oauth2_token&gt;</td>
 </tr>
-<tr class="row-even"><td><strong>/oauth/idp/ui/login?return_url=/test-url</strong></td>
-<td>DELETE</td>
-<td>user.profile.delete</td>
-<td>Updates an existing user profiler.</td>
+<tr class="row-even"><td><strong>/api/latest/oauth-idp-person/:person_id</strong></td>
+<td>PUT</td>
+<td>user.profile.update</td>
+<td>Updates existing person details .</td>
+<td>Authorization: Bearer &lt;oauth2_token&gt;</td>
+</tr>
+<tr class="row-odd"><td><strong>/oauth/idp/ui/login?redirect_uri=/test-url</strong></td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Returns the markup for login screen.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><strong>/oauth/idp/login?redirect_uri=/test-url</strong></td>
+<td>POST</td>
+<td>&nbsp;</td>
+<td>Authenticate the user, generates a token and passes it to redirect uri.</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><strong>/oauth/idp/ui/cb</strong></td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>A very simple callback which extracts the access token received and prints it on screen.</td>
+<td>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -89,22 +114,150 @@ extensions the APIs are secured with OAUTH2 tokens.</p>
 <div class="section" id="login-frontend">
 <h2>Login frontend</h2>
 <img alt="../../_images/idp_login.png" src="../../_images/idp_login.png" />
-<p>Fantastico provides the secure process for login and account recovery. Developers can easily customize the login screen by providing
-a template which must be applied to login screen. A typical custom login template is presented below:</p>
-<div class="highlight-html"><div class="highlight"><pre>{% block head %}
-   <span class="nt">&lt;title&gt;</span>Simple login template<span class="nt">&lt;/title&gt;</span>
+<p>Developers can easily customize the login screen by providing a template which must be applied to login screen. A typical custom
+login template is presented below:</p>
+<div class="highlight-html"><div class="highlight"><pre>{% extends &quot;login.html&quot; %}
+
+{% block head %}
+    <span class="nt">&lt;title&gt;</span>Fantastico IDP default login<span class="nt">&lt;/title&gt;</span>
+
+    <span class="c">&lt;!-- Latest compiled and minified CSS --&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//code.jquery.com/jquery-2.0.3.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 {% endblock %}
 
 {% block body_header %}
-   <span class="nt">&lt;h1&gt;</span>Login screen<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;row&quot;</span> <span class="na">align=</span><span class="s">&quot;center&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;col-md-4&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;panel panel-default&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;panel-heading&quot;</span><span class="nt">&gt;</span>
+                {% block panel_header %}
+                <span class="nt">&lt;h1&gt;</span>Login to fantastico<span class="nt">&lt;/h1&gt;</span>
+                {% endblock %}
+            <span class="nt">&lt;/div&gt;</span>
 {% endblock %}
 
 {% block body_footer %}
-   <span class="nt">&lt;h6&gt;</span>A tiny little footer.<span class="nt">&lt;/h6&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;panel-footer&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;h4&gt;</span>Created by Radu Viorel Cosnita<span class="nt">&lt;/h4&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 {% endblock %}
 </pre></div>
 </div>
 <p>You can find documentation on how to configure custom login template on <a class="reference internal" href="../../get_started/settings.html"><em>Fantastico settings</em></a>.</p>
+<div class="section" id="administrator-account">
+<h3>Administrator account</h3>
+<p>When you first activate the extension and you syncdb an administrator account is created:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">username</span> <span class="o">=</span> <span class="s2">&quot;admin@fantastico.com&quot;</span>
+<span class="nv">password</span> <span class="o">=</span> <span class="s2">&quot;1234567890&quot;</span>
+</pre></div>
+</div>
+<p>This account can be used to access various applications provided by various Fantastico extensions.</p>
+</div>
+<div class="section" id="users-and-persons">
+<h3>Users and persons</h3>
+<p>At the current moment a person can only have one user associated. Person details must be retrieved using oauth-idp-profile complex
+representation (see: <a class="reference internal" href="../roa.html"><em>ROA (Resource Oriented Architecture)</em></a>). Moreover, when a new user is created a new person is created automatically and
+assigned to that user. Initially created person has some default values in order to allow very smooth account creation in various
+applications.</p>
+</div>
+</div>
+<div class="section" id="technical-summary">
+<h2>Technical summary</h2>
+<div class="section" id="password-storage">
+<h3>Password storage</h3>
+<p>It is recommend that each identity provider holds hashes of passwords instead of plain text passwords. Foreasily development of
+new Identity Providers, Fantastico provides a contract for easily hashing passwords.</p>
+<dl class="class">
+<dt id="fantastico.oauth2.passwords_hasher.PasswordsHasher">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.passwords_hasher.</tt><tt class="descname">PasswordsHasher</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/passwords_hasher.html#PasswordsHasher"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides an abstract contract for password hasher. A password hasher is an algorithm that generates a strong
+hash starting from a plain text string.</p>
+<dl class="method">
+<dt id="fantastico.oauth2.passwords_hasher.PasswordsHasher.hash_password">
+<tt class="descname">hash_password</tt><big>(</big><em>plain_passwd</em>, <em>hash_ctx=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/passwords_hasher.html#PasswordsHasher.hash_password"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method must be overriden in order to provide concrete hashing algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>plain_passwd</strong> (<em>str</em>) &#8211; The plain password for which we want to obtain a strong hash.</li>
+<li><strong>hash_ctx</strong> (<tt class="xref py py-class docutils literal"><span class="pre">fantastico.utils.dictionary_object.DictionaryObject</span></tt>) &#8211; An optional hashing context which contains additional attributes required by hashing algorithm. E.g: sha512 with salt.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The strong hash generated.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.sha512salt_passwords_hasher.Sha512SaltPasswordsHasher">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.sha512salt_passwords_hasher.</tt><tt class="descname">Sha512SaltPasswordsHasher</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/sha512salt_passwords_hasher.html#Sha512SaltPasswordsHasher"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the sha512salt implementation for password hashing. In addition, the result is encoded using base64.
+In order to use this hasher try the code snippet below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sha512_hasher</span> <span class="o">=</span> <span class="n">PasswordsHasherFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_hasher</span><span class="p">(</span><span class="n">PasswordsHasherFactory</span><span class="o">.</span><span class="n">SHA512_SALT</span><span class="p">)</span>
+<span class="n">hashed_passwd</span> <span class="o">=</span> <span class="n">sha512_hasher</span><span class="o">.</span><span class="n">hash_password</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">,</span> <span class="n">DictionaryObject</span><span class="p">({</span><span class="s">&quot;salt&quot;</span><span class="p">:</span> <span class="mi">123</span><span class="p">}))</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fantastico.oauth2.sha512salt_passwords_hasher.Sha512SaltPasswordsHasher.hash_password">
+<tt class="descname">hash_password</tt><big>(</big><em>plain_passwd</em>, <em>hash_ctx=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/sha512salt_passwords_hasher.html#Sha512SaltPasswordsHasher.hash_password"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method provides the sha512 with salt algorithm for a given plain password. In addition, the hash is base64
+encoded.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.passwords_hasher_factory.PasswordsHasherFactory">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.passwords_hasher_factory.</tt><tt class="descname">PasswordsHasherFactory</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/passwords_hasher_factory.html#PasswordsHasherFactory"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides a factory used to obtain concrete password hasher providers. At the moment, the following
+hashers are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li>SHA512_SALT</li>
+</ul>
+</div></blockquote>
+<dl class="method">
+<dt id="fantastico.oauth2.passwords_hasher_factory.PasswordsHasherFactory.get_hasher">
+<tt class="descname">get_hasher</tt><big>(</big><em>hash_alg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/passwords_hasher_factory.html#PasswordsHasherFactory.get_hasher"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This method obtains a concrete passwords hasher provider based on the requested hash algorithm. See the constants
+defined in this factory in order to find out supported algorithms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>hash_alg</strong> (<em>str</em>) &#8211; A string uniquely identifying desired hash algorithm.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A concrete passwords hasher provider.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#fantastico.oauth2.passwords_hasher.PasswordsHasher" title="fantastico.oauth2.passwords_hasher.PasswordsHasher"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.oauth2.passwords_hasher.PasswordsHasher</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="technical_summary.html#fantastico.oauth2.exceptions.OAuth2TokenEncryptionError" title="fantastico.oauth2.exceptions.OAuth2TokenEncryptionError">fantastico.oauth2.exceptions.OAuth2TokenEncryptionError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">In case the requested algorithm is not supported.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 </div>
 

@@ -127,7 +127,7 @@ so in Fantastico for each defined resource you can define a validator which will
 .. code-block:: python
 
    class AppSettingValidator(ResourceValidator):
-       def validate(self, resource):
+       def validate(self, resource, request, existing_resource_id=None):
            errors = []
          
            if resource.name == "unsupported":
@@ -167,6 +167,18 @@ We are aware that there are some common validation cases which can be reused:
 
 All common validation cases  are provided out of the box as methods part of ResourceValidator class. You can easily use them into
 your resource validator.
+
+There are some rare cases when a resource contains sensitive data (e.g user passwords / credit card numbers). In order to alter or
+suppress such sensitive data you can simply override **format_resource** method. Below you can find a simple example of user
+data retrieval where password is never sent back to client even if requested:
+
+.. code-block:: python
+
+   class UserValidator(ResourceValidator):
+      def format_resource(self, user, request):
+         user.password = None
+
+With the above example, whenever you request GET on /users or GET on /user/:userid password will be suppressed.
 
 .. _partial-object-representation:
 
@@ -281,6 +293,12 @@ Composed attributes usage is limited to below mentioned operations:
    * First level subresources.
 
 We do not support update / create of multiple resources using one single request.
+
+Security
+--------
+
+Fantastico provides a compliant OAuth 2 RFC implementation which is also integrated with ROA. For more information about enabling
+OAuth 2 authorization on ROA please read :doc:`/features/oauth2/controllers_security`.
 
 Advantages
 ----------

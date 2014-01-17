@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -71,7 +71,9 @@
 
         <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.middleware.request_middleware.RequestMiddleware&quot;</span><span class="p">,</span>
                 <span class="s">&quot;fantastico.middleware.model_session_middleware.ModelSessionMiddleware&quot;</span><span class="p">,</span>
-                <span class="s">&quot;fantastico.middleware.routing_middleware.RoutingMiddleware&quot;</span><span class="p">]</span>
+                <span class="s">&quot;fantastico.middleware.routing_middleware.RoutingMiddleware&quot;</span><span class="p">,</span>
+                <span class="s">&quot;fantastico.oauth2.middleware.exceptions_middleware.OAuth2ExceptionsMiddleware&quot;</span><span class="p">,</span>
+                <span class="s">&quot;fantastico.oauth2.middleware.tokens_middleware.OAuth2TokensMiddleware&quot;</span><span class="p">]</span>
 </div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.supported_languages"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.supported_languages">[docs]</a>    <span class="k">def</span> <span class="nf">supported_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -86,6 +88,14 @@
         <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.routing_engine.dummy_routeloader.DummyRouteLoader&quot;</span><span class="p">,</span>
                 <span class="s">&quot;fantastico.mvc.controller_registrator.ControllerRouteLoader&quot;</span><span class="p">,</span>
                 <span class="s">&quot;fantastico.roa.resources_registrator.ResourcesRegistrator&quot;</span><span class="p">]</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.mvc_additional_paths"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.mvc_additional_paths">[docs]</a>    <span class="k">def</span> <span class="nf">mvc_additional_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property defines additional packages which must be scanned for controllers. You can use this in order to specify</span>
+<span class="sd">        custom mvc controllers location which are not found in custom components. For instance, OAuth2 controller resides</span>
+<span class="sd">        in core packages of Fantastico.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="s">&quot;fantastico.oauth2&quot;</span><span class="p">]</span>
 </div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="BasicSettings.dev_server_port"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.dev_server_port">[docs]</a>    <span class="k">def</span> <span class="nf">dev_server_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -168,6 +178,37 @@
 <span class="sd">        :doc:`/features/components/roa_discovery/roa_discovery`.&#39;&#39;&#39;</span>
 
         <span class="k">return</span> <span class="s">&quot;/api&quot;</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.oauth2_idp"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.oauth2_idp">[docs]</a>    <span class="k">def</span> <span class="nf">oauth2_idp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds the configuration for Fantastico default Identity Provider. In most cases you will change the</span>
+<span class="sd">        template applied to login screen in order to customize it to your needs. If you want to change</span>
+<span class="sd">        the template for login screen make sure your provide relative path to your components root folder</span>
+<span class="sd">        (e.g /components/frontend/views/custom_login.html). Moreover, you can also specify the login token validity period (in</span>
+<span class="sd">        seconds). It is recommended to set a high value (e.g 2 weeks).</span>
+
+<span class="sd">        Additionaly, you can control default idp index page. Usually, Fantastico OAuth2 identity provider login page should be</span>
+<span class="sd">        good enough.</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            return {&quot;client_id&quot;: &quot;11111111-1111-1111-1111-111111111111&quot;,</span>
+<span class="sd">                    &quot;template&quot;: &quot;/components/frontend/views/custom_login.html&quot;,</span>
+<span class="sd">                    &quot;expires_in&quot;: 1209600,</span>
+<span class="sd">                    &quot;idp_index&quot;: &quot;/oauth/idp/ui/login&quot;}</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;client_id&quot;</span><span class="p">:</span> <span class="s">&quot;11111111-1111-1111-1111-111111111111&quot;</span><span class="p">,</span>
+                <span class="s">&quot;template&quot;</span><span class="p">:</span> <span class="s">&quot;login.html&quot;</span><span class="p">,</span>
+                <span class="s">&quot;expires_in&quot;</span><span class="p">:</span> <span class="mi">1209600</span><span class="p">,</span>
+                <span class="s">&quot;idp_index&quot;</span><span class="p">:</span> <span class="s">&quot;/oauth/idp/ui/login&quot;</span><span class="p">}</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.access_token_validity"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.access_token_validity">[docs]</a>    <span class="k">def</span> <span class="nf">access_token_validity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property defines the validity of an access token in seconds. By default, this property is set</span>
+<span class="sd">        to 1h = 3600 seconds.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="mi">3600</span>
 </div></div>
 <span class="k">class</span> <span class="nc">AwsStageSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the configuration profile for Aws Stage environment integration.&#39;&#39;&#39;</span>

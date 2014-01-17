@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -85,7 +85,32 @@
         <span class="sd">&#39;&#39;&#39;This method transforms calculates sqlalchemy expression held by this filter.&#39;&#39;&#39;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">model_filter</span><span class="o">.</span><span class="n">get_expression</span><span class="p">()</span> <span class="k">for</span> <span class="n">model_filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_filters</span><span class="p">])</span>
-</div></div>
+</div>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is overriden in order to correctly evaluate equality of two compound model filters.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">model_filters</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_filters</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_filters</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_filters</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">!=</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_filters</span><span class="p">[</span><span class="n">idx</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method generates a hash code for compound model filters.&#39;&#39;&#39;</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_filters</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_filters</span><span class="p">)):</span>
+            <span class="n">result</span> <span class="o">^=</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_filters</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+</div>
 <div class="viewcode-block" id="ModelFilterAnd"><a class="viewcode-back" href="../../../../features/mvc.html#fantastico.mvc.models.model_filter_compound.ModelFilterAnd">[docs]</a><span class="k">class</span> <span class="nc">ModelFilterAnd</span><span class="p">(</span><span class="n">ModelFilterCompound</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides a compound filter that allows **and** conditions against models. Below you can find a simple example:</span>
 

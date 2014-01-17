@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -51,6 +51,7 @@
 <span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoControllerInvalidError</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.model_facade</span> <span class="kn">import</span> <span class="n">ModelFacade</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2UnauthorizedError</span><span class="p">,</span> <span class="n">OAuth2Error</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 
@@ -196,27 +197,20 @@
         <span class="k">def</span> <span class="nf">new_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="sd">&#39;&#39;&#39;This method is the one that replaces the original decorated method.&#39;&#39;&#39;</span>
 
-            <span class="n">request</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_request_from_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">request</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">BaseController</span><span class="p">):</span>
-                    <span class="n">contr</span> <span class="o">=</span> <span class="n">request</span>
-                    <span class="n">request</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-                    <span class="n">contr</span><span class="o">.</span><span class="n">curr_request</span> <span class="o">=</span> <span class="n">request</span>
-            <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">FantasticoControllerInvalidError</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_validate_security_context</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 
             <span class="n">conn_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn_manager</span> <span class="ow">or</span> <span class="n">mvc</span><span class="o">.</span><span class="n">CONN_MANAGER</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_inject_models</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">conn_manager</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">request_id</span><span class="p">))</span>
+            <span class="n">db_conn</span> <span class="o">=</span> <span class="n">conn_manager</span><span class="o">.</span><span class="n">get_connection</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">request_id</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inject_models</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">db_conn</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="n">orig_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">new_handler</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__name__</span>
         <span class="n">new_handler</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__doc__</span>
-        <span class="n">new_handler</span><span class="o">.</span><span class="n">__module</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__module__</span>
+        <span class="n">new_handler</span><span class="o">.</span><span class="n">__module__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__module__</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">new_handler</span><span class="p">,</span> <span class="s">&quot;orig_fn&quot;</span><span class="p">,</span> <span class="n">orig_fn</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span> <span class="o">=</span> <span class="n">new_handler</span>
@@ -224,6 +218,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">get_registered_routes</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn_handler</span>
+
+    <span class="k">def</span> <span class="nf">_get_request_from_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method extract the current request from arguments array. It is possible to raise an exception when the method</span>
+<span class="sd">        does not have the correct signature (request argument not present).&#39;&#39;&#39;</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">BaseController</span><span class="p">):</span>
+                <span class="n">contr</span> <span class="o">=</span> <span class="n">request</span>
+                <span class="n">request</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="n">contr</span><span class="o">.</span><span class="n">curr_request</span> <span class="o">=</span> <span class="n">request</span>
+        <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">FantasticoControllerInvalidError</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">request</span>
+
+    <span class="k">def</span> <span class="nf">_validate_security_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method triggers security request validation. Security context is always present (being injected by oauth2</span>
+<span class="sd">        tokens middleware).&#39;&#39;&#39;</span>
+
+        <span class="n">security_ctx</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">security</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">security_ctx</span><span class="o">.</span><span class="n">validate_context</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">OAuth2UnauthorizedError</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s">&quot;Security context insufficient scopes.&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">OAuth2Error</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2UnauthorizedError</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s">&quot;Security context validation exception: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
 </div>
 <span class="k">class</span> <span class="nc">ControllerProvider</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class marks a class as being a controller provider. It means that some of the methods from decorated class</span>

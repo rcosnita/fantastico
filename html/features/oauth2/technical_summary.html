@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OAUTH2 Technical Summary &mdash; fantastico 0.6.0-b136 documentation</title>
+    <title>OAUTH2 Technical Summary &mdash; fantastico 0.6.0-b137 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.6.0-b136',
+        VERSION:     '0.6.0-b137',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b136 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b137 documentation" href="../../index.html" />
     <link rel="up" title="OAUTH2" href="../oauth2.html" />
     <link rel="next" title="SDK" href="../sdk.html" />
     <link rel="prev" title="OAUTH2 Fantastico IDP" href="idp.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="idp.html" title="OAUTH2 Fantastico IDP"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -60,15 +60,15 @@ the previous sections before actually deep diving into technical details.</p>
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fantastico.oauth2.oauth2_controller.OAuth2Controller">
-<em class="property">class </em><tt class="descclassname">fantastico.oauth2.oauth2_controller.</tt><tt class="descname">OAuth2Controller</tt><big>(</big><em>settings_facade</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_controller.html#OAuth2Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_controller.OAuth2Controller" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.oauth2_controller.</tt><tt class="descname">OAuth2Controller</tt><big>(</big><em>settings_facade</em>, <em>handler_factory_cls=&lt;class 'fantastico.oauth2.grant_handler_factory.GrantHandlerFactory'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_controller.html#OAuth2Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_controller.OAuth2Controller" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the routes specified in OAUTH 2 specification (<a class="reference external" href="http://tools.ietf.org/html/rfc6749">RFC6479</a>). A
 technical overview of OAuth2 implementation in Fantastico is presented below:</p>
 <img alt="../../_images/oauth2_overview.png" src="../../_images/oauth2_overview.png" />
 <dl class="method">
 <dt id="fantastico.oauth2.oauth2_controller.OAuth2Controller.handle_authorize">
-<tt class="descname">handle_authorize</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_controller.html#OAuth2Controller.handle_authorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_controller.OAuth2Controller.handle_authorize" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">handle_authorize</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_controller.html#OAuth2Controller.handle_authorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_controller.OAuth2Controller.handle_authorize" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method provides the /authorize endpoint compliant with <a class="reference external" href="http://tools.ietf.org/html/rfc6749">RFC6479</a> standard.
-Authorize endpoint provides an API for obtaining an access token or an authorization code dependin on the grant type.</p>
+Authorize endpoint provides an API for obtaining an access token or an authorization code depending on the grant type.</p>
 </dd></dl>
 
 <dl class="method">
@@ -80,12 +80,27 @@ Token endpoint provides an API for obtaining access tokens.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="security-context">
-<h2>Security context<a class="headerlink" href="#security-context" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fantastico.oauth2.middleware.tokens_middleware.OAuth2TokensMiddleware">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.middleware.tokens_middleware.</tt><tt class="descname">OAuth2TokensMiddleware</tt><big>(</big><em>app</em>, <em>tokens_service_cls=&lt;class 'fantastico.oauth2.tokens_service.TokensService'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/middleware/tokens_middleware.html#OAuth2TokensMiddleware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.middleware.tokens_middleware.OAuth2TokensMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a middleware responsible for decoding an access token (if exists) and building a security context. It
+is extremely import to configure this middleware to run after
+<a class="reference internal" href="../request_response.html#fantastico.middleware.request_middleware.RequestMiddleware" title="fantastico.middleware.request_middleware.RequestMiddleware"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.middleware.request_middleware.RequestMiddleware</span></tt></a> and after
+<a class="reference internal" href="../mvc.html#fantastico.middleware.model_session_middleware.ModelSessionMiddleware" title="fantastico.middleware.model_session_middleware.ModelSessionMiddleware"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.middleware.model_session_middleware.ModelSessionMiddleware</span></tt></a> because
+it needs a valid request and connection manager saved in the current pipeline execution.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.middleware.exceptions_middleware.OAuth2ExceptionsMiddleware">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.middleware.exceptions_middleware.</tt><tt class="descname">OAuth2ExceptionsMiddleware</tt><big>(</big><em>app</em>, <em>settings_facade_cls=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em>, <em>exceptions_factory_cls=&lt;class 'fantastico.exception_formatters.ExceptionFormattersFactory'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/middleware/exceptions_middleware.html#OAuth2ExceptionsMiddleware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.middleware.exceptions_middleware.OAuth2ExceptionsMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the support for dynamically casting OAuth2 errors into concrete error responses. At the moment
+responses are returned only in english and have the format specified in RFC6749. Mainly, at each intercepted OAuth2
+exceptions a json response is returned to the client.</p>
+</dd></dl>
+
 <dl class="class">
 <dt id="fantastico.oauth2.security_context.SecurityContext">
-<em class="property">class </em><tt class="descclassname">fantastico.oauth2.security_context.</tt><tt class="descname">SecurityContext</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/security_context.html#SecurityContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.security_context.SecurityContext" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.security_context.</tt><tt class="descname">SecurityContext</tt><big>(</big><em>access_token</em>, <em>required_scopes=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/security_context.html#SecurityContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.security_context.SecurityContext" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the OAuth2 security context. Security context is available for each request and can be accessed
 using the following code snippet:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/test/controller&quot;</span><span class="p">)</span>
@@ -103,10 +118,88 @@ as documented in <a class="reference internal" href="tokens_format.html"><em>OAU
 </dd></dl>
 
 <dl class="attribute">
-<dt id="fantastico.oauth2.security_context.SecurityContext.login_token">
-<tt class="descname">login_token</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/security_context.html#SecurityContext.login_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.security_context.SecurityContext.login_token" title="Permalink to this definition">¶</a></dt>
-<dd><p>This property returns the current login token passed to the current http request. Login token is already decoded
-as documented in <a class="reference internal" href="tokens_format.html"><em>OAUTH2 Fantastico Tokens</em></a> (encrypted section).</p>
+<dt id="fantastico.oauth2.security_context.SecurityContext.required_scopes">
+<tt class="descname">required_scopes</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/security_context.html#SecurityContext.required_scopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.security_context.SecurityContext.required_scopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns the current required scopes for http request. Required scopes are only available at runtime.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.security_context.SecurityContext.validate_context">
+<tt class="descname">validate_context</tt><big>(</big><em>attr_scope='scopes'</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/security_context.html#SecurityContext.validate_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.security_context.SecurityContext.validate_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method tries to validate the current security context using the current access token and required scopes.
+Internally, the method simply ensures required scopes are present in access token granted scopes. Moreover, it receives
+an optional parameter which allows requester to decide what section of required scopes it wants to validates. Valid
+values are: scopes, create_scopes, read_scopes, update_scopes or delete_scopes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="enforcing-authorization">
+<h2>Enforcing authorization<a class="headerlink" href="#enforcing-authorization" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fantastico.oauth2.oauth2_decorators.RequiredScopes">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.oauth2_decorators.</tt><tt class="descname">RequiredScopes</tt><big>(</big><em>scopes=None</em>, <em>create=None</em>, <em>read=None</em>, <em>update=None</em>, <em>delete=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_decorators.html#RequiredScopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_decorators.RequiredScopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the decorator for enforcing fantastico to authorize requests against ROA resources and MVC controllers.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># enforce authorization for MVC controllers.</span>
+<span class="nd">@ControllerProvider</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">SecuredController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
+    <span class="nd">@RequiredScopes</span><span class="p">(</span><span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;greet.verbose&quot;</span><span class="p">,</span> <span class="s">&quot;greet.read&quot;</span><span class="p">])</span>
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/secured-controller/ui/index&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world&lt;/body&gt;&lt;/html&gt;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># enforce authorization for ROA resources.</span>
+<span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="nd">@RequiredScopes</span><span class="p">(</span><span class="n">create</span><span class="o">=</span><span class="s">&quot;app_setting.create&quot;</span><span class="p">,</span>
+                <span class="n">read</span><span class="o">=</span><span class="s">&quot;app_setting.read&quot;</span><span class="p">,</span>
+                <span class="n">update</span><span class="o">=</span><span class="s">&quot;app_setting.update&quot;</span><span class="p">,</span>
+                <span class="n">delete</span><span class="o">=</span><span class="s">&quot;app_setting.delete&quot;</span><span class="p">})</span>
+<span class="k">class</span> <span class="nc">AppSetting</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="fantastico.oauth2.oauth2_decorators.RequiredScopes.create_scopes">
+<tt class="descname">create_scopes</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_decorators.html#RequiredScopes.create_scopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_decorators.RequiredScopes.create_scopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns the scopes required for create calls.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.oauth2.oauth2_decorators.RequiredScopes.delete_scopes">
+<tt class="descname">delete_scopes</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_decorators.html#RequiredScopes.delete_scopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_decorators.RequiredScopes.delete_scopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns the scopes required for delete calls.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.oauth2_decorators.RequiredScopes.inject_scopes_in_security">
+<tt class="descname">inject_scopes_in_security</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_decorators.html#RequiredScopes.inject_scopes_in_security"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_decorators.RequiredScopes.inject_scopes_in_security" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method injects the request scopes into request security context.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.oauth2.oauth2_decorators.RequiredScopes.read_scopes">
+<tt class="descname">read_scopes</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_decorators.html#RequiredScopes.read_scopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_decorators.RequiredScopes.read_scopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns the scopes required for read calls.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.oauth2.oauth2_decorators.RequiredScopes.scopes">
+<tt class="descname">scopes</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_decorators.html#RequiredScopes.scopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_decorators.RequiredScopes.scopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns the currently set scopes (including create, read, update, delete).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.oauth2.oauth2_decorators.RequiredScopes.update_scopes">
+<tt class="descname">update_scopes</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/oauth2_decorators.html#RequiredScopes.update_scopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.oauth2_decorators.RequiredScopes.update_scopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns the scopes required for update calls.</p>
 </dd></dl>
 
 </dd></dl>
@@ -122,7 +215,7 @@ can be obtained in a secure context.</p>
 <div><div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;^/users/ui/show-profile$&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">show_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
    <span class="n">security_ctx</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">security</span>
-   <span class="n">user_id</span> <span class="o">=</span> <span class="n">security_ctx</span><span class="o">.</span><span class="n">login_token</span><span class="o">.</span><span class="n">user_id</span>
+   <span class="n">user_id</span> <span class="o">=</span> <span class="n">security_ctx</span><span class="o">.</span><span class="n">access_token</span><span class="o">.</span><span class="n">user_id</span>
 
    <span class="c"># use profile endpoint to obtain additional information.</span>
 </pre></div>
@@ -137,26 +230,135 @@ can be obtained in a secure context.</p>
 <span class="nd">@RequiredScopes</span><span class="p">(</span><span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;custom_scope1.read&quot;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
    <span class="n">access_token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">access_token</span>
-   <span class="n">scopes</span> <span class="o">=</span> <span class="n">access_token</span><span class="o">.</span><span class="n">encrypted</span><span class="o">.</span><span class="n">scopes</span>
+   <span class="n">scopes</span> <span class="o">=</span> <span class="n">access_token</span><span class="o">.</span><span class="n">scopes</span>
 
    <span class="c"># validate scopes</span>
 </pre></div>
 </div>
 </div></blockquote>
+<p>If you try to use access token property of security context when no access token is expected this will be None.</p>
 </div>
 </div>
 <div class="section" id="supported-token-generators">
 <h2>Supported token generators<a class="headerlink" href="#supported-token-generators" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fantastico.oauth2.token.Token">
-<em class="property">class </em><tt class="descclassname">fantastico.oauth2.token.</tt><tt class="descname">Token</tt><big>(</big><em>members</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token.html#Token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token.Token" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.token.</tt><tt class="descname">Token</tt><big>(</big><em>desc</em>, <em>immutable=True</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token.html#Token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token.Token" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides a token model which can be built from a generic dictionary. All dictionary keys become token
 members.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="fantastico.oauth2.tokens_service.TokensService">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.tokens_service.</tt><tt class="descname">TokensService</tt><big>(</big><em>db_conn</em>, <em>factory_cls=&lt;class 'fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory'&gt;</em>, <em>client_repo_cls=&lt;class 'fantastico.oauth2.models.client_repository.ClientRepository'&gt;</em>, <em>encryptor_cls=&lt;class 'fantastico.oauth2.token_encryption.PublicTokenEncryption'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/tokens_service.html#TokensService"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokens_service.TokensService" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides an abstraction for working with all supported token types. Internally it uses
+<a class="reference internal" href="#fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory" title="fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory</span></tt></a> for obtaining a correct token generator. Then,
+it delegates all calls to that token generator.</p>
+<dl class="attribute">
+<dt id="fantastico.oauth2.tokens_service.TokensService.db_conn">
+<tt class="descname">db_conn</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/tokens_service.html#TokensService.db_conn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokens_service.TokensService.db_conn" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property returns the database connection used by this token service.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.tokens_service.TokensService.decrypt">
+<tt class="descname">decrypt</tt><big>(</big><em>encrypted_str</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/tokens_service.html#TokensService.decrypt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokens_service.TokensService.decrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method decrypts a given string and returns a concrete token object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.tokens_service.TokensService.encrypt">
+<tt class="descname">encrypt</tt><big>(</big><em>token</em>, <em>client_id</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/tokens_service.html#TokensService.encrypt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokens_service.TokensService.encrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method encrypts a given token and returns the encrypted string representation. Client id is required in order
+to obtain the encryption keys.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.tokens_service.TokensService.generate">
+<tt class="descname">generate</tt><big>(</big><em>token_desc</em>, <em>token_type</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/tokens_service.html#TokensService.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokens_service.TokensService.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method generates a concrete token from the given token descriptor. It uses token_type in order to choose the right
+token generator.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># extract db_conn from one of your controller injected facade models.</span>
+
+<span class="c"># generate a new access token</span>
+<span class="n">tokens_service</span> <span class="o">=</span> <span class="n">TokensService</span><span class="p">(</span><span class="n">db_conn</span><span class="p">)</span>
+
+<span class="n">token_desc</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;client_id&quot;</span><span class="p">:</span> <span class="s">&quot;sample-client&quot;</span><span class="p">,</span>
+              <span class="s">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+              <span class="s">&quot;scopes&quot;</span><span class="p">:</span> <span class="s">&quot;scope1 scope2 scope3&quot;</span><span class="p">,</span>
+              <span class="s">&quot;expires_in&quot;</span><span class="p">:</span> <span class="mi">3600</span><span class="p">}</span>
+<span class="n">access_token</span> <span class="o">=</span> <span class="n">tokens_service</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">token_desc</span><span class="p">,</span> <span class="n">TokenGeneratorFactory</span><span class="o">.</span><span class="n">ACCESS_TOKEN</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.tokens_service.TokensService.invalidate">
+<tt class="descname">invalidate</tt><big>(</big><em>token</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/tokens_service.html#TokensService.invalidate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokens_service.TokensService.invalidate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method invalidates a given token object. For instance, authorization codes can be invalidated. In order to
+invalidate a token you can use the code snippet below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># extract db_conn from one of your controller injected facade models.</span>
+<span class="c"># extract token from request or instantiate a new token.</span>
+
+<span class="n">tokens_service</span> <span class="o">=</span> <span class="n">TokensService</span><span class="p">(</span><span class="n">db_conn</span><span class="p">)</span>
+<span class="n">tokens_service</span><span class="o">.</span><span class="n">invalidate</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.tokens_service.TokensService.validate">
+<tt class="descname">validate</tt><big>(</big><em>token</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/tokens_service.html#TokensService.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokens_service.TokensService.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method validates a given token object. Internally, a generator is selected to validate the given token based on
+the given token type.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># extract db_conn from one of your controller injected facade models.</span>
+<span class="c"># extract token from request or instantiate a new token.</span>
+
+<span class="n">tokens_service</span> <span class="o">=</span> <span class="n">TokensService</span><span class="p">(</span><span class="n">db_conn</span><span class="p">)</span>
+<span class="n">tokens_service</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.tokengenerator_factory.</tt><tt class="descname">TokenGeneratorFactory</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/tokengenerator_factory.html#TokenGeneratorFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the entry point for working with generators. It provides a factory for easily instantiating a generator
+which can work with a request token type.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">login_generator</span> <span class="o">=</span> <span class="n">TokenGeneratorFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_generator</span><span class="p">(</span><span class="n">TokenGeneratorFactory</span><span class="o">.</span><span class="n">LOGIN_TOKEN</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory.get_generator">
+<tt class="descname">get_generator</tt><big>(</big><em>token_type</em>, <em>db_conn</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/tokengenerator_factory.html#TokenGeneratorFactory.get_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.tokengenerator_factory.TokenGeneratorFactory.get_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns an instance of a token generator which can handel requested token type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>token_type</strong> (<em>string</em>) &#8211; A unique token type.</li>
+<li><strong>db_conn</strong> &#8211; An existing database connection (sql alchemy object) used when working with client context.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An instance of a concrete token generator which is compatible with the request token type.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fantastico.oauth2.token_generator.TokenGenerator" title="fantastico.oauth2.token_generator.TokenGenerator"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.oauth2.token_generator.TokenGenerator</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="fantastico.oauth2.token_generator.TokenGenerator">
-<em class="property">class </em><tt class="descclassname">fantastico.oauth2.token_generator.</tt><tt class="descname">TokenGenerator</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/token_generator.html#TokenGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_generator.TokenGenerator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.token_generator.</tt><tt class="descname">TokenGenerator</tt><big>(</big><em>db_conn</em>, <em>model_facade_cls=&lt;class 'fantastico.mvc.model_facade.ModelFacade'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token_generator.html#TokenGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_generator.TokenGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides an abstract contract which must be provided by each concrete token generator. A token generator
 must provide the following functionality:</p>
 <blockquote>
@@ -211,7 +413,7 @@ exception must be raised.</p>
 
 <dl class="class">
 <dt id="fantastico.oauth2.logintoken_generator.LoginTokenGenerator">
-<em class="property">class </em><tt class="descclassname">fantastico.oauth2.logintoken_generator.</tt><tt class="descname">LoginTokenGenerator</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/logintoken_generator.html#LoginTokenGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.logintoken_generator.LoginTokenGenerator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.logintoken_generator.</tt><tt class="descname">LoginTokenGenerator</tt><big>(</big><em>db_conn</em>, <em>model_facade_cls=&lt;class 'fantastico.mvc.model_facade.ModelFacade'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/logintoken_generator.html#LoginTokenGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.logintoken_generator.LoginTokenGenerator" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides support for generating and working with login tokens. A login token is used for proving that a user
 is authenticated correctly. For more information, read <a class="reference internal" href="tokens_format.html"><em>OAUTH2 Fantastico Tokens</em></a>.</p>
 <dl class="method">
@@ -236,6 +438,210 @@ is authenticated correctly. For more information, read <a class="reference inter
 <li>correct type (login).</li>
 <li>expiration time.</li>
 </ul>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.accesstoken_generator.AccessTokenGenerator">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.accesstoken_generator.</tt><tt class="descname">AccessTokenGenerator</tt><big>(</big><em>db_conn</em>, <em>model_facade_cls=&lt;class 'fantastico.mvc.model_facade.ModelFacade'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/accesstoken_generator.html#AccessTokenGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.accesstoken_generator.AccessTokenGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the methods for working with access tokens: (generate and validate).</p>
+<dl class="method">
+<dt id="fantastico.oauth2.accesstoken_generator.AccessTokenGenerator.generate">
+<tt class="descname">generate</tt><big>(</big><em>token_desc</em>, <em>time_provider=&lt;module 'time' (built-in)&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/accesstoken_generator.html#AccessTokenGenerator.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.accesstoken_generator.AccessTokenGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method generates a new access token starting from the givent token descriptor. In order to succeed the token
+descriptor must contain the following keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li>client_id - Client unique identifier.</li>
+<li>user_id - User unique identifier.</li>
+<li>scopes - The scopes requested for this client (a space delimited list of strings).</li>
+<li>expires_in - The time to live period (in seconds) for the newly generated access token.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.accesstoken_generator.AccessTokenGenerator.validate">
+<tt class="descname">validate</tt><big>(</big><em>token</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/accesstoken_generator.html#AccessTokenGenerator.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.accesstoken_generator.AccessTokenGenerator.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method validates a given access token. It checks for:</p>
+<ul class="simple">
+<li>valid client id</li>
+<li>valid token type</li>
+<li>token not expired</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="encryption-decryption">
+<h2>Encryption / decryption<a class="headerlink" href="#encryption-decryption" title="Permalink to this headline">¶</a></h2>
+<p>In Fantastico OAuth2, tokens are encrypted / decrypted using AES symmetric encryption. Below you can find the classes which provides
+AES implementation:</p>
+<dl class="class">
+<dt id="fantastico.oauth2.token_encryption.TokenEncryption">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.token_encryption.</tt><tt class="descname">TokenEncryption</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#TokenEncryption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.TokenEncryption" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides an abstract model for token encryption providers. A token encryption provider must be able
+to encrypt / decrypt a <a class="reference internal" href="#fantastico.oauth2.token.Token" title="fantastico.oauth2.token.Token"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.oauth2.token.Token</span></tt></a> objects.</p>
+<dl class="method">
+<dt id="fantastico.oauth2.token_encryption.TokenEncryption.decrypt_token">
+<tt class="descname">decrypt_token</tt><big>(</big><em>encrypted_str</em>, <em>token_iv</em>, <em>token_key</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#TokenEncryption.decrypt_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.TokenEncryption.decrypt_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by concrete providers in order to correctly transform an encrypted string into a token
+object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>encrypted_str</strong> (<em>str</em>) &#8211; Encrypted token representation.</li>
+<li><strong>token_iv</strong> (<em>byte[]</em>) &#8211; Token initialization vector used in symmetric encryption. Most of the times this will have a fix 128 bits length.</li>
+<li><strong>token_key</strong> (<em>byte[]</em>) &#8211; Token key used in symmetric encryption. Based on the implementation the length might vary: 128 / 192 / 256 bits.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Decrypted token object.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fantastico.oauth2.token.Token" title="fantastico.oauth2.token.Token"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.oauth2.token.Token</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.token_encryption.TokenEncryption.encrypt_token">
+<tt class="descname">encrypt_token</tt><big>(</big><em>token</em>, <em>token_iv</em>, <em>token_key</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#TokenEncryption.encrypt_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.TokenEncryption.encrypt_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by concrete providers in order to correctly transform a token object into an encrypted
+string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>token</strong> (<a class="reference internal" href="#fantastico.oauth2.token.Token" title="fantastico.oauth2.token.Token"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.oauth2.token.Token</span></tt></a>) &#8211; A token object we want to encrypt.</li>
+<li><strong>token_iv</strong> (<em>byte[]</em>) &#8211; Token initialization vector used in symmetric encryption. Most of the times this will have a fix 128 bits length.</li>
+<li><strong>token_key</strong> (<em>byte[]</em>) &#8211; Token key used in symmetric encryption. Based on the implementation the length might vary: 128 / 192 / 256 bits.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The encrypted representation of the token.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.token_encryption.AesTokenEncryption">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.token_encryption.</tt><tt class="descname">AesTokenEncryption</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#AesTokenEncryption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.AesTokenEncryption" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a generic AES token encryption provider. It allows developers to specify the number of bits used
+for AES (128 / 192 / 256 bits).</p>
+<dl class="method">
+<dt id="fantastico.oauth2.token_encryption.AesTokenEncryption.decrypt_token">
+<tt class="descname">decrypt_token</tt><big>(</big><em>encrypted_str</em>, <em>token_iv</em>, <em>token_key</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#AesTokenEncryption.decrypt_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.AesTokenEncryption.decrypt_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method uses AES for decrypting the given string. Internally, decrypted string is converted into a dictionary and
+then into a concrete token object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.token_encryption.AesTokenEncryption.encrypt_token">
+<tt class="descname">encrypt_token</tt><big>(</big><em>token</em>, <em>token_iv</em>, <em>token_key</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#AesTokenEncryption.encrypt_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.AesTokenEncryption.encrypt_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method uses AES for encrypting the given token. Internally it transform the token into a JSON string and
+encrypt it using given token_iv and token_key.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.token_encryption.PublicTokenEncryption">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.token_encryption.</tt><tt class="descname">PublicTokenEncryption</tt><big>(</big><em>symmetric_encryptor</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#PublicTokenEncryption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.PublicTokenEncryption" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a special token encryption: a mix of base64 encoded and symmetrical encrypted token. We need
+this mix because client_id is required for every operation involving oauth2 tokens.</p>
+<dl class="method">
+<dt id="fantastico.oauth2.token_encryption.PublicTokenEncryption.decrypt_token">
+<tt class="descname">decrypt_token</tt><big>(</big><em>encrypted_str</em>, <em>token_iv=None</em>, <em>token_key=None</em>, <em>client_repo=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#PublicTokenEncryption.decrypt_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.PublicTokenEncryption.decrypt_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This methods receives a public token representation and returns a concrete token object. In many cases token_iv and
+token_key will not be known so they will obtained from the public part of the token using client_id descriptor
+persisted in database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.oauth2.token_encryption.PublicTokenEncryption.encrypt_token">
+<tt class="descname">encrypt_token</tt><big>(</big><em>token</em>, <em>token_iv=None</em>, <em>token_key=None</em>, <em>client_repo=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/token_encryption.html#PublicTokenEncryption.encrypt_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.token_encryption.PublicTokenEncryption.encrypt_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method takes a concrete token object and returns a base64 representation of the token. In the rare cases where
+the encryption vectors are not known client_repo is used to read client descriptor and lazy obtain the vectors.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="suported-grant-types">
+<h2>Suported grant types<a class="headerlink" href="#suported-grant-types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="fantastico.oauth2.grant_handler.GrantHandler">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.grant_handler.</tt><tt class="descname">GrantHandler</tt><big>(</big><em>tokens_service</em>, <em>settings_facade</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/grant_handler.html#GrantHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.grant_handler.GrantHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the abstract contract of a handler. Each concrete handler must implement this contract in order to
+correctly extend Fantastico OAuth2 supported handlers.</p>
+<dl class="method">
+<dt id="fantastico.oauth2.grant_handler.GrantHandler.handle_grant">
+<tt class="descname">handle_grant</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/grant_handler.html#GrantHandler.handle_grant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.grant_handler.GrantHandler.handle_grant" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden in order to correctly implement grant logic. It receives the current http request
+and return a http response.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.grant_handler_factory.GrantHandlerFactory">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.grant_handler_factory.</tt><tt class="descname">GrantHandlerFactory</tt><big>(</big><em>tokens_service_cls=&lt;class 'fantastico.oauth2.tokens_service.TokensService'&gt;</em>, <em>settings_facade_cls=&lt;class 'fantastico.settings.SettingsFacade'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/grant_handler_factory.html#GrantHandlerFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.grant_handler_factory.GrantHandlerFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a factory which can be used to obtain a concrete grant handler. Below you can find a code snippet for
+obtaining and implicit grant type handler:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">grant_handler</span> <span class="o">=</span> <span class="n">GrantHandlerFactory</span><span class="p">()</span><span class="o">.</span><span class="n">get_handler</span><span class="p">(</span><span class="n">GrantHandlerFactory</span><span class="o">.</span><span class="n">IMPLICIT_GRANT</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="fantastico.oauth2.grant_handler_factory.GrantHandlerFactory.get_handler">
+<tt class="descname">get_handler</tt><big>(</big><em>handler_type</em>, <em>db_conn</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/grant_handler_factory.html#GrantHandlerFactory.get_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.grant_handler_factory.GrantHandlerFactory.get_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method builds a grant handler which matches requested handler_type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>handler_type</strong> (<em>str</em>) &#8211; A string value describing the grant_type which must be handled.</li>
+<li><strong>db_conn</strong> (<em>Connection</em>) &#8211; A db connection active session which cn be used.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A concrete grant handler instance.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#fantastico.oauth2.grant_handler.GrantHandler" title="fantastico.oauth2.grant_handler.GrantHandler"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.oauth2.grant_handler.GrantHandler</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.implicit_grant_handler.</tt><tt class="descname">ImplicitGrantHandler</tt><big>(</big><em>tokens_service</em>, <em>settings_facade</em>, <em>exception_formatters_cls=&lt;class 'fantastico.exception_formatters.ExceptionFormattersFactory'&gt;</em>, <em>client_repo_cls=&lt;class 'fantastico.oauth2.models.client_repository.ClientRepository'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/implicit_grant_handler.html#ImplicitGrantHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides the implementation for implicit grant type described in
+<a class="reference external" href="http://tools.ietf.org/html/rfc6749">RFC6749</a>. Implementation of this grant type is fully compliant with OAuth2 spec.</p>
+<dl class="method">
+<dt id="fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler.handle_grant">
+<tt class="descname">handle_grant</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/implicit_grant_handler.html#ImplicitGrantHandler.handle_grant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler.handle_grant" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method provides the algorithm for implementing implicit grant type handler. Internally it will use TokensService
+in order to generate a new access token.</p>
 </dd></dl>
 
 </dd></dl>
@@ -272,8 +678,8 @@ friendly description.</p>
 <dl class="class">
 <dt id="fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError">
 <em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2InvalidTokenTypeError</tt><big>(</big><em>token_type</em>, <em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2InvalidTokenTypeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class provides a concrete exception used to notify that a token has been seen to a token generator which does not
-support it.</p>
+<dd><p>This class provides a concrete exception used to notify that a token has been sent to a token generator which does not
+support it or the token type is unknown.</p>
 <dl class="attribute">
 <dt id="fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError.token_type">
 <tt class="descname">token_type</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2InvalidTokenTypeError.token_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError.token_type" title="Permalink to this definition">¶</a></dt>
@@ -286,6 +692,60 @@ support it.</p>
 <dt id="fantastico.oauth2.exceptions.OAuth2TokenExpiredError">
 <em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2TokenExpiredError</tt><big>(</big><em>msg=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2TokenExpiredError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2TokenExpiredError" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides a concrete exception used to notify that a token is expired.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2InvalidClientError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2InvalidClientError</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2InvalidClientError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2InvalidClientError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a concrete exception used to notify an invalid client (not found or revoked).</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2InvalidScopesError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2InvalidScopesError</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2InvalidScopesError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2InvalidScopesError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a concrete exception used to notify that a client is not allowed to use a request set of scopes.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2MissingQueryParamError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2MissingQueryParamError</tt><big>(</big><em>param_name</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2MissingQueryParamError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2MissingQueryParamError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a concrete exception used to notify a missing query parameter from an OAuth2 endpoint.</p>
+<dl class="attribute">
+<dt id="fantastico.oauth2.exceptions.OAuth2MissingQueryParamError.param_name">
+<tt class="descname">param_name</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2MissingQueryParamError.param_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2MissingQueryParamError.param_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property return the name of the query parameter which is missing.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2TokenEncryptionError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2TokenEncryptionError</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2TokenEncryptionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2TokenEncryptionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a concrete exception used to notify an error during encrypt / decrypt token operations.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2UnsupportedGrantError</tt><big>(</big><em>handler_type</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2UnsupportedGrantError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a concrete exception for notifying unsupport oauth2 grant type.</p>
+<dl class="attribute">
+<dt id="fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError.handler_type">
+<tt class="descname">handler_type</tt><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2UnsupportedGrantError.handler_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError.handler_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the unsupported grant type name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2UnauthorizedError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2UnauthorizedError</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2UnauthorizedError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2UnauthorizedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a concrete exception for notifying unauthorized access to oauth2 protected resources.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="fantastico.oauth2.exceptions.OAuth2AuthenticationError">
+<em class="property">class </em><tt class="descclassname">fantastico.oauth2.exceptions.</tt><tt class="descname">OAuth2AuthenticationError</tt><big>(</big><em>msg</em>, <em>http_code=403</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/exceptions.html#OAuth2AuthenticationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.oauth2.exceptions.OAuth2AuthenticationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides a concrete exception used to notify a failed authentication attempt from an OAuth2 IDP.</p>
 </dd></dl>
 
 </div>
@@ -301,13 +761,15 @@ support it.</p>
   <ul>
 <li><a class="reference internal" href="#">OAUTH2 Technical Summary</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#security-context">Security context</a></li>
+<li><a class="reference internal" href="#enforcing-authorization">Enforcing authorization</a></li>
 <li><a class="reference internal" href="#common-tokens-usage">Common tokens usage</a><ul>
 <li><a class="reference internal" href="#obtain-authenticated-user-id">Obtain authenticated user id</a></li>
 <li><a class="reference internal" href="#obtain-current-granted-scopes">Obtain current granted scopes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#supported-token-generators">Supported token generators</a></li>
+<li><a class="reference internal" href="#encryption-decryption">Encryption / decryption</a></li>
+<li><a class="reference internal" href="#suported-grant-types">Suported grant types</a></li>
 <li><a class="reference internal" href="#concrete-exceptions">Concrete exceptions</a></li>
 </ul>
 </li>
@@ -353,7 +815,7 @@ support it.</p>
         <li class="right" >
           <a href="idp.html" title="OAUTH2 Fantastico IDP"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" >OAUTH2</a> &raquo;</li> 
       </ul>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.roa.resource_decorator &mdash; fantastico 0.6.0-b136 documentation</title>
+    <title>fantastico.roa.resource_decorator &mdash; fantastico 0.6.0-b137 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.6.0-b136',
+        VERSION:     '0.6.0-b137',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b136 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b137 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -77,9 +77,30 @@
 <span class="sd">            name = Column(&quot;name&quot;, String(50), unique=True, nullable=False)</span>
 <span class="sd">            value = Column(&quot;value&quot;, Text, nullable=False)</span>
 
-<span class="sd">            def __init__(self, name, value):</span>
+<span class="sd">            def __init__(self, name=None, value=None):</span>
 <span class="sd">               self.name = name</span>
 <span class="sd">               self.value = value</span>
+
+<span class="sd">    Starting from **Fantastico** version 0.6 ROA resources support OAuth2 authorization. Because of this, resources can now be</span>
+<span class="sd">    user dependent or user independent. In order for authorization to work as expected for resources which are available only</span>
+<span class="sd">    to certain users you can use the following code snippet:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        @Resource(name=&quot;app-setting&quot;, url=&quot;/app-settings&quot;, user_dependent=True)</span>
+<span class="sd">        class AppSetting(BASEMODEL):</span>
+<span class="sd">            id = Column(&quot;id&quot;, Integer, primary_key=True, autoincrement=True)</span>
+<span class="sd">            name = Column(&quot;name&quot;, String(50), unique=True, nullable=False)</span>
+<span class="sd">            value = Column(&quot;value&quot;, Text, nullable=False)</span>
+<span class="sd">            user_id = Column(&quot;user_id&quot;, Integer, nullable=False)</span>
+
+<span class="sd">            def __init__(self, name=None, value=None, user_id=None):</span>
+<span class="sd">               self.name = name</span>
+<span class="sd">               self.value = value</span>
+<span class="sd">               self.user_id = user_id</span>
+
+<span class="sd">    If you do not define a user_id property for user dependent resources a runtime exception is raised. In order to find out more</span>
+<span class="sd">    about OAuth2 authorization implemented into fantastico please read: :doc:`/features/oauth2`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="nd">@property</span>
@@ -105,6 +126,20 @@
         <span class="sd">&#39;&#39;&#39;This read only property holds the model of the resource.&#39;&#39;&#39;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Resource.user_dependent"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_decorator.Resource.user_dependent">[docs]</a>    <span class="k">def</span> <span class="nf">user_dependent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This read only property returns True if user is owned only by one resource and False otherwise. It is really important</span>
+<span class="sd">        to understand the impact of the property when set to True:</span>
+
+<span class="sd">        #. Every GET on resource root url will also receive a filter user_id from access_token == resource.model.user_id</span>
+<span class="sd">        #. Every GET on a specific resource id will be validated also on user_id field.</span>
+<span class="sd">        #. Every POST for creating a new resource will automatically assign resource to user_id found in access_token. There is an</span>
+<span class="sd">            exception when the resource does not require create scopes.</span>
+<span class="sd">        #. Every PUT on a specific resource id will also check to ensure the user from the access_token owns the resource.</span>
+<span class="sd">        #. Every DELETE on a specific resource id will also check to ensure the user from the access_token owns the resource.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_dependent</span>
 </div>
     <span class="nd">@property</span>
 <div class="viewcode-block" id="Resource.subresources"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_decorator.Resource.subresources">[docs]</a>    <span class="k">def</span> <span class="nf">subresources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -138,13 +173,14 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validator</span>
 </div>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">subresources</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">subresources</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">validator</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">user_dependent</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_subresources</span> <span class="o">=</span> <span class="n">subresources</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validator</span> <span class="o">=</span> <span class="n">validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_user_dependent</span> <span class="o">=</span> <span class="n">user_dependent</span>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_cls</span><span class="p">,</span> <span class="n">resources_registry</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is invoked when the model class is first imported into python virtual machine.&#39;&#39;&#39;</span>
@@ -202,7 +238,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

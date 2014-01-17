@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.mvc.controller_registrator &mdash; fantastico 0.6.0-b136 documentation</title>
+    <title>fantastico.mvc.controller_registrator &mdash; fantastico 0.6.0-b137 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.6.0-b136',
+        VERSION:     '0.6.0-b137',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b136 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b137 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -66,6 +66,9 @@
 <span class="kn">from</span> <span class="nn">fantastico.routing_engine.routing_loaders</span> <span class="kn">import</span> <span class="n">RouteLoader</span>
 <span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">SettingsFacade</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <div class="viewcode-block" id="ControllerRouteLoader"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_registrator.ControllerRouteLoader">[docs]</a><span class="k">class</span> <span class="nc">ControllerRouteLoader</span><span class="p">(</span><span class="n">RouteLoader</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides a route loader that is capable of scanning the disk and registering only the routes that</span>
@@ -73,16 +76,37 @@
 <span class="sd">    it ignores tests subfolder as well as test_* / itest_* modules.&#39;&#39;&#39;</span>
 
     <span class="nd">@property</span>
-<div class="viewcode-block" id="ControllerRouteLoader.scanned_folder"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_registrator.ControllerRouteLoader.scanned_folder">[docs]</a>    <span class="k">def</span> <span class="nf">scanned_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ControllerRouteLoader.scanned_folders"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.controller_registrator.ControllerRouteLoader.scanned_folders">[docs]</a>    <span class="k">def</span> <span class="nf">scanned_folders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This property returns the currently scanned folder from where mvc routes are collected.&#39;&#39;&#39;</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scanned_folder</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span>
 </div>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="o">=</span><span class="n">SettingsFacade</span><span class="p">,</span> <span class="n">scanned_folder</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ignore_prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ControllerRouteLoader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">settings_facade</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_scanned_folder</span> <span class="o">=</span> <span class="n">scanned_folder</span> <span class="ow">or</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_class_abslocation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+
+        <span class="n">custom_packages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;mvc_additional_paths&quot;</span><span class="p">)</span>
+
+        <span class="n">folders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_custom_packages_filelist</span><span class="p">(</span><span class="n">custom_packages</span><span class="p">)</span>
+        <span class="n">folders</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scanned_folder</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">folders</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_ignore_prefix</span> <span class="o">=</span> <span class="n">ignore_prefix</span> <span class="ow">or</span> <span class="p">[</span><span class="s">&quot;__init__&quot;</span><span class="p">,</span> <span class="s">&quot;__pycache__&quot;</span><span class="p">,</span> <span class="s">&quot;tests&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;itest&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_get_custom_packages_filelist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">custom_packages</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method returns all filenames where the given custom packages reside on disk.&#39;&#39;&#39;</span>
+
+        <span class="n">folders</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">custom_package</span> <span class="ow">in</span> <span class="n">custom_packages</span><span class="p">:</span>
+            <span class="n">package</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">custom_package</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getabsfile</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+
+            <span class="n">folders</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">filename</span><span class="p">[:</span><span class="n">filename</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">)])</span>
+
+        <span class="k">return</span> <span class="n">folders</span>
 
     <span class="k">def</span> <span class="nf">_is_ignored_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method determines if a filename is ignored or not.&#39;&#39;&#39;</span>
@@ -104,7 +128,8 @@
         <span class="sd">&#39;&#39;&#39;This method is used for loading all routes that are mapped through</span>
 <span class="sd">        :py:class:`fantastico.mvc.controller_decorators.Controller` decorator.&#39;&#39;&#39;</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_register_from_folder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scanned_folder</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">scanned_folder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_register_from_folder</span><span class="p">(</span><span class="n">scanned_folder</span><span class="p">)</span>
 
         <span class="n">controller_routes</span> <span class="o">=</span> <span class="n">Controller</span><span class="o">.</span><span class="n">get_registered_routes</span><span class="p">()</span>
         <span class="n">routes</span> <span class="o">=</span> <span class="p">{}</span>
@@ -155,7 +180,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Fantastico settings &mdash; fantastico 0.6.0-b136 documentation</title>
+    <title>Fantastico settings &mdash; fantastico 0.6.0-b137 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.6.0-b136',
+        VERSION:     '0.6.0-b137',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b136 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b137 documentation" href="../index.html" />
     <link rel="up" title="Getting started" href="getting_started.html" />
     <link rel="next" title="Contribute" href="contribute.html" />
     <link rel="prev" title="Installation manual" href="installation.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>  
@@ -80,6 +80,13 @@ configuration: Dev / Stage / Production.</p>
 <img alt="../_images/settings.png" src="../_images/settings.png" />
 <p>As you can see, if you want to overwrite basic configuration you simply have to extend the class and set new values
 for the attributes you want to overwrite.</p>
+<dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.access_token_validity">
+<tt class="descname">access_token_validity</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.access_token_validity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.BasicSettings.access_token_validity" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property defines the validity of an access token in seconds. By default, this property is set
+to 1h = 3600 seconds.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="fantastico.settings.BasicSettings.database_config">
 <tt class="descname">database_config</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.database_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.BasicSettings.database_config" title="Permalink to this definition">¶</a></dt>
@@ -128,6 +135,32 @@ and ensures no thread is using that connection till is completely refreshed.</p>
 <dt id="fantastico.settings.BasicSettings.installed_middleware">
 <tt class="descname">installed_middleware</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.installed_middleware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.BasicSettings.installed_middleware" title="Permalink to this definition">¶</a></dt>
 <dd><p>Property that holds all installed middlewares.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.mvc_additional_paths">
+<tt class="descname">mvc_additional_paths</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.mvc_additional_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.BasicSettings.mvc_additional_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property defines additional packages which must be scanned for controllers. You can use this in order to specify
+custom mvc controllers location which are not found in custom components. For instance, OAuth2 controller resides
+in core packages of Fantastico.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.oauth2_idp">
+<tt class="descname">oauth2_idp</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.oauth2_idp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.settings.BasicSettings.oauth2_idp" title="Permalink to this definition">¶</a></dt>
+<dd><p>This property holds the configuration for Fantastico default Identity Provider. In most cases you will change the
+template applied to login screen in order to customize it to your needs. If you want to change
+the template for login screen make sure your provide relative path to your components root folder
+(e.g /components/frontend/views/custom_login.html). Moreover, you can also specify the login token validity period (in
+seconds). It is recommended to set a high value (e.g 2 weeks).</p>
+<p>Additionaly, you can control default idp index page. Usually, Fantastico OAuth2 identity provider login page should be
+good enough.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">return</span> <span class="p">{</span><span class="s">&quot;client_id&quot;</span><span class="p">:</span> <span class="s">&quot;11111111-1111-1111-1111-111111111111&quot;</span><span class="p">,</span>
+        <span class="s">&quot;template&quot;</span><span class="p">:</span> <span class="s">&quot;/components/frontend/views/custom_login.html&quot;</span><span class="p">,</span>
+        <span class="s">&quot;expires_in&quot;</span><span class="p">:</span> <span class="mi">1209600</span><span class="p">,</span>
+        <span class="s">&quot;idp_index&quot;</span><span class="p">:</span> <span class="s">&quot;/oauth/idp/ui/login&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -297,7 +330,7 @@ profile used.</p>
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
       </ul>
     </div>

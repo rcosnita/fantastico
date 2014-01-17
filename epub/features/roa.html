@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="mvc.html" title="Model View Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
       </ul>
     </div>
@@ -156,7 +156,7 @@ avoiding multiple APIs chaos we strongly encourage to use the latest available A
 <p>Each resource requires validation for create / update operations. Validation is harder to be achieved through code introspection
 so in Fantastico for each defined resource you can define a validator which will be invoked automatically.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">AppSettingValidator</span><span class="p">(</span><span class="n">ResourceValidator</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">existing_resource_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;unsupported&quot;</span><span class="p">:</span>
@@ -200,6 +200,15 @@ are only invoked for <strong>Create</strong> and <strong>Update</strong>:</p>
 </div></blockquote>
 <p>All common validation cases  are provided out of the box as methods part of ResourceValidator class. You can easily use them into
 your resource validator.</p>
+<p>There are some rare cases when a resource contains sensitive data (e.g user passwords / credit card numbers). In order to alter or
+suppress such sensitive data you can simply override <strong>format_resource</strong> method. Below you can find a simple example of user
+data retrieval where password is never sent back to client even if requested:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">UserValidator</span><span class="p">(</span><span class="n">ResourceValidator</span><span class="p">):</span>
+   <span class="k">def</span> <span class="nf">format_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+      <span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+</div>
+<p>With the above example, whenever you request GET on /users or GET on /user/:userid password will be suppressed.</p>
 </div>
 <div class="section" id="partial-object-representation">
 <span id="id1"></span><h2>Partial object representation</h2>
@@ -302,6 +311,11 @@ to obtain details about a specific address (e.g bill_address) you can use exampl
 </ul>
 </div></blockquote>
 <p>We do not support update / create of multiple resources using one single request.</p>
+</div>
+<div class="section" id="security">
+<h2>Security</h2>
+<p>Fantastico provides a compliant OAuth 2 RFC implementation which is also integrated with ROA. For more information about enabling
+OAuth 2 authorization on ROA please read <a class="reference internal" href="oauth2/controllers_security.html"><em>Controllers security</em></a>.</p>
 </div>
 <div class="section" id="advantages">
 <h2>Advantages</h2>

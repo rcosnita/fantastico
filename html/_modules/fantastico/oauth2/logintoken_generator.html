@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.oauth2.logintoken_generator &mdash; fantastico 0.6.0-b136 documentation</title>
+    <title>fantastico.oauth2.logintoken_generator &mdash; fantastico 0.6.0-b137 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.6.0-b136',
+        VERSION:     '0.6.0-b137',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b136 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b137 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -62,7 +62,7 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.oauth2.logintoken_generator</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">,</span> <span class="n">OAuth2InvalidTokenTypeError</span><span class="p">,</span> <span class="n">OAuth2TokenExpiredError</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2InvalidTokenTypeError</span><span class="p">,</span> <span class="n">OAuth2TokenExpiredError</span>
 <span class="kn">from</span> <span class="nn">fantastico.oauth2.token</span> <span class="kn">import</span> <span class="n">Token</span>
 <span class="kn">from</span> <span class="nn">fantastico.oauth2.token_generator</span> <span class="kn">import</span> <span class="n">TokenGenerator</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -85,19 +85,12 @@
 
         <span class="n">token_desc</span> <span class="o">=</span> <span class="n">token_desc</span> <span class="ow">or</span> <span class="p">{}</span>
 
-        <span class="n">client_id</span> <span class="o">=</span> <span class="n">token_desc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;client_id&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">client_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;client_id&quot;</span><span class="p">)</span>
-
-        <span class="n">user_id</span> <span class="o">=</span> <span class="n">token_desc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;user_id&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">user_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;user_id&quot;</span><span class="p">)</span>
+        <span class="n">client_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_missing_attr</span><span class="p">(</span><span class="s">&quot;client_id&quot;</span><span class="p">,</span> <span class="n">token_desc</span><span class="p">)</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_missing_attr</span><span class="p">(</span><span class="s">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">token_desc</span><span class="p">)</span>
 
         <span class="n">creation_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_provider</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
 
-        <span class="n">expires_in</span> <span class="o">=</span> <span class="n">token_desc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;expires_in&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">expires_in</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;expires_in&quot;</span><span class="p">)</span>
+        <span class="n">expires_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_missing_attr</span><span class="p">(</span><span class="s">&quot;expires_in&quot;</span><span class="p">,</span> <span class="n">token_desc</span><span class="p">)</span>
 
         <span class="n">expiration_time</span> <span class="o">=</span> <span class="n">creation_time</span> <span class="o">+</span> <span class="n">expires_in</span>
 
@@ -119,7 +112,7 @@
         <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TOKEN_TYPE</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">OAuth2InvalidTokenTypeError</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s">&quot;Login token generator does not support </span><span class="si">%s</span><span class="s"> tokens.&quot;</span> <span class="o">%</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">expiration_time</span> <span class="o">-</span> <span class="n">token</span><span class="o">.</span><span class="n">creation_time</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">expiration_time</span> <span class="o">&lt;</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">():</span>
             <span class="k">raise</span> <span class="n">OAuth2TokenExpiredError</span><span class="p">(</span><span class="s">&quot;Token is expired.&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">True</span></div></div>
@@ -153,7 +146,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

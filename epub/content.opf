@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2013-12-26</dc:date>
+    <dc:date>2014-01-17</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -151,23 +151,62 @@
     <item id="_modules_fantastico_middleware_request_context.html"
           href="_modules/fantastico/middleware/request_context.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_passwords_hasher.html"
+          href="_modules/fantastico/oauth2/passwords_hasher.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_grant_handler.html"
+          href="_modules/fantastico/oauth2/grant_handler.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_oauth2_exceptions.html"
           href="_modules/fantastico/oauth2/exceptions.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_oauth2_token_generator.html"
           href="_modules/fantastico/oauth2/token_generator.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_grant_handler_factory.html"
+          href="_modules/fantastico/oauth2/grant_handler_factory.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_oauth2_security_context.html"
           href="_modules/fantastico/oauth2/security_context.html"
           media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_tokengenerator_factory.html"
+          href="_modules/fantastico/oauth2/tokengenerator_factory.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_passwords_hasher_factory.html"
+          href="_modules/fantastico/oauth2/passwords_hasher_factory.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_oauth2_decorators.html"
+          href="_modules/fantastico/oauth2/oauth2_decorators.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_implicit_grant_handler.html"
+          href="_modules/fantastico/oauth2/implicit_grant_handler.html"
+          media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_oauth2_oauth2_controller.html"
           href="_modules/fantastico/oauth2/oauth2_controller.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_sha512salt_passwords_hasher.html"
+          href="_modules/fantastico/oauth2/sha512salt_passwords_hasher.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_oauth2_logintoken_generator.html"
           href="_modules/fantastico/oauth2/logintoken_generator.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_oauth2_token.html"
           href="_modules/fantastico/oauth2/token.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_token_encryption.html"
+          href="_modules/fantastico/oauth2/token_encryption.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_tokens_service.html"
+          href="_modules/fantastico/oauth2/tokens_service.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_accesstoken_generator.html"
+          href="_modules/fantastico/oauth2/accesstoken_generator.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_middleware_exceptions_middleware.html"
+          href="_modules/fantastico/oauth2/middleware/exceptions_middleware.html"
+          media-type="application/xhtml+xml" />
+    <item id="_modules_fantastico_oauth2_middleware_tokens_middleware.html"
+          href="_modules/fantastico/oauth2/middleware/tokens_middleware.html"
           media-type="application/xhtml+xml" />
     <item id="_modules_fantastico_rendering_component.html"
           href="_modules/fantastico/rendering/component.html"

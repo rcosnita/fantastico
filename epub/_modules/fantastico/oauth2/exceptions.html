@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -86,8 +86,8 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="OAuth2InvalidTokenTypeError"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError">[docs]</a><span class="k">class</span> <span class="nc">OAuth2InvalidTokenTypeError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception used to notify that a token has been seen to a token generator which does not</span>
-<span class="sd">    support it.&#39;&#39;&#39;</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception used to notify that a token has been sent to a token generator which does not</span>
+<span class="sd">    support it or the token type is unknown.&#39;&#39;&#39;</span>
 
     <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12020</span>
 
@@ -108,7 +108,83 @@
     <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12030</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2TokenExpiredError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2TokenExpiredError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OAuth2TokenEncryptionError"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2TokenEncryptionError">[docs]</a><span class="k">class</span> <span class="nc">OAuth2TokenEncryptionError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception used to notify an error during encrypt / decrypt token operations.&#39;&#39;&#39;</span>
+
+    <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12040</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2TokenEncryptionError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OAuth2InvalidClientError"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2InvalidClientError">[docs]</a><span class="k">class</span> <span class="nc">OAuth2InvalidClientError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception used to notify an invalid client (not found or revoked).&#39;&#39;&#39;</span>
+
+    <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12050</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2InvalidClientError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OAuth2InvalidScopesError"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2InvalidScopesError">[docs]</a><span class="k">class</span> <span class="nc">OAuth2InvalidScopesError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception used to notify that a client is not allowed to use a request set of scopes.&#39;&#39;&#39;</span>
+
+    <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12060</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2InvalidScopesError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OAuth2MissingQueryParamError"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2MissingQueryParamError">[docs]</a><span class="k">class</span> <span class="nc">OAuth2MissingQueryParamError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception used to notify a missing query parameter from an OAuth2 endpoint.&#39;&#39;&#39;</span>
+
+    <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12070</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="OAuth2MissingQueryParamError.param_name"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2MissingQueryParamError.param_name">[docs]</a>    <span class="k">def</span> <span class="nf">param_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property return the name of the query parameter which is missing.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_param_name</span>
+</div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_param_name</span> <span class="o">=</span> <span class="n">param_name</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;Query parameter </span><span class="si">%s</span><span class="s"> is missing.&quot;</span> <span class="o">%</span> <span class="n">param_name</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2MissingQueryParamError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OAuth2UnsupportedGrantError"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError">[docs]</a><span class="k">class</span> <span class="nc">OAuth2UnsupportedGrantError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception for notifying unsupport oauth2 grant type.&#39;&#39;&#39;</span>
+
+    <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12080</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="OAuth2UnsupportedGrantError.handler_type"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError.handler_type">[docs]</a>    <span class="k">def</span> <span class="nf">handler_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property holds the unsupported grant type name.&#39;&#39;&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handler_type</span>
+</div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler_type</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handler_type</span> <span class="o">=</span> <span class="n">handler_type</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;Handler type </span><span class="si">%s</span><span class="s"> is not supported&quot;</span> <span class="o">%</span> <span class="n">handler_type</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2UnsupportedGrantError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OAuth2UnauthorizedError"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2UnauthorizedError">[docs]</a><span class="k">class</span> <span class="nc">OAuth2UnauthorizedError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception for notifying unauthorized access to oauth2 protected resources.&#39;&#39;&#39;</span>
+
+    <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12100</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2UnauthorizedError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">http_code</span><span class="o">=</span><span class="mi">401</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="OAuth2AuthenticationError"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.exceptions.OAuth2AuthenticationError">[docs]</a><span class="k">class</span> <span class="nc">OAuth2AuthenticationError</span><span class="p">(</span><span class="n">OAuth2Error</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a concrete exception used to notify a failed authentication attempt from an OAuth2 IDP.&#39;&#39;&#39;</span>
+
+    <span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="mi">12200</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">http_code</span><span class="o">=</span><span class="mi">403</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2AuthenticationError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ERROR_CODE</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">http_code</span><span class="p">)</span></div>
 </pre></div>
 
           </div>

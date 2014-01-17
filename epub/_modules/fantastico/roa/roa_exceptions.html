@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -53,12 +53,19 @@
     <span class="sd">&#39;&#39;&#39;This class provides the core error used within Fantastico ROA layer. Usually, more concrete exceptions are raised by</span>
 <span class="sd">    ROA layers.&#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoRoaError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">http_code</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">http_code</span><span class="o">=</span><span class="mi">400</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoRoaError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">http_code</span><span class="o">=</span><span class="n">http_code</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="FantasticoRoaDuplicateError"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError">[docs]</a><span class="k">class</span> <span class="nc">FantasticoRoaDuplicateError</span><span class="p">(</span><span class="n">FantasticoRoaError</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This concrete exception is used to notify user that multiple resources with same name and version or url and version</span>
-<span class="sd">    can not be registered multiple times.&#39;&#39;&#39;</span></div>
+<span class="sd">    can not be registered multiple times.&#39;&#39;&#39;</span>
+</div>
+<span class="k">class</span> <span class="nc">FantasticoRoaMethodNotSupportedError</span><span class="p">(</span><span class="n">FantasticoRoaError</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This concrete exception is used to notify user that the current http method requested is not supported on the given</span>
+<span class="sd">    resource.&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FantasticoRoaMethodNotSupportedError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">http_code</span><span class="o">=</span><span class="mi">405</span><span class="p">)</span>
 </pre></div>
 
           </div>

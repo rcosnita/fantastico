@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -48,7 +48,11 @@
 <span class="sd">.. py:module:: fantastico.oauth2.oauth2_controller</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span><span class="p">,</span> <span class="n">Controller</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.grant_handler_factory</span> <span class="kn">import</span> <span class="n">GrantHandlerFactory</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2MissingQueryParamError</span><span class="p">,</span> <span class="n">OAuth2UnsupportedGrantError</span>
 
+<span class="nd">@ControllerProvider</span><span class="p">()</span>
 <div class="viewcode-block" id="OAuth2Controller"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.oauth2_controller.OAuth2Controller">[docs]</a><span class="k">class</span> <span class="nc">OAuth2Controller</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the routes specified in OAUTH 2 specification (`RFC6479 &lt;http://tools.ietf.org/html/rfc6749&gt;`_). A</span>
 <span class="sd">    technical overview of OAuth2 implementation in Fantastico is presented below:</span>
@@ -56,17 +60,41 @@
 <span class="sd">    .. image:: /images/oauth2/oauth2_overview.png</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">,</span> <span class="n">handler_factory_cls</span><span class="o">=</span><span class="n">GrantHandlerFactory</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OAuth2Controller</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">settings_facade</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handler_factory</span> <span class="o">=</span> <span class="n">handler_factory_cls</span><span class="p">()</span>
+
+    <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;^/oauth/authorize$&quot;</span><span class="p">,</span>
+                <span class="n">models</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;Client&quot;</span><span class="p">:</span> <span class="s">&quot;fantastico.oauth2.models.clients.Client&quot;</span><span class="p">})</span>
 <div class="viewcode-block" id="OAuth2Controller.handle_authorize"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.oauth2_controller.OAuth2Controller.handle_authorize">[docs]</a>    <span class="k">def</span> <span class="nf">handle_authorize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method provides the /authorize endpoint compliant with `RFC6479 &lt;http://tools.ietf.org/html/rfc6749&gt;`_ standard.</span>
-<span class="sd">        Authorize endpoint provides an API for obtaining an access token or an authorization code dependin on the grant type.&#39;&#39;&#39;</span>
+<span class="sd">        Authorize endpoint provides an API for obtaining an access token or an authorization code depending on the grant type.&#39;&#39;&#39;</span>
 
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+        <span class="n">db_conn</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">session</span>
+        <span class="n">grant_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_param</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;response_type&quot;</span><span class="p">)</span>
+
+        <span class="n">grant_handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handler_factory</span><span class="o">.</span><span class="n">get_handler</span><span class="p">(</span><span class="n">grant_type</span><span class="p">,</span> <span class="n">db_conn</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">grant_handler</span><span class="o">.</span><span class="n">handle_grant</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="OAuth2Controller.handle_token"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.oauth2_controller.OAuth2Controller.handle_token">[docs]</a>    <span class="k">def</span> <span class="nf">handle_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method provides the /token endpoint compliant with `RFC6479 &lt;http://tools.ietf.org/html/rfc6749&gt;`_.</span>
 <span class="sd">        Token endpoint provides an API for obtaining access tokens.&#39;&#39;&#39;</span>
 
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+        <span class="n">grant_type</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;grant_type&quot;</span><span class="p">,</span> <span class="s">&quot;refresh_token&quot;</span><span class="p">)</span>
+
+        <span class="k">raise</span> <span class="n">OAuth2UnsupportedGrantError</span><span class="p">(</span><span class="n">grant_type</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_validate_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method tries to obtain param_name from the given request. If the parameter is not found an oauth2 exception is</span>
+<span class="sd">        raised.&#39;&#39;&#39;</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">param_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2MissingQueryParamError</span><span class="p">(</span><span class="n">param_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">value</span></div>
 </pre></div>
 
           </div>

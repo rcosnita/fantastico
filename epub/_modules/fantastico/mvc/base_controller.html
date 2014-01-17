@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -48,12 +48,13 @@
 
 <span class="sd">.. py:module:: fantastico.mvc.base_controller</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoTemplateNotFoundError</span><span class="p">,</span> \
-    <span class="n">FantasticoError</span>
+<span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoTemplateNotFoundError</span><span class="p">,</span> <span class="n">FantasticoError</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
 <span class="kn">from</span> <span class="nn">jinja2.environment</span> <span class="kn">import</span> <span class="n">Environment</span>
 <span class="kn">from</span> <span class="nn">jinja2.exceptions</span> <span class="kn">import</span> <span class="n">TemplateNotFound</span>
 <span class="kn">from</span> <span class="nn">jinja2.loaders</span> <span class="kn">import</span> <span class="n">FileSystemLoader</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">fantastico.settings</span> <span class="kn">import</span> <span class="n">BasicSettings</span>
 
 <div class="viewcode-block" id="BaseController"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController">[docs]</a><span class="k">class</span> <span class="nc">BaseController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides common methods useful for every concrete controller. Even if no type checking is done in</span>
@@ -97,7 +98,7 @@
 
         <span class="k">return</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_component_path_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">,</span> <span class="n">root_folder</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </div>
-<div class="viewcode-block" id="BaseController.load_template"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController.load_template">[docs]</a>    <span class="k">def</span> <span class="nf">load_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tpl_name</span><span class="p">,</span> <span class="n">model_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">get_template</span><span class="o">=</span><span class="n">Environment</span><span class="o">.</span><span class="n">get_template</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseController.load_template"><a class="viewcode-back" href="../../../features/mvc.html#fantastico.mvc.base_controller.BaseController.load_template">[docs]</a>    <span class="k">def</span> <span class="nf">load_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tpl_name</span><span class="p">,</span> <span class="n">model_data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">get_template</span><span class="o">=</span><span class="n">Environment</span><span class="o">.</span><span class="n">get_template</span><span class="p">,</span> <span class="n">enable_global_folder</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is responsible for loading a template from disk and render it using the given model data.</span>
 
 <span class="sd">        .. code-block:: python</span>
@@ -115,6 +116,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__init_jinja_context</span><span class="p">()</span>
 
         <span class="n">model_data</span> <span class="o">=</span> <span class="n">model_data</span> <span class="ow">or</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">enable_global_folder</span><span class="p">:</span>
+            <span class="n">config_cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_settings_facade</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span><span class="o">.</span><span class="n">__class__</span>
+            <span class="n">parent_path</span> <span class="o">=</span> <span class="n">instantiator</span><span class="o">.</span><span class="n">get_class_abslocation</span><span class="p">(</span><span class="n">config_cls</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">config_cls</span> <span class="o">!=</span> <span class="n">BasicSettings</span><span class="p">:</span>
+                <span class="n">parent_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">../&quot;</span> <span class="o">%</span> <span class="n">parent_path</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">parent_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_loader</span><span class="o">.</span><span class="n">searchpath</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_tpl_loader</span><span class="o">.</span><span class="n">searchpath</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent_path</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">get_template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tpl_env</span><span class="p">,</span> <span class="n">tpl_name</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">model_data</span><span class="p">)</span>

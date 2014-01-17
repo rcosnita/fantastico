@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fantastico.oauth2.token_encryption</title>
+    
+    <link rel="stylesheet" href="../../../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <h1>Source code for fantastico.oauth2.token_encryption</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Copyright 2013 Cosnita Radu Viorel</span>
+
+<span class="sd">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated</span>
+<span class="sd">documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation</span>
+<span class="sd">the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,</span>
+<span class="sd">and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span>
+
+<span class="sd">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span>
+
+<span class="sd">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE</span>
+<span class="sd">WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span>
+<span class="sd">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,</span>
+<span class="sd">ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span>
+
+<span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
+<span class="sd">.. py:module:: fantastico.oauth2.token_encryption</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span><span class="p">,</span> <span class="n">ABCMeta</span> <span class="c"># pylint: disable=W0611</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">,</span> <span class="n">OAuth2TokenEncryptionError</span><span class="p">,</span> <span class="n">OAuth2Error</span><span class="p">,</span> \
+    <span class="n">OAuth2InvalidClientError</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.token</span> <span class="kn">import</span> <span class="n">Token</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<div class="viewcode-block" id="TokenEncryption"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.TokenEncryption">[docs]</a><span class="k">class</span> <span class="nc">TokenEncryption</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides an abstract model for token encryption providers. A token encryption provider must be able</span>
+<span class="sd">    to encrypt / decrypt a :py:class:`fantastico.oauth2.token.Token` objects.&#39;&#39;&#39;</span>
+
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="TokenEncryption.encrypt_token"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.TokenEncryption.encrypt_token">[docs]</a>    <span class="k">def</span> <span class="nf">encrypt_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by concrete providers in order to correctly transform a token object into an encrypted</span>
+<span class="sd">        string.</span>
+
+
+<span class="sd">        :param token: A token object we want to encrypt.</span>
+<span class="sd">        :type token: :py:class:`fantastico.oauth2.token.Token`</span>
+<span class="sd">        :param token_iv: Token initialization vector used in symmetric encryption. Most of the times this will have a fix 128 bits length.</span>
+<span class="sd">        :type token_iv: byte[]</span>
+<span class="sd">        :param token_key: Token key used in symmetric encryption. Based on the implementation the length might vary: 128 / 192 / 256 bits.</span>
+<span class="sd">        :type token_key: byte[]</span>
+<span class="sd">        :return: The encrypted representation of the token.</span>
+<span class="sd">        :rtype: str&#39;&#39;&#39;</span>
+</div>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="TokenEncryption.decrypt_token"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.TokenEncryption.decrypt_token">[docs]</a>    <span class="k">def</span> <span class="nf">decrypt_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encrypted_str</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by concrete providers in order to correctly transform an encrypted string into a token</span>
+<span class="sd">        object.</span>
+
+<span class="sd">        :param encrypted_str: Encrypted token representation.</span>
+<span class="sd">        :type encrypted_str: str</span>
+<span class="sd">        :param token_iv: Token initialization vector used in symmetric encryption. Most of the times this will have a fix 128 bits length.</span>
+<span class="sd">        :type token_iv: byte[]</span>
+<span class="sd">        :param token_key: Token key used in symmetric encryption. Based on the implementation the length might vary: 128 / 192 / 256 bits.</span>
+<span class="sd">        :type token_key: byte[]</span>
+<span class="sd">        :return: Decrypted token object.</span>
+<span class="sd">        :rtype: :py:class:`fantastico.oauth2.token.Token`&#39;&#39;&#39;</span>
+</div>
+    <span class="k">def</span> <span class="nf">_validate_encryption_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides the validation code for symmetric encryption keys.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token_iv</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;token_iv&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token_key</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;token_key&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="AesTokenEncryption"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.AesTokenEncryption">[docs]</a><span class="k">class</span> <span class="nc">AesTokenEncryption</span><span class="p">(</span><span class="n">TokenEncryption</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a generic AES token encryption provider. It allows developers to specify the number of bits used</span>
+<span class="sd">    for AES (128 / 192 / 256 bits).&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="AesTokenEncryption.encrypt_token"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.AesTokenEncryption.encrypt_token">[docs]</a>    <span class="k">def</span> <span class="nf">encrypt_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method uses AES for encrypting the given token. Internally it transform the token into a JSON string and</span>
+<span class="sd">        encrypt it using given token_iv and token_key.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_encryption_args</span><span class="p">(</span><span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">dictionary</span><span class="p">)</span>
+
+            <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">token_key</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_CFB</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">cipher</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">text</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2TokenEncryptionError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="AesTokenEncryption.decrypt_token"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.AesTokenEncryption.decrypt_token">[docs]</a>    <span class="k">def</span> <span class="nf">decrypt_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encrypted_str</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method uses AES for decrypting the given string. Internally, decrypted string is converted into a dictionary and</span>
+<span class="sd">        then into a concrete token object.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">encrypted_str</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;encrypted_str&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_encryption_args</span><span class="p">(</span><span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cipher</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">token_key</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_CFB</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">)</span>
+
+            <span class="n">encrypted_str</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">encrypted_str</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+            <span class="n">decrypted_text</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">encrypted_str</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">token_descriptor</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">decrypted_text</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">Token</span><span class="p">(</span><span class="n">token_descriptor</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2TokenEncryptionError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+</div></div>
+<div class="viewcode-block" id="PublicTokenEncryption"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.PublicTokenEncryption">[docs]</a><span class="k">class</span> <span class="nc">PublicTokenEncryption</span><span class="p">(</span><span class="n">TokenEncryption</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides a special token encryption: a mix of base64 encoded and symmetrical encrypted token. We need</span>
+<span class="sd">    this mix because client_id is required for every operation involving oauth2 tokens.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symmetric_encryptor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_symmetric_encryptor</span> <span class="o">=</span> <span class="n">symmetric_encryptor</span>
+
+<div class="viewcode-block" id="PublicTokenEncryption.encrypt_token"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.PublicTokenEncryption.encrypt_token">[docs]</a>    <span class="k">def</span> <span class="nf">encrypt_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">token_iv</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">token_key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">client_repo</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method takes a concrete token object and returns a base64 representation of the token. In the rare cases where</span>
+<span class="sd">        the encryption vectors are not known client_repo is used to read client descriptor and lazy obtain the vectors.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;token&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">token_iv</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">token_key</span><span class="p">)</span> <span class="ow">and</span> <span class="n">client_repo</span><span class="p">:</span>
+            <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_encryption_keys</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_repo</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_encryption_args</span><span class="p">(</span><span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">encrypted_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symmetric_encryptor</span><span class="o">.</span><span class="n">encrypt_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">)</span>
+            <span class="n">ret_value</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;client_id&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+                         <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="n">token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
+                         <span class="s">&quot;encrypted&quot;</span><span class="p">:</span> <span class="n">encrypted_str</span><span class="p">}</span>
+
+            <span class="n">ret_value</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">ret_value</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+            <span class="k">return</span> <span class="n">ret_value</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">OAuth2Error</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2TokenEncryptionError</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s">&quot;Unexpected symmetric error: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="PublicTokenEncryption.decrypt_token"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.token_encryption.PublicTokenEncryption.decrypt_token">[docs]</a>    <span class="k">def</span> <span class="nf">decrypt_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encrypted_str</span><span class="p">,</span> <span class="n">token_iv</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">token_key</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">client_repo</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This methods receives a public token representation and returns a concrete token object. In many cases token_iv and</span>
+<span class="sd">        token_key will not be known so they will obtained from the public part of the token using client_id descriptor</span>
+<span class="sd">        persisted in database.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">encrypted_str</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">encrypted_str</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidTokenDescriptorError</span><span class="p">(</span><span class="s">&quot;encrypted_str&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">raw_token</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">encrypted_str</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+            <span class="n">raw_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_token</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+            <span class="n">client_id</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="p">[</span><span class="s">&quot;client_id&quot;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">token_iv</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">token_key</span><span class="p">:</span>
+                <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_encryption_keys</span><span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="n">client_repo</span><span class="p">)</span>
+
+            <span class="n">encrypted_part</span> <span class="o">=</span> <span class="n">raw_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;encrypted&quot;</span><span class="p">)</span>
+
+            <span class="n">token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symmetric_encryptor</span><span class="o">.</span><span class="n">decrypt_token</span><span class="p">(</span><span class="n">encrypted_part</span><span class="p">,</span> <span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">token</span>
+        <span class="k">except</span> <span class="n">OAuth2Error</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2TokenEncryptionError</span><span class="p">(</span><span class="s">&quot;Unexpected symmetric encryption error: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+</div>
+    <span class="k">def</span> <span class="nf">_load_encryption_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">,</span> <span class="n">client_repo</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method is used to load the encryption keys for the specified client using the given repo.&#39;&#39;&#39;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">client</span> <span class="o">=</span> <span class="n">client_repo</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">client_id</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">OAuth2InvalidClientError</span><span class="p">(</span><span class="s">&quot;Client </span><span class="si">%s</span><span class="s"> is not valid: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">client_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
+
+        <span class="n">token_iv</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">token_iv</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+        <span class="n">token_key</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">token_key</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">token_iv</span><span class="p">,</span> <span class="n">token_key</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

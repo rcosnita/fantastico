@@ -1,14 +1,17 @@
 \indexentry{BasicSettings (class in fantastico.settings)|hyperpage}{4}
+\indexentry{access\_token\_validity (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{database\_config (fantastico.settings.BasicSettings attribute)|hyperpage}{4}
 \indexentry{dev\_server\_host (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{dev\_server\_port (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{doc\_base (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{installed\_middleware (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
+\indexentry{mvc\_additional\_paths (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
+\indexentry{oauth2\_idp (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{roa\_api (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{routes\_loaders (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{supported\_languages (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
 \indexentry{templates\_config (fantastico.settings.BasicSettings attribute)|hyperpage}{5}
-\indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{5}
+\indexentry{SettingsFacade (class in fantastico.settings)|hyperpage}{6}
 \indexentry{get() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
 \indexentry{get\_config() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
 \indexentry{get\_root\_folder() (fantastico.settings.SettingsFacade method)|hyperpage}{6}
@@ -17,16 +20,21 @@
 \indexentry{\_get\_root\_folder() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
 \indexentry{check\_original\_methods() (fantastico.tests.base\_case.FantasticoUnitTestsCase method)|hyperpage}{7}
 \indexentry{setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method)|hyperpage}{7}
-\indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{7}
+\indexentry{FantasticoIntegrationTestCase (class in fantastico.tests.base\_case)|hyperpage}{8}
 \indexentry{\_envs (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{8}
+\indexentry{\_get\_db\_conn() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
+\indexentry{\_get\_oauth2\_logintoken() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
+\indexentry{\_get\_oauth2\_token() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
+\indexentry{\_get\_token() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
+\indexentry{\_invalidate\_encrypted\_token() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
+\indexentry{\_invalidate\_oauth2\_token() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
 \indexentry{\_restore\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
-\indexentry{\_run\_test\_all\_envs() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
 \indexentry{\_save\_call\_methods() (fantastico.tests.base\_case.FantasticoIntegrationTestCase method)|hyperpage}{8}
 \indexentry{fantastico\_cfg\_os\_key (fantastico.tests.base\_case.FantasticoIntegrationTestCase attribute)|hyperpage}{8}
 \indexentry{DevServerIntegration (class in fantastico.server.tests.itest\_dev\_server)|hyperpage}{8}
-\indexentry{\_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
-\indexentry{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
-\indexentry{\_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{8}
+\indexentry{\_check\_server\_started() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{9}
+\indexentry{\_get\_server\_base\_url() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{9}
+\indexentry{\_run\_test\_against\_dev\_server() (fantastico.server.tests.itest\_dev\_server.DevServerIntegration method)|hyperpage}{9}
 \indexentry{DevServer (class in fantastico.server.dev\_server)|hyperpage}{9}
 \indexentry{start() (fantastico.server.dev\_server.DevServer method)|hyperpage}{9}
 \indexentry{started (fantastico.server.dev\_server.DevServer attribute)|hyperpage}{9}
@@ -82,10 +90,11 @@
 \indexentry{model\_cls (fantastico.mvc.model\_facade.ModelFacade attribute)|hyperpage}{48}
 \indexentry{model\_pk\_cols (fantastico.mvc.model\_facade.ModelFacade attribute)|hyperpage}{48}
 \indexentry{new\_model() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{48}
+\indexentry{session (fantastico.mvc.model\_facade.ModelFacade attribute)|hyperpage}{48}
 \indexentry{update() (fantastico.mvc.model\_facade.ModelFacade method)|hyperpage}{48}
 \indexentry{ControllerRouteLoader (class in fantastico.mvc.controller\_registrator)|hyperpage}{49}
 \indexentry{load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method)|hyperpage}{49}
-\indexentry{scanned\_folder (fantastico.mvc.controller\_registrator.ControllerRouteLoader attribute)|hyperpage}{50}
+\indexentry{scanned\_folders (fantastico.mvc.controller\_registrator.ControllerRouteLoader attribute)|hyperpage}{50}
 \indexentry{BaseController (class in fantastico.mvc.base\_controller)|hyperpage}{50}
 \indexentry{curr\_request (fantastico.mvc.base\_controller.BaseController attribute)|hyperpage}{50}
 \indexentry{get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method)|hyperpage}{50}
@@ -114,161 +123,218 @@
 \indexentry{sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute)|hyperpage}{52}
 \indexentry{ModelSessionMiddleware (class in fantastico.middleware.model\_session\_middleware)|hyperpage}{52}
 \indexentry{Resource (class in fantastico.roa.resource\_decorator)|hyperpage}{62}
-\indexentry{model (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{62}
-\indexentry{name (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{62}
-\indexentry{subresources (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{62}
-\indexentry{url (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{62}
+\indexentry{model (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{63}
+\indexentry{name (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{63}
+\indexentry{subresources (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{63}
+\indexentry{url (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{63}
+\indexentry{user\_dependent (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{63}
 \indexentry{validator (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{63}
 \indexentry{version (fantastico.roa.resource\_decorator.Resource attribute)|hyperpage}{63}
-\indexentry{ResourcesRegistry (class in fantastico.roa.resources\_registry)|hyperpage}{63}
-\indexentry{all\_resources() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{63}
-\indexentry{available\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute)|hyperpage}{63}
-\indexentry{available\_url\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute)|hyperpage}{63}
-\indexentry{find\_by\_name() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{63}
-\indexentry{find\_by\_url() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{63}
-\indexentry{register\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{63}
-\indexentry{unregister\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{63}
-\indexentry{ResourcesRegistrator (class in fantastico.roa.resources\_registrator)|hyperpage}{64}
-\indexentry{load\_routes() (fantastico.roa.resources\_registrator.ResourcesRegistrator method)|hyperpage}{64}
-\indexentry{register\_resources() (fantastico.roa.resources\_registrator.ResourcesRegistrator method)|hyperpage}{64}
-\indexentry{RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller)|hyperpage}{64}
-\indexentry{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)|hyperpage}{64}
-\indexentry{QueryParser (class in fantastico.roa.query\_parser)|hyperpage}{64}
-\indexentry{parse\_filter() (fantastico.roa.query\_parser.QueryParser method)|hyperpage}{65}
-\indexentry{parse\_sort() (fantastico.roa.query\_parser.QueryParser method)|hyperpage}{65}
-\indexentry{QueryParserOperation (class in fantastico.roa.query\_parser\_operations)|hyperpage}{65}
-\indexentry{add\_argument() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{65}
-\indexentry{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{65}
-\indexentry{get\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{65}
-\indexentry{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{65}
-\indexentry{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{65}
+\indexentry{ResourcesRegistry (class in fantastico.roa.resources\_registry)|hyperpage}{64}
+\indexentry{all\_resources() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{64}
+\indexentry{available\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute)|hyperpage}{64}
+\indexentry{available\_url\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute)|hyperpage}{64}
+\indexentry{find\_by\_name() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{64}
+\indexentry{find\_by\_url() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{64}
+\indexentry{register\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{64}
+\indexentry{unregister\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method)|hyperpage}{64}
+\indexentry{ResourcesRegistrator (class in fantastico.roa.resources\_registrator)|hyperpage}{65}
+\indexentry{load\_routes() (fantastico.roa.resources\_registrator.ResourcesRegistrator method)|hyperpage}{65}
+\indexentry{register\_resources() (fantastico.roa.resources\_registrator.ResourcesRegistrator method)|hyperpage}{65}
+\indexentry{RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller)|hyperpage}{65}
+\indexentry{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)|hyperpage}{65}
+\indexentry{QueryParser (class in fantastico.roa.query\_parser)|hyperpage}{65}
+\indexentry{parse\_filter() (fantastico.roa.query\_parser.QueryParser method)|hyperpage}{66}
+\indexentry{parse\_sort() (fantastico.roa.query\_parser.QueryParser method)|hyperpage}{66}
+\indexentry{QueryParserOperation (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
+\indexentry{add\_argument() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{66}
+\indexentry{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{66}
+\indexentry{get\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{66}
+\indexentry{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{66}
+\indexentry{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{66}
 \indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{66}
-\indexentry{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{66}
-\indexentry{QueryParserOperationBinary (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
-\indexentry{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)|hyperpage}{66}
-\indexentry{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)|hyperpage}{66}
-\indexentry{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)|hyperpage}{66}
-\indexentry{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)|hyperpage}{66}
-\indexentry{QueryParserOperationBinaryEq (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryEq method)|hyperpage}{66}
-\indexentry{QueryParserOperationBinaryGt (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryGt method)|hyperpage}{66}
-\indexentry{QueryParserOperationBinaryGe (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryGe method)|hyperpage}{66}
-\indexentry{QueryParserOperationBinaryLt (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLt method)|hyperpage}{66}
-\indexentry{QueryParserOperationBinaryLe (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLe method)|hyperpage}{66}
-\indexentry{QueryParserOperationBinaryIn (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryIn method)|hyperpage}{66}
-\indexentry{QueryParserOperationBinaryLike (class in fantastico.roa.query\_parser\_operations)|hyperpage}{66}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLike method)|hyperpage}{66}
-\indexentry{QueryParserOperationCompound (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
-\indexentry{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)|hyperpage}{67}
-\indexentry{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)|hyperpage}{67}
-\indexentry{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)|hyperpage}{67}
-\indexentry{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)|hyperpage}{67}
-\indexentry{QueryParserOperationOr (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationOr method)|hyperpage}{67}
-\indexentry{QueryParserOperationAnd (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationAnd method)|hyperpage}{67}
-\indexentry{QueryParserOperationSort (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
-\indexentry{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)|hyperpage}{67}
-\indexentry{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)|hyperpage}{67}
-\indexentry{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)|hyperpage}{67}
-\indexentry{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)|hyperpage}{67}
-\indexentry{QueryParserOperationSortAsc (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortAsc method)|hyperpage}{67}
-\indexentry{QueryParserOperationSortDesc (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
-\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortDesc method)|hyperpage}{67}
-\indexentry{ResourceJsonSerializer (class in fantastico.roa.resource\_json\_serializer)|hyperpage}{67}
-\indexentry{deserialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method)|hyperpage}{68}
-\indexentry{serialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method)|hyperpage}{68}
-\indexentry{FantasticoRoaError (class in fantastico.roa.roa\_exceptions)|hyperpage}{68}
-\indexentry{FantasticoRoaDuplicateError (class in fantastico.roa.roa\_exceptions)|hyperpage}{68}
-\indexentry{QueryParserOperationInvalidError (class in fantastico.roa.query\_parser\_exceptions)|hyperpage}{68}
-\indexentry{ResourceJsonSerializerError (class in fantastico.roa.resource\_json\_serializer\_exceptions)|hyperpage}{68}
-\indexentry{ResourceValidator (class in fantastico.roa.resource\_validator)|hyperpage}{68}
-\indexentry{validate() (fantastico.roa.resource\_validator.ResourceValidator method)|hyperpage}{69}
-\indexentry{RoaController (class in fantastico.contrib.roa\_discovery.roa\_controller)|hyperpage}{69}
-\indexentry{create\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{69}
-\indexentry{create\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{70}
-\indexentry{delete\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{70}
-\indexentry{delete\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{70}
-\indexentry{get\_collection() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{70}
-\indexentry{get\_collection\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{70}
-\indexentry{get\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{70}
-\indexentry{get\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{71}
-\indexentry{handle\_resource\_options() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{71}
-\indexentry{handle\_resource\_options\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{71}
-\indexentry{update\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{71}
-\indexentry{update\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{71}
-\indexentry{OAuth2Controller (class in fantastico.oauth2.oauth2\_controller)|hyperpage}{80}
-\indexentry{handle\_authorize() (fantastico.oauth2.oauth2\_controller.OAuth2Controller method)|hyperpage}{80}
-\indexentry{handle\_token() (fantastico.oauth2.oauth2\_controller.OAuth2Controller method)|hyperpage}{80}
-\indexentry{SecurityContext (class in fantastico.oauth2.security\_context)|hyperpage}{80}
-\indexentry{access\_token (fantastico.oauth2.security\_context.SecurityContext attribute)|hyperpage}{80}
-\indexentry{login\_token (fantastico.oauth2.security\_context.SecurityContext attribute)|hyperpage}{81}
-\indexentry{Token (class in fantastico.oauth2.token)|hyperpage}{81}
-\indexentry{TokenGenerator (class in fantastico.oauth2.token\_generator)|hyperpage}{81}
-\indexentry{generate() (fantastico.oauth2.token\_generator.TokenGenerator method)|hyperpage}{81}
-\indexentry{invalidate() (fantastico.oauth2.token\_generator.TokenGenerator method)|hyperpage}{81}
-\indexentry{validate() (fantastico.oauth2.token\_generator.TokenGenerator method)|hyperpage}{82}
-\indexentry{LoginTokenGenerator (class in fantastico.oauth2.logintoken\_generator)|hyperpage}{82}
-\indexentry{generate() (fantastico.oauth2.logintoken\_generator.LoginTokenGenerator method)|hyperpage}{82}
-\indexentry{validate() (fantastico.oauth2.logintoken\_generator.LoginTokenGenerator method)|hyperpage}{82}
-\indexentry{OAuth2Error (class in fantastico.oauth2.exceptions)|hyperpage}{82}
-\indexentry{error\_code (fantastico.oauth2.exceptions.OAuth2Error attribute)|hyperpage}{82}
-\indexentry{OAuth2InvalidTokenDescriptorError (class in fantastico.oauth2.exceptions)|hyperpage}{82}
-\indexentry{attr\_name (fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError attribute)|hyperpage}{82}
-\indexentry{OAuth2InvalidTokenTypeError (class in fantastico.oauth2.exceptions)|hyperpage}{82}
-\indexentry{token\_type (fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError attribute)|hyperpage}{82}
-\indexentry{OAuth2TokenExpiredError (class in fantastico.oauth2.exceptions)|hyperpage}{82}
-\indexentry{SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension)|hyperpage}{83}
-\indexentry{exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{84}
-\indexentry{get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{84}
-\indexentry{get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{84}
-\indexentry{SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb)|hyperpage}{84}
-\indexentry{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{84}
-\indexentry{get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{84}
-\indexentry{get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{84}
-\indexentry{SdkCommandVersion (class in fantastico.sdk.commands.command\_version)|hyperpage}{85}
-\indexentry{exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{85}
-\indexentry{get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{85}
-\indexentry{SdkCore (class in fantastico.sdk.fantastico)|hyperpage}{85}
-\indexentry{exec() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{86}
-\indexentry{get\_arguments() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{86}
-\indexentry{get\_help() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{86}
-\indexentry{SdkCommandsRegistry (class in fantastico.sdk.sdk\_core)|hyperpage}{86}
-\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{86}
-\indexentry{get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{86}
-\indexentry{SdkCommandArgument (class in fantastico.sdk.sdk\_core)|hyperpage}{87}
-\indexentry{help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{87}
-\indexentry{name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{87}
-\indexentry{short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{87}
-\indexentry{type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{87}
-\indexentry{SdkCommand (class in fantastico.sdk.sdk\_core)|hyperpage}{87}
-\indexentry{exec() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{87}
-\indexentry{exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{87}
-\indexentry{get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{87}
-\indexentry{SdkCommand (class in fantastico.sdk.sdk\_decorators)|hyperpage}{87}
-\indexentry{FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{88}
-\indexentry{FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{88}
-\indexentry{FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{88}
-\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{90}
-\indexentry{parse() (fantastico.rendering.component.Component method)|hyperpage}{91}
-\indexentry{render() (fantastico.rendering.component.Component method)|hyperpage}{91}
-\indexentry{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)|hyperpage}{93}
-\indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{93}
-\indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{93}
-\indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{93}
-\indexentry{PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router)|hyperpage}{95}
-\indexentry{serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method)|hyperpage}{96}
-\indexentry{DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{96}
-\indexentry{DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{96}
-\indexentry{TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller)|hyperpage}{98}
-\indexentry{list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{98}
-\indexentry{list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{98}
-\indexentry{TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes)|hyperpage}{98}
-\indexentry{RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller)|hyperpage}{99}
-\indexentry{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)|hyperpage}{99}
+\indexentry{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperation method)|hyperpage}{67}
+\indexentry{QueryParserOperationBinary (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
+\indexentry{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)|hyperpage}{67}
+\indexentry{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)|hyperpage}{67}
+\indexentry{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)|hyperpage}{67}
+\indexentry{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method)|hyperpage}{67}
+\indexentry{QueryParserOperationBinaryEq (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryEq method)|hyperpage}{67}
+\indexentry{QueryParserOperationBinaryGt (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryGt method)|hyperpage}{67}
+\indexentry{QueryParserOperationBinaryGe (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryGe method)|hyperpage}{67}
+\indexentry{QueryParserOperationBinaryLt (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLt method)|hyperpage}{67}
+\indexentry{QueryParserOperationBinaryLe (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLe method)|hyperpage}{67}
+\indexentry{QueryParserOperationBinaryIn (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryIn method)|hyperpage}{67}
+\indexentry{QueryParserOperationBinaryLike (class in fantastico.roa.query\_parser\_operations)|hyperpage}{67}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinaryLike method)|hyperpage}{67}
+\indexentry{QueryParserOperationCompound (class in fantastico.roa.query\_parser\_operations)|hyperpage}{68}
+\indexentry{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)|hyperpage}{68}
+\indexentry{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)|hyperpage}{68}
+\indexentry{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)|hyperpage}{68}
+\indexentry{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationCompound method)|hyperpage}{68}
+\indexentry{QueryParserOperationOr (class in fantastico.roa.query\_parser\_operations)|hyperpage}{68}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationOr method)|hyperpage}{68}
+\indexentry{QueryParserOperationAnd (class in fantastico.roa.query\_parser\_operations)|hyperpage}{68}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationAnd method)|hyperpage}{68}
+\indexentry{QueryParserOperationSort (class in fantastico.roa.query\_parser\_operations)|hyperpage}{68}
+\indexentry{build\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)|hyperpage}{68}
+\indexentry{get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)|hyperpage}{68}
+\indexentry{get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)|hyperpage}{68}
+\indexentry{validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method)|hyperpage}{68}
+\indexentry{QueryParserOperationSortAsc (class in fantastico.roa.query\_parser\_operations)|hyperpage}{68}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortAsc method)|hyperpage}{68}
+\indexentry{QueryParserOperationSortDesc (class in fantastico.roa.query\_parser\_operations)|hyperpage}{68}
+\indexentry{get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortDesc method)|hyperpage}{68}
+\indexentry{ResourceJsonSerializer (class in fantastico.roa.resource\_json\_serializer)|hyperpage}{68}
+\indexentry{deserialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method)|hyperpage}{69}
+\indexentry{serialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method)|hyperpage}{69}
+\indexentry{FantasticoRoaError (class in fantastico.roa.roa\_exceptions)|hyperpage}{69}
+\indexentry{FantasticoRoaDuplicateError (class in fantastico.roa.roa\_exceptions)|hyperpage}{69}
+\indexentry{QueryParserOperationInvalidError (class in fantastico.roa.query\_parser\_exceptions)|hyperpage}{69}
+\indexentry{ResourceJsonSerializerError (class in fantastico.roa.resource\_json\_serializer\_exceptions)|hyperpage}{69}
+\indexentry{ResourceValidator (class in fantastico.roa.resource\_validator)|hyperpage}{70}
+\indexentry{format\_collection() (fantastico.roa.resource\_validator.ResourceValidator method)|hyperpage}{70}
+\indexentry{format\_resource() (fantastico.roa.resource\_validator.ResourceValidator method)|hyperpage}{70}
+\indexentry{validate() (fantastico.roa.resource\_validator.ResourceValidator method)|hyperpage}{70}
+\indexentry{validate\_missing\_attr() (fantastico.roa.resource\_validator.ResourceValidator method)|hyperpage}{70}
+\indexentry{RoaController (class in fantastico.contrib.roa\_discovery.roa\_controller)|hyperpage}{70}
+\indexentry{create\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{71}
+\indexentry{create\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{71}
+\indexentry{delete\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{71}
+\indexentry{delete\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{72}
+\indexentry{get\_collection() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{72}
+\indexentry{get\_collection\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{72}
+\indexentry{get\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{72}
+\indexentry{get\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{72}
+\indexentry{handle\_resource\_options() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{72}
+\indexentry{handle\_resource\_options\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{72}
+\indexentry{update\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{72}
+\indexentry{update\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{73}
+\indexentry{validate\_security\_context() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method)|hyperpage}{73}
+\indexentry{PasswordsHasher (class in fantastico.oauth2.passwords\_hasher)|hyperpage}{83}
+\indexentry{hash\_password() (fantastico.oauth2.passwords\_hasher.PasswordsHasher method)|hyperpage}{83}
+\indexentry{Sha512SaltPasswordsHasher (class in fantastico.oauth2.sha512salt\_passwords\_hasher)|hyperpage}{83}
+\indexentry{hash\_password() (fantastico.oauth2.sha512salt\_passwords\_hasher.Sha512SaltPasswordsHasher method)|hyperpage}{83}
+\indexentry{PasswordsHasherFactory (class in fantastico.oauth2.passwords\_hasher\_factory)|hyperpage}{84}
+\indexentry{get\_hasher() (fantastico.oauth2.passwords\_hasher\_factory.PasswordsHasherFactory method)|hyperpage}{84}
+\indexentry{OAuth2Controller (class in fantastico.oauth2.oauth2\_controller)|hyperpage}{84}
+\indexentry{handle\_authorize() (fantastico.oauth2.oauth2\_controller.OAuth2Controller method)|hyperpage}{84}
+\indexentry{handle\_token() (fantastico.oauth2.oauth2\_controller.OAuth2Controller method)|hyperpage}{85}
+\indexentry{OAuth2TokensMiddleware (class in fantastico.oauth2.middleware.tokens\_middleware)|hyperpage}{85}
+\indexentry{OAuth2ExceptionsMiddleware (class in fantastico.oauth2.middleware.exceptions\_middleware)|hyperpage}{85}
+\indexentry{SecurityContext (class in fantastico.oauth2.security\_context)|hyperpage}{85}
+\indexentry{access\_token (fantastico.oauth2.security\_context.SecurityContext attribute)|hyperpage}{85}
+\indexentry{required\_scopes (fantastico.oauth2.security\_context.SecurityContext attribute)|hyperpage}{85}
+\indexentry{validate\_context() (fantastico.oauth2.security\_context.SecurityContext method)|hyperpage}{85}
+\indexentry{RequiredScopes (class in fantastico.oauth2.oauth2\_decorators)|hyperpage}{86}
+\indexentry{create\_scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute)|hyperpage}{86}
+\indexentry{delete\_scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute)|hyperpage}{86}
+\indexentry{inject\_scopes\_in\_security() (fantastico.oauth2.oauth2\_decorators.RequiredScopes method)|hyperpage}{86}
+\indexentry{read\_scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute)|hyperpage}{86}
+\indexentry{scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute)|hyperpage}{86}
+\indexentry{update\_scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute)|hyperpage}{86}
+\indexentry{Token (class in fantastico.oauth2.token)|hyperpage}{87}
+\indexentry{TokensService (class in fantastico.oauth2.tokens\_service)|hyperpage}{87}
+\indexentry{db\_conn (fantastico.oauth2.tokens\_service.TokensService attribute)|hyperpage}{87}
+\indexentry{decrypt() (fantastico.oauth2.tokens\_service.TokensService method)|hyperpage}{87}
+\indexentry{encrypt() (fantastico.oauth2.tokens\_service.TokensService method)|hyperpage}{87}
+\indexentry{generate() (fantastico.oauth2.tokens\_service.TokensService method)|hyperpage}{87}
+\indexentry{invalidate() (fantastico.oauth2.tokens\_service.TokensService method)|hyperpage}{88}
+\indexentry{validate() (fantastico.oauth2.tokens\_service.TokensService method)|hyperpage}{88}
+\indexentry{TokenGeneratorFactory (class in fantastico.oauth2.tokengenerator\_factory)|hyperpage}{88}
+\indexentry{get\_generator() (fantastico.oauth2.tokengenerator\_factory.TokenGeneratorFactory method)|hyperpage}{88}
+\indexentry{TokenGenerator (class in fantastico.oauth2.token\_generator)|hyperpage}{88}
+\indexentry{generate() (fantastico.oauth2.token\_generator.TokenGenerator method)|hyperpage}{88}
+\indexentry{invalidate() (fantastico.oauth2.token\_generator.TokenGenerator method)|hyperpage}{89}
+\indexentry{validate() (fantastico.oauth2.token\_generator.TokenGenerator method)|hyperpage}{89}
+\indexentry{LoginTokenGenerator (class in fantastico.oauth2.logintoken\_generator)|hyperpage}{89}
+\indexentry{generate() (fantastico.oauth2.logintoken\_generator.LoginTokenGenerator method)|hyperpage}{89}
+\indexentry{validate() (fantastico.oauth2.logintoken\_generator.LoginTokenGenerator method)|hyperpage}{89}
+\indexentry{AccessTokenGenerator (class in fantastico.oauth2.accesstoken\_generator)|hyperpage}{89}
+\indexentry{generate() (fantastico.oauth2.accesstoken\_generator.AccessTokenGenerator method)|hyperpage}{89}
+\indexentry{validate() (fantastico.oauth2.accesstoken\_generator.AccessTokenGenerator method)|hyperpage}{89}
+\indexentry{TokenEncryption (class in fantastico.oauth2.token\_encryption)|hyperpage}{90}
+\indexentry{decrypt\_token() (fantastico.oauth2.token\_encryption.TokenEncryption method)|hyperpage}{90}
+\indexentry{encrypt\_token() (fantastico.oauth2.token\_encryption.TokenEncryption method)|hyperpage}{90}
+\indexentry{AesTokenEncryption (class in fantastico.oauth2.token\_encryption)|hyperpage}{90}
+\indexentry{decrypt\_token() (fantastico.oauth2.token\_encryption.AesTokenEncryption method)|hyperpage}{90}
+\indexentry{encrypt\_token() (fantastico.oauth2.token\_encryption.AesTokenEncryption method)|hyperpage}{90}
+\indexentry{PublicTokenEncryption (class in fantastico.oauth2.token\_encryption)|hyperpage}{91}
+\indexentry{decrypt\_token() (fantastico.oauth2.token\_encryption.PublicTokenEncryption method)|hyperpage}{91}
+\indexentry{encrypt\_token() (fantastico.oauth2.token\_encryption.PublicTokenEncryption method)|hyperpage}{91}
+\indexentry{GrantHandler (class in fantastico.oauth2.grant\_handler)|hyperpage}{91}
+\indexentry{handle\_grant() (fantastico.oauth2.grant\_handler.GrantHandler method)|hyperpage}{91}
+\indexentry{GrantHandlerFactory (class in fantastico.oauth2.grant\_handler\_factory)|hyperpage}{91}
+\indexentry{get\_handler() (fantastico.oauth2.grant\_handler\_factory.GrantHandlerFactory method)|hyperpage}{91}
+\indexentry{ImplicitGrantHandler (class in fantastico.oauth2.implicit\_grant\_handler)|hyperpage}{91}
+\indexentry{handle\_grant() (fantastico.oauth2.implicit\_grant\_handler.ImplicitGrantHandler method)|hyperpage}{92}
+\indexentry{OAuth2Error (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{error\_code (fantastico.oauth2.exceptions.OAuth2Error attribute)|hyperpage}{92}
+\indexentry{OAuth2InvalidTokenDescriptorError (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{attr\_name (fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError attribute)|hyperpage}{92}
+\indexentry{OAuth2InvalidTokenTypeError (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{token\_type (fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError attribute)|hyperpage}{92}
+\indexentry{OAuth2TokenExpiredError (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{OAuth2InvalidClientError (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{OAuth2InvalidScopesError (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{OAuth2MissingQueryParamError (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{param\_name (fantastico.oauth2.exceptions.OAuth2MissingQueryParamError attribute)|hyperpage}{92}
+\indexentry{OAuth2TokenEncryptionError (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{OAuth2UnsupportedGrantError (class in fantastico.oauth2.exceptions)|hyperpage}{92}
+\indexentry{handler\_type (fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError attribute)|hyperpage}{92}
+\indexentry{OAuth2UnauthorizedError (class in fantastico.oauth2.exceptions)|hyperpage}{93}
+\indexentry{OAuth2AuthenticationError (class in fantastico.oauth2.exceptions)|hyperpage}{93}
+\indexentry{SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension)|hyperpage}{93}
+\indexentry{exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{94}
+\indexentry{get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{94}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method)|hyperpage}{94}
+\indexentry{SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb)|hyperpage}{94}
+\indexentry{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{94}
+\indexentry{get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{95}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)|hyperpage}{95}
+\indexentry{SdkCommandVersion (class in fantastico.sdk.commands.command\_version)|hyperpage}{95}
+\indexentry{exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{95}
+\indexentry{get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method)|hyperpage}{95}
+\indexentry{SdkCore (class in fantastico.sdk.fantastico)|hyperpage}{95}
+\indexentry{exec() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{96}
+\indexentry{get\_arguments() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{96}
+\indexentry{get\_help() (fantastico.sdk.fantastico.SdkCore method)|hyperpage}{96}
+\indexentry{SdkCommandsRegistry (class in fantastico.sdk.sdk\_core)|hyperpage}{96}
+\indexentry{add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{96}
+\indexentry{get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method)|hyperpage}{96}
+\indexentry{SdkCommandArgument (class in fantastico.sdk.sdk\_core)|hyperpage}{97}
+\indexentry{help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{97}
+\indexentry{name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{97}
+\indexentry{short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{97}
+\indexentry{type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute)|hyperpage}{97}
+\indexentry{SdkCommand (class in fantastico.sdk.sdk\_core)|hyperpage}{97}
+\indexentry{exec() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{97}
+\indexentry{exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{97}
+\indexentry{get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method)|hyperpage}{97}
+\indexentry{SdkCommand (class in fantastico.sdk.sdk\_decorators)|hyperpage}{97}
+\indexentry{FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{98}
+\indexentry{FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{98}
+\indexentry{FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions)|hyperpage}{98}
+\indexentry{Component (class in fantastico.rendering.component)|hyperpage}{100}
+\indexentry{parse() (fantastico.rendering.component.Component method)|hyperpage}{101}
+\indexentry{render() (fantastico.rendering.component.Component method)|hyperpage}{101}
+\indexentry{DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller)|hyperpage}{103}
+\indexentry{max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute)|hyperpage}{103}
+\indexentry{retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method)|hyperpage}{103}
+\indexentry{FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions)|hyperpage}{103}
+\indexentry{PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router)|hyperpage}{105}
+\indexentry{serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method)|hyperpage}{106}
+\indexentry{DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{106}
+\indexentry{DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages)|hyperpage}{106}
+\indexentry{TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller)|hyperpage}{108}
+\indexentry{list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{108}
+\indexentry{list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method)|hyperpage}{108}
+\indexentry{TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes)|hyperpage}{108}
+\indexentry{RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller)|hyperpage}{109}
+\indexentry{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)|hyperpage}{109}

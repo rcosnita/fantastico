@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.roa.resource_validator &mdash; fantastico 0.6.0-b136 documentation</title>
+    <title>fantastico.roa.resource_validator &mdash; fantastico 0.6.0-b137 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.6.0-b136',
+        VERSION:     '0.6.0-b137',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b136 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b137 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" /> 
   </head>
   <body>
@@ -33,7 +33,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -62,6 +62,8 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.roa.resource_validator</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">fantastico.roa.roa_exceptions</span> <span class="kn">import</span> <span class="n">FantasticoRoaError</span>
+<span class="kn">from</span> <span class="nn">fantastico.utils.dictionary_object</span> <span class="kn">import</span> <span class="n">DictionaryObject</span>
 
 <div class="viewcode-block" id="ResourceValidator"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator">[docs]</a><span class="k">class</span> <span class="nc">ResourceValidator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the base for all validators which can be used for resources.</span>
@@ -69,7 +71,7 @@
 <span class="sd">    .. code-block:: python</span>
 
 <span class="sd">        class AppSettingValidator(ResourceValidator):</span>
-<span class="sd">            def validate(self, resource):</span>
+<span class="sd">            def validate(self, resource, request, existing_resource_id=None):</span>
 <span class="sd">                errors = []</span>
 
 <span class="sd">                if resource.name == &quot;unsupported&quot;:</span>
@@ -82,18 +84,61 @@
 <span class="sd">                    return</span>
 
 <span class="sd">                raise FantasticoRoaError(errors)</span>
+
+<span class="sd">            def format_collection(self, resources, request):</span>
+<span class="sd">                # we can safely retrieve the full collection of resources so nothing has to be done here.</span>
+
+<span class="sd">            def format_resource(self, resource, request):</span>
+<span class="sd">                # we can safely retrieve the resource so nothing has to be done here.</span>
+
+<span class="sd">    Every method from validator receives the current http request in order to give access to resource validators to security</span>
+<span class="sd">    context and other contexts which might be necessary.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-<div class="viewcode-block" id="ResourceValidator.validate"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+<div class="viewcode-block" id="ResourceValidator.validate"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">existing_resource_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span> <span class="c"># pylint: disable=W0613</span>
         <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass in order to provide the validation logic required for the given</span>
 <span class="sd">        resource. The resource received as an argument represents an instance of the model used to describe the resource.</span>
 <span class="sd">        This method can raise unexpected exceptions. It is recommended to use</span>
-<span class="sd">        :py:class:`fantastico.roa.roa_exceptions.FantasticoRoaError`.&#39;&#39;&#39;</span>
+<span class="sd">        :py:class:`fantastico.roa.roa_exceptions.FantasticoRoaError`</span>
+
+<span class="sd">        Moreover, there are special cases when you need the existing resource id. The easiest way to achieve this is to look at</span>
+<span class="sd">        existing_resource_id argument..&#39;&#39;&#39;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
-        <span class="k">return</span> <span class="bp">True</span></div></div>
+        <span class="k">return</span> <span class="bp">True</span>
+</div>
+<div class="viewcode-block" id="ResourceValidator.format_collection"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.format_collection">[docs]</a>    <span class="k">def</span> <span class="nf">format_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span> <span class="c"># pylint: disable=W0613</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass in order to provide custom logic which must be executed after</span>
+<span class="sd">        a collection is fetched from database. By default, this method simply iterates over the list of available resources and</span>
+<span class="sd">        invoke format_resource.</span>
+
+<span class="sd">        Usually you will want to override this method in order to suppress sensitive data to be sent to clients.&#39;&#39;&#39;</span>
+
+        <span class="n">resources</span> <span class="o">=</span> <span class="n">resources</span> <span class="ow">or</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resources</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">format_resource</span><span class="p">(</span><span class="n">DictionaryObject</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">immutable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span> <span class="n">request</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ResourceValidator.format_resource"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.format_resource">[docs]</a>    <span class="k">def</span> <span class="nf">format_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span> <span class="c"># pylint: disable=W0613</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass in order to provide custom logic which must be executed after a resource</span>
+<span class="sd">        is fetched.</span>
+
+<span class="sd">        Usually you will want to override this method in order to suppress sensitive data to be sent to clients.&#39;&#39;&#39;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="ResourceValidator.validate_missing_attr"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.validate_missing_attr">[docs]</a>    <span class="k">def</span> <span class="nf">validate_missing_attr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides a simple validation for ensuring given attr_name exists and it&#39;s not empty into the specified</span>
+<span class="sd">        resource.&#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">resource</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">FantasticoRoaError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> attribute is mandatory. Please provide it.&quot;</span> <span class="o">%</span> <span class="n">attr_name</span><span class="p">)</span>
+
+        <span class="n">attr_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attr_value</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">(</span><span class="n">attr_value</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">FantasticoRoaError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> attribute is mandatory. Please provide it.&quot;</span> <span class="o">%</span> <span class="n">attr_name</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -124,7 +169,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

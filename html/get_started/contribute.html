@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Contribute &mdash; fantastico 0.6.0-b136 documentation</title>
+    <title>Contribute &mdash; fantastico 0.6.0-b137 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.6.0-b136',
+        VERSION:     '0.6.0-b137',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b136 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b137 documentation" href="../index.html" />
     <link rel="up" title="Getting started" href="getting_started.html" />
     <link rel="next" title="Development mode" href="dev_mode.html" />
     <link rel="prev" title="Fantastico settings" href="settings.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="settings.html" title="Fantastico settings"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>  
@@ -141,22 +141,8 @@ this method on all classes which might contain &#64;Controller decorator. It eas
 <dl class="class">
 <dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase">
 <em class="property">class </em><tt class="descclassname">fantastico.tests.base_case.</tt><tt class="descname">FantasticoIntegrationTestCase</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is the base class that must be inherited by each integration test written for fantastico.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SimpleIntegration</span><span class="p">(</span><span class="n">FantasticoIntegrationTestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">simple_class</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">def</span> <span class="nf">cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">simple_class</span> <span class="o">=</span> <span class="bp">None</span>
-
-    <span class="k">def</span> <span class="nf">test_simple_ok</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">do_stuff</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">env_cls</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">simple_class</span><span class="p">[</span><span class="n">env</span><span class="p">],</span> <span class="n">env_cls</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="n">do_stuff</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If you used this class you don&#8217;t have to mind about restoring call methods from each middleware once they are wrapped
+<dd><p>This is the base class that must be inherited by each integration test written for fantastico.
+If you used this class you don&#8217;t have to mind about restoring call methods from each middleware once they are wrapped
 by fantastico app. This is a must because otherwise you will crash other tests.</p>
 <dl class="attribute">
 <dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._envs">
@@ -165,16 +151,45 @@ by fantastico app. This is a must because otherwise you will crash other tests.<
 </dd></dl>
 
 <dl class="method">
-<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._restore_call_methods">
-<tt class="descname">_restore_call_methods</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._restore_call_methods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._restore_call_methods" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method restore original call methods to all affected middlewares.</p>
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._get_db_conn">
+<tt class="descname">_get_db_conn</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._get_db_conn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._get_db_conn" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method opens a db connection and returns it to for usage.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs">
-<tt class="descname">_run_test_all_envs</tt><big>(</big><em>callable_obj</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._run_test_all_envs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._run_test_all_envs" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method is used to execute a callable block of code on all environments. This is extremely useful for
-avoid boiler plate code duplication and executing test logic against all environments.</p>
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._get_oauth2_logintoken">
+<tt class="descname">_get_oauth2_logintoken</tt><big>(</big><em>client_id</em>, <em>user_id</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._get_oauth2_logintoken"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._get_oauth2_logintoken" title="Permalink to this definition">¶</a></dt>
+<dd><p>This methods generates an oauth2 login token which can be used in integration tests.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._get_oauth2_token">
+<tt class="descname">_get_oauth2_token</tt><big>(</big><em>client_id</em>, <em>user_id</em>, <em>scopes</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._get_oauth2_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._get_oauth2_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method generates an oauth2 access token which can be used in integration tests.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._get_token">
+<tt class="descname">_get_token</tt><big>(</big><em>token_type</em>, <em>token_desc</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._get_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._get_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method provides a generic token generation method which can be used in integration tests.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._invalidate_encrypted_token">
+<tt class="descname">_invalidate_encrypted_token</tt><big>(</big><em>encrypted_token</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._invalidate_encrypted_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._invalidate_encrypted_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method invalidates a given encrypted token using tokens service implementation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._invalidate_oauth2_token">
+<tt class="descname">_invalidate_oauth2_token</tt><big>(</big><em>token</em><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._invalidate_oauth2_token"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._invalidate_oauth2_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method invalidates the given token automatically.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.tests.base_case.FantasticoIntegrationTestCase._restore_call_methods">
+<tt class="descname">_restore_call_methods</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/fantastico/tests/base_case.html#FantasticoIntegrationTestCase._restore_call_methods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.tests.base_case.FantasticoIntegrationTestCase._restore_call_methods" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method restore original call methods to all affected middlewares.</p>
 </dd></dl>
 
 <dl class="method">
@@ -211,10 +226,7 @@ avoid boiler plate code duplication and executing test logic against all environ
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;Hello world.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exception</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_all_envs</span><span class="p">(</span><span class="k">lambda</span> <span class="n">env</span><span class="p">,</span> <span class="n">settings_cls</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_against_dev_server</span><span class="p">(</span><span class="n">request_logic</span><span class="p">,</span> <span class="n">assert_logic</span><span class="p">))</span>
-
-        <span class="c"># you can also pass only request logic without assert logic</span>
-        <span class="c"># self._run_test_all_envs(lambda env, settings_cls: self._run_test_against_dev_server(request_logic))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_test_against_dev_server</span><span class="p">(</span><span class="n">request_logic</span><span class="p">,</span> <span class="n">assert_logic</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>As you can see from above listed code, when you write a new integration test against Fantastico server you only need
@@ -304,7 +316,7 @@ code is correct.</p>
         <li class="right" >
           <a href="settings.html" title="Fantastico settings"
              >previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" >Getting started</a> &raquo;</li> 
       </ul>
     </div>

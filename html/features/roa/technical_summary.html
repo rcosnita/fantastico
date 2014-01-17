@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ROA Technical Summary &mdash; fantastico 0.6.0-b136 documentation</title>
+    <title>ROA Technical Summary &mdash; fantastico 0.6.0-b137 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.6.0-b136',
+        VERSION:     '0.6.0-b137',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b136 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.6.0-b137 documentation" href="../../index.html" />
     <link rel="up" title="ROA (Resource Oriented Architecture)" href="../roa.html" />
     <link rel="next" title="10000 - Resource Collection Not Found" href="errors/error_10000.html" />
     <link rel="prev" title="REST Responses" href="rest_responses.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="rest_responses.html" title="REST Responses"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../roa.html" accesskey="U">ROA (Resource Oriented Architecture)</a> &raquo;</li> 
       </ul>
@@ -56,7 +56,7 @@
 <h1>ROA Technical Summary<a class="headerlink" href="#roa-technical-summary" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="fantastico.roa.resource_decorator.Resource">
-<em class="property">class </em><tt class="descclassname">fantastico.roa.resource_decorator.</tt><tt class="descname">Resource</tt><big>(</big><em>name</em>, <em>url</em>, <em>version=1.0</em>, <em>subresources=None</em>, <em>validator=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_decorator.Resource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.roa.resource_decorator.</tt><tt class="descname">Resource</tt><big>(</big><em>name</em>, <em>url</em>, <em>version=1.0</em>, <em>subresources=None</em>, <em>validator=None</em>, <em>user_dependent=False</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_decorator.Resource" title="Permalink to this definition">¶</a></dt>
 <dd><img alt="../../_images/roa_classes.png" src="../../_images/roa_classes.png" />
 <p>This class provides the main way for defining resources. Below you can find a very simple example for defining new resources:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">)</span>
@@ -65,11 +65,29 @@
     <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 </pre></div>
 </div>
+<p>Starting from <strong>Fantastico</strong> version 0.6 ROA resources support OAuth2 authorization. Because of this, resources can now be
+user dependent or user independent. In order for authorization to work as expected for resources which are available only
+to certain users you can use the following code snippet:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;app-setting&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">&quot;/app-settings&quot;</span><span class="p">,</span> <span class="n">user_dependent</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AppSetting</span><span class="p">(</span><span class="n">BASEMODEL</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">autoincrement</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+</pre></div>
+</div>
+<p>If you do not define a user_id property for user dependent resources a runtime exception is raised. In order to find out more
+about OAuth2 authorization implemented into fantastico please read: <a class="reference internal" href="../oauth2.html"><em>OAUTH2</em></a>.</p>
 <dl class="attribute">
 <dt id="fantastico.roa.resource_decorator.Resource.model">
 <tt class="descname">model</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource.model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_decorator.Resource.model" title="Permalink to this definition">¶</a></dt>
@@ -109,6 +127,29 @@ or multiple (composite uniquely identified resources) resource attributes.</p>
 <dt id="fantastico.roa.resource_decorator.Resource.url">
 <tt class="descname">url</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource.url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_decorator.Resource.url" title="Permalink to this definition">¶</a></dt>
 <dd><p>This read only property holds the url of the resource.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.roa.resource_decorator.Resource.user_dependent">
+<tt class="descname">user_dependent</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_decorator.html#Resource.user_dependent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_decorator.Resource.user_dependent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This read only property returns True if user is owned only by one resource and False otherwise. It is really important
+to understand the impact of the property when set to True:</p>
+<ol class="arabic">
+<li><p class="first">Every GET on resource root url will also receive a filter user_id from access_token == resource.model.user_id</p>
+</li>
+<li><p class="first">Every GET on a specific resource id will be validated also on user_id field.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Every POST for creating a new resource will automatically assign resource to user_id found in access_token. There is an</dt>
+<dd><p class="first last">exception when the resource does not require create scopes.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Every PUT on a specific resource id will also check to ensure the user from the access_token owns the resource.</p>
+</li>
+<li><p class="first">Every DELETE on a specific resource id will also check to ensure the user from the access_token owns the resource.</p>
+</li>
+</ol>
 </dd></dl>
 
 <dl class="attribute">
@@ -732,27 +773,27 @@ a resource.</p>
 <h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="fantastico.roa.roa_exceptions.FantasticoRoaError">
-<em class="property">class </em><tt class="descclassname">fantastico.roa.roa_exceptions.</tt><tt class="descname">FantasticoRoaError</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/roa_exceptions.html#FantasticoRoaError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.roa_exceptions.FantasticoRoaError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.roa.roa_exceptions.</tt><tt class="descname">FantasticoRoaError</tt><big>(</big><em>msg</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/roa_exceptions.html#FantasticoRoaError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.roa_exceptions.FantasticoRoaError" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the core error used within Fantastico ROA layer. Usually, more concrete exceptions are raised by
 ROA layers.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError">
-<em class="property">class </em><tt class="descclassname">fantastico.roa.roa_exceptions.</tt><tt class="descname">FantasticoRoaDuplicateError</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/roa_exceptions.html#FantasticoRoaDuplicateError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.roa.roa_exceptions.</tt><tt class="descname">FantasticoRoaDuplicateError</tt><big>(</big><em>msg</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/roa_exceptions.html#FantasticoRoaDuplicateError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.roa_exceptions.FantasticoRoaDuplicateError" title="Permalink to this definition">¶</a></dt>
 <dd><p>This concrete exception is used to notify user that multiple resources with same name and version or url and version
 can not be registered multiple times.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError">
-<em class="property">class </em><tt class="descclassname">fantastico.roa.query_parser_exceptions.</tt><tt class="descname">QueryParserOperationInvalidError</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/query_parser_exceptions.html#QueryParserOperationInvalidError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.roa.query_parser_exceptions.</tt><tt class="descname">QueryParserOperationInvalidError</tt><big>(</big><em>msg</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/query_parser_exceptions.html#QueryParserOperationInvalidError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.query_parser_exceptions.QueryParserOperationInvalidError" title="Permalink to this definition">¶</a></dt>
 <dd><p>This exception notifies the query parser that something is wrong with the current operation arguments.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError">
-<em class="property">class </em><tt class="descclassname">fantastico.roa.resource_json_serializer_exceptions.</tt><tt class="descname">ResourceJsonSerializerError</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_json_serializer_exceptions.html#ResourceJsonSerializerError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">fantastico.roa.resource_json_serializer_exceptions.</tt><tt class="descname">ResourceJsonSerializerError</tt><big>(</big><em>msg</em>, <em>http_code=400</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_json_serializer_exceptions.html#ResourceJsonSerializerError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_json_serializer_exceptions.ResourceJsonSerializerError" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides a concrete exception used when serializing / deserializing resource models.</p>
 </dd></dl>
 
@@ -764,7 +805,7 @@ can not be registered multiple times.</p>
 <em class="property">class </em><tt class="descclassname">fantastico.roa.resource_validator.</tt><tt class="descname">ResourceValidator</tt><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class provides the base for all validators which can be used for resources.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">AppSettingValidator</span><span class="p">(</span><span class="n">ResourceValidator</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">existing_resource_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;unsupported&quot;</span><span class="p">:</span>
@@ -777,15 +818,49 @@ can not be registered multiple times.</p>
             <span class="k">return</span>
 
         <span class="k">raise</span> <span class="n">FantasticoRoaError</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">format_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="c"># we can safely retrieve the full collection of resources so nothing has to be done here.</span>
+
+    <span class="k">def</span> <span class="nf">format_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="c"># we can safely retrieve the resource so nothing has to be done here.</span>
 </pre></div>
 </div>
+<p>Every method from validator receives the current http request in order to give access to resource validators to security
+context and other contexts which might be necessary.</p>
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.format_collection">
+<tt class="descname">format_collection</tt><big>(</big><em>resources</em>, <em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.format_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.format_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each subclass in order to provide custom logic which must be executed after
+a collection is fetched from database. By default, this method simply iterates over the list of available resources and
+invoke format_resource.</p>
+<p>Usually you will want to override this method in order to suppress sensitive data to be sent to clients.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.format_resource">
+<tt class="descname">format_resource</tt><big>(</big><em>resource</em>, <em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.format_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.format_resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each subclass in order to provide custom logic which must be executed after a resource
+is fetched.</p>
+<p>Usually you will want to override this method in order to suppress sensitive data to be sent to clients.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="fantastico.roa.resource_validator.ResourceValidator.validate">
-<tt class="descname">validate</tt><big>(</big><em>resource</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.validate" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">validate</tt><big>(</big><em>resource</em>, <em>request</em>, <em>existing_resource_id=None</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.validate" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method must be overriden by each subclass in order to provide the validation logic required for the given
 resource. The resource received as an argument represents an instance of the model used to describe the resource.
 This method can raise unexpected exceptions. It is recommended to use
-<a class="reference internal" href="#fantastico.roa.roa_exceptions.FantasticoRoaError" title="fantastico.roa.roa_exceptions.FantasticoRoaError"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.roa.roa_exceptions.FantasticoRoaError</span></tt></a>.</p>
+<a class="reference internal" href="#fantastico.roa.roa_exceptions.FantasticoRoaError" title="fantastico.roa.roa_exceptions.FantasticoRoaError"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.roa.roa_exceptions.FantasticoRoaError</span></tt></a></p>
+<p>Moreover, there are special cases when you need the existing resource id. The easiest way to achieve this is to look at
+existing_resource_id argument..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.validate_missing_attr">
+<tt class="descname">validate_missing_attr</tt><big>(</big><em>resource</em>, <em>attr_name</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.validate_missing_attr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.validate_missing_attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method provides a simple validation for ensuring given attr_name exists and it&#8217;s not empty into the specified
+resource.</p>
 </dd></dl>
 
 </dd></dl>
@@ -955,6 +1030,13 @@ Content-Length: 0
 <dd><p>This is the route handler for latest update existing item api.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="fantastico.contrib.roa_discovery.roa_controller.RoaController.validate_security_context">
+<tt class="descname">validate_security_context</tt><big>(</big><em>request</em>, <em>attr_scope</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/contrib/roa_discovery/roa_controller.html#RoaController.validate_security_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.contrib.roa_discovery.roa_controller.RoaController.validate_security_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method triggers security context validation and converts unexpected exceptions to OAuth2UnauthorizedError.
+If everything is fine this method return the access_token from security context.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1030,7 +1112,7 @@ Content-Length: 0
         <li class="right" >
           <a href="rest_responses.html" title="REST Responses"
              >previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b136 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.6.0-b137 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../roa.html" >ROA (Resource Oriented Architecture)</a> &raquo;</li> 
       </ul>
