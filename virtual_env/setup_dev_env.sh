@@ -7,6 +7,7 @@ pip install coverage
 pip install pylint
 pip install jinja2==2.6
 pip install sphinx
+pip install sphinx_bootstrap_theme
 pip install webob
 pip install virtual_env/libs/mysql-connector
 pip install sqlalchemy
