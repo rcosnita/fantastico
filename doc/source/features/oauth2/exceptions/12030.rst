@@ -1,0 +1,8 @@
+12030 - OAuth token expired
+===========================
+
+This is a frequent error you might encounter when using OAuth tokens for accessing APIs. You can easily recover from this
+by obtaining a new access token and retry the API call with the new token.
+
+A better solution is to cache the token TTL and with 1 minute before expiration try to renew the token transparently. Like this
+you guarantee no service interruption will occur for your end users.

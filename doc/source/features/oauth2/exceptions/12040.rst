@@ -1,0 +1,7 @@
+12040 - OAuth token encryption error
+====================================
+
+In most cases you will not end up with this OAuth error returned for your API call. This happens in one of the two scenarios:
+
+   #. Someone tries to send a fake token which can not be interpreted by Fantastico.
+   #. Client keys have been wrongly rotated. In this case simply report a bug to project creator.

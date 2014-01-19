@@ -1,0 +1,8 @@
+12050 - OAuth invalid client error
+==================================
+
+This error response usually occurs during authorization phase, when an inexistent client_id is specified. In order to fix it,
+you must register the client_id before trying to issue new tokens for it.
+
+A second scenario, which is highly improbable is that some deleted the client_id from registered clients after you have obtained
+a valid authorized token.

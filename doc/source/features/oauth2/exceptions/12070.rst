@@ -1,0 +1,5 @@
+12070 - OAuth missing query parameter
+=====================================
+
+This error is quite common during authorization / api calls when requester does not add all mandatory query parameters to request.
+In order to fix this you must make sure all mandatory parameters are sent through the request.
