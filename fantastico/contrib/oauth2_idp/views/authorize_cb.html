@@ -2,10 +2,70 @@
 
 <head>
     <title>Fantastico Implicit Grant</title>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        function AuthorizeCbHandler() {
+            this._msg_div = $("#status_msg");
+        };
+        
+        AuthorizeCbHandler.prototype.handleResponse = function() {
+            var hashQuery = document.location.hash.substring(1);
+            
+            parameters = this._getHashParams(hashQuery);
+            
+            if(!parameters.error) {
+                return this._show_ok_message(parameters);
+            }
+            
+            return this._show_error_message(parameters);
+        };
+        
+        /**
+         * This method is taken from the excellent stack overflow discussion: 
+         * http://stackoverflow.com/questions/4197591/parsing-url-hash-fragment-identifier-with-javascript
+         */
+        AuthorizeCbHandler.prototype._getHashParams = function(query) {
+            var hashParams = {};
+            
+            var e,
+                a = /\+/g,  // Regex for replacing addition symbol with a space
+                r = /([^&;=]+)=?([^&;]*)/g,
+                d = function (s) { return decodeURIComponent(s.replace(a, " ")); };
+        
+            while (e = r.exec(query))
+               hashParams[d(e[1])] = d(e[2]);
+        
+            return hashParams;
+        };
+        
+        AuthorizeCbHandler.prototype._show_error_message = function(parameters) {
+            var msg = [];
+            
+            msg.push("<b>error:</b> " + parameters.error);
+            msg.push("<b>error_description:</b> " + parameters.error_description);
+            msg.push("<b>error_uri:</b> " + parameters.error_uri);
+            msg.push("<b>state:</b> " + parameters.state);
+            
+            this._msg_div.html(msg.join("<br/>"));
+        };
+        
+        AuthorizeCbHandler.prototype._show_ok_message = function(parameters) {
+            var msg = [];
+            
+            msg.push("<b>access_token:</b> " + parameters.access_token);
+            msg.push("<b>token_type:</b> " + parameters.token_type);
+            msg.push("<b>expires_in:</b> " + parameters.expires_in);
+            msg.push("<b>scope:</b> " + parameters.scope);
+            msg.push("<b>state:</b> " + parameters.state);
+            
+            this._msg_div.html(msg.join("<br/>"));
+        };
+    </script>
 </head>
 
-<body>
-    <h3>Congrats. Implicit Grant works as expected. Look in the url for getting your access token.</h3>
+<body onload="new AuthorizeCbHandler().handleResponse();">
+    <div id="status_msg">&nbsp;</div>
 </body>
 
 </html>
