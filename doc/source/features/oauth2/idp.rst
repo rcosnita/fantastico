@@ -2,7 +2,8 @@ OAUTH2 Fantastico IDP
 =====================
 
 Fantastico provides a default Identity provider which provides required APIs for managing users. As other Fantastico
-extensions the APIs are secured with OAUTH2 tokens.
+extensions APIs, idp APIs are secured with OAUTH2 tokens. In order to activate IDP extension for **Fantastico** follow
+:doc:`/features/components/oauth2/oauth2_idp/index`.
 
 APIs
 ----
