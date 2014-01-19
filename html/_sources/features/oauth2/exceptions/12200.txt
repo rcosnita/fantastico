@@ -1,0 +1,5 @@
+12200 - OAuth authentication error
+==================================
+
+This exception occurs during authorization phase when resource owner provides wrong credentials. In order to recover you must
+try a new authorization from your application.

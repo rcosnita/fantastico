@@ -13,9 +13,9 @@ Versions
 
 * v0.6.0 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 
-   * Add implicit grant type implementation.
-   * Add security support for endpoints / controllers.
-   * Add Fantastico identity provider.
+   * Added implicit grant type implementation.
+   * Added security support for endpoints / controllers.
+   * Added Fantastico identity provider.
    * Fix a bug in ROA APIs routes mapping.
    * Added support for MVC Controllers into custom packages (not residing in components root folder).
    * Added ROA resources dependent on user (integrated with OAuth2 access tokens).

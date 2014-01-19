@@ -154,45 +154,59 @@
 \contentsline {paragraph}{Encryption / decryption}{90}{paragraph*.344}
 \contentsline {paragraph}{Suported grant types}{91}{paragraph*.354}
 \contentsline {paragraph}{Concrete exceptions}{92}{paragraph*.361}
-\contentsline {section}{\numberline {4.7}SDK}{93}{section.4.7}
-\contentsline {subsection}{\numberline {4.7.1}Intro}{93}{subsection.4.7.1}
-\contentsline {subsection}{\numberline {4.7.2}Usage}{93}{subsection.4.7.2}
-\contentsline {subsection}{\numberline {4.7.3}Supported commands}{93}{subsection.4.7.3}
-\contentsline {subsubsection}{Activate extension command}{93}{subsubsection*.378}
-\contentsline {subsubsection}{Fantastico command}{94}{subsubsection*.383}
-\contentsline {subsubsection}{Syncdb command}{94}{subsubsection*.384}
-\contentsline {subsubsection}{Version command}{95}{subsubsection*.389}
-\contentsline {subsection}{\numberline {4.7.4}Technical summary}{95}{subsection.4.7.4}
-\contentsline {section}{\numberline {4.8}Component model}{98}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}Static folder}{99}{subsection.4.8.1}
-\contentsline {subsection}{\numberline {4.8.2}Sql folder}{99}{subsection.4.8.2}
-\contentsline {subsubsection}{Sql folder example}{99}{subsubsection*.413}
-\contentsline {section}{\numberline {4.9}Component reusage}{100}{section.4.9}
-\contentsline {section}{\numberline {4.10}Built in components}{102}{section.4.10}
-\contentsline {subsection}{\numberline {4.10.1}Dynamic menu}{102}{subsection.4.10.1}
-\contentsline {subsubsection}{Integration}{102}{subsubsection*.417}
-\contentsline {paragraph}{Component files activation deprecated}{102}{paragraph*.418}
-\contentsline {paragraph}{Component files activation (SDK)}{102}{paragraph*.419}
-\contentsline {paragraph}{Component sample + db data}{102}{paragraph*.420}
-\contentsline {subsubsection}{Current limitations}{103}{subsubsection*.421}
-\contentsline {subsubsection}{Technical summary}{103}{subsubsection*.422}
-\contentsline {subsection}{\numberline {4.10.2}Dynamic pages}{104}{subsection.4.10.2}
-\contentsline {subsubsection}{Integration}{104}{subsubsection*.427}
-\contentsline {subsubsection}{Current limitations}{105}{subsubsection*.428}
-\contentsline {subsubsection}{Technical summary}{105}{subsubsection*.429}
-\contentsline {subsection}{\numberline {4.10.3}Tracking codes}{106}{subsection.4.10.3}
-\contentsline {subsubsection}{Analytic solutions}{107}{subsubsection*.434}
-\contentsline {subsubsection}{Integration}{107}{subsubsection*.435}
-\contentsline {subsubsection}{Current limitations}{108}{subsubsection*.436}
-\contentsline {subsubsection}{Technical summary}{108}{subsubsection*.437}
-\contentsline {subsection}{\numberline {4.10.4}ROA Auto discovery}{108}{subsection.4.10.4}
-\contentsline {subsubsection}{Integration}{108}{subsubsection*.442}
-\contentsline {subsubsection}{Current limitations}{109}{subsubsection*.443}
-\contentsline {subsubsection}{Technical summary}{109}{subsubsection*.444}
-\contentsline {chapter}{\numberline {5}Changes}{111}{chapter.5}
-\contentsline {section}{\numberline {5.1}Feedback}{111}{section.5.1}
-\contentsline {section}{\numberline {5.2}Versions}{111}{section.5.2}
-\contentsline {chapter}{\numberline {6}Provide feedback}{115}{chapter.6}
-\contentsline {chapter}{\numberline {7}Build status}{117}{chapter.7}
-\contentsline {chapter}{\numberline {8}License}{119}{chapter.8}
-\contentsline {chapter}{Index}{121}{section*.447}
+\contentsline {subsection}{\numberline {4.6.2}OAuth2 exceptions}{93}{subsection.4.6.2}
+\contentsline {subsubsection}{12000 - OAuth generic error}{93}{subsubsection*.378}
+\contentsline {subsubsection}{12010 - OAuth invalid token descriptor}{93}{subsubsection*.379}
+\contentsline {subsubsection}{12020 - Invalid token type error}{93}{subsubsection*.380}
+\contentsline {subsubsection}{12030 - OAuth token expired}{93}{subsubsection*.381}
+\contentsline {subsubsection}{12040 - OAuth token encryption error}{93}{subsubsection*.382}
+\contentsline {subsubsection}{12050 - OAuth invalid client error}{93}{subsubsection*.383}
+\contentsline {subsubsection}{12060 - OAuth invalid scopes}{94}{subsubsection*.384}
+\contentsline {subsubsection}{12070 - OAuth missing query parameter}{94}{subsubsection*.385}
+\contentsline {subsubsection}{12080 - OAuth unsupported grant type}{94}{subsubsection*.386}
+\contentsline {subsubsection}{12100 - OAuth unauthorized error}{94}{subsubsection*.387}
+\contentsline {subsubsection}{12200 - OAuth authentication error}{94}{subsubsection*.388}
+\contentsline {section}{\numberline {4.7}SDK}{94}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}Intro}{94}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}Usage}{94}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.3}Supported commands}{95}{subsection.4.7.3}
+\contentsline {subsubsection}{Activate extension command}{95}{subsubsection*.389}
+\contentsline {subsubsection}{Fantastico command}{95}{subsubsection*.394}
+\contentsline {subsubsection}{Syncdb command}{95}{subsubsection*.395}
+\contentsline {subsubsection}{Version command}{96}{subsubsection*.400}
+\contentsline {subsection}{\numberline {4.7.4}Technical summary}{97}{subsection.4.7.4}
+\contentsline {section}{\numberline {4.8}Component model}{100}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Static folder}{100}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Sql folder}{100}{subsection.4.8.2}
+\contentsline {subsubsection}{Sql folder example}{100}{subsubsection*.424}
+\contentsline {section}{\numberline {4.9}Component reusage}{101}{section.4.9}
+\contentsline {section}{\numberline {4.10}Built in components}{103}{section.4.10}
+\contentsline {subsection}{\numberline {4.10.1}Dynamic menu}{103}{subsection.4.10.1}
+\contentsline {subsubsection}{Integration}{103}{subsubsection*.428}
+\contentsline {paragraph}{Component files activation deprecated}{103}{paragraph*.429}
+\contentsline {paragraph}{Component files activation (SDK)}{103}{paragraph*.430}
+\contentsline {paragraph}{Component sample + db data}{104}{paragraph*.431}
+\contentsline {subsubsection}{Current limitations}{104}{subsubsection*.432}
+\contentsline {subsubsection}{Technical summary}{104}{subsubsection*.433}
+\contentsline {subsection}{\numberline {4.10.2}Dynamic pages}{105}{subsection.4.10.2}
+\contentsline {subsubsection}{Integration}{105}{subsubsection*.438}
+\contentsline {subsubsection}{Current limitations}{106}{subsubsection*.439}
+\contentsline {subsubsection}{Technical summary}{106}{subsubsection*.440}
+\contentsline {subsection}{\numberline {4.10.3}Tracking codes}{108}{subsection.4.10.3}
+\contentsline {subsubsection}{Analytic solutions}{108}{subsubsection*.445}
+\contentsline {subsubsection}{Integration}{108}{subsubsection*.446}
+\contentsline {subsubsection}{Current limitations}{109}{subsubsection*.447}
+\contentsline {subsubsection}{Technical summary}{109}{subsubsection*.448}
+\contentsline {subsection}{\numberline {4.10.4}ROA Auto discovery}{110}{subsection.4.10.4}
+\contentsline {subsubsection}{Integration}{110}{subsubsection*.453}
+\contentsline {subsubsection}{Current limitations}{110}{subsubsection*.454}
+\contentsline {subsubsection}{Technical summary}{110}{subsubsection*.455}
+\contentsline {subsection}{\numberline {4.10.5}OAuth2 Identity Provider}{111}{subsection.4.10.5}
+\contentsline {subsubsection}{Integration}{111}{subsubsection*.458}
+\contentsline {chapter}{\numberline {5}Changes}{113}{chapter.5}
+\contentsline {section}{\numberline {5.1}Feedback}{113}{section.5.1}
+\contentsline {section}{\numberline {5.2}Versions}{113}{section.5.2}
+\contentsline {chapter}{\numberline {6}Provide feedback}{117}{chapter.6}
+\contentsline {chapter}{\numberline {7}Build status}{119}{chapter.7}
+\contentsline {chapter}{\numberline {8}License}{121}{chapter.8}
+\contentsline {chapter}{Index}{123}{section*.459}

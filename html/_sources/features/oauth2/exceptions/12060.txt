@@ -1,0 +1,5 @@
+12060 - OAuth invalid scopes
+============================
+
+This error response usually occurs in authorization phase when a user wants a token with higher privileges than the client is
+allowed to use. In this scenario, you must make sure the right scopes have been requested.

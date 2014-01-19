@@ -37,3 +37,21 @@ you can find some particularities of Fantastico implementation:
    oauth2/controllers_security
    oauth2/idp
    oauth2/technical_summary
+
+OAuth2 exceptions
+-----------------
+
+.. toctree:: 
+   :maxdepth: 2
+   
+   oauth2/exceptions/12000
+   oauth2/exceptions/12010
+   oauth2/exceptions/12020
+   oauth2/exceptions/12030
+   oauth2/exceptions/12040
+   oauth2/exceptions/12050
+   oauth2/exceptions/12060
+   oauth2/exceptions/12070
+   oauth2/exceptions/12080
+   oauth2/exceptions/12100
+   oauth2/exceptions/12200

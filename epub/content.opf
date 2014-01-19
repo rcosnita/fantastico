@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2014-01-17</dc:date>
+    <dc:date>2014-01-19</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -466,6 +466,42 @@
     <item id="features_oauth2_simple_api_example.html"
           href="features/oauth2/simple_api_example.html"
           media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12030.html"
+          href="features/oauth2/exceptions/12030.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12080.html"
+          href="features/oauth2/exceptions/12080.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12040.html"
+          href="features/oauth2/exceptions/12040.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12070.html"
+          href="features/oauth2/exceptions/12070.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12000.html"
+          href="features/oauth2/exceptions/12000.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12020.html"
+          href="features/oauth2/exceptions/12020.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12200.html"
+          href="features/oauth2/exceptions/12200.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12010.html"
+          href="features/oauth2/exceptions/12010.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12100.html"
+          href="features/oauth2/exceptions/12100.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12060.html"
+          href="features/oauth2/exceptions/12060.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_oauth2_exceptions_12050.html"
+          href="features/oauth2/exceptions/12050.html"
+          media-type="application/xhtml+xml" />
+    <item id="features_components_oauth2_oauth2_idp_index.html"
+          href="features/components/oauth2/oauth2_idp/index.html"
+          media-type="application/xhtml+xml" />
     <item id="features_components_oauth2_app_registration_index.html"
           href="features/components/oauth2/app_registration/index.html"
           media-type="application/xhtml+xml" />
@@ -562,6 +598,17 @@
     <itemref idref="features_oauth2_controllers_security.html" />
     <itemref idref="features_oauth2_idp.html" />
     <itemref idref="features_oauth2_technical_summary.html" />
+    <itemref idref="features_oauth2_exceptions_12000.html" />
+    <itemref idref="features_oauth2_exceptions_12010.html" />
+    <itemref idref="features_oauth2_exceptions_12020.html" />
+    <itemref idref="features_oauth2_exceptions_12030.html" />
+    <itemref idref="features_oauth2_exceptions_12040.html" />
+    <itemref idref="features_oauth2_exceptions_12050.html" />
+    <itemref idref="features_oauth2_exceptions_12060.html" />
+    <itemref idref="features_oauth2_exceptions_12070.html" />
+    <itemref idref="features_oauth2_exceptions_12080.html" />
+    <itemref idref="features_oauth2_exceptions_12100.html" />
+    <itemref idref="features_oauth2_exceptions_12200.html" />
     <itemref idref="features_sdk.html" />
     <itemref idref="features_sdk_command_activate_extension.html" />
     <itemref idref="features_sdk_command_fantastico.html" />
@@ -574,6 +621,7 @@
     <itemref idref="features_components_dynamic_pages_dynamic_pages.html" />
     <itemref idref="features_components_tracking_codes_tracking_codes.html" />
     <itemref idref="features_components_roa_discovery_roa_discovery.html" />
+    <itemref idref="features_components_oauth2_oauth2_idp_index.html" />
     <itemref idref="changes.html" />
     <itemref idref="genindex.html" />
   </spine>

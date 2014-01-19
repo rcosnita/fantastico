@@ -1,0 +1,5 @@
+12100 - OAuth unauthorized error
+================================
+
+This error response is usually returned when a client is not authorized (e.g does not have sufficient scopes) to do a certain
+request. In order to solve this, make sure you issue the access token with the necessary scopes.

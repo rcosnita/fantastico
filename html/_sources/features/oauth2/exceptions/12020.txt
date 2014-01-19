@@ -1,0 +1,5 @@
+12020 - Invalid token type error
+================================
+
+This exception error code is usually returned when there is a bug in Fantastico server side code. Unfortunately you will not be
+able to solve it from your project. The only possible action is to report a bug on Fantastico github project page.

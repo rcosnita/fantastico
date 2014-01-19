@@ -1,0 +1,5 @@
+12080 - OAuth unsupported grant type
+====================================
+
+This error response is usually returned during authorization phase when a client try to obtain a token using an unsupported flow
+(e.g: client credentials). Make sure you use a Fantastico OAuth2 supported grant (e.g: implicit).

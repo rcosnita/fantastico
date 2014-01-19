@@ -1,0 +1,6 @@
+12000 - OAuth generic error
+===========================
+
+This error can occur when something unexpected occured into OAuth /authorize or /token apis. Most of the time you should not
+get into this generic case. In order to debug this read the detailed description passed in **error_description** hash / query /
+json attribute.

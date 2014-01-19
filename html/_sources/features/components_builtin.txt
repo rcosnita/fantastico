@@ -13,3 +13,4 @@ as well as sample of how to use them:
    components/dynamic_pages/dynamic_pages
    components/tracking_codes/tracking_codes
    components/roa_discovery/roa_discovery
+   components/oauth2/oauth2_idp/index
