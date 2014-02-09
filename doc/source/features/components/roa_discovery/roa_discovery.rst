@@ -24,7 +24,6 @@ Current limitations
 -------------------
 
    * ROA discovery supports only application/json content type for responses.
-   * ROA sample resource can not be removed from registry.
 
 Technical summary
 -----------------
