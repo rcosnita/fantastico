@@ -3,7 +3,7 @@ Fantastico
 
 [Build status](http://jenkins.scrum-expert.ro:8080/job/fantastico-framework/badge/icon/)
 
-Create the best pluggable, developer friendly content publishing framework for Python 3 developers.
+This is a mini framework created to support very fast web routing and rest services development.
 
 Get started
 -----------
