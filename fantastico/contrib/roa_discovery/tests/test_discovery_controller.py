@@ -57,6 +57,8 @@ class RoaDiscoveryControllerTests(FantasticoUnitTestsCase):
         self.assertIsNotNone(response)
         self.assertEqual(response.content_type, "application/json")
         self.assertEqual(response.charset, "UTF-8")
+        self.assertEqual(response.headers["Access-Control-Allow-Origin"], "*")
+        self.assertEqual(response.headers["Access-Control-Allow-Methods"], "OPTIONS,GET,POST,PUT,DELETE")
 
         resources = json.loads(response.body.decode())
 

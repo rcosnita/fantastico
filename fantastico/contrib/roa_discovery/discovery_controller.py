@@ -85,5 +85,9 @@ class RoaDiscoveryController(BaseController):
             body[resource.name]["latest"] = api_url_latest
 
         body = json.dumps(body).encode()
-
-        return Response(body=body, content_type="application/json", charset="UTF-8")
+        
+        response = Response(body=body, content_type="application/json", charset="UTF-8")
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"
+        
+        return response
