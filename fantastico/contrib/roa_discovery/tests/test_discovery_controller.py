@@ -107,3 +107,32 @@ class RoaDiscoveryControllerTests(FantasticoUnitTestsCase):
             self.assertEqual(ctx.exception, expected_ex)
         finally:
             resources_registry.ResourcesRegistry = old_registry_cls
+
+    def test_discovery_controller_options(self):
+        '''This test case ensures options request are handled correctly by roa registry.'''
+        
+        request = Mock()
+        request.headers = {"Access-Control-Request-Headers": "header1,header2"}
+        
+        self._settings_facade.get = Mock(return_value="")
+
+        from fantastico.contrib.roa_discovery.discovery_controller import RoaDiscoveryController
+
+        self._discovery_ctrl = RoaDiscoveryController(self._settings_facade, self._registry_cls)
+
+        self._registry.all_resources = lambda: []
+
+        response = self._discovery_ctrl.handle_list_resources_options(request)
+        
+        self.assertIsNotNone(response)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content_type, "application/json")
+        self.assertEqual(response.charset, "UTF-8")
+        
+        self.assertIsNotNone(response.headers)
+        self.assertEqual(response.headers["Content-Length"], "0")
+        self.assertEqual(response.headers["Cache-Control"], "private")
+        self.assertEqual(response.headers["Access-Control-Allow-Origin"], "*")
+        self.assertEqual(response.headers["Access-Control-Allow-Methods"], "OPTIONS,GET,POST,PUT,DELETE")
+        self.assertEqual(response.headers["Access-Control-Allow-Headers"], request.headers["Access-Control-Request-Headers"])
+        

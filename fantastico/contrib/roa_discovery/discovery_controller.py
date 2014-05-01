@@ -91,3 +91,16 @@ class RoaDiscoveryController(BaseController):
         response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"
         
         return response
+
+    @Controller(url="^/roa/resources(/)?$", method="OPTIONS")
+    def handle_list_resources_options(self, request):
+        '''This method handles all OPTIONS cors requests coming for resources registry listing.'''
+        
+        response = Response(content_type="application/json", status_code=200)
+        response.headers["Content-Length"] = "0"
+        response.headers["Cache-Control"] = "private"
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"
+        response.headers["Access-Control-Allow-Headers"] = request.headers.get("Access-Control-Request-Headers", "")
+
+        return response
