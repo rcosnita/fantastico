@@ -98,6 +98,19 @@ class OAuth2ExceptionsMiddleware(object):
         response = ex_formatter.format_ex(body, ctx={"redirect_uri": redirect_uri})
 
         if ex_format == ExceptionFormattersFactory.JSON:
-            return Response(body=json.dumps(response).encode(), content_type="application/json; charset=UTF-8", status=http_code)
+            response = Response(body=json.dumps(response).encode(), content_type="application/json; charset=UTF-8", 
+                                status=http_code)
+            self._add_cors_headers(response)
+            
+            return response
 
-        return RedirectResponse(response)
+        response = RedirectResponse(response)
+        self._add_cors_headers(response)
+        
+        return response
+
+    def _add_cors_headers(self, response):
+        '''This method adds the cors headers required to support cross domain requests exception serialization.'''
+        
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"

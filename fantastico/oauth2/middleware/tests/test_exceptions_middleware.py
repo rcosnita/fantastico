@@ -212,7 +212,9 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
 
         http_code = "%s %s" % (http_code, status_reasons[http_code])
         start_response.assert_called_once_with(http_code, [("Content-Type", "application/json; charset=UTF-8"),
-                                                           ("Content-Length", str(content_length))])
+                                                           ("Content-Length", str(content_length)),
+                                                           ("Access-Control-Allow-Origin", "*"),
+                                                           ("Access-Control-Allow-Methods", "OPTIONS,GET,POST,PUT,DELETE")])
 
         return body
 
@@ -241,7 +243,9 @@ class ExceptionsMiddlewareTests(FantasticoUnitTestsCase):
 
         start_response.assert_called_once_with("302 Found", [("Location", expected_url),
                                                              ('Content-Type', 'text/html'),
-                                                             ('Content-Length', '0')])
+                                                             ('Content-Length', '0'),
+                                                             ("Access-Control-Allow-Origin", "*"),
+                                                             ("Access-Control-Allow-Methods", "OPTIONS,GET,POST,PUT,DELETE")])
 
     def _mock_settings_facade(self):
         '''This method mocks settings facade.'''
