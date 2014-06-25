@@ -22,6 +22,7 @@ from fantastico.oauth2.security_context import SecurityContext
 from fantastico.oauth2.token import Token
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
+from fantastico.oauth2.exceptions import OAuth2UnauthorizedError
 
 class RequiredScopesTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for RequiredScopes decorator class.'''
@@ -39,6 +40,20 @@ class RequiredScopesTests(FantasticoUnitTestsCase):
         '''This test case ensures required_scopes are correctly appended to request security context.'''
 
         self._test_required_scopes_method(self._controller.do_stuff, ["scope1", "scope2", "scope3"])
+
+    def test_required_scopes_unauthorized(self):
+        '''This test case ensures a concrete exception is raised if the requested scopes are not available in
+        the current security context.'''
+        
+        access_token = Token({"scopes": []})
+
+        request = Mock()
+        request.context = Mock()
+        request.context.security = SecurityContext(access_token)
+        
+        mock_controller = MockController(Mock())
+        
+        self.assertRaises(OAuth2UnauthorizedError, lambda: mock_controller.do_stuff(request))
 
     def test_no_required_scopes_ok(self):
         '''This test case ensures required scopes decorator still works when no scopes are specified.'''

@@ -16,10 +16,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.oauth2_decorators
 '''
+import inspect
+
 from fantastico.exceptions import FantasticoControllerInvalidError
 from fantastico.mvc.base_controller import BaseController
+from fantastico.oauth2.exceptions import OAuth2UnauthorizedError
 from fantastico.oauth2.security_context import SecurityContext
-import inspect
+
 
 class RequiredScopes(object):
     '''This class provides the decorator for enforcing fantastico to authorize requests against ROA resources and MVC controllers.
@@ -29,8 +32,8 @@ class RequiredScopes(object):
         # enforce authorization for MVC controllers.
         @ControllerProvider()
         class SecuredController(BaseController):
-            @RequiredScopes(scopes=["greet.verbose", "greet.read"])
             @Controller(url="/secured-controller/ui/index")
+            @RequiredScopes(scopes=["greet.verbose", "greet.read"])
             def say_hello(self, request):
                 return "<html><body><h1>Hello world</body></html>"
 
@@ -142,6 +145,9 @@ class RequiredScopes(object):
             request = self._get_request_from_args(args)
             self.inject_scopes_in_security(request)
 
+            if not request.context.security.validate_context():
+                raise OAuth2UnauthorizedError("You are not authorized to access the resource.")
+
             return orig_fn(*args, **kwargs)
 
         new_fn.__name__ = orig_fn.__name__
@@ -168,5 +174,7 @@ class RequiredScopes(object):
 
         security_ctx = request.context.security
 
-        request.context.security = SecurityContext(access_token=security_ctx.access_token,
-                                                   required_scopes=self)
+        ctx = SecurityContext(access_token=security_ctx.access_token,
+                              required_scopes=self)
+                
+        request.context.security = ctx
