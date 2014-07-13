@@ -17,6 +17,7 @@ Versions
    * Added support for exception serialized responses CORS compatible requests.
    * Fix @RequiredScopes attribute for MVC controllers (now it automatically validates the security context before invoking underline method).
    * Add support for headers appended to each response (support for global CORS configurable headers).
+   * Improve implicit grant handler so that it supports non redirect responses.
 
 * v0.6.0 (`Provide feedback <https://docs.google.com/forms/d/1tKBopU3lfDB_w8F4h7Rl1Rn4uydAJq-nha09L_ptJck/edit?usp=sharing>`_)
 

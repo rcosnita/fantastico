@@ -16,6 +16,8 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.oauth2.tests.test_implicit_granthandler
 '''
+import urllib
+
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError
 from fantastico.oauth2.implicit_grant_handler import ImplicitGrantHandler
 from fantastico.oauth2.token import Token
@@ -24,7 +26,8 @@ from fantastico.routing_engine.custom_responses import RedirectResponse
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
 from webob.request import Request
-import urllib
+from webob.response import Response
+
 
 class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
     '''This class provides the tests suite for implicit grant handler.'''
@@ -83,6 +86,22 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
 
         self._test_handle_template(client_id, redirect_uri, scope, state, encrypted_login)
 
+    def test_handle_noredirect_ok(self):
+        '''This test case ensures implicit grant without redirect works as expected when all prerequisites 
+        are fulfilled.'''
+
+        client_id = "sample app"
+        redirect_uri = "/example/cb"
+        scope = "scope1 scope2"
+        state = "xyz"
+
+        encrypted_login = "abcd"
+        
+        redirect = 0
+
+        self._test_handle_template(client_id, redirect_uri, scope, state, encrypted_login, 
+                                   redirect_qparam=redirect)
+    
     def test_handle_ok_redirectwithhash(self):
         '''This test case ensures implicit grant works as expected even when redirect uri has a fragment in it.'''
 
@@ -202,7 +221,7 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
         return self._test_handle_template(client_id, redirect_uri, scope, state, encrypted_login)
 
     def _test_handle_template(self, client_id, redirect_uri, scope, state, encrypted_login, expected_redirect=None,
-                              encrypted_access=None):
+                              encrypted_access=None, redirect_qparam=None):
         '''This method provides a template for testing handle_grant method from implicit grant provider.'''
 
         if not encrypted_access:
@@ -225,7 +244,8 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
                           "redirect_uri": redirect_uri,
                           "scope": scope,
                           "state": state,
-                          "login_token": encrypted_login}
+                          "login_token": encrypted_login,
+                          "redirect": redirect_qparam}
 
         self._tokens_service.decrypt = Mock(return_value=login_token)
         self._tokens_service.generate = Mock(return_value=access_token)
@@ -233,7 +253,11 @@ class ImplicitGrantHandlerTests(FantasticoUnitTestsCase):
 
         response = self._handler.handle_grant(request)
 
-        self.assertIsInstance(response, RedirectResponse)
+        if not redirect_qparam:
+            self.assertIsInstance(response, RedirectResponse)
+        else:
+            self.assertIsInstance(response, Response)
+            
         self.assertEqual(expected_redirect, response.headers.get("Location"))
 
         self._tokens_service.decrypt.assert_called_once_with(encrypted_login)

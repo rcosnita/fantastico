@@ -26,7 +26,12 @@ import urllib
 
 class ImplicitGrantHandler(GrantHandler):
     '''This class provides the implementation for implicit grant type described in
-    `RFC6749 <http://tools.ietf.org/html/rfc6749>`_. Implementation of this grant type is fully compliant with OAuth2 spec.'''
+    `RFC6749 <http://tools.ietf.org/html/rfc6749>`_. Implementation of this grant type is fully compliant with 
+    OAuth2 spec. In addition to RFC6749, the implicit grant implemented in fantastico supports an additional
+    query parameter named **redirect** which is optional. If redirect query parameter is specified with value
+    0 then a 200 OK response is returned to the client in comparison with redirect 1 value where 302 Found response
+    is returned. We do this in order to support more advanced use cases where user can orchestrate the redirects
+    rather than browser.'''
 
     def __init__(self, tokens_service, settings_facade, exception_formatters_cls=ExceptionFormattersFactory,
                  client_repo_cls=ClientRepository):
@@ -39,7 +44,8 @@ class ImplicitGrantHandler(GrantHandler):
 
     def handle_grant(self, request):
         '''This method provides the algorithm for implementing implicit grant type handler. Internally it will use TokensService
-        in order to generate a new access token.'''
+        in order to generate a new access token. In addition, if redirect query parameter is set to false then a 200 OK response
+        with Location header and no body is sent to the client.'''
 
         client_id = self._validate_missing_param(request, "client_id")
         redirect_uri = self._validate_missing_param(request, "redirect_uri")
@@ -78,8 +84,15 @@ class ImplicitGrantHandler(GrantHandler):
                         (redirect_uri, prefix_sign, encrypted_access, urllib.parse.quote(state),
                          access_token.type, self._expires_in,
                          urllib.parse.quote(scopes))
-
-        return RedirectResponse(return_url)
+        
+        is_redirect = int(request.params.get("redirect") or 1)
+        if is_redirect == 1:            
+            return RedirectResponse(return_url)
+        
+        response = Response(body=b"")
+        response.headers["Location"] = return_url
+        
+        return response
 
     def _get_error_redirect(self, request, redirect_uri, state):
         '''This method builds an error redirect response if the request has query parameters indicating error case.'''
