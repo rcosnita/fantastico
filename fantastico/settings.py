@@ -178,6 +178,20 @@ class BasicSettings(object):
         to 1h = 3600 seconds.'''
 
         return 3600
+    
+    @property
+    def global_response_headers(self):
+        '''This property defines the headers which must be appended to every response. You can use this property in order
+        to globally enable cors.
+        
+        .. code-block:: python
+        
+            return {"Access-Control-Allow-Origin": "*"}
+        
+        By default, no global header is appended to response.
+        '''
+        
+        return {}
 
 class AwsStageSettings(BasicSettings):
     '''This class provides the configuration profile for Aws Stage environment integration.'''

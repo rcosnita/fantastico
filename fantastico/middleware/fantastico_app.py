@@ -90,7 +90,17 @@ class FantasticoApp(object):
         if request.accept.quality(response.content_type) is None:
             raise FantasticoContentTypeError("User brower accepts %s but received %s." % \
                                              (request.accept, response.content_type))
-
+        
+        self._append_global_response_headers(response)
+        
         start_response(response.status, response.headerlist)
 
         return [response.body]
+
+    def _append_global_response_headers(self, response):
+        '''This method appends all global response headers into the given response.'''
+        
+        global_headers = self._settings_facade.get("global_response_headers") or {}
+        
+        for header_name in global_headers.keys():
+            response.headers[header_name] = global_headers[header_name] 

@@ -17,7 +17,7 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.middleware.tests.fantastico_app
 '''
 from fantastico.exceptions import FantasticoClassNotFoundError, FantasticoContentTypeError, FantasticoNoRequestError, \
-    FantasticoRouteNotFoundError, FantasticoError
+    FantasticoRouteNotFoundError
 from fantastico.middleware.fantastico_app import FantasticoApp
 from fantastico.tests.base_case import FantasticoUnitTestsCase
 from mock import Mock
@@ -48,7 +48,11 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
     def test_middlewares_wrapped(self):
         '''Test case that ensures configured middlewares from a config profile are wrapped in the correct order.'''
         
-        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])
+        def get(key):
+            if key == "installed_middleware":
+                return ["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"]
+        
+        self._settings_facade.get = get
         
         app = FantasticoApp(self._settings_facade_cls)        
         
@@ -62,9 +66,15 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         self.assertEqual(["middleware"], chained_resp)
         
     def test_middleware_wrapped_in_order(self):
-        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware",
-                                                       "fantastico.middleware.tests.test_fantastico_app.MockedMiddleware2",
-                                                       "fantastico.middleware.tests.test_fantastico_app.MockedMiddleware3"])
+        '''This test case ensures middlewares are wrapped and executed in the configured order.'''
+        
+        def get(key):
+            if key == "installed_middleware":
+                return ["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware",
+                        "fantastico.middleware.tests.test_fantastico_app.MockedMiddleware2",
+                        "fantastico.middleware.tests.test_fantastico_app.MockedMiddleware3"]
+        
+        self._settings_facade.get = get
         
         app = FantasticoApp(self._settings_facade_cls)
 
@@ -91,16 +101,31 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
     def test_middleware_not_found_ex(self):
         '''Test case that ensures an exception is raised when an invalid middleware is specified.'''
         
-        self._settings_facade.get = Mock(return_value=["not.found.exception"])        
+        def get(key, installed_middleware):
+            if key == "installed_middleware":
+                return installed_middleware
+        
+        self._settings_facade.get = lambda key: get(key, ["not.found.exception"])        
         self.assertRaises(FantasticoClassNotFoundError, FantasticoApp, *[self._settings_facade_cls])
         
-        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware1099"])
+        self._settings_facade.get = \
+            lambda key: get(key, ["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware1099"])
         self.assertRaises(FantasticoClassNotFoundError, FantasticoApp, *[self._settings_facade_cls])
         
     def test_exec_controller_ok(self):
         '''This test case ensures that requested route is executed - success scenario.'''
 
-        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+        global_headers = {"X-Custom-Header1": "header1",
+                          "X-Custom-Header2": "header2"}
+
+        def get(key):
+            if key == "installed_middleware":
+                return ["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"]
+            
+            if key == "global_response_headers":
+                return global_headers
+                
+        self._settings_facade.get = get
                 
         app_middleware = FantasticoApp(self._settings_facade_cls)
         
@@ -112,11 +137,18 @@ class FantasticoAppTests(FantasticoUnitTestsCase):
         
         self.assertEqual([b"Hello world"], app_middleware(self._environ, Mock()))
         self.assertTrue(self._environ["test_wrapped_ok"])
+        
+        self.assertEqual(global_headers["X-Custom-Header1"], response.headers["X-Custom-Header1"])
+        self.assertEqual(global_headers["X-Custom-Header2"], response.headers["X-Custom-Header2"])
     
     def test_exec_controller_url_params_ok(self):
         '''This test case ensures that requested route is executed and url_params are passed correctly.'''
 
-        self._settings_facade.get = Mock(return_value=["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"])        
+        def get(key):
+            if key == "installed_middleware":
+                return ["fantastico.middleware.tests.test_fantastico_app.MockedMiddleware"]
+            
+        self._settings_facade.get = get        
                 
         app_middleware = FantasticoApp(self._settings_facade_cls)
         
