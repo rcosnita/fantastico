@@ -248,7 +248,7 @@ class RoaController(BaseController):
         return self.get_collection(request, "latest", self._trim_resource_url(resource_url))
 
     @Controller(url=[BASE_URL + "$", BASE_URL + "/(?P<resource_id>.*?)$"], method="OPTIONS") # pylint: disable=W0613
-    def handle_resource_options(self, request, version, resource_url, kwargs=None):
+    def handle_resource_options(self, request, version, resource_url, **kwargs):
         '''This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different
         domains than project host.'''
 
@@ -264,10 +264,10 @@ class RoaController(BaseController):
         return response
 
     @Controller(url=[BASE_LATEST_URL + "$", BASE_LATEST_URL + "/(?P<resource_id>.*?)$"], method="OPTIONS")
-    def handle_resource_options_latest(self, request, resource_url, kwargs=None):
+    def handle_resource_options_latest(self, request, resource_url, **kwargs):
         '''This method handles OPTIONS http requests for ROA api latest versions.'''
 
-        return self.handle_resource_options(request, "latest", self._trim_resource_url(resource_url), kwargs)
+        return self.handle_resource_options(request, "latest", self._trim_resource_url(resource_url), **kwargs)
 
     def _validate_resource(self, resource, request, request_body, existing_resource_id=None):
         '''This method is used to validate the resource. If the resource validation fails an error response is sent. Otherwise
