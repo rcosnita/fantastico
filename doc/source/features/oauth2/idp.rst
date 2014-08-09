@@ -78,6 +78,7 @@ login template is presented below:
 
 You can find documentation on how to configure custom login template on :doc:`/get_started/settings`.
 
+
 Administrator account
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -97,6 +98,23 @@ At the current moment a person can only have one user associated. Person details
 representation (see: :doc:`/features/roa`). Moreover, when a new user is created a new person is created automatically and
 assigned to that user. Initially created person has some default values in order to allow very smooth account creation in various
 applications.
+
+Default oauth callback
+----------------------
+
+By default, the oauth idp also provides a callback page which displays received hash parameters. In order to allow reusage of this callback
+in mobile apps this callback page sends **fantastico.oauth.cb.message** message to it's parent frame with the following body:
+
+.. code-block:: javascript
+
+   {
+      "messageType": "fantastico.oauth.cb.message",
+      "url": "<current url include hash fragment>",
+      "access_token": "<currently received access token>",
+      "expires_in": "<the number of minutes in which access token will expire>"
+   }
+   
+In case of an error the same message is sent with error attributes received in hash fragment.
 
 Technical summary
 -----------------
