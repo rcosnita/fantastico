@@ -48,6 +48,8 @@
             msg.push("<b>state:</b> " + parameters.state);
             
             this._msg_div.html(msg.join("<br/>"));
+            
+            this.sendMessage(parameters);
         };
         
         AuthorizeCbHandler.prototype._show_ok_message = function(parameters) {
@@ -60,6 +62,23 @@
             msg.push("<b>state:</b> " + parameters.state);
             
             this._msg_div.html(msg.join("<br/>"));
+            
+            this.sendMessage(parameters);
+        };
+        
+        AuthorizeCbHandler.prototype.sendMessage = function(messageBody) {
+        	var parentWindow = window.parent;
+        	
+        	if(!parentWindow) {
+        		return;
+        	}
+        	
+        	messageBody.url = window.location.href;
+        	messageBody.messageType = "fantastico.oauth.cb.message";
+        	
+        	console.log("Sending notification to parent.");
+        	
+        	parentWindow.postMessage(messageBody, "*");
         };
     </script>
 </head>
