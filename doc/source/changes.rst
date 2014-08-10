@@ -11,6 +11,10 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 Versions
 --------
 
+* v0.7.1 (stable)
+
+   * Added **/api/oauth/profile/me** for obtaining authenticated user profile information. 
+
 * v0.7.0 (stable)
 
    * Added support for cross origin requests on ROA resources registry (/roa/resources).
