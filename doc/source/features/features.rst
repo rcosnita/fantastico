@@ -8,6 +8,7 @@ Fantastico features
    request_response
    routing_engine
    mvc
+   cors
    roa
    oauth2
    sdk
