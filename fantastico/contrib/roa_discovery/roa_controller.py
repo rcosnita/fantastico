@@ -20,7 +20,8 @@ from fantastico import mvc
 from fantastico.contrib.roa_discovery import roa_helper
 from fantastico.exceptions import FantasticoDbError
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import ControllerProvider, Controller
+from fantastico.mvc.controller_decorators import ControllerProvider, Controller, \
+    CorsEnabled
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
@@ -248,20 +249,12 @@ class RoaController(BaseController):
         return self.get_collection(request, "latest", self._trim_resource_url(resource_url))
 
     @Controller(url=[BASE_URL + "$", BASE_URL + "/(?P<resource_id>.*?)$"], method="OPTIONS") # pylint: disable=W0613
+    @CorsEnabled()
     def handle_resource_options(self, request, version, resource_url, **kwargs):
         '''This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different
         domains than project host.'''
-
-        kwargs = kwargs or {}
-
-        response = Response(content_type="application/json", status_code=200)
-        response.headers["Content-Length"] = "0"
-        response.headers["Cache-Control"] = "private"
-        response.headers["Access-Control-Allow-Origin"] = "*"
-        response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"
-        response.headers["Access-Control-Allow-Headers"] = request.headers.get("Access-Control-Request-Headers", "")
-
-        return response
+        
+        pass
 
     @Controller(url=[BASE_LATEST_URL + "$", BASE_LATEST_URL + "/(?P<resource_id>.*?)$"], method="OPTIONS")
     def handle_resource_options_latest(self, request, resource_url, **kwargs):

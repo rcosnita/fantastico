@@ -16,13 +16,16 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.mvc.controller_decorator
 '''
+import inspect
+
 from fantastico import mvc
 from fantastico.exceptions import FantasticoControllerInvalidError
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.model_facade import ModelFacade
 from fantastico.oauth2.exceptions import OAuth2UnauthorizedError, OAuth2Error
 from fantastico.utils import instantiator
-import inspect
+from webob.response import Response
+
 
 class ModelsHolder(dict):
     '''This class is used for holding all models injected into a controller.'''
@@ -241,3 +244,38 @@ class ControllerProvider(object):
             setattr(meth_value, "full_name", full_name)
 
         return cls
+
+class CorsEnabled(object):
+    '''This class provides the cors behavior which ensures all cors required headers are appended to response. It is designed
+    to be used on controller methods decorated with @Controller attribute.
+    
+    .. code-block:: python
+    
+        @Controller(url="/api/filesystem/(?P<filename>.*)$", method="OPTIONS")
+        @CorsEnabled()
+        def upload_file_options(self, request, filename):        
+            pass
+        
+    As you can see there is no need to implement cors controller methods because the decorator does all the job.
+    '''
+    
+    def __call__(self, orig_fn):
+        def cors_enabled_fn(self, request, *args, **kwargs): # pylint: disable=W0613
+            '''This method provides the algorithm for building a generic cors response for the current request.'''
+            
+            kwargs = kwargs or {}
+    
+            response = Response(content_type="application/json", status_code=200)
+            response.headers["Content-Length"] = "0"
+            response.headers["Cache-Control"] = "private"
+            response.headers["Access-Control-Allow-Origin"] = "*"
+            response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"
+            response.headers["Access-Control-Allow-Headers"] = request.headers.get("Access-Control-Request-Headers", "")
+    
+            return response
+
+        cors_enabled_fn.__name__ = orig_fn.__name__
+        cors_enabled_fn.__doc__ = orig_fn.__doc__
+        cors_enabled_fn.__module__ = orig_fn.__module__
+
+        return cors_enabled_fn

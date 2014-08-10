@@ -61,7 +61,7 @@ class IdpController(BaseController):
 
         return Response(content)
 
-    @Controller(url="^/oauth/idp/ui/cb$")
+    @Controller(url="^/oauth/idp/ui/cb$") # pylint: disable=W0613
     def show_oauth_idpcallback(self, request):
         '''This method loads the idp callback page which contains the client side code for extracting the current generated
         token.'''

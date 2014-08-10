@@ -16,12 +16,15 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.contrib.roa_discovery.discovery_controller
 '''
+import json
+
 from fantastico.contrib.roa_discovery import roa_helper
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from fantastico.mvc.controller_decorators import Controller, ControllerProvider, \
+    CorsEnabled
 from fantastico.roa import resources_registry
 from webob.response import Response
-import json
+
 
 @ControllerProvider()
 class RoaDiscoveryController(BaseController):
@@ -93,14 +96,8 @@ class RoaDiscoveryController(BaseController):
         return response
 
     @Controller(url="^/roa/resources(/)?$", method="OPTIONS")
+    @CorsEnabled()
     def handle_list_resources_options(self, request):
         '''This method handles all OPTIONS cors requests coming for resources registry listing.'''
         
-        response = Response(content_type="application/json", status_code=200)
-        response.headers["Content-Length"] = "0"
-        response.headers["Cache-Control"] = "private"
-        response.headers["Access-Control-Allow-Origin"] = "*"
-        response.headers["Access-Control-Allow-Methods"] = "OPTIONS,GET,POST,PUT,DELETE"
-        response.headers["Access-Control-Allow-Headers"] = request.headers.get("Access-Control-Request-Headers", "")
-
-        return response
+        pass
