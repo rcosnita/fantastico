@@ -67,6 +67,11 @@ FROM dual
 WHERE NOT EXISTS(SELECT 1 FROM oauth2_scopes WHERE `name` = 'user.profile.read');
 
 INSERT INTO oauth2_scopes(`name`)
+SELECT 'user.profile.read.person'
+FROM dual
+WHERE NOT EXISTS(SELECT 1 FROM oauth2_scopes WHERE `name` = 'user.profile.read.person');
+
+INSERT INTO oauth2_scopes(`name`)
 SELECT 'user.profile.update'
 FROM dual
 WHERE NOT EXISTS(SELECT 1 FROM oauth2_scopes WHERE `name` = 'user.profile.update');

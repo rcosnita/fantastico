@@ -17,6 +17,9 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. py:module:: fantastico.contrib.oauth2_idp.idp_controller
 '''
 
+import json
+import urllib
+
 from fantastico.contrib.oauth2_idp.models.user_repository import UserRepository
 from fantastico.mvc.base_controller import BaseController
 from fantastico.mvc.controller_decorators import Controller, ControllerProvider
@@ -24,12 +27,14 @@ from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2Error
 from fantastico.oauth2.models.return_urls import ClientReturnUrl
+from fantastico.oauth2.oauth2_decorators import RequiredScopes
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.oauth2.tokens_service import TokensService
+from fantastico.roa.resource_json_serializer import ResourceJsonSerializer
 from fantastico.utils.dictionary_object import DictionaryObject
 from webob.response import Response
-import urllib
+
 
 @ControllerProvider()
 class IdpController(BaseController):
@@ -61,6 +66,27 @@ class IdpController(BaseController):
 
         return Response(content)
 
+    @Controller(url="^/api/oauth/profile/me$", models={"Person": "fantastico.contrib.oauth2_idp.models.users.User"})
+    @RequiredScopes(scopes=["user.profile.read", "user.profile.read.person"])
+    def get_profile_information(self, request, serializer_cls=ResourceJsonSerializer):
+        '''This method provides the profile api for retrieving user information based on the specified
+        access token.'''
+        
+        user_id = request.context.security.access_token.user_id
+        person_facade = request.models.Person
+        user = person_facade.find_by_pk({person_facade.model_cls.user_id: user_id})
+                
+        person = {"user_id": user_id,
+                  "first_name": user.person.first_name,
+                  "last_name": user.person.last_name,
+                  "email_address": user.person.email_address,
+                  "cell_number": user.person.cell_number,
+                  "phone_number": user.person.phone_number}
+        
+        person = json.dumps(person).encode()
+        
+        return Response(person, content_type="application/json")
+
     @Controller(url="^/oauth/idp/ui/cb$") # pylint: disable=W0613
     def show_oauth_idpcallback(self, request):
         '''This method loads the idp callback page which contains the client side code for extracting the current generated
@@ -69,7 +95,7 @@ class IdpController(BaseController):
         content = self.load_template("authorize_cb.html")
 
         return Response(content)
-
+    
     @Controller(url="^/oauth/idp/login$", method="POST",
                 models={"ClientReturnUrl": "fantastico.oauth2.models.return_urls.ClientReturnUrl"})
     def authenticate(self, request, tokens_service_cls=TokensService, user_repo_cls=UserRepository):
