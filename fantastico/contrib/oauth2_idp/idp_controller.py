@@ -22,7 +22,8 @@ import urllib
 
 from fantastico.contrib.oauth2_idp.models.user_repository import UserRepository
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import Controller, ControllerProvider
+from fantastico.mvc.controller_decorators import Controller, ControllerProvider,\
+    CorsEnabled
 from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
 from fantastico.oauth2.exceptions import OAuth2MissingQueryParamError, OAuth2AuthenticationError, OAuth2Error
@@ -86,6 +87,12 @@ class IdpController(BaseController):
         person = json.dumps(person).encode()
         
         return Response(person, content_type="application/json")
+
+    @Controller(url="^/api/oauth/profile/me$", method="OPTIONS")
+    @CorsEnabled()
+    def handle_get_profile_cors(self, request):
+        '''This method enables cors for get_profile operation.'''
+        pass
 
     @Controller(url="^/oauth/idp/ui/cb$") # pylint: disable=W0613
     def show_oauth_idpcallback(self, request):
