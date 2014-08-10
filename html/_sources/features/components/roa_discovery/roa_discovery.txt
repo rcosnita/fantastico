@@ -12,7 +12,7 @@ Integration
 
    .. code-block:: bash
 
-      fsdk activate-extension --name roa-discovery --comp-root <comp_root>
+      fsdk activate-extension --name roa_discovery --comp-root <comp_root>
 
 #. Start your project
 #. Access http://localhost/roa/resources
@@ -24,7 +24,6 @@ Current limitations
 -------------------
 
    * ROA discovery supports only application/json content type for responses.
-   * ROA sample resource can not be removed from registry.
 
 Technical summary
 -----------------

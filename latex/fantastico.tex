@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{January 19, 2014}
-\release{0.6.0-b139}
+\date{August 10, 2014}
+\release{0.7.0-b140}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -361,6 +361,21 @@ This property holds development server port. By default this is 12000.
 \begin{fulllineitems}
 \phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.doc_base}\pysigline{\bfcode{doc\_base}}
 This property defines public location of \textbf{Fantastico} documentation.
+
+\end{fulllineitems}
+
+\index{global\_response\_headers (fantastico.settings.BasicSettings attribute)}
+
+\begin{fulllineitems}
+\phantomsection\label{get_started/settings:fantastico.settings.BasicSettings.global_response_headers}\pysigline{\bfcode{global\_response\_headers}}
+This property defines the headers which must be appended to every response. You can use this property in order
+to globally enable cors.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{return} \PYG{p}{\PYGZob{}}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{Access\PYGZhy{}Control\PYGZhy{}Allow\PYGZhy{}Origin}\PYG{l+s}{\PYGZdq{}}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{*}\PYG{l+s}{\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+By default, no global header is appended to response.
 
 \end{fulllineitems}
 
@@ -847,7 +862,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x697b408\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x54caa68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -3636,7 +3651,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x244d408\textgreater{}}, \emph{enable\_global\_folder=False}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1516408\textgreater{}}, \emph{enable\_global\_folder=False}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -3919,6 +3934,40 @@ profile. You can read more on {\hyperref[get_started/settings:fantastico.setting
 
 \end{fulllineitems}
 
+
+
+\section{CORS}
+\label{features/cors::doc}\label{features/cors:cors}
+In Fantastico framework, CORS (cross origin resource sharing) can be enabled easily per each individual controller method.
+\index{CorsEnabled (class in fantastico.mvc.controller\_decorators)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/cors:fantastico.mvc.controller_decorators.CorsEnabled}\pysigline{\strong{class }\code{fantastico.mvc.controller\_decorators.}\bfcode{CorsEnabled}}
+This class provides the cors behavior which ensures all cors required headers are appended to response. It is designed
+to be used on controller methods decorated with @Controller attribute.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/api/filesystem/(?P\PYGZlt{}filename\PYGZgt{}.*)\PYGZdl{}}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{method}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{OPTIONS}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{n+nd}{@CorsEnabled}\PYG{p}{(}\PYG{p}{)}
+\PYG{k}{def} \PYG{n+nf}{upload\PYGZus{}file\PYGZus{}options}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{,} \PYG{n}{filename}\PYG{p}{)}\PYG{p}{:}        
+    \PYG{k}{pass}
+\end{Verbatim}
+
+As you can see there is no need to implement cors controller methods because the decorator does all the job.
+
+\end{fulllineitems}
+
+
+In addition to \textbf{CorsEnabled} decorator, you can also configure the framework to globally append some headers to each
+response:
+\begin{enumerate}
+\item {} 
+Go to your settins profile (see {\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}})
+
+\item {} 
+Change \textbf{global\_response\_headers} property and add all desired headers (e.g: Access-Control-Allow-Origin: ``*'')
+
+\end{enumerate}
 
 
 \section{ROA (Resource Oriented Architecture)}
@@ -5114,6 +5163,14 @@ records.
 
 By default, all ROA resources are mapped on \textbf{/api/} relative to current project root. You can easily change this behavior
 by modifying the settings of your application ({\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}} - property \textbf{roa\_api\_url})
+\index{handle\_list\_resources\_options() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.handle_list_resources_options}\pysiglinewithargsret{\bfcode{handle\_list\_resources\_options}}{\emph{*args}, \emph{**kwargs}}{}
+This method handles all OPTIONS cors requests coming for resources registry listing.
+
+\end{fulllineitems}
+
 \index{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)}
 
 \begin{fulllineitems}
@@ -6733,6 +6790,23 @@ assigned to that user. Initially created person has some default values in order
 applications.
 
 
+\paragraph{Default oauth callback}
+\label{features/oauth2/idp:default-oauth-callback}
+By default, the oauth idp also provides a callback page which displays received hash parameters. In order to allow reusage of this callback
+in mobile apps this callback page sends \textbf{fantastico.oauth.cb.message} message to it's parent frame with the following body:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+   \PYG{l+s+s2}{\PYGZdq{}messageType\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}fantastico.oauth.cb.message\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}url\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}current url include hash fragment\PYGZgt{}\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}access\PYGZus{}token\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}currently received access token\PYGZgt{}\PYGZdq{}}\PYG{p}{,}
+   \PYG{l+s+s2}{\PYGZdq{}expires\PYGZus{}in\PYGZdq{}}\PYG{o}{:} \PYG{l+s+s2}{\PYGZdq{}\PYGZlt{}the number of minutes in which access token will expire\PYGZgt{}\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
+
+In case of an error the same message is sent with error attributes received in hash fragment.
+
+
 \paragraph{Technical summary}
 \label{features/oauth2/idp:technical-summary}
 
@@ -6952,8 +7026,8 @@ This class provides the decorator for enforcing fantastico to authorize requests
 \PYG{c}{\PYGZsh{} enforce authorization for MVC controllers.}
 \PYG{n+nd}{@ControllerProvider}\PYG{p}{(}\PYG{p}{)}
 \PYG{k}{class} \PYG{n+nc}{SecuredController}\PYG{p}{(}\PYG{n}{BaseController}\PYG{p}{)}\PYG{p}{:}
-    \PYG{n+nd}{@RequiredScopes}\PYG{p}{(}\PYG{n}{scopes}\PYG{o}{=}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{greet.verbose}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{greet.read}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
     \PYG{n+nd}{@Controller}\PYG{p}{(}\PYG{n}{url}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/secured\PYGZhy{}controller/ui/index}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{n+nd}{@RequiredScopes}\PYG{p}{(}\PYG{n}{scopes}\PYG{o}{=}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{greet.verbose}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{greet.read}\PYG{l+s}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{)}
     \PYG{k}{def} \PYG{n+nf}{say\PYGZus{}hello}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
         \PYG{k}{return} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{\PYGZlt{}html\PYGZgt{}\PYGZlt{}body\PYGZgt{}\PYGZlt{}h1\PYGZgt{}Hello world\PYGZlt{}/body\PYGZgt{}\PYGZlt{}/html\PYGZgt{}}\PYG{l+s}{\PYGZdq{}}
 \end{Verbatim}
@@ -7556,13 +7630,19 @@ A concrete grant handler instance.
 \begin{fulllineitems}
 \phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler}\pysiglinewithargsret{\strong{class }\code{fantastico.oauth2.implicit\_grant\_handler.}\bfcode{ImplicitGrantHandler}}{\emph{tokens\_service}, \emph{settings\_facade}, \emph{exception\_formatters\_cls=\textless{}class `fantastico.exception\_formatters.ExceptionFormattersFactory'\textgreater{}}, \emph{client\_repo\_cls=\textless{}class `fantastico.oauth2.models.client\_repository.ClientRepository'\textgreater{}}}{}
 This class provides the implementation for implicit grant type described in
-\href{http://tools.ietf.org/html/rfc6749}{RFC6749}. Implementation of this grant type is fully compliant with OAuth2 spec.
+\href{http://tools.ietf.org/html/rfc6749}{RFC6749}. Implementation of this grant type is fully compliant with 
+OAuth2 spec. In addition to RFC6749, the implicit grant implemented in fantastico supports an additional
+query parameter named \textbf{redirect} which is optional. If redirect query parameter is specified with value
+0 then a 200 OK response is returned to the client in comparison with redirect 1 value where 302 Found response
+is returned. We do this in order to support more advanced use cases where user can orchestrate the redirects
+rather than browser.
 \index{handle\_grant() (fantastico.oauth2.implicit\_grant\_handler.ImplicitGrantHandler method)}
 
 \begin{fulllineitems}
 \phantomsection\label{features/oauth2/technical_summary:fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler.handle_grant}\pysiglinewithargsret{\bfcode{handle\_grant}}{\emph{request}}{}
 This method provides the algorithm for implementing implicit grant type handler. Internally it will use TokensService
-in order to generate a new access token.
+in order to generate a new access token. In addition, if redirect query parameter is set to false then a 200 OK response
+with Location header and no body is sent to the client.
 
 \end{fulllineitems}
 
@@ -7928,7 +8008,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x291c380\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x19e5380\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -8473,7 +8553,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x3d18490\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2def490\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -9058,7 +9138,7 @@ you can enable autodiscovery of resources.
 Activate \textbf{ROA Discovery} extension.
 
 \begin{Verbatim}[commandchars=\\\{\}]
-fsdk activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name roa\PYGZhy{}discovery \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}comp\PYGZus{}root\PYGZgt{}
+fsdk activate\PYGZhy{}extension \PYGZhy{}\PYGZhy{}name roa\PYGZus{}discovery \PYGZhy{}\PYGZhy{}comp\PYGZhy{}root \PYGZlt{}comp\PYGZus{}root\PYGZgt{}
 \end{Verbatim}
 
 \item {} 
@@ -9078,9 +9158,6 @@ discovery registry.
 \item {} 
 ROA discovery supports only application/json content type for responses.
 
-\item {} 
-ROA sample resource can not be removed from registry.
-
 \end{itemize}
 
 
@@ -9096,6 +9173,14 @@ records.
 
 By default, all ROA resources are mapped on \textbf{/api/} relative to current project root. You can easily change this behavior
 by modifying the settings of your application ({\hyperref[get_started/settings:fantastico.settings.BasicSettings]{\code{fantastico.settings.BasicSettings}}} - property \textbf{roa\_api\_url})
+\index{handle\_list\_resources\_options() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/components/roa_discovery/roa_discovery:fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.handle_list_resources_options}\pysiglinewithargsret{\bfcode{handle\_list\_resources\_options}}{\emph{*args}, \emph{**kwargs}}{}
+This method handles all OPTIONS cors requests coming for resources registry listing.
+
+\end{fulllineitems}
+
 \index{list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method)}
 
 \begin{fulllineitems}
@@ -9198,6 +9283,32 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 
 \section{Versions}
 \label{changes:versions}\begin{itemize}
+\item {} 
+v0.7.0 (stable)
+\begin{itemize}
+\item {} 
+Added support for cross origin requests on ROA resources registry (/roa/resources).
+
+\item {} 
+Added support for exception serialized responses CORS compatible requests.
+
+\item {} 
+Add CORS decorator for enabling CORS headers on custom controller routes.
+
+\item {} 
+Add support for headers appended to each response (support for global CORS configurable headers).
+
+\item {} 
+Fix cors for ROA fetch individual item.
+
+\item {} 
+Fix @RequiredScopes attribute for MVC controllers (now it automatically validates the security context before invoking underline method).
+
+\item {} 
+Improve implicit grant handler so that it supports non redirect responses.
+
+\end{itemize}
+
 \item {} 
 v0.6.0 (\href{https://docs.google.com/forms/d/1tKBopU3lfDB\_w8F4h7Rl1Rn4uydAJq-nha09L\_ptJck/edit?usp=sharing}{Provide feedback})
 \begin{itemize}

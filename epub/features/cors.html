@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CORS</title>
+    
+    <link rel="stylesheet" href="../_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="roa.html" title="ROA (Resource Oriented Architecture)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mvc.html" title="Model View Controller"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
+          <li><a href="features.html" accesskey="U">Fantastico features</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="cors">
+<h1>CORS</h1>
+<p>In Fantastico framework, CORS (cross origin resource sharing) can be enabled easily per each individual controller method.</p>
+<dl class="class">
+<dt id="fantastico.mvc.controller_decorators.CorsEnabled">
+<em class="property">class </em><tt class="descclassname">fantastico.mvc.controller_decorators.</tt><tt class="descname">CorsEnabled</tt><a class="reference internal" href="../_modules/fantastico/mvc/controller_decorators.html#CorsEnabled"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This class provides the cors behavior which ensures all cors required headers are appended to response. It is designed
+to be used on controller methods decorated with &#64;Controller attribute.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/api/filesystem/(?P&lt;filename&gt;.*)$&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;OPTIONS&quot;</span><span class="p">)</span>
+<span class="nd">@CorsEnabled</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">upload_file_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>        
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>As you can see there is no need to implement cors controller methods because the decorator does all the job.</p>
+</dd></dl>
+
+<p>In addition to <strong>CorsEnabled</strong> decorator, you can also configure the framework to globally append some headers to each
+response:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Go to your settins profile (see <a class="reference internal" href="../get_started/settings.html#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a>)</li>
+<li>Change <strong>global_response_headers</strong> property and add all desired headers (e.g: Access-Control-Allow-Origin: &#8220;*&#8221;)</li>
+</ol>
+</div></blockquote>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2013, Radu Viorel Cosnita.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42788125-1', 'rcosnita.github.io');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

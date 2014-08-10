@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b139 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -57,7 +57,12 @@
 
 <div class="viewcode-block" id="ImplicitGrantHandler"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler">[docs]</a><span class="k">class</span> <span class="nc">ImplicitGrantHandler</span><span class="p">(</span><span class="n">GrantHandler</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the implementation for implicit grant type described in</span>
-<span class="sd">    `RFC6749 &lt;http://tools.ietf.org/html/rfc6749&gt;`_. Implementation of this grant type is fully compliant with OAuth2 spec.&#39;&#39;&#39;</span>
+<span class="sd">    `RFC6749 &lt;http://tools.ietf.org/html/rfc6749&gt;`_. Implementation of this grant type is fully compliant with </span>
+<span class="sd">    OAuth2 spec. In addition to RFC6749, the implicit grant implemented in fantastico supports an additional</span>
+<span class="sd">    query parameter named **redirect** which is optional. If redirect query parameter is specified with value</span>
+<span class="sd">    0 then a 200 OK response is returned to the client in comparison with redirect 1 value where 302 Found response</span>
+<span class="sd">    is returned. We do this in order to support more advanced use cases where user can orchestrate the redirects</span>
+<span class="sd">    rather than browser.&#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens_service</span><span class="p">,</span> <span class="n">settings_facade</span><span class="p">,</span> <span class="n">exception_formatters_cls</span><span class="o">=</span><span class="n">ExceptionFormattersFactory</span><span class="p">,</span>
                  <span class="n">client_repo_cls</span><span class="o">=</span><span class="n">ClientRepository</span><span class="p">):</span>
@@ -70,7 +75,8 @@
 
 <div class="viewcode-block" id="ImplicitGrantHandler.handle_grant"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler.handle_grant">[docs]</a>    <span class="k">def</span> <span class="nf">handle_grant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method provides the algorithm for implementing implicit grant type handler. Internally it will use TokensService</span>
-<span class="sd">        in order to generate a new access token.&#39;&#39;&#39;</span>
+<span class="sd">        in order to generate a new access token. In addition, if redirect query parameter is set to false then a 200 OK response</span>
+<span class="sd">        with Location header and no body is sent to the client.&#39;&#39;&#39;</span>
 
         <span class="n">client_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_missing_param</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;client_id&quot;</span><span class="p">)</span>
         <span class="n">redirect_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_missing_param</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;redirect_uri&quot;</span><span class="p">)</span>
@@ -109,8 +115,15 @@
                         <span class="p">(</span><span class="n">redirect_uri</span><span class="p">,</span> <span class="n">prefix_sign</span><span class="p">,</span> <span class="n">encrypted_access</span><span class="p">,</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">state</span><span class="p">),</span>
                          <span class="n">access_token</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expires_in</span><span class="p">,</span>
                          <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">scopes</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="n">RedirectResponse</span><span class="p">(</span><span class="n">return_url</span><span class="p">)</span>
+        
+        <span class="n">is_redirect</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;redirect&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_redirect</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>            
+            <span class="k">return</span> <span class="n">RedirectResponse</span><span class="p">(</span><span class="n">return_url</span><span class="p">)</span>
+        
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">b</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Location&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">return_url</span>
+        
+        <span class="k">return</span> <span class="n">response</span>
 </div>
     <span class="k">def</span> <span class="nf">_get_error_redirect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">redirect_uri</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method builds an error redirect response if the request has query parameters indicating error case.&#39;&#39;&#39;</span>

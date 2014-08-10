@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>OAUTH2 Fantastico IDP &mdash; fantastico 0.6.0-b139 documentation</title>
+    <title>OAUTH2 Fantastico IDP &mdash; fantastico 0.7.0-b140 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.6.0-b139',
+        VERSION:     '0.7.0-b140',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b139 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.7.0-b140 documentation" href="../../index.html" />
     <link rel="up" title="OAUTH2" href="../oauth2.html" />
     <link rel="next" title="OAUTH2 Technical Summary" href="technical_summary.html" />
     <link rel="prev" title="Controllers security" href="controllers_security.html" />
@@ -51,7 +51,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html">
           Fantastico framework</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.6.0-b139</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b140</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -90,6 +90,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../request_response.html">Request lifecycle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../routing_engine.html">Routing engine</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../mvc.html">Model View Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cors.html">CORS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../roa.html">ROA (Resource Oriented Architecture)</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../oauth2.html">OAUTH2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../sdk.html">SDK</a></li>
@@ -118,6 +119,7 @@
 <li><a class="reference internal" href="#users-and-persons">Users and persons</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#default-oauth-callback">Default oauth callback</a></li>
 <li><a class="reference internal" href="#technical-summary">Technical summary</a><ul>
 <li><a class="reference internal" href="#password-storage">Password storage</a></li>
 </ul>
@@ -304,6 +306,20 @@ representation (see: <a class="reference internal" href="../roa.html"><em>ROA (R
 assigned to that user. Initially created person has some default values in order to allow very smooth account creation in various
 applications.</p>
 </div>
+</div>
+<div class="section" id="default-oauth-callback">
+<h2>Default oauth callback<a class="headerlink" href="#default-oauth-callback" title="Permalink to this headline">¶</a></h2>
+<p>By default, the oauth idp also provides a callback page which displays received hash parameters. In order to allow reusage of this callback
+in mobile apps this callback page sends <strong>fantastico.oauth.cb.message</strong> message to it&#8217;s parent frame with the following body:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;messageType&quot;</span><span class="o">:</span> <span class="s2">&quot;fantastico.oauth.cb.message&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;url&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;current url include hash fragment&gt;&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;access_token&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;currently received access token&gt;&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;expires_in&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;the number of minutes in which access token will expire&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In case of an error the same message is sent with error attributes received in hash fragment.</p>
 </div>
 <div class="section" id="technical-summary">
 <h2>Technical summary<a class="headerlink" href="#technical-summary" title="Permalink to this headline">¶</a></h2>

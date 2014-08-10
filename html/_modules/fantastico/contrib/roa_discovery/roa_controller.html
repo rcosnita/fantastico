@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.contrib.roa_discovery.roa_controller &mdash; fantastico 0.6.0-b139 documentation</title>
+    <title>fantastico.contrib.roa_discovery.roa_controller &mdash; fantastico 0.7.0-b140 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '0.6.0-b139',
+        VERSION:     '0.7.0-b140',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b139 documentation" href="../../../../index.html" />
+    <link rel="top" title="fantastico 0.7.0-b140 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -49,7 +49,7 @@
         </button>
         <a class="navbar-brand" href="../../../../index.html">
           Fantastico framework</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.6.0-b139</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b140</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -88,6 +88,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../features/request_response.html">Request lifecycle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../features/routing_engine.html">Routing engine</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../features/mvc.html">Model View Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../features/cors.html">CORS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../features/roa.html">ROA (Resource Oriented Architecture)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../features/oauth2.html">OAUTH2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../features/sdk.html">SDK</a></li>
@@ -164,7 +165,8 @@
 <span class="kn">from</span> <span class="nn">fantastico.contrib.roa_discovery</span> <span class="kn">import</span> <span class="n">roa_helper</span>
 <span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoDbError</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
-<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span><span class="p">,</span> <span class="n">Controller</span>
+<span class="kn">from</span> <span class="nn">fantastico.mvc.controller_decorators</span> <span class="kn">import</span> <span class="n">ControllerProvider</span><span class="p">,</span> <span class="n">Controller</span><span class="p">,</span> \
+    <span class="n">CorsEnabled</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.model_facade</span> <span class="kn">import</span> <span class="n">ModelFacade</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter</span> <span class="kn">import</span> <span class="n">ModelFilter</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.models.model_filter_compound</span> <span class="kn">import</span> <span class="n">ModelFilterAnd</span>
@@ -392,26 +394,18 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">))</span>
 </div>
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="p">[</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;$&quot;</span><span class="p">,</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)$&quot;</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;OPTIONS&quot;</span><span class="p">)</span> <span class="c"># pylint: disable=W0613</span>
-<div class="viewcode-block" id="RoaController.handle_resource_options"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options">[docs]</a>    <span class="k">def</span> <span class="nf">handle_resource_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="nd">@CorsEnabled</span><span class="p">()</span>
+<div class="viewcode-block" id="RoaController.handle_resource_options"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options">[docs]</a>    <span class="k">def</span> <span class="nf">handle_resource_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method enables support for http ajax CORS requests. This is mandatory if we want to host apis on different</span>
 <span class="sd">        domains than project host.&#39;&#39;&#39;</span>
-
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="p">{}</span>
-
-        <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;0&quot;</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Cache-Control&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;private&quot;</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Origin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Methods&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OPTIONS,GET,POST,PUT,DELETE&quot;</span>
-        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Headers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;Access-Control-Request-Headers&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">response</span>
+        
+        <span class="k">pass</span>
 </div>
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="p">[</span><span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;$&quot;</span><span class="p">,</span> <span class="n">BASE_LATEST_URL</span> <span class="o">+</span> <span class="s">&quot;/(?P&lt;resource_id&gt;.*?)$&quot;</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s">&quot;OPTIONS&quot;</span><span class="p">)</span>
-<div class="viewcode-block" id="RoaController.handle_resource_options_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options_latest">[docs]</a>    <span class="k">def</span> <span class="nf">handle_resource_options_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="RoaController.handle_resource_options_latest"><a class="viewcode-back" href="../../../../features/roa/technical_summary.html#fantastico.contrib.roa_discovery.roa_controller.RoaController.handle_resource_options_latest">[docs]</a>    <span class="k">def</span> <span class="nf">handle_resource_options_latest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method handles OPTIONS http requests for ROA api latest versions.&#39;&#39;&#39;</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_resource_options</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">),</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_resource_options</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&quot;latest&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trim_resource_url</span><span class="p">(</span><span class="n">resource_url</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </div>
     <span class="k">def</span> <span class="nf">_validate_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">request_body</span><span class="p">,</span> <span class="n">existing_resource_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method is used to validate the resource. If the resource validation fails an error response is sent. Otherwise</span>

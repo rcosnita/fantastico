@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b139 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -47,10 +47,13 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.oauth2.oauth2_decorators</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
 <span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoControllerInvalidError</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
+<span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2UnauthorizedError</span>
 <span class="kn">from</span> <span class="nn">fantastico.oauth2.security_context</span> <span class="kn">import</span> <span class="n">SecurityContext</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
+
 
 <div class="viewcode-block" id="RequiredScopes"><a class="viewcode-back" href="../../../features/oauth2/technical_summary.html#fantastico.oauth2.oauth2_decorators.RequiredScopes">[docs]</a><span class="k">class</span> <span class="nc">RequiredScopes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the decorator for enforcing fantastico to authorize requests against ROA resources and MVC controllers.</span>
@@ -60,8 +63,8 @@
 <span class="sd">        # enforce authorization for MVC controllers.</span>
 <span class="sd">        @ControllerProvider()</span>
 <span class="sd">        class SecuredController(BaseController):</span>
-<span class="sd">            @RequiredScopes(scopes=[&quot;greet.verbose&quot;, &quot;greet.read&quot;])</span>
 <span class="sd">            @Controller(url=&quot;/secured-controller/ui/index&quot;)</span>
+<span class="sd">            @RequiredScopes(scopes=[&quot;greet.verbose&quot;, &quot;greet.read&quot;])</span>
 <span class="sd">            def say_hello(self, request):</span>
 <span class="sd">                return &quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world&lt;/body&gt;&lt;/html&gt;&quot;</span>
 
@@ -173,6 +176,9 @@
             <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_request_from_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inject_scopes_in_security</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">validate_context</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">OAuth2UnauthorizedError</span><span class="p">(</span><span class="s">&quot;You are not authorized to access the resource.&quot;</span><span class="p">)</span>
+
             <span class="k">return</span> <span class="n">orig_fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">new_fn</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__name__</span>
@@ -199,8 +205,10 @@
 
         <span class="n">security_ctx</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">security</span>
 
-        <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">security</span> <span class="o">=</span> <span class="n">SecurityContext</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="n">security_ctx</span><span class="o">.</span><span class="n">access_token</span><span class="p">,</span>
-                                                   <span class="n">required_scopes</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div></div>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">SecurityContext</span><span class="p">(</span><span class="n">access_token</span><span class="o">=</span><span class="n">security_ctx</span><span class="o">.</span><span class="n">access_token</span><span class="p">,</span>
+                              <span class="n">required_scopes</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+                
+        <span class="n">request</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">security</span> <span class="o">=</span> <span class="n">ctx</span></div></div>
 </pre></div>
 
           </div>

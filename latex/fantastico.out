@@ -17,16 +17,17 @@
 \BOOKMARK [1][-]{section.4.2}{Request lifecycle}{chapter.4}% 17
 \BOOKMARK [1][-]{section.4.3}{Routing engine}{chapter.4}% 18
 \BOOKMARK [1][-]{section.4.4}{Model View Controller}{chapter.4}% 19
-\BOOKMARK [1][-]{section.4.5}{ROA \(Resource Oriented Architecture\)}{chapter.4}% 20
-\BOOKMARK [1][-]{section.4.6}{OAUTH2}{chapter.4}% 21
-\BOOKMARK [1][-]{section.4.7}{SDK}{chapter.4}% 22
-\BOOKMARK [1][-]{section.4.8}{Component model}{chapter.4}% 23
-\BOOKMARK [1][-]{section.4.9}{Component reusage}{chapter.4}% 24
-\BOOKMARK [1][-]{section.4.10}{Built in components}{chapter.4}% 25
-\BOOKMARK [0][-]{chapter.5}{Changes}{}% 26
-\BOOKMARK [1][-]{section.5.1}{Feedback}{chapter.5}% 27
-\BOOKMARK [1][-]{section.5.2}{Versions}{chapter.5}% 28
-\BOOKMARK [0][-]{chapter.6}{Provide feedback}{}% 29
-\BOOKMARK [0][-]{chapter.7}{Build status}{}% 30
-\BOOKMARK [0][-]{chapter.8}{License}{}% 31
-\BOOKMARK [0][-]{section*.459}{Index}{}% 32
+\BOOKMARK [1][-]{section.4.5}{CORS}{chapter.4}% 20
+\BOOKMARK [1][-]{section.4.6}{ROA \(Resource Oriented Architecture\)}{chapter.4}% 21
+\BOOKMARK [1][-]{section.4.7}{OAUTH2}{chapter.4}% 22
+\BOOKMARK [1][-]{section.4.8}{SDK}{chapter.4}% 23
+\BOOKMARK [1][-]{section.4.9}{Component model}{chapter.4}% 24
+\BOOKMARK [1][-]{section.4.10}{Component reusage}{chapter.4}% 25
+\BOOKMARK [1][-]{section.4.11}{Built in components}{chapter.4}% 26
+\BOOKMARK [0][-]{chapter.5}{Changes}{}% 27
+\BOOKMARK [1][-]{section.5.1}{Feedback}{chapter.5}% 28
+\BOOKMARK [1][-]{section.5.2}{Versions}{chapter.5}% 29
+\BOOKMARK [0][-]{chapter.6}{Provide feedback}{}% 30
+\BOOKMARK [0][-]{chapter.7}{Build status}{}% 31
+\BOOKMARK [0][-]{chapter.8}{License}{}% 32
+\BOOKMARK [0][-]{section*.464}{Index}{}% 33

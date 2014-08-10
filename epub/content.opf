@@ -9,7 +9,7 @@
     <dc:publisher>Radu Viorel Cosnita</dc:publisher>
     <dc:rights>2013, Radu Viorel Cosnita</dc:rights>
     <dc:identifier id="unknown" opf:scheme="unknown">unknown</dc:identifier>
-    <dc:date>2014-01-19</dc:date>
+    <dc:date>2014-08-10</dc:date>
   </metadata>
   <manifest>
     <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
@@ -430,6 +430,9 @@
     <item id="features_component_model.html"
           href="features/component_model.html"
           media-type="application/xhtml+xml" />
+    <item id="features_cors.html"
+          href="features/cors.html"
+          media-type="application/xhtml+xml" />
     <item id="features_component_reusage.html"
           href="features/component_reusage.html"
           media-type="application/xhtml+xml" />
@@ -581,6 +584,7 @@
     <itemref idref="features_request_response.html" />
     <itemref idref="features_routing_engine.html" />
     <itemref idref="features_mvc.html" />
+    <itemref idref="features_cors.html" />
     <itemref idref="features_roa.html" />
     <itemref idref="features_roa_rest_standard.html" />
     <itemref idref="features_roa_rest_responses.html" />

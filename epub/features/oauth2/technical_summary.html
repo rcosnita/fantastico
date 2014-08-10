@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="idp.html" title="OAUTH2 Fantastico IDP"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b139 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -127,8 +127,8 @@ values are: scopes, create_scopes, read_scopes, update_scopes or delete_scopes.<
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># enforce authorization for MVC controllers.</span>
 <span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">SecuredController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>
-    <span class="nd">@RequiredScopes</span><span class="p">(</span><span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;greet.verbose&quot;</span><span class="p">,</span> <span class="s">&quot;greet.read&quot;</span><span class="p">])</span>
     <span class="nd">@Controller</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">&quot;/secured-controller/ui/index&quot;</span><span class="p">)</span>
+    <span class="nd">@RequiredScopes</span><span class="p">(</span><span class="n">scopes</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;greet.verbose&quot;</span><span class="p">,</span> <span class="s">&quot;greet.read&quot;</span><span class="p">])</span>
     <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="k">return</span> <span class="s">&quot;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world&lt;/body&gt;&lt;/html&gt;&quot;</span>
 </pre></div>
@@ -619,12 +619,18 @@ obtaining and implicit grant type handler:</p>
 <dt id="fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler">
 <em class="property">class </em><tt class="descclassname">fantastico.oauth2.implicit_grant_handler.</tt><tt class="descname">ImplicitGrantHandler</tt><big>(</big><em>tokens_service</em>, <em>settings_facade</em>, <em>exception_formatters_cls=&lt;class 'fantastico.exception_formatters.ExceptionFormattersFactory'&gt;</em>, <em>client_repo_cls=&lt;class 'fantastico.oauth2.models.client_repository.ClientRepository'&gt;</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/implicit_grant_handler.html#ImplicitGrantHandler"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This class provides the implementation for implicit grant type described in
-<a class="reference external" href="http://tools.ietf.org/html/rfc6749">RFC6749</a><span class="link-target"> [http://tools.ietf.org/html/rfc6749]</span>. Implementation of this grant type is fully compliant with OAuth2 spec.</p>
+<a class="reference external" href="http://tools.ietf.org/html/rfc6749">RFC6749</a><span class="link-target"> [http://tools.ietf.org/html/rfc6749]</span>. Implementation of this grant type is fully compliant with 
+OAuth2 spec. In addition to RFC6749, the implicit grant implemented in fantastico supports an additional
+query parameter named <strong>redirect</strong> which is optional. If redirect query parameter is specified with value
+0 then a 200 OK response is returned to the client in comparison with redirect 1 value where 302 Found response
+is returned. We do this in order to support more advanced use cases where user can orchestrate the redirects
+rather than browser.</p>
 <dl class="method">
 <dt id="fantastico.oauth2.implicit_grant_handler.ImplicitGrantHandler.handle_grant">
 <tt class="descname">handle_grant</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/oauth2/implicit_grant_handler.html#ImplicitGrantHandler.handle_grant"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This method provides the algorithm for implementing implicit grant type handler. Internally it will use TokensService
-in order to generate a new access token.</p>
+in order to generate a new access token. In addition, if redirect query parameter is set to false then a 200 OK response
+with Location header and no body is sent to the client.</p>
 </dd></dl>
 
 </dd></dl>

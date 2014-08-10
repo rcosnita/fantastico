@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.6.0-b139 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -129,9 +129,22 @@
         <span class="n">response</span> <span class="o">=</span> <span class="n">ex_formatter</span><span class="o">.</span><span class="n">format_ex</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;redirect_uri&quot;</span><span class="p">:</span> <span class="n">redirect_uri</span><span class="p">})</span>
 
         <span class="k">if</span> <span class="n">ex_format</span> <span class="o">==</span> <span class="n">ExceptionFormattersFactory</span><span class="o">.</span><span class="n">JSON</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json; charset=UTF-8&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">http_code</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json; charset=UTF-8&quot;</span><span class="p">,</span> 
+                                <span class="n">status</span><span class="o">=</span><span class="n">http_code</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_cors_headers</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+            
+            <span class="k">return</span> <span class="n">response</span>
 
-        <span class="k">return</span> <span class="n">RedirectResponse</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">RedirectResponse</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_cors_headers</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">response</span>
+
+    <span class="k">def</span> <span class="nf">_add_cors_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method adds the cors headers required to support cross domain requests exception serialization.&#39;&#39;&#39;</span>
+        
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Origin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Methods&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OPTIONS,GET,POST,PUT,DELETE&quot;</span></div>
 </pre></div>
 
           </div>

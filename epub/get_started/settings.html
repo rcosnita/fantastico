@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation manual"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">fantastico 0.6.0-b139 documentation</a> &raquo;</li>
+        <li><a href="../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
           <li><a href="getting_started.html" accesskey="U">Getting started</a> &raquo;</li> 
       </ul>
     </div>
@@ -112,6 +112,17 @@ and ensures no thread is using that connection till is completely refreshed.</p>
 <dt id="fantastico.settings.BasicSettings.doc_base">
 <tt class="descname">doc_base</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.doc_base"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>This property defines public location of <strong>Fantastico</strong> documentation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="fantastico.settings.BasicSettings.global_response_headers">
+<tt class="descname">global_response_headers</tt><a class="reference internal" href="../_modules/fantastico/settings.html#BasicSettings.global_response_headers"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This property defines the headers which must be appended to every response. You can use this property in order
+to globally enable cors.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">return</span> <span class="p">{</span><span class="s">&quot;Access-Control-Allow-Origin&quot;</span><span class="p">:</span> <span class="s">&quot;*&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>By default, no global header is appended to response.</p>
 </dd></dl>
 
 <dl class="attribute">

@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="controllers_security.html" title="Controllers security"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.6.0-b139 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -168,6 +168,20 @@ representation (see: <a class="reference internal" href="../roa.html"><em>ROA (R
 assigned to that user. Initially created person has some default values in order to allow very smooth account creation in various
 applications.</p>
 </div>
+</div>
+<div class="section" id="default-oauth-callback">
+<h2>Default oauth callback</h2>
+<p>By default, the oauth idp also provides a callback page which displays received hash parameters. In order to allow reusage of this callback
+in mobile apps this callback page sends <strong>fantastico.oauth.cb.message</strong> message to it&#8217;s parent frame with the following body:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">{</span>
+   <span class="s2">&quot;messageType&quot;</span><span class="o">:</span> <span class="s2">&quot;fantastico.oauth.cb.message&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;url&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;current url include hash fragment&gt;&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;access_token&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;currently received access token&gt;&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;expires_in&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;the number of minutes in which access token will expire&gt;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In case of an error the same message is sent with error attributes received in hash fragment.</p>
 </div>
 <div class="section" id="technical-summary">
 <h2>Technical summary</h2>

@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../index.html">fantastico 0.6.0-b139 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -209,6 +209,20 @@
 <span class="sd">        to 1h = 3600 seconds.&#39;&#39;&#39;</span>
 
         <span class="k">return</span> <span class="mi">3600</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="BasicSettings.global_response_headers"><a class="viewcode-back" href="../../get_started/settings.html#fantastico.settings.BasicSettings.global_response_headers">[docs]</a>    <span class="k">def</span> <span class="nf">global_response_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This property defines the headers which must be appended to every response. You can use this property in order</span>
+<span class="sd">        to globally enable cors.</span>
+<span class="sd">        </span>
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">        </span>
+<span class="sd">            return {&quot;Access-Control-Allow-Origin&quot;: &quot;*&quot;}</span>
+<span class="sd">        </span>
+<span class="sd">        By default, no global header is appended to response.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="k">return</span> <span class="p">{}</span>
 </div></div>
 <span class="k">class</span> <span class="nc">AwsStageSettings</span><span class="p">(</span><span class="n">BasicSettings</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the configuration profile for Aws Stage environment integration.&#39;&#39;&#39;</span>

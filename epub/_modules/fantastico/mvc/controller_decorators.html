@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.6.0-b139 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -47,13 +47,16 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.mvc.controller_decorator</span>
 <span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
 <span class="kn">from</span> <span class="nn">fantastico</span> <span class="kn">import</span> <span class="n">mvc</span>
 <span class="kn">from</span> <span class="nn">fantastico.exceptions</span> <span class="kn">import</span> <span class="n">FantasticoControllerInvalidError</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.base_controller</span> <span class="kn">import</span> <span class="n">BaseController</span>
 <span class="kn">from</span> <span class="nn">fantastico.mvc.model_facade</span> <span class="kn">import</span> <span class="n">ModelFacade</span>
 <span class="kn">from</span> <span class="nn">fantastico.oauth2.exceptions</span> <span class="kn">import</span> <span class="n">OAuth2UnauthorizedError</span><span class="p">,</span> <span class="n">OAuth2Error</span>
 <span class="kn">from</span> <span class="nn">fantastico.utils</span> <span class="kn">import</span> <span class="n">instantiator</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">webob.response</span> <span class="kn">import</span> <span class="n">Response</span>
+
 
 <span class="k">class</span> <span class="nc">ModelsHolder</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class is used for holding all models injected into a controller.&#39;&#39;&#39;</span>
@@ -272,6 +275,41 @@
             <span class="nb">setattr</span><span class="p">(</span><span class="n">meth_value</span><span class="p">,</span> <span class="s">&quot;full_name&quot;</span><span class="p">,</span> <span class="n">full_name</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">cls</span>
+
+<div class="viewcode-block" id="CorsEnabled"><a class="viewcode-back" href="../../../features/cors.html#fantastico.mvc.controller_decorators.CorsEnabled">[docs]</a><span class="k">class</span> <span class="nc">CorsEnabled</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This class provides the cors behavior which ensures all cors required headers are appended to response. It is designed</span>
+<span class="sd">    to be used on controller methods decorated with @Controller attribute.</span>
+<span class="sd">    </span>
+<span class="sd">    .. code-block:: python</span>
+<span class="sd">    </span>
+<span class="sd">        @Controller(url=&quot;/api/filesystem/(?P&lt;filename&gt;.*)$&quot;, method=&quot;OPTIONS&quot;)</span>
+<span class="sd">        @CorsEnabled()</span>
+<span class="sd">        def upload_file_options(self, request, filename):        </span>
+<span class="sd">            pass</span>
+<span class="sd">        </span>
+<span class="sd">    As you can see there is no need to implement cors controller methods because the decorator does all the job.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orig_fn</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">cors_enabled_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span> <span class="c"># pylint: disable=W0613</span>
+            <span class="sd">&#39;&#39;&#39;This method provides the algorithm for building a generic cors response for the current request.&#39;&#39;&#39;</span>
+            
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="p">{}</span>
+    
+            <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s">&quot;application/json&quot;</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Content-Length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;0&quot;</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Cache-Control&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;private&quot;</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Origin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Methods&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;OPTIONS,GET,POST,PUT,DELETE&quot;</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&quot;Access-Control-Allow-Headers&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;Access-Control-Request-Headers&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+    
+            <span class="k">return</span> <span class="n">response</span>
+
+        <span class="n">cors_enabled_fn</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="n">cors_enabled_fn</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__doc__</span>
+        <span class="n">cors_enabled_fn</span><span class="o">.</span><span class="n">__module__</span> <span class="o">=</span> <span class="n">orig_fn</span><span class="o">.</span><span class="n">__module__</span>
+
+        <span class="k">return</span> <span class="n">cors_enabled_fn</span></div>
 </pre></div>
 
           </div>

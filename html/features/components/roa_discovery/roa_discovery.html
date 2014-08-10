@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ROA Auto discovery &mdash; fantastico 0.6.0-b139 documentation</title>
+    <title>ROA Auto discovery &mdash; fantastico 0.7.0-b140 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.6.0-b139',
+        VERSION:     '0.7.0-b140',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b139 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.7.0-b140 documentation" href="../../../index.html" />
     <link rel="up" title="Built in components" href="../../components_builtin.html" />
     <link rel="next" title="OAuth2 Identity Provider" href="../oauth2/oauth2_idp/index.html" />
     <link rel="prev" title="Tracking codes" href="../tracking_codes/tracking_codes.html" />
@@ -51,7 +51,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html">
           Fantastico framework</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.6.0-b139</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b140</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -90,6 +90,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../request_response.html">Request lifecycle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../routing_engine.html">Routing engine</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../mvc.html">Model View Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cors.html">CORS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../roa.html">ROA (Resource Oriented Architecture)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../oauth2.html">OAUTH2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../sdk.html">SDK</a></li>
@@ -172,7 +173,7 @@ you can enable autodiscovery of resources.</p>
 <h2>Integration<a class="headerlink" href="#integration" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
 <li><p class="first">Activate <strong>ROA Discovery</strong> extension.</p>
-<div class="highlight-bash"><div class="highlight"><pre>fsdk activate-extension --name roa-discovery --comp-root &lt;comp_root&gt;
+<div class="highlight-bash"><div class="highlight"><pre>fsdk activate-extension --name roa_discovery --comp-root &lt;comp_root&gt;
 </pre></div>
 </div>
 </li>
@@ -189,7 +190,6 @@ discovery registry.</p>
 <blockquote>
 <div><ul class="simple">
 <li>ROA discovery supports only application/json content type for responses.</li>
-<li>ROA sample resource can not be removed from registry.</li>
 </ul>
 </div></blockquote>
 </div>
@@ -204,6 +204,12 @@ client side applications against resources name and you are going to use this co
 records.</p>
 <p>By default, all ROA resources are mapped on <strong>/api/</strong> relative to current project root. You can easily change this behavior
 by modifying the settings of your application (<a class="reference internal" href="../../../get_started/settings.html#fantastico.settings.BasicSettings" title="fantastico.settings.BasicSettings"><tt class="xref py py-class docutils literal"><span class="pre">fantastico.settings.BasicSettings</span></tt></a> - property <strong>roa_api_url</strong>)</p>
+<dl class="method">
+<dt id="fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.handle_list_resources_options">
+<tt class="descname">handle_list_resources_options</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/roa_discovery/discovery_controller.html#RoaDiscoveryController.handle_list_resources_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.handle_list_resources_options" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method handles all OPTIONS cors requests coming for resources registry listing.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.list_registered_resources">
 <tt class="descname">list_registered_resources</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../_modules/fantastico/contrib/roa_discovery/discovery_controller.html#RoaDiscoveryController.list_registered_resources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.contrib.roa_discovery.discovery_controller.RoaDiscoveryController.list_registered_resources" title="Permalink to this definition">¶</a></dt>

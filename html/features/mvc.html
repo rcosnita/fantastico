@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Model View Controller &mdash; fantastico 0.6.0-b139 documentation</title>
+    <title>Model View Controller &mdash; fantastico 0.7.0-b140 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.6.0-b139',
+        VERSION:     '0.7.0-b140',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,9 +28,9 @@
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="fantastico 0.6.0-b139 documentation" href="../index.html" />
+    <link rel="top" title="fantastico 0.7.0-b140 documentation" href="../index.html" />
     <link rel="up" title="Fantastico features" href="features.html" />
-    <link rel="next" title="ROA (Resource Oriented Architecture)" href="roa.html" />
+    <link rel="next" title="CORS" href="cors.html" />
     <link rel="prev" title="Routing engine" href="routing_engine.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -51,7 +51,7 @@
         </button>
         <a class="navbar-brand" href="../index.html">
           Fantastico framework</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.6.0-b139</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b140</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -90,6 +90,7 @@
 <li class="toctree-l2"><a class="reference internal" href="request_response.html">Request lifecycle</a></li>
 <li class="toctree-l2"><a class="reference internal" href="routing_engine.html">Routing engine</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Model View Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cors.html">CORS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="roa.html">ROA (Resource Oriented Architecture)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="oauth2.html">OAUTH2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdk.html">SDK</a></li>
@@ -135,7 +136,7 @@
     </a>
   </li>
   <li>
-    <a href="roa.html" title="Next Chapter: ROA (Resource Oriented Architecture)"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">ROA (Resource Or... &raquo;</span>
+    <a href="cors.html" title="Next Chapter: CORS"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">CORS &raquo;</span>
     </a>
   </li>
               
@@ -603,7 +604,7 @@ Fantastico it is recommended that every controller implementation inherits this 
 
 <dl class="method">
 <dt id="fantastico.mvc.base_controller.BaseController.load_template">
-<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x244d408&gt;</em>, <em>enable_global_folder=False</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.base_controller.BaseController.load_template" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">load_template</tt><big>(</big><em>tpl_name</em>, <em>model_data=None</em>, <em>get_template=&lt;function get_template at 0x1516408&gt;</em>, <em>enable_global_folder=False</em><big>)</big><a class="reference internal" href="../_modules/fantastico/mvc/base_controller.html#BaseController.load_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.mvc.base_controller.BaseController.load_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is responsible for loading a template from disk and render it using the given model data.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nd">@ControllerProvider</span><span class="p">()</span>
 <span class="k">class</span> <span class="nc">TestController</span><span class="p">(</span><span class="n">BaseController</span><span class="p">):</span>

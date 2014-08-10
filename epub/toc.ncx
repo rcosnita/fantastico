@@ -479,190 +479,196 @@
       </navPoint>
       <navPoint id="navPoint62" playOrder="62">
         <navLabel>
+          <text>CORS</text>
+        </navLabel>
+        <content src="features/cors.html" />
+      </navPoint>
+      <navPoint id="navPoint63" playOrder="63">
+        <navLabel>
           <text>ROA (Resource Oriented Architecture)</text>
         </navLabel>
         <content src="features/roa.html" />
-        <navPoint id="navPoint62" playOrder="62">
+        <navPoint id="navPoint63" playOrder="63">
           <navLabel>
             <text>ROA (Resource Oriented Architecture)</text>
           </navLabel>
           <content src="features/roa.html" />
         </navPoint>
-        <navPoint id="navPoint63" playOrder="63">
+        <navPoint id="navPoint64" playOrder="64">
           <navLabel>
             <text>Examples</text>
           </navLabel>
           <content src="features/roa.html#examples" />
         </navPoint>
-        <navPoint id="navPoint64" playOrder="64">
+        <navPoint id="navPoint65" playOrder="65">
           <navLabel>
             <text>Application settings stored in database</text>
           </navLabel>
           <content src="features/roa.html#application-settings-stored-in-database" />
         </navPoint>
-        <navPoint id="navPoint65" playOrder="65">
+        <navPoint id="navPoint66" playOrder="66">
           <navLabel>
             <text>Versioning</text>
           </navLabel>
           <content src="features/roa.html#versioning" />
         </navPoint>
-        <navPoint id="navPoint66" playOrder="66">
+        <navPoint id="navPoint67" playOrder="67">
           <navLabel>
             <text>Validation</text>
           </navLabel>
           <content src="features/roa.html#validation" />
         </navPoint>
-        <navPoint id="navPoint67" playOrder="67">
+        <navPoint id="navPoint68" playOrder="68">
           <navLabel>
             <text>Partial object representation</text>
           </navLabel>
           <content src="features/roa.html#partial-object-representation" />
         </navPoint>
-        <navPoint id="navPoint68" playOrder="68">
+        <navPoint id="navPoint69" playOrder="69">
           <navLabel>
             <text>Resource composed attributes</text>
           </navLabel>
           <content src="features/roa.html#resource-composed-attributes" />
         </navPoint>
-        <navPoint id="navPoint69" playOrder="69">
+        <navPoint id="navPoint70" playOrder="70">
           <navLabel>
             <text>Security</text>
           </navLabel>
           <content src="features/roa.html#security" />
         </navPoint>
-        <navPoint id="navPoint70" playOrder="70">
+        <navPoint id="navPoint71" playOrder="71">
           <navLabel>
             <text>Advantages</text>
           </navLabel>
           <content src="features/roa.html#advantages" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint71" playOrder="71">
+      <navPoint id="navPoint72" playOrder="72">
         <navLabel>
           <text>OAUTH2</text>
         </navLabel>
         <content src="features/oauth2.html" />
-        <navPoint id="navPoint71" playOrder="71">
+        <navPoint id="navPoint72" playOrder="72">
           <navLabel>
             <text>OAUTH2</text>
           </navLabel>
           <content src="features/oauth2.html" />
         </navPoint>
-        <navPoint id="navPoint72" playOrder="72">
+        <navPoint id="navPoint73" playOrder="73">
           <navLabel>
             <text>Fantastico security</text>
           </navLabel>
           <content src="features/oauth2.html#fantastico-security" />
         </navPoint>
-        <navPoint id="navPoint73" playOrder="73">
+        <navPoint id="navPoint74" playOrder="74">
           <navLabel>
             <text>OAuth2 exceptions</text>
           </navLabel>
           <content src="features/oauth2.html#oauth2-exceptions" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint74" playOrder="74">
+      <navPoint id="navPoint75" playOrder="75">
         <navLabel>
           <text>SDK</text>
         </navLabel>
         <content src="features/sdk.html" />
-        <navPoint id="navPoint74" playOrder="74">
+        <navPoint id="navPoint75" playOrder="75">
           <navLabel>
             <text>SDK</text>
           </navLabel>
           <content src="features/sdk.html" />
         </navPoint>
-        <navPoint id="navPoint75" playOrder="75">
+        <navPoint id="navPoint76" playOrder="76">
           <navLabel>
             <text>Intro</text>
           </navLabel>
           <content src="features/sdk.html#intro" />
         </navPoint>
-        <navPoint id="navPoint76" playOrder="76">
+        <navPoint id="navPoint77" playOrder="77">
           <navLabel>
             <text>Usage</text>
           </navLabel>
           <content src="features/sdk.html#usage" />
         </navPoint>
-        <navPoint id="navPoint77" playOrder="77">
+        <navPoint id="navPoint78" playOrder="78">
           <navLabel>
             <text>Supported commands</text>
           </navLabel>
           <content src="features/sdk.html#supported-commands" />
         </navPoint>
-        <navPoint id="navPoint78" playOrder="78">
+        <navPoint id="navPoint79" playOrder="79">
           <navLabel>
             <text>Technical summary</text>
           </navLabel>
           <content src="features/sdk.html#technical-summary" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint79" playOrder="79">
+      <navPoint id="navPoint80" playOrder="80">
         <navLabel>
           <text>Component model</text>
         </navLabel>
         <content src="features/component_model.html" />
-        <navPoint id="navPoint79" playOrder="79">
+        <navPoint id="navPoint80" playOrder="80">
           <navLabel>
             <text>Component model</text>
           </navLabel>
           <content src="features/component_model.html" />
         </navPoint>
-        <navPoint id="navPoint80" playOrder="80">
+        <navPoint id="navPoint81" playOrder="81">
           <navLabel>
             <text>Static folder</text>
           </navLabel>
           <content src="features/component_model.html#static-folder" />
         </navPoint>
-        <navPoint id="navPoint81" playOrder="81">
+        <navPoint id="navPoint82" playOrder="82">
           <navLabel>
             <text>Sql folder</text>
           </navLabel>
           <content src="features/component_model.html#sql-folder" />
         </navPoint>
       </navPoint>
-      <navPoint id="navPoint82" playOrder="82">
+      <navPoint id="navPoint83" playOrder="83">
         <navLabel>
           <text>Component reusage</text>
         </navLabel>
         <content src="features/component_reusage.html" />
       </navPoint>
-      <navPoint id="navPoint83" playOrder="83">
+      <navPoint id="navPoint84" playOrder="84">
         <navLabel>
           <text>Built in components</text>
         </navLabel>
         <content src="features/components_builtin.html" />
-        <navPoint id="navPoint83" playOrder="83">
+        <navPoint id="navPoint84" playOrder="84">
           <navLabel>
             <text>Built in components</text>
           </navLabel>
           <content src="features/components_builtin.html" />
         </navPoint>
-        <navPoint id="navPoint84" playOrder="84">
+        <navPoint id="navPoint85" playOrder="85">
           <navLabel>
             <text>Dynamic menu</text>
           </navLabel>
           <content src="features/components/dynamic_menu/dynamic_menu.html" />
         </navPoint>
-        <navPoint id="navPoint85" playOrder="85">
+        <navPoint id="navPoint86" playOrder="86">
           <navLabel>
             <text>Dynamic pages</text>
           </navLabel>
           <content src="features/components/dynamic_pages/dynamic_pages.html" />
         </navPoint>
-        <navPoint id="navPoint86" playOrder="86">
+        <navPoint id="navPoint87" playOrder="87">
           <navLabel>
             <text>Tracking codes</text>
           </navLabel>
           <content src="features/components/tracking_codes/tracking_codes.html" />
         </navPoint>
-        <navPoint id="navPoint87" playOrder="87">
+        <navPoint id="navPoint88" playOrder="88">
           <navLabel>
             <text>ROA Auto discovery</text>
           </navLabel>
           <content src="features/components/roa_discovery/roa_discovery.html" />
         </navPoint>
-        <navPoint id="navPoint88" playOrder="88">
+        <navPoint id="navPoint89" playOrder="89">
           <navLabel>
             <text>OAuth2 Identity Provider</text>
           </navLabel>
@@ -670,24 +676,24 @@
         </navPoint>
       </navPoint>
     </navPoint>
-    <navPoint id="navPoint89" playOrder="89">
+    <navPoint id="navPoint90" playOrder="90">
       <navLabel>
         <text>Changes</text>
       </navLabel>
       <content src="changes.html" />
-      <navPoint id="navPoint89" playOrder="89">
+      <navPoint id="navPoint90" playOrder="90">
         <navLabel>
           <text>Changes</text>
         </navLabel>
         <content src="changes.html" />
       </navPoint>
-      <navPoint id="navPoint90" playOrder="90">
+      <navPoint id="navPoint91" playOrder="91">
         <navLabel>
           <text>Feedback</text>
         </navLabel>
         <content src="changes.html#feedback" />
       </navPoint>
-      <navPoint id="navPoint91" playOrder="91">
+      <navPoint id="navPoint92" playOrder="92">
         <navLabel>
           <text>Versions</text>
         </navLabel>
