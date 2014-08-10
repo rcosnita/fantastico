@@ -11,7 +11,7 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 Versions
 --------
 
-* v0.7.0 (Work in progress)
+* v0.7.0 (stable)
 
    * Added support for cross origin requests on ROA resources registry (/roa/resources).
    * Added support for exception serialized responses CORS compatible requests.   
