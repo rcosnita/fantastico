@@ -403,6 +403,9 @@ class RoaController(BaseController):
 
             model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
             model_id = model_facade.create(model)[0]
+            
+            if resource.validator:
+                resource.validator().on_post_create(model, request)
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(resource.version, resource.url, dbex)
 
@@ -469,6 +472,9 @@ class RoaController(BaseController):
 
             setattr(model, pk_col.name, resource_id)
             model_facade.update(model)
+            
+            if resource.validator:
+                resource.validator().on_post_update(model, request)
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(resource.version, resource.url, dbex)
 
@@ -526,6 +532,9 @@ class RoaController(BaseController):
                 return self._handle_resource_item_notfound(version, resource_url, resource_id)
 
             model_facade.delete(existing_model)
+            
+            if resource.validator:
+                resource.validator().on_post_delete(existing_model, request)
         except FantasticoDbError as dbex:
             return self._handle_resource_dberror(version, resource_url, dbex)
 

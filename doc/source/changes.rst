@@ -14,6 +14,7 @@ Versions
 * v0.7.1 (stable)
 
    * Added **/api/oauth/profile/me** for obtaining authenticated user profile information. 
+   * Added **on_post_create** / **on_post_update** / **post_delete events** for ROA.
 
 * v0.7.0 (stable)
 

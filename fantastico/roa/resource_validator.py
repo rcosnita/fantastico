@@ -44,6 +44,15 @@ class ResourceValidator(object):
 
             def format_resource(self, resource, request):
                 # we can safely retrieve the resource so nothing has to be done here.
+            
+            def on_post_create(self, resource, request):
+                # override this only if you want to trigger additional actions after a resource creation.
+            
+            def on_post_update(self, resource, request):
+                # override this only if you want to trigger additional actions after a resource update.
+            
+            def on_post_delete(self, resource, requesT):
+                # override this only if you want to trigger addition actions after a resource delete.
 
     Every method from validator receives the current http request in order to give access to resource validators to security
     context and other contexts which might be necessary.
@@ -93,3 +102,21 @@ class ResourceValidator(object):
         attr_value = getattr(resource, attr_name)
         if not attr_value or not str(attr_value).strip():
             raise FantasticoRoaError("%s attribute is mandatory. Please provide it." % attr_name)
+
+    def on_post_create(self, resource, request):
+        '''This method must be overriden by each subclass which wants to receive notifications after a resource has been successfully
+        created.'''
+
+        pass
+    
+    def on_post_update(self, resource, request):
+        '''This method must be overriden by each subclass which wants to receive notifications after a resource has been successfully
+        updated.'''
+        
+        pass
+    
+    def on_post_delete(self, resource, request):
+        '''This method must be overriden by each subclass which wants to receive notifications after a resource has been successfully
+        deleted.'''
+        
+        pass        
