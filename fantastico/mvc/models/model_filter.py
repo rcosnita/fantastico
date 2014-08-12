@@ -116,7 +116,7 @@ class ModelFilter(ModelFilterAbstract):
         if not query:
             return None
         
-        if self.column.table == query._primary_entity.selectable:
+        if not hasattr(query, "_primary_entity") or self.column.table == query._primary_entity.selectable:
             return query.filter(self.get_expression())
         else:
             return query.join(self.column.table).filter(self.get_expression())

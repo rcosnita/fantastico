@@ -45,7 +45,7 @@ class ModelFilterCompound(ModelFilterAbstract):
 
         try:
             for model_filter in self._model_filters:
-                if model_filter.column.table != query._primary_entity.selectable:
+                if hasattr(query, "_primary_entity") and model_filter.column.table != query._primary_entity.selectable:
                     query = query.join(model_filter.column.table)
             
             query = query.filter(self.get_expression())
