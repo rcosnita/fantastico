@@ -47,6 +47,8 @@ class ModelSortTest(FantasticoUnitTestsCase):
         expected_result = Mock()
         
         query = Mock()
+        query._primary_entity = query
+        query._primary_entity.selectable = self._id_col.table
         query.order_by = Mock(return_value=expected_result)
         
         for sort_dir in ModelSort.get_supported_sort_dirs(self):

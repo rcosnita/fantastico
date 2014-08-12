@@ -127,7 +127,7 @@ class QueryParserOperationSort(QueryParserOperation, metaclass=ABCMeta):
         self._argument = self._arguments[0].strip()
 
         try:
-            self._argument = getattr(model, self._argument)
+            self._argument = self._get_column(model, self._argument)
         except AttributeError:
             raise QueryParserOperationInvalidError("Resource attribute %s does not exist." % self._argument)
 
