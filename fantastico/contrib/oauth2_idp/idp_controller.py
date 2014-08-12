@@ -22,7 +22,7 @@ import urllib
 
 from fantastico.contrib.oauth2_idp.models.user_repository import UserRepository
 from fantastico.mvc.base_controller import BaseController
-from fantastico.mvc.controller_decorators import Controller, ControllerProvider,\
+from fantastico.mvc.controller_decorators import Controller, ControllerProvider, \
     CorsEnabled
 from fantastico.mvc.models.model_filter import ModelFilter
 from fantastico.mvc.models.model_filter_compound import ModelFilterAnd
@@ -32,7 +32,6 @@ from fantastico.oauth2.oauth2_decorators import RequiredScopes
 from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.oauth2.tokengenerator_factory import TokenGeneratorFactory
 from fantastico.oauth2.tokens_service import TokensService
-from fantastico.roa.resource_json_serializer import ResourceJsonSerializer
 from fantastico.utils.dictionary_object import DictionaryObject
 from webob.response import Response
 
@@ -69,7 +68,7 @@ class IdpController(BaseController):
 
     @Controller(url="^/api/oauth/profile/me$", models={"Person": "fantastico.contrib.oauth2_idp.models.users.User"})
     @RequiredScopes(scopes=["user.profile.read", "user.profile.read.person"])
-    def get_profile_information(self, request, serializer_cls=ResourceJsonSerializer):
+    def get_profile_information(self, request):
         '''This method provides the profile api for retrieving user information based on the specified
         access token.'''
         
