@@ -16,10 +16,13 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 .. codeauthor:: Radu Viorel Cosnita <radu.cosnita@gmail.com>
 .. py:module:: fantastico.roa.resource_json_serializer
 '''
-from fantastico.roa.resource_json_serializer_exceptions import ResourceJsonSerializerError
+import datetime
 import inspect
 import json
 import re
+
+from fantastico.roa.resource_json_serializer_exceptions import ResourceJsonSerializerError
+
 
 class ResourceJsonSerializer(object):
     '''This class provides the methods for serializing a given resource into a dictionary and deserializing a dictionary into
@@ -38,6 +41,7 @@ class ResourceJsonSerializer(object):
         self._subresources_attrs = self._identify_subres_attributes()
         self._supported_attrs = self._identify_public_attrs(self._resource_ref.model)
 
+        self._converters = {datetime.datetime: lambda value: value.isoformat()}
 
     def _identify_subres_attributes(self):
         '''This method returns all subresource attributes which must be ignored by serializer.'''
@@ -184,6 +188,11 @@ class ResourceJsonSerializer(object):
             if field.find(".") == -1:
                 try:
                     result[field] = getattr(model, field)
+                    
+                    converter = self._converters.get(result[field].__class__)
+                    
+                    if converter:
+                        result[field] = converter(result[field])
                 except AttributeError:
                     raise ResourceJsonSerializerError("Model does not have attribute %s." % field)
 

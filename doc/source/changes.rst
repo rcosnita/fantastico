@@ -15,6 +15,7 @@ Versions
 
    * Added **/api/oauth/profile/me** for obtaining authenticated user profile information. 
    * Added **on_post_create** / **on_post_update** / **post_delete events** for ROA.
+   * Added isoformat for json serialization of datetime fields.
 
 * v0.7.0 (stable)
 
