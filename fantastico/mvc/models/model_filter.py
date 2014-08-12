@@ -119,7 +119,10 @@ class ModelFilter(ModelFilterAbstract):
         if not hasattr(query, "_primary_entity") or self.column.table == query._primary_entity.selectable:
             return query.filter(self.get_expression())
         else:
-            return query.join(self.column.table).filter(self.get_expression())
+            if hasattr(query, "_joinpoint") and not (self.column.table in query._joinpoint.values()):
+                query = query.join(self.column.table)
+            
+            return query.filter(self.get_expression())
 
     def get_expression(self):
         '''Method used to return the underlining sqlalchemy exception held by this filter.'''

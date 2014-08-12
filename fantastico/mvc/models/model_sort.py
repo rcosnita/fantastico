@@ -76,7 +76,10 @@ class ModelSort(ModelFilterAbstract):
         if not hasattr(query, "_primary_entity") or self.column.table == query._primary_entity.selectable:
             return query.order_by(self.get_expression())
         else:
-            return query.join(self.column.table).order_by(self.get_expression())
+            if hasattr(query, "_joinpoint") and not (self.column.table in query._joinpoint.values()):
+                query = query.join(self.column.table)
+            
+            return query.order_by(self.get_expression())
     
     def get_expression(self):
         '''This method returns the sqlalchemy expression held by this filter.'''

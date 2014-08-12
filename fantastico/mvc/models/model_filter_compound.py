@@ -45,12 +45,11 @@ class ModelFilterCompound(ModelFilterAbstract):
 
         try:
             for model_filter in self._model_filters:
-                if hasattr(query, "_primary_entity") and model_filter.column.table != query._primary_entity.selectable:
+                if hasattr(query, "_primary_entity") and model_filter.column.table != query._primary_entity.selectable \
+                    and hasattr(query, "_joinpoint") and not (model_filter.column.table in query._joinpoint.values()):
                     query = query.join(model_filter.column.table)
             
-            query = query.filter(self.get_expression())
-
-            return query
+            return query.filter(self.get_expression())
         except Exception as ex:
             raise FantasticoError(ex)
 

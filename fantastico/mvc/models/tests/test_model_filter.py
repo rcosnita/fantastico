@@ -84,6 +84,8 @@ class ModelFilterTests(FantasticoUnitTestsCase):
         model_filter = ModelFilter(model.id, "invalid list", ModelFilter.IN)
 
         query = Mock()
+        query._primary_entity = query
+        query.selectable = model.id.table
 
         with self.assertRaises(FantasticoNotSupportedError):
             model_filter.build(query)
