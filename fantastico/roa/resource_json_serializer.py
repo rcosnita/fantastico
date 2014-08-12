@@ -164,6 +164,11 @@ class ResourceJsonSerializer(object):
 
         try:
             result[subfield_name][attr_name] = getattr(subfield, attr_name)
+            
+            converter = self._converters.get(result[subfield_name][attr_name].__class__)
+            
+            if converter:
+                result[subfield_name][attr_name] = converter(result[subfield_name][attr_name])            
         except AttributeError:
             raise ResourceJsonSerializerError("Submodel %s does not have attribute %s." % \
                                               (subfield_name, attr_name))
