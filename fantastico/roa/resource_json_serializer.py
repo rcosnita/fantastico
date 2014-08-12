@@ -194,6 +194,11 @@ class ResourceJsonSerializer(object):
                 try:
                     result[field] = getattr(model, field)
                     
+                    if hasattr(result[field], "_resource_decorator"):
+                        result[field] = ResourceJsonSerializer(result[field]._resource_decorator).serialize(result[field])
+                        
+                        continue
+                    
                     converter = self._converters.get(result[field].__class__)
                     
                     if converter:

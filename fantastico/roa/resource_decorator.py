@@ -144,6 +144,7 @@ class Resource(object):
         resources_registry = resources_registry or ResourcesRegistry()
 
         self._model = model_cls
+        model_cls._resource_decorator = self
 
         resources_registry.register_resource(self)
 
