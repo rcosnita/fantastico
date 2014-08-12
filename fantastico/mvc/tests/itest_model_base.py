@@ -33,7 +33,7 @@ class BaseModelIntegration(FantasticoIntegrationTestCase):
         
         from fantastico import mvc
         
-        mvc.init_dm_db_engine(db_config)
+        mvc.CONN_MANAGER = mvc.init_dm_db_engine(db_config)
         
         self.assertIsNotNone(mvc.BASEMODEL)
         self.assertIsNotNone(mvc.CONN_MANAGER)

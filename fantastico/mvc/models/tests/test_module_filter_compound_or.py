@@ -66,6 +66,10 @@ class ModelFilterOrTests(FantasticoUnitTestsCase):
             
             return Mock()
             
+        self._model.id.table = Mock()
+        query._primary_entity = query
+        query.selectable = self._model.id.table
+        
         query.filter = filter_fn
         
         query_new = model_filter.build(query)

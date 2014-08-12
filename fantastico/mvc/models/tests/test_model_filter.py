@@ -54,6 +54,11 @@ class ModelFilterTests(FantasticoUnitTestsCase):
         model.id.in_ = Mock(return_value=expected_result)
 
         query = Mock()
+        
+        model.id.table = Mock()
+        query._primary_entity = query       
+        query.selectable = model.id.table
+         
         query.filter = lambda *args, **kwargs: expected_result
 
         for operation in ModelFilter.get_supported_operations():
@@ -63,6 +68,7 @@ class ModelFilterTests(FantasticoUnitTestsCase):
                 ref_value = [ref_value]
 
             model_filter = ModelFilter(model.id, ref_value, operation)
+                        
             new_query = model_filter.build(query)
 
             self.assertEqual(model.id, model_filter.column)

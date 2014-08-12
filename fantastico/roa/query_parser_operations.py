@@ -97,7 +97,21 @@ class QueryParserOperation(object, metaclass=ABCMeta):
         self.validate(model)
 
         return self.build_filter(model)
+    
+    def _get_column(self, model, column_name):
+        '''This method provides an implementation for obtaining the column definition based on the column name and
+        given model.'''
+        
+        column = None
+        columns = column_name.split(".")
 
+        if column_name.find(".") == -1:
+            column = getattr(model, column_name)
+        else:
+            column = getattr(model, columns[0]).property.target.columns.get(columns[1])
+
+        return column
+    
 class QueryParserOperationSort(QueryParserOperation, metaclass=ABCMeta):
     '''This class provides base support for sort operations: asc / desc.'''
 
@@ -194,7 +208,7 @@ class QueryParserOperationBinary(QueryParserOperation):
             raise QueryParserOperationInvalidError("Binary operation %s second argument is empty." % self._operation)
 
         try:
-            self._column = getattr(model, column_name)
+            self._column = self._get_column(model, column_name)
         except AttributeError:
             raise QueryParserOperationInvalidError("Resource model does not contain %s attribute." % column_name)
 

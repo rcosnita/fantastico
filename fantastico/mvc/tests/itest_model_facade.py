@@ -50,15 +50,23 @@ class ModelFacadeIntegration(FantasticoIntegrationTestCase):
     model_facade = None
     last_generated_pk = None
     entities_created = []
+    request_id = uuid.uuid4()
     
     @classmethod
     def setup_once(cls):
         '''This method is invoked once before executing any test case. For model facade we create a series of messages.'''
         
         cls.settings_facade = SettingsFacade()
-        mvc.init_dm_db_engine(cls.settings_facade.get("database_config"), echo=True)
+        mvc.CONN_MANAGER = mvc.init_dm_db_engine(cls.settings_facade.get("database_config"), echo=True)
         
-        cls.model_facade = ModelFacade(ModelFacadeMessage, mvc.CONN_MANAGER.get_connection(uuid.uuid4()))
+        cls.model_facade = ModelFacade(ModelFacadeMessage, 
+                                       mvc.CONN_MANAGER.get_connection(ModelFacadeIntegration.request_id))
+    
+    @classmethod
+    def cleanup_once(cls):
+        '''This method is invoked once for cleaning up all resources from test suite.'''
+        
+        mvc.CONN_MANAGER.close_connection(ModelFacadeIntegration.request_id)
     
     def init(self):
         '''This method creates a number of messages before each test case.'''

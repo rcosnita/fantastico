@@ -257,6 +257,8 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
             return self._session
         
         self._session.query = query_mock
+        self._session._primary_entity = self._session
+        self._session.selectable = PersonModelTest.id.table
         self._session.filter = filter_mock
         self._session.order_by = sort_mock
         self._session.offset = offset_mock
@@ -348,6 +350,8 @@ class ModelFacadeTests(FantasticoUnitTestsCase):
             return self._session
         
         self._session.query = query_mock
+        self._session._primary_entity = self._session
+        self._session.selectable = PersonModelTest.id.table
         self._session.filter = filter_mock
         self._session.count = Mock(return_value=20)
         

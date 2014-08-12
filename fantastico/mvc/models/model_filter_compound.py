@@ -44,6 +44,10 @@ class ModelFilterCompound(ModelFilterAbstract):
         '''This method transform the current compound statement into an sql alchemy filter.'''
 
         try:
+            for model_filter in self._model_filters:
+                if model_filter.column.table != query._primary_entity.selectable:
+                    query = query.join(model_filter.column.table)
+            
             query = query.filter(self.get_expression())
 
             return query

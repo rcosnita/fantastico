@@ -16,6 +16,7 @@ Versions
    * Added **/api/oauth/profile/me** for obtaining authenticated user profile information. 
    * Added **on_post_create** / **on_post_update** / **post_delete events** for ROA.
    * Added isoformat for json serialization of datetime fields.
+   * Added support for nested filtering into roa resources (e.g model.submodel.<property_name> == 1)
 
 * v0.7.0 (stable)
 
