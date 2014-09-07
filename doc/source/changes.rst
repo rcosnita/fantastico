@@ -13,8 +13,9 @@ Versions
 
 * v0.7.1 (stable)
 
-   * Added **/api/oauth/profile/me** for obtaining authenticated user profile information. 
-   * Added **on_post_create** / **on_post_update** / **post_delete events** for ROA.
+   * Added **/api/oauth/profile/me** for obtaining authenticated user profile information.
+   * Added **on_pre_create** / **on_pre_update** / **on_pre_delete events** for ROA. 
+   * Added **on_post_create** / **on_post_update** / **on_pre_delete events** for ROA.
    * Added isoformat for json serialization of datetime fields.
    * Fix bug for full recursive serialization of subresources when requested.
    * Added support for nested filtering into roa resources (e.g filter=eq(submodel.<property_name>,1))
