@@ -103,15 +103,33 @@ class ResourceValidator(object):
         if not attr_value or not str(attr_value).strip():
             raise FantasticoRoaError("%s attribute is mandatory. Please provide it." % attr_name)
 
+    def on_pre_create(self, resource, request):
+        '''This method must be overriden by each subclass which wants to receive notifications about a pending
+        create resource operation.'''
+        
+        pass
+
     def on_post_create(self, resource, request):
         '''This method must be overriden by each subclass which wants to receive notifications after a resource 
         has been successfully created.'''
 
         pass
+
+    def on_pre_update(self, resource, request):
+        '''This method must be overriden by each subclass which wants to receive notifications about a pending
+        update resource operation.'''
+        
+        pass
     
     def on_post_update(self, resource, request):
         '''This method must be overriden by each subclass which wants to receive notifications after a resource 
         has been successfully updated.'''
+        
+        pass
+    
+    def on_pre_delete(self, resource, request):
+        '''This method must be overriden by each subclass which wants to receive notifications about a pending
+        delete resource operation.'''
         
         pass
     

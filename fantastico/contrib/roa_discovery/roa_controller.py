@@ -401,6 +401,9 @@ class RoaController(BaseController):
             if resource.user_dependent and access_token:
                 model.user_id = access_token.user_id
 
+            if resource.validator:
+                resource.validator().on_post_create(model, request)
+
             model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
             model_id = model_facade.create(model)[0]
             
@@ -471,6 +474,10 @@ class RoaController(BaseController):
                 return self._handle_resource_item_notfound(version, resource_url, resource_id)
 
             setattr(model, pk_col.name, resource_id)
+
+            if resource.validator:
+                resource.validator().on_pre_update(model, request)            
+            
             model_facade.update(model)
             
             if resource.validator:
@@ -530,6 +537,9 @@ class RoaController(BaseController):
 
             if not existing_model:
                 return self._handle_resource_item_notfound(version, resource_url, resource_id)
+
+            if resource.validator:
+                resource.validator().on_pre_delete(existing_model, request)
 
             model_facade.delete(existing_model)
             
