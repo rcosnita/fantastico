@@ -402,7 +402,7 @@ class RoaController(BaseController):
                 model.user_id = access_token.user_id
 
             if resource.validator:
-                resource.validator().on_post_create(model, request)
+                resource.validator().on_pre_create(model, request)
 
             model_facade = self._model_facade_cls(resource.model, self._get_current_connection(request))
             model_id = model_facade.create(model)[0]
