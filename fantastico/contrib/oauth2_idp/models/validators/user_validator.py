@@ -23,7 +23,7 @@ from fantastico.oauth2.passwords_hasher_factory import PasswordsHasherFactory
 from fantastico.roa.resource_validator import ResourceValidator
 from fantastico.roa.roa_exceptions import FantasticoRoaError
 from fantastico.utils.dictionary_object import DictionaryObject
-from validate_email import validate_email
+from fantastico.validate_email import validate_email
 from fantastico.exceptions import FantasticoDbError
 
 class UserValidator(ResourceValidator):

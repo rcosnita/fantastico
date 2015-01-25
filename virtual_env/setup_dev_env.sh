@@ -14,4 +14,3 @@ pip install sqlalchemy
 pip install mock
 pip install uwsgi
 pip install "pycrypto>=2.6"
-pip install validate_email

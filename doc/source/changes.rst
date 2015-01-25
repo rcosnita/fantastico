@@ -20,6 +20,7 @@ Versions
    * Fix bug for full recursive serialization of subresources when requested.
    * Added support for nested filtering into roa resources (e.g filter=eq(submodel.<property_name>,1))
    * Added support for nested ordering into roa resource (e.g order=asc(submodel.<property_name>))
+   * Bring validate_email code into fantastico so that each new installation of framework works as expected (cause by an incompatible python 3 validate_email package published on pypi).
 
 * v0.7.0 (stable)
 
