@@ -42,7 +42,7 @@ class RequestMiddleware(object):
         supported_langs = settings_facade.get("supported_languages")
 
         if hasattr(client_langs, "_parsed"):
-            client_langs = client_langs._parsed
+            client_langs = client_langs._parsed # pylint: disable=W0212
         else:
             client_langs = []
 

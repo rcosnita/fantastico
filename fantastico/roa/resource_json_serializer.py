@@ -194,8 +194,10 @@ class ResourceJsonSerializer(object):
                 try:
                     result[field] = getattr(model, field)
                     
+                    # pylint: disable=W0212
                     if hasattr(result[field], "_resource_decorator"):
-                        result[field] = ResourceJsonSerializer(result[field]._resource_decorator).serialize(result[field])
+                        result[field] = ResourceJsonSerializer(result[field]._resource_decorator)\
+                                            .serialize(result[field])
                         
                         continue
                     

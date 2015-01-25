@@ -73,10 +73,10 @@ class ModelSort(ModelFilterAbstract):
     def build(self, query):
         '''This method appends sort_by clause to the given query.'''
         
-        if not hasattr(query, "_primary_entity") or self.column.table == query._primary_entity.selectable:
+        if not hasattr(query, "_primary_entity") or self.column.table == query._primary_entity.selectable:# pylint: disable=W0212
             return query.order_by(self.get_expression())
         else:
-            if hasattr(query, "_joinpoint") and not (self.column.table in query._joinpoint.values()):
+            if hasattr(query, "_joinpoint") and not (self.column.table in query._joinpoint.values()):# pylint: disable=W0212
                 query = query.join(self.column.table)
             
             return query.order_by(self.get_expression())

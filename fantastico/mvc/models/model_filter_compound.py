@@ -45,6 +45,7 @@ class ModelFilterCompound(ModelFilterAbstract):
 
         try:
             for model_filter in self._model_filters:
+                # pylint: disable=W0212
                 if hasattr(query, "_primary_entity") and model_filter.column.table != query._primary_entity.selectable \
                     and hasattr(query, "_joinpoint") and not (model_filter.column.table in query._joinpoint.values()):
                     query = query.join(model_filter.column.table)

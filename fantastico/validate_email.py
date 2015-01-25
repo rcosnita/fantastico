@@ -1,3 +1,8 @@
+'''
+This module provides email validation functionality. It is obtained from https://github.com/syrusakbary/validate_email.
+Many thanks to Syrus Akbary for his contribution.
+'''
+
 # RFC 2822 - style email validation for Python
 # (c) 2012 Syrus Akbary <me@syrusakbary.com>
 # Extended from (c) 2011 Noel Bush <noel@aitools.org>
@@ -18,19 +23,6 @@
 # with the omission of the pattern components marked as "obsolete".
 
 import re
-import smtplib
-import logging
-import socket
-
-try:
-    import DNS
-    ServerError = DNS.ServerError
-    DNS.DiscoverNameServers()
-except ImportError:
-    DNS = None
-
-    class ServerError(Exception):
-        pass
 
 # All we are really doing is comparing the input string to one
 # gigantic regular expression.  But building that regexp, and
@@ -88,20 +80,6 @@ VALID_ADDRESS_REGEXP = '^' + ADDR_SPEC + '$'
 
 MX_DNS_CACHE = {}
 MX_CHECK_CACHE = {}
-
-
-def get_mx_ip(hostname):
-    if hostname not in MX_DNS_CACHE:
-        try:
-            MX_DNS_CACHE[hostname] = DNS.mxlookup(hostname)
-        except ServerError as e:
-            if e.rcode == 3:  # NXDOMAIN (Non-Existent Domain)
-                MX_DNS_CACHE[hostname] = None
-            else:
-                raise
-
-    return MX_DNS_CACHE[hostname]
-
 
 def validate_email(email):
     """Indicate whether the given string is a valid email address
