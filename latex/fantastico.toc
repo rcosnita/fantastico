@@ -116,99 +116,99 @@
 \contentsline {subsubsection}{ROA Technical Summary}{63}{subsubsection*.172}
 \contentsline {paragraph}{Exceptions}{70}{paragraph*.246}
 \contentsline {paragraph}{API generic controller}{70}{paragraph*.251}
-\contentsline {paragraph}{API error responses}{74}{paragraph*.271}
-\contentsline {subparagraph}{10000 - Resource Collection Not Found}{74}{subparagraph*.272}
-\contentsline {subparagraph}{10010 - Resource Invalid}{74}{subparagraph*.273}
-\contentsline {subparagraph}{10020 - No body given}{74}{subparagraph*.274}
-\contentsline {subparagraph}{10030 - Unexpected database error}{74}{subparagraph*.275}
-\contentsline {subparagraph}{10040 - Resource item not found}{74}{subparagraph*.276}
-\contentsline {section}{\numberline {4.7}OAUTH2}{74}{section.4.7}
+\contentsline {paragraph}{API error responses}{74}{paragraph*.277}
+\contentsline {subparagraph}{10000 - Resource Collection Not Found}{74}{subparagraph*.278}
+\contentsline {subparagraph}{10010 - Resource Invalid}{74}{subparagraph*.279}
+\contentsline {subparagraph}{10020 - No body given}{74}{subparagraph*.280}
+\contentsline {subparagraph}{10030 - Unexpected database error}{75}{subparagraph*.281}
+\contentsline {subparagraph}{10040 - Resource item not found}{75}{subparagraph*.282}
+\contentsline {section}{\numberline {4.7}OAUTH2}{75}{section.4.7}
 \contentsline {subsection}{\numberline {4.7.1}Fantastico security}{75}{subsection.4.7.1}
-\contentsline {subsubsection}{Example (Simple Menu API)}{75}{subsubsection*.277}
-\contentsline {paragraph}{Terminology}{75}{paragraph*.278}
-\contentsline {paragraph}{Display all menus}{76}{paragraph*.279}
-\contentsline {paragraph}{Managing menus.}{76}{paragraph*.280}
-\contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{77}{subsubsection*.281}
-\contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{78}{subsubsection*.282}
-\contentsline {paragraph}{/authorize}{78}{paragraph*.283}
-\contentsline {subsubsection}{OAUTH2 Fantastico App registration}{78}{subsubsection*.284}
-\contentsline {paragraph}{App registration extension}{80}{paragraph*.285}
-\contentsline {paragraph}{Manual registration}{80}{paragraph*.286}
-\contentsline {subsubsection}{Controllers security}{80}{subsubsection*.287}
-\contentsline {paragraph}{Regular controllers security}{80}{paragraph*.288}
-\contentsline {paragraph}{ROA OAUTH2 Security}{80}{paragraph*.289}
-\contentsline {subsubsection}{OAUTH2 Fantastico IDP}{81}{subsubsection*.290}
-\contentsline {paragraph}{APIs}{81}{paragraph*.291}
-\contentsline {paragraph}{User profile data}{82}{paragraph*.292}
-\contentsline {paragraph}{Login frontend}{82}{paragraph*.293}
-\contentsline {subparagraph}{Administrator account}{83}{subparagraph*.294}
-\contentsline {subparagraph}{Users and persons}{83}{subparagraph*.295}
-\contentsline {paragraph}{Default oauth callback}{83}{paragraph*.296}
-\contentsline {paragraph}{Technical summary}{83}{paragraph*.297}
-\contentsline {subparagraph}{Password storage}{83}{subparagraph*.298}
-\contentsline {subsubsection}{OAUTH2 Technical Summary}{84}{subsubsection*.305}
-\contentsline {paragraph}{Overview}{84}{paragraph*.306}
-\contentsline {paragraph}{Enforcing authorization}{86}{paragraph*.316}
-\contentsline {paragraph}{Common tokens usage}{87}{paragraph*.324}
-\contentsline {subparagraph}{Obtain authenticated user id}{87}{subparagraph*.325}
-\contentsline {subparagraph}{Obtain current granted scopes}{87}{subparagraph*.326}
-\contentsline {paragraph}{Supported token generators}{87}{paragraph*.327}
-\contentsline {paragraph}{Encryption / decryption}{90}{paragraph*.348}
-\contentsline {paragraph}{Suported grant types}{91}{paragraph*.358}
-\contentsline {paragraph}{Concrete exceptions}{92}{paragraph*.365}
-\contentsline {subsection}{\numberline {4.7.2}OAuth2 exceptions}{93}{subsection.4.7.2}
-\contentsline {subsubsection}{12000 - OAuth generic error}{93}{subsubsection*.382}
-\contentsline {subsubsection}{12010 - OAuth invalid token descriptor}{93}{subsubsection*.383}
-\contentsline {subsubsection}{12020 - Invalid token type error}{93}{subsubsection*.384}
-\contentsline {subsubsection}{12030 - OAuth token expired}{93}{subsubsection*.385}
-\contentsline {subsubsection}{12040 - OAuth token encryption error}{94}{subsubsection*.386}
-\contentsline {subsubsection}{12050 - OAuth invalid client error}{94}{subsubsection*.387}
-\contentsline {subsubsection}{12060 - OAuth invalid scopes}{94}{subsubsection*.388}
-\contentsline {subsubsection}{12070 - OAuth missing query parameter}{94}{subsubsection*.389}
-\contentsline {subsubsection}{12080 - OAuth unsupported grant type}{94}{subsubsection*.390}
-\contentsline {subsubsection}{12100 - OAuth unauthorized error}{94}{subsubsection*.391}
-\contentsline {subsubsection}{12200 - OAuth authentication error}{94}{subsubsection*.392}
-\contentsline {section}{\numberline {4.8}SDK}{94}{section.4.8}
-\contentsline {subsection}{\numberline {4.8.1}Intro}{95}{subsection.4.8.1}
-\contentsline {subsection}{\numberline {4.8.2}Usage}{95}{subsection.4.8.2}
-\contentsline {subsection}{\numberline {4.8.3}Supported commands}{95}{subsection.4.8.3}
-\contentsline {subsubsection}{Activate extension command}{95}{subsubsection*.393}
-\contentsline {subsubsection}{Fantastico command}{96}{subsubsection*.398}
-\contentsline {subsubsection}{Syncdb command}{96}{subsubsection*.399}
-\contentsline {subsubsection}{Version command}{97}{subsubsection*.404}
-\contentsline {subsection}{\numberline {4.8.4}Technical summary}{97}{subsection.4.8.4}
-\contentsline {section}{\numberline {4.9}Component model}{100}{section.4.9}
-\contentsline {subsection}{\numberline {4.9.1}Static folder}{100}{subsection.4.9.1}
-\contentsline {subsection}{\numberline {4.9.2}Sql folder}{101}{subsection.4.9.2}
-\contentsline {subsubsection}{Sql folder example}{101}{subsubsection*.428}
-\contentsline {section}{\numberline {4.10}Component reusage}{102}{section.4.10}
-\contentsline {section}{\numberline {4.11}Built in components}{103}{section.4.11}
-\contentsline {subsection}{\numberline {4.11.1}Dynamic menu}{103}{subsection.4.11.1}
-\contentsline {subsubsection}{Integration}{104}{subsubsection*.432}
-\contentsline {paragraph}{Component files activation deprecated}{104}{paragraph*.433}
-\contentsline {paragraph}{Component files activation (SDK)}{104}{paragraph*.434}
-\contentsline {paragraph}{Component sample + db data}{104}{paragraph*.435}
-\contentsline {subsubsection}{Current limitations}{104}{subsubsection*.436}
-\contentsline {subsubsection}{Technical summary}{105}{subsubsection*.437}
-\contentsline {subsection}{\numberline {4.11.2}Dynamic pages}{105}{subsection.4.11.2}
-\contentsline {subsubsection}{Integration}{106}{subsubsection*.442}
-\contentsline {subsubsection}{Current limitations}{106}{subsubsection*.443}
-\contentsline {subsubsection}{Technical summary}{107}{subsubsection*.444}
-\contentsline {subsection}{\numberline {4.11.3}Tracking codes}{108}{subsection.4.11.3}
-\contentsline {subsubsection}{Analytic solutions}{108}{subsubsection*.449}
-\contentsline {subsubsection}{Integration}{109}{subsubsection*.450}
-\contentsline {subsubsection}{Current limitations}{109}{subsubsection*.451}
-\contentsline {subsubsection}{Technical summary}{109}{subsubsection*.452}
-\contentsline {subsection}{\numberline {4.11.4}ROA Auto discovery}{110}{subsection.4.11.4}
-\contentsline {subsubsection}{Integration}{110}{subsubsection*.457}
-\contentsline {subsubsection}{Current limitations}{110}{subsubsection*.458}
-\contentsline {subsubsection}{Technical summary}{110}{subsubsection*.459}
-\contentsline {subsection}{\numberline {4.11.5}OAuth2 Identity Provider}{111}{subsection.4.11.5}
+\contentsline {subsubsection}{Example (Simple Menu API)}{76}{subsubsection*.283}
+\contentsline {paragraph}{Terminology}{76}{paragraph*.284}
+\contentsline {paragraph}{Display all menus}{76}{paragraph*.285}
+\contentsline {paragraph}{Managing menus.}{77}{paragraph*.286}
+\contentsline {subsubsection}{OAUTH2 Fantastico Tokens}{77}{subsubsection*.287}
+\contentsline {subsubsection}{OAUTH2 Fantastico Error Responses}{78}{subsubsection*.288}
+\contentsline {paragraph}{/authorize}{78}{paragraph*.289}
+\contentsline {subsubsection}{OAUTH2 Fantastico App registration}{79}{subsubsection*.290}
+\contentsline {paragraph}{App registration extension}{80}{paragraph*.291}
+\contentsline {paragraph}{Manual registration}{80}{paragraph*.292}
+\contentsline {subsubsection}{Controllers security}{81}{subsubsection*.293}
+\contentsline {paragraph}{Regular controllers security}{81}{paragraph*.294}
+\contentsline {paragraph}{ROA OAUTH2 Security}{81}{paragraph*.295}
+\contentsline {subsubsection}{OAUTH2 Fantastico IDP}{81}{subsubsection*.296}
+\contentsline {paragraph}{APIs}{82}{paragraph*.297}
+\contentsline {paragraph}{User profile data}{83}{paragraph*.298}
+\contentsline {paragraph}{Login frontend}{83}{paragraph*.299}
+\contentsline {subparagraph}{Administrator account}{84}{subparagraph*.300}
+\contentsline {subparagraph}{Users and persons}{84}{subparagraph*.301}
+\contentsline {paragraph}{Default oauth callback}{84}{paragraph*.302}
+\contentsline {paragraph}{Technical summary}{84}{paragraph*.303}
+\contentsline {subparagraph}{Password storage}{84}{subparagraph*.304}
+\contentsline {subsubsection}{OAUTH2 Technical Summary}{85}{subsubsection*.311}
+\contentsline {paragraph}{Overview}{85}{paragraph*.312}
+\contentsline {paragraph}{Enforcing authorization}{87}{paragraph*.322}
+\contentsline {paragraph}{Common tokens usage}{88}{paragraph*.330}
+\contentsline {subparagraph}{Obtain authenticated user id}{88}{subparagraph*.331}
+\contentsline {subparagraph}{Obtain current granted scopes}{88}{subparagraph*.332}
+\contentsline {paragraph}{Supported token generators}{88}{paragraph*.333}
+\contentsline {paragraph}{Encryption / decryption}{91}{paragraph*.354}
+\contentsline {paragraph}{Suported grant types}{92}{paragraph*.364}
+\contentsline {paragraph}{Concrete exceptions}{93}{paragraph*.371}
+\contentsline {subsection}{\numberline {4.7.2}OAuth2 exceptions}{94}{subsection.4.7.2}
+\contentsline {subsubsection}{12000 - OAuth generic error}{94}{subsubsection*.388}
+\contentsline {subsubsection}{12010 - OAuth invalid token descriptor}{94}{subsubsection*.389}
+\contentsline {subsubsection}{12020 - Invalid token type error}{94}{subsubsection*.390}
+\contentsline {subsubsection}{12030 - OAuth token expired}{94}{subsubsection*.391}
+\contentsline {subsubsection}{12040 - OAuth token encryption error}{95}{subsubsection*.392}
+\contentsline {subsubsection}{12050 - OAuth invalid client error}{95}{subsubsection*.393}
+\contentsline {subsubsection}{12060 - OAuth invalid scopes}{95}{subsubsection*.394}
+\contentsline {subsubsection}{12070 - OAuth missing query parameter}{95}{subsubsection*.395}
+\contentsline {subsubsection}{12080 - OAuth unsupported grant type}{95}{subsubsection*.396}
+\contentsline {subsubsection}{12100 - OAuth unauthorized error}{95}{subsubsection*.397}
+\contentsline {subsubsection}{12200 - OAuth authentication error}{95}{subsubsection*.398}
+\contentsline {section}{\numberline {4.8}SDK}{95}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}Intro}{96}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.2}Usage}{96}{subsection.4.8.2}
+\contentsline {subsection}{\numberline {4.8.3}Supported commands}{96}{subsection.4.8.3}
+\contentsline {subsubsection}{Activate extension command}{96}{subsubsection*.399}
+\contentsline {subsubsection}{Fantastico command}{97}{subsubsection*.404}
+\contentsline {subsubsection}{Syncdb command}{97}{subsubsection*.405}
+\contentsline {subsubsection}{Version command}{98}{subsubsection*.410}
+\contentsline {subsection}{\numberline {4.8.4}Technical summary}{98}{subsection.4.8.4}
+\contentsline {section}{\numberline {4.9}Component model}{101}{section.4.9}
+\contentsline {subsection}{\numberline {4.9.1}Static folder}{101}{subsection.4.9.1}
+\contentsline {subsection}{\numberline {4.9.2}Sql folder}{102}{subsection.4.9.2}
+\contentsline {subsubsection}{Sql folder example}{102}{subsubsection*.434}
+\contentsline {section}{\numberline {4.10}Component reusage}{103}{section.4.10}
+\contentsline {section}{\numberline {4.11}Built in components}{104}{section.4.11}
+\contentsline {subsection}{\numberline {4.11.1}Dynamic menu}{104}{subsection.4.11.1}
+\contentsline {subsubsection}{Integration}{105}{subsubsection*.438}
+\contentsline {paragraph}{Component files activation deprecated}{105}{paragraph*.439}
+\contentsline {paragraph}{Component files activation (SDK)}{105}{paragraph*.440}
+\contentsline {paragraph}{Component sample + db data}{105}{paragraph*.441}
+\contentsline {subsubsection}{Current limitations}{105}{subsubsection*.442}
+\contentsline {subsubsection}{Technical summary}{106}{subsubsection*.443}
+\contentsline {subsection}{\numberline {4.11.2}Dynamic pages}{106}{subsection.4.11.2}
+\contentsline {subsubsection}{Integration}{107}{subsubsection*.448}
+\contentsline {subsubsection}{Current limitations}{107}{subsubsection*.449}
+\contentsline {subsubsection}{Technical summary}{108}{subsubsection*.450}
+\contentsline {subsection}{\numberline {4.11.3}Tracking codes}{109}{subsection.4.11.3}
+\contentsline {subsubsection}{Analytic solutions}{109}{subsubsection*.455}
+\contentsline {subsubsection}{Integration}{110}{subsubsection*.456}
+\contentsline {subsubsection}{Current limitations}{110}{subsubsection*.457}
+\contentsline {subsubsection}{Technical summary}{110}{subsubsection*.458}
+\contentsline {subsection}{\numberline {4.11.4}ROA Auto discovery}{111}{subsection.4.11.4}
 \contentsline {subsubsection}{Integration}{111}{subsubsection*.463}
+\contentsline {subsubsection}{Current limitations}{111}{subsubsection*.464}
+\contentsline {subsubsection}{Technical summary}{111}{subsubsection*.465}
+\contentsline {subsection}{\numberline {4.11.5}OAuth2 Identity Provider}{112}{subsection.4.11.5}
+\contentsline {subsubsection}{Integration}{112}{subsubsection*.469}
 \contentsline {chapter}{\numberline {5}Changes}{113}{chapter.5}
 \contentsline {section}{\numberline {5.1}Feedback}{113}{section.5.1}
 \contentsline {section}{\numberline {5.2}Versions}{113}{section.5.2}
 \contentsline {chapter}{\numberline {6}Provide feedback}{117}{chapter.6}
 \contentsline {chapter}{\numberline {7}Build status}{119}{chapter.7}
 \contentsline {chapter}{\numberline {8}License}{121}{chapter.8}
-\contentsline {chapter}{Index}{123}{section*.464}
+\contentsline {chapter}{Index}{123}{section*.470}

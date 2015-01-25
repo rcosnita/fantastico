@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.7.0-b141 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -432,8 +432,14 @@
             <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">user_dependent</span> <span class="ow">and</span> <span class="n">access_token</span><span class="p">:</span>
                 <span class="n">model</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">access_token</span><span class="o">.</span><span class="n">user_id</span>
 
+            <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+                <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">on_pre_create</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
             <span class="n">model_facade</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_facade_cls</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_current_connection</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
             <span class="n">model_id</span> <span class="o">=</span> <span class="n">model_facade</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+                <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">on_post_create</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
 
@@ -499,7 +505,14 @@
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_item_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">)</span>
 
             <span class="nb">setattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">pk_col</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+                <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">on_pre_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>            
+            
             <span class="n">model_facade</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+                <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">on_post_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
 
@@ -556,7 +569,13 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">existing_model</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_item_notfound</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">resource_id</span><span class="p">)</span>
 
+            <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+                <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">on_pre_delete</span><span class="p">(</span><span class="n">existing_model</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+
             <span class="n">model_facade</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">existing_model</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">:</span>
+                <span class="n">resource</span><span class="o">.</span><span class="n">validator</span><span class="p">()</span><span class="o">.</span><span class="n">on_post_delete</span><span class="p">(</span><span class="n">existing_model</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">FantasticoDbError</span> <span class="k">as</span> <span class="n">dbex</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_resource_dberror</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="n">resource_url</span><span class="p">,</span> <span class="n">dbex</span><span class="p">)</span>
 

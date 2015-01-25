@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
+        <li><a href="../../../../index.html">fantastico 0.7.0-b141 documentation</a> &raquo;</li>
           <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -75,9 +75,13 @@
         <span class="sd">&#39;&#39;&#39;This method transform the current compound statement into an sql alchemy filter.&#39;&#39;&#39;</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">())</span>
-
-            <span class="k">return</span> <span class="n">query</span>
+            <span class="k">for</span> <span class="n">model_filter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_filters</span><span class="p">:</span>
+                <span class="c"># pylint: disable=W0212</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s">&quot;_primary_entity&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model_filter</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">table</span> <span class="o">!=</span> <span class="n">query</span><span class="o">.</span><span class="n">_primary_entity</span><span class="o">.</span><span class="n">selectable</span> \
+                    <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s">&quot;_joinpoint&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">model_filter</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">table</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">_joinpoint</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+                    <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_filter</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+            
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">())</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">FantasticoError</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
 </div>

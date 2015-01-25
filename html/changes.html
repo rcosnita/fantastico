@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Changes &mdash; fantastico 0.7.0-b140 documentation</title>
+    <title>Changes &mdash; fantastico 0.7.0-b141 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.7.0-b140',
+        VERSION:     '0.7.0-b141',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="fantastico 0.7.0-b140 documentation" href="index.html" />
+    <link rel="top" title="fantastico 0.7.0-b141 documentation" href="index.html" />
     <link rel="prev" title="OAuth2 Identity Provider" href="features/components/oauth2/oauth2_idp/index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -49,7 +49,7 @@
         </button>
         <a class="navbar-brand" href="index.html">
           Fantastico framework</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b140</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b141</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -168,6 +168,20 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 <div class="section" id="versions">
 <h2>Versions<a class="headerlink" href="#versions" title="Permalink to this headline">¶</a></h2>
 <ul>
+<li><p class="first">v0.7.1 (stable)</p>
+<blockquote>
+<div><ul class="simple">
+<li>Added <strong>/api/oauth/profile/me</strong> for obtaining authenticated user profile information.</li>
+<li>Added <strong>on_pre_create</strong> / <strong>on_pre_update</strong> / <strong>on_pre_delete events</strong> for ROA.</li>
+<li>Added <strong>on_post_create</strong> / <strong>on_post_update</strong> / <strong>on_pre_delete events</strong> for ROA.</li>
+<li>Added isoformat for json serialization of datetime fields.</li>
+<li>Fix bug for full recursive serialization of subresources when requested.</li>
+<li>Added support for nested filtering into roa resources (e.g filter=eq(submodel.&lt;property_name&gt;,1))</li>
+<li>Added support for nested ordering into roa resource (e.g order=asc(submodel.&lt;property_name&gt;))</li>
+<li>Bring validate_email code into fantastico so that each new installation of framework works as expected (cause by an incompatible python 3 validate_email package published on pypi).</li>
+</ul>
+</div></blockquote>
+</li>
 <li><p class="first">v0.7.0 (stable)</p>
 <blockquote>
 <div><ul class="simple">

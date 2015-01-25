@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.7.0-b141 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -75,6 +75,15 @@
 
 <span class="sd">            def format_resource(self, resource, request):</span>
 <span class="sd">                # we can safely retrieve the resource so nothing has to be done here.</span>
+<span class="sd">            </span>
+<span class="sd">            def on_post_create(self, resource, request):</span>
+<span class="sd">                # override this only if you want to trigger additional actions after a resource creation.</span>
+<span class="sd">            </span>
+<span class="sd">            def on_post_update(self, resource, request):</span>
+<span class="sd">                # override this only if you want to trigger additional actions after a resource update.</span>
+<span class="sd">            </span>
+<span class="sd">            def on_post_delete(self, resource, requesT):</span>
+<span class="sd">                # override this only if you want to trigger addition actions after a resource delete.</span>
 
 <span class="sd">    Every method from validator receives the current http request in order to give access to resource validators to security</span>
 <span class="sd">    context and other contexts which might be necessary.</span>
@@ -123,7 +132,43 @@
 
         <span class="n">attr_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">attr_value</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">(</span><span class="n">attr_value</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="n">FantasticoRoaError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> attribute is mandatory. Please provide it.&quot;</span> <span class="o">%</span> <span class="n">attr_name</span><span class="p">)</span></div></div>
+            <span class="k">raise</span> <span class="n">FantasticoRoaError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> attribute is mandatory. Please provide it.&quot;</span> <span class="o">%</span> <span class="n">attr_name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ResourceValidator.on_pre_create"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.on_pre_create">[docs]</a>    <span class="k">def</span> <span class="nf">on_pre_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass which wants to receive notifications about a pending</span>
+<span class="sd">        create resource operation.&#39;&#39;&#39;</span>
+        
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="ResourceValidator.on_post_create"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.on_post_create">[docs]</a>    <span class="k">def</span> <span class="nf">on_post_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass which wants to receive notifications after a resource </span>
+<span class="sd">        has been successfully created.&#39;&#39;&#39;</span>
+
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="ResourceValidator.on_pre_update"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.on_pre_update">[docs]</a>    <span class="k">def</span> <span class="nf">on_pre_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass which wants to receive notifications about a pending</span>
+<span class="sd">        update resource operation.&#39;&#39;&#39;</span>
+        
+        <span class="k">pass</span>
+    </div>
+<div class="viewcode-block" id="ResourceValidator.on_post_update"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.on_post_update">[docs]</a>    <span class="k">def</span> <span class="nf">on_post_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass which wants to receive notifications after a resource </span>
+<span class="sd">        has been successfully updated.&#39;&#39;&#39;</span>
+        
+        <span class="k">pass</span>
+    </div>
+<div class="viewcode-block" id="ResourceValidator.on_pre_delete"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.on_pre_delete">[docs]</a>    <span class="k">def</span> <span class="nf">on_pre_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass which wants to receive notifications about a pending</span>
+<span class="sd">        delete resource operation.&#39;&#39;&#39;</span>
+        
+        <span class="k">pass</span>
+    </div>
+<div class="viewcode-block" id="ResourceValidator.on_post_delete"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_validator.ResourceValidator.on_post_delete">[docs]</a>    <span class="k">def</span> <span class="nf">on_post_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method must be overriden by each subclass which wants to receive notifications after a resource </span>
+<span class="sd">        has been successfully deleted.&#39;&#39;&#39;</span>
+        
+        <span class="k">pass</span>        </div></div>
 </pre></div>
 
           </div>

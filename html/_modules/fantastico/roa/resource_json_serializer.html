@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>fantastico.roa.resource_json_serializer &mdash; fantastico 0.7.0-b140 documentation</title>
+    <title>fantastico.roa.resource_json_serializer &mdash; fantastico 0.7.0-b141 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0.7.0-b140',
+        VERSION:     '0.7.0-b141',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="fantastico 0.7.0-b140 documentation" href="../../../index.html" />
+    <link rel="top" title="fantastico 0.7.0-b141 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -49,7 +49,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html">
           Fantastico framework</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b140</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b141</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -161,10 +161,13 @@
 <span class="sd">.. codeauthor:: Radu Viorel Cosnita &lt;radu.cosnita@gmail.com&gt;</span>
 <span class="sd">.. py:module:: fantastico.roa.resource_json_serializer</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">from</span> <span class="nn">fantastico.roa.resource_json_serializer_exceptions</span> <span class="kn">import</span> <span class="n">ResourceJsonSerializerError</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">fantastico.roa.resource_json_serializer_exceptions</span> <span class="kn">import</span> <span class="n">ResourceJsonSerializerError</span>
+
 
 <div class="viewcode-block" id="ResourceJsonSerializer"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.resource_json_serializer.ResourceJsonSerializer">[docs]</a><span class="k">class</span> <span class="nc">ResourceJsonSerializer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides the methods for serializing a given resource into a dictionary and deserializing a dictionary into</span>
@@ -183,6 +186,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_subresources_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identify_subres_attributes</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_supported_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identify_public_attrs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_resource_ref</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_converters</span> <span class="o">=</span> <span class="p">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="n">value</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()}</span>
 
     <span class="k">def</span> <span class="nf">_identify_subres_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This method returns all subresource attributes which must be ignored by serializer.&#39;&#39;&#39;</span>
@@ -305,6 +309,11 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">][</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">subfield</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">)</span>
+            
+            <span class="n">converter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_converters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">][</span><span class="n">attr_name</span><span class="p">]</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">converter</span><span class="p">:</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">][</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">converter</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">subfield_name</span><span class="p">][</span><span class="n">attr_name</span><span class="p">])</span>            
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ResourceJsonSerializerError</span><span class="p">(</span><span class="s">&quot;Submodel </span><span class="si">%s</span><span class="s"> does not have attribute </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> \
                                               <span class="p">(</span><span class="n">subfield_name</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">))</span>
@@ -329,6 +338,18 @@
             <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+                    
+                    <span class="c"># pylint: disable=W0212</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">],</span> <span class="s">&quot;_resource_decorator&quot;</span><span class="p">):</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">ResourceJsonSerializer</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">_resource_decorator</span><span class="p">)</span>\
+                                            <span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
+                        
+                        <span class="k">continue</span>
+                    
+                    <span class="n">converter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_converters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+                    
+                    <span class="k">if</span> <span class="n">converter</span><span class="p">:</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">converter</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">field</span><span class="p">])</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">ResourceJsonSerializerError</span><span class="p">(</span><span class="s">&quot;Model does not have attribute </span><span class="si">%s</span><span class="s">.&quot;</span> <span class="o">%</span> <span class="n">field</span><span class="p">)</span>
 

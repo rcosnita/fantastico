@@ -19,7 +19,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="../../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">fantastico 0.7.0-b141 documentation</a> &raquo;</li>
           <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
@@ -128,7 +128,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_filter</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-</div></div>
+    </div>
+    <span class="k">def</span> <span class="nf">_get_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;This method provides an implementation for obtaining the column definition based on the column name and</span>
+<span class="sd">        given model.&#39;&#39;&#39;</span>
+        
+        <span class="n">column</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="n">column_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">column_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">column_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">column</span>
+    </div>
 <div class="viewcode-block" id="QueryParserOperationSort"><a class="viewcode-back" href="../../../features/roa/technical_summary.html#fantastico.roa.query_parser_operations.QueryParserOperationSort">[docs]</a><span class="k">class</span> <span class="nc">QueryParserOperationSort</span><span class="p">(</span><span class="n">QueryParserOperation</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;This class provides base support for sort operations: asc / desc.&#39;&#39;&#39;</span>
 
@@ -144,7 +158,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_column</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Resource attribute </span><span class="si">%s</span><span class="s"> does not exist.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span><span class="p">)</span>
 </div>
@@ -225,7 +239,7 @@
             <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Binary operation </span><span class="si">%s</span><span class="s"> second argument is empty.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_column</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">column_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_column</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_column</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">column_name</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">QueryParserOperationInvalidError</span><span class="p">(</span><span class="s">&quot;Resource model does not contain </span><span class="si">%s</span><span class="s"> attribute.&quot;</span> <span class="o">%</span> <span class="n">column_name</span><span class="p">)</span>
 </div>

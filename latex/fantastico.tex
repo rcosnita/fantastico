@@ -14,8 +14,8 @@
 
 
 \title{fantastico Documentation}
-\date{August 10, 2014}
-\release{0.7.0-b140}
+\date{January 25, 2015}
+\release{0.7.0-b141}
 \author{Radu Viorel Cosnita}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -862,7 +862,7 @@ it to simply test your new components.
 \index{start() (fantastico.server.dev\_server.DevServer method)}
 
 \begin{fulllineitems}
-\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x54caa68\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
+\phantomsection\label{get_started/dev_mode:fantastico.server.dev_server.DevServer.start}\pysiglinewithargsret{\bfcode{start}}{\emph{build\_server=\textless{}function make\_server at 0x66fef30\textgreater{}}, \emph{app=\textless{}class `fantastico.middleware.fantastico\_app.FantasticoApp'\textgreater{}}}{}
 This method starts a WSGI development server. All attributes like port, hostname and protocol are read from
 configuration file.
 
@@ -3651,7 +3651,7 @@ This method is used to retrieve the component folder name under which this contr
 \index{load\_template() (fantastico.mvc.base\_controller.BaseController method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1516408\textgreater{}}, \emph{enable\_global\_folder=False}}{}
+\phantomsection\label{features/mvc:fantastico.mvc.base_controller.BaseController.load_template}\pysiglinewithargsret{\bfcode{load\_template}}{\emph{tpl\_name}, \emph{model\_data=None}, \emph{get\_template=\textless{}function get\_template at 0x1ff4408\textgreater{}}, \emph{enable\_global\_folder=False}}{}
 This method is responsible for loading a template from disk and render it using the given model data.
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -5789,6 +5789,15 @@ This class provides the base for all validators which can be used for resources.
 
     \PYG{k}{def} \PYG{n+nf}{format\PYGZus{}resource}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{resource}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
         \PYG{c}{\PYGZsh{} we can safely retrieve the resource so nothing has to be done here.}
+    
+    \PYG{k}{def} \PYG{n+nf}{on\PYGZus{}post\PYGZus{}create}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{resource}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{c}{\PYGZsh{} override this only if you want to trigger additional actions after a resource creation.}
+    
+    \PYG{k}{def} \PYG{n+nf}{on\PYGZus{}post\PYGZus{}update}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{resource}\PYG{p}{,} \PYG{n}{request}\PYG{p}{)}\PYG{p}{:}
+        \PYG{c}{\PYGZsh{} override this only if you want to trigger additional actions after a resource update.}
+    
+    \PYG{k}{def} \PYG{n+nf}{on\PYGZus{}post\PYGZus{}delete}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{resource}\PYG{p}{,} \PYG{n}{requesT}\PYG{p}{)}\PYG{p}{:}
+        \PYG{c}{\PYGZsh{} override this only if you want to trigger addition actions after a resource delete.}
 \end{Verbatim}
 
 Every method from validator receives the current http request in order to give access to resource validators to security
@@ -5813,6 +5822,60 @@ This method must be overriden by each subclass in order to provide custom logic 
 is fetched.
 
 Usually you will want to override this method in order to suppress sensitive data to be sent to clients.
+
+\end{fulllineitems}
+
+\index{on\_post\_create() (fantastico.roa.resource\_validator.ResourceValidator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator.on_post_create}\pysiglinewithargsret{\bfcode{on\_post\_create}}{\emph{resource}, \emph{request}}{}
+This method must be overriden by each subclass which wants to receive notifications after a resource 
+has been successfully created.
+
+\end{fulllineitems}
+
+\index{on\_post\_delete() (fantastico.roa.resource\_validator.ResourceValidator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator.on_post_delete}\pysiglinewithargsret{\bfcode{on\_post\_delete}}{\emph{resource}, \emph{request}}{}
+This method must be overriden by each subclass which wants to receive notifications after a resource 
+has been successfully deleted.
+
+\end{fulllineitems}
+
+\index{on\_post\_update() (fantastico.roa.resource\_validator.ResourceValidator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator.on_post_update}\pysiglinewithargsret{\bfcode{on\_post\_update}}{\emph{resource}, \emph{request}}{}
+This method must be overriden by each subclass which wants to receive notifications after a resource 
+has been successfully updated.
+
+\end{fulllineitems}
+
+\index{on\_pre\_create() (fantastico.roa.resource\_validator.ResourceValidator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator.on_pre_create}\pysiglinewithargsret{\bfcode{on\_pre\_create}}{\emph{resource}, \emph{request}}{}
+This method must be overriden by each subclass which wants to receive notifications about a pending
+create resource operation.
+
+\end{fulllineitems}
+
+\index{on\_pre\_delete() (fantastico.roa.resource\_validator.ResourceValidator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator.on_pre_delete}\pysiglinewithargsret{\bfcode{on\_pre\_delete}}{\emph{resource}, \emph{request}}{}
+This method must be overriden by each subclass which wants to receive notifications about a pending
+delete resource operation.
+
+\end{fulllineitems}
+
+\index{on\_pre\_update() (fantastico.roa.resource\_validator.ResourceValidator method)}
+
+\begin{fulllineitems}
+\phantomsection\label{features/roa/technical_summary:fantastico.roa.resource_validator.ResourceValidator.on_pre_update}\pysiglinewithargsret{\bfcode{on\_pre\_update}}{\emph{resource}, \emph{request}}{}
+This method must be overriden by each subclass which wants to receive notifications about a pending
+update resource operation.
 
 \end{fulllineitems}
 
@@ -6681,6 +6744,17 @@ DELETE
 user.profile.delete
  & 
 Updates an existing user profile.
+ & 
+Authorization: Bearer \textless{}oauth2\_token\textgreater{}
+\\\hline
+
+\textbf{/api/oauth/profile/me}
+ & 
+GET
+ & 
+user.profile.read, user.profile.read.person
+ & 
+Retrieves information about authenticated user (based on the access token).
  & 
 Authorization: Bearer \textless{}oauth2\_token\textgreater{}
 \\\hline
@@ -8008,7 +8082,7 @@ settings. Read more about configuring fantastico on {\hyperref[get_started/setti
 \index{exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x19e5380\textgreater{}}}{}
+\phantomsection\label{features/sdk/command_syncdb:fantastico.sdk.commands.command_syncdb.SdkCommandSyncDb.exec}\pysiglinewithargsret{\bfcode{exec}}{\emph{os\_lib=\textless{}module `os' from `/mnt/jenkins\_ebs/continous\_integration/fantastico\_doc\_workspace/pip-deps/lib/python3.2/os.py'\textgreater{}}, \emph{call\_cmd=\textless{}function call at 0x24c3380\textgreater{}}}{}
 This method executes module\_setup.sql and create\_data.sql scripts.
 \begin{quote}\begin{description}
 \item[{Raises {\hyperref[features/sdk:fantastico.sdk.sdk_exceptions.FantasticoSdkCommandError]{fantastico.sdk.sdk\_exceptions.FantasticoSdkCommandError}}}] \leavevmode
@@ -8553,7 +8627,7 @@ when no / not enough arguments are provided to component.
 \index{render() (fantastico.rendering.component.Component method)}
 
 \begin{fulllineitems}
-\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x2def490\textgreater{}}}{}
+\phantomsection\label{features/component_reusage:fantastico.rendering.component.Component.render}\pysiglinewithargsret{\bfcode{render}}{\emph{template='/raw\_dump.html'}, \emph{url=None}, \emph{runtime='server'}, \emph{caller=\textless{}function \textless{}lambda\textgreater{} at 0x38ff380\textgreater{}}}{}
 This method is used to render the specified url using the given parameters.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -9283,6 +9357,35 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 
 \section{Versions}
 \label{changes:versions}\begin{itemize}
+\item {} 
+v0.7.1 (stable)
+\begin{itemize}
+\item {} 
+Added \textbf{/api/oauth/profile/me} for obtaining authenticated user profile information.
+
+\item {} 
+Added \textbf{on\_pre\_create} / \textbf{on\_pre\_update} / \textbf{on\_pre\_delete events} for ROA.
+
+\item {} 
+Added \textbf{on\_post\_create} / \textbf{on\_post\_update} / \textbf{on\_pre\_delete events} for ROA.
+
+\item {} 
+Added isoformat for json serialization of datetime fields.
+
+\item {} 
+Fix bug for full recursive serialization of subresources when requested.
+
+\item {} 
+Added support for nested filtering into roa resources (e.g filter=eq(submodel.\textless{}property\_name\textgreater{},1))
+
+\item {} 
+Added support for nested ordering into roa resource (e.g order=asc(submodel.\textless{}property\_name\textgreater{}))
+
+\item {} 
+Bring validate\_email code into fantastico so that each new installation of framework works as expected (cause by an incompatible python 3 validate\_email package published on pypi).
+
+\end{itemize}
+
 \item {} 
 v0.7.0 (stable)
 \begin{itemize}

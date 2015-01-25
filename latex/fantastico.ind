@@ -33,17 +33,17 @@
   \indexspace
   \bigletter A
   \item access\_token (fantastico.oauth2.security\_context.SecurityContext attribute), 
-		\hyperpage{86}
+		\hyperpage{87}
   \item access\_token\_validity (fantastico.settings.BasicSettings attribute), \hyperpage{4}
-  \item AccessTokenGenerator (class in fantastico.oauth2.accesstoken\_generator), \hyperpage{90}
+  \item AccessTokenGenerator (class in fantastico.oauth2.accesstoken\_generator), \hyperpage{91}
   \item add\_argument() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
 		\hyperpage{67}
-  \item add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{98}
-  \item AesTokenEncryption (class in fantastico.oauth2.token\_encryption), \hyperpage{91}
+  \item add\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{99}
+  \item AesTokenEncryption (class in fantastico.oauth2.token\_encryption), \hyperpage{92}
   \item all\_resources() (fantastico.roa.resources\_registry.ResourcesRegistry method), 
 		\hyperpage{64}
   \item attr\_name (fantastico.oauth2.exceptions.OAuth2InvalidTokenDescriptorError attribute), 
-		\hyperpage{92}
+		\hyperpage{93}
   \item available\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute), 
 		\hyperpage{64}
   \item available\_url\_resources (fantastico.roa.resources\_registry.ResourcesRegistry attribute), 
@@ -74,38 +74,38 @@
   \item code (fantastico.locale.language.Language attribute), \hyperpage{40}
   \item column (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{51}
   \item column (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{52}
-  \item Component (class in fantastico.rendering.component), \hyperpage{102}
+  \item Component (class in fantastico.rendering.component), \hyperpage{103}
   \item Controller (class in fantastico.mvc.controller\_decorators), \hyperpage{44}
   \item ControllerRouteLoader (class in fantastico.mvc.controller\_registrator), \hyperpage{49}
   \item CorsEnabled (class in fantastico.mvc.controller\_decorators), \hyperpage{52}
   \item count\_records() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{46}
   \item create() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{46}
   \item create\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{71}
+		\hyperpage{72}
   \item create\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
 		\hyperpage{72}
   \item create\_scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute), 
-		\hyperpage{86}
+		\hyperpage{87}
   \item curr\_request (fantastico.mvc.base\_controller.BaseController attribute), \hyperpage{50}
 
   \indexspace
   \bigletter D
   \item database\_config (fantastico.settings.BasicSettings attribute), \hyperpage{4}
-  \item db\_conn (fantastico.oauth2.tokens\_service.TokensService attribute), \hyperpage{88}
-  \item decrypt() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{88}
+  \item db\_conn (fantastico.oauth2.tokens\_service.TokensService attribute), \hyperpage{89}
+  \item decrypt() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{89}
   \item decrypt\_token() (fantastico.oauth2.token\_encryption.AesTokenEncryption method), 
-		\hyperpage{91}
+		\hyperpage{92}
   \item decrypt\_token() (fantastico.oauth2.token\_encryption.PublicTokenEncryption method), 
-		\hyperpage{91}
+		\hyperpage{92}
   \item decrypt\_token() (fantastico.oauth2.token\_encryption.TokenEncryption method), 
-		\hyperpage{90}
+		\hyperpage{91}
   \item delete() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{46}
   \item delete\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
 		\hyperpage{72}
   \item delete\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{72}
+		\hyperpage{73}
   \item delete\_scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute), 
-		\hyperpage{87}
+		\hyperpage{88}
   \item deserialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method), 
 		\hyperpage{69}
   \item dev\_server\_host (fantastico.settings.BasicSettings attribute), \hyperpage{5}
@@ -117,27 +117,27 @@
   \item doc\_base (fantastico.settings.BasicSettings attribute), \hyperpage{5}
   \item DummyRouteLoader (class in fantastico.routing\_engine.dummy\_routeloader), \hyperpage{43}
   \item DynamicMenuController (class in fantastico.contrib.dynamic\_menu.menu\_controller), 
-		\hyperpage{105}
-  \item DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{107}
-  \item DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{108}
+		\hyperpage{106}
+  \item DynamicPage (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{108}
+  \item DynamicPageModel (class in fantastico.contrib.dynamic\_pages.models.pages), \hyperpage{109}
 
   \indexspace
   \bigletter E
-  \item encrypt() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{88}
+  \item encrypt() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{89}
   \item encrypt\_token() (fantastico.oauth2.token\_encryption.AesTokenEncryption method), 
-		\hyperpage{91}
+		\hyperpage{92}
   \item encrypt\_token() (fantastico.oauth2.token\_encryption.PublicTokenEncryption method), 
-		\hyperpage{91}
+		\hyperpage{92}
   \item encrypt\_token() (fantastico.oauth2.token\_encryption.TokenEncryption method), 
-		\hyperpage{90}
-  \item error\_code (fantastico.oauth2.exceptions.OAuth2Error attribute), \hyperpage{92}
+		\hyperpage{91}
+  \item error\_code (fantastico.oauth2.exceptions.OAuth2Error attribute), \hyperpage{93}
   \item exec() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{95}
-  \item exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), \hyperpage{96}
-  \item exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), \hyperpage{97}
-  \item exec() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{98}
-  \item exec() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{99}
-  \item exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{99}
+		\hyperpage{96}
+  \item exec() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), \hyperpage{97}
+  \item exec() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), \hyperpage{98}
+  \item exec() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{99}
+  \item exec() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{100}
+  \item exec\_command() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{100}
 
   \indexspace
   \bigletter F
@@ -155,17 +155,17 @@
   \item FantasticoInsufficientArgumentsError (class in fantastico.exceptions), \hyperpage{38}
   \item FantasticoIntegrationTestCase (class in fantastico.tests.base\_case), \hyperpage{8}
   \item FantasticoMenuNotFoundException (class in fantastico.contrib.dynamic\_menu.menu\_exceptions), 
-		\hyperpage{105}
+		\hyperpage{106}
   \item FantasticoNoRequestError (class in fantastico.exceptions), \hyperpage{38}
   \item FantasticoNoRoutesError (class in fantastico.exceptions), \hyperpage{38}
   \item FantasticoNotSupportedError (class in fantastico.exceptions), \hyperpage{37}
   \item FantasticoRoaDuplicateError (class in fantastico.roa.roa\_exceptions), \hyperpage{70}
   \item FantasticoRoaError (class in fantastico.roa.roa\_exceptions), \hyperpage{70}
   \item FantasticoRouteNotFoundError (class in fantastico.exceptions), \hyperpage{38}
-  \item FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{100}
+  \item FantasticoSdkCommandError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{101}
   \item FantasticoSdkCommandNotFoundError (class in fantastico.sdk.sdk\_exceptions), 
-		\hyperpage{100}
-  \item FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{99}
+		\hyperpage{101}
+  \item FantasticoSdkError (class in fantastico.sdk.sdk\_exceptions), \hyperpage{100}
   \item FantasticoSettingNotFoundError (class in fantastico.exceptions), \hyperpage{37}
   \item FantasticoTemplateNotFoundError (class in fantastico.exceptions), \hyperpage{38}
   \item FantasticoUnitTestsCase (class in fantastico.tests.base\_case), \hyperpage{7}
@@ -184,23 +184,23 @@
   \indexspace
   \bigletter G
   \item generate() (fantastico.oauth2.accesstoken\_generator.AccessTokenGenerator method), 
-		\hyperpage{90}
+		\hyperpage{91}
   \item generate() (fantastico.oauth2.logintoken\_generator.LoginTokenGenerator method), 
-		\hyperpage{89}
-  \item generate() (fantastico.oauth2.token\_generator.TokenGenerator method), \hyperpage{89}
-  \item generate() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{88}
+		\hyperpage{90}
+  \item generate() (fantastico.oauth2.token\_generator.TokenGenerator method), \hyperpage{90}
+  \item generate() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{89}
   \item get() (fantastico.settings.SettingsFacade method), \hyperpage{6}
   \item get\_arguments() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{95}
-  \item get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
 		\hyperpage{96}
-  \item get\_arguments() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{98}
-  \item get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{99}
+  \item get\_arguments() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
+		\hyperpage{97}
+  \item get\_arguments() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{99}
+  \item get\_arguments() (fantastico.sdk.sdk\_core.SdkCommand method), \hyperpage{100}
   \item get\_collection() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{72}
+		\hyperpage{73}
   \item get\_collection\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{72}
-  \item get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{98}
+		\hyperpage{73}
+  \item get\_command() (fantastico.sdk.sdk\_core.SdkCommandsRegistry static method), \hyperpage{99}
   \item get\_component\_folder() (fantastico.mvc.base\_controller.BaseController method), 
 		\hyperpage{50}
   \item get\_config() (fantastico.settings.SettingsFacade method), \hyperpage{6}
@@ -213,7 +213,7 @@
   \item get\_filter() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
 		\hyperpage{67}
   \item get\_generator() (fantastico.oauth2.tokengenerator\_factory.TokenGeneratorFactory method), 
-		\hyperpage{88}
+		\hyperpage{89}
   \item get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
 		\hyperpage{67}
   \item get\_grammar\_rules() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method), 
@@ -231,18 +231,18 @@
   \item get\_grammar\_table() (fantastico.roa.query\_parser\_operations.QueryParserOperationSort method), 
 		\hyperpage{69}
   \item get\_handler() (fantastico.oauth2.grant\_handler\_factory.GrantHandlerFactory method), 
-		\hyperpage{91}
+		\hyperpage{92}
   \item get\_hasher() (fantastico.oauth2.passwords\_hasher\_factory.PasswordsHasherFactory method), 
-		\hyperpage{84}
+		\hyperpage{85}
   \item get\_help() (fantastico.sdk.commands.command\_activate\_extension.SdkCommandActivateExtension method), 
-		\hyperpage{96}
-  \item get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
-		\hyperpage{96}
-  \item get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), 
 		\hyperpage{97}
-  \item get\_help() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{98}
+  \item get\_help() (fantastico.sdk.commands.command\_syncdb.SdkCommandSyncDb method), 
+		\hyperpage{97}
+  \item get\_help() (fantastico.sdk.commands.command\_version.SdkCommandVersion method), 
+		\hyperpage{98}
+  \item get\_help() (fantastico.sdk.fantastico.SdkCore method), \hyperpage{99}
   \item get\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{72}
+		\hyperpage{73}
   \item get\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
 		\hyperpage{73}
   \item get\_loaders() (fantastico.routing\_engine.router.Router method), \hyperpage{41}
@@ -279,54 +279,54 @@
   \item get\_token() (fantastico.roa.query\_parser\_operations.QueryParserOperationSortDesc method), 
 		\hyperpage{69}
   \item global\_response\_headers (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item GrantHandler (class in fantastico.oauth2.grant\_handler), \hyperpage{91}
-  \item GrantHandlerFactory (class in fantastico.oauth2.grant\_handler\_factory), \hyperpage{91}
+  \item GrantHandler (class in fantastico.oauth2.grant\_handler), \hyperpage{92}
+  \item GrantHandlerFactory (class in fantastico.oauth2.grant\_handler\_factory), \hyperpage{92}
 
   \indexspace
   \bigletter H
   \item handle\_authorize() (fantastico.oauth2.oauth2\_controller.OAuth2Controller method), 
-		\hyperpage{85}
-  \item handle\_grant() (fantastico.oauth2.grant\_handler.GrantHandler method), \hyperpage{91}
+		\hyperpage{86}
+  \item handle\_grant() (fantastico.oauth2.grant\_handler.GrantHandler method), \hyperpage{92}
   \item handle\_grant() (fantastico.oauth2.implicit\_grant\_handler.ImplicitGrantHandler method), 
-		\hyperpage{92}
+		\hyperpage{93}
   \item handle\_list\_resources\_options() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method), 
-		\hyperpage{66}, \hyperpage{110}
+		\hyperpage{66}, \hyperpage{111}
   \item handle\_resource\_options() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
 		\hyperpage{73}
   \item handle\_resource\_options\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{73}
+		\hyperpage{74}
   \item handle\_route() (fantastico.routing\_engine.router.Router method), \hyperpage{42}
   \item handle\_token() (fantastico.oauth2.oauth2\_controller.OAuth2Controller method), 
-		\hyperpage{85}
+		\hyperpage{86}
   \item handler\_type (fantastico.oauth2.exceptions.OAuth2UnsupportedGrantError attribute), 
-		\hyperpage{93}
+		\hyperpage{94}
   \item hash\_password() (fantastico.oauth2.passwords\_hasher.PasswordsHasher method), 
-		\hyperpage{83}
-  \item hash\_password() (fantastico.oauth2.sha512salt\_passwords\_hasher.Sha512SaltPasswordsHasher method), 
 		\hyperpage{84}
-  \item help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{98}
+  \item hash\_password() (fantastico.oauth2.sha512salt\_passwords\_hasher.Sha512SaltPasswordsHasher method), 
+		\hyperpage{85}
+  \item help (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{99}
   \item http\_code (fantastico.exceptions.FantasticoError attribute), \hyperpage{37}
   \item http\_verb (fantastico.exceptions.FantasticoHttpVerbNotSupported attribute), \hyperpage{38}
 
   \indexspace
   \bigletter I
-  \item ImplicitGrantHandler (class in fantastico.oauth2.implicit\_grant\_handler), \hyperpage{92}
+  \item ImplicitGrantHandler (class in fantastico.oauth2.implicit\_grant\_handler), \hyperpage{93}
   \item inject\_scopes\_in\_security() (fantastico.oauth2.oauth2\_decorators.RequiredScopes method), 
-		\hyperpage{87}
+		\hyperpage{88}
   \item installed\_middleware (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item invalidate() (fantastico.oauth2.token\_generator.TokenGenerator method), \hyperpage{89}
-  \item invalidate() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{88}
+  \item invalidate() (fantastico.oauth2.token\_generator.TokenGenerator method), \hyperpage{90}
+  \item invalidate() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{89}
 
   \indexspace
   \bigletter L
   \item Language (class in fantastico.locale.language), \hyperpage{40}
   \item language (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{40}
   \item list\_codes() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{110}
+		\hyperpage{111}
   \item list\_codes\_ui() (fantastico.contrib.tracking\_codes.tracking\_controller.TrackingController method), 
-		\hyperpage{110}
+		\hyperpage{111}
   \item list\_registered\_resources() (fantastico.contrib.roa\_discovery.discovery\_controller.RoaDiscoveryController method), 
-		\hyperpage{66}, \hyperpage{111}
+		\hyperpage{66}, \hyperpage{112}
   \item load\_routes() (fantastico.mvc.controller\_registrator.ControllerRouteLoader method), 
 		\hyperpage{49}
   \item load\_routes() (fantastico.roa.resources\_registrator.ResourcesRegistrator method), 
@@ -334,12 +334,12 @@
   \item load\_routes() (fantastico.routing\_engine.routing\_loaders.RouteLoader method), 
 		\hyperpage{42}
   \item load\_template() (fantastico.mvc.base\_controller.BaseController method), \hyperpage{50}
-  \item LoginTokenGenerator (class in fantastico.oauth2.logintoken\_generator), \hyperpage{89}
+  \item LoginTokenGenerator (class in fantastico.oauth2.logintoken\_generator), \hyperpage{90}
 
   \indexspace
   \bigletter M
   \item max\_items (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController attribute), 
-		\hyperpage{105}
+		\hyperpage{106}
   \item method (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{45}
   \item model (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{63}
   \item model\_cls (fantastico.mvc.model\_facade.ModelFacade attribute), \hyperpage{48}
@@ -362,42 +362,54 @@
   \indexspace
   \bigletter N
   \item name (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{63}
-  \item name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{98}
+  \item name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{99}
   \item new\_model() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{48}
 
   \indexspace
   \bigletter O
   \item oauth2\_idp (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item OAuth2AuthenticationError (class in fantastico.oauth2.exceptions), \hyperpage{93}
-  \item OAuth2Controller (class in fantastico.oauth2.oauth2\_controller), \hyperpage{84}
-  \item OAuth2Error (class in fantastico.oauth2.exceptions), \hyperpage{92}
+  \item OAuth2AuthenticationError (class in fantastico.oauth2.exceptions), \hyperpage{94}
+  \item OAuth2Controller (class in fantastico.oauth2.oauth2\_controller), \hyperpage{85}
+  \item OAuth2Error (class in fantastico.oauth2.exceptions), \hyperpage{93}
   \item OAuth2ExceptionsMiddleware (class in fantastico.oauth2.middleware.exceptions\_middleware), 
-		\hyperpage{85}
-  \item OAuth2InvalidClientError (class in fantastico.oauth2.exceptions), \hyperpage{92}
-  \item OAuth2InvalidScopesError (class in fantastico.oauth2.exceptions), \hyperpage{93}
-  \item OAuth2InvalidTokenDescriptorError (class in fantastico.oauth2.exceptions), \hyperpage{92}
-  \item OAuth2InvalidTokenTypeError (class in fantastico.oauth2.exceptions), \hyperpage{92}
-  \item OAuth2MissingQueryParamError (class in fantastico.oauth2.exceptions), \hyperpage{93}
-  \item OAuth2TokenEncryptionError (class in fantastico.oauth2.exceptions), \hyperpage{93}
-  \item OAuth2TokenExpiredError (class in fantastico.oauth2.exceptions), \hyperpage{92}
+		\hyperpage{86}
+  \item OAuth2InvalidClientError (class in fantastico.oauth2.exceptions), \hyperpage{93}
+  \item OAuth2InvalidScopesError (class in fantastico.oauth2.exceptions), \hyperpage{94}
+  \item OAuth2InvalidTokenDescriptorError (class in fantastico.oauth2.exceptions), \hyperpage{93}
+  \item OAuth2InvalidTokenTypeError (class in fantastico.oauth2.exceptions), \hyperpage{93}
+  \item OAuth2MissingQueryParamError (class in fantastico.oauth2.exceptions), \hyperpage{94}
+  \item OAuth2TokenEncryptionError (class in fantastico.oauth2.exceptions), \hyperpage{94}
+  \item OAuth2TokenExpiredError (class in fantastico.oauth2.exceptions), \hyperpage{93}
   \item OAuth2TokensMiddleware (class in fantastico.oauth2.middleware.tokens\_middleware), 
-		\hyperpage{85}
-  \item OAuth2UnauthorizedError (class in fantastico.oauth2.exceptions), \hyperpage{93}
-  \item OAuth2UnsupportedGrantError (class in fantastico.oauth2.exceptions), \hyperpage{93}
+		\hyperpage{86}
+  \item OAuth2UnauthorizedError (class in fantastico.oauth2.exceptions), \hyperpage{94}
+  \item OAuth2UnsupportedGrantError (class in fantastico.oauth2.exceptions), \hyperpage{94}
+  \item on\_post\_create() (fantastico.roa.resource\_validator.ResourceValidator method), 
+		\hyperpage{71}
+  \item on\_post\_delete() (fantastico.roa.resource\_validator.ResourceValidator method), 
+		\hyperpage{71}
+  \item on\_post\_update() (fantastico.roa.resource\_validator.ResourceValidator method), 
+		\hyperpage{71}
+  \item on\_pre\_create() (fantastico.roa.resource\_validator.ResourceValidator method), 
+		\hyperpage{71}
+  \item on\_pre\_delete() (fantastico.roa.resource\_validator.ResourceValidator method), 
+		\hyperpage{71}
+  \item on\_pre\_update() (fantastico.roa.resource\_validator.ResourceValidator method), 
+		\hyperpage{71}
   \item operation (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{51}
 
   \indexspace
   \bigletter P
-  \item PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router), \hyperpage{107}
+  \item PagesRouter (class in fantastico.contrib.dynamic\_pages.pages\_router), \hyperpage{108}
   \item param\_name (fantastico.oauth2.exceptions.OAuth2MissingQueryParamError attribute), 
-		\hyperpage{93}
-  \item parse() (fantastico.rendering.component.Component method), \hyperpage{103}
+		\hyperpage{94}
+  \item parse() (fantastico.rendering.component.Component method), \hyperpage{104}
   \item parse\_filter() (fantastico.roa.query\_parser.QueryParser method), \hyperpage{66}
   \item parse\_sort() (fantastico.roa.query\_parser.QueryParser method), \hyperpage{66}
-  \item PasswordsHasher (class in fantastico.oauth2.passwords\_hasher), \hyperpage{83}
+  \item PasswordsHasher (class in fantastico.oauth2.passwords\_hasher), \hyperpage{84}
   \item PasswordsHasherFactory (class in fantastico.oauth2.passwords\_hasher\_factory), 
-		\hyperpage{84}
-  \item PublicTokenEncryption (class in fantastico.oauth2.token\_encryption), \hyperpage{91}
+		\hyperpage{85}
+  \item PublicTokenEncryption (class in fantastico.oauth2.token\_encryption), \hyperpage{92}
 
   \indexspace
   \bigletter Q
@@ -435,7 +447,7 @@
   \indexspace
   \bigletter R
   \item read\_scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute), 
-		\hyperpage{87}
+		\hyperpage{88}
   \item RedirectResponse (class in fantastico.routing\_engine.custom\_responses), \hyperpage{40}
   \item ref\_value (fantastico.mvc.models.model\_filter.ModelFilter attribute), \hyperpage{51}
   \item register\_resource() (fantastico.roa.resources\_registry.ResourcesRegistry method), 
@@ -443,12 +455,12 @@
   \item register\_resources() (fantastico.roa.resources\_registrator.ResourcesRegistrator method), 
 		\hyperpage{65}
   \item register\_routes() (fantastico.routing\_engine.router.Router method), \hyperpage{42}
-  \item render() (fantastico.rendering.component.Component method), \hyperpage{103}
+  \item render() (fantastico.rendering.component.Component method), \hyperpage{104}
   \item RequestContext (class in fantastico.middleware.request\_context), \hyperpage{39}
   \item RequestMiddleware (class in fantastico.middleware.request\_middleware), \hyperpage{39}
   \item required\_scopes (fantastico.oauth2.security\_context.SecurityContext attribute), 
-		\hyperpage{86}
-  \item RequiredScopes (class in fantastico.oauth2.oauth2\_decorators), \hyperpage{86}
+		\hyperpage{87}
+  \item RequiredScopes (class in fantastico.oauth2.oauth2\_decorators), \hyperpage{87}
   \item Resource (class in fantastico.roa.resource\_decorator), \hyperpage{63}
   \item ResourceJsonSerializer (class in fantastico.roa.resource\_json\_serializer), \hyperpage{69}
   \item ResourceJsonSerializerError (class in fantastico.roa.resource\_json\_serializer\_exceptions), 
@@ -457,11 +469,11 @@
   \item ResourcesRegistry (class in fantastico.roa.resources\_registry), \hyperpage{64}
   \item ResourceValidator (class in fantastico.roa.resource\_validator), \hyperpage{70}
   \item retrieve\_menu\_items() (fantastico.contrib.dynamic\_menu.menu\_controller.DynamicMenuController method), 
-		\hyperpage{105}
+		\hyperpage{106}
   \item roa\_api (fantastico.settings.BasicSettings attribute), \hyperpage{5}
-  \item RoaController (class in fantastico.contrib.roa\_discovery.roa\_controller), \hyperpage{71}
+  \item RoaController (class in fantastico.contrib.roa\_discovery.roa\_controller), \hyperpage{72}
   \item RoaDiscoveryController (class in fantastico.contrib.roa\_discovery.discovery\_controller), 
-		\hyperpage{66}, \hyperpage{110}
+		\hyperpage{66}, \hyperpage{111}
   \item RouteLoader (class in fantastico.routing\_engine.routing\_loaders), \hyperpage{42}
   \item Router (class in fantastico.routing\_engine.router), \hyperpage{41}
   \item routes\_loaders (fantastico.settings.BasicSettings attribute), \hyperpage{5}
@@ -471,29 +483,29 @@
   \bigletter S
   \item scanned\_folders (fantastico.mvc.controller\_registrator.ControllerRouteLoader attribute), 
 		\hyperpage{50}
-  \item scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute), \hyperpage{87}
-  \item SdkCommand (class in fantastico.sdk.sdk\_core), \hyperpage{99}
-  \item SdkCommand (class in fantastico.sdk.sdk\_decorators), \hyperpage{99}
+  \item scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute), \hyperpage{88}
+  \item SdkCommand (class in fantastico.sdk.sdk\_core), \hyperpage{100}
+  \item SdkCommand (class in fantastico.sdk.sdk\_decorators), \hyperpage{100}
   \item SdkCommandActivateExtension (class in fantastico.sdk.commands.command\_activate\_extension), 
-		\hyperpage{95}
-  \item SdkCommandArgument (class in fantastico.sdk.sdk\_core), \hyperpage{98}
-  \item SdkCommandsRegistry (class in fantastico.sdk.sdk\_core), \hyperpage{98}
-  \item SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb), \hyperpage{96}
-  \item SdkCommandVersion (class in fantastico.sdk.commands.command\_version), \hyperpage{97}
-  \item SdkCore (class in fantastico.sdk.fantastico), \hyperpage{97}
-  \item SecurityContext (class in fantastico.oauth2.security\_context), \hyperpage{85}
+		\hyperpage{96}
+  \item SdkCommandArgument (class in fantastico.sdk.sdk\_core), \hyperpage{99}
+  \item SdkCommandsRegistry (class in fantastico.sdk.sdk\_core), \hyperpage{99}
+  \item SdkCommandSyncDb (class in fantastico.sdk.commands.command\_syncdb), \hyperpage{97}
+  \item SdkCommandVersion (class in fantastico.sdk.commands.command\_version), \hyperpage{98}
+  \item SdkCore (class in fantastico.sdk.fantastico), \hyperpage{98}
+  \item SecurityContext (class in fantastico.oauth2.security\_context), \hyperpage{86}
   \item serialize() (fantastico.roa.resource\_json\_serializer.ResourceJsonSerializer method), 
 		\hyperpage{70}
   \item serve\_dynamic\_page() (fantastico.contrib.dynamic\_pages.pages\_router.PagesRouter method), 
-		\hyperpage{107}
+		\hyperpage{108}
   \item session (fantastico.mvc.model\_facade.ModelFacade attribute), \hyperpage{48}
   \item settings (fantastico.middleware.request\_context.RequestContext attribute), \hyperpage{40}
   \item SettingsFacade (class in fantastico.settings), \hyperpage{6}
   \item setup\_once() (fantastico.tests.base\_case.FantasticoUnitTestsCase class method), 
 		\hyperpage{8}
   \item Sha512SaltPasswordsHasher (class in fantastico.oauth2.sha512salt\_passwords\_hasher), 
-		\hyperpage{84}
-  \item short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{98}
+		\hyperpage{85}
+  \item short\_name (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{99}
   \item sort\_dir (fantastico.mvc.models.model\_sort.ModelSort attribute), \hyperpage{52}
   \item start() (fantastico.server.dev\_server.DevServer method), \hyperpage{9}
   \item started (fantastico.server.dev\_server.DevServer attribute), \hyperpage{10}
@@ -504,17 +516,17 @@
   \indexspace
   \bigletter T
   \item templates\_config (fantastico.settings.BasicSettings attribute), \hyperpage{6}
-  \item Token (class in fantastico.oauth2.token), \hyperpage{87}
+  \item Token (class in fantastico.oauth2.token), \hyperpage{88}
   \item token\_type (fantastico.oauth2.exceptions.OAuth2InvalidTokenTypeError attribute), 
-		\hyperpage{92}
-  \item TokenEncryption (class in fantastico.oauth2.token\_encryption), \hyperpage{90}
-  \item TokenGenerator (class in fantastico.oauth2.token\_generator), \hyperpage{89}
-  \item TokenGeneratorFactory (class in fantastico.oauth2.tokengenerator\_factory), \hyperpage{88}
-  \item TokensService (class in fantastico.oauth2.tokens\_service), \hyperpage{87}
-  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{110}
+		\hyperpage{93}
+  \item TokenEncryption (class in fantastico.oauth2.token\_encryption), \hyperpage{91}
+  \item TokenGenerator (class in fantastico.oauth2.token\_generator), \hyperpage{90}
+  \item TokenGeneratorFactory (class in fantastico.oauth2.tokengenerator\_factory), \hyperpage{89}
+  \item TokensService (class in fantastico.oauth2.tokens\_service), \hyperpage{88}
+  \item TrackingCode (class in fantastico.contrib.tracking\_codes.models.codes), \hyperpage{111}
   \item TrackingController (class in fantastico.contrib.tracking\_codes.tracking\_controller), 
-		\hyperpage{109}
-  \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{98}
+		\hyperpage{110}
+  \item type (fantastico.sdk.sdk\_core.SdkCommandArgument attribute), \hyperpage{99}
 
   \indexspace
   \bigletter U
@@ -522,11 +534,11 @@
 		\hyperpage{65}
   \item update() (fantastico.mvc.model\_facade.ModelFacade method), \hyperpage{48}
   \item update\_item() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{73}
+		\hyperpage{74}
   \item update\_item\_latest() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{73}
+		\hyperpage{74}
   \item update\_scopes (fantastico.oauth2.oauth2\_decorators.RequiredScopes attribute), 
-		\hyperpage{87}
+		\hyperpage{88}
   \item url (fantastico.mvc.controller\_decorators.Controller attribute), \hyperpage{45}
   \item url (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{64}
   \item user\_dependent (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{64}
@@ -534,11 +546,11 @@
   \indexspace
   \bigletter V
   \item validate() (fantastico.oauth2.accesstoken\_generator.AccessTokenGenerator method), 
-		\hyperpage{90}
+		\hyperpage{91}
   \item validate() (fantastico.oauth2.logintoken\_generator.LoginTokenGenerator method), 
-		\hyperpage{89}
-  \item validate() (fantastico.oauth2.token\_generator.TokenGenerator method), \hyperpage{89}
-  \item validate() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{88}
+		\hyperpage{90}
+  \item validate() (fantastico.oauth2.token\_generator.TokenGenerator method), \hyperpage{90}
+  \item validate() (fantastico.oauth2.tokens\_service.TokensService method), \hyperpage{89}
   \item validate() (fantastico.roa.query\_parser\_operations.QueryParserOperation method), 
 		\hyperpage{67}
   \item validate() (fantastico.roa.query\_parser\_operations.QueryParserOperationBinary method), 
@@ -549,11 +561,11 @@
 		\hyperpage{69}
   \item validate() (fantastico.roa.resource\_validator.ResourceValidator method), \hyperpage{71}
   \item validate\_context() (fantastico.oauth2.security\_context.SecurityContext method), 
-		\hyperpage{86}
+		\hyperpage{87}
   \item validate\_missing\_attr() (fantastico.roa.resource\_validator.ResourceValidator method), 
-		\hyperpage{71}
+		\hyperpage{72}
   \item validate\_security\_context() (fantastico.contrib.roa\_discovery.roa\_controller.RoaController method), 
-		\hyperpage{73}
+		\hyperpage{74}
   \item validator (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{64}
   \item version (fantastico.roa.resource\_decorator.Resource attribute), \hyperpage{64}
 

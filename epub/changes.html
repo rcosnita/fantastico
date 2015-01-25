@@ -22,7 +22,7 @@
         <li class="right" >
           <a href="features/components/oauth2/oauth2_idp/index.html" title="OAuth2 Identity Provider"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li> 
+        <li><a href="index.html">fantastico 0.7.0-b141 documentation</a> &raquo;</li> 
       </ul>
     </div>
 
@@ -41,6 +41,20 @@ so do not hesitate to get in touch with us (for support, feature requests, sugge
 <div class="section" id="versions">
 <h2>Versions</h2>
 <ul>
+<li><p class="first">v0.7.1 (stable)</p>
+<blockquote>
+<div><ul class="simple">
+<li>Added <strong>/api/oauth/profile/me</strong> for obtaining authenticated user profile information.</li>
+<li>Added <strong>on_pre_create</strong> / <strong>on_pre_update</strong> / <strong>on_pre_delete events</strong> for ROA.</li>
+<li>Added <strong>on_post_create</strong> / <strong>on_post_update</strong> / <strong>on_pre_delete events</strong> for ROA.</li>
+<li>Added isoformat for json serialization of datetime fields.</li>
+<li>Fix bug for full recursive serialization of subresources when requested.</li>
+<li>Added support for nested filtering into roa resources (e.g filter=eq(submodel.&lt;property_name&gt;,1))</li>
+<li>Added support for nested ordering into roa resource (e.g order=asc(submodel.&lt;property_name&gt;))</li>
+<li>Bring validate_email code into fantastico so that each new installation of framework works as expected (cause by an incompatible python 3 validate_email package published on pypi).</li>
+</ul>
+</div></blockquote>
+</li>
 <li><p class="first">v0.7.0 (stable)</p>
 <blockquote>
 <div><ul class="simple">

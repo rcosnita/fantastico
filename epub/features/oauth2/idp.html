@@ -25,7 +25,7 @@
         <li class="right" >
           <a href="controllers_security.html" title="Controllers security"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">fantastico 0.7.0-b140 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">fantastico 0.7.0-b141 documentation</a> &raquo;</li>
           <li><a href="../features.html" >Fantastico features</a> &raquo;</li>
           <li><a href="../oauth2.html" accesskey="U">OAUTH2</a> &raquo;</li> 
       </ul>
@@ -44,11 +44,11 @@ extensions APIs, idp APIs are secured with OAUTH2 tokens. In order to activate I
 <h2>APIs</h2>
 <table border="1" class="docutils">
 <colgroup>
-<col width="23%" />
-<col width="5%" />
-<col width="10%" />
-<col width="43%" />
-<col width="18%" />
+<col width="21%" />
+<col width="4%" />
+<col width="19%" />
+<col width="39%" />
+<col width="16%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>URI</strong></td>
@@ -81,25 +81,31 @@ extensions APIs, idp APIs are secured with OAUTH2 tokens. In order to activate I
 <td>Updates an existing user profile.</td>
 <td>Authorization: Bearer &lt;oauth2_token&gt;</td>
 </tr>
-<tr class="row-even"><td><strong>/api/latest/oauth-idp-person/:person_id</strong></td>
+<tr class="row-even"><td><strong>/api/oauth/profile/me</strong></td>
+<td>GET</td>
+<td>user.profile.read, user.profile.read.person</td>
+<td>Retrieves information about authenticated user (based on the access token).</td>
+<td>Authorization: Bearer &lt;oauth2_token&gt;</td>
+</tr>
+<tr class="row-odd"><td><strong>/api/latest/oauth-idp-person/:person_id</strong></td>
 <td>PUT</td>
 <td>user.profile.update</td>
 <td>Updates existing person details .</td>
 <td>Authorization: Bearer &lt;oauth2_token&gt;</td>
 </tr>
-<tr class="row-odd"><td><strong>/oauth/idp/ui/login?redirect_uri=/test-url</strong></td>
+<tr class="row-even"><td><strong>/oauth/idp/ui/login?redirect_uri=/test-url</strong></td>
 <td>GET</td>
 <td>&nbsp;</td>
 <td>Returns the markup for login screen.</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td><strong>/oauth/idp/login?redirect_uri=/test-url</strong></td>
+<tr class="row-odd"><td><strong>/oauth/idp/login?redirect_uri=/test-url</strong></td>
 <td>POST</td>
 <td>&nbsp;</td>
 <td>Authenticate the user, generates a token and passes it to redirect uri.</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-odd"><td><strong>/oauth/idp/ui/cb</strong></td>
+<tr class="row-even"><td><strong>/oauth/idp/ui/cb</strong></td>
 <td>GET</td>
 <td>&nbsp;</td>
 <td>A very simple callback which extracts the access token received and prints it on screen.</td>

@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ROA Technical Summary &mdash; fantastico 0.7.0-b140 documentation</title>
+    <title>ROA Technical Summary &mdash; fantastico 0.7.0-b141 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.7.0-b140',
+        VERSION:     '0.7.0-b141',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="fantastico 0.7.0-b140 documentation" href="../../index.html" />
+    <link rel="top" title="fantastico 0.7.0-b141 documentation" href="../../index.html" />
     <link rel="up" title="ROA (Resource Oriented Architecture)" href="../roa.html" />
     <link rel="next" title="10000 - Resource Collection Not Found" href="errors/error_10000.html" />
     <link rel="prev" title="REST Responses" href="rest_responses.html" />
@@ -51,7 +51,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html">
           Fantastico framework</a>
-        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b140</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.7.0-b141</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -944,6 +944,15 @@ can not be registered multiple times.</p>
 
     <span class="k">def</span> <span class="nf">format_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
         <span class="c"># we can safely retrieve the resource so nothing has to be done here.</span>
+    
+    <span class="k">def</span> <span class="nf">on_post_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="c"># override this only if you want to trigger additional actions after a resource creation.</span>
+    
+    <span class="k">def</span> <span class="nf">on_post_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="c"># override this only if you want to trigger additional actions after a resource update.</span>
+    
+    <span class="k">def</span> <span class="nf">on_post_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">requesT</span><span class="p">):</span>
+        <span class="c"># override this only if you want to trigger addition actions after a resource delete.</span>
 </pre></div>
 </div>
 <p>Every method from validator receives the current http request in order to give access to resource validators to security
@@ -963,6 +972,48 @@ invoke format_resource.</p>
 <dd><p>This method must be overriden by each subclass in order to provide custom logic which must be executed after a resource
 is fetched.</p>
 <p>Usually you will want to override this method in order to suppress sensitive data to be sent to clients.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.on_post_create">
+<tt class="descname">on_post_create</tt><big>(</big><em>resource</em>, <em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.on_post_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.on_post_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each subclass which wants to receive notifications after a resource 
+has been successfully created.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.on_post_delete">
+<tt class="descname">on_post_delete</tt><big>(</big><em>resource</em>, <em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.on_post_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.on_post_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each subclass which wants to receive notifications after a resource 
+has been successfully deleted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.on_post_update">
+<tt class="descname">on_post_update</tt><big>(</big><em>resource</em>, <em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.on_post_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.on_post_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each subclass which wants to receive notifications after a resource 
+has been successfully updated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.on_pre_create">
+<tt class="descname">on_pre_create</tt><big>(</big><em>resource</em>, <em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.on_pre_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.on_pre_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each subclass which wants to receive notifications about a pending
+create resource operation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.on_pre_delete">
+<tt class="descname">on_pre_delete</tt><big>(</big><em>resource</em>, <em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.on_pre_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.on_pre_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each subclass which wants to receive notifications about a pending
+delete resource operation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fantastico.roa.resource_validator.ResourceValidator.on_pre_update">
+<tt class="descname">on_pre_update</tt><big>(</big><em>resource</em>, <em>request</em><big>)</big><a class="reference internal" href="../../_modules/fantastico/roa/resource_validator.html#ResourceValidator.on_pre_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fantastico.roa.resource_validator.ResourceValidator.on_pre_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must be overriden by each subclass which wants to receive notifications about a pending
+update resource operation.</p>
 </dd></dl>
 
 <dl class="method">
