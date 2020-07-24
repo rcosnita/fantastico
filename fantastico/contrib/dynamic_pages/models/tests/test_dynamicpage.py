@@ -41,7 +41,7 @@ class DynamicPageTests(FantasticoUnitTestsCase):
 
         name = "/en/home"
         url = "/en/home"
-        template = "/frontend/views/master.html"
+        template = "/frontend/views/main.html"
         keywords = "keyword 1, ..."
         description = "description"
         title = "Home page"
